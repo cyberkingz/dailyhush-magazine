@@ -11,8 +11,8 @@ import Alert from './Alert';
 import { cn } from '../../lib/utils';
 
 const ForgotPasswordPage: React.FC<AuthPageProps> = ({
-  onSuccess,
-  redirectTo,
+  onSuccess: _onSuccess,
+  redirectTo: _redirectTo,
   className,
 }) => {
   const [email, setEmail] = useState('');

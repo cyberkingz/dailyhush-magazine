@@ -18,7 +18,7 @@ interface ResetPasswordPageProps extends AuthPageProps {
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({
   token,
   onSuccess,
-  redirectTo,
+  redirectTo: _redirectTo,
   className,
 }) => {
   const [formData, setFormData] = useState({

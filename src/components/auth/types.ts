@@ -1,5 +1,4 @@
 /* Authentication Component Types & Interfaces - Admin Only */
-import React from 'react';
 
 // Common Types
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost';

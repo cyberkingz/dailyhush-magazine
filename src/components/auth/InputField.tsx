@@ -22,8 +22,8 @@ interface InputFieldProps extends BaseInputProps {
   label?: string;
   value: string;
   onChange: (value: string) => void;
-  onBlur?: () => void;
-  onFocus?: () => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   success?: string;
   hint?: string;
@@ -60,7 +60,6 @@ const InputField: React.FC<InputFieldProps> = ({
   ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`;
   const errorId = `${inputId}-error`;
@@ -76,12 +75,10 @@ const InputField: React.FC<InputFieldProps> = ({
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(true);
     onFocus?.(e);
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false);
     onBlur?.(e);
   };
 

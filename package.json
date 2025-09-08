@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build && npm run sitemap",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sitemap": "ts-node scripts/generate-sitemap.ts"
+    "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.2",
@@ -29,6 +29,7 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.10",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2"

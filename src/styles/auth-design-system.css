@@ -6,43 +6,43 @@
 
 :root {
   /* Color Tokens */
-  --auth-primary: theme('colors.brand.600');
-  --auth-primary-hover: theme('colors.brand.700');
-  --auth-primary-light: theme('colors.brand.50');
-  --auth-secondary: theme('colors.neutral.600');
-  --auth-secondary-hover: theme('colors.neutral.700');
+  --auth-primary: #0284c7;
+  --auth-primary-hover: #0369a1;
+  --auth-primary-light: #f0f9ff;
+  --auth-secondary: #475569;
+  --auth-secondary-hover: #334155;
   
   /* Surface Colors */
-  --auth-surface-primary: theme('colors.neutral.0');
-  --auth-surface-secondary: theme('colors.neutral.50');
-  --auth-surface-tertiary: theme('colors.neutral.100');
+  --auth-surface-primary: #ffffff;
+  --auth-surface-secondary: #f8fafc;
+  --auth-surface-tertiary: #f1f5f9;
   
   /* Text Colors */
-  --auth-text-primary: theme('colors.neutral.900');
-  --auth-text-secondary: theme('colors.neutral.600');
-  --auth-text-tertiary: theme('colors.neutral.500');
-  --auth-text-inverse: theme('colors.neutral.0');
+  --auth-text-primary: #0f172a;
+  --auth-text-secondary: #475569;
+  --auth-text-tertiary: #64748b;
+  --auth-text-inverse: #ffffff;
   
   /* Border Colors */
-  --auth-border-primary: theme('colors.neutral.200');
-  --auth-border-secondary: theme('colors.neutral.300');
-  --auth-border-focus: theme('colors.brand.500');
-  --auth-border-error: theme('colors.error.500');
-  --auth-border-success: theme('colors.success.500');
+  --auth-border-primary: #e2e8f0;
+  --auth-border-secondary: #cbd5e1;
+  --auth-border-focus: #0ea5e9;
+  --auth-border-error: #ef4444;
+  --auth-border-success: #22c55e;
   
   /* Status Colors */
-  --auth-success: theme('colors.success.600');
-  --auth-success-bg: theme('colors.success.50');
-  --auth-success-border: theme('colors.success.200');
-  --auth-error: theme('colors.error.600');
-  --auth-error-bg: theme('colors.error.50');
-  --auth-error-border: theme('colors.error.200');
-  --auth-warning: theme('colors.warning.600');
-  --auth-warning-bg: theme('colors.warning.50');
-  --auth-warning-border: theme('colors.warning.200');
-  --auth-info: theme('colors.info.600');
-  --auth-info-bg: theme('colors.info.50');
-  --auth-info-border: theme('colors.info.200');
+  --auth-success: #16a34a;
+  --auth-success-bg: #f0fdf4;
+  --auth-success-border: #bbf7d0;
+  --auth-error: #dc2626;
+  --auth-error-bg: #fef2f2;
+  --auth-error-border: #fecaca;
+  --auth-warning: #d97706;
+  --auth-warning-bg: #fffbeb;
+  --auth-warning-border: #fde68a;
+  --auth-info: #2563eb;
+  --auth-info-bg: #eff6ff;
+  --auth-info-border: #bfdbfe;
   
   /* Spacing Tokens */
   --auth-space-xs: 0.25rem;

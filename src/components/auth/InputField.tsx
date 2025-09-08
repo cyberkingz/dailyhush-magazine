@@ -1,6 +1,37 @@
 import React, { useState, useCallback } from 'react';
-import { InputFieldProps } from './types';
 import { cn } from '../../lib/utils';
+
+type InputType = 'text' | 'email' | 'password' | 'tel' | 'url';
+type ValidationState = 'default' | 'valid' | 'invalid';
+
+interface BaseInputProps {
+  id?: string;
+  name?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  required?: boolean;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  className?: string;
+  'aria-describedby'?: string;
+  'aria-invalid'?: boolean;
+}
+
+interface InputFieldProps extends BaseInputProps {
+  type: InputType;
+  label?: string;
+  value: string;
+  onChange: (value: string) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  error?: string;
+  success?: string;
+  hint?: string;
+  icon?: React.ReactNode;
+  rightAddon?: React.ReactNode;
+  validationState?: ValidationState;
+  showPasswordToggle?: boolean;
+}
 
 const InputField: React.FC<InputFieldProps> = ({
   type,

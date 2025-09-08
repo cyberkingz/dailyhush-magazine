@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AuthPageProps } from './types';
+interface AuthPageProps {
+  onSuccess?: () => void;
+  redirectTo?: string;
+  className?: string;
+}
 import { AuthCard, AuthHeader, AuthForm, AuthFooter, AuthLink } from './AuthCard';
 import InputField from './InputField';
 import Button from './Button';

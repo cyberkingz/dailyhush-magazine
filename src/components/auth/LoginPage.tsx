@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { AuthPageProps } from './types';
-import { AuthCard, AuthHeader, AuthForm, AuthDivider, AuthFooter, AuthLink } from './AuthCard';
-import InputField from './InputField';
 import Button from './Button';
 import Alert from './Alert';
-import SocialButton from './SocialButton';
 import { cn } from '../../lib/utils';
+
+interface AuthPageProps {
+  onSuccess?: () => void;
+  redirectTo?: string;
+  className?: string;
+}
 
 const LoginPage: React.FC<AuthPageProps> = ({
   onSuccess,
@@ -20,7 +22,6 @@ const LoginPage: React.FC<AuthPageProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<{ type: 'error' | 'success' | 'info'; message: string } | null>(null);
-  const [socialLoading, setSocialLoading] = useState<Record<string, boolean>>({});
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -50,42 +51,23 @@ const LoginPage: React.FC<AuthPageProps> = ({
     setAlert(null);
 
     try {
-      // Simulate API call
+      // Simulate API call - replace with actual Supabase auth
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Mock successful login
-      setAlert({ type: 'success', message: 'Login successful! Redirecting...' });
+      setAlert({ type: 'success', message: 'Login successful! Redirecting to dashboard...' });
       setTimeout(() => {
         onSuccess?.();
+        // Redirect to admin dashboard
+        window.location.href = redirectTo || '/admin/dashboard';
       }, 1000);
     } catch (error) {
       setAlert({
         type: 'error',
-        message: 'Invalid email or password. Please try again.'
+        message: 'Invalid credentials. Please check your email and password.'
       });
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleSocialLogin = async (provider: string) => {
-    setSocialLoading(prev => ({ ...prev, [provider]: true }));
-    setAlert(null);
-
-    try {
-      // Simulate social login
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setAlert({ type: 'success', message: `Signed in with ${provider}!` });
-      setTimeout(() => {
-        onSuccess?.();
-      }, 1000);
-    } catch (error) {
-      setAlert({
-        type: 'error',
-        message: `Failed to sign in with ${provider}. Please try again.`
-      });
-    } finally {
-      setSocialLoading(prev => ({ ...prev, [provider]: false }));
     }
   };
 
@@ -97,128 +79,112 @@ const LoginPage: React.FC<AuthPageProps> = ({
     }
   };
 
+  const handleForgotPassword = () => {
+    // Navigate to forgot password page
+    window.location.href = '/admin/forgot-password';
+  };
+
   return (
-    <div className={cn('auth-fade-in', className)}>
-      <AuthCard>
-        <AuthHeader
-          title="Welcome back"
-          subtitle="Sign in to your account to continue"
-        />
+    <div className={cn('min-h-screen bg-gradient-to-b from-yellow-50 to-white', className)}>
+      <div className="flex min-h-screen">
+        <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+          <div className="mx-auto w-full max-w-sm lg:w-96">
+            {/* Brand Header */}
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-gray-900 mb-3">DailyHush</h1>
+              <div className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-8"></div>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2">Admin Access</h2>
+              <p className="text-gray-600 mb-8">Sign in to manage your content and settings</p>
+            </div>
 
-        {alert && (
-          <Alert
-            type={alert.type}
-            message={alert.message}
-            dismissible
-            onDismiss={() => setAlert(null)}
-          />
-        )}
-
-        {/* Social Login Options */}
-        <div className="space-y-3">
-          <SocialButton
-            provider="google"
-            onClick={() => handleSocialLogin('Google')}
-            loading={socialLoading.google}
-            disabled={loading}
-          />
-          <SocialButton
-            provider="github"
-            onClick={() => handleSocialLogin('GitHub')}
-            loading={socialLoading.github}
-            disabled={loading}
-          />
-        </div>
-
-        <AuthDivider text="or continue with email" />
-
-        <AuthForm onSubmit={handleSubmit}>
-          <InputField
-            type="email"
-            label="Email address"
-            value={formData.email}
-            onChange={handleInputChange('email')}
-            error={errors.email}
-            placeholder="Enter your email"
-            autoComplete="email"
-            autoFocus
-            required
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+            <div className="bg-white shadow-xl rounded-2xl p-8">
+              {alert && (
+                <Alert
+                  type={alert.type}
+                  message={alert.message}
+                  dismissible
+                  onDismiss={() => setAlert(null)}
                 />
-              </svg>
-            }
-          />
+              )}
 
-          <InputField
-            type="password"
-            label="Password"
-            value={formData.password}
-            onChange={handleInputChange('password')}
-            error={errors.password}
-            placeholder="Enter your password"
-            autoComplete="current-password"
-            required
-            showPasswordToggle
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-            }
-          />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Admin Email</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email')(e.target.value)}
+                    className="border border-gray-300 px-5 py-3 rounded-full w-full bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900 placeholder-gray-500"
+                    placeholder="Enter your admin email"
+                    autoComplete="email"
+                    autoFocus
+                    required
+                  />
+                  {errors.email && (
+                    <p className="mt-2 text-sm text-red-600">{errors.email}</p>
+                  )}
+                </div>
 
-          <div className="flex items-center justify-between">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={formData.rememberMe}
-                onChange={(e) => setFormData(prev => ({ ...prev, rememberMe: e.target.checked }))}
-                className="h-4 w-4 text-brand-600 focus:ring-brand-500 border-neutral-300 rounded"
-              />
-              <span className="ml-2 text-sm text-neutral-600">Remember me</span>
-            </label>
-            <AuthLink href="/auth/forgot-password" className="text-sm">
-              Forgot your password?
-            </AuthLink>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                  <input
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => handleInputChange('password')(e.target.value)}
+                    className="border border-gray-300 px-5 py-3 rounded-full w-full bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900 placeholder-gray-500"
+                    placeholder="Enter your password"
+                    autoComplete="current-password"
+                    required
+                  />
+                  {errors.password && (
+                    <p className="mt-2 text-sm text-red-600">{errors.password}</p>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.rememberMe}
+                      onChange={(e) => setFormData(prev => ({ ...prev, rememberMe: e.target.checked }))}
+                      className="h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-neutral-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-neutral-600">Remember me</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-sm text-yellow-600 hover:text-yellow-700 transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  loading={loading}
+                  disabled={loading}
+                  className="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold border-0 focus:ring-yellow-400"
+                >
+                  {loading ? 'Signing in...' : 'Sign in to Dashboard'}
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p className="text-xs text-gray-500">
+                  Admin access only • Secure authentication
+                </p>
+                <p className="text-xs text-gray-400 mt-2">
+                  DailyHush Content Management System
+                </p>
+              </div>
+            </div>
           </div>
-
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            fullWidth
-            loading={loading}
-            disabled={loading}
-          >
-            Sign in
-          </Button>
-        </AuthForm>
-
-        <AuthFooter>
-          <p className="text-neutral-600">
-            Don't have an account?{' '}
-            <AuthLink href="/auth/register">
-              Sign up for free
-            </AuthLink>
-          </p>
-          <p className="text-xs text-neutral-500">
-            By signing in, you agree to our{' '}
-            <AuthLink href="/terms" className="text-xs">Terms of Service</AuthLink>
-            {' '}and{' '}
-            <AuthLink href="/privacy" className="text-xs">Privacy Policy</AuthLink>
-          </p>
-        </AuthFooter>
-      </AuthCard>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,9 +1,9 @@
+/* Import Authentication Design System */
+@import './auth-design-system.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Authentication Design System */
-@import './auth-design-system.css';
 
 :root {
   color-scheme: light;

@@ -1,2 +1,45 @@
+# SPA fallback - must be last rule
 /*  /index.html  200
+
+# Auth routes
+/login  /admin/login  200
+/signin  /admin/login  200
+/auth/*  /admin/login  200
+
+# Admin redirects
+/admin  /admin/dashboard  200
+
+# Blog routes
+/blog  /blog/index  200
+/post/*  /blog/:splat  200
+/category/*  /categories/:splat  200
+
+# API routes (if you have serverless functions)
+/api/*  /.netlify/functions/:splat  200
+
+# Static assets and files
+/robots.txt  /robots.txt  200
+/sitemap.xml  /sitemap.xml  200
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.supabase.io https://*.supabase.co;
+
+# Cache static assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache images
+*.jpg
+  Cache-Control: public, max-age=31536000
+*.png  
+  Cache-Control: public, max-age=31536000
+*.svg
+  Cache-Control: public, max-age=31536000
+*.webp
+  Cache-Control: public, max-age=31536000
 

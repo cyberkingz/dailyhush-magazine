@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { AlertProps } from './types';
 import { cn } from '../../lib/utils';
+
+type AlertType = 'success' | 'error' | 'warning' | 'info';
+
+interface AlertProps {
+  type: AlertType;
+  title?: string;
+  message: string;
+  dismissible?: boolean;
+  onDismiss?: () => void;
+  className?: string;
+  icon?: React.ReactNode;
+}
 
 const Alert: React.FC<AlertProps> = ({
   type,

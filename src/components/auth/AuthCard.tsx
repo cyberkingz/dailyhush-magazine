@@ -1,6 +1,17 @@
 import React from 'react';
-import { AuthCardProps, AuthHeaderProps } from './types';
 import { cn } from '../../lib/utils';
+
+interface AuthCardProps {
+  children: React.ReactNode;
+  wide?: boolean;
+  className?: string;
+}
+
+interface AuthHeaderProps {
+  title: string;
+  subtitle?: string;
+  className?: string;
+}
 
 export const AuthCard: React.FC<AuthCardProps> = ({
   children,

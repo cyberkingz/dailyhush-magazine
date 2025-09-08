@@ -1,6 +1,23 @@
 import React from 'react';
-import { ProgressProps, StepProps } from './types';
 import { cn } from '../../lib/utils';
+
+interface ProgressProps {
+  value: number;
+  max?: number;
+  className?: string;
+  showPercentage?: boolean;
+}
+
+interface StepProps {
+  steps: Array<{
+    id: string;
+    title: string;
+    description?: string;
+  }>;
+  currentStep: string;
+  completedSteps: string[];
+  className?: string;
+}
 
 export const Progress: React.FC<ProgressProps> = ({
   value,

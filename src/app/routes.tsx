@@ -9,6 +9,8 @@ const CategoryList = lazy(() => import('@/pages/categories/[slug]'))
 const About = lazy(() => import('@/pages/about'))
 const Contact = lazy(() => import('@/pages/contact'))
 const Newsletter = lazy(() => import('@/pages/newsletter'))
+const Privacy = lazy(() => import('@/pages/privacy'))
+const Terms = lazy(() => import('@/pages/terms'))
 
 // Admin
 const AdminLogin = lazy(() => import('@/pages/admin/login'))
@@ -31,6 +33,8 @@ export function AppRoutes() {
         <Route path="/about" element={<Layout><About /></Layout>} />
         <Route path="/contact" element={<Layout><Contact /></Layout>} />
         <Route path="/newsletter" element={<Layout><Newsletter /></Layout>} />
+        <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
+        <Route path="/terms" element={<Layout><Terms /></Layout>} />
 
         {/* Admin */}
         <Route path="/admin/login" element={<AdminLogin />} />

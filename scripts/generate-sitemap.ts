@@ -2,7 +2,7 @@ import { writeFileSync } from 'node:fs'
 
 const base = process.env.SITE_URL || 'https://example.com'
 const routes = [
-  '/', '/blog', '/about', '/contact', '/newsletter'
+  '/', '/blog', '/about', '/contact', '/newsletter', '/privacy', '/terms'
 ]
 
 const urls = routes.map((p) => `  <url>\n    <loc>${base}${p}</loc>\n  </url>`).join('\n')

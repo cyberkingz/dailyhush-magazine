@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DeltaQuest Media / CareerAddict — Funnel & Cartographie (Fix)</title>
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#121a2a; --ink:#eaf1ff; --muted:#a6b1c8;
+      --link:#8ecaff; --border:#1f2a44;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--ink);background:#0b1220}
+    header{padding:24px 18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+    h1{margin:0 0 6px;font-size:22px}
+    .sub{color:var(--muted);font-size:14px}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
+    .tab{border:1px solid var(--border);background:#0f1830;color:var(--ink);padding:9px 12px;border-radius:10px;cursor:pointer;font-size:14px}
+    .tab[aria-selected="true"]{background:#172543;border-color:#3d5aa1}
+    .panel{display:none}
+    .panel.active{display:block}
+    .card{background:#121a2a;border:1px solid var(--border);border-radius:14px;padding:14px;margin:12px 0}
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .hint{font-size:12px;color:var(--muted);margin-top:8px}
+
+    /* table */
+    table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    th,td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+    th{background:#0f1830;text-align:left;font-weight:600}
+    tr:last-child td{border-bottom:0}
+    .small{font-size:13px;color:var(--muted)}
+  </style>
+
+  <!-- Mermaid (10.9.4) -->
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.4/dist/mermaid.esm.min.mjs";
+    window._mermaid = mermaid; // expose for later re-renders
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "loose",
+      theme: "dark",
+      themeVariables: {
+        primaryColor:"#1a294a",
+        primaryTextColor:"#eaf1ff",
+        lineColor:"#6aa9ff",
+        secondaryColor:"#0f1830",
+        tertiaryColor:"#122040"
+      }
+    });
+    window.dispatchEvent(new Event('mermaid:ready'));
+  </script>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>DeltaQuest Media / CareerAddict — Funnel & Cartographie</h1>
+      <div class="sub">Distinction claire entre <code>careeraddict.com</code> (site) et <code>dose.careeraddict.com</code> (Beehiiv hub).</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="funnel">Funnel</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="map">Cartographie</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sites">Sites</button>
+    </nav>
+
+    <!-- FUNNEL -->
+    <section id="funnel" class="panel active">
+      <div class="card">
+        <h2 style="margin:.2rem 0 10px">Funnel (Step by Step)</h2>
+        <pre class="mermaid">
+flowchart TB
+  A["Visiteur - careeraddict.com"] --> B{"Opt-in"}
+  B -->|Popup FREE Worksheet| C["Inscription THE DOSE"]
+  B -->|Hero email field| C
+  C --> D["Reco autres newsletters"]
+  D --> E["Thank You page"]
+  E --> F["Email bienvenue + lead magnet"]
+
+  classDef site fill:#0f1830,stroke:#3b4f8e,stroke-width:1.2,color:#eaf1ff;
+  classDef news fill:#2b1f47,stroke:#7a63c7,stroke-width:1.2,color:#f3eefe;
+
+  class A,E site
+  class C,D,F news
+        </pre>
+        <div class="hint">Flux public observé: site -> opt-in -> reco -> TY -> welcome (+ lead magnet).</div>
+      </div>
+    </section>
+
+    <!-- CARTOGRAPHIE -->
+    <section id="map" class="panel">
+      <div class="card">
+        <h2 style="margin:.2rem 0 10px">Cartographie du business</h2>
+        <pre class="mermaid">
+flowchart LR
+  RP["Robert Pilyugin (founder)"]:::core --> DQ["DeltaQuest Media"]:::core
+
+  %% Deux domaines distincts
+  DQ --> CA["careeraddict.com\n(Site principal: SEO, Store, Services)"]:::site
+  DQ --> DOSESITE["dose.careeraddict.com\n(Beehiiv hub: Posts, Newsletters, Archives)"]:::site
+
+  %% Newsletter
+  DOSESITE --> DOSE["THE DOSE (newsletter)"]:::news
+  HR["HRAddict.com"]:::site --> HRN["HRAddict newsletter"]:::news
+  DQ --> CH["CareerHunter.io"]:::site
+  DQ --> CX["Customer Experience Show"]:::site
+
+  %% Produits & services (sur le site principal)
+  CA --> DLD["Digital downloads (ebooks, planners, bundles)"]:::prod
+  CA --> CVS["CV / resume services"]:::prod
+  CH --> TST["Psychometric tests"]:::prod
+
+  %% Monétisation
+  DOSE --> SPN["Sponsoring / placements"]:::rev
+  DOSE --> AFF["Affiliation / paid recommendations"]:::rev
+  CA --> ADS["Display / programmatic ads"]:::rev
+  CVS --> R1["Services revenue"]:::rev
+  DLD --> R2["One-off sales"]:::rev
+  TST --> R3["Paid tests / licences"]:::rev
+
+  %% Aller/retour de trafic
+  CA <-->|opt-in / CTAs| DOSESITE
+
+  %% Réseaux
+  CA -.-> IG["Instagram"]:::soc
+  CA -.-> YT["YouTube"]:::soc
+  CA -.-> LI["LinkedIn"]:::soc
+  CA -.-> TW["X (Twitter)"]:::soc
+
+  classDef core fill:#17325e,stroke:#6aa9ff,stroke-width:1.6,color:#eaf1ff;
+  classDef site fill:#1b3058,stroke:#89c8ff,stroke-width:1.2,color:#eaf1ff;
+  classDef news fill:#3a285f,stroke:#bda4ff,stroke-width:1.2,color:#fff;
+  classDef prod fill:#153d2a,stroke:#4bb673,stroke-width:1.2,color:#eafff1;
+  classDef rev  fill:#3f320e,stroke:#e3c76a,stroke-width:1.2,color:#fff1b3;
+  classDef soc  fill:#5a2a1f,stroke:#ffa98b,stroke-width:1.1,color:#ffe6de;
+
+  %% Liens externes (clics)
+  click CA "https://www.careeraddict.com/" _blank
+  click DOSESITE "https://dose.careeraddict.com/" _blank
+  click IG "https://www.instagram.com/careeraddict/" _blank
+  click YT "https://www.youtube.com/careeraddict-video" _blank
+  click LI "https://www.linkedin.com/company/career-addict/" _blank
+  click TW "https://x.com/careeraddict" _blank
+        </pre>
+        <div class="small">NOTE : <code>dose.careeraddict.com</code> est la publication Beehiiv (posts/newsletters/archives) et sert d’hub d’audience. <code>careeraddict.com</code> concentre SEO, store et services.</div>
+      </div>
+    </section>
+
+    <!-- SITES (comparatif clair) -->
+    <section id="sites" class="panel">
+      <div class="card">
+        <h2 style="margin:.2rem 0 10px">Sites — rôles & responsabilités</h2>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40%">Domaine</th>
+              <th style="width:60%">Rôle & responsabilités</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>careeraddict.com</strong><br><span class="small">Site principal</span></td>
+              <td>
+                <ul style="margin:0 0 0 18px">
+                  <li>Articles SEO (Career Advice, pages piliers).</li>
+                  <li>Store : bundles, planners, résumé templates.</li>
+                  <li>Services : CV / resume help.</li>
+                  <li>Capture e-mail : pop-up “FREE Worksheet”, opt-in hero.</li>
+                  <li>Trafic sortant vers la newsletter : renvoi vers <code>dose.careeraddict.com</code> pour l’inscription et les archives.</li>
+                  <li>Monétisation côté site : ventes digitales, services, affichage publicitaire.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>dose.careeraddict.com</strong><br><span class="small">Beehiiv hub</span></td>
+              <td>
+                <ul style="margin:0 0 0 18px">
+                  <li>Publication Beehiiv : Posts, Newsletters, Archives publiques.</li>
+                  <li>Opt-in natif (Sign up / Login), <em>gating</em> de certains “goodies”.</li>
+                  <li>Monétisation : recommandations payées (CPL) et placements sponsorisés dans les éditions.</li>
+                  <li>Nurturing : éditions régulières (“The Dose”) → CTAs vers le store / services sur <code>careeraddict.com</code>.</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin:18px 0 8px">Flux entre les deux domaines</h3>
+        <pre class="mermaid">
+flowchart LR
+  CA["careeraddict.com\n(pop-up, hero opt-in, store)"]:::site -->|subscribe| DS["dose.careeraddict.com\n(Beehiiv hub)"]:::site
+  DS -->|editions / archives → CTAs| CA
+  DS -->|paid recos / sponsors| CA
+
+  classDef site fill:#1b3058,stroke:#89c8ff,stroke-width:1.2,color:#eaf1ff;
+
+  click CA "https://www.careeraddict.com/" _blank
+  click DS "https://dose.careeraddict.com/" _blank
+        </pre>
+        <div class="hint">En bref : le site capte & vend, le hub Beehiiv nourrit & monétise l’audience via recos/sponsors et renvoie vers le store.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function whenMermaidReady(){
+      return window._mermaid
+        ? Promise.resolve()
+        : new Promise(res => window.addEventListener('mermaid:ready', res, { once: true }));
+    }
+
+    const tabs   = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+
+    async function renderMermaidIn(el){
+      await whenMermaidReady();
+      const selector = `#${el.id} .mermaid`;
+      await window._mermaid.run({ querySelector: selector });
+    }
+
+    tabs.forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+        panels.forEach(p=>p.classList.remove('active'));
+
+        btn.setAttribute('aria-selected','true');
+        const panel = document.getElementById(btn.dataset.tab);
+        panel.classList.add('active');
+
+        await renderMermaidIn(panel);
+      });
+    });
+
+    // Render initially visible panel
+    renderMermaidIn(document.querySelector('.panel.active'));
+  </script>
+</body>
+</html>

@@ -2,6 +2,17 @@ import { useParams, Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import { NewsletterCTA } from '@/components/NewsletterCTA'
 
+// Slug aliases - map the URL slug to the content key
+const slugAliases: Record<string, string> = {
+  'the-science-behind-red-light-therapy-for-skin-health': 'red-light-therapy-science',
+  'how-wearable-tech-is-transforming-fitness-and-wellness': 'wearable-tech-fitness-wellness',
+  'daily-habits-for-clearer-skin-backed-by-science': 'daily-habits-clearer-skin',
+  'apple-watch-as-a-fashion-accessory-style-meets-tech': 'apple-watch-fashion-accessory',
+  'the-future-of-smart-jewelry-fashion-or-function': 'future-smart-jewelry',
+  'top-10-wellness-trends-dominating-instagram-in-2025': 'top-10-wellness-trends-instagram-2025',
+  'can-ai-track-your-stress-levels-the-future-of-mental-wellness-apps': 'can-ai-track-your-stress-levels-future-of-mental-wellness-apps'
+}
+
 const articleContent: Record<string, {
   title: string
   excerpt: string
@@ -158,7 +169,84 @@ const articleContent: Record<string, {
     author: 'DailyHush Editorial Team',
     date: 'Jan 10, 2025',
     readTime: '8 min read',
-    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1600&h=900&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&h=900&q=80',
+    content: `
+      <p>Your smartphone camera can now diagnose skin conditions with 95% accuracy. AI-powered apps analyze your complexion in real-time, recommending personalized treatments within seconds. But as artificial intelligence revolutionizes skincare, a crucial question emerges: can algorithms truly replace the nuanced expertise of trained dermatologists?</p>
+
+      <h2>The AI Skincare Revolution</h2>
+      <p>The global AI skincare market has exploded from $2.4 billion in 2023 to a projected $12.8 billion by 2025. Companies like Olay, L'Oréal, and emerging startups are leveraging machine learning algorithms trained on millions of skin images to deliver personalized beauty solutions.</p>
+
+      <p>These systems analyze facial features, skin tone, texture, and environmental factors to create custom formulations and treatment plans. Some platforms can even predict how your skin will age and recommend preventive measures accordingly.</p>
+
+      <h2>How AI Skin Analysis Actually Works</h2>
+      <p>Modern AI skincare tools use computer vision and deep learning neural networks to process skin images. Here's what happens when you take that selfie:</p>
+
+      <h3>Image Processing</h3>
+      <p>The algorithm immediately maps your facial geometry, identifying key zones and landmarks. It analyzes pixel-level data to detect variations in color, texture, and surface irregularities invisible to the naked eye.</p>
+
+      <h3>Pattern Recognition</h3>
+      <p>The system compares your skin patterns against its training database of dermatologist-validated images, looking for matches with known conditions like acne, rosacea, melasma, or early signs of photoaging.</p>
+
+      <h3>Personalized Recommendations</h3>
+      <p>Based on the analysis, AI generates targeted product recommendations, ingredient preferences, and treatment protocols tailored to your specific skin concerns and sensitivities.</p>
+
+      <h2>Where AI Excels</h2>
+      <p>Artificial intelligence offers several advantages over traditional skincare consultation methods:</p>
+
+      <ul>
+        <li><strong>24/7 Accessibility:</strong> Instant analysis anytime, anywhere, without appointment scheduling</li>
+        <li><strong>Consistent Analysis:</strong> No variation in assessment quality due to practitioner fatigue or experience level</li>
+        <li><strong>Objective Measurement:</strong> Quantifies skin metrics that might be subjectively interpreted by humans</li>
+        <li><strong>Continuous Learning:</strong> Algorithms improve with every analysis, becoming more accurate over time</li>
+        <li><strong>Cost-Effective:</strong> Dramatically reduces the cost of personalized skincare guidance</li>
+      </ul>
+
+      <h2>The Limitations of Algorithmic Analysis</h2>
+      <p>Despite impressive capabilities, AI skincare technology faces significant constraints that highlight the continued value of human expertise:</p>
+
+      <h3>Surface-Level Analysis</h3>
+      <p>Most consumer AI tools can only analyze what's visible on the skin's surface. Dermatologists use dermoscopy, biopsies, and other diagnostic techniques to examine deeper skin layers and cellular structures.</p>
+
+      <h3>Medical Context Blindness</h3>
+      <p>AI systems lack understanding of your complete medical history, current medications, and underlying health conditions that might affect skin appearance or treatment suitability.</p>
+
+      <h3>Lighting and Image Quality Dependency</h3>
+      <p>AI accuracy depends heavily on consistent lighting conditions and image quality. Poor selfies can lead to misdiagnosis or inappropriate recommendations.</p>
+
+      <h2>The Hybrid Future</h2>
+      <p>Rather than replacement, the future points toward collaboration between AI and dermatologists. Leading dermatology practices are already integrating AI tools to enhance, not replace, their diagnostic capabilities.</p>
+
+      <blockquote>
+        <p>"AI is incredibly powerful for screening and monitoring, but the human element remains irreplaceable for complex cases requiring medical judgment and empathy." - Dr. Sarah Chen, Board-Certified Dermatologist</p>
+      </blockquote>
+
+      <h2>Choosing AI Skincare Tools Wisely</h2>
+      <p>If you're considering AI-powered skincare solutions, look for platforms that:</p>
+
+      <ul>
+        <li>Use clinically validated algorithms with published accuracy rates</li>
+        <li>Clearly state their limitations and when to seek professional consultation</li>
+        <li>Integrate with licensed dermatologists for complex cases</li>
+        <li>Provide transparent information about their training data sources</li>
+        <li>Offer clear privacy policies regarding your skin data</li>
+      </ul>
+
+      <h2>The Bottom Line</h2>
+      <p>AI in skincare represents a powerful tool for accessible, personalized beauty guidance, but it's not a complete substitute for professional dermatological care. For routine maintenance, product selection, and monitoring skin changes, AI offers exceptional value and convenience.</p>
+
+      <p>However, for medical concerns, unusual skin changes, or complex conditions, the diagnostic expertise, clinical judgment, and treatment authority of licensed dermatologists remain essential. The smartest approach combines both: use AI for daily optimization and professional guidance for serious concerns.</p>
+
+      <p>The future of skincare isn't human versus machine—it's human with machine, creating more accessible, effective, and personalized beauty solutions than either could achieve alone.</p>
+    `
+  },
+  'the-rise-of-ai-in-skincare-can-algorithms-replace-dermatologists': {
+    title: 'The Rise of AI in Skincare: Can Algorithms Replace Dermatologists?',
+    excerpt: 'Artificial intelligence is transforming skin analysis and treatment recommendations, but how far can technology go in replacing human expertise?',
+    category: 'Beauty',
+    author: 'DailyHush Editorial Team',
+    date: 'Jan 10, 2025',
+    readTime: '8 min read',
+    imageUrl: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&h=900&q=80',
     content: `
       <p>Your smartphone camera can now diagnose skin conditions with 95% accuracy. AI-powered apps analyze your complexion in real-time, recommending personalized treatments within seconds. But as artificial intelligence revolutionizes skincare, a crucial question emerges: can algorithms truly replace the nuanced expertise of trained dermatologists?</p>
 
@@ -229,6 +317,108 @@ const articleContent: Record<string, {
     `
   },
   'top-5-beauty-gadgets-2025': {
+    title: 'Top 5 Beauty Gadgets of 2025 That Actually Work',
+    excerpt: 'Cut through the beauty tech hype with these scientifically-proven devices that deliver measurable results for your skin and routine.',
+    category: 'Beauty',
+    author: 'DailyHush Editorial Team',
+    date: 'Jan 9, 2025',
+    readTime: '7 min read',
+    imageUrl: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&h=900&q=80',
+    content: `
+      <p>Beauty technology promises are everywhere—LED masks that reverse aging, ultrasonic cleansers that transform your complexion, microcurrent devices that rival Botox. But which gadgets actually deliver on their bold claims? After testing dozens of devices and reviewing clinical studies, here are the five beauty tech investments that provide genuine, measurable results.</p>
+
+      <h2>1. NuFACE Trinity Pro: Microcurrent Facial Toning</h2>
+      <p><strong>Price Range:</strong> $395-$429 | <strong>Results Timeline:</strong> 4-6 weeks</p>
+      
+      <p>Microcurrent technology uses low-level electrical currents that mirror your body's natural bioelectricity to stimulate facial muscles. The NuFACE Trinity Pro stands out for its clinical backing and consistent results.</p>
+
+      <h3>The Science</h3>
+      <p>Studies published in the Journal of Clinical and Aesthetic Dermatology showed that participants using microcurrent devices experienced a 32% improvement in facial muscle tone and 25% increase in collagen production after 8 weeks of regular use.</p>
+
+      <h3>Real Results</h3>
+      <p>Users report lifted eyebrows, more defined jawlines, and reduced appearance of jowls. The key is consistency—15 minutes, 3-5 times per week yields the best outcomes. Professional aestheticians often use similar technology in $300+ facial treatments.</p>
+
+      <p><strong>Bottom Line:</strong> Worth the investment if you commit to regular use. The tightening effects are genuine but require maintenance.</p>
+
+      <h2>2. Foreo Luna 4: Smart Sonic Facial Cleansing</h2>
+      <p><strong>Price Range:</strong> $199-$299 | <strong>Results Timeline:</strong> 1-2 weeks</p>
+
+      <p>The Foreo Luna 4's T-Sonic pulsations and AI-powered app integration represent the evolution of facial cleansing technology. Unlike rotating brush heads that can harbor bacteria, the silicone surface is naturally antimicrobial.</p>
+
+      <h3>The Technology</h3>
+      <p>The device delivers up to 12,000 T-Sonic pulsations per minute, which clinical studies show removes 99.5% of dirt, oil, and makeup residue—significantly more effective than manual cleansing alone.</p>
+
+      <h3>Standout Features</h3>
+      <p>The connected app analyzes your skin via smartphone camera and adjusts the cleansing intensity automatically. Firming massage modes on the reverse side stimulate circulation and lymphatic drainage.</p>
+
+      <p><strong>Bottom Line:</strong> Immediate improvement in skin texture and clarity. The most universally beneficial beauty device on our list.</p>
+
+      <h2>3. Therabody TheraFace PRO: Multi-Modal Skin Therapy</h2>
+      <p><strong>Price Range:</strong> $399 | <strong>Results Timeline:</strong> 2-4 weeks</p>
+
+      <p>This device combines three proven modalities: LED light therapy, percussive therapy, and microcurrent stimulation. The versatility allows targeted treatment for multiple skin concerns.</p>
+
+      <h3>Clinical Foundation</h3>
+      <p>LED light therapy at 660nm (red) and 415nm (blue) wavelengths has extensive clinical validation. Studies show red light increases ATP production in skin cells by 150%, accelerating cellular repair and collagen synthesis.</p>
+
+      <h3>Unique Advantage</h3>
+      <p>The percussive therapy function increases product absorption by up to 300%, making your existing serums and treatments more effective. The combination approach addresses both surface and deeper tissue concerns.</p>
+
+      <p><strong>Bottom Line:</strong> Best value for those wanting multiple treatment modalities in one device. Particularly effective for acne-prone and aging skin.</p>
+
+      <h2>4. SolaWave 4-in-1 Skincare Wand</h2>
+      <p><strong>Price Range:</strong> $149 | <strong>Results Timeline:</strong> 3-4 weeks</p>
+
+      <p>This compact device delivers red light therapy, galvanic current, therapeutic warmth, and facial massage in one affordable tool. It's become a social media sensation, but the science supports the hype.</p>
+
+      <h3>Evidence-Based Results</h3>
+      <p>Independent clinical testing showed 22% improvement in fine lines, 18% increase in skin firmness, and 15% improvement in skin tone evenness after 6 weeks of daily use.</p>
+
+      <h3>Why It Works</h3>
+      <p>The combination of 660nm red light with galvanic current enhances cellular metabolism while the gentle warmth increases circulation. The T-bar design makes it easy to incorporate into your existing routine.</p>
+
+      <p><strong>Bottom Line:</strong> Excellent entry point into beauty tech. Genuine results at an accessible price point, though effects are more subtle than higher-end devices.</p>
+
+      <h2>5. Dyson Airwrap Multi-Styler Complete</h2>
+      <p><strong>Price Range:</strong> $599 | <strong>Results Timeline:</strong> Immediate</p>
+
+      <p>While primarily a styling tool, the Airwrap's innovative technology prevents heat damage that accelerates hair aging, making it a legitimate beauty investment for long-term hair health.</p>
+
+      <h3>Revolutionary Technology</h3>
+      <p>The Coanda effect uses high-velocity airflow to curl and style hair without extreme heat. Traditional curling irons reach 400°F+, while the Airwrap operates at a maximum of 302°F, reducing heat damage by up to 50%.</p>
+
+      <h3>Long-Term Benefits</h3>
+      <p>Trichology studies indicate that reducing heat exposure preserves the hair's cuticle structure, maintaining moisture retention and preventing brittleness. Users report improved hair texture and reduced breakage over time.</p>
+
+      <p><strong>Bottom Line:</strong> Investment piece that pays dividends in hair health. The styling versatility and damage prevention justify the premium price for regular heat styling users.</p>
+
+      <h2>What to Look for in Beauty Tech</h2>
+      <p>Before investing in any beauty gadget, apply these criteria:</p>
+
+      <ul>
+        <li><strong>Clinical Evidence:</strong> Look for peer-reviewed studies, not just brand-sponsored testimonials</li>
+        <li><strong>FDA Clearance:</strong> Devices with medical claims should have regulatory approval</li>
+        <li><strong>Realistic Timeline:</strong> Beware of promises of "instant" transformation—genuine skin changes take weeks</li>
+        <li><strong>User Commitment:</strong> Consider whether you'll realistically use the device consistently</li>
+        <li><strong>Professional Endorsement:</strong> Dermatologists or aestheticians should validate the technology</li>
+      </ul>
+
+      <h2>The Investment Reality</h2>
+      <p>Quality beauty devices represent significant upfront costs but can deliver value over time. A single professional facial treatment costs $150-$400, making a $300 device economical after 2-3 uses if you maintain consistency.</p>
+
+      <blockquote>
+        <p>"The best beauty device is the one you'll actually use. Consistency trumps cutting-edge technology every time." - Dr. Rachel Morrison, Celebrity Aesthetician</p>
+      </blockquote>
+
+      <h2>Making Your Choice</h2>
+      <p>Start with one device that addresses your primary concern. Master its use and see results before adding others. The most expensive tool is one that sits unused in your drawer.</p>
+
+      <p>Remember: these devices enhance and accelerate results from good skincare fundamentals—they don't replace sunscreen, proper cleansing, or moisturizing. Think of them as advanced tools that amplify your existing routine, not shortcuts to skip the basics.</p>
+
+      <p>The beauty tech revolution is real, but success requires the same discipline as any effective skincare regimen: consistency, patience, and realistic expectations.</p>
+    `
+  },
+  'top-5-beauty-gadgets-of-2025-that-actually-work': {
     title: 'Top 5 Beauty Gadgets of 2025 That Actually Work',
     excerpt: 'Cut through the beauty tech hype with these scientifically-proven devices that deliver measurable results for your skin and routine.',
     category: 'Beauty',
@@ -935,7 +1125,7 @@ const articleContent: Record<string, {
     author: 'Marcus Chen',
     date: 'Jan 10, 2025',
     readTime: '8 min read',
-    imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1600&h=900&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&h=900&q=80',
     content: `
       <p>Your Instagram feed is basically a wellness laboratory right now. Influencers are ice bathing at 5 AM, downing mysterious green powders, and wearing $300 red light masks while claiming they've "cracked the code" on human optimization. Some of these trends are legitimate breakthroughs backed by real science. Others are expensive placebos wrapped in attractive packaging and pushed by people who confuse correlation with causation.</p>
 
@@ -1372,7 +1562,7 @@ const articleContent: Record<string, {
     author: 'Marcus Rodriguez',
     date: 'Jan 8, 2025',
     readTime: '7 min read',
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&h=900&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1600&h=900&q=80',
     content: `
       <p>Dave Asprey was dying at 46. The successful tech entrepreneur could barely think straight, despite building a multi-million dollar company. His doctors found nothing wrong with his blood work, yet he felt like his body was betraying him.</p>
 
@@ -2274,7 +2464,9 @@ const defaultContent = {
 
 export default function BlogDetail() {
   const { slug } = useParams()
-  const article = slug ? (articleContent[slug] || { ...defaultContent, title: `Article: ${slug}` }) : defaultContent
+  // Check if the slug is an alias, if so, use the aliased content key
+  const contentKey = slug && slugAliases[slug] ? slugAliases[slug] : slug
+  const article = contentKey ? (articleContent[contentKey] || { ...defaultContent, title: `Article: ${slug}` }) : defaultContent
 
   useEffect(() => {
     document.title = `${article.title} — DailyHush`

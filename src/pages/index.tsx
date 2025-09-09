@@ -4,25 +4,6 @@ import { NewsletterCTA } from '@/components/NewsletterCTA'
 
 const categories = ['All', 'Wellness','Beauty','Tech'] as const
 
-// Curated Unsplash photo IDs per category to avoid broken Source endpoints
-const UNSPLASH_IDS: Record<Exclude<(typeof categories)[number], 'All'>, string[]> = {
-  Wellness: [
-    '1469474968028-56623f02e42e', // yoga mat
-    '1515378791036-0648a3ef77b2', // stones spa
-    '1571019613454-1cb2d6ce0fd1', // fitness workout
-  ],
-  Beauty: [
-    '1514136649217-b627b4b9cfb2', // skincare flatlay
-    '1487412912498-0447578fcca8', // makeup brushes
-    '1519861531473-9200262188bf', // cosmetics
-  ],
-  Tech: [
-    '1498050108023-c5249f4df085', // code laptop
-    '1518770660439-4636190af475', // gadgets desk
-    '1519389950473-47ba0277781c', // ai abstract
-  ],
-}
-
 function unsplashUrl(id: string) {
   return `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&h=450&q=60`;
 }
@@ -36,7 +17,7 @@ const demoPosts = [
     category: 'Beauty' as const,
     author: 'DailyHush Editorial Team',
     date: 'Jan 10, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Beauty[0]),
+    imageUrl: unsplashUrl('1556228720-195a672e8a03'),
   },
   {
     id: 2,
@@ -45,7 +26,7 @@ const demoPosts = [
     category: 'Beauty' as const,
     author: 'DailyHush Editorial Team',
     date: 'Jan 9, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Beauty[1]),
+    imageUrl: unsplashUrl('1596462502278-27bfdc403348'),
   },
   {
     id: 3,
@@ -54,7 +35,7 @@ const demoPosts = [
     category: 'Wellness' as const,
     author: 'DailyHush Editorial Team',
     date: 'Jan 8, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Wellness[0]),
+    imageUrl: unsplashUrl('1571019613454-1cb2f99b2d8b'),
   },
   {
     id: 4,
@@ -63,7 +44,7 @@ const demoPosts = [
     category: 'Tech' as const,
     author: 'DailyHush Editorial Team',
     date: 'Jan 7, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Tech[0]),
+    imageUrl: unsplashUrl('1544367567-0f2fcb009e0b'),
   },
   {
     id: 5,
@@ -72,7 +53,7 @@ const demoPosts = [
     category: 'Beauty' as const,
     author: 'DailyHush Editorial Team',
     date: 'Jan 6, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Beauty[2]),
+    imageUrl: unsplashUrl('1515377905703-c4788e51af15'),
   },
   // Fashion & Lifestyle posts
   {
@@ -82,7 +63,7 @@ const demoPosts = [
     category: 'Tech' as const,
     author: 'Alexandra Sterling',
     date: 'Jan 5, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Tech[1]),
+    imageUrl: unsplashUrl('1434493789847-2f02dc6ca35d'),
   },
   {
     id: 7,
@@ -91,7 +72,7 @@ const demoPosts = [
     category: 'Beauty' as const,
     author: 'Victoria Chen-Martinez',
     date: 'Jan 4, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Beauty[0]),
+    imageUrl: unsplashUrl('1515562141207-7a88fb7ce338'),
   },
   {
     id: 8,
@@ -100,7 +81,7 @@ const demoPosts = [
     category: 'Wellness' as const,
     author: 'Marcus Chen',
     date: 'Jan 3, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Wellness[1]),
+    imageUrl: unsplashUrl('1469474968028-56623f02e42e'),
   },
   {
     id: 9,
@@ -109,7 +90,7 @@ const demoPosts = [
     category: 'Wellness' as const,
     author: 'Jamie Rodriguez',
     date: 'Jan 2, 2025',
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&h=450&q=60',
+    imageUrl: unsplashUrl('1518611012118-696072aa579a'),
   },
   // Health & Performance posts  
   {
@@ -119,7 +100,7 @@ const demoPosts = [
     category: 'Wellness' as const,
     author: 'Marcus Rodriguez',
     date: 'Jan 1, 2025',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Wellness[0]),
+    imageUrl: unsplashUrl('1515378791036-0648a3ef77b2'),
   },
   {
     id: 11,
@@ -128,7 +109,7 @@ const demoPosts = [
     category: 'Tech' as const,
     author: 'Dr. Samantha Liu',
     date: 'Dec 31, 2024',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Tech[2]),
+    imageUrl: unsplashUrl('1559757148-5c350d0d3c56'),
   },
   {
     id: 12,
@@ -137,7 +118,7 @@ const demoPosts = [
     category: 'Tech' as const,
     author: 'Dr. Michael Chen',
     date: 'Dec 30, 2024',
-    imageUrl: unsplashUrl(UNSPLASH_IDS.Tech[0]),
+    imageUrl: unsplashUrl('1541781774459-bb2af2f05b55'),
   },
 ]
 

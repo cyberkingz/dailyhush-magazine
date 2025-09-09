@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { getLeads, getLeadAnalytics, updateLeadSubscription } from '../../lib/services/leads'
 import type { Lead, LeadAnalytics } from '../../lib/types/leads'
 
-export function LeadsManager() {
+function LeadsManager() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [analytics, setAnalytics] = useState<LeadAnalytics[]>([])
   const [totalCount, setTotalCount] = useState(0)
@@ -234,3 +234,5 @@ export function LeadsManager() {
     </div>
   )
 }
+
+export default LeadsManager;

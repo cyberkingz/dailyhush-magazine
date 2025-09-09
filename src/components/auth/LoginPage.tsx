@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Button from './Button';
 import Alert from './Alert';
 import { cn } from '../../lib/utils';
+import { supabase } from '../../lib/supabase';
+import { validateAdminAccess } from '../../lib/services/auth';
 
 interface AuthPageProps {
   onSuccess?: () => void;
@@ -51,20 +53,42 @@ const LoginPage: React.FC<AuthPageProps> = ({
     setAlert(null);
 
     try {
-      // Simulate API call - replace with actual Supabase auth
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock successful login
-      setAlert({ type: 'success', message: 'Login successful! Redirecting to dashboard...' });
-      setTimeout(() => {
-        onSuccess?.();
-        // Redirect to admin dashboard
-        window.location.href = redirectTo || '/admin/dashboard';
-      }, 1000);
-    } catch (error) {
+      // Additional validation for admin access
+      if (!validateAdminAccess(formData.email)) {
+        throw new Error('Access denied. Admin privileges required.');
+      }
+
+      // Use Supabase authentication
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      // Check if user is authenticated and has admin privileges
+      if (data.user && validateAdminAccess(data.user.email || '')) {
+        setAlert({ type: 'success', message: 'Login successful! Redirecting to dashboard...' });
+        
+        // Store admin session
+        if (formData.rememberMe) {
+          localStorage.setItem('admin_session', 'true');
+        }
+        
+        setTimeout(() => {
+          onSuccess?.();
+          window.location.href = redirectTo || '/admin/dashboard';
+        }, 1000);
+      } else {
+        throw new Error('Access denied. Admin privileges required.');
+      }
+    } catch (error: any) {
+      console.error('Authentication error:', error);
       setAlert({
         type: 'error',
-        message: 'Invalid credentials. Please check your email and password.'
+        message: error.message || 'Invalid credentials. Please check your email and password.'
       });
     } finally {
       setLoading(false);

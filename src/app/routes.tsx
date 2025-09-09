@@ -17,6 +17,7 @@ const Terms = lazy(() => import('@/pages/terms'))
 const AdminLogin = lazy(() => import('@/pages/admin/login'))
 const AdminDashboard = lazy(() => import('@/pages/admin/dashboard'))
 const AdminPosts = lazy(() => import('@/pages/admin/posts'))
+const AdminLeads = lazy(() => import('@/pages/admin/leads'))
 const AdminPostNew = lazy(() => import('@/pages/admin/posts-new'))
 const AdminPostEdit = lazy(() => import('@/pages/admin/posts-[id]'))
 const AdminCategories = lazy(() => import('@/pages/admin/categories'))
@@ -41,6 +42,7 @@ export function AppRoutes() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/leads" element={<AdminLeads />} />
         <Route path="/admin/posts" element={<AdminPosts />} />
         <Route path="/admin/posts-new" element={<AdminPostNew />} />
         <Route path="/admin/posts-:id" element={<AdminPostEdit />} />

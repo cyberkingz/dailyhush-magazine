@@ -22,3 +22,6 @@ export { Progress, Steps } from './Progress';
 export { default as LoginPage } from './LoginPage';
 export { default as ForgotPasswordPage } from './ForgotPasswordPage';
 export { default as ResetPasswordPage } from './ResetPasswordPage';
+
+// Auth Guard Components
+export { default as AdminGuard } from './AdminGuard';

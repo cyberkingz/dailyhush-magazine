@@ -1,12 +1,37 @@
-export default function AdminDashboard() {
+import React, { useState, useEffect } from 'react';
+import { AdminLayout, DashboardStats } from '../../components/admin';
+import { AdminGuard } from '../../components/auth';
+import { getLeads } from '../../lib/services/leads';
+import type { Lead } from '../../lib/types/leads';
+
+const AdminDashboard: React.FC = () => {
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        setLoading(true);
+        const { leads: leadsData } = await getLeads(100); // Get latest 100 leads for stats
+        setLeads(leadsData);
+      } catch (error) {
+        console.error('Error fetching leads:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeads();
+  }, []);
+
   return (
-    <main className="container-prose py-10 space-y-4">
-      <h1 className="text-2xl font-semibold">Dashboard</h1>
-      <ul className="list-disc pl-6 text-sm">
-        <li>Drafts / Published counts</li>
-        <li>Recent posts</li>
-      </ul>
-    </main>
-  )
-}
+    <AdminGuard>
+      <AdminLayout currentPage="/admin/dashboard">
+        <DashboardStats leads={leads} loading={loading} />
+      </AdminLayout>
+    </AdminGuard>
+  );
+};
+
+export default AdminDashboard;
 

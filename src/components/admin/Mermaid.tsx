@@ -25,7 +25,6 @@ export const Mermaid: React.FC<MermaidProps> = ({ code, className }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    let canceled = false
     const render = async () => {
       try {
         // Reset target content
@@ -37,11 +36,8 @@ export const Mermaid: React.FC<MermaidProps> = ({ code, className }) => {
       }
     }
     render()
-    return () => {
-      canceled = true
-    }
+    return () => {}
   }, [code, id])
 
   return <div id={id} ref={ref} className={cn('overflow-auto', className)} />
 }
-

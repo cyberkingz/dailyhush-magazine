@@ -3,7 +3,6 @@ import {
   Users, 
   Mail, 
   TrendingUp, 
-  Eye, 
   Calendar,
   Globe,
   BarChart3,
@@ -37,6 +36,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, loading }) => {
         todayLeads: 0,
         weekLeads: 0,
         monthLeads: 0,
+        lastMonthLeads: 0,
         topSources: []
       };
     }

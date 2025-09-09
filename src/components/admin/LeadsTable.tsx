@@ -8,7 +8,6 @@ import {
   Eye,
   Check,
   X,
-  Calendar,
   Globe,
   Smartphone,
   Monitor,
@@ -32,7 +31,7 @@ interface FilterState {
 
 const ITEMS_PER_PAGE = 25;
 
-const LeadsTable: React.FC<LeadsTableProps> = ({ leads, loading, onRefresh }) => {
+const LeadsTable: React.FC<LeadsTableProps> = ({ leads, loading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<FilterState>({
     search: '',

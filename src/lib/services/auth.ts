@@ -1,5 +1,4 @@
 import { supabase } from '../supabase';
-import type { User } from '@supabase/supabase-js';
 
 export interface AuthUser {
   id: string;
@@ -47,7 +46,7 @@ export async function signOut(): Promise<void> {
 
 // Auth state change listener
 export function onAuthStateChange(callback: (user: AuthUser | null) => void) {
-  return supabase.auth.onAuthStateChange(async (event, session) => {
+  return supabase.auth.onAuthStateChange(async (_event, session) => {
     if (session?.user) {
       callback({
         id: session.user.id,
@@ -63,7 +62,7 @@ export function onAuthStateChange(callback: (user: AuthUser | null) => void) {
 // Create admin user (for initial setup)
 export async function createAdminUser(email: string, password: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const { data, error } = await supabase.auth.signUp({
+    const { data: _data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {

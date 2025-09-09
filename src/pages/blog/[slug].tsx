@@ -2478,7 +2478,7 @@ export default function BlogDetail() {
       {/* Article Header */}
       <header className="bg-white border-b border-gray-100">
         <div className="mx-auto max-w-4xl px-6 py-8">
-          <Link to="/blog" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors">
+          <Link to="/" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors">
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>

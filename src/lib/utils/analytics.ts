@@ -16,7 +16,7 @@ declare global {
 }
 
 // Track newsletter signup event
-export function trackNewsletterSignup(variant: string, email?: string) {
+export function trackNewsletterSignup(variant: string, _email?: string) {
   try {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'newsletter_signup', {

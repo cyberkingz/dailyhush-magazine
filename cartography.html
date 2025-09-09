@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DeltaQuest Media / CareerAddict — Funnel & Cartographie (Fix)</title>
+  <title>DeltaQuest Media / CareerAddict & HRAddict — Funnel & Cartographie</title>
   <style>
     :root{
       --bg:#0b1220; --panel:#121a2a; --ink:#eaf1ff; --muted:#a6b1c8;
@@ -36,7 +36,7 @@
   <!-- Mermaid (10.9.4) -->
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.4/dist/mermaid.esm.min.mjs";
-    window._mermaid = mermaid; // expose for later re-renders
+    window._mermaid = mermaid;
     mermaid.initialize({
       startOnLoad: false,
       securityLevel: "loose",
@@ -55,8 +55,8 @@
 <body>
   <header>
     <div class="wrap">
-      <h1>DeltaQuest Media / CareerAddict — Funnel & Cartographie</h1>
-      <div class="sub">Distinction claire entre <code>careeraddict.com</code> (site) et <code>dose.careeraddict.com</code> (Beehiiv hub).</div>
+      <h1>DeltaQuest Media — Funnel & Cartographie</h1>
+      <div class="sub">Deux piles parallèles : <code>careeraddict.com</code> ↔ <code>dose.careeraddict.com</code> et <code>hraddict.com</code> ↔ <code>newsletter.hraddict.com</code>.</div>
     </div>
   </header>
 
@@ -74,19 +74,29 @@
         <pre class="mermaid">
 flowchart TB
   A["Visiteur - careeraddict.com"] --> B{"Opt-in"}
-  B -->|Popup FREE Worksheet| C["Inscription THE DOSE"]
+  B -->|Popup FREE Worksheet| C["Inscription THE DOSE (Beehiiv)"]
   B -->|Hero email field| C
-  C --> D["Reco autres newsletters"]
+  C --> D["Reco autres newsletters (Beehiiv)"]
   D --> E["Thank You page"]
   E --> F["Email bienvenue + lead magnet"]
+
+  subgraph HRAddict [HRAddict (parallèle)]
+    A2["Visiteur - hraddict.com"] --> B2{"Opt-in"}
+    B2 --> C2["Inscription HRAddict (Beehiiv)"]
+    C2 --> D2["Reco autres newsletters (Beehiiv)"]
+    D2 --> E2["Thank You page"]
+    E2 --> F2["Email bienvenue + lead magnet"]
+  end
 
   classDef site fill:#0f1830,stroke:#3b4f8e,stroke-width:1.2,color:#eaf1ff;
   classDef news fill:#2b1f47,stroke:#7a63c7,stroke-width:1.2,color:#f3eefe;
 
   class A,E site
   class C,D,F news
+  class A2,E2 site
+  class C2,D2,F2 news
         </pre>
-        <div class="hint">Flux public observé: site -> opt-in -> reco -> TY -> welcome (+ lead magnet).</div>
+        <div class="hint">Flux observés: (1) CareerAddict → The Dose (Beehiiv). (2) HRAddict → HRAddict Newsletter (Beehiiv).</div>
       </div>
     </section>
 
@@ -98,31 +108,35 @@ flowchart TB
 flowchart LR
   RP["Robert Pilyugin (founder)"]:::core --> DQ["DeltaQuest Media"]:::core
 
-  %% Deux domaines distincts
-  DQ --> CA["careeraddict.com\n(Site principal: SEO, Store, Services)"]:::site
-  DQ --> DOSESITE["dose.careeraddict.com\n(Beehiiv hub: Posts, Newsletters, Archives)"]:::site
+  %% Pile CareerAddict
+  DQ --> CA["careeraddict.com<br/>(Site principal: SEO, Store, Services)"]:::site
+  DQ --> DOSEHUB["dose.careeraddict.com<br/>(Beehiiv hub: Posts, Newsletters, Archives)"]:::site
+  DOSEHUB --> DOSE["THE DOSE (newsletter)"]:::news
+  CA <-->|opt-in / CTAs| DOSEHUB
 
-  %% Newsletter
-  DOSESITE --> DOSE["THE DOSE (newsletter)"]:::news
-  HR["HRAddict.com"]:::site --> HRN["HRAddict newsletter"]:::news
+  %% Pile HRAddict
+  DQ --> HRSITE["hraddict.com<br/>(Site: contenus RH)"]:::site
+  DQ --> HRHUB["newsletter.hraddict.com<br/>(Beehiiv hub: Archives & opt-in)"]:::site
+  HRHUB --> HRN["HRAddict newsletter"]:::news
+  HRSITE <-->|opt-in / CTAs| HRHUB
+
+  %% Autres actifs
   DQ --> CH["CareerHunter.io"]:::site
   DQ --> CX["Customer Experience Show"]:::site
 
-  %% Produits & services (sur le site principal)
+  %% Produits & services
   CA --> DLD["Digital downloads (ebooks, planners, bundles)"]:::prod
   CA --> CVS["CV / resume services"]:::prod
-  CH --> TST["Psychometric tests"]:::prod
+  CH --> TST["Psychometric tests (6 tests, full access, schools)"]:::prod
 
   %% Monétisation
-  DOSE --> SPN["Sponsoring / placements"]:::rev
-  DOSE --> AFF["Affiliation / paid recommendations"]:::rev
+  DOSE --> SPN["Sponsoring / placements (newsletter)"]:::rev
+  DOSE --> AFF["Affiliation / paid recommendations (CPL)"]:::rev
+  HRN  --> SPN2["Sponsoring / placements (newsletter)"]:::rev
   CA --> ADS["Display / programmatic ads"]:::rev
   CVS --> R1["Services revenue"]:::rev
   DLD --> R2["One-off sales"]:::rev
-  TST --> R3["Paid tests / licences"]:::rev
-
-  %% Aller/retour de trafic
-  CA <-->|opt-in / CTAs| DOSESITE
+  TST --> R3["Paid tests / licences (B2C/B2B/Schools)"]:::rev
 
   %% Réseaux
   CA -.-> IG["Instagram"]:::soc
@@ -139,13 +153,16 @@ flowchart LR
 
   %% Liens externes (clics)
   click CA "https://www.careeraddict.com/" _blank
-  click DOSESITE "https://dose.careeraddict.com/" _blank
+  click DOSEHUB "https://dose.careeraddict.com/" _blank
+  click HRSITE "https://www.hraddict.com/" _blank
+  click HRHUB "https://newsletter.hraddict.com/" _blank
+  click CH "https://www.careerhunter.io/" _blank
   click IG "https://www.instagram.com/careeraddict/" _blank
   click YT "https://www.youtube.com/careeraddict-video" _blank
   click LI "https://www.linkedin.com/company/career-addict/" _blank
   click TW "https://x.com/careeraddict" _blank
         </pre>
-        <div class="small">NOTE : <code>dose.careeraddict.com</code> est la publication Beehiiv (posts/newsletters/archives) et sert d’hub d’audience. <code>careeraddict.com</code> concentre SEO, store et services.</div>
+        <div class="small">Deux « hubs » Beehiiv distincts (The Dose & HRAddict) nourrissent l’audience et renvoient vers les offres du site principal.</div>
       </div>
     </section>
 
@@ -168,9 +185,8 @@ flowchart LR
                   <li>Articles SEO (Career Advice, pages piliers).</li>
                   <li>Store : bundles, planners, résumé templates.</li>
                   <li>Services : CV / resume help.</li>
-                  <li>Capture e-mail : pop-up “FREE Worksheet”, opt-in hero.</li>
-                  <li>Trafic sortant vers la newsletter : renvoi vers <code>dose.careeraddict.com</code> pour l’inscription et les archives.</li>
-                  <li>Monétisation côté site : ventes digitales, services, affichage publicitaire.</li>
+                  <li>Capture e-mail (pop-up + hero) → renvoi vers <code>dose.careeraddict.com</code>.</li>
+                  <li>Monétisation : ventes digitales, services, display ads.</li>
                 </ul>
               </td>
             </tr>
@@ -178,29 +194,58 @@ flowchart LR
               <td><strong>dose.careeraddict.com</strong><br><span class="small">Beehiiv hub</span></td>
               <td>
                 <ul style="margin:0 0 0 18px">
-                  <li>Publication Beehiiv : Posts, Newsletters, Archives publiques.</li>
-                  <li>Opt-in natif (Sign up / Login), <em>gating</em> de certains “goodies”.</li>
-                  <li>Monétisation : recommandations payées (CPL) et placements sponsorisés dans les éditions.</li>
-                  <li>Nurturing : éditions régulières (“The Dose”) → CTAs vers le store / services sur <code>careeraddict.com</code>.</li>
+                  <li>Posts & archives « The Dose » (Beehiiv).</li>
+                  <li>Reco payées (CPL) & sponsors newsletter.</li>
+                  <li>CTAs vers store/services sur <code>careeraddict.com</code>.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>hraddict.com</strong><br><span class="small">Site RH</span></td>
+              <td>
+                <ul style="margin:0 0 0 18px">
+                  <li>Contenus & ressources RH (SEO, evergreen).</li>
+                  <li>Opt-in & renvoi vers <code>newsletter.hraddict.com</code>.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>newsletter.hraddict.com</strong><br><span class="small">Beehiiv hub</span></td>
+              <td>
+                <ul style="margin:0 0 0 18px">
+                  <li>Archives & opt-in de la HRAddict newsletter.</li>
+                  <li>Reco payées & sponsoring B2B RH.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>careerhunter.io</strong><br><span class="small">Produit SaaS/tests</span></td>
+              <td>
+                <ul style="margin:0 0 0 18px">
+                  <li>6 tests psychométriques • Full Access • offres Écoles/Teams.</li>
+                  <li>Monétisation : ventes directes, licences B2B/éducation.</li>
                 </ul>
               </td>
             </tr>
           </tbody>
         </table>
 
-        <h3 style="margin:18px 0 8px">Flux entre les deux domaines</h3>
+        <h3 style="margin:18px 0 8px">Flux entre les domaines (x2)</h3>
         <pre class="mermaid">
 flowchart LR
-  CA["careeraddict.com\n(pop-up, hero opt-in, store)"]:::site -->|subscribe| DS["dose.careeraddict.com\n(Beehiiv hub)"]:::site
-  DS -->|editions / archives → CTAs| CA
-  DS -->|paid recos / sponsors| CA
+  CA["careeraddict.com"]:::site -->|subscribe| DOSEHUB["dose.careeraddict.com<br/>(Beehiiv)"]:::site
+  DOSEHUB -->|editions / CTAs| CA
+  HRSITE["hraddict.com"]:::site -->|subscribe| HRHUB["newsletter.hraddict.com<br/>(Beehiiv)"]:::site
+  HRHUB -->|editions / CTAs| HRSITE
 
   classDef site fill:#1b3058,stroke:#89c8ff,stroke-width:1.2,color:#eaf1ff;
 
   click CA "https://www.careeraddict.com/" _blank
-  click DS "https://dose.careeraddict.com/" _blank
+  click DOSEHUB "https://dose.careeraddict.com/" _blank
+  click HRSITE "https://www.hraddict.com/" _blank
+  click HRHUB "https://newsletter.hraddict.com/" _blank
         </pre>
-        <div class="hint">En bref : le site capte & vend, le hub Beehiiv nourrit & monétise l’audience via recos/sponsors et renvoie vers le store.</div>
+        <div class="hint">Chaque marque a son hub Beehiiv dédié pour l’opt-in, les archives et la monétisation newsletter.</div>
       </div>
     </section>
   </main>
@@ -225,16 +270,13 @@ flowchart LR
       btn.addEventListener('click', async ()=>{
         tabs.forEach(x=>x.setAttribute('aria-selected','false'));
         panels.forEach(p=>p.classList.remove('active'));
-
         btn.setAttribute('aria-selected','true');
         const panel = document.getElementById(btn.dataset.tab);
         panel.classList.add('active');
-
         await renderMermaidIn(panel);
       });
     });
 
-    // Render initially visible panel
     renderMermaidIn(document.querySelector('.panel.active'));
   </script>
 </body>

@@ -1,5 +1,11 @@
 ---
 name: supabase-expert
+description: use this agent for supabase related tasks
+model: sonnet
+---
+
+---
+name: supabase-expert
 description: Expert in Supabase backend-as-a-service platform for the Clarity Facebook Ads Analytics platform, specializing in user data, campaign analytics storage, real-time decision tracking, and Facebook Ads data persistence. Uses Supabase MCP for direct database operations.
 ---
 

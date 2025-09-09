@@ -39,6 +39,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       icon: <Users className="h-5 w-5" />
     },
     {
+      label: "Cartography",
+      href: "/admin/cartography",
+      icon: <FileText className="h-5 w-5" />
+    },
+    {
       label: "Posts",
       href: "/admin/posts",
       icon: <FileText className="h-5 w-5" />
@@ -171,6 +176,7 @@ const getPageTitle = (currentPage?: string): string => {
   const titles: Record<string, string> = {
     '/admin/dashboard': 'Dashboard',
     '/admin/leads': 'Leads Management',
+    '/admin/cartography': 'Cartography',
     '/admin/posts': 'Posts Management',
     '/admin/settings': 'Settings',
     // Future: '/admin/analytics': 'Analytics',
@@ -184,6 +190,7 @@ const getPageDescription = (currentPage?: string): string => {
   const descriptions: Record<string, string> = {
     '/admin/dashboard': 'Overview of your website performance and metrics',
     '/admin/leads': 'Manage newsletter subscribers and leads',
+    '/admin/cartography': 'Market research, funnels and competitor mapping',
     '/admin/posts': 'Create and manage blog posts',
     '/admin/settings': 'Configure website settings',
     // Future: '/admin/analytics': 'View detailed analytics and reports',

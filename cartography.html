@@ -56,7 +56,7 @@
   <header>
     <div class="wrap">
       <h1>DeltaQuest Media — Funnel & Cartographie</h1>
-      <div class="sub">Deux piles parallèles : <code>careeraddict.com</code> ↔ <code>dose.careeraddict.com</code> et <code>hraddict.com</code> ↔ <code>newsletter.hraddict.com</code>.</div>
+      <div class="sub">Deux piles paralleles : <code>careeraddict.com</code> ↔ <code>dose.careeraddict.com</code> et <code>hraddict.com</code> ↔ <code>newsletter.hraddict.com</code>.</div>
     </div>
   </header>
 
@@ -78,17 +78,17 @@ flowchart TB
   B -->|Hero email field| C
   C --> D["Reco autres newsletters (Beehiiv)"]
   D --> E["Thank You page"]
-  E --> F["Email bienvenue + lead magnet (J0 - immédiat)"]
-  F --> G["Email sponsorisé + weekly goody (J0 + quelques heures)"]
-  G --> H["Nurturing hebdo : éditions, sponsors, recos, CTAs → store/tests"]
+  E --> F["Email bienvenue + lead magnet (J0 - immediat)"]
+  F --> G["Email sponsorise + weekly goody (J0 + heures)"]
+  G --> H["Nurturing hebdo : editions, sponsors, recos, CTAs -> store/tests"]
 
-  subgraph HRAddict [HRAddict (parallèle)]
+  subgraph HRAddict_Parallele ["HRAddict (parallele)"]
     A2["Visiteur - hraddict.com"] --> B2{"Opt-in"}
     B2 --> C2["Inscription HRAddict (Beehiiv)"]
     C2 --> D2["Reco autres newsletters (Beehiiv)"]
     D2 --> E2["Thank You page"]
     E2 --> F2["Email bienvenue + lead magnet (J0)"]
-    F2 --> G2["Email sponsorisé/édition (J0 + heures)"]
+    F2 --> G2["Email sponsorise/edition (J0 + heures)"]
     G2 --> H2["Nurturing B2B RH (hebdo)"]
   end
 
@@ -100,7 +100,7 @@ flowchart TB
   class A2,E2 site
   class C2,D2,F2,G2,H2 news
         </pre>
-        <div class="hint">Cadence observée : Welcome instant + 2e email sponsorisé le même jour, puis nurturing hebdo (goodies, sponsors, recos).</div>
+        <div class="hint">Cadence observee : Welcome instant + 2e email sponsorise le meme jour, puis nurturing hebdo (goodies, sponsors, recos).</div>
       </div>
     </section>
 
@@ -133,17 +133,16 @@ flowchart LR
   CA --> CVS["CV / resume services"]:::prod
   CH --> TST["Psychometric tests (6 tests, full access, schools)"]:::prod
 
-  %% Monétisation
+  %% Monetisation
   DOSE --> SPN["Sponsoring / placements (newsletter)"]:::rev
   DOSE --> AFF["Affiliation / paid recommendations (CPL)"]:::rev
-  DOSE --> BST["Boosts (Beehiiv, hors Spark)"]:::rev
   HRN  --> SPN2["Sponsoring / placements (newsletter)"]:::rev
   CA --> ADS["Display / programmatic ads"]:::rev
   CVS --> R1["Services revenue"]:::rev
   DLD --> R2["One-off sales"]:::rev
   TST --> R3["Paid tests / licences (B2C/B2B/Schools)"]:::rev
 
-  %% Réseaux
+  %% Reseaux
   CA -.-> IG["Instagram"]:::soc
   CA -.-> YT["YouTube"]:::soc
   CA -.-> LI["LinkedIn"]:::soc
@@ -156,7 +155,7 @@ flowchart LR
   classDef rev  fill:#3f320e,stroke:#e3c76a,stroke-width:1.2,color:#fff1b3;
   classDef soc  fill:#5a2a1f,stroke:#ffa98b,stroke-width:1.1,color:#ffe6de;
 
-  %% Liens externes (clics)
+  %% Liens externes
   click CA "https://www.careeraddict.com/" _blank
   click DOSEHUB "https://dose.careeraddict.com/" _blank
   click HRSITE "https://www.hraddict.com/" _blank
@@ -167,19 +166,19 @@ flowchart LR
   click LI "https://www.linkedin.com/company/career-addict/" _blank
   click TW "https://x.com/careeraddict" _blank
         </pre>
-        <div class="small">Deux « hubs » Beehiiv (The Dose & HRAddict) nourrissent l’audience et renvoient vers les offres du site principal. Boosts = dispo sans Spark (plan Scale), Spark = sélectif.</div>
+        <div class="small">Deux hubs Beehiiv distincts (The Dose & HRAddict) nourrissent l’audience et renvoient vers les offres du site principal.</div>
       </div>
     </section>
 
-    <!-- SITES (comparatif clair) -->
+    <!-- SITES -->
     <section id="sites" class="panel">
       <div class="card">
-        <h2 style="margin:.2rem 0 10px">Sites — rôles & responsabilités</h2>
+        <h2 style="margin:.2rem 0 10px">Sites — roles & responsabilites</h2>
         <table>
           <thead>
             <tr>
               <th style="width:40%">Domaine</th>
-              <th style="width:60%">Rôle & responsabilités</th>
+              <th style="width:60%">Role & responsabilites</th>
             </tr>
           </thead>
           <tbody>
@@ -188,10 +187,10 @@ flowchart LR
               <td>
                 <ul style="margin:0 0 0 18px">
                   <li>Articles SEO (Career Advice, pages piliers).</li>
-                  <li>Store : bundles, planners, résumé templates.</li>
+                  <li>Store : bundles, planners, resume templates.</li>
                   <li>Services : CV / resume help.</li>
-                  <li>Capture e-mail (pop-up + hero) → renvoi vers <code>dose.careeraddict.com</code>.</li>
-                  <li>Monétisation : ventes digitales, services, display ads.</li>
+                  <li>Capture email (pop-up + hero) → renvoi vers <code>dose.careeraddict.com</code>.</li>
+                  <li>Monetisation : ventes digitales, services, display ads.</li>
                 </ul>
               </td>
             </tr>
@@ -200,9 +199,7 @@ flowchart LR
               <td>
                 <ul style="margin:0 0 0 18px">
                   <li>Posts & archives « The Dose » (Beehiiv).</li>
-                  <li>Reco payées (CPL) & sponsors newsletter.</li>
-                  <li><u>Boosts</u> (Beehiiv, accessible sans Spark — plan Scale requis).</li>
-                  <li><u>Spark</u> (programme sélectif, bonus possible si éligible).</li>
+                  <li>Reco payees (CPL) & sponsors newsletter.</li>
                   <li>CTAs vers store/services sur <code>careeraddict.com</code>.</li>
                 </ul>
               </td>
@@ -221,7 +218,7 @@ flowchart LR
               <td>
                 <ul style="margin:0 0 0 18px">
                   <li>Archives & opt-in de la HRAddict newsletter.</li>
-                  <li>Reco payées & sponsoring B2B RH.</li>
+                  <li>Reco payees & sponsoring B2B RH.</li>
                 </ul>
               </td>
             </tr>
@@ -229,8 +226,8 @@ flowchart LR
               <td><strong>careerhunter.io</strong><br><span class="small">Produit SaaS/tests</span></td>
               <td>
                 <ul style="margin:0 0 0 18px">
-                  <li>6 tests psychométriques • Full Access • offres Écoles/Teams.</li>
-                  <li>Monétisation : ventes directes, licences B2B/éducation.</li>
+                  <li>6 tests psychometriques • Full Access • offres Ecoles/Teams.</li>
+                  <li>Monetisation : ventes directes, licences B2B/education.</li>
                 </ul>
               </td>
             </tr>
@@ -241,9 +238,9 @@ flowchart LR
         <pre class="mermaid">
 flowchart LR
   CA["careeraddict.com"]:::site -->|subscribe| DOSEHUB["dose.careeraddict.com<br/>(Beehiiv)"]:::site
-  DOSEHUB -->|editions / CTAs / sponsors / boosts| CA
+  DOSEHUB -->|editions / CTAs| CA
   HRSITE["hraddict.com"]:::site -->|subscribe| HRHUB["newsletter.hraddict.com<br/>(Beehiiv)"]:::site
-  HRHUB -->|editions / CTAs / sponsors| HRSITE
+  HRHUB -->|editions / CTAs| HRSITE
 
   classDef site fill:#1b3058,stroke:#89c8ff,stroke-width:1.2,color:#eaf1ff;
 
@@ -252,7 +249,7 @@ flowchart LR
   click HRSITE "https://www.hraddict.com/" _blank
   click HRHUB "https://newsletter.hraddict.com/" _blank
         </pre>
-        <div class="hint">Boosts ≠ Spark : Boosts sont intégrés à Beehiiv (plan Scale), Spark est un réseau sélectif supplémentaire.</div>
+        <div class="hint">Chaque marque a son hub Beehiiv dedie pour l’opt-in, les archives et la monetisation newsletter.</div>
       </div>
     </section>
   </main>

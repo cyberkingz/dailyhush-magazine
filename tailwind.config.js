@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
@@ -7,6 +9,22 @@ export default {
   ],
   theme: {
     extend: {
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.gray.700'),
+            a: { color: theme('colors.yellow.600'), textDecoration: 'none', '&:hover': { textDecoration: 'underline' } },
+            h1: { color: theme('colors.gray.900'), fontWeight: '700' },
+            h2: { color: theme('colors.gray.900'), fontWeight: '700' },
+            h3: { color: theme('colors.gray.900'), fontWeight: '700' },
+            blockquote: { borderLeftColor: theme('colors.yellow.400') },
+            code: { backgroundColor: theme('colors.gray.100'), padding: '0.2rem 0.4rem', borderRadius: '0.375rem' },
+            'ul > li::marker': { color: theme('colors.gray.400') },
+            'ol > li::marker': { color: theme('colors.gray.400') },
+            img: { borderRadius: '0.75rem' },
+          },
+        },
+      }),
       // Design System Foundation
       colors: {
         // Brand Colors
@@ -147,6 +165,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 }
-

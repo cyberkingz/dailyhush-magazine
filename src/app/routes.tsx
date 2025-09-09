@@ -23,6 +23,7 @@ const AdminPostEdit = lazy(() => import('@/pages/admin/posts-[id]'))
 const AdminCategories = lazy(() => import('@/pages/admin/categories'))
 const AdminAuthors = lazy(() => import('@/pages/admin/authors'))
 const AdminSettings = lazy(() => import('@/pages/admin/settings'))
+const AdminCartography = lazy(() => import('@/pages/admin/cartography'))
 
 export function AppRoutes() {
   return (
@@ -49,6 +50,7 @@ export function AppRoutes() {
         <Route path="/admin/categories" element={<AdminCategories />} />
         <Route path="/admin/authors" element={<AdminAuthors />} />
         <Route path="/admin/settings" element={<AdminSettings />} />
+        <Route path="/admin/cartography" element={<AdminCartography />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
+import { BrandLoader } from '@/components/ui/BrandLoader'
 
 const Home = lazy(() => import('@/pages/index'))
 const BlogList = lazy(() => import('@/pages/blog/index'))
@@ -24,7 +25,7 @@ const AdminSettings = lazy(() => import('@/pages/admin/settings'))
 
 export function AppRoutes() {
   return (
-    <Suspense fallback={<div className="container-prose py-8">Loading…</div>}>
+    <Suspense fallback={<BrandLoader /> }>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/blog" element={<Layout><BlogList /></Layout>} />

@@ -7,7 +7,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="font-bold text-xl text-gray-900 mb-3">DailyHush</h3>
+            <Link to="/" className="inline-flex items-center mb-3" aria-label="DailyHush Home">
+              <img src="/inline-logo.png" alt="DailyHush" className="h-7 w-auto" />
+            </Link>
             <p className="text-gray-600 text-sm mb-4">Your daily dose of thoughtful content and insights.</p>
             <div className="text-xs text-gray-500 space-y-1">
               <p>Red Impact LLC DBA DailyHush</p>
@@ -54,4 +56,3 @@ export function Footer() {
     </footer>
   )
 }
-

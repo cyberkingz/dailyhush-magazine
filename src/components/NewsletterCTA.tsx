@@ -79,7 +79,7 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
         <p className="text-base md:text-lg text-gray-600 mt-2 md:mt-3">
           {isArticle 
             ? 'Get more insights delivered to your inbox weekly.'
-            : 'Subscribe to our newsletter for weekly insights.'}
+            : 'Subscribe to our newsletter for weekly insights on beauty, wellness, and tech.'}
         </p>
         
         <form onSubmit={handleSubmit} className="mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
@@ -118,9 +118,13 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
           </div>
         )}
         
-        <p className="text-sm text-gray-500 mt-4">
-          Join 10,000+ readers. No spam, unsubscribe anytime.
-        </p>
+        <div className="text-sm text-gray-500 mt-4 space-y-1">
+          <p>Join 10,000+ readers. No spam. Unsubscribe anytime.</p>
+          <p>By subscribing, you agree to receive our newsletter. You can unsubscribe at any time.</p>
+          <p>
+            <a href="/privacy" className="underline underline-offset-2 hover:text-gray-700">See our Privacy Policy</a>
+          </p>
+        </div>
       </div>
     </div>
   )

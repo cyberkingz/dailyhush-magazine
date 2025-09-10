@@ -143,16 +143,15 @@ const Logo = () => {
     <Link
       to="/admin/dashboard"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+      aria-label="DailyHush Admin"
     >
-      <div className="h-6 w-6 bg-yellow-400 rounded-lg flex-shrink-0 flex items-center justify-center">
-        <span className="font-bold text-black text-xs">DH</span>
-      </div>
+      <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0" />
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="font-bold text-black whitespace-pre"
       >
-        DailyHush Admin
+        Admin
       </motion.span>
     </Link>
   );
@@ -162,11 +161,10 @@ const LogoIcon = () => {
   return (
     <Link
       to="/admin/dashboard"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+      className="font-normal flex items-center text-sm text-black py-1 relative z-20"
+      aria-label="DailyHush Admin"
     >
-      <div className="h-6 w-6 bg-yellow-400 rounded-lg flex-shrink-0 flex items-center justify-center">
-        <span className="font-bold text-black text-xs">DH</span>
-      </div>
+      <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0" />
     </Link>
   );
 };

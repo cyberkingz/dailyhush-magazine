@@ -7,7 +7,7 @@ interface BrandLoaderProps {
 }
 
 export function BrandLoader({
-  message = 'Loading DailyHush…',
+  message = 'Loading…',
   fullScreen = true,
   className,
 }: BrandLoaderProps) {
@@ -28,7 +28,7 @@ export function BrandLoader({
           {/* Animated accent ring */}
           <div className="absolute inset-0 rounded-full border-4 border-yellow-400 border-t-transparent animate-spin" />
         </div>
-        <div className="text-gray-900 font-semibold tracking-tight">DailyHush</div>
+        <img src="/inline-logo.png" alt="DailyHush" className="h-5 w-auto" />
         <div className="text-gray-500 text-sm" aria-hidden>
           {message}
         </div>
@@ -36,4 +36,3 @@ export function BrandLoader({
     </div>
   )
 }
-

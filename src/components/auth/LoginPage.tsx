@@ -115,7 +115,7 @@ const LoginPage: React.FC<AuthPageProps> = ({
           <div className="mx-auto w-full max-w-sm lg:w-96">
             {/* Brand Header */}
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 mb-3">DailyHush</h1>
+              <img src="/inline-logo.png" alt="DailyHush" className="h-8 mx-auto mb-3" />
               <div className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-8"></div>
               <h2 className="text-2xl font-semibold text-gray-800 mb-2">Admin Access</h2>
               <p className="text-gray-600 mb-8">Sign in to manage your content and settings</p>

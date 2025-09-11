@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { PostCard } from '@/components/blog/PostCard'
 import { NewsletterCTA } from '@/components/NewsletterCTA'
+import { Users } from 'lucide-react'
+import NewsletterInlineForm from '@/components/NewsletterInlineForm'
 
 const categories = ['All', 'Wellness','Beauty','Tech'] as const
 
@@ -130,19 +133,44 @@ export default function Home() {
     ? demoPosts 
     : demoPosts.filter(post => post.category === selectedCategory)
 
+  // Home page does not feature a specific edition anymore
+
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-yellow-50 to-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Your daily dose of curated insights
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Thoughtfully selected content about wellness, beauty, and technology to keep you informed and inspired.
-          </p>
+      <section className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm font-semibold text-amber-600 mb-6">
+              <Users className="w-4 h-4" />
+              <span>Trusted by 50,000+ Beauty Insiders</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Evidence-based beauty<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">
+                without the hype
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Get weekly insights on beauty, wellness, and lifestyle trends. Our expert team tests products, 
+              analyzes ingredients, and cuts through marketing fluff to bring you what actually works.
+            </p>
+            
+            <div className="max-w-xl mx-auto">
+              <NewsletterInlineForm sourcePage="home-hero" />
+            </div>
+            
+            <div className="text-sm text-gray-500 mt-4 space-y-1 max-w-xl mx-auto text-center">
+              <p>By subscribing, you agree to receive our newsletter. You can unsubscribe at any time.</p>
+              <p><Link to="/privacy" className="underline underline-offset-2 hover:text-gray-700">See our Privacy Policy</Link></p>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Featured Newsletter Section removed */}
 
       {/* Main Content */}
       <section className="mx-auto max-w-7xl px-6 py-12">

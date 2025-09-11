@@ -102,8 +102,8 @@ const AdminSettings: React.FC = () => {
             {/* Database Settings */}
             <div className="bg-white rounded-lg border border-neutral-200 p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Database className="h-5 w-5 text-purple-600" />
+                <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                  <Database className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Database</h3>

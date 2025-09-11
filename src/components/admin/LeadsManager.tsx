@@ -86,7 +86,7 @@ function LeadsManager() {
         
         <div className="bg-white p-6 rounded-lg border">
           <h3 className="text-lg font-semibold text-gray-900">Conversion Rate</h3>
-          <p className="text-3xl font-bold text-purple-600 mt-2">{conversionRate}%</p>
+          <p className="text-3xl font-bold text-amber-600 mt-2">{conversionRate}%</p>
           <p className="text-sm text-gray-500 mt-1">Confirmation rate</p>
         </div>
       </div>

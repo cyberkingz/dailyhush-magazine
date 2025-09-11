@@ -95,7 +95,7 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
           <button 
             type="submit" 
             disabled={isSubmitting || !email.trim()}
-            className="bg-yellow-400 text-black font-semibold px-6 sm:px-8 py-3 rounded-full hover:bg-yellow-300 transition-colors w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="bg-yellow-400 text-black font-semibold px-6 sm:px-8 py-3 rounded-full hover:bg-yellow-300 hover:text-black focus:text-black transition-colors w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <>
@@ -119,7 +119,6 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
         )}
         
         <div className="text-sm text-gray-500 mt-4 space-y-1">
-          <p>Join 10,000+ readers. No spam. Unsubscribe anytime.</p>
           <p>By subscribing, you agree to receive our newsletter. You can unsubscribe at any time.</p>
           <p>
             <a href="/privacy" className="underline underline-offset-2 hover:text-gray-700">See our Privacy Policy</a>

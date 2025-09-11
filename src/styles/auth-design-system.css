@@ -5,10 +5,10 @@
    ========================================================================== */
 
 :root {
-  /* Color Tokens */
-  --auth-primary: #0284c7;
-  --auth-primary-hover: #0369a1;
-  --auth-primary-light: #f0f9ff;
+  /* Color Tokens - Aligned with Newsletter CTA Yellow/Black Brand */
+  --auth-primary: #000000;
+  --auth-primary-hover: #1f2937;
+  --auth-primary-light: #fef9c3;
   --auth-secondary: #475569;
   --auth-secondary-hover: #334155;
   

@@ -1,15 +1,41 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
 import { newsletterEditions } from '@/content/newsletters'
-import { Mail, Users, Award, TrendingUp, Clock, Eye, Share2, ArrowRight, Calendar } from 'lucide-react'
+import { Mail, Users, Award, TrendingUp, Eye, Share2, ArrowRight, Calendar } from 'lucide-react'
 import NewsletterInlineForm from '@/components/NewsletterInlineForm'
-import { NewsletterCTA } from '@/components/NewsletterCTA'
 
 export default function NewslettersArchive() {
   const editions = [...newsletterEditions].sort((a, b) => (a.date < b.date ? 1 : -1))
-  const latest = editions.slice(0, 3)
+  const [params, setParams] = useSearchParams()
+  const pageSize = 6
+  const rawPage = parseInt(params.get('page') ?? '1', 10)
+  const currentPage = Number.isNaN(rawPage) || rawPage < 1 ? 1 : rawPage
+  const totalPages = Math.max(1, Math.ceil(editions.length / pageSize))
+  const safePage = Math.min(currentPage, totalPages)
+  const start = (safePage - 1) * pageSize
+  const pageItems = editions.slice(start, start + pageSize)
+
+  const goTo = (p: number) => {
+    const n = Math.min(Math.max(1, p), totalPages)
+    if (n === 1) setParams({})
+    else setParams({ page: String(n) })
+  }
+
+  // Restricted pages UX (pages beyond public archive)
+  const [showRestricted, setShowRestricted] = useState(false)
+  const [requestedPage, setRequestedPage] = useState<number | null>(null)
+  const maxPagesShown = Math.max(totalPages, 5)
+  const handlePageClick = (p: number) => {
+    if (p <= totalPages) {
+      goTo(p)
+    } else {
+      setRequestedPage(p)
+      setShowRestricted(true)
+    }
+  }
 
   return (
-    <main className="py-10 min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <main className="pt-0 pb-10 min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 py-20 px-6 mb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(250,204,21,0.1)_50%,transparent_75%)] animate-pulse"></div>
@@ -44,10 +70,7 @@ export default function NewslettersArchive() {
               <span className="font-semibold text-gray-900">92% Open Rate</span>
             </div>
           </div>
-          
-          <div className="mt-8 max-w-xl mx-auto">
-            <NewsletterInlineForm sourcePage="newsletter-archive" />
-          </div>
+          {/* Intentionally no hero opt-in here; archive CTA appears after the list */}
         </div>
       </div>
 
@@ -56,10 +79,8 @@ export default function NewslettersArchive() {
       <section className="max-w-7xl mx-auto px-6 mb-20">
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Latest 3 Editions
-            </h2>
-            <p className="text-lg text-gray-600">Our three most recent newsletters</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Archive</h2>
+            <p className="text-lg text-gray-600">Browse all past editions</p>
           </div>
           <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
             <Calendar className="w-4 h-4" />
@@ -68,7 +89,7 @@ export default function NewslettersArchive() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {latest.map((n) => (
+          {pageItems.map((n) => (
             <article 
               key={n.slug} 
               className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
@@ -80,6 +101,7 @@ export default function NewslettersArchive() {
                     <img 
                       src={n.heroImage} 
                       alt={n.title}
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
@@ -135,23 +157,70 @@ export default function NewslettersArchive() {
             </article>
           ))}
         </div>
-        
-        {/* Load More Button (for future use) */}
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">
-            That's all for now! New editions every Monday.
-          </p>
-        </div>
+
+        {/* Pagination */}
+        {(
+          <nav className="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+            <button
+              onClick={() => handlePageClick(safePage - 1)}
+              disabled={safePage === 1}
+              className="px-3 py-2 rounded border text-sm disabled:opacity-50"
+            >
+              Previous
+            </button>
+            {Array.from({ length: maxPagesShown }, (_, i) => i + 1).map((p) => {
+              const isActive = p === safePage
+              const isRestricted = p > totalPages
+              return (
+                <button
+                  key={p}
+                  onClick={() => handlePageClick(p)}
+                  aria-disabled={isRestricted}
+                  className={`px-3 py-2 rounded border text-sm ${isActive ? 'bg-black text-white border-black' : ''} ${isRestricted ? 'opacity-70' : ''}`}
+                  title={isRestricted ? 'Admins only' : undefined}
+                >
+                  {p}
+                </button>
+              )
+            })}
+            <button
+              onClick={() => handlePageClick(safePage + 1)}
+              className="px-3 py-2 rounded border text-sm"
+            >
+              Next
+            </button>
+          </nav>
+        )}
       </section>
       
-      {/* CTA Section */}
-      <section className="max-w-4xl mx-auto px-6 mb-20">
-        <NewsletterCTA centered />
-        <p className="text-sm text-gray-600 mt-4 flex items-center justify-center gap-2">
-          <Clock className="w-4 h-4" />
-          <span>Delivered every Monday at 7am EST</span>
+      {/* Secondary CTA (smaller than homepage) */}
+      <section className="max-w-3xl mx-auto px-6 mb-20">
+        <h3 className="text-center text-lg font-semibold text-gray-900 mb-2">
+          Enjoyed these editions? Don’t miss the next one.
+        </h3>
+        <p className="text-center text-gray-600 mb-4">Subscribe below to get our weekly brief.</p>
+        <div className="max-w-xl mx-auto">
+          <NewsletterInlineForm sourcePage="archives-cta" />
+        </div>
+        <p className="text-xs text-gray-500 mt-3 text-center">
+          By subscribing, you agree to receive our newsletter. You can unsubscribe at any time. <Link to="/privacy" className="underline">Privacy Policy</Link>
         </p>
       </section>
+
+      {/* Restricted modal */}
+      {showRestricted && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
+            <h4 className="text-xl font-bold text-gray-900 mb-2">Admins Only</h4>
+            <p className="text-gray-700 mb-4">
+              Pages beyond our public archive are for internal use. Please sign in as an admin to access page {requestedPage}.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setShowRestricted(false)} className="px-4 py-2 rounded border">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

@@ -130,6 +130,147 @@ export const newsletterEditions: NewsletterEdition[] = [
     `,
   },
   {
+    slug: 'jul-01-2025',
+    title: 'Heatwave Skin Protocol: Barrier First, Glow Second',
+    date: '2025-07-01',
+    displayDate: 'July 1, 2025',
+    summary:
+      'A 4-step routine for heat waves: cleanse light, hydrate smarter, SPF reapply hacks, and sweat-safe makeup tips.',
+    heroImage:
+      'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <p>Keep it light: gel cleanser, humectant serum + occlusive points, SPF 30+ stick for reapplication, and skin tints over foundations.</p>
+    `,
+  },
+  {
+    slug: 'jun-24-2025',
+    title: 'Kitchen to Vanity: Science‑Backed DIYs That Are Actually Safe',
+    date: '2025-06-24',
+    displayDate: 'June 24, 2025',
+    summary:
+      'Three dermatologist‑approved at‑home tricks that won’t wreck your barrier (and two myths to avoid).',
+    heroImage:
+      'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <ul>
+        <li>Oat mask for irritation (colloidal oatmeal + water)</li>
+        <li>Green tea compress for redness</li>
+        <li>Honey dab for spots — not for all-day wear</li>
+      </ul>
+      <p>Avoid lemon and baking soda on skin — pH disaster.</p>
+    `,
+  },
+  {
+    slug: 'aug-19-2025',
+    title: 'Summer SPF Truths: What Actually Matters (And What Doesn\'t)',
+    date: '2025-08-19',
+    displayDate: 'August 19, 2025',
+    summary:
+      'Mineral vs chemical, PA ratings, reapplication cadence, and the two mistakes ruining otherwise perfect routines.',
+    heroImage:
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <h2>SPF That Works In Real Life</h2>
+      <p>Choose by UV filters and texture, not marketing. Aim for SPF 30+ with high UVA protection (look for PA++++ or "broad spectrum"). Reapply if outdoors >2 hours or after sweat/swim.</p>
+      <ul>
+        <li>Mineral: great for sensitivity; watch white cast.</li>
+        <li>Chemical: elegant textures, better for deeper tones.</li>
+        <li>Hybrid: best of both, often most wearable.</li>
+      </ul>
+      <p>Two killers of otherwise perfect routines: under‑application (<strong>use 2–3 fingers</strong>) and skipping reapplication.</p>
+    `,
+  },
+  {
+    slug: 'aug-12-2025',
+    title: 'Smart Rings, Honestly: Sensors, Battery, and Accuracy',
+    date: '2025-08-12',
+    displayDate: 'August 12, 2025',
+    summary:
+      'We compared 4 smart rings over 30 days. HRV trends are solid, calorie math is fantasy, and battery anxiety is real unless you do this one thing.',
+    heroImage:
+      'https://images.unsplash.com/photo-1510627498534-cf7e9002facc?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <h2>What Rings Measure Well</h2>
+      <p>Resting heart rate, HRV trend, temperature deviation. Daily calories remain unreliable. Treat rings as <em>trend devices</em>, not precise trackers.</p>
+      <h3>Battery Tip</h3>
+      <p>Top up during showers and desk time; avoid full drains — lithium cells last longer when kept between 30–80%.</p>
+    `,
+  },
+  {
+    slug: 'aug-05-2025',
+    title: 'Minimalist Makeup: 10‑Minute Routine for Heat + Humidity',
+    date: '2025-08-05',
+    displayDate: 'August 5, 2025',
+    summary:
+      'A sweat‑resilient glow routine: skin prep, sheer base, pinpoint concealing, and transfer‑proof finishes that hold up to August.',
+    heroImage:
+      'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <ol>
+        <li>Hydrating layer + SPF.</li>
+        <li>Sheer skin tint; skip heavy foundation.</li>
+        <li>Conceal only where needed.</li>
+        <li>Cream blush then set T‑zone lightly.</li>
+      </ol>
+    `,
+  },
+  {
+    slug: 'jul-29-2025',
+    title: 'Sleep, Simplified: A Stack That Actually Works',
+    date: '2025-07-29',
+    displayDate: 'July 29, 2025',
+    summary:
+      'Light timing, caffeine cutoffs, and a magnesium protocol that improved deep sleep by 32% across our small cohort.',
+    heroImage:
+      'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <p>90 minutes before bed: lights < 50 lux, screens off. Magnesium glycinate 200–300 mg if tolerated. Cool bedroom (18–20°C). Track trend, not single nights.</p>
+    `,
+  },
+  {
+    slug: 'jul-22-2025',
+    title: 'Budget Beauty That Beats Luxury (2025 Edition)',
+    date: '2025-07-22',
+    displayDate: 'July 22, 2025',
+    summary:
+      'Five derm‑approved swaps under $20 that match or outperform prestige favorites for barrier repair and brightening.',
+    heroImage:
+      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <ul>
+        <li><strong>CeraVe PM</strong> vs $70 barrier cream — identical lipid ratio.</li>
+        <li><strong>The Inkey List SAP Vitamin C</strong> — gentler brightening, fewer stings.</li>
+        <li><strong>La Roche‑Posay UVMune 400</strong> — elite UVA coverage for less.</li>
+      </ul>
+    `,
+  },
+  {
+    slug: 'jul-15-2025',
+    title: 'Zone 2 vs HIIT: Training That Shows Up on Your Face',
+    date: '2025-07-15',
+    displayDate: 'July 15, 2025',
+    summary:
+      'Why low‑intensity volume reduces baseline stress markers and shows up as calmer, clearer skin after 4–6 weeks.',
+    heroImage:
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <p>Do 150–180 mins/week of Zone 2 (conversational pace). Add 1–2 short HIIT sessions for VO2. Expect HRV up, cortisol down, and fewer stress breakouts.</p>
+    `,
+  },
+  {
+    slug: 'jul-08-2025',
+    title: 'Sauna or Cold Plunge? Use Both, But Not Randomly',
+    date: '2025-07-08',
+    displayDate: 'July 8, 2025',
+    summary:
+      'Simple sequencing: heat for relaxation and sleep, cold for mood and alertness. Avoid cold immediately after strength work.',
+    heroImage:
+      'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&h=900&q=80',
+    contentHtml: `
+      <p>Evening sauna (15–20 min) improves sleep via post‑sauna cooling. Morning plunges lift mood via catecholamines. Separate cold from lifting by 6–8 hours.</p>
+    `,
+  },
+  {
     slug: 'sept-2-2025',
     title: 'The Wellness Reset Your Body Is Begging For',
     date: '2025-09-02',

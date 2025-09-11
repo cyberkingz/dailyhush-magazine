@@ -60,6 +60,9 @@ export function getCurrentTrackingContext(): LeadTrackingContext {
     sourcePage = 'article'
   } else if (path === '/blog/') {
     sourcePage = 'blog-index'
+  } else if (path.startsWith('/newsletter/') && path !== '/newsletter') {
+    // Article URLs aliased under /newsletter/:slug
+    sourcePage = 'article'
   } else if (path.startsWith('/categories/')) {
     sourcePage = 'category'
   } else if (path === '/newsletter') {

@@ -121,7 +121,7 @@ export const newsletterEditions: NewsletterEdition[] = [
           <p class="text-lg font-semibold text-gray-800 mb-4">Hit reply - I read every single response!</p>
           <p class="text-sm text-gray-500 mt-4">
             Evidence-based beauty insights you can trust<br/>
-            <a href="/newsletters" class="underline">Browse archives</a> | 
+            <a href="/archives" class="underline">Browse archives</a> | 
             <a href="/privacy" class="underline">Privacy</a> | 
             <a href="#" class="underline">Forward to a friend</a>
           </p>
@@ -262,7 +262,7 @@ export const newsletterEditions: NewsletterEdition[] = [
           <p class="text-lg font-semibold text-gray-800 mb-4">Reply and share your results - I feature the best responses!</p>
           <p class="text-sm text-gray-500 mt-4">
             Evidence-based wellness without the overwhelm<br/>
-            <a href="/newsletters" class="underline">Browse archives</a> | 
+            <a href="/archives" class="underline">Browse archives</a> | 
             <a href="/privacy" class="underline">Privacy</a> | 
             <a href="#" class="underline">Forward to a friend</a>
           </p>
@@ -438,7 +438,7 @@ export const newsletterEditions: NewsletterEdition[] = [
           </a>
           <p class="text-sm text-gray-500 mt-4">
             Real results from real testing. No fluff, no sponsors.<br/>
-            <a href="/newsletters" class="underline">Read past editions</a> | 
+            <a href="/archives" class="underline">Read past editions</a> | 
             <a href="/privacy" class="underline">Privacy</a> | 
             <a href="#" class="underline">Forward to your group chat</a>
           </p>

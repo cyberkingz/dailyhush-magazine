@@ -31,7 +31,7 @@ export default function NewsletterEdition() {
         { property: 'og:title', content: edition.title },
         { property: 'og:description', content: edition.summary },
         { property: 'og:type', content: 'article' },
-        { property: 'og:url', content: `${window.location.origin}/newsletters/${edition.slug}` },
+        { property: 'og:url', content: `${window.location.origin}/archives/${edition.slug}` },
         { property: 'og:image', content: edition.heroImage || '' },
         { property: 'article:published_time', content: edition.date },
         { property: 'article:author', content: 'DailyHush Editorial Team' },
@@ -86,7 +86,7 @@ export default function NewsletterEdition() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               as="link"
-              to="/newsletters"
+              to="/archives"
               variant="primary"
               size="md"
               leftIcon={<ArrowLeft className="w-4 h-4" />}
@@ -126,4 +126,3 @@ export default function NewsletterEdition() {
     </main>
   )
 }
-

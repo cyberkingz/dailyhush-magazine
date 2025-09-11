@@ -14,7 +14,7 @@ const NewsletterHeader: React.FC<NewsletterHeaderProps> = ({ edition, onShare })
     <div className="max-w-4xl mx-auto px-6 mb-8">
       <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
         <Link 
-          to="/newsletters" 
+          to="/archives" 
           className="inline-flex items-center gap-1 hover:text-gray-700 transition"
         >
           <ArrowLeft className="w-4 h-4" />

@@ -10,7 +10,7 @@ const NewsletterNavigation: React.FC<NewsletterNavigationProps> = ({ onShare }) 
   return (
     <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
       <Link 
-        to="/newsletters" 
+        to="/archives" 
         className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition"
       >
         <ArrowLeft className="w-4 h-4" />

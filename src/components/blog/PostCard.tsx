@@ -14,7 +14,7 @@ export function PostCard({ title, excerpt, category, author, date, imageUrl, slu
   const postSlug = slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
   
   return (
-    <Link to={`/blog/${postSlug}`} className="block">
+    <Link to={`/newsletter/${postSlug}`} className="block">
       <article className="group overflow-hidden rounded-xl bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
       {imageUrl ? (
         <div className="aspect-[16/9] bg-gray-100">
@@ -38,4 +38,3 @@ export function PostCard({ title, excerpt, category, author, date, imageUrl, slu
     </Link>
   )
 }
-

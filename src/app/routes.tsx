@@ -35,12 +35,16 @@ export function AppRoutes() {
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/blog" element={<Layout><BlogList /></Layout>} />
         <Route path="/blog/:slug" element={<Layout><BlogDetail /></Layout>} />
+        <Route path="/newsletter/:slug" element={<Layout><BlogDetail /></Layout>} />
         <Route path="/categories/:slug" element={<Layout><CategoryList /></Layout>} />
         <Route path="/about" element={<Layout><About /></Layout>} />
         <Route path="/contact" element={<Layout><Contact /></Layout>} />
         <Route path="/newsletter" element={<Layout><Newsletter /></Layout>} />
-        <Route path="/newsletters" element={<Layout><NewslettersArchive /></Layout>} />
-        <Route path="/newsletters/:slug" element={<Layout><NewsletterEdition /></Layout>} />
+        <Route path="/archives" element={<Layout><NewslettersArchive /></Layout>} />
+        <Route path="/archives/:slug" element={<Layout><NewsletterEdition /></Layout>} />
+        {/* Legacy redirects */}
+        <Route path="/newsletters" element={<Navigate to="/archives" replace />} />
+        <Route path="/newsletters/:slug" element={<Navigate to={window.location.pathname.replace('/newsletters', '/archives')} replace />} />
         <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
         <Route path="/terms" element={<Layout><Terms /></Layout>} />
 

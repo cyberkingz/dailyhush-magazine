@@ -73,7 +73,7 @@ export default function NewslettersArchive() {
               key={n.slug} 
               className="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
             >
-              <Link to={`/newsletters/${n.slug}`} className="block">
+              <Link to={`/archives/${n.slug}`} className="block">
                 {/* Image Container */}
                 <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                   {n.heroImage ? (

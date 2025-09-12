@@ -21,6 +21,7 @@ export const newsletterEditions: NewsletterEdition[] = [
     heroImage: fiveBeautyTechImg,
     contentHtml: `
       <p><strong>In partnership with Droplette</strong></p>
+      <p class="text-center"><img src="https://droplette.io/cdn/shop/files/Droplette_Logo_Updated_2023-01.png?v=1728060117&width=400" alt="Droplette logo" style="max-width:200px;width:100%;height:auto;margin:8px auto;"/></p>
 
       <p>Hello Beauty Innovators! ✨ Mid‑September glow check? Let's talk tech that transforms your routine, a massive beauty blunder, and the 'quiet luxury' trend—your bonus Wednesday beauty dose.</p>
 
@@ -33,7 +34,8 @@ export const newsletterEditions: NewsletterEdition[] = [
 
       <hr />
 
-      <h2 id="in-the-spotlight">💎 5 Beauty Tech Innovations That Will Transform Your Routine in 2025</h2>
+      <h2 id="in-the-spotlight">In the Spotlight</h2>
+      <p class="text-center"><img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&h=500&q=80" alt="LED light therapy mask and beauty devices" style="max-width:100%;height:auto;border-radius:12px;"/></p>
       <p>Feeling overwhelmed by the endless stream of "revolutionary" beauty gadgets? Don't worry — we've filtered the noise.</p>
       <p><strong>The real game‑changing innovations.</strong> Forget 99 "hot gadgets" lists. Research shows beauty enthusiasts consistently invest in a few future‑proof technologies:</p>
       <ol>
@@ -49,11 +51,13 @@ export const newsletterEditions: NewsletterEdition[] = [
       <hr />
 
       <h3>Today’s Task — Audit + Optimize Your Routine</h3>
+      <p class="text-center"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&h=400&q=80" alt="Organized skincare routine products" style="max-width:100%;height:auto;border-radius:12px;"/></p>
       <p>Take 15–20 minutes to photograph your current skincare and makeup collection. Sort into: daily, weekly, and "haven't touched in months." You'll instantly spot gaps, clutter, and forgotten gems.</p>
 
       <hr />
 
       <h2>Together with Droplette</h2>
+      <p class="text-center"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=600&h=400&q=80" alt="Advanced skincare technology device" style="max-width:100%;height:auto;border-radius:12px;"/></p>
       <h3>Learn from this beauty brand's $50M mistake</h3>
       <p>In 2019, a major beauty conglomerate passed on licensing breakthrough micro‑delivery technology for $2M. That platform could be worth $50M+ today.</p>
       <p>Now, <a href="https://droplette.io" target="_blank" rel="noopener">Droplette</a> — founded by MIT‑trained scientists — is revolutionizing a $180B skincare market with <strong>micro‑infusion technology</strong>. Read how it works: <a href="https://droplette.io/pages/how-it-works" target="_blank" rel="noopener">droplette.io/pages/how‑it‑works</a>.</p>
@@ -64,6 +68,7 @@ export const newsletterEditions: NewsletterEdition[] = [
       <hr />
 
       <h2>The Beauty Pulse</h2>
+      <p class="text-center"><img src="https://images.unsplash.com/photo-1556228720-da4e85f25e15?auto=format&fit=crop&w=600&h=300&q=80" alt="Clean beauty products with natural ingredients" style="max-width:100%;height:auto;border-radius:12px;"/></p>
       <h4>🌍 Europe's Clean Beauty Crisis — <a href="https://www.politico.eu/article/eu-loosen-rule-cancer-causing-chemical-cosmetics/" target="_blank" rel="noopener">Politico</a></h4>
       <ul>
         <li><strong>What's unfolding:</strong> Slow regulatory approval risks Europe losing clean beauty innovation to faster‑moving markets.</li>
@@ -88,12 +93,14 @@ export const newsletterEditions: NewsletterEdition[] = [
       <hr />
 
       <h2>Glow Growth</h2>
+      <p class="text-center"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&h=400&q=80" alt="Daily skincare routine essentials" style="max-width:100%;height:auto;border-radius:12px;"/></p>
       <h3>How to Build a Skincare Routine That Actually Works</h3>
       <p>The key is understanding your skin's needs, choosing quality ingredients, and being consistent. No matter what skin type you have, there is a universal approach to building an effective routine that delivers real results.</p>
 
       <hr />
 
       <h2>Beauty Break</h2>
+      <p class="text-center"><img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&h=300&q=80" alt="Woman enjoying self-care moment" style="max-width:100%;height:auto;border-radius:12px;"/></p>
       <p><em>Self‑care Sunday vibes:</em> When your skincare routine becomes your meditation practice ✨</p>
 
       <hr />

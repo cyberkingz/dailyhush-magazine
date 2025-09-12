@@ -1,5 +1,5 @@
-import { writeFileSync } from 'node:fs'
-import { newsletterEditions } from '../src/content/newsletters'
+import { writeFileSync, readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 const base = process.env.SITE_URL || 'https://example.com'
 const routes = [
@@ -13,9 +13,12 @@ const routes = [
   '/terms',
 ]
 
-const editionRoutes = newsletterEditions.flatMap((e) => [
-  `/archives/${e.slug}`,
-  `/newsletter/${e.slug}`,
+// Extract edition slugs without importing app code (avoids asset imports)
+const newslettersSrc = readFileSync(resolve('src/content/newsletters.ts'), 'utf8')
+const slugs = Array.from(newslettersSrc.matchAll(/slug:\s*'([^']+)'/g)).map((m) => m[1])
+const editionRoutes = slugs.flatMap((slug) => [
+  `/archives/${slug}`,
+  `/newsletter/${slug}`,
 ])
 
 const urls = [...routes, ...editionRoutes]

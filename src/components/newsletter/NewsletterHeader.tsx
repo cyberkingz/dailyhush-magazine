@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Mail, Share2, ExternalLink } from 'lucide-react';
-import Button from '../ui/Button';
+import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import type { NewsletterEdition } from '../../content/newsletters';
 
 interface NewsletterHeaderProps {
   edition: NewsletterEdition;
-  onShare: () => void;
 }
 
-const NewsletterHeader: React.FC<NewsletterHeaderProps> = ({ edition, onShare }) => {
+const NewsletterHeader: React.FC<NewsletterHeaderProps> = ({ edition }) => {
   return (
     <div className="max-w-4xl mx-auto px-6 mb-8">
       <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
@@ -34,10 +32,7 @@ const NewsletterHeader: React.FC<NewsletterHeaderProps> = ({ edition, onShare })
             <Clock className="w-4 h-4" />
             <span>5 min read</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Mail className="w-4 h-4" />
-            <span>47K opens</span>
-          </div>
+          {/* opens removed */}
         </div>
         
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
@@ -45,28 +40,7 @@ const NewsletterHeader: React.FC<NewsletterHeaderProps> = ({ edition, onShare })
         </h1>
         
         <p className="text-xl text-gray-700 mb-6">{edition.summary}</p>
-        
-        <div className="flex flex-wrap gap-3">
-          <Button
-            variant="ghost"
-            size="md"
-            onClick={onShare}
-            leftIcon={<Share2 className="w-4 h-4" />}
-          >
-            Share with Friends
-          </Button>
-          
-          
-          <Button
-            as="anchor"
-            href={`mailto:?subject=${encodeURIComponent(edition.title)}&body=${encodeURIComponent(`Check out this newsletter: ${window.location.href}`)}`}
-            variant="outline"
-            size="md"
-            leftIcon={<ExternalLink className="w-4 h-4" />}
-          >
-            Forward to Friend
-          </Button>
-        </div>
+        {/* share actions removed */}
       </div>
 
       {edition.heroImage && (

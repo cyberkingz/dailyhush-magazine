@@ -70,12 +70,12 @@ export default function NewsletterEdition() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               as="link"
-              to="/archives"
+              to="/"
               variant="primary"
               size="md"
               leftIcon={<ArrowLeft className="w-4 h-4" />}
             >
-              Browse All Editions
+              Latest Editions
             </Button>
             <Button
               as="link"

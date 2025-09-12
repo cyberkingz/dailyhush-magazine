@@ -9,6 +9,7 @@ export type NewsletterEdition = {
 }
 
 // High-quality newsletter archive for SparkLoop Partner Network approval
+import fiveBeautyTechImg from '@/assets/editions-assets/5 Beauty Tech Innovations.png'
 export const newsletterEditions: NewsletterEdition[] = [
   {
     slug: 'sept-11-2025',
@@ -17,8 +18,7 @@ export const newsletterEditions: NewsletterEdition[] = [
     displayDate: 'September 11, 2025',
     summary:
       "The real game‑changing devices revealed, a $50M beauty mistake, 'quiet luxury' trend spreads, plus more beauty wisdom...",
-    heroImage:
-      'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&h=900&q=80',
+    heroImage: fiveBeautyTechImg,
     contentHtml: `
       <p><strong>In partnership with Droplette</strong></p>
 

@@ -59,23 +59,7 @@ export default function NewsletterEdition() {
     }
   }, [edition])
 
-  const handleShare = async () => {
-    if (navigator.share && edition) {
-      try {
-        await navigator.share({
-          title: edition.title,
-          text: edition.summary,
-          url: window.location.href,
-        })
-      } catch (err) {
-        // Fallback to copy to clipboard
-        navigator.clipboard.writeText(window.location.href)
-      }
-    } else {
-      // Fallback to copy to clipboard
-      navigator.clipboard.writeText(window.location.href)
-    }
-  }
+  // Sharing controls removed
 
   if (!edition) {
     return (
@@ -110,7 +94,7 @@ export default function NewsletterEdition() {
 
   return (
     <main className="py-10">
-      <NewsletterHeader edition={edition} onShare={handleShare} />
+      <NewsletterHeader edition={edition} />
 
       {/* Newsletter Content */}
       <div className="max-w-4xl mx-auto px-6">
@@ -121,7 +105,7 @@ export default function NewsletterEdition() {
 
         <AuthorBio />
 
-        <NewsletterNavigation onShare={handleShare} />
+        <NewsletterNavigation />
       </div>
     </main>
   )

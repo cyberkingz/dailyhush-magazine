@@ -13,7 +13,10 @@ const routes = [
   '/terms',
 ]
 
-const editionRoutes = newsletterEditions.map((e) => `/archives/${e.slug}`)
+const editionRoutes = newsletterEditions.flatMap((e) => [
+  `/archives/${e.slug}`,
+  `/newsletter/${e.slug}`,
+])
 
 const urls = [...routes, ...editionRoutes]
   .map((p) => `  <url>\n    <loc>${base}${p}</loc>\n  </url>`)

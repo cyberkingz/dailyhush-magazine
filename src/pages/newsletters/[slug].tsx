@@ -31,7 +31,7 @@ export default function NewsletterEdition() {
         { property: 'og:title', content: edition.title },
         { property: 'og:description', content: edition.summary },
         { property: 'og:type', content: 'article' },
-        { property: 'og:url', content: `${window.location.origin}/archives/${edition.slug}` },
+        { property: 'og:url', content: `${window.location.origin}/newsletter/${edition.slug}` },
         { property: 'og:image', content: edition.heroImage || '' },
         { property: 'article:published_time', content: edition.date },
         { property: 'article:author', content: 'DailyHush Editorial Team' },

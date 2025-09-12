@@ -63,7 +63,7 @@ export default function Home() {
             .sort((a, b) => (a.date < b.date ? 1 : -1))
             .slice(0, 3)
             .map((n) => (
-              <Link key={n.slug} to={`/archives/${n.slug}`} className="block group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition">
+              <Link key={n.slug} to={`/newsletter/${n.slug}`} className="block group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition">
                 {n.heroImage && (
                   <div className="h-48 w-full overflow-hidden">
                     <img src={n.heroImage} alt={n.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />

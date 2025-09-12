@@ -35,7 +35,10 @@ export function AppRoutes() {
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/blog" element={<Layout><BlogList /></Layout>} />
         <Route path="/blog/:slug" element={<Layout><BlogDetail /></Layout>} />
-        <Route path="/newsletter/:slug" element={<Layout><BlogDetail /></Layout>} />
+        {/* Newsletter edition canonical route */}
+        <Route path="/newsletter/:slug" element={<Layout><NewsletterEdition /></Layout>} />
+        {/* Blog alias under newsletter namespace */}
+        <Route path="/newsletter/article/:slug" element={<Layout><BlogDetail /></Layout>} />
         <Route path="/categories/:slug" element={<Layout><CategoryList /></Layout>} />
         <Route path="/about" element={<Layout><About /></Layout>} />
         <Route path="/contact" element={<Layout><Contact /></Layout>} />

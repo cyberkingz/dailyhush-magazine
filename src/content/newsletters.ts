@@ -127,113 +127,104 @@ export const newsletterEditions: NewsletterEdition[] = [
     heroImage:
       'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&h=900&q=80',
     contentHtml: `
-      <div class="prose prose-lg max-w-none">
-        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8 rounded-r-lg">
-          <h2 class="text-xl font-bold text-gray-900 mt-0">Editor's Note</h2>
-          <p class="text-gray-700 mb-0">After testing 47 beauty tech gadgets this month (yes, my bathroom looks like a Best Buy), I've discovered something shocking: AI skin analysis isn't just a gimmick anymore. The latest apps are catching things my dermatologist missed. Here's what actually works...</p>
-        </div>
+      <p><strong>Editor's Note</strong></p>
+      <p>After testing 47 beauty tech gadgets this month (yes, my bathroom looks like a Best Buy), I've discovered something shocking: AI skin analysis isn't just a gimmick anymore. The latest apps are catching things my dermatologist missed. Here's what actually works...</p>
 
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔬 The Tech That Changed My Skin</h2>
+      <h3>On today's agenda</h3>
+      <ul>
+        <li>🔬 The Tech That Changed My Skin</li>
+        <li>🧪 Ingredient Deep Dive: Bakuchiol</li>
+        <li>🎯 Quick Wins This Week</li>
+      </ul>
+
+      <hr />
+
+      <h2>🔬 The Tech That Changed My Skin</h2>
         
-        <h3 class="text-xl font-semibold text-gray-800">1. The $30 App That Replaced My $300 Derm Visits</h3>
-        <p><strong>SkinVision AI</strong> caught a suspicious mole my doctor said was "probably fine." Spoiler: it wasn't. The app uses the same deep learning models as Stanford's melanoma detection research, achieving 95% accuracy.</p>
-        
-        <p class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+      <h3>1. The $30 App That Replaced My $300 Derm Visits</h3>
+      <p><strong>SkinVision AI</strong> caught a suspicious mole my doctor said was "probably fine." Spoiler: it wasn't. The app uses the same deep learning models as Stanford's melanoma detection research, achieving 95% accuracy.</p>
+      <p>
           <strong>My 30-Day Test:</strong><br/>
           • Daily skin scans: 2 minutes<br/>
           • Issues detected: 3 (hyperpigmentation, dehydration, enlarged pores)<br/>
           • Accuracy vs. professional assessment: 87%<br/>
           • Money saved on consultations: $900
-        </p>
+      </p>
 
-        <h3 class="text-xl font-semibold text-gray-800">2. The Smart Mirror Worth the Splurge</h3>
-        <p>The <strong>HiMirror Plus+</strong> ($319) sounds ridiculous until you realize it's tracking your skin's progress with clinical-grade precision. After 8 weeks:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Dark spots reduced by 23% (verified with before/after analysis)</li>
-          <li>Hydration levels improved from 42% to 67%</li>
-          <li>Personalized routine adjustments based on daily scans</li>
-          <li>Caught my tretinoin irritation before it became visible</li>
-        </ul>
+      <h3>2. The Smart Mirror Worth the Splurge</h3>
+      <p>The <strong>HiMirror Plus+</strong> ($319) sounds ridiculous until you realize it's tracking your skin's progress with clinical-grade precision. After 8 weeks:</p>
+      <ul>
+        <li>Dark spots reduced by 23% (verified with before/after analysis)</li>
+        <li>Hydration levels improved from 42% to 67%</li>
+        <li>Personalized routine adjustments based on daily scans</li>
+        <li>Caught my tretinoin irritation before it became visible</li>
+      </ul>
 
-        <h3 class="text-xl font-semibold text-gray-800">3. The Free Tool Nobody Talks About</h3>
-        <p>Your iPhone's magnifier app (yes, really) at 10x zoom reveals more about your skin texture than any fancy device. Use it with natural light at 8am for consistent progress tracking.</p>
+      <h3>3. The Free Tool Nobody Talks About</h3>
+      <p>Your iPhone's magnifier app (yes, really) at 10x zoom reveals more about your skin texture than any fancy device. Use it with natural light at 8am for consistent progress tracking.</p>
 
-        <div class="bg-yellow-50 p-6 rounded-lg my-8">
-          <h2 class="text-2xl font-bold text-amber-900 mt-0">💬 Reader Spotlight</h2>
-          <blockquote class="italic text-amber-800">
+      <hr />
+
+      <h2>💬 Reader Spotlight</h2>
+      <blockquote>
             "Your tip about checking skincare pH with litmus strips was a game-changer. My 'gentle' cleanser was pH 9.5! No wonder my barrier was destroyed."
-          </blockquote>
-          <p class="text-right text-amber-700 font-semibold">— Sarah M., subscriber since 2023</p>
-        </div>
+      </blockquote>
+      <p><em>— Sarah M., subscriber since 2023</em></p>
 
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">🧪 This Week's Ingredient Deep Dive: Bakuchiol</h2>
+      <hr />
+
+      <h2>🧪 This Week's Ingredient Deep Dive: Bakuchiol</h2>
+      <p>Everyone's calling it "natural retinol," but that's misleading. Here's what the science actually says:</p>
+      <h4>What It Does ✓</h4>
+      <ul>
+        <li>Stimulates collagen (proven in 2014 study)</li>
+        <li>Reduces hyperpigmentation</li>
+        <li>Zero irritation or photosensitivity</li>
+        <li>Safe during pregnancy</li>
+      </ul>
+      
+      <h4>What It Doesn't ✗</h4>
+      <ul>
+        <li>Work as fast as retinol (12 vs 6 weeks)</li>
+        <li>Address severe acne</li>
+        <li>Have 40+ years of research</li>
+        <li>Cost less than retinol</li>
+      </ul>
         
-        <p>Everyone's calling it "natural retinol," but that's misleading. Here's what the science actually says:</p>
+      <p><strong>My verdict:</strong> Perfect for retinol-sensitive skin or daytime use. Try <em>Herbivore Bakuchiol Serum</em> ($54) or <em>The Inkey List Bakuchiol</em> ($13) for budget option.</p>
+
+      <hr />
+
+      <h2>🎯 Quick Wins This Week</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-          <div class="bg-green-50 p-4 rounded-lg">
-            <h4 class="font-bold text-green-900">What It Does ✓</h4>
-            <ul class="text-sm space-y-1 mt-2">
-              <li>• Stimulates collagen (proven in 2014 study)</li>
-              <li>• Reduces hyperpigmentation</li>
-              <li>• Zero irritation or photosensitivity</li>
-              <li>• Safe during pregnancy</li>
-            </ul>
-          </div>
-          <div class="bg-red-50 p-4 rounded-lg">
-            <h4 class="font-bold text-red-900">What It Doesn't ✗</h4>
-            <ul class="text-sm space-y-1 mt-2">
-              <li>• Work as fast as retinol (12 vs 6 weeks)</li>
-              <li>• Address severe acne</li>
-              <li>• Have 40+ years of research</li>
-              <li>• Cost less than retinol</li>
-            </ul>
-          </div>
-        </div>
-        
-        <p><strong>My verdict:</strong> Perfect for retinol-sensitive skin or daytime use. Try <em>Herbivore Bakuchiol Serum</em> ($54) or <em>The Inkey List Bakuchiol</em> ($13) for budget option.</p>
+      <ol>
+        <li><strong>The 60-Second Rule:</strong> Cleanse for exactly 60 seconds. Set a timer. Most of us only manage 15-20 seconds, leaving makeup and sunscreen residue.</li>
+        <li><strong>The Bathroom Humidity Hack:</strong> Apply hyaluronic acid serums in your steamy bathroom post-shower. The humidity helps it draw moisture INTO skin rather than pulling it out.</li>
+        <li><strong>The Pillowcase Test:</strong> Flip your pillowcase inside out after night 1, change completely after night 3. Your skin will thank you (especially if you're acne-prone).</li>
+      </ol>
 
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">🎯 Quick Wins This Week</h2>
-        
-        <ol class="list-decimal pl-6 space-y-3">
-          <li><strong>The 60-Second Rule:</strong> Cleanse for exactly 60 seconds. Set a timer. Most of us only manage 15-20 seconds, leaving makeup and sunscreen residue.</li>
-          
-          <li><strong>The Bathroom Humidity Hack:</strong> Apply hyaluronic acid serums in your steamy bathroom post-shower. The humidity helps it draw moisture INTO skin rather than pulling it out.</li>
-          
-          <li><strong>The Pillowcase Test:</strong> Flip your pillowcase inside out after night 1, change completely after night 3. Your skin will thank you (especially if you're acne-prone).</li>
-        </ol>
+      <hr />
 
-        <div class="bg-gradient-to-r from-yellow-50 to-amber-50 p-8 rounded-xl my-8">
-          <h2 class="text-2xl font-bold text-gray-900 mt-0">🔮 Coming Next Week</h2>
-          <p class="text-lg text-gray-700">The Korean 10-step routine is dead. I spent 3 weeks in Seoul beauty labs discovering what's replacing it. Hint: It's only 3 steps, costs under $50, and the results are insane.</p>
-          <button class="bg-yellow-400 text-black px-6 py-3 rounded-full font-semibold hover:bg-yellow-300 hover:text-black transition">
-            Get Early Access →
-          </button>
-        </div>
+      <h2>🔮 Coming Next Week</h2>
+      <p>The Korean 10-step routine is dead. I spent 3 weeks in Seoul beauty labs discovering what's replacing it. Hint: It's only 3 steps, costs under $50, and the results are insane.</p>
+      <p><a href="/newsletter" target="_blank" rel="noopener">Get Early Access →</a></p>
 
-        <div class="border-t pt-8 mt-12">
-          <h3 class="text-lg font-bold mb-4">💌 Your Weekly Challenge</h3>
-          <p>Track your skin's hydration levels for 7 days using just a piece of clear tape (seriously). Press tape on your cheek for 5 seconds each morning. The more dead skin cells it picks up, the more dehydrated you are. Reply with your day 1 vs day 7 results!</p>
-          
-          <div class="bg-yellow-100 p-4 rounded-lg mt-6">
-            <p class="text-sm text-gray-700">
-              <strong>Quick Poll:</strong> What's your biggest skincare tech fail?<br/>
-              Reply with: A) LED mask that did nothing B) Expensive app subscription C) Gadget still in box D) Other (tell me!)
-            </p>
-          </div>
-        </div>
+      <hr />
 
-        <div class="text-center mt-12 pt-8 border-t">
-          <p class="text-gray-600 mb-4">💌 What's your biggest takeaway from this edition?</p>
-          <p class="text-lg font-semibold text-gray-800 mb-4">Hit reply - I read every single response!</p>
-          <p class="text-sm text-gray-500 mt-4">
-            Evidence-based beauty insights you can trust<br/>
-            <a href="/archives" class="underline">Browse archives</a> | 
-            <a href="/privacy" class="underline">Privacy</a> | 
-            <a href="#" class="underline">Forward to a friend</a>
-          </p>
-        </div>
-      </div>
+      <h2>💌 Your Weekly Challenge</h2>
+      <p>Track your skin's hydration levels for 7 days using just a piece of clear tape (seriously). Press tape on your cheek for 5 seconds each morning. The more dead skin cells it picks up, the more dehydrated you are. Reply with your day 1 vs day 7 results!</p>
+      
+      <h3>Quick Poll</h3>
+      <p>What's your biggest skincare tech fail? Reply with: A) LED mask that did nothing B) Expensive app subscription C) Gadget still in box D) Other (tell me!)</p>
+
+      <hr />
+
+      <h2>Feedback</h2>
+      <p>💌 What's your biggest takeaway from this edition? Hit reply - I read every single response!</p>
+      <p>📩 Evidence-based beauty insights you can trust.</p>
+
+      <hr />
+      <p>Subscribe now to get the next issue before anyone else.</p>
     `,
   },
   {

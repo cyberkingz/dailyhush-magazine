@@ -124,7 +124,7 @@ export async function createLead(email: string, context?: Partial<LeadTrackingCo
     
     return {
       success: true,
-      message: 'Successfully subscribed! Check your email for confirmation.'
+      message: 'Successfully subscribed!'
     }
     
   } catch (error) {

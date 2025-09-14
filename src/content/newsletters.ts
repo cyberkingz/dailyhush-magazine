@@ -141,13 +141,13 @@ export const newsletterEditions: NewsletterEdition[] = [
       <h2 id="in-the-spotlight">In the Spotlight</h2>
         
       <h3>1. Collagen Supplements That Actually Deliver</h3>
-      <p>Collagen is your skin’s scaffolding, and by 30 we’re losing 1% a year. A <a href="https://pubmed.ncbi.nlm.nih.gov/36736695/" target="_blank" rel="noopener">2023 meta-analysis</a> of 26 trials (1,700+ people) found oral hydrolyzed collagen <strong>improved skin elasticity and hydration</strong> within 8–12 weeks. No, it’s not a facelift, but it’s one of the few supplements with real clinical backing.</p>
+      <p>Collagen is your skin’s scaffolding, and by 30 we’re losing 1% a year. A <a href="https://www.mdpi.com/2072-6643/15/9/2080" target="_blank" rel="noopener">2023 meta-analysis</a> of 26 trials (1,721 people) found oral hydrolyzed collagen <strong>improved skin elasticity and hydration</strong> within 8–12 weeks. No, it’s not a facelift, but it’s one of the few supplements with real clinical backing.</p>
       <p>
           <strong>Pro tip:</strong> Look for 2.5–10g of hydrolyzed collagen peptides daily, paired with vitamin C for synthesis support.
       </p>
   
       <h3>2. NAD+: Cellular Energy = Youthful Skin</h3>
-      <p>NAD+ levels drop as we age, slowing DNA repair and cell renewal. A <a href="https://onlinelibrary.wiley.com/doi/10.1111/acel.14233" target="_blank" rel="noopener">2025 trial in *Aging Cell*</a> showed NAD+ precursor NR improved cardiovascular and skin health in patients with premature aging. For beauty, that means <strong>better repair and resilience</strong> at the cellular level.</p>
+      <p>NAD+ levels drop as we age, slowing DNA repair and cell renewal. A <a href="https://onlinelibrary.wiley.com/doi/10.1111/acel.70093" target="_blank" rel="noopener">2025 trial in *Aging Cell*</a> showed NAD+ precursor NR improved cardiovascular and skin health in patients with premature aging. For beauty, that means <strong>better repair and resilience</strong> at the cellular level.</p>
       <p><em>How to boost it:</em> Supplements like NR/NMN, or naturally through exercise and intermittent fasting.</p>
   
       <h3>3. Retinoids vs. Bakuchiol: Old Guard vs. New Wave</h3>

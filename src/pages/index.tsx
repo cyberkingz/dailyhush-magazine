@@ -49,12 +49,11 @@ export default function Home() {
 
       {/* Latest Editions (3) */}
       <section className="mx-auto max-w-7xl px-6 py-12">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Latest 3 Editions</h2>
             <p className="text-gray-600 mt-2">A quick snapshot of our most recent newsletters.</p>
           </div>
-          <Link to="/archives" className="text-sm font-semibold underline">View All Editions</Link>
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-16">

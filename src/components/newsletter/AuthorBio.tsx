@@ -13,11 +13,7 @@ const AuthorBio: React.FC = () => {
             Our team of beauty experts, dermatologists, and wellness professionals test products and trends so you don't have to. 
             We're committed to evidence-based advice that actually works.
           </p>
-          <div className="flex gap-4 text-sm">
-            <span className="text-gray-600">50,000+ subscribers</span>
-            <span className="text-gray-600">92% open rate</span>
-            <span className="text-gray-600">Publishing since 2023</span>
-          </div>
+          {/* Stats row removed per request */}
         </div>
       </div>
     </div>

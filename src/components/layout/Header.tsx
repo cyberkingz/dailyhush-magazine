@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export function Header() {
+export function Header({ onSubscribeClick }: { onSubscribeClick?: () => void }) {
   return (
     <header className="bg-white border-b border-gray-100">
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
@@ -10,7 +10,17 @@ export function Header() {
           </Link>
         </div>
         <div className="flex items-center gap-3">
-          <Link to="/newsletter" className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 transition-colors">Subscribe</Link>
+          {onSubscribeClick ? (
+            <button
+              type="button"
+              onClick={onSubscribeClick}
+              className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 transition-colors"
+            >
+              Subscribe
+            </button>
+          ) : (
+            <Link to="/newsletter" className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 transition-colors">Subscribe</Link>
+          )}
         </div>
       </div>
     </header>

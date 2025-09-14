@@ -161,7 +161,7 @@ export const newsletterEditions: NewsletterEdition[] = [
       <hr />
   
       <h2>The Beauty Pulse</h2>
-      <h4>🧬 Bryan Johnson’s Blueprint Skin Hack — <a href="https://www.businessinsider.com/bryan-johnson-anti-aging-routine-skin-care-supplements-2023-5" target="_blank" rel="noopener">Business Insider</a></h4>
+      <h4>🧬 Bryan Johnson’s Blueprint Skin Hack — <a href="https://nypost.com/2025/01/13/health/bryan-johnson-14-step-morning-routine-for-anti-aging-including-91-pills/" target="_blank" rel="noopener">New York Post</a></h4>
       <ul>
         <li><strong>What's unfolding:</strong> The 45-year-old tech founder claims his skin’s biological age is under 40 thanks to collagen, niacinamide, and red light therapy.</li>
         <li><strong>Why it matters:</strong> Longevity protocols are crossing into mainstream beauty.</li>
@@ -171,7 +171,7 @@ export const newsletterEditions: NewsletterEdition[] = [
         <li><strong>What's unfolding:</strong> The global collagen market is projected to hit $9B by 2030, driven by beauty demand.</li>
         <li><strong>Why it matters:</strong> Consumers want inside-out solutions, not just topical fixes.</li>
       </ul>
-      <h4>💡 Red Light Therapy Evidence — <a href="https://stanfordhealthcare.org/medical-conditions/skin-hair-and-nails/skin-rejuvenation/treatments/red-light-therapy.html" target="_blank" rel="noopener">Stanford Health</a></h4>
+      <h4>💡 Red Light Therapy Evidence — <a href="https://www.peninsuladoctor.com/blog/red-and-infrared-light-therapy-explained-clinical-insights-and-proven-benefits/" target="_blank" rel="noopener">Peninsula Doctor</a></h4>
       <ul>
         <li><strong>What's unfolding:</strong> Clinical data shows red light improves wrinkles and collagen density.</li>
         <li><strong>Why it matters:</strong> Home devices are moving from fad to evidence-based tool.</li>

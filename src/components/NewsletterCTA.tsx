@@ -27,9 +27,12 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
       setResponse(result)
       
       if (result.success) {
-        setEmail('')
         // Track successful subscription
         trackNewsletterSignup(variant, email)
+        // Redirect to thank-you with Upscribe
+        const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`
+        setTimeout(() => { window.location.assign(next) }, 150)
+        setEmail('')
       }
     } catch (error) {
       console.error('Error submitting lead:', error)
@@ -43,32 +46,7 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
     }
   }
   
-  // Show success message
-  if (response && response.success) {
-    return (
-      <div className={`rounded-2xl p-8 md:p-10 bg-green-50 border border-green-200 ${centered ? 'text-center' : ''}`}>
-        <div className={centered ? 'max-w-2xl mx-auto' : 'max-w-2xl'}>
-          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full">
-            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Welcome aboard!
-          </h2>
-          <p className="text-base md:text-lg text-gray-600 mt-2 md:mt-3">
-            {response.message}
-          </p>
-          <button
-            onClick={() => setResponse(null)}
-            className="mt-6 text-green-600 hover:text-green-700 font-medium"
-          >
-            Subscribe another email →
-          </button>
-        </div>
-      </div>
-    )
-  }
+  // No success "card" here—redirect handles UX
   
   return (
     <div className={`rounded-2xl p-8 md:p-10 bg-yellow-50 border border-yellow-200 ${centered ? 'text-center' : ''}`}>

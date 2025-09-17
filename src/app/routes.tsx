@@ -12,6 +12,7 @@ const Contact = lazy(() => import('@/pages/contact'))
 const Newsletter = lazy(() => import('@/pages/newsletter'))
 const Privacy = lazy(() => import('@/pages/privacy'))
 const Terms = lazy(() => import('@/pages/terms'))
+const SubscribeThankYou = lazy(() => import('@/pages/subscriptions/thank-you'))
 // Newsletter archive
 const NewslettersArchive = lazy(() => import('@/pages/newsletters'))
 const NewsletterEdition = lazy(() => import('@/pages/newsletters/[slug]'))
@@ -45,6 +46,7 @@ export function AppRoutes() {
         <Route path="/newsletter" element={<Layout><Newsletter /></Layout>} />
         <Route path="/archives" element={<Layout><NewslettersArchive /></Layout>} />
         <Route path="/archives/:slug" element={<Layout><NewsletterEdition /></Layout>} />
+        <Route path="/subscriptions/thank-you" element={<Layout><SubscribeThankYou /></Layout>} />
         {/* Legacy redirects */}
         <Route path="/newsletters" element={<Navigate to="/archives" replace />} />
         <Route path="/newsletters/:slug" element={<Navigate to={window.location.pathname.replace('/newsletters', '/archives')} replace />} />

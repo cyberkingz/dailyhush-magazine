@@ -5,6 +5,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* SparkLoop Upscribe Modal Styling */
+[id*="sparkloop"], [class*="sparkloop"], [class*="upscribe"] {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9999 !important;
+}
+
+/* SparkLoop backdrop */
+[id*="sparkloop"] > div:first-child, 
+[class*="sparkloop"] > div:first-child,
+[class*="upscribe"] > div:first-child {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  z-index: 9998 !important;
+}
+
+/* SparkLoop modal content */
+[id*="sparkloop"] .modal, 
+[class*="sparkloop"] .modal,
+[class*="upscribe"] .modal,
+[id*="sparkloop"] [role="dialog"],
+[class*="sparkloop"] [role="dialog"],
+[class*="upscribe"] [role="dialog"] {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  margin: auto !important;
+  max-width: 500px !important;
+  max-height: 600px !important;
+  background: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
 :root {
   color-scheme: light;
   

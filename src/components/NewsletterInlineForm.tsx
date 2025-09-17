@@ -1,24 +1,84 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { createLead, getCurrentTrackingContext } from '@/lib/services/leads'
 import { trackNewsletterSignup } from '@/lib/utils/analytics'
 import type { LeadSubmissionResponse } from '@/lib/types/leads'
+
+declare global {
+  interface Window {
+    SparkLoop?: any
+    SL?: any
+  }
+}
 
 type Props = {
   placeholder?: string
   buttonLabel?: string
   sourcePage?: string
   className?: string
+  redirectOnSuccess?: boolean
+  redirectTo?: string
+  showSparkLoop?: boolean
 }
 
 export default function NewsletterInlineForm({
   placeholder = 'you@example.com',
   buttonLabel = 'Subscribe',
   sourcePage,
-  className = ''
+  className = '',
+  redirectOnSuccess = true,
+  redirectTo = '/subscriptions/thank-you',
+  showSparkLoop = false
 }: Props) {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [response, setResponse] = useState<LeadSubmissionResponse | null>(null)
+
+  // Function to trigger SparkLoop Upscribe
+  const triggerSparkLoop = (subscriberEmail: string) => {
+    const upscribeId = import.meta.env.VITE_SPARKLOOP_UPSCRIBE_ID as string | undefined
+    
+    if (!upscribeId) {
+      console.log('SparkLoop Upscribe ID not configured')
+      return
+    }
+
+    let tries = 0
+    const maxTries = 20
+    const interval = window.setInterval(() => {
+      const sl = window.SparkLoop || (window as any).SL
+      
+      if (!sl) {
+        if (++tries >= maxTries) {
+          console.log('SparkLoop not available after max tries')
+          window.clearInterval(interval)
+        }
+        return
+      }
+
+      try {
+        // Track the subscriber first
+        if (typeof sl.trackSubscriber === 'function') {
+          sl.trackSubscriber(subscriberEmail)
+        }
+        
+        // Show Upscribe popup
+        const gen = sl.generate || sl
+        if (gen && typeof gen.upscribePopup === 'function') {
+          console.log('Triggering SparkLoop Upscribe for:', subscriberEmail)
+          gen.upscribePopup(upscribeId, subscriberEmail)
+          window.clearInterval(interval)
+          return
+        }
+      } catch (error) {
+        console.error('SparkLoop error:', error)
+      }
+
+      if (++tries >= maxTries) {
+        console.log('SparkLoop trigger failed after max tries')
+        window.clearInterval(interval)
+      }
+    }, 200)
+  }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -30,10 +90,23 @@ export default function NewsletterInlineForm({
       const baseCtx = getCurrentTrackingContext()
       const ctx = sourcePage ? { ...baseCtx, source_page: sourcePage } : baseCtx
       const res = await createLead(email, ctx)
-      setResponse(res)
       if (res.success) {
-        setEmail('')
         trackNewsletterSignup('inline', email)
+        
+        if (showSparkLoop) {
+          // Show SparkLoop Upscribe instead of redirecting
+          setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
+          setTimeout(() => triggerSparkLoop(email), 300)
+        } else if (redirectOnSuccess) {
+          // Traditional redirect flow
+          const next = `${redirectTo}?email=${encodeURIComponent(email)}`
+          setTimeout(() => { window.location.assign(next) }, 150)
+        } else {
+          setResponse(res)
+        }
+        setEmail('')
+      } else {
+        setResponse(res)
       }
     } catch (err) {
       console.error(err)
@@ -81,4 +154,3 @@ export default function NewsletterInlineForm({
     </div>
   )
 }
-

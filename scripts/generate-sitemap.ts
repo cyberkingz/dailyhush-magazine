@@ -14,8 +14,10 @@ const routes = [
 ]
 
 // Extract edition slugs without importing app code (avoids asset imports)
-const newslettersSrc = readFileSync(resolve('src/content/newsletters.ts'), 'utf8')
-const slugs = Array.from(newslettersSrc.matchAll(/slug:\s*'([^']+)'/g)).map((m) => m[1])
+const newsletterIndexSrc = readFileSync(resolve('src/content/newsletters/index.ts'), 'utf8')
+// Extract imported file names from the index
+const importMatches = Array.from(newsletterIndexSrc.matchAll(/from\s+'\.\/([^']+)'/g))
+const slugs = importMatches.map(m => m[1])
 const editionRoutes = slugs.flatMap((slug) => [
   `/archives/${slug}`,
   `/newsletter/${slug}`,

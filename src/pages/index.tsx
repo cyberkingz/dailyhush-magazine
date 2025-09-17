@@ -34,7 +34,11 @@ export default function Home() {
             </p>
             
             <div className="max-w-xl mx-auto">
-              <NewsletterInlineForm sourcePage="home-hero" />
+              <NewsletterInlineForm 
+                sourcePage="home-hero" 
+                showSparkLoop={true}
+                redirectOnSuccess={false}
+              />
             </div>
             
             <div className="text-sm text-gray-500 mt-4 space-y-1 max-w-xl mx-auto text-center">

@@ -33,7 +33,7 @@
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://js.sparkloop.app https://script.sparkloop.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.supabase.io https://*.supabase.co https://js.sparkloop.app https://script.sparkloop.app;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://js.sparkloop.app https://script.sparkloop.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.supabase.io https://*.supabase.co https://js.sparkloop.app https://script.sparkloop.app https://script-settings.sparkloop.app;"
 
 [[headers]]
   for = "/assets/*"

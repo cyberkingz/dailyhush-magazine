@@ -29,6 +29,11 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
       if (result.success) {
         // Track successful subscription
         trackNewsletterSignup(variant, email)
+        try {
+          // Hint SparkLoop about the subscriber
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ;(window as any).SL?.trackSubscriber?.(email)
+        } catch {}
         // Redirect to thank-you with Upscribe
         const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`
         setTimeout(() => { window.location.assign(next) }, 150)

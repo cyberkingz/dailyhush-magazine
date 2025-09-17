@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { createLead, getCurrentTrackingContext } from '@/lib/services/leads'
 import { trackNewsletterSignup } from '@/lib/utils/analytics'
 import type { LeadSubmissionResponse } from '@/lib/types/leads'

@@ -1,4 +1,5 @@
 import { supabase } from '../supabase'
+import { notifyN8nSubscription } from './webhook'
 import type { 
   Lead, 
   CreateLeadData, 
@@ -121,6 +122,12 @@ export async function createLead(email: string, context?: Partial<LeadTrackingCo
         error: error.message
       }
     }
+    
+    // Successfully created lead - notify n8n webhook
+    // This runs asynchronously and doesn't block the response
+    notifyN8nSubscription(leadData).catch(webhookError => {
+      console.warn('n8n webhook notification failed (subscription still successful):', webhookError)
+    })
     
     return {
       success: true,

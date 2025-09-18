@@ -1,5 +1,6 @@
 import { supabase } from '../supabase'
 import { getCurrentTrackingContext } from './leads'
+import { notifyN8nContact } from './webhook'
 import type { 
   ContactSubmission, 
   CreateContactSubmissionData, 
@@ -54,6 +55,27 @@ export async function createContactSubmission(
         error: error.message
       }
     }
+    
+    // Successfully created contact submission - notify n8n webhook
+    // This runs asynchronously and doesn't block the response
+    notifyN8nContact({
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      message: data.message,
+      source_page: submissionData.source_page,
+      source_url: submissionData.source_url,
+      utm_source: submissionData.utm_source,
+      utm_medium: submissionData.utm_medium,
+      utm_campaign: submissionData.utm_campaign,
+      utm_term: submissionData.utm_term,
+      utm_content: submissionData.utm_content,
+      browser: submissionData.browser,
+      device_type: submissionData.device_type as 'desktop' | 'mobile' | 'tablet' | 'unknown' | undefined,
+      referrer_url: submissionData.referrer_url
+    }).catch(webhookError => {
+      console.warn('n8n contact webhook notification failed (submission still successful):', webhookError)
+    })
     
     return {
       success: true,

@@ -146,13 +146,6 @@ const Logo = () => {
       aria-label="DailyHush Admin"
     >
       <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0" />
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-bold text-black whitespace-pre"
-      >
-        Admin
-      </motion.span>
     </Link>
   );
 };

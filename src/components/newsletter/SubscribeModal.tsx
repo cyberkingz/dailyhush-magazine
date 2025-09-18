@@ -16,7 +16,8 @@ export function SubscribeModal({ open, onClose }: SubscribeModalProps) {
         sourcePage="header-modal" 
         buttonLabel="Subscribe" 
         showSparkLoop={true} 
-        redirectOnSuccess={false} 
+        redirectOnSuccess={false}
+        onSuccess={onClose}
       />
       <p className="text-xs text-gray-500 mt-3">By subscribing, you agree to receive our newsletter. Unsubscribe anytime.</p>
     </Modal>

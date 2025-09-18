@@ -18,6 +18,7 @@ type Props = {
   redirectOnSuccess?: boolean
   redirectTo?: string
   showSparkLoop?: boolean
+  onSuccess?: () => void
 }
 
 export default function NewsletterInlineForm({
@@ -27,7 +28,8 @@ export default function NewsletterInlineForm({
   className = '',
   redirectOnSuccess = true,
   redirectTo = '/subscriptions/thank-you',
-  showSparkLoop = false
+  showSparkLoop = false,
+  onSuccess
 }: Props) {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -58,6 +60,11 @@ export default function NewsletterInlineForm({
           setResponse(res)
         }
         setEmail('')
+        
+        // Call onSuccess callback if provided
+        if (onSuccess) {
+          onSuccess()
+        }
       } else {
         setResponse(res)
       }

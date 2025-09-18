@@ -1,16 +1,18 @@
 import { useParams } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { getNewsletterBySlug } from '@/content/newsletters'
 import { ArrowLeft, Mail } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { NewsletterHeader, AuthorBio, NewsletterNavigation } from '@/components/newsletter'
 import { FAQ } from '@/components/FAQ'
+import { SubscribeModal } from '@/components/newsletter/SubscribeModal'
 
 export default function NewsletterEdition() {
   const { slug } = useParams()
   const edition = slug ? getNewsletterBySlug(slug) : undefined
   const contentRef = useRef<HTMLDivElement>(null)
+  const [autoPopupOpen, setAutoPopupOpen] = useState(false)
 
   // Render FAQ component if faqData exists
   useEffect(() => {
@@ -26,6 +28,48 @@ export default function NewsletterEdition() {
       }
     }
   }, [edition])
+
+  // Auto-popup newsletter signup for non-email visitors
+  useEffect(() => {
+    // Check if user came from email
+    const urlParams = new URLSearchParams(window.location.search)
+    const fromEmail = urlParams.get('from_email') === 'true'
+    
+    if (fromEmail) {
+      return // Don't show popup for email subscribers
+    }
+    
+    // Check if popup was already shown today
+    const today = new Date().toDateString()
+    const lastShown = localStorage.getItem('newsletter-popup-shown')
+    
+    if (lastShown === today) {
+      return // Don't show again today
+    }
+    
+    let hasTriggered = false
+    
+    const handleScroll = () => {
+      if (hasTriggered) return
+      
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollPercentage = (scrollTop / documentHeight) * 100
+      
+      if (scrollPercentage >= 12) { // 12% scroll threshold
+        hasTriggered = true
+        setAutoPopupOpen(true)
+        localStorage.setItem('newsletter-popup-shown', today)
+        window.removeEventListener('scroll', handleScroll)
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   // Set meta tags for SEO and social sharing
   useEffect(() => {
@@ -125,6 +169,13 @@ export default function NewsletterEdition() {
 
         <NewsletterNavigation />
       </div>
+      
+      {/* Auto-popup modal for non-email visitors */}
+      <SubscribeModal 
+        open={autoPopupOpen} 
+        onClose={() => setAutoPopupOpen(false)}
+        sourcePage="newsletter-auto-popup"
+      />
     </main>
   )
 }

@@ -4,16 +4,17 @@ import NewsletterInlineForm from '@/components/NewsletterInlineForm'
 type SubscribeModalProps = {
   open: boolean
   onClose: () => void
+  sourcePage?: string
 }
 
-export function SubscribeModal({ open, onClose }: SubscribeModalProps) {
+export function SubscribeModal({ open, onClose, sourcePage = "header-modal" }: SubscribeModalProps) {
   return (
     <Modal open={open} onClose={onClose} title="Join DailyHush" maxWidthClassName="max-w-xl">
       <p className="text-gray-600 mb-4">
         Get weekly insights on beauty, wellness, and tech — evidence based and hype free.
       </p>
       <NewsletterInlineForm 
-        sourcePage="header-modal" 
+        sourcePage={sourcePage} 
         buttonLabel="Subscribe" 
         showSparkLoop={true} 
         redirectOnSuccess={false}

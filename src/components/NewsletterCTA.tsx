@@ -6,9 +6,16 @@ import type { LeadSubmissionResponse } from '../lib/types/leads'
 type NewsletterCTAProps = {
   variant?: 'default' | 'article'
   centered?: boolean
+  showSparkLoop?: boolean
+  redirectOnSuccess?: boolean
 }
 
-export function NewsletterCTA({ variant = 'default', centered = false }: NewsletterCTAProps) {
+export function NewsletterCTA({ 
+  variant = 'default', 
+  centered = false,
+  showSparkLoop = false,
+  redirectOnSuccess = true
+}: NewsletterCTAProps) {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [response, setResponse] = useState<LeadSubmissionResponse | null>(null)
@@ -29,14 +36,18 @@ export function NewsletterCTA({ variant = 'default', centered = false }: Newslet
       if (result.success) {
         // Track successful subscription
         trackNewsletterSignup(variant, email)
-        try {
-          // Hint SparkLoop about the subscriber
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ;(window as any).SL?.trackSubscriber?.(email)
-        } catch {}
-        // Redirect to thank-you with Upscribe
-        const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`
-        setTimeout(() => { window.location.assign(next) }, 150)
+        
+        if (showSparkLoop) {
+          // Show SparkLoop Upscribe inline instead of redirecting
+          setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
+          // Don't manually trigger - SparkLoop auto-detects form submission
+        } else if (redirectOnSuccess) {
+          // Traditional redirect flow to thank-you page
+          const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`
+          window.location.assign(next)
+        } else {
+          setResponse(result)
+        }
         setEmail('')
       }
     } catch (error) {

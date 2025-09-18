@@ -33,53 +33,6 @@ export default function NewsletterInlineForm({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [response, setResponse] = useState<LeadSubmissionResponse | null>(null)
 
-  // Function to trigger SparkLoop Upscribe
-  const triggerSparkLoop = (subscriberEmail: string) => {
-    const upscribeId = import.meta.env.VITE_SPARKLOOP_UPSCRIBE_ID as string | undefined
-    
-    if (!upscribeId) {
-      console.log('SparkLoop Upscribe ID not configured')
-      return
-    }
-
-    let tries = 0
-    const maxTries = 20
-    const interval = window.setInterval(() => {
-      const sl = window.SparkLoop || (window as any).SL
-      
-      if (!sl) {
-        if (++tries >= maxTries) {
-          console.log('SparkLoop not available after max tries')
-          window.clearInterval(interval)
-        }
-        return
-      }
-
-      try {
-        // Track the subscriber first
-        if (typeof sl.trackSubscriber === 'function') {
-          sl.trackSubscriber(subscriberEmail)
-        }
-        
-        // Show Upscribe popup
-        const gen = sl.generate || sl
-        if (gen && typeof gen.upscribePopup === 'function') {
-          console.log('Triggering SparkLoop Upscribe for:', subscriberEmail)
-          gen.upscribePopup(upscribeId, subscriberEmail)
-          window.clearInterval(interval)
-          return
-        }
-      } catch (error) {
-        console.error('SparkLoop error:', error)
-      }
-
-      if (++tries >= maxTries) {
-        console.log('SparkLoop trigger failed after max tries')
-        window.clearInterval(interval)
-      }
-    }, 200)
-  }
-
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!email.trim()) return
@@ -96,7 +49,7 @@ export default function NewsletterInlineForm({
         if (showSparkLoop) {
           // Show SparkLoop Upscribe instead of redirecting
           setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
-          setTimeout(() => triggerSparkLoop(email), 300)
+          // Don't manually trigger - SparkLoop auto-detects form submission
         } else if (redirectOnSuccess) {
           // Traditional redirect flow
           const next = `${redirectTo}?email=${encodeURIComponent(email)}`

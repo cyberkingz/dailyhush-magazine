@@ -18,19 +18,19 @@ export default function Home() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm font-semibold text-amber-600 mb-6">
               <Users className="w-4 h-4" />
-              <span>Trusted by 50,000+ Beauty Insiders</span>
+              <span>Trusted by 50,000+ Growth-Focused Readers</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Evidence-based beauty<br />
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight md:leading-none">
+              Your weekly dose of<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">
-                without the hype
+                progress & wellness
               </span>
             </h1>
             
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Get weekly insights on beauty, wellness, and lifestyle trends. Our expert team tests products, 
-              analyzes ingredients, and cuts through marketing fluff to bring you what actually works.
+              Weekly insights on productivity, wellness, and sustainable growth. Real routines, tested tools, 
+              and inspiring stories—no hype, just what works for ambitious people like you.
             </p>
             
             <div className="max-w-xl mx-auto">

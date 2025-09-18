@@ -1,6 +1,7 @@
 import type { NewsletterEdition } from './types'
 
 // Import all newsletter editions
+import { sep182025 } from './sep-18-2025'
 import sept11 from './sept-11-2025'
 import sept13 from './sept-13-2025'
 import sept9 from './sept-9-2025'
@@ -18,6 +19,7 @@ import jun24 from './jun-24-2025'
 
 // High-quality newsletter archive for SparkLoop Partner Network approval
 export const newsletterEditions: NewsletterEdition[] = [
+  sep182025,
   sept11,
   sept13,
   sept9,

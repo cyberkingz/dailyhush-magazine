@@ -1,13 +1,31 @@
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { createRoot } from 'react-dom/client'
 import { getNewsletterBySlug } from '@/content/newsletters'
 import { ArrowLeft, Mail } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { NewsletterHeader, AuthorBio, NewsletterNavigation } from '@/components/newsletter'
+import { FAQ } from '@/components/FAQ'
 
 export default function NewsletterEdition() {
   const { slug } = useParams()
   const edition = slug ? getNewsletterBySlug(slug) : undefined
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  // Render FAQ component if faqData exists
+  useEffect(() => {
+    if (edition?.faqData && contentRef.current) {
+      const faqSection = contentRef.current.querySelector('#faq-section')
+      if (faqSection) {
+        const root = createRoot(faqSection)
+        root.render(<FAQ items={edition.faqData} />)
+        
+        return () => {
+          root.unmount()
+        }
+      }
+    }
+  }, [edition])
 
   // Set meta tags for SEO and social sharing
   useEffect(() => {
@@ -97,7 +115,7 @@ export default function NewsletterEdition() {
       <NewsletterHeader edition={edition} />
 
       {/* Newsletter Content */}
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
         <article 
           className="prose prose-lg prose-gray max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-a:text-amber-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900" 
           dangerouslySetInnerHTML={{ __html: edition.contentHtml }} 

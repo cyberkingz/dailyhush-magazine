@@ -164,7 +164,7 @@ const LogoIcon = () => {
       className="font-normal flex items-center text-sm text-black py-1 relative z-20"
       aria-label="DailyHush Admin"
     >
-      <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0" />
+      <img src="/rounded-logo.jpg" alt="DailyHush" className="h-8 w-8 rounded-full flex-shrink-0" />
     </Link>
   );
 };

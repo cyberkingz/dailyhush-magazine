@@ -4,7 +4,8 @@ import {
   Users, 
   FileText, 
   Settings, 
-  LogOut
+  LogOut,
+  MessageSquare
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -32,6 +33,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       label: "Dashboard",
       href: "/admin/dashboard",
       icon: <LayoutDashboard className="h-5 w-5" />
+    },
+    {
+      label: "Contact Submissions",
+      href: "/admin/contact-submissions",
+      icon: <MessageSquare className="h-5 w-5" />
     },
     {
       label: "Leads",
@@ -166,6 +172,7 @@ const LogoIcon = () => {
 const getPageTitle = (currentPage?: string): string => {
   const titles: Record<string, string> = {
     '/admin/dashboard': 'Dashboard',
+    '/admin/contact-submissions': 'Contact Submissions',
     '/admin/leads': 'Leads Management',
     '/admin/cartography': 'Cartography',
     '/admin/posts': 'Posts Management',
@@ -180,6 +187,7 @@ const getPageTitle = (currentPage?: string): string => {
 const getPageDescription = (currentPage?: string): string => {
   const descriptions: Record<string, string> = {
     '/admin/dashboard': 'Overview of your website performance and metrics',
+    '/admin/contact-submissions': 'View and manage contact form submissions',
     '/admin/leads': 'Manage newsletter subscribers and leads',
     '/admin/cartography': 'Market research, funnels and competitor mapping',
     '/admin/posts': 'Create and manage blog posts',

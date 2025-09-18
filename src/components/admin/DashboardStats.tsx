@@ -7,12 +7,18 @@ import {
   Globe,
   BarChart3,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  MessageSquare,
+  Clock,
+  CheckCircle,
+  AlertTriangle
 } from 'lucide-react';
 import type { Lead } from '../../lib/types/leads';
+import type { ContactSubmission } from '../../lib/types/contact';
 
 interface DashboardStatsProps {
   leads: Lead[];
+  contactSubmissions?: ContactSubmission[];
   loading?: boolean;
 }
 
@@ -25,10 +31,10 @@ interface StatCard {
   description: string;
 }
 
-const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, loading }) => {
+const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissions = [], loading }) => {
   // Calculate statistics
   const stats = React.useMemo(() => {
-    if (loading || leads.length === 0) {
+    if (loading) {
       return {
         totalLeads: 0,
         subscribedLeads: 0,
@@ -37,7 +43,14 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, loading }) => {
         weekLeads: 0,
         monthLeads: 0,
         lastMonthLeads: 0,
-        topSources: []
+        topSources: [],
+        // Contact submission stats
+        totalSubmissions: 0,
+        newSubmissions: 0,
+        inProgressSubmissions: 0,
+        repliedSubmissions: 0,
+        todaySubmissions: 0,
+        overdueSubmissions: 0
       };
     }
 
@@ -71,6 +84,19 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, loading }) => {
       .slice(0, 3)
       .map(([source, count]) => ({ source, count }));
 
+    // Contact submission statistics
+    const totalSubmissions = contactSubmissions.length;
+    const newSubmissions = contactSubmissions.filter(s => s.status === 'new').length;
+    const inProgressSubmissions = contactSubmissions.filter(s => s.status === 'in_progress').length;
+    const repliedSubmissions = contactSubmissions.filter(s => s.status === 'replied').length;
+    const todaySubmissions = contactSubmissions.filter(s => new Date(s.created_at) >= today).length;
+    
+    // Overdue submissions (new submissions > 24 hours old)
+    const overdueSubmissions = contactSubmissions.filter(s => 
+      s.status === 'new' && 
+      (now.getTime() - new Date(s.created_at).getTime()) > 24 * 60 * 60 * 1000
+    ).length;
+
     return {
       totalLeads,
       subscribedLeads,
@@ -79,9 +105,16 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, loading }) => {
       weekLeads,
       monthLeads,
       lastMonthLeads,
-      topSources
+      topSources,
+      // Contact submission stats
+      totalSubmissions,
+      newSubmissions,
+      inProgressSubmissions,
+      repliedSubmissions,
+      todaySubmissions,
+      overdueSubmissions
     };
-  }, [leads, loading]);
+  }, [leads, contactSubmissions, loading]);
 
   // Calculate growth percentages
   const calculateGrowth = (current: number, previous: number): { percentage: string; type: 'positive' | 'negative' | 'neutral' } => {
@@ -139,6 +172,62 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, loading }) => {
 
   return (
     <div className="space-y-6">
+      {/* Contact Submissions Alert */}
+      {stats.overdueSubmissions > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+          <AlertTriangle className="h-5 w-5 text-red-600" />
+          <div>
+            <div className="font-medium text-red-800">
+              {stats.overdueSubmissions} contact submission{stats.overdueSubmissions > 1 ? 's' : ''} overdue
+            </div>
+            <div className="text-sm text-red-600">
+              These submissions have been waiting for more than 24 hours and need immediate attention.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Submissions Summary */}
+      {contactSubmissions.length > 0 && (
+        <div className="bg-white rounded-lg p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">Contact Submissions</h3>
+            <MessageSquare className="h-5 w-5 text-gray-400" />
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full mb-2">
+                <MessageSquare className="h-5 w-5 text-yellow-600" />
+              </div>
+              <div className="text-xl font-bold text-gray-900">{stats.newSubmissions}</div>
+              <div className="text-sm text-gray-500">New</div>
+            </div>
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mb-2">
+                <Clock className="h-5 w-5 text-blue-600" />
+              </div>
+              <div className="text-xl font-bold text-gray-900">{stats.inProgressSubmissions}</div>
+              <div className="text-sm text-gray-500">In Progress</div>
+            </div>
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-green-100 rounded-full mb-2">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+              </div>
+              <div className="text-xl font-bold text-gray-900">{stats.repliedSubmissions}</div>
+              <div className="text-sm text-gray-500">Replied</div>
+            </div>
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full mb-2">
+                <Calendar className="h-5 w-5 text-gray-600" />
+              </div>
+              <div className="text-xl font-bold text-gray-900">{stats.todaySubmissions}</div>
+              <div className="text-sm text-gray-500">Today</div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat, index) => (

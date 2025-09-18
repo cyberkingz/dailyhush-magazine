@@ -2,58 +2,131 @@ import { Link } from 'react-router-dom'
 
 export function Footer() {
   return (
-    <footer className="mt-20">
+    <footer className="mt-24" role="contentinfo">
       {/* Main footer content */}
-      <div className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 border-t border-gray-100">
-        <div className="mx-auto max-w-7xl px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Logo */}
-            <div>
-              <Link to="/" className="block mb-4" aria-label="DailyHush Home">
-                <img src="/inline-logo.png" alt="DailyHush" className="h-8 w-auto" />
+      <div className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 border-t border-amber-100">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Brand section - takes more space */}
+            <div className="lg:col-span-5">
+              <Link 
+                to="/" 
+                className="inline-block mb-6 hover:opacity-80 transition-opacity" 
+                aria-label="DailyHush Home"
+              >
+                <img 
+                  src="/inline-logo.png" 
+                  alt="DailyHush" 
+                  className="h-10 w-auto" 
+                />
               </Link>
-              <p className="text-gray-900 font-medium text-sm tracking-wide mb-3">Less noise. More you.</p>
-              <p className="text-gray-600 text-sm">Your weekly dose of progress and wellness. Real insights for ambitious people who want to grow sustainably.</p>
-            </div>
-
-            {/* Company Info */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Company</h4>
-              <div className="text-xs text-gray-500 space-y-1">
-                <p>Red Impact LLC DBA DailyHush</p>
-                <p>30 N Gould St Ste R</p>
-                <p>Sheridan, Wyoming, 82801</p>
-                <p>Company #: 2024-001419992</p>
+              <p className="text-gray-900 font-semibold text-lg tracking-tight mb-4">
+                Less noise. More you.
+              </p>
+              <p className="text-gray-700 text-base leading-relaxed max-w-md">
+                Your weekly dose of progress and wellness. Real insights for ambitious people who want to grow sustainably.
+              </p>
+              
+              {/* Social proof or newsletter signup could go here */}
+              <div className="mt-6 pt-6 border-t border-amber-200">
+                <p className="text-sm text-gray-600 font-medium">
+                  Trusted by ambitious professionals worldwide
+                </p>
               </div>
             </div>
 
-            {/* Legal & Contact */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Legal & Contact</h4>
-              <nav className="flex flex-col gap-2 text-sm text-gray-600 mb-4">
-                <Link to="/privacy" className="hover:text-gray-900 transition-colors">Privacy Policy</Link>
-                <Link to="/terms" className="hover:text-gray-900 transition-colors">Terms of Service</Link>
+            {/* Quick Links */}
+            <div className="lg:col-span-3">
+              <h3 className="font-semibold text-gray-900 text-base mb-6 tracking-tight">
+                Resources
+              </h3>
+              <nav className="space-y-4" aria-label="Footer navigation">
+                <Link 
+                  to="/privacy" 
+                  className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+                >
+                  Privacy Policy
+                </Link>
+                <Link 
+                  to="/terms" 
+                  className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+                >
+                  Terms of Service
+                </Link>
+                <Link 
+                  to="/contact"
+                  className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+                >
+                  Contact Support
+                </Link>
               </nav>
-              <div className="text-xs text-gray-500 space-y-1">
-                <p>Phone: <a href="tel:+12013670512" className="hover:text-gray-700">+1 201-367-0512</a></p>
-                <p>Email: <a href="mailto:hello@daily-hush.com" className="hover:text-gray-700">hello@daily-hush.com</a></p>
+            </div>
+
+            {/* Contact Info */}
+            <div className="lg:col-span-4">
+              <h3 className="font-semibold text-gray-900 text-base mb-6 tracking-tight">
+                Get in Touch
+              </h3>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Email</p>
+                  <a 
+                    href="mailto:hello@daily-hush.com" 
+                    className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
+                  >
+                    hello@daily-hush.com
+                  </a>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Phone</p>
+                  <a 
+                    href="tel:+12013670512" 
+                    className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
+                  >
+                    +1 (201) 367-0512
+                  </a>
+                </div>
+              </div>
+              
+              {/* Company details - condensed */}
+              <div className="pt-6 border-t border-amber-200">
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  Red Impact LLC DBA DailyHush<br />
+                  30 N Gould St Ste R, Sheridan, WY 82801
+                </p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
       
-      {/* Copyright bar with custom yellow */}
-      <div className="py-4" style={{ backgroundColor: 'rgb(255 213 81)' }}>
+      {/* Copyright bar - improved contrast */}
+      <div className="py-5 bg-amber-200 border-t border-amber-300">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-black font-medium">© {new Date().getFullYear()} Red Impact LLC DBA DailyHush. All rights reserved.</p>
-            <div className="flex gap-4 text-sm text-black font-medium">
-              <Link to="/privacy" className="hover:text-gray-800 transition-colors">Privacy</Link>
-              <Link to="/terms" className="hover:text-gray-800 transition-colors">Terms</Link>
-              <a href="mailto:hello@daily-hush.com" className="hover:text-gray-800 transition-colors">Contact</a>
-            </div>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <p className="text-sm text-gray-800 font-medium">
+              © {new Date().getFullYear()} Red Impact LLC DBA DailyHush. All rights reserved.
+            </p>
+            <nav className="flex gap-6 text-sm" aria-label="Footer legal links">
+              <Link 
+                to="/privacy" 
+                className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
+              >
+                Privacy
+              </Link>
+              <Link 
+                to="/terms" 
+                className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
+              >
+                Terms
+              </Link>
+              <a 
+                href="mailto:hello@daily-hush.com" 
+                className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
+              >
+                Contact
+              </a>
+            </nav>
           </div>
         </div>
       </div>

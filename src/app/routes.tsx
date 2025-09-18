@@ -20,6 +20,7 @@ const NewsletterEdition = lazy(() => import('@/pages/newsletters/[slug]'))
 // Admin
 const AdminLogin = lazy(() => import('@/pages/admin/login'))
 const AdminDashboard = lazy(() => import('@/pages/admin/dashboard'))
+const AdminContactSubmissions = lazy(() => import('@/pages/admin/contact-submissions'))
 const AdminPosts = lazy(() => import('@/pages/admin/posts'))
 const AdminLeads = lazy(() => import('@/pages/admin/leads'))
 const AdminPostNew = lazy(() => import('@/pages/admin/posts-new'))
@@ -57,6 +58,7 @@ export function AppRoutes() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/contact-submissions" element={<AdminContactSubmissions />} />
         <Route path="/admin/leads" element={<AdminLeads />} />
         <Route path="/admin/posts" element={<AdminPosts />} />
         <Route path="/admin/posts-new" element={<AdminPostNew />} />

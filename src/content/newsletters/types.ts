@@ -6,4 +6,8 @@ export type NewsletterEdition = {
   summary: string
   heroImage?: string
   contentHtml: string
+  faqData?: Array<{
+    question: string
+    answer: string
+  }>
 }

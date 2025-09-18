@@ -23,5 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment variables
+.env
+.env.local
+.env.production
+.env.example
+
 # MCP configuration with API keys
 .mcp.json

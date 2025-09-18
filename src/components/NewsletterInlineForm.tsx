@@ -49,7 +49,7 @@ export default function NewsletterInlineForm({
         if (showSparkLoop) {
           // Show SparkLoop Upscribe instead of redirecting
           setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
-          // Don't manually trigger - SparkLoop auto-detects form submission
+          // SparkLoop auto-detects form submission and handles redirect via dashboard configuration
         } else if (redirectOnSuccess) {
           // Traditional redirect flow
           const next = `${redirectTo}?email=${encodeURIComponent(email)}`

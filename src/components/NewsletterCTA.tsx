@@ -40,7 +40,7 @@ export function NewsletterCTA({
         if (showSparkLoop) {
           // Show SparkLoop Upscribe inline instead of redirecting
           setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
-          // Don't manually trigger - SparkLoop auto-detects form submission
+          // SparkLoop auto-detects form submission and handles redirect via dashboard configuration
         } else if (redirectOnSuccess) {
           // Traditional redirect flow to thank-you page
           const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`

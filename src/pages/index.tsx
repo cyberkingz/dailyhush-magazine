@@ -87,7 +87,7 @@ export default function Home() {
 
         {/* Newsletter CTA */}
         <div className="max-w-4xl mx-auto">
-          <NewsletterCTA centered />
+          <NewsletterCTA centered showSparkLoop={true} redirectOnSuccess={false} />
         </div>
       </section>
     </>

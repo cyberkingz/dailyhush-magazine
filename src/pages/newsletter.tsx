@@ -25,7 +25,11 @@ export default function Newsletter() {
 
           {/* Inline email opt-in inside hero */}
           <div className="max-w-xl mx-auto">
-            <NewsletterInlineForm sourcePage="newsletter" />
+            <NewsletterInlineForm 
+              sourcePage="newsletter" 
+              showSparkLoop={true} 
+              redirectOnSuccess={false} 
+            />
           </div>
         </div>
       </section>

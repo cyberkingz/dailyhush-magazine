@@ -38,9 +38,9 @@ export function NewsletterCTA({
         trackNewsletterSignup(variant, email)
         
         if (showSparkLoop) {
-          // Show SparkLoop Upscribe inline instead of redirecting
+          // Show SparkLoop Upscribe inline - it will auto-close after submission
           setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
-          // SparkLoop auto-detects form submission and handles redirect via dashboard configuration
+          // SparkLoop auto-detects form submission and closes widget per dashboard configuration
         } else if (redirectOnSuccess) {
           // Traditional redirect flow to thank-you page
           const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`

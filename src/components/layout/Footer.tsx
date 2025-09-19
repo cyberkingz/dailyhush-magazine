@@ -120,12 +120,12 @@ export function Footer() {
               >
                 Terms
               </Link>
-              <a 
-                href="mailto:hello@daily-hush.com" 
+              <Link 
+                to="/contact" 
                 className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
               >
                 Contact
-              </a>
+              </Link>
             </nav>
           </div>
         </div>

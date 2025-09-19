@@ -42,7 +42,7 @@ export const sep182025 = {
   summary: 'A personal letter from Toni about his journey from toxic hustle to balanced productivity through systematic habits.',
   category: 'Productivity',
   author: 'Toni',
-  heroImage: '/src/assets/editions-assets/obsessions-to-habits.png',
+  heroImage: '/editions-assets/obsessions-to-habits.png',
   tags: ['productivity', 'micro-habits', 'work-life-balance', 'personal-development'],
   faqData: toniFaqData,
   contentHtml: `

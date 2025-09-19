@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { NewsletterCTA } from '@/components/NewsletterCTA'
 import { Users } from 'lucide-react'
 import NewsletterInlineForm from '@/components/NewsletterInlineForm'
-import { newsletterEditions } from '@/content/newsletters'
 
 export default function Home() {
   useEffect(() => { document.title = 'DailyHush — Your Daily Dose of Insights' }, [])

@@ -49,10 +49,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Newsletter Section removed */}
 
-      {/* Latest Editions (3) */}
-      <section className="mx-auto max-w-7xl px-6 py-12">
+
+      
+      {/* <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="flex items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Latest 3 Editions</h2>
@@ -83,13 +83,15 @@ export default function Home() {
                 </div>
               </Link>
           ))}
-        </div>
+        </div> 
 
-        {/* Newsletter CTA */}
+
         <div className="max-w-4xl mx-auto">
           <NewsletterCTA centered showSparkLoop={true} redirectOnSuccess={false} />
-        </div>
-      </section>
+        </div> 
+
+      </section>  */}
+      
     </>
   )
 }

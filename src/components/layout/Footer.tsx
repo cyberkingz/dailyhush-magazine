@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom'
 
 export function Footer() {
   return (
-    <footer className="mt-24" role="contentinfo">
+    <footer className="mt-0 border-t border-gray-100" role="contentinfo">
       {/* Main footer content */}
-      <div className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 border-t border-amber-100">
+      <div className="bg-whiteborder-t border-amber-100">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Brand section - takes more space */}

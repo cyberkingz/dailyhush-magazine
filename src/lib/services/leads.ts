@@ -1,5 +1,6 @@
 import { supabase } from '../supabase'
 import { notifyN8nSubscription } from './webhook'
+import { notifyBeehiivSubscription } from './beehiiv-webhook'
 import type { 
   Lead, 
   CreateLeadData, 
@@ -123,10 +124,15 @@ export async function createLead(email: string, context?: Partial<LeadTrackingCo
       }
     }
     
-    // Successfully created lead - notify n8n webhook
-    // This runs asynchronously and doesn't block the response
-    notifyN8nSubscription(leadData).catch(webhookError => {
-      console.warn('n8n webhook notification failed (subscription still successful):', webhookError)
+    // Successfully created lead - notify webhooks
+    // Send to beehiiv webhook (just like n8n)
+    notifyBeehiivSubscription(leadData).catch(beehiivError => {
+      console.warn('Beehiiv webhook notification failed (subscription still successful):', beehiivError)
+    })
+    
+    // Also notify n8n webhook for additional processing
+    notifyN8nSubscription(leadData).catch(n8nError => {
+      console.warn('n8n webhook notification failed (subscription still successful):', n8nError)
     })
     
     return {

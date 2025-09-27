@@ -2,6 +2,7 @@ import type { Lead } from '../types/leads'
 
 // n8n webhook configuration
 const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL
+const BEEHIIV_PUBLICATION_ID = import.meta.env.VITE_BEEHIIV_PUBLICATION_ID
 
 // Interface for webhook notification data
 interface WebhookNotificationData {
@@ -18,6 +19,7 @@ interface WebhookNotificationData {
   browser?: string
   device_type?: 'desktop' | 'mobile' | 'tablet' | 'unknown'
   referrer_url?: string
+  beehiiv_publication_id?: string
 }
 
 /**
@@ -46,8 +48,21 @@ export async function notifyN8nSubscription(leadData: Partial<Lead>): Promise<bo
       utm_content: leadData.utm_content,
       browser: leadData.browser,
       device_type: leadData.device_type,
-      referrer_url: leadData.referrer_url
+      referrer_url: leadData.referrer_url,
+      beehiiv_publication_id: BEEHIIV_PUBLICATION_ID
     }
+
+    // Log what we're sending to n8n (which forwards to beehiiv)
+    console.log('📧 Sending to n8n/beehiiv:', {
+      email: notificationData.email,
+      beehiiv_publication_id: notificationData.beehiiv_publication_id,
+      source_page: notificationData.source_page,
+      utm_params: {
+        utm_source: notificationData.utm_source,
+        utm_medium: notificationData.utm_medium,
+        utm_campaign: notificationData.utm_campaign
+      }
+    })
 
     // Build URL parameters, filtering out undefined values
     const params = new URLSearchParams()
@@ -57,8 +72,11 @@ export async function notifyN8nSubscription(leadData: Partial<Lead>): Promise<bo
       }
     })
 
-    // Send GET request to n8n webhook
+    // Send GET request to n8n webhook (as it was working before)
     const webhookUrl = `${N8N_WEBHOOK_URL}?${params.toString()}`
+    
+    // Log the full webhook URL for debugging
+    console.log('📤 Full n8n webhook URL:', webhookUrl)
     
     const response = await fetch(webhookUrl, {
       method: 'GET',
@@ -67,11 +85,12 @@ export async function notifyN8nSubscription(leadData: Partial<Lead>): Promise<bo
     })
 
     if (!response.ok) {
-      console.warn(`n8n webhook returned status ${response.status}:`, await response.text())
+      console.warn(`❌ n8n webhook returned status ${response.status}:`, await response.text())
       return false
     }
 
-    console.log('Successfully notified n8n of newsletter subscription')
+    console.log('✅ Successfully notified n8n webhook - should forward to beehiiv')
+    console.log('🔍 Check n8n execution logs for beehiiv API response')
     return true
 
   } catch (error) {
@@ -127,19 +146,14 @@ export async function notifyN8nContact(contactData: {
       referrer_url: contactData.referrer_url
     }
 
-    // Build URL parameters, filtering out undefined values
-    const params = new URLSearchParams()
-    Object.entries(notificationData).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '') {
-        params.append(key, String(value))
-      }
-    })
-
-    // Send GET request to n8n webhook
-    const webhookUrl = `${N8N_WEBHOOK_URL}?${params.toString()}`
-    
-    const response = await fetch(webhookUrl, {
-      method: 'GET',
+    // Send POST request to n8n webhook with no-cors mode to bypass CORS
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors', // This bypasses CORS checks
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(notificationData),
       // Add timeout to prevent hanging
       signal: AbortSignal.timeout(5000)
     })

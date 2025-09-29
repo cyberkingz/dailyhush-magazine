@@ -86,8 +86,8 @@ export default function ThankYouPage() {
         </div>
       )}
 
-      <div className="w-full max-w-5xl px-4 flex flex-1">
-        <div className="bg-white border border-gray-200 shadow-2xl flex-1 flex flex-col overflow-hidden">
+      <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1">
+        <div className="bg-white border-2 border-gray-300 flex-1 flex flex-col overflow-hidden">
           {/* Enhanced Urgency Header */}
           <div className="relative overflow-hidden bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white py-6 md:py-8">
             <div className="absolute inset-0 bg-black/10" />
@@ -113,7 +113,7 @@ export default function ThankYouPage() {
             </div>
           </div>
 
-          <div className="flex-1 max-w-4xl w-full mx-auto px-8 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
+          <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
         {/* Letter Header */}
         <div className="mb-16">
           <p className="text-lg text-gray-600 mb-2">✅ You're subscribed to DailyHush!</p>
@@ -424,7 +424,7 @@ export default function ThankYouPage() {
           </div>
 
           {/* Hormozi CTA Section */}
-          <div className="mb-12 max-w-3xl mx-auto">
+          <div className="mb-12 max-w-3xl mx-auto px-4 md:px-0">
 
             <p className="text-xl font-bold text-gray-900 mb-8">
               You Have Two Choices Right Now

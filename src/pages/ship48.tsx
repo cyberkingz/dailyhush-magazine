@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Timer, CheckCircle, Trophy, Share2, ArrowRight, Clock, Target, Flame, Calendar } from 'lucide-react'
+import { Timer, CheckCircle, Trophy, Share2, ArrowRight, Clock, Target, Flame, Calendar, Zap, FileText, Users } from 'lucide-react'
+import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 
 interface SessionData {
   startTime: number
@@ -383,6 +384,73 @@ export default function Ship48() {
             </div>
           )}
         </div>
+
+        {/* F.I.R.E. STARTER KIT CTA - Context-aware */}
+        {(completedTasks.length >= 2 || totalSessions > 0) && (
+          <div className="mt-12 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl shadow-2xl p-8 text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-pink-600/20"></div>
+            <div className="relative">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                  <Zap className="w-4 h-4" />
+                  <span>You're clearly ready to ship! 🚀</span>
+                </div>
+                
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Skip the Planning, Start Shipping
+                </h2>
+                
+                <p className="text-xl text-orange-100 mb-6 max-w-2xl mx-auto">
+                  The F.I.R.E. STARTER KIT gives you everything you need to launch in 48 hours.
+                  No more endless planning - just a proven system that works.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <FileText className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="font-bold mb-2">Complete Notion System</h4>
+                  <p className="text-orange-100 text-sm">9 pre-filled steps, templates, and frameworks ready to use</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Timer className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="font-bold mb-2">48-Hour Launch Plan</h4>
+                  <p className="text-orange-100 text-sm">Proven timeline that eliminates overwhelm and forces action</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="font-bold mb-2">Turn Ideas Into Reality</h4>
+                  <p className="text-orange-100 text-sm">Stop planning, start shipping. For entrepreneurs ready to act</p>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className="bg-white rounded-2xl p-6 inline-block">
+                  <CheckoutButton 
+                    variant="cta" 
+                    size="lg"
+                    showPricing={true}
+                    className="mb-4"
+                  >
+                    <Flame className="w-5 h-5" />
+                    Get F.I.R.E. STARTER KIT Now
+                  </CheckoutButton>
+                  <p className="text-xs text-gray-500">
+                    ⚡ Instant access • 🔒 30-day guarantee • 📧 Lifetime support
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Enhanced CTA for newsletter - Context-aware */}
         <div className="text-center mt-12 p-8 bg-gray-50 rounded-2xl">

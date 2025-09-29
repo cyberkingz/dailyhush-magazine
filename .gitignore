@@ -31,3 +31,6 @@ dist-ssr
 
 # MCP configuration with API keys
 .mcp.json
+
+# Local Netlify folder
+.netlify

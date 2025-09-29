@@ -35,7 +35,7 @@ export default function Home() {
               <NewsletterInlineForm 
                 sourcePage="home-hero" 
                 showSparkLoop={true}
-                redirectOnSuccess={false}
+                redirectOnSuccess={true}
               />
             </div>
             

@@ -270,62 +270,135 @@ export default function ThankYouPage() {
             </div>
           </div>
 
+          {/* Ticket-Style Deal Section */}
           <div className="mb-16">
-            <p className="text-xl font-bold text-gray-900 mb-8">
-              Here's The Deal
-            </p>
-            
-            <p className="text-lg text-gray-900 mb-6 leading-relaxed">
-              I analyzed 47 business courses in the last 30 days. Average price: $1,497. Most teach theory from "gurus" who've never actually launched anything.
-            </p>
-            
-            <p className="text-lg text-gray-900 mb-6 leading-relaxed">
-              This gives you the exact F.I.R.E. method that launched 847 real businesses. Not theory. Not fluff. The actual step-by-step system that forces you to ship in 48 hours and get real customers.
-            </p>
-            
-            <p className="text-lg text-gray-900 mb-8 leading-relaxed">
-              <strong>Your investment: $27.</strong> Less than what most people waste on coffee in a week. Less than a single tank of gas. But it could finally turn your ideas into income.
-            </p>
-
-            <p className="text-xl font-bold text-gray-900 mb-8">
-              What Others Charge vs. What You Pay
-            </p>
-            
-            <div className="text-lg text-gray-900 leading-relaxed mb-8">
-              <p className="mb-3">
-                • Business course from "guru": $2,997 → <strong>Included FREE</strong>
-              </p>
-              <p className="mb-3">
-                • 1-hour business coaching session: $500 → <strong>Included FREE</strong>
-              </p>
-              <p className="mb-3">
-                • Done-for-you launch templates: $997 → <strong>Included FREE</strong>
-              </p>
-              <p className="mb-6">
-                • Customer validation system: $497 → <strong>Included FREE</strong>
-              </p>
+            {/* Deal Header with Torn Edge Effect */}
+            <div className="relative bg-gradient-to-r from-blue-600 to-blue-500 text-white p-8 rounded-t-2xl">
+              <div 
+                className="absolute bottom-0 left-0 right-0 h-4 bg-white" 
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'%3E%3Cpath d='M0,5 Q5,0 10,5 T20,5 T30,5 T40,5 T50,5 T60,5 T70,5 T80,5 T90,5 T100,5' fill='white'/%3E%3C/svg%3E")`,
+                  backgroundSize: '100px 16px',
+                  backgroundRepeat: 'repeat-x'
+                }} 
+              />
               
-              <p className="mb-4">
-                <strong>BONUS STACK (Today Only):</strong><br/>
-                Private Notion workspace with all templates ($297), Exclusive Slack community access ($197), Weekly founder Q&A calls for 3 months ($997)
-              </p>
-              
-              <p className="mb-4">
-                <strong>Total Real Value: $6,482</strong>
-              </p>
-              
-              <p className="text-xl text-gray-900">
-                <strong>Today You Get Everything For: $27</strong>
-              </p>
+              <div className="text-center">
+                <div className="inline-block bg-black bg-opacity-20 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                  🔥 LIMITED TIME OFFER
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black mb-4 text-white">
+                  HERE'S THE DEAL
+                </h2>
+                <p className="text-xl font-bold opacity-90">
+                  I analyzed 47 business courses. Average price: $1,497.
+                </p>
+                <p className="text-lg opacity-80 mt-2">
+                  Most teach theory from "gurus" who've never launched anything.
+                </p>
+              </div>
             </div>
 
-            <div className="mb-12">
+            {/* Value Stack - Ticket Body */}
+            <div className="bg-white border-2 border-dashed border-gray-300 p-8 relative">
+
+              <div className="text-center mb-8">
+                <p className="text-xl text-gray-900 font-bold mb-4">
+                  This gives you the exact F.I.R.E. method that launched 847 real businesses.
+                </p>
+                <p className="text-lg text-gray-700">
+                  Not theory. Not fluff. The step-by-step system that forces you to ship in 48 hours.
+                </p>
+              </div>
+
+              {/* Value Breakdown */}
+              <div className="bg-gray-50 rounded-xl p-6 mb-8">
+                <h3 className="text-2xl font-black text-center mb-6 text-gray-900">
+                  WHAT OTHERS CHARGE VS. WHAT YOU PAY
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
+                    <span className="text-lg text-gray-900">Business course from "guru"</span>
+                    <div className="text-right">
+                      <span className="text-red-500 line-through text-lg">$2,997</span>
+                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
+                    <span className="text-lg text-gray-900">1-hour business coaching session</span>
+                    <div className="text-right">
+                      <span className="text-red-500 line-through text-lg">$500</span>
+                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
+                    <span className="text-lg text-gray-900">Done-for-you launch templates</span>
+                    <div className="text-right">
+                      <span className="text-red-500 line-through text-lg">$997</span>
+                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
+                    <span className="text-lg text-gray-900">Customer validation system</span>
+                    <div className="text-right">
+                      <span className="text-red-500 line-through text-lg">$497</span>
+                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bonus Stack */}
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white p-6 rounded-xl mb-8">
+                <div className="text-center">
+                  <h3 className="text-2xl font-black mb-4 text-white">
+                    🎁 BONUS STACK (Today Only)
+                  </h3>
+                  <div className="grid md:grid-cols-3 gap-4 text-center">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4 text-white">
+                      <div className="font-bold text-lg">Private Notion Workspace</div>
+                      <div className="text-sm">All templates included</div>
+                      <div className="font-black text-xl mt-2">$297</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4 text-white">
+                      <div className="font-bold text-lg">Exclusive Slack Community</div>
+                      <div className="text-sm">847 launched founders</div>
+                      <div className="font-black text-xl mt-2">$197</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4 text-white">
+                      <div className="font-bold text-lg">Weekly Q&A Calls</div>
+                      <div className="text-sm">3 months included</div>
+                      <div className="font-black text-xl mt-2">$997</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Value */}
+              <div className="border-4 border-dashed border-red-500 bg-red-50 p-6 rounded-xl text-center">
+                <div className="text-3xl font-black text-red-600 mb-2">
+                  TOTAL REAL VALUE: $6,482
+                </div>
+                <div className="text-lg text-gray-700 mb-4">
+                  Less than dinner for two. Less than a tank of gas.
+                </div>
+                <div className="text-5xl font-black text-green-600">
+                  YOU PAY: $27
+                </div>
+                <div className="text-sm text-gray-600 mt-2">
+                  That's 99.6% OFF • Save $6,455 Today
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-12">
               <p className="text-lg text-gray-900 mb-6 leading-relaxed">
-                But since you just joined DailyHush (and I want to prove this works), you get everything for just $27.
-              </p>
-              
-              <p className="text-lg text-gray-900 mb-6 leading-relaxed">
-                Twenty-seven dollars. That's less than dinner for two. Less than a tank of gas. Less than what most people waste on coffee in a week.
+                But since you just joined DailyHush (and I want to prove this works), you get everything at this special subscriber price.
               </p>
               
               <p className="text-xl font-bold text-gray-900 mb-6">
@@ -351,13 +424,13 @@ export default function ThankYouPage() {
           </div>
 
           {/* Hormozi CTA Section */}
-          <div className="mb-12 text-center">
+          <div className="mb-12 max-w-3xl mx-auto">
 
             <p className="text-xl font-bold text-gray-900 mb-8">
               You Have Two Choices Right Now
             </p>
 
-            <div className="text-lg text-gray-900 leading-relaxed mb-12 text-left">
+            <div className="text-lg text-gray-900 leading-relaxed mb-12">
               <p className="mb-6">
                 <strong>Choice #1: Do Nothing</strong><br/>
                 Keep planning forever. Watch others launch while you perfect your business plan. Stay stuck in "research mode" with a computer full of ideas that never become real businesses. Wonder in 6 months why you didn't take action.<br/>
@@ -433,7 +506,7 @@ export default function ThankYouPage() {
                 email={userEmail}
                 variant="cta"
                 size="lg"
-                className="w-full sm:w-auto px-10 py-5 text-lg font-bold bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-red-400"
+                className="w-full sm:w-auto px-10 py-5 text-lg font-bold bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-green-400"
                 showPricing={false}
               >
                 <AlertTriangle className="h-5 w-5" />
@@ -445,10 +518,9 @@ export default function ThankYouPage() {
                 ⏰ Only 67 spots left at this price
               </p>
             </div>
-            </div>
           </div>
 
-          <div className="border-t border-gray-200 pt-12 mt-16 px-8 md:px-16 pb-16 md:pb-20 space-y-8">
+          <div className="border-t border-gray-200 pt-12 mt-16 px-8 md:px-16 pb-16 md:pb-20 space-y-8 max-w-3xl mx-auto">
             <p className="text-lg text-gray-900 leading-relaxed">
               <strong>P.S.</strong> Sarah Mitchell from Austin just messaged me: "Downloaded the F.I.R.E. kit on Friday, launched on Sunday, first customer on Tuesday. The action list literally forced me to stop overthinking." She's made $8,200 in 6 months. Question is: Will you be sending me your launch story next week?
             </p>

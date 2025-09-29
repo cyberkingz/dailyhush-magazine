@@ -3,7 +3,6 @@ import { CheckCircle, DollarSign, AlertTriangle, ArrowRight } from 'lucide-react
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
 
 export default function ThankYouPage() {
-  const [timeLeft, setTimeLeft] = useState({ minutes: 23, seconds: 47 })
   const [showNotification, setShowNotification] = useState(false)
   const [currentNotification, setCurrentNotification] = useState(0)
   
@@ -21,23 +20,7 @@ export default function ThankYouPage() {
   ]
 
   useEffect(() => {
-    document.title = 'URGENT: Your F.I.R.E. Starter Kit (23:47 Left) — DailyHush'
-    
-    // Countdown timer
-    const countdown = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.minutes === 0 && prev.seconds === 0) {
-          clearInterval(countdown)
-          return prev
-        }
-        if (prev.seconds === 0) {
-          return { minutes: prev.minutes - 1, seconds: 59 }
-        }
-        return { ...prev, seconds: prev.seconds - 1 }
-      })
-    }, 1000)
-
-    return () => clearInterval(countdown)
+    document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
   
   // Social proof notifications effect
@@ -97,17 +80,14 @@ export default function ThankYouPage() {
             <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
               <div className="flex items-center justify-center gap-3 flex-wrap">
                 <div className="flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full">
-                  <AlertTriangle className="h-4 w-4 text-yellow-300 animate-bounce" />
-                  <span className="text-xs font-bold uppercase tracking-wider">Limited Time</span>
+                  <AlertTriangle className="h-4 w-4 text-yellow-300" />
+                  <span className="text-xs font-bold uppercase tracking-wider">Special Price</span>
                 </div>
                 <span className="text-sm md:text-base font-bold tracking-wide uppercase">
-                  🔥 OFFER EXPIRES IN
-                  <span className="ml-2 text-lg md:text-xl font-black bg-black/40 backdrop-blur text-yellow-300 px-3 py-1 rounded-md border border-yellow-300/30">
-                    {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
-                  </span>
+                  🎯 F.I.R.E. STARTER KIT
                 </span>
                 <div className="text-xs text-red-100 font-medium">
-                  ⚡ Don't let another idea die!
+                  ⚡ Stop planning. Start shipping.
                 </div>
               </div>
             </div>
@@ -127,39 +107,39 @@ export default function ThankYouPage() {
           {/* Letter Headline */}
           <div className="mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-              Why 90% of Great Ideas Die in "Planning Mode"<br />
-              <span className="text-2xl md:text-3xl font-normal text-gray-700">(And The F.I.R.E. Method That Ships Ideas in 48 Hours)</span>
+              Stop Planning Your Business to Death<br />
+              <span className="text-2xl md:text-3xl font-normal text-gray-700">(And Finally Ship Something That Matters)</span>
             </h1>
           </div>
 
           {/* Letter Body */}
           <div className="mb-16 space-y-8 text-left leading-relaxed text-lg text-gray-900">
             <p className="mb-6">
-              Dear Friend,
+              Look, we both know you're not lacking ideas. Your notes app is probably bursting with "breakthrough concepts" and your bookmarks folder has more business opportunities than most people see in a lifetime.
             </p>
             
             <p className="mb-6">
-              The brutal truth: 90% of great ideas die in "planning mode."
+              The problem isn't your vision - it's your execution.
             </p>
             
             <p className="mb-6">
-              While you're perfecting your 47-slide business plan, your competitor just shipped their "embarrassingly simple" MVP and got their first paying customer.
+              You've become a chronic planner. A perpetual researcher. Someone who knows exactly what needs to be done but somehow never quite... does it.
             </p>
             
             <p className="mb-6">
-              <strong>The difference? MINDSET.</strong>
+              <strong>Here's what I've learned after watching hundreds of entrepreneurs get trapped in this cycle:</strong>
             </p>
             
             <p className="mb-6">
-              I used to be a chronic planner. Spent 6 months "researching" and "validating" ideas that never saw the light of day. My computer was a graveyard of perfect plans that never became real businesses.
+              The difference between successful business builders and eternal planners isn't talent, connections, or capital. It's a single behavioral shift that happens in the first 48 hours of any new project.
             </p>
             
             <p className="mb-6">
-              <strong>Then I discovered the F.I.R.E. Method.</strong>
+              <strong>Most people spend those crucial first two days "getting organized." Successful people spend them shipping something - anything - to real customers.</strong>
             </p>
             
             <p className="mb-6">
-              Not some guru's theory. A battle-tested framework from Eugene Schwartz, Alex Hormozi, Steve Blank, and other masters who actually build real businesses.
+              Even if it's embarrassingly simple. Even if it's not ready.
             </p>
             
             <p className="mb-4">
@@ -245,27 +225,27 @@ export default function ThankYouPage() {
             <div className="space-y-6 leading-relaxed text-lg text-gray-900">
               
               <p>
-                <strong>Sarah Mitchell, Austin, Texas - Launched in 48 hours</strong><br/>
-                "I was stuck in 'research mode' for 8 months. Downloaded the F.I.R.E. kit on a Friday, launched my MVP on Sunday night. First customer paid $297 on Tuesday. The action list literally forced me to stop thinking and start doing. [verified by Stripe receipt #PMT-2024-0847]"<br/>
-                - Digital marketing consultant, $8,200 MRR after 6 months
+                <strong>Sarah M., Austin, Texas</strong><br/>
+                "Stuck in planning for 8 months. The F.I.R.E. action list finally forced me to stop researching and start building. Launched over the weekend, got my first paying customer within 3 days. The framework works because it eliminates decision paralysis."<br/>
+                - Marketing consultant who shipped her first digital product
               </p>
 
               <p>
-                <strong>Michael Rodriguez, Miami, FL - From idea to $5K/month</strong><br/>
-                "The customer avatar template saved me from building the wrong product. Did the 3 customer interviews using their script - completely changed my approach. Launched, got 47 customers in month 1. Now at $5K/month recurring. The kit pays for itself 185x over."<br/>
-                - SaaS productivity tool [verified by bank statement]
+                <strong>Michael R., Miami, FL</strong><br/>
+                "The customer interview script saved me from building the wrong thing. Three conversations completely changed my product direction. Launched with real market feedback instead of assumptions. Wish I'd found this template years ago."<br/>
+                - Software founder who validated before building
               </p>
 
               <p>
-                <strong>Jennifer Lopez Chen, San Diego, CA - $23K launch</strong><br/>
-                "Single mom, 3 kids, working part-time. Used the F.I.R.E. method during naptime and weekends. Launched a parenting course that made $23K in the first month. The 'irresistible offer' template was magic - 47% conversion rate on cold traffic."<br/>
-                - Online course creator [income verified by CPA statement]
+                <strong>Jennifer C., San Diego, CA</strong><br/>
+                "Working mom with limited time. The 48-hour framework fit into my weekend schedule. Finally shipped something instead of endlessly planning. The pre-filled steps made it impossible to get lost in the details."<br/>
+                - Course creator who broke through analysis paralysis
               </p>
 
               <p>
-                <strong>David Kim, Seattle, WA - $156K in year 1</strong><br/>
-                "Was overthinking a business idea for 2 years. The F.I.R.E. kit forced me to ship in 48 hours. Got real feedback, pivoted based on customer input, scaled to $13K/month. The speed was everything - my competitor launched 6 months later with an inferior product."<br/>
-                - B2B software, 890 paying customers [verified by Stripe analytics]
+                <strong>David K., Seattle, WA</strong><br/>
+                "Two years of 'someday I'll launch.' The F.I.R.E. method forced me to ship imperfectly and iterate with real customers. Got actual feedback instead of theoretical advice. My competitor is still planning while I'm already serving customers."<br/>
+                - B2B software founder who chose speed over perfection
               </p>
             </div>
           </div>
@@ -311,86 +291,16 @@ export default function ThankYouPage() {
                 </p>
               </div>
 
-              {/* Value Breakdown */}
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                <h3 className="text-2xl font-black text-center mb-6 text-gray-900">
-                  WHAT OTHERS CHARGE VS. WHAT YOU PAY
-                </h3>
-                
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-lg text-gray-900">Business course from "guru"</span>
-                    <div className="text-right">
-                      <span className="text-red-500 line-through text-lg">$2,997</span>
-                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-lg text-gray-900">1-hour business coaching session</span>
-                    <div className="text-right">
-                      <span className="text-red-500 line-through text-lg">$500</span>
-                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-lg text-gray-900">Done-for-you launch templates</span>
-                    <div className="text-right">
-                      <span className="text-red-500 line-through text-lg">$997</span>
-                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-lg text-gray-900">Customer validation system</span>
-                    <div className="text-right">
-                      <span className="text-red-500 line-through text-lg">$497</span>
-                      <span className="text-green-600 font-bold text-xl ml-2">FREE</span>
-                    </div>
-                  </div>
+              {/* Simple, Honest Pricing */}
+              <div className="text-center space-y-6">
+                <div className="text-6xl font-black text-green-600 mb-2">
+                  $27
                 </div>
-              </div>
-
-              {/* Bonus Stack */}
-              <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white p-6 rounded-xl mb-8">
-                <div className="text-center">
-                  <h3 className="text-2xl font-black mb-4 text-white">
-                    🎁 BONUS STACK (Today Only)
-                  </h3>
-                  <div className="grid md:grid-cols-3 gap-4 text-center">
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4 text-white">
-                      <div className="font-bold text-lg">Private Notion Workspace</div>
-                      <div className="text-sm">All templates included</div>
-                      <div className="font-black text-xl mt-2">$297</div>
-                    </div>
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4 text-white">
-                      <div className="font-bold text-lg">Exclusive Slack Community</div>
-                      <div className="text-sm">847 launched founders</div>
-                      <div className="font-black text-xl mt-2">$197</div>
-                    </div>
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4 text-white">
-                      <div className="font-bold text-lg">Weekly Q&A Calls</div>
-                      <div className="text-sm">3 months included</div>
-                      <div className="font-black text-xl mt-2">$997</div>
-                    </div>
-                  </div>
+                <div className="text-xl text-gray-700">
+                  One-time payment. Lifetime access.
                 </div>
-              </div>
-
-              {/* Total Value */}
-              <div className="border-4 border-dashed border-red-500 bg-red-50 p-6 rounded-xl text-center">
-                <div className="text-3xl font-black text-red-600 mb-2">
-                  TOTAL REAL VALUE: $6,482
-                </div>
-                <div className="text-lg text-gray-700 mb-4">
-                  Less than dinner for two. Less than a tank of gas.
-                </div>
-                <div className="text-5xl font-black text-green-600">
-                  YOU PAY: $27
-                </div>
-                <div className="text-sm text-gray-600 mt-2">
-                  That's 99.6% OFF • Save $6,455 Today
+                <div className="text-lg text-gray-600">
+                  30-day money-back guarantee. No questions asked.
                 </div>
               </div>
             </div>
@@ -449,9 +359,6 @@ export default function ThankYouPage() {
             </div>
 
             <div className="mb-12 text-center">
-              <p className="text-lg text-gray-900 mb-6">
-                ⚠️ Timer above is REAL - offer disappears at 00:00
-              </p>
               
               <div className="mb-6">
                 <CheckoutButton 
@@ -468,7 +375,7 @@ export default function ThankYouPage() {
               </div>
               
               <p className="text-gray-600 text-sm mb-2">
-                ✅ Join 847 launched founders already inside • ⏰ Only 23 spots left at this price
+                ✅ Join 847 launched founders already inside • 🎯 30-day money-back guarantee
               </p>
               
               <p className="text-gray-600 text-sm">
@@ -491,11 +398,11 @@ export default function ThankYouPage() {
 
             <div className="text-center space-y-6">
               <p className="text-xl font-bold text-gray-900">
-                ⚠️ Final Warning: {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')} Left
+                🎯 The Question That Haunts Chronic Planners
               </p>
               
               <p className="text-lg text-gray-900 leading-relaxed">
-                This $27 introductory price is only available to the first 100 new DailyHush subscribers. After that, it goes to the regular price of $297. Currently 67 spots remaining.
+                "What if I'm still planning this same business idea next year?" The F.I.R.E. method forces you to ship imperfectly instead of planning perfectly. 847 people chose action over analysis. Which type of person are you?
               </p>
               
               <p className="text-xl font-bold text-gray-900">

@@ -20,6 +20,7 @@ interface WebhookNotificationData {
   device_type?: 'desktop' | 'mobile' | 'tablet' | 'unknown'
   referrer_url?: string
   beehiiv_publication_id?: string
+  lead_magnet_title?: string
 }
 
 /**
@@ -34,6 +35,12 @@ export async function notifyN8nSubscription(leadData: Partial<Lead>): Promise<bo
   }
 
   try {
+    // Determine lead magnet title based on source_page
+    let leadMagnetTitle = ''
+    if (leadData.source_page === 'home-hero') {
+      leadMagnetTitle = 'The Planning Paralysis Test'
+    }
+
     // Prepare webhook notification data
     const notificationData: WebhookNotificationData = {
       event: 'newsletter_subscription',
@@ -49,7 +56,8 @@ export async function notifyN8nSubscription(leadData: Partial<Lead>): Promise<bo
       browser: leadData.browser,
       device_type: leadData.device_type,
       referrer_url: leadData.referrer_url,
-      beehiiv_publication_id: BEEHIIV_PUBLICATION_ID
+      beehiiv_publication_id: BEEHIIV_PUBLICATION_ID,
+      lead_magnet_title: leadMagnetTitle
     }
 
     // Log what we're sending to n8n (which forwards to beehiiv)

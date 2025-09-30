@@ -175,9 +175,9 @@ export default function NewsletterInlineForm({
         
         if (showSparkLoop) {
           // Show success message and set up redirect after SparkLoop closes
-          setResponse({ 
-            success: true, 
-            message: 'Thanks for subscribing! Looking for more great newsletters? If the modal doesn\'t appear, click here to continue.' 
+          setResponse({
+            success: true,
+            message: 'Thanks for subscribing! Redirecting...'
           })
           setShouldRedirectAfterSparkLoop(true)
           // Don't clear email yet - SparkLoop redirect needs it
@@ -240,22 +240,7 @@ export default function NewsletterInlineForm({
       </form>
       {response && (
         <p className={`mt-3 text-sm ${response.success ? 'text-green-700' : 'text-red-600'}`}>
-          {response.success && showSparkLoop && shouldRedirectAfterSparkLoop ? (
-            <>
-              Thanks for subscribing! Looking for more great newsletters?{' '}
-              <button 
-                onClick={() => {
-                  const finalUrl = `${redirectTo}?email=${encodeURIComponent(email)}`
-                  window.location.assign(finalUrl)
-                }}
-                className="underline hover:no-underline font-semibold"
-              >
-                Click here to continue →
-              </button>
-            </>
-          ) : (
-            response.message
-          )}
+          {response.message}
         </p>
       )}
     </div>

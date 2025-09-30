@@ -250,7 +250,7 @@ export default function ThankYouPage() {
             </div>
           </div>
 
-          {/* Ticket-Style Deal Section */}
+          {/* Enhanced Price Reveal Section */}
           <div className="mb-16">
             {/* Deal Header with Torn Edge Effect */}
             <div className="relative bg-gradient-to-r from-blue-600 to-blue-500 text-white p-8 rounded-t-2xl">
@@ -284,23 +284,71 @@ export default function ThankYouPage() {
 
               <div className="text-center mb-8">
                 <p className="text-xl text-gray-900 font-bold mb-4">
-                  This gives you the exact F.I.R.E. method that launched 847 real businesses.
+                  This gives you the exact F.I.R.E. method that forces you to ship in 48 hours.
                 </p>
                 <p className="text-lg text-gray-700">
-                  Not theory. Not fluff. The step-by-step system that forces you to ship in 48 hours.
+                  Not theory. Not fluff. The step-by-step system I use with private clients.
                 </p>
               </div>
 
-              {/* Simple, Honest Pricing */}
+              {/* Emotional Value Buildup */}
+              <div className="mb-10 space-y-6 text-left max-w-2xl mx-auto">
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Look, if you hired me personally to walk you through this system, my consulting rate is <strong>$300/hour</strong>. We'd need at least 6 hours to cover everything properly.
+                </p>
+                
+                <p className="text-xl font-bold text-gray-900 text-center py-3 bg-gray-50 rounded">
+                  That's $1,800 for private consulting
+                </p>
+                
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  I could easily charge $497 for this system. That's what my business advisor tells me. Most business courses charge $1,497+ for far less actionable content.
+                </p>
+                
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  <strong>But here's why I'm not charging $497...</strong> Because I remember what it was like starting out, staring at my bank account, knowing I had the drive but not the roadmap. And because I want to flood the market with entrepreneurs who actually execute instead of endlessly planning.
+                </p>
+              </div>
+
+              {/* Emotional Price Reveal */}
               <div className="text-center space-y-6">
-                <div className="text-6xl font-black text-green-600 mb-2">
-                  $27
+                <p className="text-xl text-gray-900 mb-6">
+                  So instead of $497... instead of even $97... you get lifetime access for just:
+                </p>
+
+                <div className="bg-green-50 border-2 border-green-300 rounded-lg p-8 mb-6">
+                  <div className="text-7xl font-black text-green-600 mb-3">
+                    $27
+                  </div>
+                  <div className="text-xl text-gray-700 mb-2">
+                    One-time payment. Forever yours.
+                  </div>
+                  <div className="text-lg text-gray-600 mb-4">
+                    30-day money-back guarantee. No questions asked.
+                  </div>
+                  
+                  <p className="text-lg text-gray-700 font-medium leading-relaxed">
+                    That's less than lunch. Less than a tank of gas. Less than those business magazines collecting dust on your desk that you never read.
+                  </p>
                 </div>
-                <div className="text-xl text-gray-700">
-                  One-time payment. Lifetime access.
+                
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-gray-600">
+                  <p><strong>Fair warning:</strong> My business manager thinks I'm crazy for pricing this so low. She keeps showing me spreadsheets proving I should charge at least $297. Don't be surprised if you see the price higher when you tell your entrepreneur friends about this.</p>
                 </div>
-                <div className="text-lg text-gray-600">
-                  30-day money-back guarantee. No questions asked.
+                
+                {/* CTA Button Right After Offer */}
+                <div className="mt-8">
+                  <CheckoutButton 
+                    email={userEmail}
+                    variant="cta"
+                    size="lg"
+                    className="w-full px-8 py-4 text-xl font-bold rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+                    showPricing={false}
+                  >
+                    <DollarSign className="h-6 w-6" />
+                    Get F.I.R.E. STARTER KIT Now - $27
+                    <ArrowRight className="h-5 w-5" />
+                  </CheckoutButton>
                 </div>
               </div>
             </div>
@@ -379,15 +427,15 @@ export default function ThankYouPage() {
               </p>
               
               <p className="text-gray-600 text-sm">
-                256-bit SSL Secure • Instant Access • 60-Day Guarantee
+                256-bit SSL Secure • Instant Access • No questions asked
               </p>
             </div>
 
             <p className="text-xl font-bold text-gray-900 mb-6">
-              My "Unreasonable" 48-Hour + 10X Guarantee
+              My "Unreasonable" 30-Day Guarantee
             </p>
             <p className="text-lg text-gray-900 mb-6 leading-relaxed">
-              Use the F.I.R.E. method for 60 days. If you don't launch something within 48 hours and make at least $270 (10x your investment) within 60 days, I'll refund your $27 AND you keep everything. Plus, I'll personally review your launch and tell you exactly what went wrong.
+              Use the F.I.R.E. method for 30 days. If you don't ship something within 48 hours using this system, I'll refund your $27 AND you keep everything. No complicated requirements, no revenue targets to hit.
             </p>
             <p className="text-lg text-gray-900 mb-6 leading-relaxed">
               Hell, if you don't like the Notion template design, I'll refund you. No questions, no hassles, no hoops. Just email me your receipt.

@@ -15,6 +15,12 @@ export async function notifyBeehiivSubscription(leadData: Partial<Lead>): Promis
   }
 
   try {
+    // Determine lead magnet title based on source_page
+    let leadMagnetTitle = ''
+    if (leadData.source_page === 'home-hero') {
+      leadMagnetTitle = 'The Planning Paralysis Test'
+    }
+
     // Prepare form data for beehiiv
     const formData = new URLSearchParams({
       email: leadData.email || '',
@@ -23,7 +29,8 @@ export async function notifyBeehiivSubscription(leadData: Partial<Lead>): Promis
       utm_campaign: leadData.utm_campaign || '',
       utm_term: leadData.utm_term || '',
       utm_content: leadData.utm_content || '',
-      referring_site: leadData.source_page || leadData.referrer_url || ''
+      referring_site: leadData.source_page || leadData.referrer_url || '',
+      lead_magnet_title: leadMagnetTitle
     })
 
     // Log what we're sending

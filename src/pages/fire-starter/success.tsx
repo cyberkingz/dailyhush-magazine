@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { CheckCircle, ExternalLink, Mail, Users, FileText, ArrowRight, Download, Zap } from 'lucide-react'
+import { CheckCircle, Mail, Users, FileText, ArrowRight, Zap } from 'lucide-react'
 import { useStripe } from '@/hooks/useStripe'
 
 interface PurchaseInfo {
@@ -13,17 +13,10 @@ interface PurchaseInfo {
   accessGranted: boolean
 }
 
-interface Resources {
-  notionWorkspace: string
-  communityAccess: string
-  supportEmail: string
-}
-
 export default function FireStarterSuccess() {
   const [searchParams] = useSearchParams()
   const { verifyPurchase, createCoachingCheckout, loading, error } = useStripe()
   const [purchase, setPurchase] = useState<PurchaseInfo | null>(null)
-  const [resources, setResources] = useState<Resources | null>(null)
   const [verificationError, setVerificationError] = useState<string | null>(null)
   const [coachingLoading, setCoachingLoading] = useState(false)
   const [coachingPurchased, setCoachingPurchased] = useState(false)
@@ -59,7 +52,6 @@ export default function FireStarterSuccess() {
       verifyPurchase(sessionId)
         .then((result) => {
           setPurchase(result.purchase)
-          setResources(result.resources)
         })
         .catch((err) => {
           setVerificationError(err.message)
@@ -265,78 +257,103 @@ export default function FireStarterSuccess() {
 
         {/* UPSELL - 1-on-1 Coaching Call */}
         {!coachingPurchased ? (
-          <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-2xl shadow-2xl p-8 md:p-10 text-center border-4 border-amber-300/50">
-            <div className="inline-flex items-center gap-2 bg-white/90 text-amber-600 px-4 py-1.5 rounded-full text-xs font-bold mb-5 shadow-lg">
-              <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-              ONE-TIME OFFER • EXPIRES IN 48 HOURS
-            </div>
+          <div className="relative bg-gradient-to-br from-amber-50 via-white to-yellow-50 rounded-2xl shadow-xl p-8 md:p-10 text-center border border-amber-200 overflow-hidden">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-yellow-500/5 pointer-events-none"></div>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Want 1-on-1 Help to Launch Faster?
-            </h2>
-            <p className="text-white/95 text-lg mb-6 max-w-2xl mx-auto">
-              Get a <span className="font-bold underline decoration-2 decoration-white/80">60-minute strategy call</span> with an expert to fast-track your F.I.R.E. implementation
-            </p>
+            <div className="relative">
+              {/* Refined urgency badge */}
+              <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-3 py-1 rounded-full text-xs font-semibold mb-6 shadow-sm">
+                <span className="inline-block w-1.5 h-1.5 bg-white rounded-full"></span>
+                LIMITED TIME OFFER
+              </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-6 max-w-lg mx-auto border border-white/20">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-left text-white">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                  <span className="text-sm font-medium">Personalized roadmap review</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                  <span className="text-sm font-medium">Custom implementation plan</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                  <span className="text-sm font-medium">Live Q&A with expert coach</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                  <span className="text-sm font-medium">Action items & next steps</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                Want 1-on-1 Help to <br className="hidden md:block" />Launch Faster?
+              </h2>
+
+              <p className="text-gray-700 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+                Get a <span className="font-semibold text-amber-600">60-minute strategy call</span> with an expert coach to fast-track your F.I.R.E. implementation
+              </p>
+
+              {/* Benefits grid with refined styling */}
+              <div className="bg-white rounded-xl p-6 mb-8 max-w-lg mx-auto shadow-md border border-amber-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="w-5 h-5 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                    </div>
+                    <span className="text-sm text-gray-700 font-medium leading-snug">Personalized roadmap review</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="w-5 h-5 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                    </div>
+                    <span className="text-sm text-gray-700 font-medium leading-snug">Custom implementation plan</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="w-5 h-5 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                    </div>
+                    <span className="text-sm text-gray-700 font-medium leading-snug">Live Q&A with expert</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="w-5 h-5 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                    </div>
+                    <span className="text-sm text-gray-700 font-medium leading-snug">Actionable next steps</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mb-6">
-              <div className="inline-flex items-baseline gap-2">
-                <span className="text-white/70 text-2xl line-through">$297</span>
-                <span className="text-white text-5xl font-bold">$150</span>
+              {/* Refined pricing */}
+              <div className="mb-8">
+                <div className="inline-flex items-baseline gap-3">
+                  <span className="text-gray-400 text-xl font-medium line-through">$297</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-yellow-600 text-5xl md:text-6xl font-bold">$150</span>
+                </div>
+                <div className="inline-flex items-center gap-2 mt-3">
+                  <span className="inline-block w-2 h-2 bg-amber-500 rounded-full"></span>
+                  <p className="text-gray-600 text-sm font-medium">50% OFF • New Customer Exclusive</p>
+                </div>
               </div>
-              <p className="text-white/80 text-sm mt-2">50% OFF • New Customer Exclusive</p>
-            </div>
 
-            <button
-              onClick={handleCoachingClick}
-              disabled={coachingLoading}
-              className="inline-flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-amber-600 px-10 py-5 rounded-xl font-bold text-xl transition shadow-2xl hover:shadow-3xl transform hover:scale-105 active:scale-95 w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              {coachingLoading ? (
-                <>
-                  <div className="w-6 h-6 border-3 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
-                  Processing Payment...
-                </>
-              ) : (
-                <>
-                  <Users className="w-6 h-6" strokeWidth={2.5} />
-                  Add Coaching Call - $150
-                  <ArrowRight className="w-6 h-6" strokeWidth={2.5} />
-                </>
+              {/* Polished button */}
+              <button
+                onClick={handleCoachingClick}
+                disabled={coachingLoading}
+                className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {coachingLoading ? (
+                  <>
+                    <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Processing Payment...
+                  </>
+                ) : (
+                  <>
+                    <Users className="w-5 h-5" strokeWidth={2.5} />
+                    Add Coaching Call • $150
+                  </>
+                )}
+              </button>
+
+              {coachingError && (
+                <div className="mt-5 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                  <p className="text-sm font-medium">{coachingError}</p>
+                  <p className="text-xs mt-1">Please try again or contact support.</p>
+                </div>
               )}
-            </button>
 
-            {coachingError && (
-              <div className="mt-4 bg-red-500/20 border border-red-400 text-white px-4 py-3 rounded-lg">
-                <p className="text-sm font-medium">{coachingError}</p>
-                <p className="text-xs mt-1 opacity-80">Please try again or contact support.</p>
+              {/* Refined trust indicator */}
+              <div className="flex items-center justify-center gap-2 mt-6">
+                <div className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-3 h-3 text-green-600" strokeWidth={3} />
+                </div>
+                <p className="text-gray-500 text-xs font-medium">
+                  Secure one-click payment • Same card on file
+                </p>
               </div>
-            )}
-
-            <p className="text-white/70 text-xs mt-5 flex items-center justify-center gap-2">
-              <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              One-click payment • No re-entering card details
-            </p>
+            </div>
           </div>
         ) : (
           <div className="bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl shadow-2xl p-8 md:p-10 text-center border-4 border-green-300/50">
@@ -365,8 +382,8 @@ export default function FireStarterSuccess() {
 
             <p className="text-white/70 text-sm mt-6">
               Questions? Email us at{' '}
-              <a href="mailto:support@dailyhush.com" className="underline font-medium">
-                support@dailyhush.com
+              <a href="mailto:hello@daily-hush.com" className="underline font-medium">
+                hello@daily-hush.com
               </a>
             </p>
           </div>

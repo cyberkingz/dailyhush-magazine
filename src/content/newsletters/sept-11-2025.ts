@@ -1,5 +1,5 @@
 import type { NewsletterEdition } from './types'
-import fiveBeautyTechImg from '@/assets/editions-assets/5 Beauty Tech Innovations.png'
+// import fiveBeautyTechImg from '@/assets/editions-assets/5 Beauty Tech Innovations.png'
 
 const newsletter: NewsletterEdition = {
   slug: 'sept-11-2025',
@@ -8,7 +8,7 @@ const newsletter: NewsletterEdition = {
   displayDate: 'September 11, 2025',
   summary:
     "The real game‑changing devices revealed, a $50M beauty mistake, 'quiet luxury' trend spreads, plus more beauty wisdom...",
-  heroImage: fiveBeautyTechImg,
+  // heroImage: fiveBeautyTechImg,
   contentHtml: `
     <p><strong>In partnership with Droplette</strong></p>
     <p class="text-center"><img src="https://droplette.io/cdn/shop/files/Droplette_Logo_Updated_2023-01.png?v=1728060117&width=400" alt="Droplette logo" style="max-width:200px;width:100%;height:auto;margin:8px auto;"/></p>

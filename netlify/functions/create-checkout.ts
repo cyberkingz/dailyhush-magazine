@@ -86,6 +86,7 @@ export const handler: Handler = async (event) => {
       cancel_url: `${process.env.SITE_URL || 'https://daily-hush.com'}/ship48?cancelled=true`,
       automatic_tax: { enabled: true },
       payment_intent_data: {
+        setup_future_usage: 'off_session', // Save payment method for future use
         metadata: {
           product: 'fire_starter_kit',
           utm_source: utm_source || '',

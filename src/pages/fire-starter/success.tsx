@@ -47,9 +47,9 @@ export default function FireStarterSuccess() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Verifying your purchase...</p>
         </div>
       </div>
@@ -67,9 +67,9 @@ export default function FireStarterSuccess() {
           <p className="text-gray-600 mb-6">
             {verificationError || error || 'We couldn\'t verify your purchase right now, but don\'t worry! Your F.I.R.E. STARTER KIT has been sent to your email.'}
           </p>
-          <Link 
-            to="/ship48" 
-            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+          <Link
+            to="/ship48"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white px-6 py-3 rounded-lg font-semibold transition"
           >
             <ArrowRight className="w-4 h-4" />
             Continue to Ship48
@@ -87,154 +87,178 @@ export default function FireStarterSuccess() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-      <div className="mx-auto max-w-4xl px-6 py-12">
-        
-        {/* Success Header */}
-        <div className="text-center mb-12">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-12 h-12 text-green-500" />
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
+      <div className="mx-auto max-w-4xl px-6 py-8 md:py-12">
+
+        {/* Success Header - Streamlined */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <CheckCircle className="w-10 h-10 text-white" strokeWidth={2.5} />
           </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Welcome to the
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-500">
-              {' '}F.I.R.E. STARTER KIT!
+
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            You're In!
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">
+              {' '}Payment Confirmed
             </span>
           </h1>
-          
-          <p className="text-xl text-gray-600 mb-6">
-            Your purchase is complete. Time to turn your 'someday' into today! 🚀
+
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Your F.I.R.E. STARTER KIT is ready. Let's get you started in the next 60 seconds.
           </p>
-          
-          {/* Purchase Summary */}
-          <div className="inline-flex items-center gap-4 bg-white px-6 py-3 rounded-full shadow-md">
-            <span className="text-sm text-gray-500">Purchase confirmed</span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-            <span className="font-semibold text-green-600">
-              {formatAmount(purchase.amountPaid, purchase.currency)}
-            </span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-            <span className="text-sm text-gray-500">{purchase.customerEmail}</span>
+        </div>
+
+        {/* REASSURANCE - Email Confirmation (Supportive, not competing) */}
+        <div className="mb-8">
+          <div className="bg-blue-50 border-2 border-blue-100 rounded-xl p-5 flex items-start gap-4">
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Mail className="w-5 h-5 text-blue-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-bold text-gray-900 mb-1">Confirmation Email Sent</h3>
+              <p className="text-sm text-gray-700 mb-2">
+                Backup access link and instructions sent to <span className="font-semibold text-blue-600 break-all">{purchase.customerEmail}</span>
+              </p>
+              <div className="flex flex-wrap gap-3 text-xs text-gray-600">
+                <span className="inline-flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-green-500" />
+                  Backup links
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-green-500" />
+                  Setup guide
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-green-500" />
+                  Support info
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Your Resources */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          
-          {/* Primary Resource - Notion Workspace */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-green-200">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                <FileText className="w-6 h-6 text-white" />
+        {/* PROGRESSIVE DISCLOSURE - Collapsible Receipt */}
+        <details className="mb-8 group">
+          <summary className="cursor-pointer list-none">
+            <div className="bg-white rounded-xl shadow-md p-4 flex items-center justify-between hover:shadow-lg transition group-open:rounded-b-none">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <FileText className="w-4 h-4 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Order Receipt</h3>
+                  <p className="text-xs text-gray-500">
+                    {formatAmount(purchase.amountPaid, purchase.currency)} • Order #{purchase.sessionId.slice(-8).toUpperCase()}
+                  </p>
+                </div>
+              </div>
+              <div className="text-gray-400 group-open:rotate-180 transition-transform">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </summary>
+
+          <div className="bg-white rounded-b-xl shadow-md px-6 py-5">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                <div>
+                  <div className="text-gray-500 mb-1">Product</div>
+                  <div className="font-semibold text-gray-900">F.I.R.E. STARTER KIT</div>
+                </div>
+                <div>
+                  <div className="text-gray-500 mb-1">Amount</div>
+                  <div className="font-semibold text-amber-600">{formatAmount(purchase.amountPaid, purchase.currency)}</div>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-gray-500 mb-1">Customer Email</div>
+                  <div className="text-gray-900 break-all">{purchase.customerEmail}</div>
+                </div>
+                <div>
+                  <div className="text-gray-500 mb-1">Payment Status</div>
+                  <div className="inline-flex items-center gap-1.5">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="text-green-600 font-medium capitalize">{purchase.paymentStatus}</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-gray-500 mb-1">Order ID</div>
+                  <div className="text-gray-900 font-mono text-xs">#{purchase.sessionId.slice(-8).toUpperCase()}</div>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-gray-500 mb-1">Purchase Date</div>
+                  <div className="text-gray-900">{new Date(purchase.purchaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        {/* SECONDARY ACTION - What Happens Next */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-lg flex items-center justify-center">
+              <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+              What Happens Next
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex gap-4 items-start">
+              <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-amber-600 font-bold text-sm">1</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900">Your Notion Workspace</h3>
-                <p className="text-green-600 text-sm font-medium">Ready to use immediately</p>
-              </div>
-            </div>
-            
-            <p className="text-gray-600 mb-6">
-              Complete F.I.R.E. system with 9 pre-filled steps, templates, and frameworks to launch in 48 hours.
-            </p>
-            
-            <a
-              href={resources?.notionWorkspace || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition inline-flex items-center justify-center gap-2"
-            >
-              <Download className="w-5 h-5" />
-              Access Your Workspace
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Secondary Resources */}
-          <div className="space-y-6">
-            
-            {/* Email Confirmation */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <div className="flex items-center gap-3 mb-3">
-                <Mail className="w-8 h-8 text-blue-500" />
-                <h4 className="font-bold text-gray-900">Check Your Email</h4>
-              </div>
-              <p className="text-gray-600 text-sm mb-3">
-                We've sent detailed instructions and backup links to <strong>{purchase.customerEmail}</strong>
-              </p>
-              <div className="text-xs text-gray-500">
-                <p>📧 Delivery email sent</p>
-                <p>🔗 Backup access links included</p>
-                <p>📋 Step-by-step getting started guide</p>
+                <h4 className="font-semibold text-gray-900 mb-1">Duplicate to Your Notion</h4>
+                <p className="text-sm text-gray-600">Click the button above. The template will open in a new tab and you can duplicate it with one click.</p>
               </div>
             </div>
 
-            {/* Support */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <div className="flex items-center gap-3 mb-3">
-                <Users className="w-8 h-8 text-emerald-500" />
-                <h4 className="font-bold text-gray-900">Need Help?</h4>
+            <div className="flex gap-4 items-start">
+              <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-yellow-600 font-bold text-sm">2</span>
               </div>
-              <p className="text-gray-600 text-sm mb-3">
-                Questions about your F.I.R.E. STARTER KIT? We're here to help you succeed.
-              </p>
-              <a
-                href={`mailto:${resources?.supportEmail || 'hello@dailyhush.com'}?subject=F.I.R.E. STARTER KIT Support (${sessionId})`}
-                className="text-emerald-600 hover:text-emerald-700 font-medium text-sm inline-flex items-center gap-1"
-              >
-                <Mail className="w-4 h-4" />
-                Get Support
-              </a>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">Follow the 9 Steps</h4>
+                <p className="text-sm text-gray-600">Your workspace includes a clear path from idea to launch. Start with Step 1 and work through each framework.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4 items-start">
+              <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-orange-600 font-bold text-sm">3</span>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">Ship in 48 Hours</h4>
+                <p className="text-sm text-gray-600">Use the Ship48 challenge below to turn your template into a launched product this weekend.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Next Steps */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Zap className="w-6 h-6 text-orange-500" />
-            Your Next Steps (Do This Now!)
+        {/* TERTIARY ACTION - Ship48 Challenge */}
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl p-6 md:p-8 text-center border border-gray-700">
+          <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+            <Zap className="w-3 h-3" />
+            BONUS CHALLENGE
+          </div>
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
+            Ready to Ship in 48 Hours?
           </h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-blue-600 font-bold">1</span>
-              </div>
-              <h4 className="font-semibold mb-2">Access Your Workspace</h4>
-              <p className="text-sm text-gray-600">Click the link above to duplicate the Notion template to your workspace</p>
-            </div>
-            
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-orange-600 font-bold">2</span>
-              </div>
-              <h4 className="font-semibold mb-2">Start Your 48h Sprint</h4>
-              <p className="text-sm text-gray-600">Use the Ship48 challenge to implement your F.I.R.E. system</p>
-            </div>
-            
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-green-600 font-bold">3</span>
-              </div>
-              <h4 className="font-semibold mb-2">Ship & Share</h4>
-              <p className="text-sm text-gray-600">Launch your project and share your success story!</p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA to Ship48 */}
-        <div className="text-center bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl shadow-xl p-8 text-white">
-          <h2 className="text-2xl font-bold mb-4">Ready to Start Shipping?</h2>
-          <p className="text-indigo-100 mb-6">
-            Take your new F.I.R.E. STARTER KIT for a spin with our 48-hour shipping challenge
+          <p className="text-gray-300 mb-6 max-w-xl mx-auto">
+            Join our Ship48 challenge to turn your F.I.R.E. STARTER KIT into a live product this weekend.
           </p>
-          <Link 
+          <Link
             to="/ship48?utm_source=fire_starter&utm_medium=success_page&utm_campaign=post_purchase"
-            className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition inline-flex items-center gap-2"
+            className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-lg font-semibold transition shadow-lg hover:shadow-xl"
           >
-            Start 48-Hour Challenge <ArrowRight className="w-5 h-5" />
+            Join Ship48 Challenge
+            <ArrowRight className="w-4 h-4" />
           </Link>
+          <p className="text-gray-400 text-xs mt-3">Free • 48-hour sprint • Launch-focused</p>
         </div>
       </div>
     </div>

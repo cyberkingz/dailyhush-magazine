@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { CheckCircle, AlertTriangle, Sparkles, Zap, Flame } from 'lucide-react'
+import { CheckCircle, Flame } from 'lucide-react'
 import { useScarcity } from '../contexts/ScarcityContext'
 
 interface UrgencyBannerProps {
@@ -30,118 +30,108 @@ export function UrgencyBanner({
   }, [isSoldOut])
 
   return (
-    <div className={`relative overflow-hidden text-black ${
+    <div className={`relative overflow-hidden ${
       isSoldOut
-        ? 'bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400'
-        : 'bg-gradient-to-br from-yellow-400 via-yellow-300 to-amber-400'
+        ? 'bg-gradient-to-br from-slate-100 via-gray-100 to-slate-100'
+        : 'bg-gradient-to-br from-amber-50 via-orange-50/40 to-rose-50/30'
     }`}>
-      {/* Animated background elements */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
-      <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      {/* Soft animated background elements */}
+      <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
+      <div className="absolute inset-0 opacity-60">
+        <div
+          className="absolute top-0 right-0 w-96 h-96 bg-rose-100/40 rounded-full blur-3xl transition-opacity duration-[3000ms] ease-in-out"
+          style={{
+            animation: 'gentlePulse 4s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="absolute bottom-0 left-0 w-96 h-96 bg-amber-100/40 rounded-full blur-3xl transition-opacity duration-[3000ms] ease-in-out"
+          style={{
+            animation: 'gentlePulse 4s ease-in-out infinite 2s',
+          }}
+        />
       </div>
+
+      {/* Gentle pulse keyframe animation */}
+      <style>{`
+        @keyframes gentlePulse {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.7; }
+        }
+        @keyframes subtleShimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        @keyframes softBounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-2px); }
+        }
+      `}</style>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
         <div className="space-y-4 sm:space-y-5">
 
-          {/* Welcome Badge with Spots Scarcity */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <div className="inline-flex items-center gap-2 bg-black text-yellow-400 px-4 py-1.5 rounded-full shadow-lg">
-              <Sparkles className="h-4 w-4" />
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider">
-                New Subscriber Welcome Offer
-              </span>
+          {/* Main Headline with celebration */}
+          <div className="text-center space-y-3">
+            <div className="inline-block">
+              <p className="text-xs sm:text-sm font-medium text-slate-600 mb-2">
+                🎉 50,000 subscribers milestone celebration
+              </p>
             </div>
-            {showSocialProof && (
-              <div className={`flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1 rounded-full ${
-                isCritical
-                  ? 'bg-red-600 text-white animate-pulse'
-                  : isSoldOut
-                  ? 'bg-gray-800 text-gray-300'
-                  : 'bg-black/80 text-yellow-400'
-              }`}>
-                <Flame className={`h-4 w-4 ${isCritical ? 'animate-bounce' : ''}`} />
-                <span>
-                  {isSoldOut ? 'SOLD OUT TODAY' : `Only ${spotsRemaining}/${totalSpots} spots left!`}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Main Headline */}
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-gray-900">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight text-slate-900 px-2">
               {productName}
             </h2>
-            <p className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 flex items-center justify-center gap-2">
-              <Zap className="h-5 w-5 text-gray-900" />
+            <p className="text-sm sm:text-base md:text-lg font-medium text-slate-600 px-2">
               {tagline}
             </p>
           </div>
 
+          {/* Spots Scarcity Badge */}
+          {showSocialProof && (
+            <div className="flex justify-center">
+              <div className={`inline-flex items-center gap-2 text-sm sm:text-base font-semibold px-5 py-2.5 rounded-full transition-all duration-300 ${
+                isCritical
+                  ? 'bg-rose-600 text-white shadow-lg shadow-rose-200'
+                  : isSoldOut
+                  ? 'bg-slate-700 text-slate-200'
+                  : 'bg-slate-800/90 text-amber-100 shadow-md'
+              }`} style={isCritical ? { animation: 'softBounce 2s ease-in-out infinite' } : {}}>
+                <Flame className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span>
+                  {isSoldOut ? 'SOLD OUT TODAY' : `Only ${spotsRemaining}/${totalSpots} spots left today`}
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* Progress Bar - Spots Remaining */}
           {!isSoldOut && (
-            <div className="max-w-md mx-auto">
-              <div className="relative w-full bg-black/20 rounded-full h-3 sm:h-4 overflow-hidden shadow-inner">
+            <div className="max-w-sm mx-auto px-2">
+              <div className="relative w-full bg-slate-200/60 rounded-full h-3 overflow-hidden shadow-sm">
                 <div
-                  className={`h-full rounded-full transition-all duration-500 ease-out ${
+                  className={`h-full rounded-full transition-all duration-700 ease-out ${
                     isCritical
-                      ? 'bg-gradient-to-r from-red-600 to-red-500 animate-pulse'
-                      : 'bg-gradient-to-r from-green-600 via-yellow-500 to-yellow-400'
+                      ? 'bg-gradient-to-r from-rose-400 to-pink-400'
+                      : 'bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400'
                   }`}
                   style={{ width: `${progressPercentage}%` }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 animate-shimmer" />
+                  <div
+                    className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0"
+                    style={{ animation: 'subtleShimmer 3s linear infinite' }}
+                  />
                 </div>
               </div>
-              <p className={`text-center text-xs sm:text-sm font-bold mt-2 ${
-                isCritical ? 'text-red-700 animate-pulse' : 'text-gray-800'
-              }`}>
-                {isCritical
-                  ? `⚠️ Almost Gone! Only ${spotsRemaining} spots left`
-                  : `${spotsRemaining} spots available at this price today`
-                }
-              </p>
             </div>
           )}
 
-          {/* Trust Signals & Urgency Message */}
-          {isSoldOut ? (
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded-full shadow-lg">
-                <AlertTriangle className="h-4 w-4" />
-                <span className="text-sm font-bold uppercase">Today's Special Pricing Sold Out</span>
-              </div>
-            </div>
-          ) : isCritical ? (
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 animate-pulse">
-              <div className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full shadow-lg">
-                <AlertTriangle className="h-4 w-4" />
-                <span className="text-sm font-bold uppercase">
-                  Only ${spotsRemaining} spots left! Don't miss out
-                </span>
-                <AlertTriangle className="h-4 w-4" />
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
-              <div className="flex items-center gap-1.5 font-semibold text-gray-800">
-                <CheckCircle className="h-4 w-4 text-green-700" />
-                <span>30-Day Money-Back Guarantee</span>
-              </div>
-              <span className="hidden sm:inline text-gray-600">•</span>
-              <div className="flex items-center gap-1.5 font-semibold text-gray-800">
-                <Zap className="h-4 w-4 text-gray-900" />
-                <span>Instant Access After Purchase</span>
-              </div>
+          {/* Trust Signal */}
+          {!isSoldOut && !isCritical && (
+            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-slate-600">
+              <CheckCircle className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+              <span>30-Day Money-Back Guarantee • Instant Access</span>
             </div>
           )}
-
-          {/* Transparency Note */}
-          <p className="text-center text-[11px] sm:text-xs text-gray-700 max-w-2xl mx-auto leading-relaxed">
-            {transparencyMessage || defaultTransparencyMessage}
-          </p>
         </div>
       </div>
     </div>

@@ -1,105 +1,217 @@
-import { useEffect, useState } from 'react'
-import { CheckCircle, DollarSign, ArrowRight } from 'lucide-react'
+import { useEffect, useState, useRef } from 'react'
+import { CheckCircle, DollarSign, ArrowRight, Flame } from 'lucide-react'
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
 import { UrgencyBanner } from '../../components/UrgencyBanner'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 
 function ThankYouPageContent() {
   const [showNotification, setShowNotification] = useState(false)
+  const [isExiting, setIsExiting] = useState(false)
   const [currentNotification, setCurrentNotification] = useState(0)
-  const { decrementSpots } = useScarcity()
+  const [showStickyBar, setShowStickyBar] = useState(false)
+  const { decrementSpots, spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
+
+  // Use ref to track latest spots value without triggering effect re-runs
+  const spotsRemainingRef = useRef(spotsRemaining)
+  useEffect(() => {
+    spotsRemainingRef.current = spotsRemaining
+  }, [spotsRemaining])
 
   // Get email from URL params
   const urlParams = new URLSearchParams(window.location.search)
   const userEmail = urlParams.get('email') || undefined
   
-  // Social proof notifications - mixed with purchases
+  // Purchase notifications only - each triggers -1 spot
   const notifications = [
     { name: "Sarah", location: "New York", action: "just purchased F.I.R.E. Kit", time: "Just now", isPurchase: true },
     { name: "Mike", location: "San Francisco", action: "just purchased F.I.R.E. Kit", time: "1 min ago", isPurchase: true },
-    { name: "Jessica", location: "Austin", action: "got first customer", time: "3 min ago", isPurchase: false },
-    { name: "David", location: "Miami", action: "just purchased F.I.R.E. Kit", time: "4 min ago", isPurchase: true },
-    { name: "Emma", location: "Seattle", action: "launched in 48 hours", time: "6 min ago", isPurchase: false },
-    { name: "Alex", location: "Chicago", action: "just purchased F.I.R.E. Kit", time: "8 min ago", isPurchase: true },
-    { name: "Lisa", location: "Boston", action: "shipped her MVP", time: "10 min ago", isPurchase: false },
-    { name: "Tom", location: "Portland", action: "just purchased F.I.R.E. Kit", time: "12 min ago", isPurchase: true }
+    { name: "Jessica", location: "Austin", action: "just purchased F.I.R.E. Kit", time: "2 min ago", isPurchase: true },
+    { name: "David", location: "Miami", action: "just purchased F.I.R.E. Kit", time: "3 min ago", isPurchase: true },
+    { name: "Emma", location: "Seattle", action: "just purchased F.I.R.E. Kit", time: "4 min ago", isPurchase: true },
+    { name: "Alex", location: "Chicago", action: "just purchased F.I.R.E. Kit", time: "5 min ago", isPurchase: true },
+    { name: "Lisa", location: "Boston", action: "just purchased F.I.R.E. Kit", time: "6 min ago", isPurchase: true },
+    { name: "Tom", location: "Portland", action: "just purchased F.I.R.E. Kit", time: "7 min ago", isPurchase: true },
+    { name: "Rachel", location: "Denver", action: "just purchased F.I.R.E. Kit", time: "8 min ago", isPurchase: true },
+    { name: "Kevin", location: "Atlanta", action: "just purchased F.I.R.E. Kit", time: "9 min ago", isPurchase: true }
   ]
 
   useEffect(() => {
     document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
 
-  // Social proof notifications effect - connected to spots
+  // Track scroll position for sticky bar - show after 15% scroll
   useEffect(() => {
-    const showNextNotification = () => {
-      const notification = notifications[currentNotification]
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollPercentage = (scrollTop / docHeight) * 100
 
-      // If it's a purchase notification, decrement spots
-      if (notification.isPurchase) {
-        decrementSpots()
+      setShowStickyBar(scrollPercentage >= 15)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Purchase notifications effect - each notification decrements spots
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null
+
+    const showNextNotification = () => {
+      // Check current spots using ref (always has latest value)
+      if (spotsRemainingRef.current <= 0) {
+        // Clear interval if sold out
+        if (intervalId) {
+          clearInterval(intervalId)
+        }
+        setShowNotification(false)
+        return
       }
 
+      // Every notification is a purchase, so decrement spots
+      decrementSpots()
+
+      // Show notification with slide-up
       setShowNotification(true)
+      setIsExiting(false)
+
+      // After 4 seconds, start exit animation (slide down)
       setTimeout(() => {
-        setShowNotification(false)
+        setIsExiting(true)
+
+        // After exit animation completes (500ms), hide and move to next
         setTimeout(() => {
+          setShowNotification(false)
           setCurrentNotification((prev) => (prev + 1) % notifications.length)
-        }, 2000)
-      }, 5000)
+        }, 500)
+      }, 4000)
     }
 
     // Initial delay
     const initialTimeout = setTimeout(() => {
       showNextNotification()
-      const interval = setInterval(showNextNotification, 15000)
-      return () => clearInterval(interval)
-    }, 3000)
+      intervalId = setInterval(showNextNotification, 28000) // 28 seconds = ~20 minutes total
+    }, 5000) // Initial delay: 5 seconds
 
-    return () => clearTimeout(initialTimeout)
+    return () => {
+      clearTimeout(initialTimeout)
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+    }
   }, [currentNotification, decrementSpots])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex justify-center items-stretch">
-      {/* Floating Social Proof Notification */}
+      {/* Floating Purchase Notification - iOS Glassmorphic Style */}
       {showNotification && (
-        <div className="fixed bottom-8 left-8 z-50 animate-slide-up">
-          <div className={`bg-white rounded-lg shadow-2xl border p-4 flex items-center gap-3 max-w-sm ${
-            notifications[currentNotification].isPurchase
-              ? 'border-yellow-400 ring-2 ring-yellow-200'
-              : 'border-green-200'
-          }`}>
-            <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
-              notifications[currentNotification].isPurchase
-                ? 'bg-gradient-to-br from-yellow-500 to-amber-500'
-                : 'bg-gradient-to-br from-green-500 to-emerald-500'
-            }`}>
-              {notifications[currentNotification].isPurchase ? (
+        <div className={`fixed top-4 left-4 right-4 sm:top-auto sm:bottom-8 sm:left-8 sm:right-auto z-50 transition-all duration-500 ${
+          isExiting ? 'animate-slide-down' : 'animate-slide-from-top sm:animate-slide-up'
+        }`}>
+          <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-4 flex items-center gap-3 max-w-sm overflow-hidden mx-auto sm:mx-0">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50/40 via-rose-50/20 to-orange-50/30 pointer-events-none" />
+
+            {/* Content */}
+            <div className="relative flex items-center gap-3 w-full">
+              <div className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg">
                 <DollarSign className="w-6 h-6 text-white" />
-              ) : (
-                <CheckCircle className="w-6 h-6 text-white" />
-              )}
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-gray-900">
-                {notifications[currentNotification].name} from {notifications[currentNotification].location}
-              </p>
-              <p className="text-xs text-gray-600">
-                {notifications[currentNotification].action} • {notifications[currentNotification].time}
-              </p>
-            </div>
-            <div className="flex-shrink-0">
-              <div className={`text-xs font-bold ${
-                notifications[currentNotification].isPurchase ? 'text-yellow-600' : 'text-green-600'
-              }`}>
-                {notifications[currentNotification].isPurchase ? 'SOLD' : 'VERIFIED'}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-slate-900 truncate">
+                  {notifications[currentNotification].name} from {notifications[currentNotification].location}
+                </p>
+                <p className="text-xs text-slate-600 truncate">
+                  {notifications[currentNotification].action} • {notifications[currentNotification].time}
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <div className="text-xs font-semibold text-amber-700 bg-amber-100/80 backdrop-blur-sm px-2.5 py-1 rounded-full border border-amber-200/50">
+                  SOLD
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
 
+      {/* Mobile Sticky Bottom Bar - Premium Redesign */}
+      <div className={`fixed bottom-0 left-0 right-0 z-40 sm:hidden transition-transform duration-500 ease-out ${
+        showStickyBar ? 'translate-y-0' : 'translate-y-full'
+      }`}>
+        {/* Multi-layer glassmorphic background */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/98 to-white/95 backdrop-blur-2xl" />
+
+        {/* Subtle top glow */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-200/40 to-transparent" />
+
+        {/* Content container */}
+        <div className="relative px-4 py-4 space-y-3">
+          {/* Spots Counter Bar */}
+          {!isSoldOut && (
+            <div className="space-y-2">
+              {/* Progress bar */}
+              <div className="relative w-full bg-slate-200/60 rounded-full h-2 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-700 ease-out ${
+                    isCritical
+                      ? 'bg-gradient-to-r from-rose-400 to-pink-400'
+                      : 'bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400'
+                  }`}
+                  style={{ width: `${(spotsRemaining / totalSpots) * 100}%` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer" />
+                </div>
+              </div>
+
+              {/* Counter text */}
+              <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-slate-700">
+                <Flame className={`h-3.5 w-3.5 ${isCritical ? 'text-rose-600' : 'text-amber-600'}`} />
+                <span>{spotsRemaining}/{totalSpots} spots left today</span>
+              </div>
+            </div>
+          )}
+
+          {/* Primary CTA - Full width clean button */}
+          <CheckoutButton
+            email={userEmail}
+            variant="cta"
+            size="lg"
+            className="
+              w-full relative group
+              px-6 py-4
+              rounded-2xl
+              text-base font-bold tracking-wide
+              transition-all duration-300 ease-out
+              active:scale-[0.98]
+              bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30
+            "
+            showPricing={false}
+            showTrustSignals={false}
+          >
+            <span className="flex items-center justify-center gap-2">
+              <span>Get F.I.R.E. Kit</span>
+              <span className="text-amber-50/80">•</span>
+              <span className="font-black">$27</span>
+            </span>
+
+            {/* Subtle inner glow */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/5 via-transparent to-white/10 pointer-events-none" />
+          </CheckoutButton>
+
+          {/* Trust signal - Simple */}
+          <div className="flex items-center justify-center text-xs text-slate-600">
+            <CheckCircle className="h-3 w-3 text-emerald-600 flex-shrink-0 mr-1" />
+            <span>30-day money-back guarantee</span>
+          </div>
+        </div>
+
+        {/* Safe area padding for iPhone */}
+        <div className="h-safe-area-inset-bottom bg-gradient-to-t from-white to-transparent" />
+      </div>
+
       <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1">
-        <div className="bg-white border-2 border-gray-300 flex-1 flex flex-col overflow-hidden">
+        <div className="bg-white border-2 border-gray-300 flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0">
           {/* Urgency Banner Component */}
           <UrgencyBanner
             productName="F.I.R.E. STARTER KIT"

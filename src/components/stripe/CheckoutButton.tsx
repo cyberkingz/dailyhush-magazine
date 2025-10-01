@@ -10,16 +10,18 @@ interface CheckoutButtonProps {
   children?: React.ReactNode
   showFeatures?: boolean
   showPricing?: boolean
+  showTrustSignals?: boolean
 }
 
-export function CheckoutButton({ 
-  email, 
+export function CheckoutButton({
+  email,
   variant = 'primary',
   size = 'lg',
   className = '',
   children,
   showFeatures = false,
-  showPricing = true
+  showPricing = true,
+  showTrustSignals = true
 }: CheckoutButtonProps) {
   const { createFireStarterCheckout, loading, error } = useStripe()
 
@@ -37,7 +39,7 @@ export function CheckoutButton({
   const variants = {
     primary: "bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white shadow-lg hover:shadow-xl",
     secondary: "bg-white text-gray-900 border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50",
-    cta: "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl animate-pulse hover:animate-none"
+    cta: "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl animate-pulse-soft hover:animate-none"
   }
   
   const sizes = {
@@ -109,10 +111,12 @@ export function CheckoutButton({
       )}
 
       {/* Trust Signals */}
-      <div className="text-center text-xs text-gray-500 space-y-1">
-        <p>🔒 Secure payment powered by Stripe</p>
-        <p>💡 Instant access • 📧 Email support included</p>
-      </div>
+      {showTrustSignals && (
+        <div className="text-center text-xs text-gray-500 space-y-1">
+          <p>🔒 Secure payment powered by Stripe</p>
+          <p>💡 Instant access • 📧 Email support included</p>
+        </div>
+      )}
     </div>
   )
 }

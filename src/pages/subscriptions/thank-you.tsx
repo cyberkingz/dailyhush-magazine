@@ -104,10 +104,7 @@ function ThankYouPageContent() {
           <UrgencyBanner
             productName="F.I.R.E. STARTER KIT"
             tagline="Stop planning. Start shipping."
-            countdownDuration={15}
-            storageKey="fire_countdown_end"
             showSocialProof={true}
-            socialProofCount={127}
             regularPrice={47}
           />
 

@@ -303,17 +303,19 @@ function ThankYouPageContent() {
           </div>
 
           {/* Step 0: Try It Now */}
-          <div className="mb-16 bg-blue-50 border-2 border-blue-200 rounded-xl p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              Step 0: Try It Now (Free)
-            </h2>
-            <div className="space-y-4 text-lg text-gray-900 leading-relaxed">
-              <p>Take your 3 favorite business ideas.</p>
-              <p>Delete two.</p>
-              <p className="font-bold">
-                Congrats — you've just done <strong>F (Focus)</strong>.
-              </p>
-              <p>The kit gives you I, R, and E in the next 48h.</p>
+          <div className="mb-16 flex justify-center">
+            <div className="bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 border-4 border-dashed border-blue-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
+              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
+                Step 0: Try It Now <span className="text-blue-600">(Free)</span>
+              </h2>
+              <div className="space-y-4 text-base text-gray-800 leading-relaxed">
+                <p>Take your 3 favorite business ideas.</p>
+                <p>Delete two.</p>
+                <p className="font-bold bg-white/60 px-4 py-2 rounded-lg">
+                  Congrats — you've just done <strong className="text-blue-600">F (Focus)</strong>.
+                </p>
+                <p className="text-sm">The kit gives you I, R, and E in the next 48h.</p>
+              </div>
             </div>
           </div>
 
@@ -380,39 +382,38 @@ function ThankYouPageContent() {
             </p>
           </div>
 
-          {/* Here's The Deal */}
+          {/* Phase 1: Teaser - Price Curiosity Hook */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
               Here's The Deal
             </h2>
 
-            <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8">
-              <p>I could charge $497 (my advisor says $297 minimum).</p>
-              <p>My consulting rate is $300/hour. It takes 6 hours to teach this live = $1,800.</p>
-              <div className="bg-green-50 border-2 border-green-300 rounded-xl p-8 text-center">
-                <p className="text-2xl font-bold text-gray-900 mb-4">Today: $27 one-time.</p>
-                <p className="text-lg text-gray-700 mb-2">30-day money-back guarantee.</p>
-                <p className="text-lg text-gray-700">
-                  That's less than lunch. Less than the stack of business books on your desk.
-                </p>
-              </div>
-              <p className="text-xl font-bold">
-                But it could change your financial future forever.
-              </p>
-            </div>
+            <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8 text-center">
+              <p>The regular price for this system is $387.</p>
+              <p>That's what 847 founders already paid to get their first customer in 72 hours.</p>
 
-            <div className="text-center">
-              <CheckoutButton
-                email={userEmail}
-                variant="cta"
-                size="lg"
-                className="w-full sm:w-auto px-8 py-4 text-xl font-bold rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-                showPricing={false}
-              >
-                <DollarSign className="h-6 w-6" />
-                Get F.I.R.E. STARTER KIT Now - $27
-                <ArrowRight className="h-5 w-5" />
-              </CheckoutButton>
+              {/* Teaser Card - Creates Curiosity */}
+              <div className="flex justify-center">
+                <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-4 border-dashed border-green-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
+                  <p className="text-xl font-bold text-gray-700 mb-4">
+                    But today you won't pay<br/>anywhere near that.
+                  </p>
+                  <p className="text-base text-gray-600 mb-6 leading-relaxed">
+                    For less than lunch, you can get the exact 48h system that launched 847 businesses...
+                  </p>
+                  <div className="bg-white/80 rounded-xl px-6 py-4 border-2 border-green-500">
+                    <p className="text-sm text-gray-600 mb-1">One-time investment:</p>
+                    <p className="text-4xl font-black text-green-600">$27</p>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-4 italic">
+                    (You're probably wondering: "What do I get for $27?"<br/>Keep reading... 👇)
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-xl font-bold text-center">
+                The price is nothing. The system could change your financial future forever.
+              </p>
             </div>
           </div>
 
@@ -465,13 +466,22 @@ function ThankYouPageContent() {
           </div>
 
           {/* Limited-Time Subscriber Deal */}
-          <div className="mb-16 bg-red-50 border-2 border-red-200 rounded-xl p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-              Limited-Time Subscriber Deal
-            </h2>
-            <div className="space-y-4 text-lg text-gray-900 leading-relaxed">
-              <p>• Today: $27 (goes up to $47 on December 31, 2025).</p>
-              <p>• First 20 buyers get bonus: <strong>"Weekend Ship Checklist"</strong> (printable 48h action map).</p>
+          <div className="mb-16 flex justify-center">
+            <div className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 border-4 border-dashed border-red-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
+              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
+                🎉 50K Subscriber Celebration
+              </h2>
+              <div className="space-y-4 text-base text-gray-800 leading-relaxed">
+                <p className="font-semibold">
+                  Only <span className="text-red-600 font-bold">50 spots</span> at <span className="text-red-600 font-bold">$27</span> today
+                </p>
+                <p className="text-sm text-gray-600">
+                  (Regular price: $387)
+                </p>
+                <p className="bg-white/60 px-4 py-2 rounded-lg font-semibold">
+                  Once sold out, price goes back to $387
+                </p>
+              </div>
             </div>
           </div>
 
@@ -494,26 +504,102 @@ function ThankYouPageContent() {
               </div>
             </div>
 
-            {/* Final CTA */}
-            <div className="text-center space-y-8 mb-16">
-              <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-300 rounded-2xl p-8">
-                <p className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                  "Your notes app is full.<br/>Your Stripe is empty.<br/>Fix that in 48h with F.I.R.E."
+            {/* Phase 2: Full Reveal Transition */}
+            <div className="mb-12 text-center">
+              <div className="inline-block bg-gradient-to-r from-yellow-100 to-amber-100 border-2 border-yellow-400 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 mb-3 sm:mb-4">
+                <p className="text-sm sm:text-base md:text-lg font-black text-gray-900">
+                  You asked: "What do I get for $27?"
                 </p>
-                <CheckoutButton
-                  email={userEmail}
-                  variant="cta"
-                  size="lg"
-                  className="w-full sm:w-auto px-12 py-6 text-xl font-bold bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-                  showPricing={false}
-                >
-                  <DollarSign className="h-6 w-6" />
-                  Get the Starter Kit for $27 (One-time)
-                  <ArrowRight className="h-5 w-5" />
-                </CheckoutButton>
-                <p className="text-sm text-gray-600 mt-4">
-                  ✅ 30-day money-back guarantee • 🔒 Secure payment • ⚡ Instant access
-                </p>
+              </div>
+              <p className="text-base sm:text-lg md:text-xl font-bold text-gray-900 max-w-2xl mx-auto px-4">
+                Here's everything inside the F.I.R.E. Starter Kit 👇
+              </p>
+            </div>
+
+            {/* Phase 2: Full Offer Reveal - Compact Stack */}
+            <div className="mb-16 flex justify-center">
+              <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-6 md:p-10 text-center max-w-lg w-full shadow-xl space-y-3 sm:space-y-4 md:space-y-6">
+
+                {/* Headline */}
+                <div className="space-y-1.5">
+                  <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight">
+                    Your notes are full.<br/>
+                    Your Stripe is empty.
+                  </p>
+                  <div className="w-12 h-0.5 sm:h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto rounded-full"></div>
+                </div>
+
+                {/* Promise */}
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-lg px-4 py-2.5 sm:px-5 sm:py-3">
+                  <p className="text-sm sm:text-base md:text-lg font-bold text-gray-900">
+                    Your first paying customer in 48h
+                  </p>
+                </div>
+
+                {/* Value + Price Combined */}
+                <div className="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                  <div className="p-3 sm:p-4 md:p-6 space-y-2">
+                    <div className="flex items-start gap-2">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">48h Roadmap (PDF + Notion template)</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Customer Validation Script Pack</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">MVP Launch Checklist</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Offer Builder Worksheet</p>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-gray-200 bg-white px-4 py-3 sm:px-6 sm:py-4 md:py-5 text-center">
+                    <p className="text-xs text-gray-500 mb-0.5">Was: <span className="line-through">$387</span></p>
+                    <p className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900">$27</p>
+                    <p className="text-xs text-gray-500 mt-1">One-time payment</p>
+                  </div>
+                </div>
+
+                {/* Guarantee Badge - Prominent */}
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-green-50 border-2 border-green-500 rounded-full px-3 py-1.5 sm:px-5 sm:py-2.5">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                  </svg>
+                  <span className="text-xs sm:text-sm font-bold text-green-700">30-Day "Ship or It's Free" Guarantee</span>
+                </div>
+
+                {/* CTA Button */}
+                <div className="w-full space-y-1.5 sm:space-y-2">
+                  <CheckoutButton
+                    email={userEmail}
+                    variant="cta"
+                    size="lg"
+                    className="w-full px-6 py-3.5 sm:px-8 sm:py-4 md:py-5 text-sm sm:text-base md:text-lg font-black bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                    showPricing={false}
+                    showTrustSignals={false}
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      Yes! I want my first customer in 48h → $27
+                    </span>
+                  </CheckoutButton>
+
+                  {/* Scarcity - Subtle */}
+                  <p className="text-xs text-center text-gray-500">
+                    <span className="text-orange-600 font-semibold">⚡ Only {spotsRemaining}/50 spots left today</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -502,10 +502,10 @@ export default function ThankYouPage() {
                 Sincerely,
               </p>
               <p className="text-lg font-bold text-gray-900">
-                [Your Name]
+                Tony
               </p>
               <p className="text-gray-600">
-                Creator of the F.I.R.E. Starter Kit
+                Creator of the F.I.R.E. Starter Kit & Founder of DailyHush
               </p>
             </div>
           </div>

@@ -24,14 +24,23 @@ export default function ThankYouPage() {
     document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
 
-  // Countdown timer effect - counts down to midnight (end of day)
+  // Countdown timer effect - 15 minute countdown from page load
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date()
-      const midnight = new Date()
-      midnight.setHours(23, 59, 59, 999)
+    // Get or set the countdown end time in localStorage
+    const COUNTDOWN_DURATION = 15 * 60 * 1000 // 15 minutes in milliseconds
+    const STORAGE_KEY = 'fire_countdown_end'
 
-      const difference = midnight.getTime() - now.getTime()
+    let countdownEnd = localStorage.getItem(STORAGE_KEY)
+
+    if (!countdownEnd) {
+      // First visit - set countdown end time
+      countdownEnd = String(Date.now() + COUNTDOWN_DURATION)
+      localStorage.setItem(STORAGE_KEY, countdownEnd)
+    }
+
+    const calculateTimeLeft = () => {
+      const now = Date.now()
+      const difference = Number(countdownEnd) - now
 
       if (difference > 0) {
         const hours = Math.floor(difference / (1000 * 60 * 60))

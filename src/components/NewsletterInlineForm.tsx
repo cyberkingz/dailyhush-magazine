@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { createLead, getCurrentTrackingContext } from '@/lib/services/leads'
 import { trackNewsletterSignup } from '@/lib/utils/analytics'
 import type { LeadSubmissionResponse } from '@/lib/types/leads'
@@ -35,6 +35,7 @@ export default function NewsletterInlineForm({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [response, setResponse] = useState<LeadSubmissionResponse | null>(null)
   const [waitingForSparkLoop, setWaitingForSparkLoop] = useState(false)
+  const emailForRedirect = useRef('')
 
   useEffect(() => {
     if (!waitingForSparkLoop || !showSparkLoop) return
@@ -43,7 +44,7 @@ export default function NewsletterInlineForm({
 
     const redirectNow = () => {
       console.log('SparkLoop modal closed, redirecting NOW...')
-      window.location.assign(`${redirectTo}?email=${encodeURIComponent(email)}`)
+      window.location.assign(`${redirectTo}?email=${encodeURIComponent(emailForRedirect.current)}`)
     }
 
     // MutationObserver detects DOM changes instantly
@@ -99,7 +100,7 @@ export default function NewsletterInlineForm({
       observer.disconnect()
       clearTimeout(timeout)
     }
-  }, [waitingForSparkLoop, showSparkLoop, email, redirectTo])
+  }, [waitingForSparkLoop, showSparkLoop, redirectTo])
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -113,6 +114,9 @@ export default function NewsletterInlineForm({
       const res = await createLead(email, ctx)
       if (res.success) {
         trackNewsletterSignup('inline', email)
+
+        // Store email for redirect before clearing form
+        emailForRedirect.current = email
 
         if (showSparkLoop) {
           // Show SparkLoop Upscribe inline - it will auto-close after submission

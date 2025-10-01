@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { createLead } from '../lib/services/leads'
 import { trackNewsletterSignup } from '../lib/utils/analytics'
 import type { LeadSubmissionResponse } from '../lib/types/leads'
@@ -27,6 +27,7 @@ export function NewsletterCTA({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [response, setResponse] = useState<LeadSubmissionResponse | null>(null)
   const [waitingForSparkLoop, setWaitingForSparkLoop] = useState(false)
+  const emailForRedirect = useRef('')
   const isArticle = variant === 'article'
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export function NewsletterCTA({
 
     const redirectNow = () => {
       console.log('SparkLoop modal closed, redirecting NOW...')
-      window.location.assign(`/subscriptions/thank-you?email=${encodeURIComponent(email)}`)
+      window.location.assign(`/subscriptions/thank-you?email=${encodeURIComponent(emailForRedirect.current)}`)
     }
 
     // MutationObserver detects DOM changes instantly
@@ -92,7 +93,7 @@ export function NewsletterCTA({
       observer.disconnect()
       clearTimeout(timeout)
     }
-  }, [waitingForSparkLoop, showSparkLoop, email])
+  }, [waitingForSparkLoop, showSparkLoop])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -109,6 +110,9 @@ export function NewsletterCTA({
       if (result.success) {
         // Track successful subscription
         trackNewsletterSignup(variant, email)
+
+        // Store email for redirect before clearing form
+        emailForRedirect.current = email
 
         if (showSparkLoop) {
           // Show SparkLoop Upscribe inline - it will auto-show after submission

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { CheckCircle, DollarSign, AlertTriangle, ArrowRight } from 'lucide-react'
+import { CheckCircle, DollarSign, AlertTriangle, ArrowRight, Clock } from 'lucide-react'
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
 
 export default function ThankYouPage() {
   const [showNotification, setShowNotification] = useState(false)
   const [currentNotification, setCurrentNotification] = useState(0)
-  
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
+
   // Get email from URL params
   const urlParams = new URLSearchParams(window.location.search)
   const userEmail = urlParams.get('email') || undefined
@@ -22,7 +23,33 @@ export default function ThankYouPage() {
   useEffect(() => {
     document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
-  
+
+  // Countdown timer effect - counts down to midnight (end of day)
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date()
+      const midnight = new Date()
+      midnight.setHours(23, 59, 59, 999)
+
+      const difference = midnight.getTime() - now.getTime()
+
+      if (difference > 0) {
+        const hours = Math.floor(difference / (1000 * 60 * 60))
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+
+        setTimeLeft({ hours, minutes, seconds })
+      } else {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 })
+      }
+    }
+
+    calculateTimeLeft()
+    const timer = setInterval(calculateTimeLeft, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
   // Social proof notifications effect
   useEffect(() => {
     const showNextNotification = () => {
@@ -78,7 +105,7 @@ export default function ThankYouPage() {
             <div className="absolute bottom-0 right-1/4 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
 
             <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-              <div className="flex items-center justify-center gap-3 flex-wrap">
+              <div className="flex items-center justify-center gap-3 flex-wrap mb-3">
                 <div className="flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full">
                   <AlertTriangle className="h-4 w-4 text-yellow-300" />
                   <span className="text-xs font-bold uppercase tracking-wider">Special Price</span>
@@ -88,6 +115,28 @@ export default function ThankYouPage() {
                 </span>
                 <div className="text-xs text-red-100 font-medium">
                   ⚡ Stop planning. Start shipping.
+                </div>
+              </div>
+
+              {/* Countdown Timer */}
+              <div className="flex items-center justify-center gap-2 bg-black/30 px-4 py-2 rounded-lg backdrop-blur-sm inline-flex">
+                <Clock className="h-4 w-4 text-yellow-300 animate-pulse" />
+                <span className="text-sm font-bold uppercase tracking-wider">
+                  Offer Ends In:
+                </span>
+                <div className="flex items-center gap-1">
+                  <span className="bg-white/20 px-2 py-1 rounded font-mono text-sm font-bold min-w-[2ch]">
+                    {String(timeLeft.hours).padStart(2, '0')}
+                  </span>
+                  <span className="text-xs">h</span>
+                  <span className="bg-white/20 px-2 py-1 rounded font-mono text-sm font-bold min-w-[2ch]">
+                    {String(timeLeft.minutes).padStart(2, '0')}
+                  </span>
+                  <span className="text-xs">m</span>
+                  <span className="bg-white/20 px-2 py-1 rounded font-mono text-sm font-bold min-w-[2ch]">
+                    {String(timeLeft.seconds).padStart(2, '0')}
+                  </span>
+                  <span className="text-xs">s</span>
                 </div>
               </div>
             </div>

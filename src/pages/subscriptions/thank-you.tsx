@@ -232,7 +232,6 @@ function ThankYouPageContent() {
             productName="F.I.R.E. STARTER KIT"
             tagline="Stop planning. Start shipping."
             showSocialProof={true}
-            regularPrice={47}
           />
 
           <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">

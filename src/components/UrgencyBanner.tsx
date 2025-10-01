@@ -6,20 +6,14 @@ interface UrgencyBannerProps {
   productName?: string
   tagline?: string
   showSocialProof?: boolean
-  regularPrice?: number
-  transparencyMessage?: string
 }
 
 export function UrgencyBanner({
   productName = 'F.I.R.E. STARTER KIT',
   tagline = 'Stop planning. Start shipping.',
-  showSocialProof = true,
-  regularPrice = 47,
-  transparencyMessage
+  showSocialProof = true
 }: UrgencyBannerProps) {
   const { spotsRemaining, totalSpots, progressPercentage, isCritical, isSoldOut } = useScarcity()
-
-  const defaultTransparencyMessage = `Only ${totalSpots} spots available at this price today. Once sold out, regular pricing applies ($${regularPrice}). We only show this offer once - no follow-up emails.`
 
   // Redirect if sold out
   useEffect(() => {

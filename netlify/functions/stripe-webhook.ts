@@ -123,7 +123,10 @@ async function handleFireStarterKitPurchase(session: Stripe.Checkout.Session) {
     // 3. Grant access to digital resources
     
     await sendFireStarterKitDeliveryEmail(customerEmail, purchaseData)
-    
+
+    // Notify n8n webhook to update Beehiiv custom field
+    await notifyN8nPurchase(customerEmail, purchaseData)
+
   } catch (error) {
     console.error('Error handling F.I.R.E. STARTER KIT purchase:', error)
     throw error

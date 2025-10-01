@@ -1,5 +1,5 @@
 import type { NewsletterEdition } from './types'
-// import beautyMeetsLongevityImg from '@/assets/editions-assets/beauty-meets-longevity.png'
+import beautyMeetsLongevityImg from '@/assets/beauty-meets-longevity.png'
 
 const newsletter: NewsletterEdition = {
   slug: 'sept-13-2025',
@@ -8,7 +8,7 @@ const newsletter: NewsletterEdition = {
   displayDate: 'September 13, 2025',
   summary:
     'From collagen powders to Bryan Johnson\'s radical blueprint, discover how longevity science is reshaping beauty routines — and which anti-aging tools actually work.',
-  // heroImage: beautyMeetsLongevityImg,
+  heroImage: beautyMeetsLongevityImg,
   contentHtml: `
     <p>Hello Timeless Seekers! ✨ Longevity isn't just about adding years to your life anymore — it's about <strong>keeping your skin and hair youthful while you do it</strong>. Collagen shakes, NAD+ boosters, even red light therapy are moving from labs to vanities. Here's your insider guide to the science of beauty longevity.</p>
 

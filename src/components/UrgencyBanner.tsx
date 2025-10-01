@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { CheckCircle, AlertTriangle, Clock, Sparkles, Zap } from 'lucide-react'
+import { CheckCircle, AlertTriangle, Clock, Sparkles, Zap, Flame } from 'lucide-react'
+import { useScarcity } from '../contexts/ScarcityContext'
 
 interface UrgencyBannerProps {
   productName?: string
@@ -7,7 +8,6 @@ interface UrgencyBannerProps {
   countdownDuration?: number // in minutes
   storageKey?: string
   showSocialProof?: boolean
-  socialProofCount?: number
   regularPrice?: number
   transparencyMessage?: string
 }
@@ -18,12 +18,12 @@ export function UrgencyBanner({
   countdownDuration = 15,
   storageKey = 'fire_countdown_end',
   showSocialProof = true,
-  socialProofCount = 127,
   regularPrice = 47,
   transparencyMessage
 }: UrgencyBannerProps) {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
   const [isUrgent, setIsUrgent] = useState(false)
+  const { spotsRemaining, totalSpots, progressPercentage, isCritical, isSoldOut } = useScarcity()
 
   // Countdown timer effect
   useEffect(() => {
@@ -59,10 +59,22 @@ export function UrgencyBanner({
     return () => clearInterval(timer)
   }, [countdownDuration, storageKey])
 
-  const defaultTransparencyMessage = `This exclusive new subscriber pricing is only shown once. After ${countdownDuration} minutes, regular pricing applies ($${regularPrice}). We won't spam you with follow-up emails about this offer.`
+  const defaultTransparencyMessage = `Only ${totalSpots} spots available at this price today. Once sold out or after ${countdownDuration} minutes (whichever comes first), regular pricing applies ($${regularPrice}). We only show this offer once - no follow-up emails.`
+
+  // Redirect if sold out
+  useEffect(() => {
+    if (isSoldOut) {
+      // Could redirect to regular pricing page
+      console.log('🚫 Sold out - regular pricing now applies')
+    }
+  }, [isSoldOut])
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-yellow-400 via-yellow-300 to-amber-400 text-black">
+    <div className={`relative overflow-hidden text-black ${
+      isSoldOut
+        ? 'bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400'
+        : 'bg-gradient-to-br from-yellow-400 via-yellow-300 to-amber-400'
+    }`}>
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
       <div className="absolute inset-0">
@@ -73,7 +85,7 @@ export function UrgencyBanner({
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
         <div className="space-y-4 sm:space-y-5">
 
-          {/* Welcome Badge with Social Proof */}
+          {/* Welcome Badge with Spots Scarcity */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <div className="inline-flex items-center gap-2 bg-black text-yellow-400 px-4 py-1.5 rounded-full shadow-lg">
               <Sparkles className="h-4 w-4" />
@@ -82,15 +94,16 @@ export function UrgencyBanner({
               </span>
             </div>
             {showSocialProof && (
-              <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold">
-                <div className="flex -space-x-2">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] font-bold text-white">S</div>
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] font-bold text-white">M</div>
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] font-bold text-white">J</div>
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] font-bold text-white">+</div>
-                </div>
-                <span className="text-gray-900">
-                  <span className="font-bold">{socialProofCount} people</span> grabbed this today
+              <div className={`flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1 rounded-full ${
+                isCritical
+                  ? 'bg-red-600 text-white animate-pulse'
+                  : isSoldOut
+                  ? 'bg-gray-800 text-gray-300'
+                  : 'bg-black/80 text-yellow-400'
+              }`}>
+                <Flame className={`h-4 w-4 ${isCritical ? 'animate-bounce' : ''}`} />
+                <span>
+                  {isSoldOut ? 'SOLD OUT TODAY' : `Only ${spotsRemaining}/${totalSpots} spots left!`}
                 </span>
               </div>
             )}
@@ -106,6 +119,32 @@ export function UrgencyBanner({
               {tagline}
             </p>
           </div>
+
+          {/* Progress Bar - Spots Remaining */}
+          {!isSoldOut && (
+            <div className="max-w-md mx-auto">
+              <div className="relative w-full bg-black/20 rounded-full h-3 sm:h-4 overflow-hidden shadow-inner">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ease-out ${
+                    isCritical
+                      ? 'bg-gradient-to-r from-red-600 to-red-500 animate-pulse'
+                      : 'bg-gradient-to-r from-green-600 via-yellow-500 to-yellow-400'
+                  }`}
+                  style={{ width: `${progressPercentage}%` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 animate-shimmer" />
+                </div>
+              </div>
+              <p className={`text-center text-xs sm:text-sm font-bold mt-2 ${
+                isCritical ? 'text-red-700 animate-pulse' : 'text-gray-800'
+              }`}>
+                {isCritical
+                  ? `⚠️ Almost Gone! Only ${spotsRemaining} spots left`
+                  : `${spotsRemaining} spots available at this price today`
+                }
+              </p>
+            </div>
+          )}
 
           {/* Countdown Timer - Hero Element */}
           <div className="flex flex-col items-center gap-3">
@@ -133,11 +172,20 @@ export function UrgencyBanner({
           </div>
 
           {/* Trust Signals & Urgency Message */}
-          {isUrgent ? (
+          {isSoldOut ? (
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded-full shadow-lg">
+                <AlertTriangle className="h-4 w-4" />
+                <span className="text-sm font-bold uppercase">Today's Special Pricing Sold Out</span>
+              </div>
+            </div>
+          ) : (isUrgent || isCritical) ? (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 animate-pulse">
               <div className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full shadow-lg">
                 <AlertTriangle className="h-4 w-4" />
-                <span className="text-sm font-bold uppercase">Last Chance! Price Increases Soon</span>
+                <span className="text-sm font-bold uppercase">
+                  {isCritical ? `Only ${spotsRemaining} spots left!` : 'Last Chance! Price Increases Soon'}
+                </span>
                 <AlertTriangle className="h-4 w-4" />
               </div>
             </div>

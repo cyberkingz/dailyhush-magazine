@@ -2,31 +2,43 @@ import { useEffect, useState } from 'react'
 import { CheckCircle, DollarSign, ArrowRight } from 'lucide-react'
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
 import { UrgencyBanner } from '../../components/UrgencyBanner'
+import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 
-export default function ThankYouPage() {
+function ThankYouPageContent() {
   const [showNotification, setShowNotification] = useState(false)
   const [currentNotification, setCurrentNotification] = useState(0)
+  const { decrementSpots } = useScarcity()
 
   // Get email from URL params
   const urlParams = new URLSearchParams(window.location.search)
   const userEmail = urlParams.get('email') || undefined
   
-  // Social proof notifications
+  // Social proof notifications - mixed with purchases
   const notifications = [
-    { name: "Sarah", location: "New York", action: "launched in 48 hours", time: "2 min ago" },
-    { name: "Mike", location: "San Francisco", action: "validated his idea", time: "5 min ago" },
-    { name: "Jessica", location: "Austin", action: "got first customer", time: "8 min ago" },
-    { name: "David", location: "Miami", action: "shipped his MVP", time: "12 min ago" },
-    { name: "Emma", location: "Seattle", action: "stopped planning, started doing", time: "15 min ago" }
+    { name: "Sarah", location: "New York", action: "just purchased F.I.R.E. Kit", time: "Just now", isPurchase: true },
+    { name: "Mike", location: "San Francisco", action: "just purchased F.I.R.E. Kit", time: "1 min ago", isPurchase: true },
+    { name: "Jessica", location: "Austin", action: "got first customer", time: "3 min ago", isPurchase: false },
+    { name: "David", location: "Miami", action: "just purchased F.I.R.E. Kit", time: "4 min ago", isPurchase: true },
+    { name: "Emma", location: "Seattle", action: "launched in 48 hours", time: "6 min ago", isPurchase: false },
+    { name: "Alex", location: "Chicago", action: "just purchased F.I.R.E. Kit", time: "8 min ago", isPurchase: true },
+    { name: "Lisa", location: "Boston", action: "shipped her MVP", time: "10 min ago", isPurchase: false },
+    { name: "Tom", location: "Portland", action: "just purchased F.I.R.E. Kit", time: "12 min ago", isPurchase: true }
   ]
 
   useEffect(() => {
     document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
 
-  // Social proof notifications effect
+  // Social proof notifications effect - connected to spots
   useEffect(() => {
     const showNextNotification = () => {
+      const notification = notifications[currentNotification]
+
+      // If it's a purchase notification, decrement spots
+      if (notification.isPurchase) {
+        decrementSpots()
+      }
+
       setShowNotification(true)
       setTimeout(() => {
         setShowNotification(false)
@@ -35,25 +47,37 @@ export default function ThankYouPage() {
         }, 2000)
       }, 5000)
     }
-    
+
     // Initial delay
     const initialTimeout = setTimeout(() => {
       showNextNotification()
       const interval = setInterval(showNextNotification, 15000)
       return () => clearInterval(interval)
     }, 3000)
-    
+
     return () => clearTimeout(initialTimeout)
-  }, [])
+  }, [currentNotification, decrementSpots])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex justify-center items-stretch">
       {/* Floating Social Proof Notification */}
       {showNotification && (
         <div className="fixed bottom-8 left-8 z-50 animate-slide-up">
-          <div className="bg-white rounded-lg shadow-2xl border border-green-200 p-4 flex items-center gap-3 max-w-sm">
-            <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-              <CheckCircle className="w-6 h-6 text-white" />
+          <div className={`bg-white rounded-lg shadow-2xl border p-4 flex items-center gap-3 max-w-sm ${
+            notifications[currentNotification].isPurchase
+              ? 'border-yellow-400 ring-2 ring-yellow-200'
+              : 'border-green-200'
+          }`}>
+            <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
+              notifications[currentNotification].isPurchase
+                ? 'bg-gradient-to-br from-yellow-500 to-amber-500'
+                : 'bg-gradient-to-br from-green-500 to-emerald-500'
+            }`}>
+              {notifications[currentNotification].isPurchase ? (
+                <DollarSign className="w-6 h-6 text-white" />
+              ) : (
+                <CheckCircle className="w-6 h-6 text-white" />
+              )}
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold text-gray-900">
@@ -64,7 +88,11 @@ export default function ThankYouPage() {
               </p>
             </div>
             <div className="flex-shrink-0">
-              <div className="text-xs text-green-600 font-bold">VERIFIED</div>
+              <div className={`text-xs font-bold ${
+                notifications[currentNotification].isPurchase ? 'text-yellow-600' : 'text-green-600'
+              }`}>
+                {notifications[currentNotification].isPurchase ? 'SOLD' : 'VERIFIED'}
+              </div>
             </div>
           </div>
         </div>
@@ -422,5 +450,14 @@ export default function ThankYouPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+// Wrap with ScarcityProvider
+export default function ThankYouPage() {
+  return (
+    <ScarcityProvider>
+      <ThankYouPageContent />
+    </ScarcityProvider>
   )
 }

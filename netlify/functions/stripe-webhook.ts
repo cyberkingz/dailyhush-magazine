@@ -155,6 +155,64 @@ async function sendFireStarterKitDeliveryEmail(email: string, purchaseData: any)
   
   // TODO: Implement actual email sending
   // await emailService.send(emailData)
-  
+
   return emailData
+}
+
+async function notifyN8nPurchase(customerEmail: string, purchaseData: any) {
+  const N8N_WEBHOOK_URL = process.env.VITE_N8N_WEBHOOK_URL
+  const BEEHIIV_PUBLICATION_ID = process.env.VITE_BEEHIIV_PUBLICATION_ID
+
+  if (!N8N_WEBHOOK_URL) {
+    console.log('n8n webhook URL not configured, skipping purchase notification')
+    return false
+  }
+
+  try {
+    // Prepare webhook notification data
+    const notificationData = {
+      event: 'purchase',
+      email: customerEmail,
+      product: 'fire_starter_kit',
+      amount: purchaseData.amount,
+      currency: purchaseData.currency,
+      sessionId: purchaseData.sessionId,
+      paymentStatus: purchaseData.paymentStatus,
+      timestamp: purchaseData.purchaseDate,
+      beehiiv_publication_id: BEEHIIV_PUBLICATION_ID,
+    }
+
+    console.log('📧 Sending purchase event to n8n:', {
+      email: customerEmail,
+      event: 'purchase',
+    })
+
+    // Build URL parameters
+    const params = new URLSearchParams()
+    Object.entries(notificationData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params.append(key, String(value))
+      }
+    })
+
+    // Send GET request to n8n webhook
+    const webhookUrl = `${N8N_WEBHOOK_URL}?${params.toString()}`
+
+    const response = await fetch(webhookUrl, {
+      method: 'GET',
+      signal: AbortSignal.timeout(5000)
+    })
+
+    if (!response.ok) {
+      console.warn(`❌ n8n webhook returned status ${response.status}`)
+      return false
+    }
+
+    console.log('✅ Successfully notified n8n of purchase')
+    return true
+
+  } catch (error) {
+    console.error('Failed to notify n8n purchase webhook:', error)
+    return false
+  }
 }

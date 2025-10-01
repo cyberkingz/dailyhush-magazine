@@ -17,8 +17,8 @@ type NewsletterCTAProps = {
   redirectOnSuccess?: boolean
 }
 
-export function NewsletterCTA({ 
-  variant = 'default', 
+export function NewsletterCTA({
+  variant = 'default',
   centered = false,
   showSparkLoop = false,
   redirectOnSuccess = true
@@ -26,146 +26,95 @@ export function NewsletterCTA({
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [response, setResponse] = useState<LeadSubmissionResponse | null>(null)
-  const [shouldRedirectAfterSparkLoop, setShouldRedirectAfterSparkLoop] = useState(false)
+  const [waitingForSparkLoop, setWaitingForSparkLoop] = useState(false)
   const isArticle = variant === 'article'
-  
+
   useEffect(() => {
-    if (shouldRedirectAfterSparkLoop && showSparkLoop) {
-      console.log('Setting up SparkLoop modal detection...')
-      let modalDetected = false
-      let observer: MutationObserver | null = null
-      
-      const redirectToThankYou = () => {
-        console.log('Redirecting to thank you page...')
-        window.location.assign(`/subscriptions/thank-you?email=${encodeURIComponent(email)}`)
-      }
-      
-      // Method 1: Check for iframe removal (SparkLoop uses iframes)
-      const checkForIframes = () => {
-        const iframes = document.querySelectorAll('iframe[src*="sparkloop"], iframe[src*="upscribe"]')
-        return iframes.length > 0
-      }
-      
-      // Method 2: Monitor DOM mutations for SparkLoop elements
-      observer = new MutationObserver((mutations) => {
-        // Check if any SparkLoop-related elements were added or removed
-        for (const mutation of mutations) {
-          // Check added nodes
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === 1) { // Element node
-              const el = node as HTMLElement
-              if (el.tagName === 'IFRAME' || 
-                  el.className?.includes('sparkloop') || 
-                  el.id?.includes('sparkloop') ||
-                  el.querySelector?.('iframe')) {
-                modalDetected = true
-                console.log('SparkLoop modal/iframe detected!')
-              }
-            }
-          })
-          
-          // Check removed nodes  
-          mutation.removedNodes.forEach((node) => {
-            if (node.nodeType === 1) { // Element node
-              const el = node as HTMLElement
-              if ((el.tagName === 'IFRAME' || 
-                   el.className?.includes('sparkloop') || 
-                   el.id?.includes('sparkloop')) && modalDetected) {
-                console.log('SparkLoop modal/iframe removed, redirecting...')
-                observer?.disconnect()
-                setTimeout(redirectToThankYou, 500) // Small delay to ensure cleanup
-              }
-            }
-          })
-        }
-      })
-      
-      // Start observing the entire document for changes
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      })
-      
-      // Method 3: Periodic check with multiple selectors
-      let checkCount = 0
-      const intervalCheck = setInterval(() => {
-        checkCount++
-        
-        // Check for various possible SparkLoop elements
-        const hasSparkLoopElements = 
-          checkForIframes() ||
-          document.querySelector('.sl-modal') !== null ||
-          document.querySelector('[class*="upscribe"]') !== null ||
-          document.querySelector('#sparkloop-upscribe') !== null ||
-          document.body.classList.contains('sl-modal-open')
-        
-        // Log what we find for debugging
-        if (checkCount === 1) {
-          console.log('Checking for SparkLoop elements...', {
-            iframes: checkForIframes(),
-            bodyClass: document.body.className,
-            sparkloopDivs: document.querySelectorAll('[id*="sparkloop"], [class*="sparkloop"]').length
-          })
-        }
-        
-        if (hasSparkLoopElements && !modalDetected) {
-          modalDetected = true
-          console.log('SparkLoop detected via interval check')
-        }
-        
-        // If modal was detected but is now gone
-        if (modalDetected && !hasSparkLoopElements) {
-          console.log('SparkLoop no longer detected, redirecting...')
-          clearInterval(intervalCheck)
-          observer?.disconnect()
-          redirectToThankYou()
-        }
-        
-        // Fallback: redirect after 5 seconds if no modal detected
-        if (!modalDetected && checkCount > 10) {
-          console.log('No SparkLoop modal detected after 5 seconds, redirecting...')
-          clearInterval(intervalCheck)
-          observer?.disconnect()
-          redirectToThankYou()
-        }
-      }, 500)
-      
-      // Ultimate fallback: redirect after 30 seconds
-      const timeout = setTimeout(() => {
-        console.log('Timeout reached, forcing redirect...')
-        clearInterval(intervalCheck)
-        observer?.disconnect()
-        redirectToThankYou()
-      }, 30000)
-      
-      return () => {
-        clearInterval(intervalCheck)
-        clearTimeout(timeout)
-        observer?.disconnect()
-      }
+    if (!waitingForSparkLoop || !showSparkLoop) return
+
+    let modalDetected = false
+
+    const redirectNow = () => {
+      console.log('SparkLoop modal closed, redirecting NOW...')
+      window.location.assign(`/subscriptions/thank-you?email=${encodeURIComponent(email)}`)
     }
-  }, [shouldRedirectAfterSparkLoop, showSparkLoop, email])
-  
+
+    // MutationObserver detects DOM changes instantly
+    const observer = new MutationObserver(() => {
+      // Check if modal is visible (not just present in DOM)
+      const sparkloopEl = document.querySelector('[id*="sparkloop"]') as HTMLElement
+      const upscribeEl = document.querySelector('[class*="upscribe"]') as HTMLElement
+      const iframe = document.querySelector('iframe[src*="sparkloop"]') as HTMLElement
+      const bodyHasModalClass = document.body.classList.contains('sl-modal-open')
+
+      // Modal is "visible" if element exists AND is displayed OR body has modal class
+      const modalVisible = bodyHasModalClass ||
+                          !!(sparkloopEl && sparkloopEl.offsetParent !== null) ||
+                          !!(upscribeEl && upscribeEl.offsetParent !== null) ||
+                          !!(iframe && iframe.offsetParent !== null)
+
+      console.log('🔍 Modal check:', {
+        modalVisible,
+        modalDetected,
+        bodyHasModalClass,
+        sparkloopVisible: sparkloopEl ? sparkloopEl.offsetParent !== null : false,
+        upscribeVisible: upscribeEl ? upscribeEl.offsetParent !== null : false,
+        iframeVisible: iframe ? iframe.offsetParent !== null : false
+      })
+
+      if (modalVisible && !modalDetected) {
+        modalDetected = true
+        console.log('✅ SparkLoop modal OPENED - detected!')
+      } else if (!modalVisible && modalDetected) {
+        // Modal closed (hidden) - redirect instantly
+        console.log('❌ SparkLoop modal CLOSED - detected! Redirecting...')
+        observer.disconnect()
+        redirectNow()
+      }
+    })
+
+    // Watch entire document for changes (structure AND attributes)
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,      // Watch for attribute changes (class, style)
+      attributeFilter: ['class', 'style', 'hidden']  // Only watch relevant attributes
+    })
+
+    // Fallback: redirect after 30 seconds
+    const timeout = setTimeout(() => {
+      observer.disconnect()
+      console.log('Timeout reached, redirecting...')
+      redirectNow()
+    }, 30000)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(timeout)
+    }
+  }, [waitingForSparkLoop, showSparkLoop, email])
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
+
     if (!email.trim()) return
-    
+
     setIsSubmitting(true)
     setResponse(null)
-    
+
     try {
       const result = await createLead(email)
       setResponse(result)
-      
+
       if (result.success) {
         // Track successful subscription
         trackNewsletterSignup(variant, email)
-        
+
         if (showSparkLoop) {
-          // Show success message and set up redirect after SparkLoop closes
+          // Show SparkLoop Upscribe inline - it will auto-show after submission
           setResponse({ success: true, message: 'Thanks for subscribing! Looking for more great newsletters?' })
-          setShouldRedirectAfterSparkLoop(true)
+          // Start watching for modal to close
+          setWaitingForSparkLoop(true)
         } else if (redirectOnSuccess) {
           // Traditional redirect flow to thank-you page
           const next = `/subscriptions/thank-you?email=${encodeURIComponent(email)}`

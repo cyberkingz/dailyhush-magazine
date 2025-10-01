@@ -78,7 +78,52 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log('Status:', paymentIntent.status)
     console.log('Amount:', paymentIntent.amount / 100)
 
-    // 4. Return success
+    // 4. Send n8n webhook notification
+    try {
+      const n8nWebhookUrl = process.env.VITE_N8N_WEBHOOK_URL
+      if (n8nWebhookUrl) {
+        console.log('📧 Sending coaching purchase event to n8n:', { email: customerEmail, product: 'coaching_call' })
+
+        // Prepare notification data
+        const notificationData = {
+          event: 'purchase',
+          email: customerEmail,
+          product: 'coaching_call',
+          productName: 'F.I.R.E. STARTER KIT - 1-on-1 Coaching Call',
+          amount: paymentIntent.amount / 100,
+          currency: paymentIntent.currency,
+          paymentIntentId: paymentIntent.id,
+          originalSessionId: originalSessionId,
+          timestamp: new Date().toISOString(),
+        }
+
+        // Build URL parameters (same format as F.I.R.E. STARTER KIT)
+        const params = new URLSearchParams()
+        Object.entries(notificationData).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== '') {
+            params.append(key, String(value))
+          }
+        })
+
+        // Send GET request to n8n webhook
+        const webhookUrl = `${n8nWebhookUrl}?${params.toString()}`
+        const n8nResponse = await fetch(webhookUrl, {
+          method: 'GET',
+          signal: AbortSignal.timeout(5000)
+        })
+
+        if (n8nResponse.ok) {
+          console.log('✅ n8n webhook notification sent successfully')
+        } else {
+          console.log(`❌ n8n webhook returned status ${n8nResponse.status}`)
+        }
+      }
+    } catch (n8nError) {
+      console.error('❌ Failed to send n8n webhook:', n8nError)
+      // Don't fail the payment if n8n notification fails
+    }
+
+    // 5. Return success
     return {
       statusCode: 200,
       headers: {

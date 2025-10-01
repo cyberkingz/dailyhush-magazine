@@ -34,9 +34,12 @@ export function NewsletterCTA({
     if (!waitingForSparkLoop || !showSparkLoop) return
 
     let modalDetected = false
+    let hasRedirected = false
 
     const redirectNow = () => {
-      console.log('SparkLoop modal closed, redirecting NOW...')
+      if (hasRedirected) return
+      hasRedirected = true
+      console.log('🚀 Redirecting to thank you page...')
       window.location.assign(`/subscriptions/thank-you?email=${encodeURIComponent(emailForRedirect.current)}`)
     }
 
@@ -66,10 +69,14 @@ export function NewsletterCTA({
       if (modalVisible && !modalDetected) {
         modalDetected = true
         console.log('✅ SparkLoop modal OPENED - detected!')
+        // Cancel early redirect since modal appeared
+        clearTimeout(earlyRedirectTimeout)
       } else if (!modalVisible && modalDetected) {
         // Modal closed (hidden) - redirect instantly
         console.log('❌ SparkLoop modal CLOSED - detected! Redirecting...')
         observer.disconnect()
+        clearTimeout(earlyRedirectTimeout)
+        clearTimeout(fallbackTimeout)
         redirectNow()
       }
     })
@@ -82,16 +89,29 @@ export function NewsletterCTA({
       attributeFilter: ['class', 'style', 'hidden']  // Only watch relevant attributes
     })
 
-    // Fallback: redirect after 30 seconds
-    const timeout = setTimeout(() => {
+    // Early redirect: if modal doesn't appear within 5 seconds, redirect anyway
+    // This handles cases where SparkLoop doesn't load (IP location, ad blocker, etc.)
+    const earlyRedirectTimeout = setTimeout(() => {
+      if (!modalDetected) {
+        observer.disconnect()
+        console.log('⚠️ SparkLoop modal did not appear after 5s (blocked/restricted?) - redirecting now')
+        clearTimeout(fallbackTimeout)
+        redirectNow()
+      }
+    }, 5000)
+
+    // Fallback: redirect after 30 seconds (safety net if something unexpected happens)
+    const fallbackTimeout = setTimeout(() => {
       observer.disconnect()
-      console.log('Timeout reached, redirecting...')
+      console.log('⏱️ Fallback timeout reached (30s) - redirecting now')
+      clearTimeout(earlyRedirectTimeout)
       redirectNow()
     }, 30000)
 
     return () => {
       observer.disconnect()
-      clearTimeout(timeout)
+      clearTimeout(earlyRedirectTimeout)
+      clearTimeout(fallbackTimeout)
     }
   }, [waitingForSparkLoop, showSparkLoop])
 

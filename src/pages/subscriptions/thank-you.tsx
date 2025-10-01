@@ -9,10 +9,13 @@ function ThankYouPageContent() {
   const [isExiting, setIsExiting] = useState(false)
   const [currentNotification, setCurrentNotification] = useState(0)
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [badgeVisible, setBadgeVisible] = useState(false)
   const { decrementSpots, spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
 
   // Use ref to track latest spots value without triggering effect re-runs
   const spotsRemainingRef = useRef(spotsRemaining)
+  const youAskedBadgeRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     spotsRemainingRef.current = spotsRemaining
   }, [spotsRemaining])
@@ -39,18 +42,44 @@ function ThankYouPageContent() {
     document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
 
-  // Track scroll position for sticky bar - show after 15% scroll
+  // Track scroll position for sticky bar - show after 15% scroll, hide when badge visible
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const scrollPercentage = (scrollTop / docHeight) * 100
 
-      setShowStickyBar(scrollPercentage >= 15)
+      // Show after 15% scroll, but hide if badge is visible
+      setShowStickyBar(scrollPercentage >= 15 && !badgeVisible)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [badgeVisible])
+
+  // Intersection Observer for "You asked" badge - hide sticky bar when visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setBadgeVisible(entry.isIntersecting)
+        })
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of badge is visible
+        rootMargin: '0px'
+      }
+    )
+
+    if (youAskedBadgeRef.current) {
+      observer.observe(youAskedBadgeRef.current)
+    }
+
+    return () => {
+      if (youAskedBadgeRef.current) {
+        observer.unobserve(youAskedBadgeRef.current)
+      }
+    }
   }, [])
 
   // Purchase notifications effect - each notification decrements spots
@@ -506,7 +535,7 @@ function ThankYouPageContent() {
 
             {/* Phase 2: Full Reveal Transition */}
             <div className="mb-12 text-center">
-              <div className="inline-block bg-gradient-to-r from-yellow-100 to-amber-100 border-2 border-yellow-400 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 mb-3 sm:mb-4">
+              <div ref={youAskedBadgeRef} className="inline-block bg-gradient-to-r from-yellow-100 to-amber-100 border-2 border-yellow-400 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 mb-3 sm:mb-4">
                 <p className="text-sm sm:text-base md:text-lg font-black text-gray-900">
                   You asked: "What do I get for $27?"
                 </p>

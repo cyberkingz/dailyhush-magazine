@@ -55,10 +55,10 @@ export default function FireStarterSuccess() {
       verifyPurchase(sessionId)
         .then((result) => {
           setPurchase(result.purchase)
-          // Show coaching modal after 3 seconds
+          // Show coaching modal after 1 second
           setTimeout(() => {
             setShowCoachingModal(true)
-          }, 3000)
+          }, 1000)
         })
         .catch((err) => {
           setVerificationError(err.message)

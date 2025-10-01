@@ -41,19 +41,25 @@ export function Footer() {
                 Resources
               </h3>
               <nav className="space-y-4" aria-label="Footer navigation">
-                <Link 
-                  to="/privacy" 
+                <Link
+                  to="/privacy"
                   className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
                 >
                   Privacy Policy
                 </Link>
-                <Link 
-                  to="/terms" 
+                <Link
+                  to="/terms"
                   className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
                 >
                   Terms of Service
                 </Link>
-                <Link 
+                <Link
+                  to="/legal-notices"
+                  className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+                >
+                  Legal Notices
+                </Link>
+                <Link
                   to="/contact"
                   className="block text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
                 >
@@ -108,20 +114,26 @@ export function Footer() {
               © {new Date().getFullYear()} Red Impact LLC DBA DailyHush. All rights reserved.
             </p>
             <nav className="flex gap-6 text-sm" aria-label="Footer legal links">
-              <Link 
-                to="/privacy" 
+              <Link
+                to="/privacy"
                 className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
               >
                 Privacy
               </Link>
-              <Link 
-                to="/terms" 
+              <Link
+                to="/terms"
                 className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
               >
                 Terms
               </Link>
-              <Link 
-                to="/contact" 
+              <Link
+                to="/legal-notices"
+                className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
+              >
+                Legal Notices
+              </Link>
+              <Link
+                to="/contact"
                 className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
               >
                 Contact

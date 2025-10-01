@@ -21,12 +21,36 @@ interface Resources {
 
 export default function FireStarterSuccess() {
   const [searchParams] = useSearchParams()
-  const { verifyPurchase, loading, error } = useStripe()
+  const { verifyPurchase, createCoachingCheckout, loading, error } = useStripe()
   const [purchase, setPurchase] = useState<PurchaseInfo | null>(null)
   const [resources, setResources] = useState<Resources | null>(null)
   const [verificationError, setVerificationError] = useState<string | null>(null)
+  const [coachingLoading, setCoachingLoading] = useState(false)
+  const [coachingPurchased, setCoachingPurchased] = useState(false)
+  const [coachingError, setCoachingError] = useState<string | null>(null)
 
   const sessionId = searchParams.get('session_id')
+
+  const handleCoachingClick = async () => {
+    if (!sessionId) {
+      setCoachingError('Unable to process request. Please refresh the page.')
+      return
+    }
+
+    setCoachingLoading(true)
+    setCoachingError(null)
+
+    try {
+      const result = await createCoachingCheckout(sessionId)
+      console.log('Coaching payment result:', result)
+      setCoachingPurchased(true)
+    } catch (err) {
+      console.error('Failed to process coaching payment:', err)
+      setCoachingError(err instanceof Error ? err.message : 'Failed to process payment')
+    } finally {
+      setCoachingLoading(false)
+    }
+  }
 
   useEffect(() => {
     document.title = '🔥 Welcome to F.I.R.E. STARTER KIT!'
@@ -239,27 +263,114 @@ export default function FireStarterSuccess() {
           </div>
         </div>
 
-        {/* TERTIARY ACTION - Ship48 Challenge */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl p-6 md:p-8 text-center border border-gray-700">
-          <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-xs font-semibold mb-4">
-            <Zap className="w-3 h-3" />
-            BONUS CHALLENGE
+        {/* UPSELL - 1-on-1 Coaching Call */}
+        {!coachingPurchased ? (
+          <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-2xl shadow-2xl p-8 md:p-10 text-center border-4 border-amber-300/50">
+            <div className="inline-flex items-center gap-2 bg-white/90 text-amber-600 px-4 py-1.5 rounded-full text-xs font-bold mb-5 shadow-lg">
+              <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+              ONE-TIME OFFER • EXPIRES IN 48 HOURS
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Want 1-on-1 Help to Launch Faster?
+            </h2>
+            <p className="text-white/95 text-lg mb-6 max-w-2xl mx-auto">
+              Get a <span className="font-bold underline decoration-2 decoration-white/80">60-minute strategy call</span> with an expert to fast-track your F.I.R.E. implementation
+            </p>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-6 max-w-lg mx-auto border border-white/20">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-left text-white">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span className="text-sm font-medium">Personalized roadmap review</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span className="text-sm font-medium">Custom implementation plan</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span className="text-sm font-medium">Live Q&A with expert coach</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span className="text-sm font-medium">Action items & next steps</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <div className="inline-flex items-baseline gap-2">
+                <span className="text-white/70 text-2xl line-through">$297</span>
+                <span className="text-white text-5xl font-bold">$150</span>
+              </div>
+              <p className="text-white/80 text-sm mt-2">50% OFF • New Customer Exclusive</p>
+            </div>
+
+            <button
+              onClick={handleCoachingClick}
+              disabled={coachingLoading}
+              className="inline-flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-amber-600 px-10 py-5 rounded-xl font-bold text-xl transition shadow-2xl hover:shadow-3xl transform hover:scale-105 active:scale-95 w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              {coachingLoading ? (
+                <>
+                  <div className="w-6 h-6 border-3 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+                  Processing Payment...
+                </>
+              ) : (
+                <>
+                  <Users className="w-6 h-6" strokeWidth={2.5} />
+                  Add Coaching Call - $150
+                  <ArrowRight className="w-6 h-6" strokeWidth={2.5} />
+                </>
+              )}
+            </button>
+
+            {coachingError && (
+              <div className="mt-4 bg-red-500/20 border border-red-400 text-white px-4 py-3 rounded-lg">
+                <p className="text-sm font-medium">{coachingError}</p>
+                <p className="text-xs mt-1 opacity-80">Please try again or contact support.</p>
+              </div>
+            )}
+
+            <p className="text-white/70 text-xs mt-5 flex items-center justify-center gap-2">
+              <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              One-click payment • No re-entering card details
+            </p>
           </div>
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
-            Ready to Ship in 48 Hours?
-          </h2>
-          <p className="text-gray-300 mb-6 max-w-xl mx-auto">
-            Join our Ship48 challenge to turn your F.I.R.E. STARTER KIT into a live product this weekend.
-          </p>
-          <Link
-            to="/ship48?utm_source=fire_starter&utm_medium=success_page&utm_campaign=post_purchase"
-            className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-lg font-semibold transition shadow-lg hover:shadow-xl"
-          >
-            Join Ship48 Challenge
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-          <p className="text-gray-400 text-xs mt-3">Free • 48-hour sprint • Launch-focused</p>
-        </div>
+        ) : (
+          <div className="bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl shadow-2xl p-8 md:p-10 text-center border-4 border-green-300/50">
+            <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <CheckCircle className="w-12 h-12 text-green-500" strokeWidth={2.5} />
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Coaching Call Added! 🎉
+            </h2>
+            <p className="text-white/95 text-lg mb-6 max-w-xl mx-auto">
+              You've been charged <span className="font-bold">$150.00</span> for your 60-minute strategy call.
+            </p>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-md mx-auto border border-white/20">
+              <h3 className="text-white font-bold mb-3">What Happens Next?</h3>
+              <div className="space-y-2 text-white/90 text-sm text-left">
+                <p>📧 You'll receive an email within 5 minutes with:</p>
+                <ul className="list-disc list-inside pl-2 space-y-1">
+                  <li>Calendar booking link</li>
+                  <li>Pre-call questionnaire</li>
+                  <li>Zoom meeting details</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-white/70 text-sm mt-6">
+              Questions? Email us at{' '}
+              <a href="mailto:support@dailyhush.com" className="underline font-medium">
+                support@dailyhush.com
+              </a>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

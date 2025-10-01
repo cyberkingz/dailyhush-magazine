@@ -12,6 +12,7 @@ const Contact = lazy(() => import('@/pages/contact'))
 const Newsletter = lazy(() => import('@/pages/newsletter'))
 const Privacy = lazy(() => import('@/pages/privacy'))
 const Terms = lazy(() => import('@/pages/terms'))
+const LegalNotices = lazy(() => import('@/pages/legal-notices'))
 const SubscribeThankYou = lazy(() => import('@/pages/subscriptions/thank-you'))
 const Ship48 = lazy(() => import('@/pages/ship48'))
 const FireStarterSuccess = lazy(() => import('@/pages/fire-starter/success'))
@@ -57,6 +58,7 @@ export function AppRoutes() {
         <Route path="/newsletters/:slug" element={<Navigate to={window.location.pathname.replace('/newsletters', '/archives')} replace />} />
         <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
         <Route path="/terms" element={<Layout><Terms /></Layout>} />
+        <Route path="/legal-notices" element={<Layout><LegalNotices /></Layout>} />
 
         {/* Admin */}
         <Route path="/admin/login" element={<AdminLogin />} />

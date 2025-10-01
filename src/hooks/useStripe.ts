@@ -98,8 +98,49 @@ export function useStripe() {
     }
   }
 
+  const createCoachingCheckout = async (originalSessionId: string) => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      console.log('Processing one-click coaching upsell for session:', originalSessionId)
+
+      const response = await fetch('/.netlify/functions/create-coaching-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          originalSessionId,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+
+      const result = await response.json()
+
+      if (!result.success) {
+        throw new Error(result.message || result.error || 'Payment failed')
+      }
+
+      console.log('✅ One-click payment successful:', result)
+      return result
+
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to process payment'
+      setError(errorMessage)
+      console.error('Coaching payment error:', err)
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return {
     createFireStarterCheckout,
+    createCoachingCheckout,
     verifyPurchase,
     loading,
     error,

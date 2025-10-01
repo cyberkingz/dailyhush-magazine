@@ -58,10 +58,21 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log('Found payment method:', paymentMethodId)
     console.log('Customer:', customerId, customerEmail)
 
-    // 3. Create a payment intent for the coaching call
+    // 3. Fetch the coaching price to get the current amount
+    const coachingPriceId = process.env.STRIPE_COACHING_CALL_PRICE_ID
+    if (!coachingPriceId) {
+      throw new Error('Coaching price ID not configured')
+    }
+
+    const priceObject = await stripe.prices.retrieve(coachingPriceId)
+    const amount = priceObject.unit_amount || 15000 // Fallback to $150 if not set
+
+    console.log('Coaching price amount:', amount / 100, priceObject.currency)
+
+    // 4. Create a payment intent for the coaching call
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 15000, // $150.00 in cents
-      currency: 'usd',
+      amount: amount,
+      currency: priceObject.currency || 'usd',
       customer: customerId,
       payment_method: paymentMethodId,
       off_session: true, // Important for one-click payments
@@ -78,7 +89,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log('Status:', paymentIntent.status)
     console.log('Amount:', paymentIntent.amount / 100)
 
-    // 4. Send n8n webhook notification
+    // 5. Send n8n webhook notification
     try {
       const n8nWebhookUrl = process.env.VITE_N8N_WEBHOOK_URL
       if (n8nWebhookUrl) {
@@ -123,7 +134,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       // Don't fail the payment if n8n notification fails
     }
 
-    // 5. Return success
+    // 6. Return success
     return {
       statusCode: 200,
       headers: {

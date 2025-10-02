@@ -7,6 +7,7 @@ declare global {
   interface Window {
     SparkLoop?: any
     SL?: any
+    fbq?: (action: string, event: string, params?: Record<string, any>) => void
   }
 }
 
@@ -134,6 +135,15 @@ export default function NewsletterInlineForm({
       const res = await createLead(email, ctx)
       if (res.success) {
         trackNewsletterSignup('inline', email)
+
+        // Fire Facebook Pixel Lead event
+        if (window.fbq) {
+          window.fbq('track', 'Lead', {
+            content_name: '48h Launch Checklist',
+            value: 0,
+            currency: 'USD'
+          })
+        }
 
         // Store email for redirect before clearing form
         emailForRedirect.current = email

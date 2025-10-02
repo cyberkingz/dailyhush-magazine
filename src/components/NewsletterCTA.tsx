@@ -131,6 +131,15 @@ export function NewsletterCTA({
         // Track successful subscription
         trackNewsletterSignup(variant, email)
 
+        // Fire Facebook Pixel Lead event
+        if (window.fbq) {
+          window.fbq('track', 'Lead', {
+            content_name: '48h Launch Checklist',
+            value: 0,
+            currency: 'USD'
+          })
+        }
+
         // Store email for redirect before clearing form
         emailForRedirect.current = email
 

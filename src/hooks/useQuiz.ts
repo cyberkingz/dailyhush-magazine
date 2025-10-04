@@ -132,12 +132,11 @@ function calculateResult(
   }
 
   // Return result based on type
-  return getResultForType(type, totalScore)
+  return getResultForType(type)
 }
 
 function getResultForType(
-  type: OverthinkerType,
-  score: number
+  type: OverthinkerType
 ): QuizResult {
   // Map each type to a normalized score out of 10
   // Everyone scores 8-9 - creates urgency while maintaining personalization

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import type { FormEvent } from 'react'
+import type { QuizAnswer } from '../types/quiz'
 import { QuizQuestion } from '../components/quiz/QuizQuestion'
 import { QuizProgress } from '../components/quiz/QuizProgress'
 import { useQuiz } from '../hooks/useQuiz'
@@ -23,7 +24,7 @@ export default function Quiz() {
   const [hasStarted, setHasStarted] = useState(false)
   const [waitingForSparkLoop, setWaitingForSparkLoop] = useState(false)
   const autoAdvanceTimerRef = useRef<number | null>(null)
-  const skipAutoAdvanceRef = useRef(false)
+  const answerSelectedOnQuestionRef = useRef<number | null>(null)
   const emailForRedirect = useRef('')
   const quizResultForRedirect = useRef<{ type: string; score: number } | null>(null)
 
@@ -48,7 +49,7 @@ export default function Quiz() {
     },
   })
 
-  // Auto-advance to next question after 300ms delay
+  // Auto-advance to next question after 500ms delay
   // Only for single and scale questions (not multiple choice)
   useEffect(() => {
     // Clear any existing timer
@@ -57,20 +58,18 @@ export default function Quiz() {
       autoAdvanceTimerRef.current = null
     }
 
-    // Skip auto-advance if user just clicked back button
-    if (skipAutoAdvanceRef.current) {
-      skipAutoAdvanceRef.current = false
-      return
-    }
-
     // Only auto-advance if:
     // 1. Question is answered
     // 2. Question type is 'single' or 'scale' (not 'multiple')
+    // 3. Answer was selected on THIS specific question (prevents auto-advance when navigating back)
     if (
       currentAnswer &&
-      (currentQuestion.type === 'single' || currentQuestion.type === 'scale')
+      (currentQuestion.type === 'single' || currentQuestion.type === 'scale') &&
+      answerSelectedOnQuestionRef.current === currentQuestionIndex
     ) {
       autoAdvanceTimerRef.current = window.setTimeout(() => {
+        // Clear the ref so we don't auto-advance again
+        answerSelectedOnQuestionRef.current = null
         goToNext()
       }, 500)
     }
@@ -81,7 +80,7 @@ export default function Quiz() {
         window.clearTimeout(autoAdvanceTimerRef.current)
       }
     }
-  }, [currentAnswer, currentQuestion.type, goToNext])
+  }, [currentAnswer, currentQuestion.type, currentQuestionIndex, goToNext])
 
   // SparkLoop modal watcher - handles redirect after modal closes
   useEffect(() => {
@@ -174,6 +173,12 @@ export default function Quiz() {
     }
   }, [waitingForSparkLoop])
 
+  const handleAnswerWithTracking = (answer: QuizAnswer) => {
+    // Track which question this answer was selected on
+    answerSelectedOnQuestionRef.current = currentQuestionIndex
+    handleAnswer(answer)
+  }
+
   const handleNextClick = () => {
     if (currentQuestionIndex === totalQuestions - 1) {
       // Last question - this will trigger onComplete in useQuiz
@@ -184,8 +189,6 @@ export default function Quiz() {
   }
 
   const handleBackClick = () => {
-    // Set flag to prevent auto-advance after going back
-    skipAutoAdvanceRef.current = true
     goToPrevious()
   }
 
@@ -427,7 +430,7 @@ export default function Quiz() {
           key={currentQuestionIndex}
           question={currentQuestion}
           answer={currentAnswer}
-          onAnswer={handleAnswer}
+          onAnswer={handleAnswerWithTracking}
         />
 
         {/* Show back button for all questions, Next button only for multiple choice */}

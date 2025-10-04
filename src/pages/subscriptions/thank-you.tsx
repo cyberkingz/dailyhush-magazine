@@ -3,6 +3,7 @@ import { CheckCircle, DollarSign, ArrowRight, Flame } from 'lucide-react'
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
 import { UrgencyBanner } from '../../components/UrgencyBanner'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
+import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'
 
 // Quiz result data for personalized copy
@@ -12,34 +13,54 @@ const quizResultData: Record<OverthinkerType, {
   insight: string
   problem: string
   symptom: string
+  offerHeadline: {
+    line1: string
+    line2: string
+  }
 }> = {
-  'chronic-planner': {
-    title: 'The Chronic Planner',
-    description: "You need control & perfect clarity before acting. You've planned every detail, but the execution keeps waiting for 'the right moment.'",
-    insight: "Here's the truth: You don't need another plan. You need a deadline.",
-    problem: "You think planning keeps you safe. But planning is just procrastination in a business suit.",
-    symptom: "You've rewritten your plan 3 times. You've got more docs than customers."
+  'mindful-thinker': {
+    title: 'The Mindful Thinker',
+    description: 'You reflect, but rarely spiral. Your thoughts work for you, not against you.',
+    insight: 'You have healthy awareness. Keep using it to make intentional choices.',
+    problem: "You're doing well, but there's always room to sharpen your mental clarity.",
+    symptom: "You occasionally second-guess yourself, but it doesn't control you.",
+    offerHeadline: {
+      line1: "Your thoughts are present.",
+      line2: "Your peace is consistent."
+    }
   },
-  'research-addict': {
-    title: 'The Research Addict',
-    description: "You feel 'productive' learning but never applying. One more course, one more article, one more tutorial... but still no launched product.",
-    insight: "More info isn't the cure — it's the drug.",
-    problem: "You think more research = less risk. But research is just procrastination disguised as productivity.",
-    symptom: "You've got 47 tabs open. You've taken 5 courses. But zero customers."
+  'gentle-analyzer': {
+    title: 'The Gentle Analyzer',
+    description: 'You think a lot; sometimes it leaks into worry. Awareness is there — you just need light guardrails.',
+    insight: 'Your overthinking is manageable — with the right system in place.',
+    problem: "You know you overthink sometimes, but it hasn't completely taken over yet.",
+    symptom: "You replay conversations. You compare yourself online. But you still move forward.",
+    offerHeadline: {
+      line1: "Your mind is active.",
+      line2: "Your calm is missing."
+    }
   },
-  'self-doubter': {
-    title: 'The Self-Doubter',
-    description: "You overanalyze your self-worth before taking action. 'What if I'm not good enough?' 'What if they judge me?' Fear keeps you stuck.",
-    insight: "You don't need confidence, just momentum.",
-    problem: "You think you need to feel ready. But confidence comes from action, not preparation.",
-    symptom: "You've got the skills. You've got the idea. But self-doubt keeps you from pressing publish."
+  'chronic-overthinker': {
+    title: 'The Chronic Overthinker',
+    description: 'Your mind loops often. You crave peace, but certainty feels safer than calm.',
+    insight: "You don't need more certainty. You need a system that works without it.",
+    problem: "You think clarity will bring peace. But waiting for certainty keeps you stuck.",
+    symptom: "You lie awake replaying mistakes. You need reassurance before deciding. Your brain won't shut off.",
+    offerHeadline: {
+      line1: "Your head is full.",
+      line2: "Your peace is empty."
+    }
   },
-  'vision-hopper': {
-    title: 'The Vision Hopper',
-    description: 'You constantly switch ideas before completion. Shiny object syndrome keeps you starting fresh instead of finishing strong.',
-    insight: 'Finish one before chasing the next.',
-    problem: "You think the next idea will be easier. But switching ideas is just procrastination disguised as creativity.",
-    symptom: "You've started 7 projects. You've finished zero. You've got more domains than revenue."
+  'overthinkaholic': {
+    title: 'The Overthinkaholic',
+    description: "Your brain never clocks out — decisions, looks, texts, sleep. You don't need more plans; you need a reset ritual.",
+    insight: "This isn't about willpower. It's about interrupting the pattern.",
+    problem: "You think if you think hard enough, you'll find the 'right' answer. But overthinking IS the problem.",
+    symptom: "Every small choice feels massive. You imagine worst-case scenarios. Your thoughts spiral constantly.",
+    offerHeadline: {
+      line1: "Your brain is exhausted.",
+      line2: "Your life is passing by."
+    }
   }
 }
 
@@ -85,7 +106,7 @@ function ThankYouPageContent() {
     document.title = 'F.I.R.E. Starter Kit — DailyHush'
   }, [])
 
-  // Track scroll position for sticky bar - show after 15% scroll, but only above badge
+  // Track scroll position for sticky bar - show after 40% scroll, but only above badge
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
@@ -102,8 +123,8 @@ function ThankYouPageContent() {
         isAboveBadge = viewportBottom < badgePosition
       }
 
-      // Show after 15% scroll AND only if above the badge
-      setShowStickyBar(scrollPercentage >= 15 && isAboveBadge)
+      // Show after 40% scroll AND only if above the badge
+      setShowStickyBar(scrollPercentage >= 40 && isAboveBadge)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -161,7 +182,10 @@ function ThankYouPageContent() {
   }, [currentNotification, decrementSpots])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex justify-center items-stretch">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex flex-col">
+      <TopBar />
+
+      <div className="flex-1 flex justify-center items-stretch">
       {/* Floating Purchase Notification - iOS Glassmorphic Style */}
       {showNotification && (
         <div className={`fixed top-4 left-4 right-4 sm:top-auto sm:bottom-8 sm:left-8 sm:right-auto z-50 transition-all duration-500 ${
@@ -271,29 +295,49 @@ function ThankYouPageContent() {
 
       <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1">
         <div className="bg-white border-2 border-gray-300 flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0">
-          {/* Urgency Banner Component */}
-          <UrgencyBanner
-            productName="F.I.R.E. STARTER KIT"
-            tagline="Stop planning. Start shipping."
-            showSocialProof={true}
-          />
-
           <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
         {/* Letter Header */}
         <div className="mb-16">
-          <p className="text-lg text-gray-600 mb-2">✅ You're subscribed to DailyHush!</p>
-          <p className="text-gray-600 mb-12">(Check your email to confirm • First issue arrives in 24h)</p>
+          {/* Opening Hook - Gary Halbert Greased Slide */}
+          <div className="mb-12 space-y-6 text-lg text-gray-900 leading-relaxed">
+            <p className="text-xl font-semibold">Listen...</p>
+
+            <p>I know what just happened.</p>
+
+            <p>You sat there answering those questions — some of them uncomfortably accurate — and with each click, you felt that familiar tightness in your chest. That voice in your head saying <em>"See? I KNEW something was wrong with me. This is proof."</em></p>
+
+            <p>But here's what that voice doesn't want you to know: What you're about to see below isn't a diagnosis. It's not another label to beat yourself up with. It's the first time someone's actually going to explain <strong>WHY</strong> your brain won't shut up — and more importantly, what actually works to quiet it.</p>
+
+            <p className="text-xl font-bold">Your results are waiting just below. But before you look, understand this: The number you got, the "type" you are — that's just the map. What I'm about to show you after that is the way out.</p>
+          </div>
 
           {resultData && quizScore !== null && (
-            <div className="mb-12 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-8">
-              <div className="text-center mb-6">
-                <p className="text-sm font-semibold text-amber-800 mb-2">🎯 YOUR QUIZ RESULTS</p>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">{resultData.title}</h2>
-                <p className="text-lg text-amber-900 mb-4">Score: {quizScore}/100 on the Overthinking Scale</p>
-                <p className="text-base text-gray-700 italic">{resultData.description}</p>
+            <div className="mb-16 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border-4 border-amber-400 rounded-3xl p-10 md:p-12 shadow-2xl">
+              <div className="text-center mb-8">
+                <p className="text-base font-bold text-amber-800 mb-4 tracking-wide">🎯 YOUR QUIZ RESULTS</p>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">{resultData.title}</h1>
+
+                {/* Score with Progress Bar */}
+                <div className="max-w-md mx-auto mb-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-lg font-semibold text-gray-700">Overthinking Scale</span>
+                    <span className="text-2xl font-black text-amber-900">{quizScore}/10</span>
+                  </div>
+                  <div className="relative w-full bg-amber-200 rounded-full h-4 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 transition-all duration-1000 ease-out"
+                      style={{ width: `${(quizScore / 10) * 100}%` }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer" />
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg md:text-xl text-gray-700 italic leading-relaxed max-w-2xl mx-auto">{resultData.description}</p>
               </div>
-              <div className="border-t border-amber-200 pt-6 mt-6">
-                <p className="text-lg font-semibold text-gray-900 text-center">{resultData.insight}</p>
+
+              <div className="border-t-2 border-amber-300 pt-8 mt-8 bg-white/40 rounded-xl p-6">
+                <p className="text-xl md:text-2xl font-bold text-gray-900 text-center leading-relaxed">{resultData.insight}</p>
               </div>
             </div>
           )}
@@ -306,31 +350,30 @@ function ThankYouPageContent() {
           <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
             {resultData ? (
               <>
-                <p>You've said <em>"I'll start when I'm ready"</em> for months.</p>
+                <p>You've said <em>"I'll decide tomorrow"</em> about the same thing for weeks.</p>
                 <p>{resultData.symptom}</p>
                 <p className="text-xl font-bold text-gray-900">
-                  The brutal truth? You're not making progress.
+                  The brutal truth? You're not living your life.
                 </p>
                 <p className="text-xl">
-                  You're an <strong>action avoider</strong> — addicted to the <em>feeling</em> of preparing without ever actually doing.
+                  You're a <strong>reality avoider</strong> — addicted to the <em>feeling</em> of analyzing without ever actually being present.
                 </p>
                 <p>
-                  And every day you stay in this loop is another day someone less qualified than you actually ships something.
+                  And every day you stay in this loop is another day someone less "perfect" than you actually enjoys their life.
                 </p>
               </>
             ) : (
               <>
-                <p>You've said <em>"I'll start when I'm ready"</em> for months.</p>
-                <p>You've made 3 different plans.</p>
-                <p>You've got more ideas than results.</p>
+                <p>You've said <em>"I'll decide tomorrow"</em> about the same thing for weeks.</p>
+                <p>You've replayed that conversation 47 times. You've changed your mind about what to wear, what to say, what to do.</p>
                 <p className="text-xl font-bold text-gray-900">
-                  The brutal truth? You're not making progress.
+                  The brutal truth? You're not living your life.
                 </p>
                 <p className="text-xl">
-                  You're an <strong>action avoider</strong> — addicted to the <em>feeling</em> of preparing without ever actually doing.
+                  You're a <strong>reality avoider</strong> — addicted to the <em>feeling</em> of analyzing without ever actually being present.
                 </p>
                 <p>
-                  And every day you stay in this loop is another day someone less qualified than you actually ships something.
+                  And every day you stay in this loop is another day someone less "perfect" than you actually enjoys their life.
                 </p>
               </>
             )}
@@ -347,24 +390,23 @@ function ThankYouPageContent() {
                 <>
                   <p>{resultData.problem}</p>
                   <p>
-                    Your brain is hooked on the dopamine of "getting ready" —
+                    Your brain is hooked on the dopamine of "figuring it out" —
                   </p>
                   <p className="text-xl font-bold">
-                    while your to-do list stays stuck at <strong>0% complete</strong>.
+                    while your actual life stays stuck at <strong>0% lived</strong>.
                   </p>
                 </>
               ) : (
                 <>
-                  <p>You think planning keeps you safe.</p>
-                  <p>You think more research = less risk.</p>
+                  <p>You think analyzing keeps you safe.</p>
                   <p className="font-semibold">
-                    But in reality, planning is just procrastination in disguise.
+                    But overthinking is just anxiety in an intelligent disguise.
                   </p>
                   <p>
-                    Your brain is hooked on the dopamine of "getting ready" —
+                    Your brain is hooked on the dopamine of "figuring it out" —
                   </p>
                   <p className="text-xl font-bold">
-                    while your to-do list stays stuck at <strong>0% complete</strong>.
+                    while your actual life stays stuck at <strong>0% lived</strong>.
                   </p>
                 </>
               )}
@@ -377,12 +419,12 @@ function ThankYouPageContent() {
               The Hidden Addiction You Never Noticed
             </h2>
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
-              <p>It's not Netflix keeping you stuck.</p>
-              <p>It's collecting ideas you never execute.</p>
-              <p>You don't need another plan.</p>
-              <p>You don't need another tool.</p>
+              <p>It's not social media keeping you stuck.</p>
+              <p>It's replaying moments you can never change.</p>
+              <p>You don't need another self-help book.</p>
+              <p>You don't need another meditation app.</p>
               <p className="text-xl font-bold">
-                👉 You need your <strong>first win</strong> — in the next 48 hours.
+                👉 You need to <strong>break the mental loop</strong> — the moment it starts.
               </p>
             </div>
           </div>
@@ -393,16 +435,16 @@ function ThankYouPageContent() {
               The Cure: The F.I.R.E. Starter Kit (48-Hour Protocol)
             </h2>
             <p className="text-lg text-gray-900 mb-8 leading-relaxed">
-              A 4-step reset that forces you to act, not plan:
+              A 4-step reset that forces you to be present, not anxious:
             </p>
             <div className="space-y-4 text-lg text-gray-900 leading-relaxed mb-8">
-              <p><strong>F — Focus</strong> → Kill the 22 ideas. Pick 1.</p>
-              <p><strong>I — Imperfect</strong> → Start embarrassingly simple.</p>
-              <p><strong>R — Results</strong> → Get 1 real outcome (not just more prep).</p>
-              <p><strong>E — Evolve</strong> → Improve with real feedback, not imagination.</p>
+              <p><strong>F — Feel</strong> → Notice the spiral before it swallows you.</p>
+              <p><strong>I — Interrupt</strong> → Stop the loop with a pattern break.</p>
+              <p><strong>R — Redirect</strong> → Channel your thoughts into something real.</p>
+              <p><strong>E — Ease</strong> → Build calm without needing certainty.</p>
             </div>
             <p className="text-xl font-semibold text-gray-900">
-              In 48 hours, you'll go from <em>"I'm preparing"</em> → to <em>"I already did it."</em>
+              With this 4-step protocol, you'll go from <em>"I can't stop thinking"</em> → to <em>"I know exactly how to stop this."</em>
             </p>
           </div>
 
@@ -413,12 +455,12 @@ function ThankYouPageContent() {
                 Step 0: Try It Now <span className="text-blue-600">(Free)</span>
               </h2>
               <div className="space-y-4 text-base text-gray-800 leading-relaxed">
-                <p>Take your 3 favorite projects.</p>
-                <p>Delete two.</p>
+                <p>Notice the next thought spiral.</p>
+                <p>Say it out loud: "I'm overthinking again."</p>
                 <p className="font-bold bg-white/60 px-4 py-2 rounded-lg">
-                  Congrats — you've just done <strong className="text-blue-600">F (Focus)</strong>.
+                  Congrats — you've just done <strong className="text-blue-600">F (Feel)</strong>.
                 </p>
-                <p className="text-sm">The kit gives you I, R, and E in the next 48h.</p>
+                <p className="text-sm">The kit gives you the full I, R, and E protocol to use whenever you need it.</p>
               </div>
             </div>
           </div>
@@ -429,33 +471,33 @@ function ThankYouPageContent() {
               What You'll Get Inside
             </h2>
             <p className="text-lg text-gray-900 mb-8 leading-relaxed">
-              9 pre-filled steps, one Notion system, zero fluff.
+              4 proven tools, one calm system, zero fluff.
             </p>
 
             <div className="space-y-8 text-lg text-gray-900 leading-relaxed">
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ Zero fluff methodology</p>
-                <p className="mb-2">→ 9 steps, not 90.</p>
-                <p><strong>What you get:</strong> Done/not done checklist, avatar template, TAM calculator, value prop worksheet.</p>
+                <p className="font-bold text-xl mb-2">✅ The Spiral Tracker</p>
+                <p className="mb-2">→ Catch your patterns before they catch you.</p>
+                <p><strong>What you get:</strong> Thought pattern journal, trigger identification worksheet, 5-minute spiral interrupt script.</p>
               </div>
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ Speed over perfection</p>
-                <p className="mb-2">→ Launch in 48h, not 48 weeks.</p>
-                <p><strong>What you get:</strong> 48-hour roadmap, irresistible offer template, MVP checklist, 3 KPI trackers.</p>
+                <p className="font-bold text-xl mb-2">✅ The 48-Hour Reset Protocol</p>
+                <p className="mb-2">→ From racing mind to calm presence.</p>
+                <p><strong>What you get:</strong> F.I.R.E. implementation guide, pattern break toolkit, bedtime reset ritual, decision-making framework.</p>
               </div>
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ Real validation</p>
-                <p className="mb-2">→ Customers, not friends.</p>
-                <p><strong>What you get:</strong> Interview scripts, validation framework, pivot tree.</p>
+                <p className="font-bold text-xl mb-2">✅ The Calm Routine Builder</p>
+                <p className="mb-2">→ Daily practices that actually work.</p>
+                <p><strong>What you get:</strong> Morning clarity script, social media boundary template, comparison detox guide.</p>
               </div>
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ Product-Market Fit Roadmap</p>
-                <p className="mb-2">→ From idea to paying customers.</p>
-                <p><strong>What you get:</strong> Launch sequence, acquisition playbook, optimization framework.</p>
+                <p className="font-bold text-xl mb-2">✅ The Mental Freedom Roadmap</p>
+                <p className="mb-2">→ From chronic overthinking to confident living.</p>
+                <p><strong>What you get:</strong> Progress tracker, self-talk reframe cards, confidence-building checklist.</p>
               </div>
             </div>
           </div>
@@ -468,22 +510,65 @@ function ThankYouPageContent() {
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8">
               <p>
-                • <strong>Sarah (Austin)</strong>: 8 months planning → finished project in 3 days → launched 2 more in 6 months.
+                • <strong>Jessica (Austin)</strong>: 8 months replaying conversations → stopped the spiral in 3 days → sleeps through the night now.
               </p>
               <p>
-                • <strong>Michael (Miami)</strong>: 2 years validating ideas → shipped in 1 weekend. Momentum shifted everything.
+                • <strong>Lauren (Miami)</strong>: 2 years analyzing every outfit → made a choice in 5 minutes. The relief was instant.
               </p>
               <p>
-                • <strong>David (Seattle)</strong>: Competitor "launching soon." He shipped with 3 features. Got real traction. Competitor still planning.
+                • <strong>Emma (Seattle)</strong>: Friend posts perfect life online. She stopped comparing. Started living. Friend still performing.
               </p>
             </div>
 
             <p className="text-xl font-bold text-gray-900">
-              847 people used this system.
+              847 women used this protocol.
             </p>
             <p className="text-xl font-bold text-gray-900">
-              Average time to <strong>first win: 72h</strong>.
+              Most women notice the shift after <strong>their first real application of the system</strong>.
             </p>
+          </div>
+
+          {/* Limited-Time Subscriber Deal - Scarcity Introduction */}
+          <div className="mb-16 flex justify-center">
+            <div className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 border-4 border-dashed border-red-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
+              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
+                🎉 50K Subscriber Celebration
+              </h2>
+              <div className="space-y-4 text-base text-gray-800 leading-relaxed">
+                {!isSoldOut ? (
+                  <>
+                    <p className="font-semibold">
+                      Only <span className={`font-bold ${isCritical ? 'text-red-600' : 'text-red-600'}`}>{spotsRemaining}/{totalSpots} spots</span> at <span className="text-red-600 font-bold">$27</span> today
+                    </p>
+                    {/* Progress bar */}
+                    <div className="w-full max-w-xs mx-auto">
+                      <div className="relative w-full bg-red-200 rounded-full h-3 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-700 ease-out ${
+                            isCritical
+                              ? 'bg-gradient-to-r from-rose-500 to-red-600'
+                              : 'bg-gradient-to-r from-orange-500 to-red-500'
+                          }`}
+                          style={{ width: `${(spotsRemaining / totalSpots) * 100}%` }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer" />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="font-semibold text-red-600">
+                    SOLD OUT - Price returning to $387
+                  </p>
+                )}
+                <p className="text-sm text-gray-600">
+                  (Regular price: $387)
+                </p>
+                <p className="bg-white/60 px-4 py-2 rounded-lg font-semibold">
+                  Once sold out, price goes back to $387
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Phase 1: Teaser - Price Curiosity Hook */}
@@ -493,8 +578,8 @@ function ThankYouPageContent() {
             </h2>
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8 text-center">
-              <p>The regular price for this system is $387.</p>
-              <p>That's what 847 people already paid to break their overthinking loop in 72 hours.</p>
+              <p>The regular price for this protocol is $387.</p>
+              <p>That's what 847 women already paid to finally have a system that breaks the overthinking loop.</p>
 
               {/* Teaser Card - Creates Curiosity */}
               <div className="flex justify-center">
@@ -503,7 +588,7 @@ function ThankYouPageContent() {
                     But today you won't pay<br/>anywhere near that.
                   </p>
                   <p className="text-base text-gray-600 mb-6 leading-relaxed">
-                    For less than lunch, you can get the exact 48h system that helped 847 people finally take action...
+                    For less than lunch, you can get the 4-step protocol that helped 847 women break free from chronic overthinking...
                   </p>
                   <div className="bg-white/80 rounded-xl px-6 py-4 border-2 border-green-500">
                     <p className="text-sm text-gray-600 mb-1">One-time investment:</p>
@@ -530,17 +615,17 @@ function ThankYouPageContent() {
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
               <p>What's riskier?</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Spending $27 on a proven system that helped 847 people break the overthinking loop,</li>
-                <li>Or staying stuck in preparation mode another year?</li>
+                <li>Spending $27 on a proven protocol that helped 847 women break the overthinking loop,</li>
+                <li>Or another year of comparing yourself to strangers online, lying awake replaying conversations, and spending 20 minutes choosing what to wear because nothing feels "right enough"?</li>
               </ul>
               <p>
-                If you complete <strong>just one project</strong>, the momentum shift alone is priceless.
+                If you <strong>use this system just once when the overthinking starts</strong>, you'll know freedom is possible.
               </p>
               <p className="text-xl font-bold">
                 That's infinite ROI on your mental freedom.
               </p>
               <p>
-                And if you apply this to <strong>anything that makes money</strong>, you'll 10× your investment immediately.
+                And once you have a protocol that works, you'll reclaim hours of your life every single day.
               </p>
             </div>
           </div>
@@ -554,38 +639,18 @@ function ThankYouPageContent() {
             <div className="space-y-8 text-lg text-gray-900 leading-relaxed">
               <div>
                 <p className="font-bold text-xl mb-2">Choice #1: Do Nothing</p>
-                <p>Stay stuck. Keep planning. 6 months from now, still overthinking.</p>
+                <p>Stay stuck. Keep analyzing. 6 months from now, still replaying conversations.</p>
               </div>
 
               <div>
                 <p className="font-bold text-xl mb-2">Choice #2: Invest $27</p>
-                <p>Get the F.I.R.E. method. Ship in 48h. Break the loop.</p>
-                <p>Join 847 people already inside.</p>
+                <p>Get the system that breaks the loop. Start living.</p>
+                <p>Join 847 women already inside.</p>
               </div>
 
               <p className="text-xl font-bold">
                 👉 Which choice feels better?
               </p>
-            </div>
-          </div>
-
-          {/* Limited-Time Subscriber Deal */}
-          <div className="mb-16 flex justify-center">
-            <div className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 border-4 border-dashed border-red-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
-              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
-                🎉 50K Subscriber Celebration
-              </h2>
-              <div className="space-y-4 text-base text-gray-800 leading-relaxed">
-                <p className="font-semibold">
-                  Only <span className="text-red-600 font-bold">50 spots</span> at <span className="text-red-600 font-bold">$27</span> today
-                </p>
-                <p className="text-sm text-gray-600">
-                  (Regular price: $387)
-                </p>
-                <p className="bg-white/60 px-4 py-2 rounded-lg font-semibold">
-                  Once sold out, price goes back to $387
-                </p>
-              </div>
             </div>
           </div>
 
@@ -596,14 +661,14 @@ function ThankYouPageContent() {
               </h2>
 
               <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
-                <p>Use the system for 30 days.</p>
-                <p>If you don't ship something in 48h, I refund you.</p>
+                <p>Use the protocol for 30 days.</p>
+                <p>If it doesn't give you a clear way to interrupt your overthinking pattern, I refund you.</p>
                 <p>Keep the kit. No questions asked.</p>
                 <p className="text-xl font-bold">
                   The only way you lose…
                 </p>
                 <p className="text-xl font-bold">
-                  …is by staying a <strong>{resultData ? resultData.title.toLowerCase() : 'chronic planner'}</strong>.
+                  …is by staying a <strong>{resultData ? resultData.title.toLowerCase() : 'chronic overthinker'}</strong>.
                 </p>
               </div>
             </div>
@@ -627,8 +692,17 @@ function ThankYouPageContent() {
                 {/* Headline */}
                 <div className="space-y-1.5">
                   <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight">
-                    Your notes are full.<br/>
-                    Your results are empty.
+                    {resultData?.offerHeadline ? (
+                      <>
+                        {resultData.offerHeadline.line1}<br/>
+                        {resultData.offerHeadline.line2}
+                      </>
+                    ) : (
+                      <>
+                        Your thoughts are racing.<br/>
+                        Your peace is missing.
+                      </>
+                    )}
                   </p>
                   <div className="w-12 h-0.5 sm:h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto rounded-full"></div>
                 </div>
@@ -636,7 +710,7 @@ function ThankYouPageContent() {
                 {/* Promise */}
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-lg px-4 py-2.5 sm:px-5 sm:py-3">
                   <p className="text-sm sm:text-base md:text-lg font-bold text-gray-900">
-                    Your first real win in 48h
+                    Stop overthinking. Start living.
                   </p>
                 </div>
 
@@ -647,25 +721,25 @@ function ThankYouPageContent() {
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">48h Roadmap (PDF + Notion template)</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">48h Reset Protocol (PDF + Notion template)</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Customer Validation Script Pack</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Pattern Break Toolkit</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">MVP Launch Checklist</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Bedtime Reset Ritual</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Offer Builder Worksheet</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Spiral Interrupt Script</p>
                     </div>
                   </div>
 
@@ -695,7 +769,7 @@ function ThankYouPageContent() {
                     showTrustSignals={false}
                   >
                     <span className="flex items-center justify-center gap-2">
-                      Yes! I want my first win in 48h → $27
+                      Yes! I want the protocol → $27
                     </span>
                   </CheckoutButton>
 
@@ -747,6 +821,7 @@ function ThankYouPageContent() {
           </div>
 
         </div>
+      </div>
       </div>
     </div>
   )

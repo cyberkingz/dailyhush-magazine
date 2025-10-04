@@ -103,67 +103,36 @@ function calculateResult(
   answers: QuizAnswer[],
   questions: QuizQuestion[]
 ): QuizResult {
-  // Score each overthinker type
-  const scores: Record<OverthinkerType, number> = {
-    'chronic-planner': 0,
-    'research-addict': 0,
-    'self-doubter': 0,
-    'vision-hopper': 0,
-  }
+  // Calculate total score by summing all answer values
+  let totalScore = 0
 
-  // Simple scoring logic - you can refine this based on specific answer patterns
   answers.forEach((answer) => {
     const question = questions.find((q) => q.id === answer.questionId)
     if (!question) return
 
-    // Section-based scoring (simplified for now)
-    if (question.section === 'mental' && answer.scaleValue && answer.scaleValue > 3) {
-      scores['research-addict'] += 2
-      scores['chronic-planner'] += 1
-    }
-
-    if (question.section === 'action') {
-      scores['chronic-planner'] += 2
-      scores['vision-hopper'] += 1
-    }
-
-    if (question.section === 'emotional') {
-      scores['self-doubter'] += 2
-    }
-
-    if (question.section === 'habits') {
-      scores['vision-hopper'] += 2
-    }
-
-    if (question.section === 'reflection') {
-      // Bridge question - distribute points based on answer choice
-      if (answer.optionId) {
-        const option = question.options?.find((o) => o.id === answer.optionId)
-        if (option && option.value > 2) {
-          scores['self-doubter'] += 1
-        }
-      }
-    }
-
-    // Add option-based scoring
+    // Add the value from the selected option
     if (answer.optionId && question.options) {
       const option = question.options.find((o) => o.id === answer.optionId)
       if (option) {
-        // Distribute points based on option value
-        // This is a simplified example - refine based on your quiz logic
-        if (option.value > 3) {
-          scores['chronic-planner'] += 1
-        }
+        totalScore += option.value
       }
     }
   })
 
-  // Determine dominant type
-  const dominantType = (Object.entries(scores) as [OverthinkerType, number][])
-    .sort(([, a], [, b]) => b - a)[0][0]
+  // Determine overthinker type based on total score ranges
+  let type: OverthinkerType
+  if (totalScore >= 16 && totalScore <= 28) {
+    type = 'mindful-thinker'
+  } else if (totalScore >= 29 && totalScore <= 44) {
+    type = 'gentle-analyzer'
+  } else if (totalScore >= 45 && totalScore <= 60) {
+    type = 'chronic-overthinker'
+  } else {
+    type = 'overthinkaholic'
+  }
 
   // Return result based on type
-  return getResultForType(dominantType, scores[dominantType])
+  return getResultForType(type, totalScore)
 }
 
 function getResultForType(
@@ -171,42 +140,45 @@ function getResultForType(
   score: number
 ): QuizResult {
   const results: Record<OverthinkerType, Omit<QuizResult, 'score'>> = {
-    'chronic-planner': {
-      type: 'chronic-planner',
-      title: 'The Chronic Planner',
+    'mindful-thinker': {
+      type: 'mindful-thinker',
+      title: 'The Mindful Thinker',
       description:
-        "You need control & perfect clarity before acting. You've planned every detail, but the execution keeps waiting for 'the right moment.'",
+        'You reflect, but rarely spiral. Your thoughts work for you, not against you.',
       insight:
-        "Here's the truth: You don't need another plan. You need a deadline.",
+        'You have healthy awareness. Keep using it to make intentional choices.',
       ctaHook:
-        'Get the F.I.R.E. Kit built specifically for Chronic Planners like you.',
+        'Take your mental clarity to the next level with the F.I.R.E. Kit.',
     },
-    'research-addict': {
-      type: 'research-addict',
-      title: 'The Research Addict',
+    'gentle-analyzer': {
+      type: 'gentle-analyzer',
+      title: 'The Gentle Analyzer',
       description:
-        "You feel 'productive' learning but never applying. One more course, one more article, one more tutorial... but still no launched product.",
-      insight: "More info isn't the cure — it's the drug.",
+        'You think a lot; sometimes it leaks into worry. Awareness is there — you just need light guardrails.',
+      insight:
+        'Your overthinking is manageable — with the right system in place.',
       ctaHook:
-        'Break the research loop with the F.I.R.E. Kit for Research Addicts.',
+        'Get the F.I.R.E. Kit to turn your analysis into action.',
     },
-    'self-doubter': {
-      type: 'self-doubter',
-      title: 'The Self-Doubter',
+    'chronic-overthinker': {
+      type: 'chronic-overthinker',
+      title: 'The Chronic Overthinker',
       description:
-        "You overanalyze your self-worth before taking action. 'What if I'm not good enough?' 'What if they judge me?' Fear keeps you stuck.",
-      insight: "You don't need confidence, just momentum.",
+        'Your mind loops often. You crave peace, but certainty feels safer than calm.',
+      insight:
+        'You don\'t need more certainty. You need a system that works without it.',
       ctaHook:
-        'Get the F.I.R.E. Kit designed for Self-Doubters ready to break free.',
+        'Break the loop with the F.I.R.E. Kit built for chronic overthinkers.',
     },
-    'vision-hopper': {
-      type: 'vision-hopper',
-      title: 'The Vision Hopper',
+    'overthinkaholic': {
+      type: 'overthinkaholic',
+      title: 'The Overthinkaholic',
       description:
-        'You constantly switch ideas before completion. Shiny object syndrome keeps you starting fresh instead of finishing strong.',
-      insight: 'Finish one before chasing the next.',
+        'Your brain never clocks out — decisions, looks, texts, sleep. You don\'t need more plans; you need a reset ritual.',
+      insight:
+        'This isn\'t about willpower. It\'s about interrupting the pattern.',
       ctaHook:
-        'Lock in your focus with the F.I.R.E. Kit for Vision Hoppers.',
+        'Get the F.I.R.E. Kit — the 48-hour protocol for people whose brains won\'t shut up.',
     },
   }
 

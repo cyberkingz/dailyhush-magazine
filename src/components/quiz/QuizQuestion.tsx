@@ -1,5 +1,7 @@
-import React from 'react'
-import { QuizQuestion as QuizQuestionType, QuizAnswer } from '../../types/quiz'
+import type {
+  QuizQuestion as QuizQuestionType,
+  QuizAnswer,
+} from '../../types/quiz'
 
 interface QuizQuestionProps {
   question: QuizQuestionType

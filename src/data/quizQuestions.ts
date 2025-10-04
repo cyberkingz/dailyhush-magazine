@@ -1,4 +1,4 @@
-import { QuizQuestion } from '../types/quiz'
+import type { QuizQuestion } from '../types/quiz'
 
 export const quizQuestions: QuizQuestion[] = [
   // SECTION 1: Cognitive Overload (Mental Noise)

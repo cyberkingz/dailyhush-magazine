@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { QuizQuestion } from '../components/quiz/QuizQuestion'
 import { QuizProgress } from '../components/quiz/QuizProgress'
 import { useQuiz } from '../hooks/useQuiz'
 import { quizQuestions } from '../data/quizQuestions'
-import { QuizResult } from '../types/quiz'
 import '../styles/quiz.css'
 
 export default function Quiz() {
@@ -21,14 +21,14 @@ export default function Quiz() {
     currentAnswer,
     canGoNext,
     canGoPrevious,
-    isComplete,
+    // `isComplete` available but not currently used in the UI flow
     result,
     handleAnswer,
     goToNext,
     goToPrevious,
   } = useQuiz({
     questions: quizQuestions,
-    onComplete: (result: QuizResult) => {
+    onComplete: () => {
       // Quiz complete, show email capture
       setShowEmailCapture(true)
     },
@@ -43,7 +43,7 @@ export default function Quiz() {
     }
   }
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!email || !result) return
 

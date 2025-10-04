@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface QuizProgressProps {
   current: number
   total: number

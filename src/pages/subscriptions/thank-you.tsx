@@ -302,45 +302,45 @@ function ThankYouPageContent() {
             But wait… before you go:
           </p>
 
-          {/* Business Voyeur Section */}
+          {/* Overthinking Reality Check */}
           <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
             {resultData ? (
               <>
-                <p>You've said <em>"I'm launching soon"</em> for months.</p>
+                <p>You've said <em>"I'll start when I'm ready"</em> for months.</p>
                 <p>{resultData.symptom}</p>
                 <p className="text-xl font-bold text-gray-900">
-                  The brutal truth? You're not an entrepreneur yet.
+                  The brutal truth? You're not making progress.
                 </p>
                 <p className="text-xl">
-                  You're a <strong>business voyeur</strong> — addicted to the <em>feeling</em> of progress without ever getting paid for it.
+                  You're an <strong>action avoider</strong> — addicted to the <em>feeling</em> of preparing without ever actually doing.
                 </p>
                 <p>
-                  And every week you stay in this loop is another week a less talented founder gets paid with a worse idea.
+                  And every day you stay in this loop is another day someone less qualified than you actually ships something.
                 </p>
               </>
             ) : (
               <>
-                <p>You've said <em>"I'm launching soon"</em> for months.</p>
-                <p>You've rewritten your plan 3 times.</p>
-                <p>You've got more tools than customers.</p>
+                <p>You've said <em>"I'll start when I'm ready"</em> for months.</p>
+                <p>You've made 3 different plans.</p>
+                <p>You've got more ideas than results.</p>
                 <p className="text-xl font-bold text-gray-900">
-                  The brutal truth? You're not an entrepreneur yet.
+                  The brutal truth? You're not making progress.
                 </p>
                 <p className="text-xl">
-                  You're a <strong>business voyeur</strong> — addicted to the <em>feeling</em> of progress without ever getting paid for it.
+                  You're an <strong>action avoider</strong> — addicted to the <em>feeling</em> of preparing without ever actually doing.
                 </p>
                 <p>
-                  And every week you stay in this loop is another week a less talented founder gets paid with a worse idea.
+                  And every day you stay in this loop is another day someone less qualified than you actually ships something.
                 </p>
               </>
             )}
           </div>
         </div>
           
-          {/* Why Smart People Stay Broke */}
+          {/* Why Smart People Stay Stuck */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Why Smart People Stay Broke
+              Why Smart People Stay Stuck
             </h2>
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
               {resultData ? (
@@ -350,7 +350,7 @@ function ThankYouPageContent() {
                     Your brain is hooked on the dopamine of "getting ready" —
                   </p>
                   <p className="text-xl font-bold">
-                    while your bank account stays stuck at <strong>$0</strong>.
+                    while your to-do list stays stuck at <strong>0% complete</strong>.
                   </p>
                 </>
               ) : (
@@ -358,13 +358,13 @@ function ThankYouPageContent() {
                   <p>You think planning keeps you safe.</p>
                   <p>You think more research = less risk.</p>
                   <p className="font-semibold">
-                    But in reality, planning is just procrastination in a business suit.
+                    But in reality, planning is just procrastination in disguise.
                   </p>
                   <p>
                     Your brain is hooked on the dopamine of "getting ready" —
                   </p>
                   <p className="text-xl font-bold">
-                    while your bank account stays stuck at <strong>$0</strong>.
+                    while your to-do list stays stuck at <strong>0% complete</strong>.
                   </p>
                 </>
               )}
@@ -377,12 +377,12 @@ function ThankYouPageContent() {
               The Hidden Addiction You Never Noticed
             </h2>
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
-              <p>It's not Netflix keeping you broke.</p>
-              <p>It's collecting business ideas you never ship.</p>
+              <p>It's not Netflix keeping you stuck.</p>
+              <p>It's collecting ideas you never execute.</p>
               <p>You don't need another plan.</p>
               <p>You don't need another tool.</p>
               <p className="text-xl font-bold">
-                👉 You need your <strong>first payment</strong> — in the next 48 hours.
+                👉 You need your <strong>first win</strong> — in the next 48 hours.
               </p>
             </div>
           </div>
@@ -393,16 +393,16 @@ function ThankYouPageContent() {
               The Cure: The F.I.R.E. Starter Kit (48-Hour Protocol)
             </h2>
             <p className="text-lg text-gray-900 mb-8 leading-relaxed">
-              A 4-step reset that forces you to ship, not plan:
+              A 4-step reset that forces you to act, not plan:
             </p>
             <div className="space-y-4 text-lg text-gray-900 leading-relaxed mb-8">
               <p><strong>F — Focus</strong> → Kill the 22 ideas. Pick 1.</p>
-              <p><strong>I — Imperfect</strong> → Launch embarrassingly simple.</p>
-              <p><strong>R — Revenue</strong> → Get 1 stranger to pay you.</p>
-              <p><strong>E — Evolve</strong> → Improve with customer money, not imagination.</p>
+              <p><strong>I — Imperfect</strong> → Start embarrassingly simple.</p>
+              <p><strong>R — Results</strong> → Get 1 real outcome (not just more prep).</p>
+              <p><strong>E — Evolve</strong> → Improve with real feedback, not imagination.</p>
             </div>
             <p className="text-xl font-semibold text-gray-900">
-              In 48 hours, you'll go from <em>"I'm preparing"</em> → to <em>"I already got paid."</em>
+              In 48 hours, you'll go from <em>"I'm preparing"</em> → to <em>"I already did it."</em>
             </p>
           </div>
 
@@ -413,7 +413,7 @@ function ThankYouPageContent() {
                 Step 0: Try It Now <span className="text-blue-600">(Free)</span>
               </h2>
               <div className="space-y-4 text-base text-gray-800 leading-relaxed">
-                <p>Take your 3 favorite business ideas.</p>
+                <p>Take your 3 favorite projects.</p>
                 <p>Delete two.</p>
                 <p className="font-bold bg-white/60 px-4 py-2 rounded-lg">
                   Congrats — you've just done <strong className="text-blue-600">F (Focus)</strong>.
@@ -468,13 +468,13 @@ function ThankYouPageContent() {
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8">
               <p>
-                • <strong>Sarah (Austin)</strong>: 8 months planning → first $500 client in 3 days → $8.2K/month in 6 months.
+                • <strong>Sarah (Austin)</strong>: 8 months planning → finished project in 3 days → launched 2 more in 6 months.
               </p>
               <p>
-                • <strong>Michael (Miami)</strong>: 2 years validating ideas → pre-orders in 1 weekend. Quit job in 3 months.
+                • <strong>Michael (Miami)</strong>: 2 years validating ideas → shipped in 1 weekend. Momentum shifted everything.
               </p>
               <p>
-                • <strong>David (Seattle)</strong>: Competitor "launching soon." He shipped with 3 features. Got 50 customers. Competitor still planning.
+                • <strong>David (Seattle)</strong>: Competitor "launching soon." He shipped with 3 features. Got real traction. Competitor still planning.
               </p>
             </div>
 
@@ -482,7 +482,7 @@ function ThankYouPageContent() {
               847 people used this system.
             </p>
             <p className="text-xl font-bold text-gray-900">
-              Average time to <strong>first customer: 72h</strong>.
+              Average time to <strong>first win: 72h</strong>.
             </p>
           </div>
 
@@ -494,7 +494,7 @@ function ThankYouPageContent() {
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8 text-center">
               <p>The regular price for this system is $387.</p>
-              <p>That's what 847 founders already paid to get their first customer in 72 hours.</p>
+              <p>That's what 847 people already paid to break their overthinking loop in 72 hours.</p>
 
               {/* Teaser Card - Creates Curiosity */}
               <div className="flex justify-center">
@@ -503,7 +503,7 @@ function ThankYouPageContent() {
                     But today you won't pay<br/>anywhere near that.
                   </p>
                   <p className="text-base text-gray-600 mb-6 leading-relaxed">
-                    For less than lunch, you can get the exact 48h system that launched 847 businesses...
+                    For less than lunch, you can get the exact 48h system that helped 847 people finally take action...
                   </p>
                   <div className="bg-white/80 rounded-xl px-6 py-4 border-2 border-green-500">
                     <p className="text-sm text-gray-600 mb-1">One-time investment:</p>
@@ -516,7 +516,7 @@ function ThankYouPageContent() {
               </div>
 
               <p className="text-xl font-bold text-center">
-                The price is nothing. The system could change your financial future forever.
+                The price is nothing. The system could change your life forever.
               </p>
             </div>
           </div>
@@ -530,17 +530,17 @@ function ThankYouPageContent() {
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
               <p>What's riskier?</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Spending $27 on a proven system that launched 847 businesses,</li>
-                <li>Or staying stuck in research mode another year?</li>
+                <li>Spending $27 on a proven system that helped 847 people break the overthinking loop,</li>
+                <li>Or staying stuck in preparation mode another year?</li>
               </ul>
               <p>
-                If you launch <strong>just one offer</strong>, average first-month revenue = <strong>$1,200</strong>.
+                If you complete <strong>just one project</strong>, the momentum shift alone is priceless.
               </p>
               <p className="text-xl font-bold">
-                That's 44× ROI.
+                That's infinite ROI on your mental freedom.
               </p>
               <p>
-                If you get <strong>just one customer</strong>, lifetime value = $300+.
+                And if you apply this to <strong>anything that makes money</strong>, you'll 10× your investment immediately.
               </p>
             </div>
           </div>
@@ -554,13 +554,13 @@ function ThankYouPageContent() {
             <div className="space-y-8 text-lg text-gray-900 leading-relaxed">
               <div>
                 <p className="font-bold text-xl mb-2">Choice #1: Do Nothing</p>
-                <p>Stay stuck. Keep planning. 6 months from now, still broke.</p>
+                <p>Stay stuck. Keep planning. 6 months from now, still overthinking.</p>
               </div>
 
               <div>
                 <p className="font-bold text-xl mb-2">Choice #2: Invest $27</p>
-                <p>Get the F.I.R.E. method. Launch in 48h. Get paid.</p>
-                <p>Join 847 founders already inside.</p>
+                <p>Get the F.I.R.E. method. Ship in 48h. Break the loop.</p>
+                <p>Join 847 people already inside.</p>
               </div>
 
               <p className="text-xl font-bold">
@@ -628,7 +628,7 @@ function ThankYouPageContent() {
                 <div className="space-y-1.5">
                   <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight">
                     Your notes are full.<br/>
-                    Your Stripe is empty.
+                    Your results are empty.
                   </p>
                   <div className="w-12 h-0.5 sm:h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto rounded-full"></div>
                 </div>
@@ -636,7 +636,7 @@ function ThankYouPageContent() {
                 {/* Promise */}
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-lg px-4 py-2.5 sm:px-5 sm:py-3">
                   <p className="text-sm sm:text-base md:text-lg font-bold text-gray-900">
-                    Your first paying customer in 48h
+                    Your first real win in 48h
                   </p>
                 </div>
 
@@ -695,7 +695,7 @@ function ThankYouPageContent() {
                     showTrustSignals={false}
                   >
                     <span className="flex items-center justify-center gap-2">
-                      Yes! I want my first customer in 48h → $27
+                      Yes! I want my first win in 48h → $27
                     </span>
                   </CheckoutButton>
 
@@ -710,13 +710,13 @@ function ThankYouPageContent() {
 
           <div className="border-t border-gray-200 pt-12 mt-16 px-8 md:px-16 pb-16 md:pb-20 space-y-8 max-w-3xl mx-auto">
             <p className="text-lg text-gray-900 leading-relaxed">
-              <strong>P.S.</strong> Right now, someone with your exact skills and less planning just launched and made their first sale.
+              <strong>P.S.</strong> Right now, someone with your exact skills and less planning just shipped something real.
             </p>
             <p className="text-lg text-gray-900 leading-relaxed">
-              The only difference? They stopped being a <strong>business voyeur</strong> and started shipping.
+              The only difference? They stopped being an <strong>action avoider</strong> and started doing.
             </p>
             <p className="text-lg text-gray-900 leading-relaxed">
-              You're already subscribed to DailyHush. But reading newsletters won't fix your $0 Stripe account. Only <strong>action</strong> will.
+              You're already subscribed to DailyHush. But reading newsletters won't break your overthinking loop. Only <strong>action</strong> will.
             </p>
 
             <div className="text-center space-y-4">
@@ -728,7 +728,7 @@ function ThankYouPageContent() {
                 showPricing={false}
               >
                 <DollarSign className="h-5 w-5" />
-                Stop Planning. Start Shipping. ($27)
+                Stop Overthinking. Start Doing. ($27)
                 <ArrowRight className="h-4 w-4" />
               </CheckoutButton>
             </div>
@@ -741,7 +741,7 @@ function ThankYouPageContent() {
                 Founder, DailyHush
               </p>
               <p className="text-sm text-gray-500 italic">
-                (Recovering business voyeur. Launched 3 businesses in 12 months using F.I.R.E.)
+                (Recovering overthinker. Shipped 3 projects in 12 months using F.I.R.E.)
               </p>
             </div>
           </div>

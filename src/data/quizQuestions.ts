@@ -7,7 +7,7 @@ export const quizQuestions: QuizQuestion[] = [
     section: 'cognitive',
     type: 'scale',
     question:
-      'How often do you replay past decisions in your head, wondering if you could've done better?',
+      'How often do you replay past decisions in your head, wondering if you could have done better?',
     scaleMin: 1,
     scaleMax: 5,
     scaleLabels: {
@@ -45,7 +45,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q4',
     section: 'action',
     type: 'single',
-    question: 'Do you tell yourself "I'll start once it's clearer"?',
+    question: 'Do you tell yourself "I will start once it is clearer"?',
     options: [
       { id: 'q4_a', text: 'Rarely - I start messy', value: 1 },
       { id: 'q4_b', text: 'Sometimes - depends on the project', value: 3 },
@@ -83,9 +83,9 @@ export const quizQuestions: QuizQuestion[] = [
     type: 'single',
     question: 'If a friend launched something imperfect, how would you react?',
     options: [
-      { id: 'q7_a', text: "I'd be proud of them", value: 1 },
-      { id: 'q7_b', text: "I'd be anxious for them", value: 4 },
-      { id: 'q7_c', text: "I'd secretly compare myself 😅", value: 5 },
+      { id: 'q7_a', text: 'I would be proud of them', value: 1 },
+      { id: 'q7_b', text: 'I would be anxious for them', value: 4 },
+      { id: 'q7_c', text: 'I would secretly compare myself 😅', value: 5 },
     ],
   },
 

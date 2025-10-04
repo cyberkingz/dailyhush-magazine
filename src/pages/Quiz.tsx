@@ -12,6 +12,7 @@ export default function Quiz() {
   const [email, setEmail] = useState('')
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false)
   const [showEmailCapture, setShowEmailCapture] = useState(false)
+  const [hasStarted, setHasStarted] = useState(false)
 
   const {
     currentQuestion,
@@ -76,7 +77,7 @@ export default function Quiz() {
     return sections[section] || section
   }
 
-  if (!currentQuestion && !showEmailCapture) {
+  if (!hasStarted) {
     return (
       <div className="quiz-container">
         <div className="quiz-intro">
@@ -97,7 +98,7 @@ export default function Quiz() {
           </div>
           <button
             className="quiz-intro__cta"
-            onClick={() => window.location.reload()}
+            onClick={() => setHasStarted(true)}
           >
             Start the Diagnostic →
           </button>

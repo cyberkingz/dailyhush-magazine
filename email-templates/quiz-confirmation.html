@@ -1,0 +1,69 @@
+<html>
+  <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; max-width: 600px; margin: 0 auto; padding: 20px;">
+
+    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+      <h1 style="margin: 0; font-size: 28px; color: #111827;">🎯 Your Results Are Ready!</h1>
+    </div>
+
+    <p style="font-size: 16px; margin-bottom: 20px;">
+      Hey there,
+    </p>
+
+    <p style="font-size: 16px; margin-bottom: 20px;">
+      Thanks for taking the <strong>Overthinker Diagnostic Quiz</strong>! We've analyzed your responses and your personalized action plan is waiting for you.
+    </p>
+
+    <p style="font-size: 16px; margin-bottom: 20px;">
+      Plus, you're now subscribed to <strong>DailyHush</strong> – where we cut through the noise and deliver actionable insights.
+    </p>
+
+    <div style="background: #f9fafb; border-left: 4px solid #fbbf24; padding: 20px; margin: 30px 0; border-radius: 8px;">
+      <h2 style="margin-top: 0; font-size: 20px; color: #111827;">🎯 Your Overthinker Type:{{ $('Webhook').item.json.query.quiz_result_type }}</h2>
+      <p style="margin-bottom: 15px; font-size: 16px;">
+        You scored <strong>{{ $('Webhook').item.json.query.quiz_score }}/100</strong> on the Overthinking Scale
+      </p>
+      <p style="margin-bottom: 20px; font-size: 16px; color: #6b7280;">
+        We've created a personalized 48-hour action plan based on your unique pattern. Ready to break the cycle and finally ship?
+      </p>
+      <a href="{{ $('Webhook').item.json.headers.origin }}/subscriptions/thank-you?email={{ $json.data.email }}"
+         style="display: inline-block; background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #000; padding: 14px 28px; text-decoration: none; border-radius: 25px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);">
+        📊 View Your Complete Results →
+      </a>
+    </div>
+
+    <p style="font-size: 16px; margin-bottom: 20px;">
+      <strong>What happens next:</strong>
+    </p>
+
+    <ul style="font-size: 16px; margin-bottom: 25px; line-height: 1.8;">
+      <li>Click the button above to see your full Overthinker profile</li>
+      <li>Get your personalized 48h action plan</li>
+      <li>Receive weekly insights from DailyHush in your inbox</li>
+      <li>First to know about exclusive resources and tools</li>
+    </ul>
+
+    <p style="font-size: 16px; margin-bottom: 20px;">
+      Your quiz results won't wait forever – dive in now and let's turn those thoughts into action.
+    </p>
+
+    <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #e5e7eb;">
+      <p style="font-size: 16px; margin-bottom: 8px;">
+        Ready to ship,
+      </p>
+      <p style="font-size: 16px; font-weight: 600; margin-bottom: 4px; color: #111827;">
+        Tony
+      </p>
+      <p style="font-size: 14px; color: #6b7280; margin-top: 0;">
+        Founder, DailyHush
+      </p>
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 13px; color: #9ca3af;">
+      <p>
+        You're receiving this because you completed the 48h Action Diagnostic and subscribed to DailyHush.<br>
+        Don't want emails? <a href="https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}" style="color: #6b7280; text-decoration: underline;">Unsubscribe</a>
+      </p>
+    </div>
+
+  </body>
+</html>

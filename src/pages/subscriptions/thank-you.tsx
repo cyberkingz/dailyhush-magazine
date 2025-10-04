@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { CheckCircle, DollarSign, ArrowRight, Flame } from 'lucide-react'
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
-import { UrgencyBanner } from '../../components/UrgencyBanner'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'

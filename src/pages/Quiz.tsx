@@ -166,9 +166,9 @@ export default function Quiz() {
       console.log('Quiz result:', result.type)
       console.log('Quiz submission ID:', quizResponse.submissionId)
 
-      // Redirect to thank you page
-      // This will use the existing flow (tripwire, one-click upsell, etc.)
-      navigate('/thank-you')
+      // Redirect to thank you page with quiz results
+      const thankYouUrl = `/subscriptions/thank-you?email=${encodeURIComponent(email)}&type=${result.type}&score=${result.score}`
+      navigate(thankYouUrl)
     } catch (error) {
       console.error('Error submitting email:', error)
       setIsSubmittingEmail(false)

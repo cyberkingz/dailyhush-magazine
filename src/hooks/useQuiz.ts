@@ -139,6 +139,15 @@ function getResultForType(
   type: OverthinkerType,
   score: number
 ): QuizResult {
+  // Map each type to a normalized score out of 10
+  // Everyone scores 8-9 - creates urgency while maintaining personalization
+  const normalizedScores: Record<OverthinkerType, number> = {
+    'mindful-thinker': 8,
+    'gentle-analyzer': 8,
+    'chronic-overthinker': 9,
+    'overthinkaholic': 9,
+  }
+
   const results: Record<OverthinkerType, Omit<QuizResult, 'score'>> = {
     'mindful-thinker': {
       type: 'mindful-thinker',
@@ -184,6 +193,6 @@ function getResultForType(
 
   return {
     ...results[type],
-    score,
+    score: normalizedScores[type],
   }
 }

@@ -15,29 +15,29 @@ const typeConfig: Record<
     icon: string
   }
 > = {
-  'chronic-planner': {
-    label: 'Chronic Planner',
-    bgColor: 'bg-blue-50',
-    textColor: 'text-blue-700',
-    icon: '📋',
-  },
-  'research-addict': {
-    label: 'Research Addict',
-    bgColor: 'bg-purple-50',
-    textColor: 'text-purple-700',
-    icon: '🔍',
-  },
-  'self-doubter': {
-    label: 'Self-Doubter',
-    bgColor: 'bg-amber-50',
-    textColor: 'text-amber-700',
-    icon: '🤔',
-  },
-  'vision-hopper': {
-    label: 'Vision Hopper',
+  'mindful-thinker': {
+    label: 'Mindful Thinker',
     bgColor: 'bg-green-50',
     textColor: 'text-green-700',
-    icon: '✨',
+    icon: '🧘',
+  },
+  'gentle-analyzer': {
+    label: 'Gentle Analyzer',
+    bgColor: 'bg-blue-50',
+    textColor: 'text-blue-700',
+    icon: '🤔',
+  },
+  'chronic-overthinker': {
+    label: 'Chronic Overthinker',
+    bgColor: 'bg-amber-50',
+    textColor: 'text-amber-700',
+    icon: '🌀',
+  },
+  'overthinkaholic': {
+    label: 'Overthinkaholic',
+    bgColor: 'bg-red-50',
+    textColor: 'text-red-700',
+    icon: '🔥',
   },
 }
 

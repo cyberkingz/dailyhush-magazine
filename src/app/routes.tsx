@@ -16,6 +16,7 @@ const LegalNotices = lazy(() => import('@/pages/legal-notices'))
 const SubscribeThankYou = lazy(() => import('@/pages/subscriptions/thank-you'))
 const Ship48 = lazy(() => import('@/pages/ship48'))
 const FireStarterSuccess = lazy(() => import('@/pages/fire-starter/success'))
+const Quiz = lazy(() => import('@/pages/Quiz'))
 // Newsletter archive
 const NewslettersArchive = lazy(() => import('@/pages/newsletters'))
 const NewsletterEdition = lazy(() => import('@/pages/newsletters/[slug]'))
@@ -51,6 +52,7 @@ export function AppRoutes() {
         <Route path="/archives" element={<Layout><NewslettersArchive /></Layout>} />
         <Route path="/archives/:slug" element={<Layout><NewsletterEdition /></Layout>} />
         <Route path="/subscriptions/thank-you" element={<SubscribeThankYou />} />
+        <Route path="/quiz" element={<Layout><Quiz /></Layout>} />
         <Route path="/ship48" element={<Layout><Ship48 /></Layout>} />
         <Route path="/fire-starter/success" element={<FireStarterSuccess />} />
         {/* Legacy redirects */}

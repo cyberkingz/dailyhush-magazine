@@ -9,6 +9,12 @@ import { submitQuiz } from '../lib/services/quiz'
 import { createLead } from '../lib/services/leads'
 import '../styles/quiz.css'
 
+declare global {
+  interface Window {
+    fbq?: (action: string, event: string, params?: Record<string, any>) => void
+  }
+}
+
 export default function Quiz() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
@@ -143,6 +149,17 @@ export default function Quiz() {
       if (!leadResponse.success && leadResponse.error !== 'duplicate_email') {
         console.error('Lead creation failed:', leadResponse.error)
         // Continue anyway - quiz results were saved
+      }
+
+      // Fire Facebook Pixel Lead event
+      if (window.fbq) {
+        window.fbq('track', 'Lead', {
+          content_name: 'Overthinker Quiz Completion',
+          content_category: result.type,
+          value: 0,
+          currency: 'USD'
+        })
+        console.log('🎯 Facebook Pixel Lead event fired:', result.type)
       }
 
       console.log('Email captured:', email)

@@ -343,7 +343,11 @@ function ThankYouPageContent() {
           )}
 
           <p className="text-xl text-gray-900 leading-relaxed max-w-3xl mx-auto mb-16">
-            But wait… before you go:
+            <strong>That number above? It's not a diagnosis. It's a warning signal.</strong>
+          </p>
+
+          <p className="text-lg text-gray-900 leading-relaxed max-w-3xl mx-auto mb-16">
+            Because every day you've been doing this:
           </p>
 
           {/* Overthinking Reality Check */}
@@ -383,7 +387,7 @@ function ThankYouPageContent() {
           {/* Why Smart People Stay Stuck */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Why Smart People Stay Stuck
+              Why Your Smartest Thoughts Keep You Paralyzed
             </h2>
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
               {resultData ? (
@@ -432,7 +436,7 @@ function ThankYouPageContent() {
           {/* The Cure: F.I.R.E. */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              The Cure: The F.I.R.E. Starter Kit (48-Hour Protocol)
+              How To Stop A 2 AM Spiral Before It Steals Your Sleep
             </h2>
             <p className="text-lg text-gray-900 mb-8 leading-relaxed">
               A 4-step reset that forces you to be present, not anxious:
@@ -468,7 +472,7 @@ function ThankYouPageContent() {
           {/* What You'll Get Inside */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              What You'll Get Inside
+              For Women Whose Brains Won't Shut Up
             </h2>
             <p className="text-lg text-gray-900 mb-8 leading-relaxed">
               4 proven tools, one calm system, zero fluff.
@@ -505,7 +509,7 @@ function ThankYouPageContent() {
           {/* Real Results */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Real Results
+              What 50,000 Overthinkers Discovered About That Voice In Their Head
             </h2>
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8">
@@ -532,7 +536,7 @@ function ThankYouPageContent() {
           <div className="mb-16 flex justify-center">
             <div className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 border-4 border-dashed border-red-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
               <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
-                🎉 50K Subscriber Celebration
+                🎉 50K Celebration — Price Locks Soon
               </h2>
               <div className="space-y-4 text-base text-gray-800 leading-relaxed">
                 {!isSoldOut ? (
@@ -574,7 +578,7 @@ function ThankYouPageContent() {
           {/* Phase 1: Teaser - Price Curiosity Hook */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-              Here's The Deal
+              Here's The Truth
             </h2>
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8 text-center">
@@ -609,7 +613,7 @@ function ThankYouPageContent() {
           {/* Let's Be Logical About Risk */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Let's Be Logical About Risk
+              Two Truths About Why You Replay Every Conversation
             </h2>
 
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
@@ -677,7 +681,7 @@ function ThankYouPageContent() {
             <div className="mb-12 text-center">
               <div ref={youAskedBadgeRef} className="inline-block bg-gradient-to-r from-yellow-100 to-amber-100 border-2 border-yellow-400 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 mb-3 sm:mb-4">
                 <p className="text-sm sm:text-base md:text-lg font-black text-gray-900">
-                  You asked: "What do I get for $27?"
+                  Stop Overthinking For Less Than What You Spent Worrying About Dinner
                 </p>
               </div>
               <p className="text-base sm:text-lg md:text-xl font-bold text-gray-900 max-w-2xl mx-auto px-4">

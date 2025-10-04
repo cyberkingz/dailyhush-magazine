@@ -23,6 +23,7 @@ export default function Quiz() {
   const [hasStarted, setHasStarted] = useState(false)
   const [waitingForSparkLoop, setWaitingForSparkLoop] = useState(false)
   const autoAdvanceTimerRef = useRef<number | null>(null)
+  const skipAutoAdvanceRef = useRef(false)
   const emailForRedirect = useRef('')
   const quizResultForRedirect = useRef<{ type: string; score: number } | null>(null)
 
@@ -54,6 +55,12 @@ export default function Quiz() {
     if (autoAdvanceTimerRef.current) {
       window.clearTimeout(autoAdvanceTimerRef.current)
       autoAdvanceTimerRef.current = null
+    }
+
+    // Skip auto-advance if user just clicked back button
+    if (skipAutoAdvanceRef.current) {
+      skipAutoAdvanceRef.current = false
+      return
     }
 
     // Only auto-advance if:
@@ -174,6 +181,12 @@ export default function Quiz() {
     } else {
       goToNext()
     }
+  }
+
+  const handleBackClick = () => {
+    // Set flag to prevent auto-advance after going back
+    skipAutoAdvanceRef.current = true
+    goToPrevious()
   }
 
   const validateEmail = (value: string) => {
@@ -423,7 +436,7 @@ export default function Quiz() {
             {canGoPrevious && (
               <button
                 className="quiz-navigation__button quiz-navigation__button--back"
-                onClick={goToPrevious}
+                onClick={handleBackClick}
                 aria-label="Go to previous question"
               >
                 ← Back

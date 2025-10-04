@@ -183,9 +183,9 @@
 }
 
 .quiz-option--selected {
-  background: rgb(254 252 232);
-  border-color: var(--brand-accent);
-  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15);
+  background: rgb(254 252 232) !important;
+  border-color: var(--brand-accent) !important;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15) !important;
 }
 
 .quiz-option__checkbox {
@@ -625,7 +625,7 @@
   }
 
   /* Active state for tap feedback (replaces hover) */
-  .quiz-option:active {
+  .quiz-option:active:not(.quiz-option--selected) {
     transform: scale(0.98);
     background: rgb(254 249 195);
     border-color: rgb(245 158 11);
@@ -633,9 +633,11 @@
   }
 
   .quiz-option--selected {
-    background: rgb(254 249 195); /* Darker yellow */
-    border-color: rgb(245 158 11); /* Amber-500 */
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); /* Stronger ring */
+    background: rgb(254 249 195) !important; /* Darker yellow */
+    border-color: rgb(245 158 11) !important; /* Amber-500 */
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important; /* Stronger ring */
+    transform: scale(0.98) !important; /* Immediate visual feedback */
+    transition-duration: 0.05s !important; /* Instant selected state */
   }
 
   .quiz-option__checkbox {

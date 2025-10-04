@@ -128,10 +128,11 @@ export default function Quiz() {
 
   const getSectionName = (section: string) => {
     const sections: Record<string, string> = {
-      cognitive: 'Mental Patterns',
+      mental: 'Mental Loops',
       action: 'Action Tendencies',
       emotional: 'Emotional Drivers',
-      behavioral: 'Behavioral Habits',
+      habits: 'Everyday Habits',
+      reflection: 'Final Self-Reflection',
     }
     return sections[section] || section
   }

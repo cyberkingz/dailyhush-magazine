@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { QuizQuestion } from '../components/quiz/QuizQuestion'
@@ -13,6 +13,7 @@ export default function Quiz() {
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false)
   const [showEmailCapture, setShowEmailCapture] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
+  const autoAdvanceTimerRef = useRef<number | null>(null)
 
   const {
     currentQuestion,
@@ -33,6 +34,35 @@ export default function Quiz() {
       setShowEmailCapture(true)
     },
   })
+
+  // Auto-advance to next question after 300ms delay
+  // Only for single and scale questions (not multiple choice)
+  useEffect(() => {
+    // Clear any existing timer
+    if (autoAdvanceTimerRef.current) {
+      window.clearTimeout(autoAdvanceTimerRef.current)
+      autoAdvanceTimerRef.current = null
+    }
+
+    // Only auto-advance if:
+    // 1. Question is answered
+    // 2. Question type is 'single' or 'scale' (not 'multiple')
+    if (
+      currentAnswer &&
+      (currentQuestion.type === 'single' || currentQuestion.type === 'scale')
+    ) {
+      autoAdvanceTimerRef.current = window.setTimeout(() => {
+        goToNext()
+      }, 300)
+    }
+
+    // Cleanup on unmount or when dependencies change
+    return () => {
+      if (autoAdvanceTimerRef.current) {
+        window.clearTimeout(autoAdvanceTimerRef.current)
+      }
+    }
+  }, [currentAnswer, currentQuestion.type, goToNext])
 
   const handleNextClick = () => {
     if (currentQuestionIndex === totalQuestions - 1) {
@@ -135,6 +165,9 @@ export default function Quiz() {
               required
               className="quiz-email-capture__input"
               disabled={isSubmittingEmail}
+              autoComplete="email"
+              aria-label="Email address"
+              inputMode="email"
             />
             <button
               type="submit"
@@ -166,30 +199,32 @@ export default function Quiz() {
 
       <div className="quiz-content">
         <QuizQuestion
+          key={currentQuestionIndex}
           question={currentQuestion}
           answer={currentAnswer}
           onAnswer={handleAnswer}
         />
 
-        <div className="quiz-navigation">
-          {canGoPrevious && (
+        {/* Only show navigation for multiple choice questions */}
+        {currentQuestion.type === 'multiple' && (
+          <div className="quiz-navigation">
+            {canGoPrevious && (
+              <button
+                className="quiz-navigation__button quiz-navigation__button--back"
+                onClick={goToPrevious}
+              >
+                ← Back
+              </button>
+            )}
             <button
-              className="quiz-navigation__button quiz-navigation__button--back"
-              onClick={goToPrevious}
+              className="quiz-navigation__button quiz-navigation__button--next"
+              onClick={handleNextClick}
+              disabled={!canGoNext}
             >
-              ← Back
+              Next →
             </button>
-          )}
-          <button
-            className="quiz-navigation__button quiz-navigation__button--next"
-            onClick={handleNextClick}
-            disabled={!canGoNext}
-          >
-            {currentQuestionIndex === totalQuestions - 1
-              ? 'See My Results →'
-              : 'Next →'}
-          </button>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   )

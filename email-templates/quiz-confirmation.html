@@ -18,14 +18,14 @@
     </p>
 
     <div style="background: #f9fafb; border-left: 4px solid #fbbf24; padding: 20px; margin: 30px 0; border-radius: 8px;">
-      <h2 style="margin-top: 0; font-size: 20px; color: #111827;">🎯 Your Overthinker Type:{{ $('Webhook').item.json.query.quiz_result_type }}</h2>
+      <h2 style="margin-top: 0; font-size: 20px; color: #111827;">🎯 Your Overthinker Type: {{ $('Webhook').item.json.query.quiz_result_type }}</h2>
       <p style="margin-bottom: 15px; font-size: 16px;">
         You scored <strong>{{ $('Webhook').item.json.query.quiz_score }}/100</strong> on the Overthinking Scale
       </p>
       <p style="margin-bottom: 20px; font-size: 16px; color: #6b7280;">
         We've created a personalized 48-hour action plan based on your unique pattern. Ready to break the cycle and finally ship?
       </p>
-      <a href="{{ $('Webhook').item.json.headers.origin }}/subscriptions/thank-you?email={{ $json.data.email }}"
+      <a href="{{ $('Webhook').item.json.headers.origin }}/subscriptions/thank-you?email={{ $json.data.email }}&type={{ $('Webhook').item.json.query.quiz_result_type }}&score={{ $('Webhook').item.json.query.quiz_score }}"
          style="display: inline-block; background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #000; padding: 14px 28px; text-decoration: none; border-radius: 25px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);">
         📊 View Your Complete Results →
       </a>

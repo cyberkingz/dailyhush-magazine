@@ -3,6 +3,45 @@ import { CheckCircle, DollarSign, ArrowRight, Flame } from 'lucide-react'
 import { CheckoutButton } from '../../components/stripe/CheckoutButton'
 import { UrgencyBanner } from '../../components/UrgencyBanner'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
+import type { OverthinkerType } from '../../types/quiz'
+
+// Quiz result data for personalized copy
+const quizResultData: Record<OverthinkerType, {
+  title: string
+  description: string
+  insight: string
+  problem: string
+  symptom: string
+}> = {
+  'chronic-planner': {
+    title: 'The Chronic Planner',
+    description: "You need control & perfect clarity before acting. You've planned every detail, but the execution keeps waiting for 'the right moment.'",
+    insight: "Here's the truth: You don't need another plan. You need a deadline.",
+    problem: "You think planning keeps you safe. But planning is just procrastination in a business suit.",
+    symptom: "You've rewritten your plan 3 times. You've got more docs than customers."
+  },
+  'research-addict': {
+    title: 'The Research Addict',
+    description: "You feel 'productive' learning but never applying. One more course, one more article, one more tutorial... but still no launched product.",
+    insight: "More info isn't the cure — it's the drug.",
+    problem: "You think more research = less risk. But research is just procrastination disguised as productivity.",
+    symptom: "You've got 47 tabs open. You've taken 5 courses. But zero customers."
+  },
+  'self-doubter': {
+    title: 'The Self-Doubter',
+    description: "You overanalyze your self-worth before taking action. 'What if I'm not good enough?' 'What if they judge me?' Fear keeps you stuck.",
+    insight: "You don't need confidence, just momentum.",
+    problem: "You think you need to feel ready. But confidence comes from action, not preparation.",
+    symptom: "You've got the skills. You've got the idea. But self-doubt keeps you from pressing publish."
+  },
+  'vision-hopper': {
+    title: 'The Vision Hopper',
+    description: 'You constantly switch ideas before completion. Shiny object syndrome keeps you starting fresh instead of finishing strong.',
+    insight: 'Finish one before chasing the next.',
+    problem: "You think the next idea will be easier. But switching ideas is just procrastination disguised as creativity.",
+    symptom: "You've started 7 projects. You've finished zero. You've got more domains than revenue."
+  }
+}
 
 function ThankYouPageContent() {
   const [showNotification, setShowNotification] = useState(false)
@@ -19,10 +58,15 @@ function ThankYouPageContent() {
     spotsRemainingRef.current = spotsRemaining
   }, [spotsRemaining])
 
-  // Get email from URL params
+  // Get email, quiz type, and score from URL params
   const urlParams = new URLSearchParams(window.location.search)
   const userEmail = urlParams.get('email') || undefined
-  
+  const quizType = urlParams.get('type') as OverthinkerType | null
+  const quizScore = urlParams.get('score') ? parseInt(urlParams.get('score')!) : null
+
+  // Get personalized quiz result data or use defaults
+  const resultData = quizType ? quizResultData[quizType] : null
+
   // Purchase notifications only - each triggers -1 spot
   const notifications = [
     { name: "Sarah", location: "New York", action: "just purchased F.I.R.E. Kit", time: "Just now", isPurchase: true },
@@ -240,24 +284,56 @@ function ThankYouPageContent() {
           <p className="text-lg text-gray-600 mb-2">✅ You're subscribed to DailyHush!</p>
           <p className="text-gray-600 mb-12">(Check your email to confirm • First issue arrives in 24h)</p>
 
+          {resultData && quizScore !== null && (
+            <div className="mb-12 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-8">
+              <div className="text-center mb-6">
+                <p className="text-sm font-semibold text-amber-800 mb-2">🎯 YOUR QUIZ RESULTS</p>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">{resultData.title}</h2>
+                <p className="text-lg text-amber-900 mb-4">Score: {quizScore}/100 on the Overthinking Scale</p>
+                <p className="text-base text-gray-700 italic">{resultData.description}</p>
+              </div>
+              <div className="border-t border-amber-200 pt-6 mt-6">
+                <p className="text-lg font-semibold text-gray-900 text-center">{resultData.insight}</p>
+              </div>
+            </div>
+          )}
+
           <p className="text-xl text-gray-900 leading-relaxed max-w-3xl mx-auto mb-16">
             But wait… before you go:
           </p>
 
           {/* Business Voyeur Section */}
           <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
-            <p>You've said <em>"I'm launching soon"</em> for months.</p>
-            <p>You've rewritten your plan 3 times.</p>
-            <p>You've got more tools than customers.</p>
-            <p className="text-xl font-bold text-gray-900">
-              The brutal truth? You're not an entrepreneur yet.
-            </p>
-            <p className="text-xl">
-              You're a <strong>business voyeur</strong> — addicted to the <em>feeling</em> of progress without ever getting paid for it.
-            </p>
-            <p>
-              And every week you stay in this loop is another week a less talented founder gets paid with a worse idea.
-            </p>
+            {resultData ? (
+              <>
+                <p>You've said <em>"I'm launching soon"</em> for months.</p>
+                <p>{resultData.symptom}</p>
+                <p className="text-xl font-bold text-gray-900">
+                  The brutal truth? You're not an entrepreneur yet.
+                </p>
+                <p className="text-xl">
+                  You're a <strong>business voyeur</strong> — addicted to the <em>feeling</em> of progress without ever getting paid for it.
+                </p>
+                <p>
+                  And every week you stay in this loop is another week a less talented founder gets paid with a worse idea.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>You've said <em>"I'm launching soon"</em> for months.</p>
+                <p>You've rewritten your plan 3 times.</p>
+                <p>You've got more tools than customers.</p>
+                <p className="text-xl font-bold text-gray-900">
+                  The brutal truth? You're not an entrepreneur yet.
+                </p>
+                <p className="text-xl">
+                  You're a <strong>business voyeur</strong> — addicted to the <em>feeling</em> of progress without ever getting paid for it.
+                </p>
+                <p>
+                  And every week you stay in this loop is another week a less talented founder gets paid with a worse idea.
+                </p>
+              </>
+            )}
           </div>
         </div>
           
@@ -267,17 +343,31 @@ function ThankYouPageContent() {
               Why Smart People Stay Broke
             </h2>
             <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
-              <p>You think planning keeps you safe.</p>
-              <p>You think more research = less risk.</p>
-              <p className="font-semibold">
-                But in reality, planning is just procrastination in a business suit.
-              </p>
-              <p>
-                Your brain is hooked on the dopamine of "getting ready" —
-              </p>
-              <p className="text-xl font-bold">
-                while your bank account stays stuck at <strong>$0</strong>.
-              </p>
+              {resultData ? (
+                <>
+                  <p>{resultData.problem}</p>
+                  <p>
+                    Your brain is hooked on the dopamine of "getting ready" —
+                  </p>
+                  <p className="text-xl font-bold">
+                    while your bank account stays stuck at <strong>$0</strong>.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>You think planning keeps you safe.</p>
+                  <p>You think more research = less risk.</p>
+                  <p className="font-semibold">
+                    But in reality, planning is just procrastination in a business suit.
+                  </p>
+                  <p>
+                    Your brain is hooked on the dopamine of "getting ready" —
+                  </p>
+                  <p className="text-xl font-bold">
+                    while your bank account stays stuck at <strong>$0</strong>.
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -513,7 +603,7 @@ function ThankYouPageContent() {
                   The only way you lose…
                 </p>
                 <p className="text-xl font-bold">
-                  …is by staying a <strong>chronic planner</strong>.
+                  …is by staying a <strong>{resultData ? resultData.title.toLowerCase() : 'chronic planner'}</strong>.
                 </p>
               </div>
             </div>

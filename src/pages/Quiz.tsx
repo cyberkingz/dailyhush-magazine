@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import type { FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { QuizQuestion } from '../components/quiz/QuizQuestion'
 import { QuizProgress } from '../components/quiz/QuizProgress'
 import { useQuiz } from '../hooks/useQuiz'
 import { quizQuestions } from '../data/quizQuestions'
 import { submitQuiz } from '../lib/services/quiz'
-import { createLead } from '../lib/services/leads'
+import { getCurrentTrackingContext } from '../lib/services/leads'
+import { supabase } from '../lib/supabase'
 import '../styles/quiz.css'
 
 declare global {
@@ -16,13 +16,15 @@ declare global {
 }
 
 export default function Quiz() {
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false)
   const [showEmailCapture, setShowEmailCapture] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
+  const [waitingForSparkLoop, setWaitingForSparkLoop] = useState(false)
   const autoAdvanceTimerRef = useRef<number | null>(null)
+  const emailForRedirect = useRef('')
+  const quizResultForRedirect = useRef<{ type: string; score: number } | null>(null)
 
   const {
     currentQuestion,
@@ -73,6 +75,97 @@ export default function Quiz() {
       }
     }
   }, [currentAnswer, currentQuestion.type, goToNext])
+
+  // SparkLoop modal watcher - handles redirect after modal closes
+  useEffect(() => {
+    if (!waitingForSparkLoop) return
+
+    let modalDetected = false
+    let hasRedirected = false
+
+    const redirectNow = () => {
+      if (hasRedirected) return
+      hasRedirected = true
+      console.log('🚀 Redirecting to thank you page...')
+
+      // Build thank you URL with quiz params
+      if (quizResultForRedirect.current) {
+        const thankYouUrl = `/subscriptions/thank-you?email=${encodeURIComponent(emailForRedirect.current)}&type=${quizResultForRedirect.current.type}&score=${quizResultForRedirect.current.score}`
+        window.location.assign(thankYouUrl)
+      }
+    }
+
+    // MutationObserver detects DOM changes instantly
+    const observer = new MutationObserver(() => {
+      // Check if modal is visible (not just present in DOM)
+      const sparkloopEl = document.querySelector('[id*="sparkloop"]') as HTMLElement
+      const upscribeEl = document.querySelector('[class*="upscribe"]') as HTMLElement
+      const iframe = document.querySelector('iframe[src*="sparkloop"]') as HTMLElement
+      const bodyHasModalClass = document.body.classList.contains('sl-modal-open')
+
+      // Modal is "visible" if element exists AND is displayed OR body has modal class
+      const modalVisible = bodyHasModalClass ||
+                          !!(sparkloopEl && sparkloopEl.offsetParent !== null) ||
+                          !!(upscribeEl && upscribeEl.offsetParent !== null) ||
+                          !!(iframe && iframe.offsetParent !== null)
+
+      console.log('🔍 Modal check:', {
+        modalVisible,
+        modalDetected,
+        bodyHasModalClass,
+        sparkloopVisible: sparkloopEl ? sparkloopEl.offsetParent !== null : false,
+        upscribeVisible: upscribeEl ? upscribeEl.offsetParent !== null : false,
+        iframeVisible: iframe ? iframe.offsetParent !== null : false
+      })
+
+      if (modalVisible && !modalDetected) {
+        modalDetected = true
+        console.log('✅ SparkLoop modal OPENED - detected!')
+        // Cancel early redirect since modal appeared
+        clearTimeout(earlyRedirectTimeout)
+      } else if (!modalVisible && modalDetected) {
+        // Modal closed (hidden) - redirect instantly
+        console.log('❌ SparkLoop modal CLOSED - detected! Redirecting...')
+        observer.disconnect()
+        clearTimeout(earlyRedirectTimeout)
+        clearTimeout(fallbackTimeout)
+        redirectNow()
+      }
+    })
+
+    // Watch entire document for changes (structure AND attributes)
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,      // Watch for attribute changes (class, style)
+      attributeFilter: ['class', 'style', 'hidden']  // Only watch relevant attributes
+    })
+
+    // Early redirect: if modal doesn't appear within 5 seconds, redirect anyway
+    // This handles cases where SparkLoop doesn't load (IP location, ad blocker, etc.)
+    const earlyRedirectTimeout = setTimeout(() => {
+      if (!modalDetected) {
+        observer.disconnect()
+        console.log('⚠️ SparkLoop modal did not appear after 5s (blocked/restricted?) - redirecting now')
+        clearTimeout(fallbackTimeout)
+        redirectNow()
+      }
+    }, 5000)
+
+    // Fallback: redirect after 30 seconds (safety net if something unexpected happens)
+    const fallbackTimeout = setTimeout(() => {
+      observer.disconnect()
+      console.log('⏱️ Fallback timeout reached (30s) - redirecting now')
+      clearTimeout(earlyRedirectTimeout)
+      redirectNow()
+    }, 30000)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(earlyRedirectTimeout)
+      clearTimeout(fallbackTimeout)
+    }
+  }, [waitingForSparkLoop])
 
   const handleNextClick = () => {
     if (currentQuestionIndex === totalQuestions - 1) {
@@ -141,14 +234,30 @@ export default function Quiz() {
         // Continue anyway - user still gets their results
       }
 
-      // Also create a lead entry (for newsletter subscription)
-      const leadResponse = await createLead(email, {
-        source_page: 'quiz',
-      })
+      // Get tracking context for both leads table and n8n
+      const trackingContext = getCurrentTrackingContext()
 
-      if (!leadResponse.success && leadResponse.error !== 'duplicate_email') {
-        console.error('Lead creation failed:', leadResponse.error)
-        // Continue anyway - quiz results were saved
+      // Save email to leads table for tracking (without triggering webhook to avoid duplicates)
+      const { error: leadError } = await supabase
+        .from('leads')
+        .insert([{
+          email: email.trim().toLowerCase(),
+          source_page: 'quiz',
+          source_url: trackingContext.source_url,
+          referrer_url: trackingContext.referrer_url,
+          user_agent: navigator.userAgent,
+          browser: trackingContext.browser_info?.browser,
+          device_type: trackingContext.browser_info?.device_type,
+          utm_source: trackingContext.utm_params?.utm_source,
+          utm_medium: trackingContext.utm_params?.utm_medium,
+          utm_campaign: trackingContext.utm_params?.utm_campaign,
+          utm_term: trackingContext.utm_params?.utm_term,
+          utm_content: trackingContext.utm_params?.utm_content
+        }])
+
+      if (leadError && leadError.code !== '23505') {
+        // Ignore duplicate email errors (23505), log others
+        console.error('Lead table insert failed:', leadError)
       }
 
       // Fire Facebook Pixel Lead event
@@ -166,9 +275,13 @@ export default function Quiz() {
       console.log('Quiz result:', result.type)
       console.log('Quiz submission ID:', quizResponse.submissionId)
 
-      // Redirect to thank you page with quiz results
-      const thankYouUrl = `/subscriptions/thank-you?email=${encodeURIComponent(email)}&type=${result.type}&score=${result.score}`
-      navigate(thankYouUrl)
+      // Store email and quiz result in refs for redirect
+      emailForRedirect.current = email
+      quizResultForRedirect.current = { type: result.type, score: result.score }
+
+      // Start watching for SparkLoop modal to close
+      // The watcher will handle redirect with all quiz params
+      setWaitingForSparkLoop(true)
     } catch (error) {
       console.error('Error submitting email:', error)
       setIsSubmittingEmail(false)

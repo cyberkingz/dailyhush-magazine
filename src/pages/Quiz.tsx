@@ -10,6 +10,7 @@ import '../styles/quiz.css'
 export default function Quiz() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false)
   const [showEmailCapture, setShowEmailCapture] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
@@ -53,7 +54,7 @@ export default function Quiz() {
     ) {
       autoAdvanceTimerRef.current = window.setTimeout(() => {
         goToNext()
-      }, 300)
+      }, 500)
     }
 
     // Cleanup on unmount or when dependencies change
@@ -73,9 +74,37 @@ export default function Quiz() {
     }
   }
 
+  const validateEmail = (value: string) => {
+    if (!value) {
+      setEmailError('Email is required')
+      return false
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(value)) {
+      setEmailError('Please enter a valid email address')
+      return false
+    }
+    setEmailError('')
+    return true
+  }
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setEmail(value)
+    if (value && emailError) {
+      // Clear error on typing if there was an error
+      validateEmail(value)
+    }
+  }
+
   const handleEmailSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!email || !result) return
+    if (!result) return
+
+    // Validate email before submitting
+    if (!validateEmail(email)) {
+      return
+    }
 
     setIsSubmittingEmail(true)
 
@@ -141,44 +170,64 @@ export default function Quiz() {
     return (
       <div className="quiz-container">
         <div className="quiz-email-capture">
-          <div className="quiz-email-capture__icon">🧠</div>
+          <div className="quiz-email-capture__icon">🎯</div>
           <h2 className="quiz-email-capture__title">
-            Your Overthinkaolic profile is being generated…
+            Your Results Are Being Generated...
           </h2>
           <p className="quiz-email-capture__subtitle">
             You're a <strong>{result.title}</strong>
           </p>
           <p className="quiz-email-capture__description">
-            Enter your email below to see your complete diagnosis and get your
-            personalized 48h action plan.
+            <strong>Enter your email to see your full results:</strong>
           </p>
+
+          <div className="quiz-email-capture__benefits">
+            <ul>
+              <li>✓ Your complete Overthinkaolic profile</li>
+              <li>✓ What makes you tick (and stuck)</li>
+              <li>✓ Your personalized breakthrough plan</li>
+            </ul>
+          </div>
 
           <form
             onSubmit={handleEmailSubmit}
             className="quiz-email-capture__form"
           >
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              required
-              className="quiz-email-capture__input"
-              disabled={isSubmittingEmail}
-              autoComplete="email"
-              aria-label="Email address"
-              inputMode="email"
-            />
+            <div className="quiz-email-capture__input-wrapper">
+              <input
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="your@email.com"
+                className={`quiz-email-capture__input ${emailError ? 'quiz-email-capture__input--error' : ''} ${email && !emailError ? 'quiz-email-capture__input--valid' : ''}`}
+                disabled={isSubmittingEmail}
+                autoComplete="email"
+                aria-label="Email address"
+                aria-invalid={!!emailError}
+                aria-describedby={emailError ? 'email-error' : undefined}
+                inputMode="email"
+              />
+              {emailError && (
+                <p id="email-error" className="quiz-email-capture__error" role="alert">
+                  ⚠️ {emailError}
+                </p>
+              )}
+            </div>
             <button
               type="submit"
               disabled={!email || isSubmittingEmail}
-              className="quiz-email-capture__button"
+              className={`quiz-email-capture__button ${isSubmittingEmail ? 'quiz-email-capture__button--loading' : ''}`}
             >
               {isSubmittingEmail
                 ? 'Generating your results...'
                 : 'See My Results →'}
             </button>
           </form>
+
+          <p className="quiz-email-capture__social-proof">
+            <span className="quiz-email-capture__avatars">👥</span>
+            Join 12,487+ overthinkers who finally shipped
+          </p>
 
           <p className="quiz-email-capture__privacy">
             🔒 Your data is safe. We'll send you your results + our best
@@ -205,24 +254,27 @@ export default function Quiz() {
           onAnswer={handleAnswer}
         />
 
-        {/* Only show navigation for multiple choice questions */}
-        {currentQuestion.type === 'multiple' && (
+        {/* Show back button for all questions, Next button only for multiple choice */}
+        {(canGoPrevious || currentQuestion.type === 'multiple') && (
           <div className="quiz-navigation">
             {canGoPrevious && (
               <button
                 className="quiz-navigation__button quiz-navigation__button--back"
                 onClick={goToPrevious}
+                aria-label="Go to previous question"
               >
                 ← Back
               </button>
             )}
-            <button
-              className="quiz-navigation__button quiz-navigation__button--next"
-              onClick={handleNextClick}
-              disabled={!canGoNext}
-            >
-              Next →
-            </button>
+            {currentQuestion.type === 'multiple' && (
+              <button
+                className="quiz-navigation__button quiz-navigation__button--next"
+                onClick={handleNextClick}
+                disabled={!canGoNext}
+              >
+                Next →
+              </button>
+            )}
           </div>
         )}
       </div>

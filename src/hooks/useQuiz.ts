@@ -87,6 +87,7 @@ export function useQuiz({ questions, onComplete }: UseQuizOptions) {
     currentQuestionIndex: state.currentQuestion,
     totalQuestions: questions.length,
     currentAnswer,
+    answers: state.answers,
     canGoNext,
     canGoPrevious,
     isComplete: state.isComplete,

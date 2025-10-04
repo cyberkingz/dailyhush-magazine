@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Users, 
-  FileText, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Users,
+  FileText,
+  Settings,
   LogOut,
-  MessageSquare
+  MessageSquare,
+  ClipboardList
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -43,6 +44,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       label: "Leads",
       href: "/admin/leads",
       icon: <Users className="h-5 w-5" />
+    },
+    {
+      label: "Quiz Results",
+      href: "/admin/quiz-results",
+      icon: <ClipboardList className="h-5 w-5" />
     },
     {
       label: "Cartography",
@@ -163,7 +169,7 @@ const LogoIcon = () => {
       className="font-normal flex items-center text-sm text-black py-1 relative z-20"
       aria-label="DailyHush Admin"
     >
-      <img src="/rounded-logo.jpg" alt="DailyHush" className="h-8 w-8 rounded-full flex-shrink-0" />
+      <img src="/rounded-logo.png" alt="DailyHush" className="h-8 w-8 rounded-full flex-shrink-0" />
     </Link>
   );
 };
@@ -174,13 +180,14 @@ const getPageTitle = (currentPage?: string): string => {
     '/admin/dashboard': 'Dashboard',
     '/admin/contact-submissions': 'Contact Submissions',
     '/admin/leads': 'Leads Management',
+    '/admin/quiz-results': 'Quiz Results',
     '/admin/cartography': 'Cartography',
     '/admin/posts': 'Posts Management',
     '/admin/settings': 'Settings',
     // Future: '/admin/analytics': 'Analytics',
     // Future: '/admin/newsletter': 'Newsletter',
   };
-  
+
   return titles[currentPage || ''] || 'Admin Panel';
 };
 
@@ -189,13 +196,14 @@ const getPageDescription = (currentPage?: string): string => {
     '/admin/dashboard': 'Overview of your website performance and metrics',
     '/admin/contact-submissions': 'View and manage contact form submissions',
     '/admin/leads': 'Manage newsletter subscribers and leads',
+    '/admin/quiz-results': 'View and analyze quiz submissions and overthinker types',
     '/admin/cartography': 'Market research, funnels and competitor mapping',
     '/admin/posts': 'Create and manage blog posts',
     '/admin/settings': 'Configure website settings',
     // Future: '/admin/analytics': 'View detailed analytics and reports',
     // Future: '/admin/newsletter': 'Manage newsletter campaigns',
   };
-  
+
   return descriptions[currentPage || ''] || 'Manage your website';
 };
 

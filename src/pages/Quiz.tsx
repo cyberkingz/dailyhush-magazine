@@ -5,6 +5,8 @@ import { QuizQuestion } from '../components/quiz/QuizQuestion'
 import { QuizProgress } from '../components/quiz/QuizProgress'
 import { useQuiz } from '../hooks/useQuiz'
 import { quizQuestions } from '../data/quizQuestions'
+import { submitQuiz } from '../lib/services/quiz'
+import { createLead } from '../lib/services/leads'
 import '../styles/quiz.css'
 
 export default function Quiz() {
@@ -21,6 +23,7 @@ export default function Quiz() {
     currentQuestionIndex,
     totalQuestions,
     currentAnswer,
+    answers,
     canGoNext,
     canGoPrevious,
     // `isComplete` available but not currently used in the UI flow
@@ -109,15 +112,44 @@ export default function Quiz() {
     setIsSubmittingEmail(true)
 
     try {
-      // TODO: Backend integration
-      // - Store email in Supabase
-      // - Trigger n8n workflow
-      // - Show SparkLoop modal
+      // Log what we're submitting
+      console.log('🎯 Submitting quiz:', {
+        email,
+        answersCount: answers.length,
+        resultType: result.type,
+        resultScore: result.score,
+      })
+      console.log('📋 All answers:', answers)
+      console.log('🏆 Result:', result)
+
+      // Submit quiz results to Supabase
+      const quizResponse = await submitQuiz({
+        email,
+        answers,
+        result,
+        questions: quizQuestions,
+      })
+
+      if (!quizResponse.success) {
+        console.error('Quiz submission failed:', quizResponse.error)
+        // Continue anyway - user still gets their results
+      }
+
+      // Also create a lead entry (for newsletter subscription)
+      const leadResponse = await createLead(email, {
+        source_page: 'quiz',
+      })
+
+      if (!leadResponse.success && leadResponse.error !== 'duplicate_email') {
+        console.error('Lead creation failed:', leadResponse.error)
+        // Continue anyway - quiz results were saved
+      }
 
       console.log('Email captured:', email)
       console.log('Quiz result:', result.type)
+      console.log('Quiz submission ID:', quizResponse.submissionId)
 
-      // For now, just redirect to thank you page
+      // Redirect to thank you page
       // This will use the existing flow (tripwire, one-click upsell, etc.)
       navigate('/thank-you')
     } catch (error) {

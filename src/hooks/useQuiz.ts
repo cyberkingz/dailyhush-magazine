@@ -116,7 +116,7 @@ function calculateResult(
     if (!question) return
 
     // Section-based scoring (simplified for now)
-    if (question.section === 'cognitive' && answer.scaleValue && answer.scaleValue > 3) {
+    if (question.section === 'mental' && answer.scaleValue && answer.scaleValue > 3) {
       scores['research-addict'] += 2
       scores['chronic-planner'] += 1
     }
@@ -130,8 +130,18 @@ function calculateResult(
       scores['self-doubter'] += 2
     }
 
-    if (question.section === 'behavioral') {
+    if (question.section === 'habits') {
       scores['vision-hopper'] += 2
+    }
+
+    if (question.section === 'reflection') {
+      // Bridge question - distribute points based on answer choice
+      if (answer.optionId) {
+        const option = question.options?.find((o) => o.id === answer.optionId)
+        if (option && option.value > 2) {
+          scores['self-doubter'] += 1
+        }
+      }
     }
 
     // Add option-based scoring

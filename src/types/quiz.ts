@@ -8,7 +8,7 @@ export interface QuizOption {
 
 export interface QuizQuestion {
   id: string;
-  section: 'cognitive' | 'action' | 'emotional' | 'behavioral';
+  section: 'mental' | 'action' | 'emotional' | 'habits' | 'reflection';
   type: QuestionType;
   question: string;
   description?: string;

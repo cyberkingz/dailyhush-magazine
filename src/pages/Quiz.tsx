@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import type { FormEvent } from 'react'
 import type { QuizAnswer } from '../types/quiz'
+import { AnnouncementBar } from '../components/layout/AnnouncementBar'
+import { TopBar } from '../components/layout/TopBar'
+import { Footer } from '../components/layout/Footer'
 import { QuizQuestion } from '../components/quiz/QuizQuestion'
 import { QuizProgress } from '../components/quiz/QuizProgress'
 import { useQuiz } from '../hooks/useQuiz'
@@ -317,8 +320,12 @@ export default function Quiz() {
 
   if (!hasStarted) {
     return (
-      <div className="quiz-container">
-        <div className="quiz-intro">
+      <div className="min-h-screen flex flex-col bg-white">
+        <AnnouncementBar />
+        <TopBar />
+        <main className="flex-1 bg-white">
+          <div className="quiz-container">
+            <div className="quiz-intro">
           <h1 className="quiz-intro__title">
             What's Your Overthinkaolic Type?
           </h1>
@@ -342,13 +349,20 @@ export default function Quiz() {
           </button>
         </div>
       </div>
+        </main>
+        <Footer />
+      </div>
     )
   }
 
   if (showEmailCapture && result) {
     return (
-      <div className="quiz-container">
-        <div className="quiz-email-capture">
+      <div className="min-h-screen flex flex-col bg-white">
+        <AnnouncementBar />
+        <TopBar />
+        <main className="flex-1 bg-white">
+          <div className="quiz-container">
+            <div className="quiz-email-capture">
           <div className="quiz-email-capture__icon">🎯</div>
           <h2 className="quiz-email-capture__title">
             Your Results Are Being Generated...
@@ -414,12 +428,19 @@ export default function Quiz() {
           </p>
         </div>
       </div>
+        </main>
+        <Footer />
+      </div>
     )
   }
 
   return (
-    <div className="quiz-container">
-      <QuizProgress
+    <div className="min-h-screen flex flex-col bg-white">
+      <AnnouncementBar />
+      <TopBar />
+      <main className="flex-1 bg-white">
+        <div className="quiz-container">
+          <QuizProgress
         current={currentQuestionIndex + 1}
         total={totalQuestions}
         section={getSectionName(currentQuestion.section)}
@@ -457,6 +478,9 @@ export default function Quiz() {
           </div>
         )}
       </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   )
 }

@@ -53,7 +53,7 @@ export function AppRoutes() {
         <Route path="/archives" element={<Layout><NewslettersArchive /></Layout>} />
         <Route path="/archives/:slug" element={<Layout><NewsletterEdition /></Layout>} />
         <Route path="/subscriptions/thank-you" element={<SubscribeThankYou />} />
-        <Route path="/quiz" element={<Layout><Quiz /></Layout>} />
+        <Route path="/quiz" element={<Quiz />} />
         <Route path="/ship48" element={<Layout><Ship48 /></Layout>} />
         <Route path="/fire-starter/success" element={<FireStarterSuccess />} />
         {/* Legacy redirects */}

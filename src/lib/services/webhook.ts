@@ -21,6 +21,9 @@ interface WebhookNotificationData {
   referrer_url?: string
   beehiiv_publication_id?: string
   lead_magnet_title?: string
+  quiz_result_type?: string
+  quiz_result_title?: string
+  quiz_score?: number
 }
 
 /**
@@ -39,6 +42,8 @@ export async function notifyN8nSubscription(leadData: Partial<Lead>): Promise<bo
     let leadMagnetTitle = ''
     if (leadData.source_page === 'home-hero') {
       leadMagnetTitle = 'The Planning Paralysis Test'
+    } else if (leadData.source_page === 'quiz') {
+      leadMagnetTitle = '48h Action Diagnostic Quiz'
     }
 
     // Prepare webhook notification data
@@ -177,6 +182,96 @@ export async function notifyN8nContact(contactData: {
   } catch (error) {
     // Log error but don't throw - webhook failures shouldn't break contact submissions
     console.error('Failed to notify n8n contact webhook:', error)
+    return false
+  }
+}
+
+/**
+ * Send quiz completion notification to n8n webhook with quiz results
+ */
+export async function notifyN8nQuizCompletion(quizData: {
+  email: string
+  overthinker_type: string
+  result_title: string
+  score: number
+  source_page?: string
+  source_url?: string
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  utm_term?: string
+  utm_content?: string
+  browser?: string
+  device_type?: 'desktop' | 'mobile' | 'tablet' | 'unknown'
+  referrer_url?: string
+}): Promise<boolean> {
+  // Skip if webhook URL not configured
+  if (!N8N_WEBHOOK_URL) {
+    console.log('n8n webhook URL not configured, skipping quiz notification')
+    return true
+  }
+
+  try {
+    // Prepare webhook notification data for quiz completion
+    const notificationData: WebhookNotificationData = {
+      event: 'quiz_completion',
+      email: quizData.email,
+      timestamp: new Date().toISOString(),
+      source_page: quizData.source_page || 'quiz',
+      source_url: quizData.source_url,
+      utm_source: quizData.utm_source,
+      utm_medium: quizData.utm_medium,
+      utm_campaign: quizData.utm_campaign,
+      utm_term: quizData.utm_term,
+      utm_content: quizData.utm_content,
+      browser: quizData.browser,
+      device_type: quizData.device_type,
+      referrer_url: quizData.referrer_url,
+      beehiiv_publication_id: BEEHIIV_PUBLICATION_ID,
+      lead_magnet_title: '48h Action Diagnostic Quiz',
+      quiz_result_type: quizData.overthinker_type,
+      quiz_result_title: quizData.result_title,
+      quiz_score: quizData.score
+    }
+
+    // Log what we're sending to n8n
+    console.log('🎯 Sending quiz completion to n8n:', {
+      email: notificationData.email,
+      quiz_result_type: notificationData.quiz_result_type,
+      quiz_result_title: notificationData.quiz_result_title,
+      quiz_score: notificationData.quiz_score,
+      beehiiv_publication_id: notificationData.beehiiv_publication_id
+    })
+
+    // Build URL parameters
+    const params = new URLSearchParams()
+    Object.entries(notificationData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params.append(key, String(value))
+      }
+    })
+
+    // Send GET request to n8n webhook
+    const webhookUrl = `${N8N_WEBHOOK_URL}?${params.toString()}`
+
+    console.log('📤 Full n8n quiz webhook URL:', webhookUrl)
+
+    const response = await fetch(webhookUrl, {
+      method: 'GET',
+      signal: AbortSignal.timeout(5000)
+    })
+
+    if (!response.ok) {
+      console.warn(`❌ n8n quiz webhook returned status ${response.status}:`, await response.text())
+      return false
+    }
+
+    console.log('✅ Successfully notified n8n of quiz completion')
+    console.log('🔍 N8N can now tag user in beehiiv with overthinker type:', quizData.overthinker_type)
+    return true
+
+  } catch (error) {
+    console.error('Failed to notify n8n quiz webhook:', error)
     return false
   }
 }

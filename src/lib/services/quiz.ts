@@ -2,6 +2,7 @@ import { supabase } from '../supabase'
 import type { QuizAnswer, QuizResult, QuizQuestion } from '../../types/quiz'
 import type { LeadTrackingContext } from '../types/leads'
 import { getCurrentTrackingContext } from './leads'
+import { notifyN8nQuizCompletion } from './webhook'
 
 export interface QuizSubmissionData {
   email: string
@@ -151,6 +152,26 @@ export async function submitQuiz(data: QuizSubmissionData): Promise<QuizSubmissi
     } else {
       console.log('✅ Quiz answers saved successfully!')
     }
+
+    // Notify N8N webhook of quiz completion (for beehiiv tagging and automation)
+    notifyN8nQuizCompletion({
+      email: data.email.trim().toLowerCase(),
+      overthinker_type: data.result.type,
+      result_title: data.result.title,
+      score: data.result.score,
+      source_page: trackingContext.source_page || 'quiz',
+      source_url: trackingContext.source_url,
+      utm_source: trackingContext.utm_params?.utm_source,
+      utm_medium: trackingContext.utm_params?.utm_medium,
+      utm_campaign: trackingContext.utm_params?.utm_campaign,
+      utm_term: trackingContext.utm_params?.utm_term,
+      utm_content: trackingContext.utm_params?.utm_content,
+      browser: trackingContext.browser_info?.browser,
+      device_type: trackingContext.browser_info?.device_type,
+      referrer_url: trackingContext.referrer_url,
+    }).catch(webhookError => {
+      console.warn('N8N quiz webhook notification failed (quiz still saved):', webhookError)
+    })
 
     return {
       success: true,

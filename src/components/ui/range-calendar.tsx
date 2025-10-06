@@ -28,7 +28,6 @@ import {
 } from "react-aria-components"
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/shadcn-button"
 
 const Calendar = AriaCalendar
 
@@ -42,10 +41,15 @@ const CalendarHeading = (props: React.HTMLAttributes<HTMLElement>) => {
       <AriaButton
         slot="previous"
         className={cn(
-          buttonVariants({ variant: "outline" }),
-          "size-7 bg-transparent p-0 opacity-50",
-          /* Hover */
-          "data-[hovered]:opacity-100"
+          "size-7 p-0 flex items-center justify-center",
+          // Muted emerald liquid glass button
+          "bg-emerald-500/15 backdrop-blur-[12px] backdrop-saturate-[140%]",
+          "border border-emerald-500/15",
+          "rounded-[8px] text-white/80",
+          "transition-all duration-[250ms]",
+          /* Hover - muted emerald liquid rise */
+          "data-[hovered]:bg-emerald-500/20 data-[hovered]:border-emerald-500/20",
+          "data-[hovered]:text-white data-[hovered]:shadow-sm"
         )}
       >
         {direction === "rtl" ? (
@@ -54,14 +58,19 @@ const CalendarHeading = (props: React.HTMLAttributes<HTMLElement>) => {
           <ChevronLeft aria-hidden className="size-4" />
         )}
       </AriaButton>
-      <AriaHeading className="grow text-center text-sm font-medium" />
+      <AriaHeading className="grow text-center text-sm font-medium text-white" />
       <AriaButton
         slot="next"
         className={cn(
-          buttonVariants({ variant: "outline" }),
-          "size-7 bg-transparent p-0 opacity-50",
-          /* Hover */
-          "data-[hovered]:opacity-100"
+          "size-7 p-0 flex items-center justify-center",
+          // Muted emerald liquid glass button
+          "bg-emerald-500/15 backdrop-blur-[12px] backdrop-saturate-[140%]",
+          "border border-emerald-500/15",
+          "rounded-[8px] text-white/80",
+          "transition-all duration-[250ms]",
+          /* Hover - muted emerald liquid rise */
+          "data-[hovered]:bg-emerald-500/20 data-[hovered]:border-emerald-500/20",
+          "data-[hovered]:text-white data-[hovered]:shadow-sm"
         )}
       >
         {direction === "rtl" ? (
@@ -94,7 +103,7 @@ const CalendarHeaderCell = ({
 }: AriaCalendarHeaderCellProps) => (
   <AriaCalendarHeaderCell
     className={cn(
-      "w-9 rounded-md text-[0.8rem] font-normal text-muted-foreground",
+      "w-9 rounded-md text-[0.8rem] font-normal text-white/60",
       className
     )}
     {...props}
@@ -114,37 +123,45 @@ const CalendarCell = ({ className, ...props }: AriaCalendarCellProps) => {
     <AriaCalendarCell
       className={composeRenderProps(className, (className, renderProps) =>
         cn(
-          buttonVariants({ variant: "ghost" }),
-          "relative flex size-9 items-center justify-center p-0 text-sm font-normal",
+          "relative flex size-9 items-center justify-center p-0 text-sm font-semibold",
+          "rounded-[10px] text-white",
+          "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+          /* Default hover - subtle liquid glass */
+          !renderProps.isSelected && !renderProps.isDisabled &&
+            "data-[hovered]:bg-[hsla(200,14%,78%,0.22)] data-[hovered]:backdrop-blur-[12px] data-[hovered]:backdrop-saturate-[180%] data-[hovered]:shadow-sm",
           /* Disabled */
-          renderProps.isDisabled && "text-muted-foreground opacity-50",
-          /* Selected */
+          renderProps.isDisabled && "text-white/40 opacity-50",
+          /* Selected - muted emerald liquid glass */
           renderProps.isSelected &&
-            "bg-amber-500 text-white data-[focused]:bg-amber-600 data-[focused]:text-white",
-          /* Hover */
+            "bg-emerald-500/35 backdrop-blur-[16px] backdrop-saturate-[140%] text-white shadow-[0_2px_4px_rgba(16,185,129,0.18)] data-[focused]:bg-emerald-500/40 data-[focused]:text-white",
+          /* Hover on selected - slightly stronger emerald */
           renderProps.isHovered &&
             renderProps.isSelected &&
             (renderProps.isSelectionStart ||
               renderProps.isSelectionEnd ||
               !isRange) &&
-            "data-[hovered]:bg-amber-600 data-[hovered]:text-white",
-          /* Selection Start/End */
+            "data-[hovered]:bg-emerald-500/45 data-[hovered]:shadow-[0_2px_4px_rgba(16,185,129,0.22)] data-[hovered]:text-white data-[hovered]:scale-[1.02]",
+          /* Selection Start - fully rounded left */
+          renderProps.isSelectionStart && isRange && "rounded-l-[10px] rounded-r-none",
+          /* Selection End - fully rounded right */
+          renderProps.isSelectionEnd && isRange && "rounded-r-[10px] rounded-l-none",
+          /* Middle of range - gray liquid glass bridge */
           renderProps.isSelected &&
             isRange &&
             !renderProps.isSelectionStart &&
             !renderProps.isSelectionEnd &&
-            "rounded-none bg-amber-50 text-amber-900",
+            "rounded-none bg-[hsla(200,12%,70%,0.28)] backdrop-blur-[16px] backdrop-saturate-[140%] text-white shadow-none",
           /* Outside Month */
           renderProps.isOutsideMonth &&
-            "text-muted-foreground opacity-50 data-[selected]:bg-amber-50/50 data-[selected]:text-muted-foreground data-[selected]:opacity-30",
-          /* Current Date */
+            "text-white/25 opacity-40 data-[selected]:bg-[hsla(200,14%,78%,0.12)] data-[selected]:text-white/30 data-[selected]:opacity-30",
+          /* Current Date - liquid glass with muted emerald ring */
           renderProps.date.compare(today(getLocalTimeZone())) === 0 &&
             !renderProps.isSelected &&
-            "bg-neutral-100 text-neutral-900 ring-2 ring-inset ring-amber-400",
+            "bg-[hsla(200,12%,70%,0.25)] backdrop-blur-[12px] backdrop-saturate-[140%] text-white ring-2 ring-inset ring-emerald-500/40 shadow-sm",
           /* Unavailable Date */
-          renderProps.isUnavailable && "cursor-default text-destructive ",
+          renderProps.isUnavailable && "cursor-default text-red-400",
           renderProps.isInvalid &&
-            "bg-destructive text-destructive-foreground data-[focused]:bg-destructive data-[hovered]:bg-destructive data-[focused]:text-destructive-foreground data-[hovered]:text-destructive-foreground",
+            "bg-red-500/25 backdrop-blur-[12px] text-red-400 data-[focused]:bg-red-500/35 data-[hovered]:bg-red-500/35",
           className
         )
       )}

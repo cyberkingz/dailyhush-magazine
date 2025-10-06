@@ -40,7 +40,7 @@
  * ```
  */
 
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 interface DashboardSectionProps {
@@ -118,9 +118,8 @@ function Sidebar({ children, className }: ChildProps) {
  */
 function Split({
   children,
-  className,
-  withDivider = true
-}: ChildProps & { withDivider?: boolean }) {
+  className
+}: ChildProps) {
   return (
     <div className={cn(
       'grid gap-6 lg:grid-cols-2',

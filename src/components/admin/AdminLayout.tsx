@@ -85,18 +85,33 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   return (
     <div className="flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 h-screen overflow-hidden">
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10 bg-white/70 backdrop-blur-[16px] border-r border-white/20">
+        <SidebarBody className={cn(
+          "justify-between gap-10",
+          // Muted emerald liquid glass sidebar
+          "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
+          "border-r border-emerald-500/25",
+          "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.15),0_24px_48px_-12px_rgba(16,185,129,0.20),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
+          "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+        )}>
           <div className="flex flex-col flex-1 overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
+            <div className="mt-8 flex flex-col gap-1">
             {navigationLinks.map((link, idx) => (
               <SidebarLink
                 key={idx}
                 link={link}
                 className={cn(
-                  "hover:bg-emerald-50/80 rounded-lg px-3 py-2 transition-all duration-200",
-                  "hover:shadow-sm hover:scale-[1.02]",
-                  currentPage === link.href && "bg-emerald-100/80 text-emerald-900 shadow-sm"
+                  // Refined liquid glass navigation items
+                  "rounded-[12px] px-3 py-2",
+                  "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+                  "text-white/80",
+                  // Hover - delicate gray liquid rise
+                  "hover:bg-[hsla(200,14%,78%,0.18)]",
+                  "hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_3px_-1px_rgba(31,45,61,0.06),0_0.5px_0_0_rgba(255,255,255,0.15)_inset]",
+                  "hover:text-white",
+                  "hover:-translate-y-[0.5px]",
+                  // Active - muted emerald accent ONLY for active state
+                  currentPage === link.href && "bg-emerald-500/50 backdrop-blur-[16px] backdrop-saturate-[140%] text-white font-medium shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_4px_8px_-2px_rgba(31,45,61,0.08),0_2px_8px_rgba(16,185,129,0.12),0_0.5px_0_0_rgba(255,255,255,0.15)_inset] border border-[hsla(160,84%,50%,0.15)]"
                 )}
               />
             ))}
@@ -105,7 +120,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
           <div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 hover:bg-red-50 rounded-lg px-2 py-2 transition-colors text-red-600 w-full text-left min-w-0"
+              className={cn(
+                "flex items-center gap-3 rounded-[12px] px-3 py-2 w-full text-left min-w-0",
+                "text-red-300/80",
+                "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+                // Red tinted liquid glass on hover
+                "hover:bg-red-500/10",
+                "hover:text-red-300",
+                "hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_3px_-1px_rgba(31,45,61,0.06)]",
+                "hover:-translate-y-[0.5px]"
+              )}
             >
               <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
                 <LogOut className="h-5 w-5" />
@@ -126,26 +150,41 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="bg-white/80 backdrop-blur-[12px] border-b border-white/30 px-6 py-4 flex-shrink-0 shadow-sm">
+        {/* Header - Ultra-refined liquid glass topbar */}
+        <header className={cn(
+          // Lighter emerald topbar - creates hierarchy through opacity
+          "bg-emerald-500/25 backdrop-blur-[48px] backdrop-saturate-[200%]",
+          "border-b border-emerald-400/20",
+          "shadow-[0_8px_16px_-4px_rgba(16,185,129,0.12),0_16px_32px_-8px_rgba(16,185,129,0.18),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
+          "px-6 py-4 flex-shrink-0",
+          "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+        )}>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                 {getPageTitle(currentPage)}
               </h1>
-              <p className="text-sm text-slate-600 mt-1">
+              <p className="text-sm text-white/70 mt-0.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
                 {getPageDescription(currentPage)}
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-slate-500">
-                Last login: {new Date().toLocaleDateString()}
+              <div className={cn(
+                "text-sm font-medium text-white/80",
+                "bg-[hsla(200,16%,85%,0.14)] backdrop-blur-[16px] backdrop-saturate-[180%]",
+                "px-3 py-1.5 rounded-[10px]",
+                "border border-[hsla(200,18%,85%,0.14)]",
+                "shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+                "transition-all duration-[250ms]"
+              )}>
+                <span className="text-white/60">Last login:</span>{" "}
+                <span className="text-white">{new Date().toLocaleDateString()}</span>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Content - Dark emerald for glass effect */}
+        {/* Content - Dark emerald for glass contrast */}
         <main className="flex-1 overflow-y-auto p-6">
           <div className="max-w-7xl mx-auto">
             {children}
@@ -161,10 +200,10 @@ const Logo = () => {
   return (
     <Link
       to="/admin/dashboard"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+      className="font-normal flex space-x-2 items-center text-sm text-white py-1 relative z-20"
       aria-label="DailyHush Admin"
     >
-      <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0" />
+      <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0 invert" />
     </Link>
   );
 };
@@ -173,7 +212,7 @@ const LogoIcon = () => {
   return (
     <Link
       to="/admin/dashboard"
-      className="font-normal flex items-center text-sm text-black py-1 relative z-20"
+      className="font-normal flex items-center text-sm text-white py-1 relative z-20"
       aria-label="DailyHush Admin"
     >
       <img src="/rounded-logo.png" alt="DailyHush" className="h-8 w-8 rounded-full flex-shrink-0" />
@@ -192,8 +231,6 @@ const getPageTitle = (currentPage?: string): string => {
     '/admin/cartography': 'Cartography',
     '/admin/posts': 'Posts Management',
     '/admin/settings': 'Settings',
-    // Future: '/admin/analytics': 'Analytics',
-    // Future: '/admin/newsletter': 'Newsletter',
   };
 
   return titles[currentPage || ''] || 'Admin Panel';
@@ -209,8 +246,6 @@ const getPageDescription = (currentPage?: string): string => {
     '/admin/cartography': 'Market research, funnels and competitor mapping',
     '/admin/posts': 'Create and manage blog posts',
     '/admin/settings': 'Configure website settings',
-    // Future: '/admin/analytics': 'View detailed analytics and reports',
-    // Future: '/admin/newsletter': 'Manage newsletter campaigns',
   };
 
   return descriptions[currentPage || ''] || 'Manage your website';

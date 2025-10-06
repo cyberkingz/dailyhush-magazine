@@ -48,6 +48,71 @@
 
   /* Glass Effect Variables */
   --glass-bg-light: hsla(0, 0%, 100%, 0.4);
+
+  /* === LIQUID GLASS GRAY SYSTEM - EXTREME REFINEMENT === */
+
+  /* Liquid Glass Gray Spectrum - Visible water tones (increased opacity) */
+  --liquid-glass-050: hsla(200, 20%, 98%, 0.06);
+  --liquid-glass-100: hsla(200, 18%, 92%, 0.10);
+  --liquid-glass-200: hsla(200, 16%, 85%, 0.14);
+  --liquid-glass-250: hsla(200, 15%, 82%, 0.16);
+  --liquid-glass-300: hsla(200, 14%, 78%, 0.18);
+  --liquid-glass-400: hsla(200, 12%, 70%, 0.22);
+  --liquid-glass-500: hsla(200, 10%, 60%, 0.25);
+  --liquid-glass-600: hsla(200, 12%, 50%, 0.28);
+  --liquid-glass-700: hsla(200, 14%, 40%, 0.32);
+
+  /* Emerald Accent - Strategic touchpoints only */
+  --emerald-accent-subtle: hsla(160, 84%, 39%, 0.08);
+  --emerald-accent-soft: hsla(160, 84%, 39%, 0.15);
+  --emerald-accent-medium: hsla(160, 84%, 39%, 0.25);
+  --emerald-accent-strong: hsla(160, 84%, 39%, 0.40);
+  --emerald-accent-glow: hsla(160, 84%, 50%, 0.20);
+
+  /* Blur System - Liquid depth (values only for Tailwind) */
+  --blur-whisper: 8px;
+  --blur-soft: 16px;
+  --blur-medium: 24px;
+  --blur-heavy: 32px;
+  --blur-ultra: 48px;
+
+  /* Saturation - Light refraction (percentage values for Tailwind) */
+  --saturate-subtle: 150%;
+  --saturate-medium: 180%;
+  --saturate-strong: 200%;
+
+  /* Shadow System - Water depth */
+  --shadow-surface: 0 0.5px 0 0 hsla(0, 0%, 100%, 0.15) inset;
+  --shadow-inner-glow: 0 1px 0 0 hsla(0, 0%, 100%, 0.12) inset;
+  --shadow-xs: 0 1px 2px -1px hsla(200, 20%, 10%, 0.04), 0 1px 3px -1px hsla(200, 20%, 10%, 0.06);
+  --shadow-sm: 0 2px 4px -2px hsla(200, 20%, 10%, 0.06), 0 4px 8px -2px hsla(200, 20%, 10%, 0.08);
+  --shadow-md: 0 4px 8px -2px hsla(200, 20%, 10%, 0.08), 0 8px 16px -4px hsla(200, 20%, 10%, 0.10);
+  --shadow-lg: 0 8px 16px -4px hsla(200, 20%, 10%, 0.10), 0 16px 32px -8px hsla(200, 20%, 10%, 0.14);
+  --shadow-xl: 0 16px 32px -8px hsla(200, 20%, 10%, 0.12), 0 24px 48px -12px hsla(200, 20%, 10%, 0.18);
+  --shadow-emerald-subtle: 0 2px 8px hsla(160, 84%, 39%, 0.12);
+  --shadow-emerald-medium: 0 4px 16px hsla(160, 84%, 39%, 0.18);
+  --shadow-emerald-strong: 0 8px 24px hsla(160, 84%, 39%, 0.25);
+
+  /* Border System - Liquid edges */
+  --border-whisper: 0.5px solid hsla(200, 20%, 90%, 0.10);
+  --border-soft: 1px solid hsla(200, 18%, 85%, 0.14);
+  --border-medium: 1px solid hsla(200, 16%, 80%, 0.18);
+  --border-strong: 1px solid hsla(200, 14%, 75%, 0.22);
+  --border-emerald-subtle: 1px solid hsla(160, 84%, 50%, 0.15);
+  --border-emerald-glow: 1px solid hsla(160, 84%, 50%, 0.25);
+
+  /* Refined Sizing */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+
+  /* Transitions - Fluid motion */
+  --transition-instant: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
   --glass-bg-medium: hsla(0, 0%, 100%, 0.6);
   --glass-bg-heavy: hsla(0, 0%, 100%, 0.8);
   --glass-border: hsla(220, 14%, 90%, 0.6);

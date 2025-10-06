@@ -119,7 +119,14 @@ export function BasicDateRangePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-[700px] p-0 bg-white border border-neutral-200/80 shadow-2xl rounded-2xl"
+          className={cn(
+            "w-[700px] p-0 max-w-[min(95vw,700px)] overflow-hidden",
+            // Muted emerald liquid glass popover
+            "!bg-emerald-500/30 !backdrop-blur-[48px] !backdrop-saturate-[140%]",
+            "!border !border-emerald-500/25",
+            "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.12),0_24px_48px_-12px_rgba(16,185,129,0.18),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+            "rounded-[24px]"
+          )}
           align="start"
           sideOffset={8}
           collisionPadding={16}
@@ -127,11 +134,15 @@ export function BasicDateRangePicker({
         >
           <div className="p-5 space-y-4">
             <div className="flex items-center justify-between gap-3">
-              <div className="text-sm font-semibold text-gray-900">Select date range</div>
+              <div className="text-sm font-semibold text-white">Select date range</div>
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-amber-600 transition-colors"
+                className={cn(
+                  "inline-flex items-center gap-1.5 text-xs font-medium",
+                  "text-white/70 hover:text-white",
+                  "transition-colors duration-[250ms]"
+                )}
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Reset
@@ -139,12 +150,25 @@ export function BasicDateRangePicker({
             </div>
 
             {/* Presets */}
-            <div className="flex flex-wrap gap-2 pb-4 border-b border-neutral-200">
+            <div className="flex flex-wrap gap-2 pb-4 border-b border-emerald-500/15">
               {presets.map((preset) => (
                 <button
                   key={preset.label}
                   onClick={() => handlePresetClick(preset.value)}
-                  className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-neutral-50 hover:bg-amber-50 hover:text-amber-700 border border-neutral-200 rounded-lg transition-colors"
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium",
+                    "rounded-[12px]",
+                    "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+                    // Muted emerald preset button
+                    "bg-emerald-500/20 backdrop-blur-[16px] backdrop-saturate-[140%]",
+                    "text-white border border-emerald-500/20",
+                    "shadow-[0_1px_2px_-1px_rgba(16,185,129,0.08),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+                    // Hover - muted emerald liquid rise
+                    "hover:bg-emerald-500/30 hover:border-emerald-500/30",
+                    "hover:shadow-[0_2px_4px_-2px_rgba(16,185,129,0.12)]",
+                    "hover:scale-[1.01] hover:-translate-y-[0.5px]",
+                    "active:scale-[0.99] active:translate-y-0"
+                  )}
                 >
                   {preset.label}
                 </button>
@@ -167,11 +191,26 @@ export function BasicDateRangePicker({
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-neutral-200">
+            <div className="flex items-center justify-end gap-2 pt-3 border-t border-emerald-500/15">
               <button
                 type="button"
                 onClick={handleCancel}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-neutral-50 border border-neutral-200 rounded-lg transition-colors"
+                className={cn(
+                  "px-4 py-2 text-sm font-medium rounded-[12px]",
+                  "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+                  // Gray liquid glass button
+                  "bg-[hsla(200,14%,78%,0.18)] text-white",
+                  "backdrop-blur-[16px] backdrop-saturate-[140%]",
+                  "border border-[hsla(200,18%,85%,0.14)]",
+                  "shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+                  // Hover - liquid rise
+                  "hover:bg-[hsla(200,12%,70%,0.22)]",
+                  "hover:shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06)]",
+                  "hover:border-[hsla(200,16%,80%,0.18)]",
+                  "hover:-translate-y-[0.5px] hover:scale-[1.003]",
+                  // Active
+                  "active:translate-y-0 active:scale-[0.997]"
+                )}
               >
                 Cancel
               </button>

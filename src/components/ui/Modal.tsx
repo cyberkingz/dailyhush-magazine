@@ -26,25 +26,25 @@ export function Modal({ open, onClose, title, children, maxWidthClassName = 'max
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onMouseDown={(e) => {
         if (e.target === overlayRef.current) onClose()
       }}
       aria-modal="true"
       role="dialog"
     >
-      <div className={`w-full ${maxWidthClassName} rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden`}> 
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+      <div className={`w-full ${maxWidthClassName} rounded-[16px] bg-[hsla(200,10%,60%,0.25)] backdrop-blur-[48px] backdrop-saturate-[200%] border border-[hsla(200,16%,80%,0.18)] shadow-[0_16px_32px_-8px_rgba(31,45,61,0.12),0_24px_48px_-12px_rgba(31,45,61,0.18),0_1px_0_0_rgba(255,255,255,0.15)_inset] overflow-hidden`}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[hsla(200,18%,85%,0.14)]">
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
           <button
             onClick={onClose}
             aria-label="Close"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] text-white/60 hover:bg-[hsla(200,14%,78%,0.18)] hover:text-white transition-all duration-[250ms]"
           >
             <span className="text-xl leading-none">×</span>
           </button>
         </div>
-        <div className="px-6 py-5">{children}</div>
+        <div className="px-6 py-5 text-white">{children}</div>
       </div>
     </div>
   )

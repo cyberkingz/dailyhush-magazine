@@ -144,18 +144,38 @@ export function DateRangePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 max-w-[min(95vw,700px)] bg-white border-neutral-200 shadow-xl rounded-xl overflow-hidden"
+          className={cn(
+            "w-auto p-0 max-w-[min(95vw,700px)] overflow-hidden",
+            // Muted monochrome emerald liquid glass popover
+            "!bg-emerald-500/30 !backdrop-blur-[48px] !backdrop-saturate-[140%]",
+            "!border !border-emerald-500/25",
+            "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.12),0_24px_48px_-12px_rgba(16,185,129,0.18),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+            "rounded-[24px]"
+          )}
           align="start"
           sideOffset={8}
         >
-          <div className="p-4 max-w-full">
+          <div className="p-5 max-w-full">
             {/* Presets */}
-            <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-neutral-200">
+            <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-emerald-500/15">
               {presets.map((preset) => (
                 <button
                   key={preset.label}
                   onClick={() => handlePresetClick(preset.value)}
-                  className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white hover:bg-amber-50 hover:text-amber-700 border border-neutral-200 rounded-lg transition-colors"
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium",
+                    "rounded-[12px]",
+                    "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+                    // Muted emerald preset button
+                    "bg-emerald-500/20 backdrop-blur-[16px] backdrop-saturate-[140%]",
+                    "text-white border border-emerald-500/20",
+                    "shadow-[0_1px_2px_-1px_rgba(16,185,129,0.08),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+                    // Hover - muted emerald liquid rise
+                    "hover:bg-emerald-500/30 hover:border-emerald-500/30",
+                    "hover:shadow-[0_2px_4px_-2px_rgba(16,185,129,0.12)]",
+                    "hover:scale-[1.01] hover:-translate-y-[0.5px]",
+                    "active:scale-[0.99] active:translate-y-0"
+                  )}
                 >
                   {preset.label}
                 </button>

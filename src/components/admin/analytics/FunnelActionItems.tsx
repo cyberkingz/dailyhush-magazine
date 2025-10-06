@@ -158,13 +158,13 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
 
   return (
     <div className={className}>
-      {/* Apple HIG: Header with SF Pro typography scale */}
+      {/* Refined header */}
       {showHeader && (
-        <div className="flex items-center justify-between mb-5">
-          <h4 className="text-[17px] font-semibold tracking-[-0.022em] text-[#1d1d1f]">
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-[17px] font-semibold tracking-[-0.022em] text-white">
             Recommendations
           </h4>
-          <span className="text-[13px] font-medium text-[#86868b] tabular-nums">
+          <span className="text-[13px] font-medium text-white/60 tabular-nums">
             {actionableInsights.length}
           </span>
         </div>
@@ -183,40 +183,40 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
             <div
               key={index}
               className={cn(
-                // Nested glass card: subtle white tint on glass parent
-                "bg-white/40 rounded-xl p-4",
-                "border border-slate-200/50",
-                // Lighter shadow for nested card
-                "shadow-sm",
-                // Apple interaction: subtle hover state
-                "transition-all duration-200 ease-out",
-                "hover:bg-white/60",
-                "hover:shadow-md",
-                "hover:-translate-y-[0.5px]"
+                // Nested liquid glass card - ultra-subtle on glass parent
+                "bg-[hsla(200,12%,70%,0.18)] backdrop-blur-[24px] backdrop-saturate-[160%]",
+                "rounded-[16px] p-4",
+                "border border-[hsla(200,16%,80%,0.18)]",
+                "shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
+                // Refined interaction
+                "transition-all duration-300",
+                "hover:bg-[hsla(200,12%,70%,0.22)]",
+                "hover:shadow-[0_4px_8px_-4px_rgba(31,45,61,0.08),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+                "hover:-translate-y-[0.5px]",
+                "hover:scale-[1.002]"
               )}
             >
               <div className="flex items-start gap-3">
-                {/* Apple HIG: Icons at 16px, monochrome with single accent */}
+                {/* Icons with refined coloring */}
                 <div className={cn(
                   "mt-[1px] shrink-0",
-                  // Apple blue (#007AFF) ONLY for critical items
-                  isCritical ? "text-[#007AFF]" : "text-[#86868b]"
+                  // Emerald ONLY for critical items
+                  isCritical ? "text-emerald-400" : "text-white/50"
                 )}>
                   <Icon className="w-4 h-4" />
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  {/* Apple HIG: SF Pro text hierarchy (17px title, 13px body) */}
+                  {/* Refined text hierarchy for liquid glass */}
                   <h5 className={cn(
-                    "text-[15px] leading-[1.33] tracking-[-0.01em] text-[#1d1d1f]",
-                    // Apple hierarchy: weight > color
+                    "text-[15px] leading-[1.33] tracking-[-0.01em] text-white",
                     isCritical ? "font-semibold" : "font-medium"
                   )}>
                     {insight.title}
                   </h5>
 
-                  {/* Apple HIG: Secondary text in System Gray (#86868b) */}
-                  <p className="mt-1 text-[13px] leading-[1.38] text-[#86868b]">
+                  {/* Secondary text */}
+                  <p className="mt-1 text-[13px] leading-[1.38] text-white/70">
                     {insight.message}
                   </p>
 
@@ -226,30 +226,28 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
                       <button
                         onClick={() => setExpandedIndex(isExpanded ? null : index)}
                         className={cn(
-                          // Apple button: text-only, SF Blue, 13px
+                          // Refined text button with emerald accent
                           "inline-flex items-center gap-1 group",
-                          "text-[13px] font-medium text-[#007AFF]",
-                          // Apple interaction: 70% opacity on hover
-                          "transition-opacity duration-200 ease-out",
-                          "hover:opacity-70",
-                          "focus:outline-none focus-visible:opacity-70"
+                          "text-[13px] font-medium text-emerald-400",
+                          "transition-all duration-[var(--transition-normal)]",
+                          "hover:text-emerald-300",
+                          "focus:outline-none focus-visible:text-emerald-300"
                         )}
                       >
                         <span>Suggestion</span>
                         <ChevronDown className={cn(
-                          "w-3.5 h-3.5 transition-transform duration-200 ease-out",
+                          "w-3.5 h-3.5 transition-transform duration-[var(--transition-normal)]",
                           isExpanded && "rotate-180"
                         )} />
                       </button>
 
-                      {/* Apple HIG: Smooth expand/collapse animation */}
+                      {/* Smooth expand/collapse animation */}
                       {isExpanded && (
                         <div className={cn(
-                          "mt-3 pt-3 border-t border-[#d2d2d7]",
-                          // Apple animation: 200ms ease, slide from top
+                          "mt-3 pt-3 border-t border-[hsla(200,16%,80%,0.18)]",
                           "animate-in slide-in-from-top-1 duration-200 ease-out"
                         )}>
-                          <p className="text-[13px] leading-[1.5] text-[#1d1d1f]">
+                          <p className="text-[13px] leading-[1.5] text-white/80">
                             {insight.recommendation}
                           </p>
                         </div>

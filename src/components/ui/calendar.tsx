@@ -16,12 +16,12 @@ const buttonVariants = ({
   variant?: "ghost" | "outline" | "primary" | "secondary"
 }) => {
   const variants = {
-    ghost: "hover:bg-neutral-100 hover:text-neutral-900",
-    outline: "border border-neutral-300 hover:bg-neutral-50",
-    primary: "bg-yellow-400 text-black hover:bg-yellow-300",
-    secondary: "bg-amber-600 text-white hover:bg-amber-700",
+    ghost: "hover:bg-emerald-500/15 hover:backdrop-blur-[12px] hover:text-white",
+    outline: "border border-emerald-500/15 hover:bg-emerald-500/15",
+    primary: "bg-emerald-500/35 backdrop-blur-[16px] backdrop-saturate-[140%] text-white hover:bg-emerald-500/45",
+    secondary: "bg-emerald-600/35 backdrop-blur-[16px] backdrop-saturate-[140%] text-white hover:bg-emerald-600/45",
   }
-  return cn("inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none", variants[variant])
+  return cn("inline-flex items-center justify-center rounded-[10px] text-sm font-semibold transition-all duration-[250ms] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none", variants[variant])
 }
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -110,11 +110,11 @@ function Calendar({
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
-          "relative has-focus:border-amber-500 border border-neutral-300 shadow-sm rounded-md",
+          "relative has-focus:border-emerald-500/40 border border-emerald-500/15 shadow-sm rounded-md",
           defaultClassNames.dropdown_root
         ),
         dropdown: cn(
-          "absolute bg-white inset-0 opacity-0",
+          "absolute bg-emerald-950/90 inset-0 opacity-0",
           defaultClassNames.dropdown
         ),
         caption_label: cn(
@@ -127,7 +127,7 @@ function Calendar({
         table: "w-full border-collapse",
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
-          "text-neutral-500 rounded-md flex-1 font-normal text-[0.8rem] select-none",
+          "text-white/60 rounded-md flex-1 font-normal text-[0.8rem] select-none",
           defaultClassNames.weekday
         ),
         week: cn("flex w-full mt-2", defaultClassNames.week),
@@ -136,7 +136,7 @@ function Calendar({
           defaultClassNames.week_number_header
         ),
         week_number: cn(
-          "text-[0.8rem] select-none text-neutral-500",
+          "text-[0.8rem] select-none text-white/60",
           defaultClassNames.week_number
         ),
         day: cn(
@@ -144,21 +144,27 @@ function Calendar({
           defaultClassNames.day
         ),
         range_start: cn(
-          "rounded-l-md bg-amber-100",
+          "rounded-l-[10px] bg-emerald-500/35 backdrop-blur-[16px] backdrop-saturate-[140%]",
           defaultClassNames.range_start
         ),
-        range_middle: cn("rounded-none", defaultClassNames.range_middle),
-        range_end: cn("rounded-r-md bg-amber-100", defaultClassNames.range_end),
+        range_middle: cn(
+          "rounded-none bg-[hsla(200,12%,70%,0.28)] backdrop-blur-[16px] backdrop-saturate-[140%]",
+          defaultClassNames.range_middle
+        ),
+        range_end: cn(
+          "rounded-r-[10px] bg-emerald-500/35 backdrop-blur-[16px] backdrop-saturate-[140%]",
+          defaultClassNames.range_end
+        ),
         today: cn(
-          "bg-neutral-100 text-neutral-900 rounded-md",
+          "bg-[hsla(200,12%,70%,0.25)] backdrop-blur-[12px] backdrop-saturate-[140%] ring-2 ring-inset ring-emerald-500/40 shadow-sm text-white rounded-[10px]",
           defaultClassNames.today
         ),
         outside: cn(
-          "text-neutral-400 aria-selected:text-neutral-400",
+          "text-white/25 aria-selected:text-white/25",
           defaultClassNames.outside
         ),
         disabled: cn(
-          "text-neutral-400 opacity-50",
+          "text-white/25 opacity-50",
           defaultClassNames.disabled
         ),
         hidden: cn("invisible", defaultClassNames.hidden),
@@ -241,7 +247,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "data-[selected-single=true]:bg-amber-500 data-[selected-single=true]:text-white data-[range-middle=true]:bg-amber-100 data-[range-middle=true]:text-neutral-900 data-[range-start=true]:bg-amber-500 data-[range-start=true]:text-white data-[range-end=true]:bg-amber-500 data-[range-end=true]:text-white flex aspect-square w-full min-w-8 flex-col gap-1 leading-none font-normal data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md",
+        "data-[selected-single=true]:bg-emerald-500/35 data-[selected-single=true]:backdrop-blur-[16px] data-[selected-single=true]:backdrop-saturate-[140%] data-[selected-single=true]:text-white data-[selected-single=true]:shadow-[0_2px_4px_rgba(16,185,129,0.18)] data-[range-middle=true]:bg-[hsla(200,12%,70%,0.28)] data-[range-middle=true]:backdrop-blur-[16px] data-[range-middle=true]:backdrop-saturate-[140%] data-[range-middle=true]:text-white data-[range-start=true]:bg-emerald-500/35 data-[range-start=true]:backdrop-blur-[16px] data-[range-start=true]:backdrop-saturate-[140%] data-[range-start=true]:text-white data-[range-start=true]:shadow-[0_2px_4px_rgba(16,185,129,0.18)] data-[range-end=true]:bg-emerald-500/35 data-[range-end=true]:backdrop-blur-[16px] data-[range-end=true]:backdrop-saturate-[140%] data-[range-end=true]:text-white data-[range-end=true]:shadow-[0_2px_4px_rgba(16,185,129,0.18)] flex aspect-square w-full min-w-8 flex-col gap-1 leading-none font-semibold data-[range-end=true]:rounded-[10px] data-[range-end=true]:rounded-r-[10px] data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-[10px] data-[range-start=true]:rounded-l-[10px]",
         defaultClassNames.day,
         className
       )}

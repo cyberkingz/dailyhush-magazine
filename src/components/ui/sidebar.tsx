@@ -87,13 +87,13 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-screen hidden md:flex md:flex-col bg-white border-r border-gray-200 w-[300px] flex-shrink-0",
+        "h-screen hidden md:flex md:flex-col w-[240px] flex-shrink-0",
         open ? "px-4" : "px-2",
         "py-4",
         className
       )}
       animate={{
-        width: animate ? (open ? "300px" : "60px") : "300px",
+        width: animate ? (open ? "240px" : "60px") : "240px",
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
@@ -114,13 +114,13 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-white border-b border-gray-200 w-full"
+          "h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between w-full"
         )}
         {...props}
       >
         <div className="flex justify-end z-20 w-full">
           <Menu
-            className="text-gray-800 cursor-pointer"
+            className="text-white cursor-pointer"
             onClick={() => setOpen(!open)}
           />
         </div>
@@ -135,12 +135,15 @@ export const MobileSidebar = ({
                 ease: "easeInOut",
               }}
               className={cn(
-                "fixed h-full w-full inset-0 bg-white p-10 z-[100] flex flex-col justify-between",
+                "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between",
+                // Emerald liquid glass mobile sidebar
+                "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
+                "border-r border-emerald-500/25",
                 className
               )}
             >
               <div
-                className="absolute right-10 top-10 z-50 text-gray-800 cursor-pointer"
+                className="absolute right-10 top-10 z-50 text-white cursor-pointer"
                 onClick={() => setOpen(!open)}
               >
                 <X />
@@ -182,7 +185,7 @@ export const SidebarLink = ({
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-gray-700 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-nowrap overflow-hidden"
+        className="text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-nowrap overflow-hidden"
       >
         {link.label}
       </motion.span>

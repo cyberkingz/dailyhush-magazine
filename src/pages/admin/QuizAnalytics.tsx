@@ -4,6 +4,7 @@ import { subDays, differenceInDays } from 'date-fns'
 import type { DateRange } from 'react-day-picker'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { supabase } from '../../lib/supabase'
+import { cn } from '../../lib/utils'
 import { quizQuestions } from '../../data/quizQuestions'
 import { BasicDateRangePicker } from '../../components/admin/BasicDateRangePicker'
 import { QuizFunnelChart } from '../../components/admin/analytics/QuizFunnelChart'
@@ -365,15 +366,15 @@ export default function QuizAnalytics() {
   const chartConfig = {
     starts: {
       label: "Starts",
-      color: "#f59e0b", // amber-500
+      color: "hsl(160, 84%, 39%)", // muted emerald
     },
     completions: {
       label: "Completions",
-      color: "#10b981", // green-500
+      color: "hsl(160, 70%, 45%)", // lighter muted emerald
     },
     emails: {
       label: "Emails",
-      color: "#3b82f6", // blue-500
+      color: "hsl(160, 60%, 50%)", // lightest muted emerald
     },
   }
 
@@ -416,14 +417,14 @@ export default function QuizAnalytics() {
         {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Quiz Analytics</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-2xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">Quiz Analytics</h1>
+            <p className="text-white/70 mt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
               Track quiz performance and conversion metrics
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-            <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200">
-              <label htmlFor="comparison-mode" className="text-sm font-medium text-gray-700 cursor-pointer whitespace-nowrap">
+            <div className="flex items-center gap-3 px-3 py-2 bg-[hsla(200,14%,78%,0.18)] backdrop-blur-[16px] backdrop-saturate-[140%] rounded-[12px] border border-[hsla(200,16%,80%,0.18)] shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_0_0_rgba(255,255,255,0.15)_inset]">
+              <label htmlFor="comparison-mode" className="text-sm font-medium text-white cursor-pointer whitespace-nowrap">
                 Compare vs previous period
               </label>
               <Switch
@@ -451,10 +452,10 @@ export default function QuizAnalytics() {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <GlassCard intensity="heavy" className="p-6">
-            <CardHeader className="p-0 pb-4">
-              <CardDescription className="text-slate-600">Total Quiz Views</CardDescription>
-              <CardTitle className="text-3xl text-slate-900">{metrics.totalViews.toLocaleString()}</CardTitle>
+          <GlassCard intensity="heavy" className="p-5">
+            <CardHeader className="p-0 pb-3">
+              <CardDescription className="text-white/70 text-sm">Total Quiz Views</CardDescription>
+              <CardTitle className="text-3xl text-white font-bold">{metrics.totalViews.toLocaleString()}</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <ResponsiveContainer width="100%" height={40}>
@@ -475,28 +476,28 @@ export default function QuizAnalytics() {
                     return (
                       <>
                         {change.isPositive ? (
-                          <TrendingUp className="h-3 w-3 text-green-600" />
+                          <TrendingUp className="h-3 w-3 text-emerald-400" />
                         ) : (
-                          <TrendingDown className="h-3 w-3 text-red-600" />
+                          <TrendingDown className="h-3 w-3 text-red-400" />
                         )}
-                        <span className={change.isPositive ? 'text-green-600' : 'text-red-600'}>
+                        <span className={change.isPositive ? 'text-emerald-400' : 'text-red-400'}>
                           {change.isPositive ? '+' : '-'}{change.value.toFixed(1)}%
                         </span>
-                        <span className="text-gray-500">vs previous period</span>
+                        <span className="text-white/60">vs previous period</span>
                       </>
                     )
                   })()}
                 </div>
               ) : (
-                <p className="text-xs text-slate-500 mt-1">Last 7 days trend</p>
+                <p className="text-xs text-white/60 mt-1">Last 7 days trend</p>
               )}
             </CardContent>
           </GlassCard>
 
-          <GlassCard intensity="heavy" className="p-6">
-            <CardHeader className="p-0 pb-4">
-              <CardDescription className="text-slate-600">Completion Rate</CardDescription>
-              <CardTitle className="text-3xl flex items-center gap-2 text-slate-900">
+          <GlassCard intensity="heavy" className="p-5">
+            <CardHeader className="p-0 pb-3">
+              <CardDescription className="text-white/70 text-sm">Completion Rate</CardDescription>
+              <CardTitle className="text-3xl flex items-center gap-2 text-white font-bold">
                 {metrics.completionRate.toFixed(1)}%
               </CardTitle>
             </CardHeader>
@@ -519,28 +520,28 @@ export default function QuizAnalytics() {
                     return (
                       <>
                         {change.isPositive ? (
-                          <TrendingUp className="h-3 w-3 text-green-600" />
+                          <TrendingUp className="h-3 w-3 text-emerald-400" />
                         ) : (
-                          <TrendingDown className="h-3 w-3 text-red-600" />
+                          <TrendingDown className="h-3 w-3 text-red-400" />
                         )}
-                        <span className={change.isPositive ? 'text-green-600' : 'text-red-600'}>
+                        <span className={change.isPositive ? 'text-emerald-400' : 'text-red-400'}>
                           {change.isPositive ? '+' : '-'}{change.value.toFixed(1)}%
                         </span>
-                        <span className="text-gray-500">vs previous period</span>
+                        <span className="text-white/60">vs previous period</span>
                       </>
                     )
                   })()}
                 </div>
               ) : (
-                <p className="text-xs text-slate-500 mt-1">Last 7 days trend</p>
+                <p className="text-xs text-white/60 mt-1">Last 7 days trend</p>
               )}
             </CardContent>
           </GlassCard>
 
-          <GlassCard intensity="heavy" className="p-6">
-            <CardHeader className="p-0 pb-4">
-              <CardDescription className="text-slate-600">Email Capture</CardDescription>
-              <CardTitle className="text-3xl text-slate-900">{metrics.emailCaptureRate.toFixed(1)}%</CardTitle>
+          <GlassCard intensity="heavy" className="p-5">
+            <CardHeader className="p-0 pb-3">
+              <CardDescription className="text-white/70 text-sm">Email Capture</CardDescription>
+              <CardTitle className="text-3xl text-white font-bold">{metrics.emailCaptureRate.toFixed(1)}%</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <ResponsiveContainer width="100%" height={40}>
@@ -548,7 +549,7 @@ export default function QuizAnalytics() {
                   <Line
                     type="monotone"
                     dataKey="emails"
-                    stroke="hsl(38, 92%, 50%)"
+                    stroke="hsl(160, 70%, 45%)"
                     strokeWidth={2}
                     dot={false}
                   />
@@ -561,31 +562,31 @@ export default function QuizAnalytics() {
                     return (
                       <>
                         {change.isPositive ? (
-                          <TrendingUp className="h-3 w-3 text-green-600" />
+                          <TrendingUp className="h-3 w-3 text-emerald-400" />
                         ) : (
-                          <TrendingDown className="h-3 w-3 text-red-600" />
+                          <TrendingDown className="h-3 w-3 text-red-400" />
                         )}
-                        <span className={change.isPositive ? 'text-green-600' : 'text-red-600'}>
+                        <span className={change.isPositive ? 'text-emerald-400' : 'text-red-400'}>
                           {change.isPositive ? '+' : '-'}{change.value.toFixed(1)}%
                         </span>
-                        <span className="text-gray-500">vs previous period</span>
+                        <span className="text-white/60">vs previous period</span>
                       </>
                     )
                   })()}
                 </div>
               ) : (
                 <div className="flex items-center justify-between text-xs mt-1">
-                  <span className="text-slate-500">Last 7 days</span>
-                  <span className="font-medium text-slate-700">{metrics.totalEmails} emails</span>
+                  <span className="text-white/60">Last 7 days</span>
+                  <span className="font-medium text-white">{metrics.totalEmails} emails</span>
                 </div>
               )}
             </CardContent>
           </GlassCard>
 
-          <GlassCard intensity="heavy" className="p-6">
-            <CardHeader className="p-0 pb-4">
-              <CardDescription className="text-slate-600">Total Emails</CardDescription>
-              <CardTitle className="text-3xl text-slate-900">{metrics.totalEmails.toLocaleString()}</CardTitle>
+          <GlassCard intensity="heavy" className="p-5">
+            <CardHeader className="p-0 pb-3">
+              <CardDescription className="text-white/70 text-sm">Total Emails</CardDescription>
+              <CardTitle className="text-3xl text-white font-bold">{metrics.totalEmails.toLocaleString()}</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <ResponsiveContainer width="100%" height={40}>
@@ -593,7 +594,7 @@ export default function QuizAnalytics() {
                   <Line
                     type="monotone"
                     dataKey="emails"
-                    stroke="hsl(217, 91%, 60%)"
+                    stroke="hsl(160, 60%, 50%)"
                     strokeWidth={2}
                     dot={false}
                   />
@@ -606,20 +607,20 @@ export default function QuizAnalytics() {
                     return (
                       <>
                         {change.isPositive ? (
-                          <TrendingUp className="h-3 w-3 text-green-600" />
+                          <TrendingUp className="h-3 w-3 text-emerald-400" />
                         ) : (
-                          <TrendingDown className="h-3 w-3 text-red-600" />
+                          <TrendingDown className="h-3 w-3 text-red-400" />
                         )}
-                        <span className={change.isPositive ? 'text-green-600' : 'text-red-600'}>
+                        <span className={change.isPositive ? 'text-emerald-400' : 'text-red-400'}>
                           {change.isPositive ? '+' : '-'}{change.value.toFixed(1)}%
                         </span>
-                        <span className="text-slate-500">vs previous period</span>
+                        <span className="text-white/60">vs previous period</span>
                       </>
                     )
                   })()}
                 </div>
               ) : (
-                <p className="text-xs text-slate-500 mt-1">Weekly growth trend</p>
+                <p className="text-xs text-white/60 mt-1">Weekly growth trend</p>
               )}
             </CardContent>
           </GlassCard>
@@ -632,8 +633,8 @@ export default function QuizAnalytics() {
             {/* Conversion Funnel */}
             <GlassCard intensity="heavy">
               <div className="px-6 pt-6 pb-4">
-                <h3 className="text-lg font-semibold text-slate-900">Conversion Funnel</h3>
-                <p className="text-sm text-slate-600 mt-1">Step-by-step conversion breakdown</p>
+                <h3 className="text-lg font-semibold text-white">Conversion Funnel</h3>
+                <p className="text-sm text-white/70 mt-1">Step-by-step conversion breakdown</p>
               </div>
               <div className="px-6 pb-6">
                 <QuizFunnelChart steps={funnelSteps} />
@@ -643,8 +644,8 @@ export default function QuizAnalytics() {
             {/* Trends Over Time */}
             <GlassCard intensity="heavy">
               <div className="px-6 pt-6 pb-3">
-                <h3 className="text-base font-semibold text-slate-900">Trends Over Time</h3>
-                <p className="text-sm text-slate-600 mt-1">Last 30 days performance</p>
+                <h3 className="text-base font-semibold text-white">Trends Over Time</h3>
+                <p className="text-sm text-white/70 mt-1">Last 30 days performance</p>
               </div>
               <div className="px-6 pb-6">
                 <ChartContainer config={chartConfig} className="h-[200px] w-full">
@@ -665,24 +666,24 @@ export default function QuizAnalytics() {
                     <Area
                       type="monotone"
                       dataKey="starts"
-                      stroke="#f59e0b"
-                      fill="#f59e0b"
+                      stroke="hsl(160, 84%, 39%)"
+                      fill="hsl(160, 84%, 39%)"
                       fillOpacity={0.2}
                       strokeWidth={2}
                     />
                     <Area
                       type="monotone"
                       dataKey="completions"
-                      stroke="#10b981"
-                      fill="#10b981"
+                      stroke="hsl(160, 70%, 45%)"
+                      fill="hsl(160, 70%, 45%)"
                       fillOpacity={0.2}
                       strokeWidth={2}
                     />
                     <Area
                       type="monotone"
                       dataKey="emails"
-                      stroke="#3b82f6"
-                      fill="#3b82f6"
+                      stroke="hsl(160, 60%, 50%)"
+                      fill="hsl(160, 60%, 50%)"
                       fillOpacity={0.2}
                       strokeWidth={2}
                     />
@@ -704,18 +705,18 @@ export default function QuizAnalytics() {
             {deviceData.length > 0 && (
               <GlassCard intensity="heavy">
                 <div className="px-6 pt-6 pb-4">
-                  <h4 className="text-sm font-semibold text-slate-900">Device Performance</h4>
-                  <p className="text-xs text-slate-600 mt-1">Conversion by device type</p>
+                  <h4 className="text-sm font-semibold text-white">Device Performance</h4>
+                  <p className="text-xs text-white/70 mt-1">Conversion by device type</p>
                 </div>
                 <div className="px-6 pb-6 space-y-2">
                   {deviceData.map((device) => (
-                    <div key={device.name} className="flex items-center justify-between py-2.5 border-b border-slate-200/60 last:border-0">
+                    <div key={device.name} className="flex items-center justify-between py-2.5 border-b border-[hsla(200,16%,80%,0.18)] last:border-0">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                        <span className="text-sm font-medium capitalize text-slate-900">{device.name}</span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                        <span className="text-sm font-medium capitalize text-white">{device.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-600">{device.views} views</span>
+                        <span className="text-xs text-white/70">{device.views} views</span>
                         <Badge
                           variant={device.conversionRate >= 70 ? 'success' : device.conversionRate >= 50 ? 'warning' : 'destructive'}
                           className="min-w-[48px] justify-center text-xs"
@@ -733,18 +734,18 @@ export default function QuizAnalytics() {
             {sourceData.length > 0 && (
               <GlassCard intensity="heavy">
                 <div className="px-6 pt-6 pb-4">
-                  <h4 className="text-sm font-semibold text-slate-900">Top Sources</h4>
-                  <p className="text-xs text-slate-600 mt-1">Conversion by traffic source</p>
+                  <h4 className="text-sm font-semibold text-white">Top Sources</h4>
+                  <p className="text-xs text-white/70 mt-1">Conversion by traffic source</p>
                 </div>
                 <div className="px-6 pb-6 space-y-2">
                   {sourceData.slice(0, 5).map((source) => (
-                    <div key={source.name} className="flex items-center justify-between py-2.5 border-b border-slate-200/60 last:border-0">
+                    <div key={source.name} className="flex items-center justify-between py-2.5 border-b border-[hsla(200,16%,80%,0.18)] last:border-0">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                        <span className="text-sm font-medium capitalize text-slate-900">{source.name}</span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                        <span className="text-sm font-medium capitalize text-white">{source.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-600">{source.views} views</span>
+                        <span className="text-xs text-white/70">{source.views} views</span>
                         <Badge
                           variant={source.conversionRate >= 70 ? 'success' : source.conversionRate >= 50 ? 'warning' : 'destructive'}
                           className="min-w-[48px] justify-center text-xs"
@@ -765,63 +766,75 @@ export default function QuizAnalytics() {
           <div className="px-6 pt-6 pb-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Question-Level Analysis</h3>
-                <p className="text-sm text-slate-600 mt-1">Drop-off rates and engagement per question</p>
+                <h3 className="text-lg font-semibold text-white">Question-Level Analysis</h3>
+                <p className="text-sm text-white/70 mt-1">Drop-off rates and engagement per question</p>
               </div>
               <div className="relative w-full sm:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/50" />
                 <Input
                   placeholder="Search questions..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-white/50 border-slate-200/50 focus:bg-white/80"
+                  className="pl-10"
                 />
               </div>
             </div>
           </div>
           <div className="px-6 pb-6">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-b border-slate-200/60 hover:bg-transparent">
-                  <TableHead className="text-slate-700">Question</TableHead>
-                  <TableHead className="text-slate-700">Section</TableHead>
-                  <TableHead className="text-slate-700">Views</TableHead>
-                  <TableHead className="text-slate-700">Completions</TableHead>
-                  <TableHead className="text-slate-700">Drop-off Rate</TableHead>
-                  <TableHead className="text-slate-700">Avg Time (s)</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredQuestions.length > 0 ? (
-                  filteredQuestions.map((question) => (
-                    <TableRow key={question.id} className="border-b border-slate-200/40 hover:bg-white/30">
-                    <TableCell className="font-medium text-slate-900 max-w-md truncate">
-                      {question.question}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">{question.section}</Badge>
-                    </TableCell>
-                    <TableCell className="text-slate-700">{question.views}</TableCell>
-                    <TableCell className="text-slate-700">{question.completions}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={question.dropoffRate < 10 ? 'success' : question.dropoffRate < 20 ? 'warning' : 'destructive'}
+            {/* Liquid glass table container - matches page aesthetic */}
+            <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset] overflow-hidden">
+              <div className="max-h-[600px] overflow-y-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-b-2 border-[hsla(200,16%,80%,0.18)] hover:bg-transparent bg-[hsla(200,10%,60%,0.25)] backdrop-blur-[48px] backdrop-saturate-[140%]">
+                    <TableHead className="text-white font-bold text-sm py-5 px-6 drop-shadow-sm">Question</TableHead>
+                    <TableHead className="text-white font-bold text-sm py-5 px-6 drop-shadow-sm">Section</TableHead>
+                    <TableHead className="text-white font-bold text-sm py-5 px-6 drop-shadow-sm">Views</TableHead>
+                    <TableHead className="text-white font-bold text-sm py-5 px-6 drop-shadow-sm">Completions</TableHead>
+                    <TableHead className="text-white font-bold text-sm py-5 px-6 drop-shadow-sm">Drop-off Rate</TableHead>
+                    <TableHead className="text-white font-bold text-sm py-5 px-6 drop-shadow-sm">Avg Time (s)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredQuestions.length > 0 ? (
+                    filteredQuestions.map((question, index) => (
+                      <TableRow
+                        key={question.id}
+                        className={cn(
+                          "border-b border-[hsla(200,16%,80%,0.18)] last:border-0",
+                          "hover:bg-[hsla(200,14%,78%,0.22)] transition-all duration-200",
+                          index % 2 === 1 && "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px] backdrop-saturate-[140%]"
+                        )}
                       >
-                        {question.dropoffRate.toFixed(1)}%
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-slate-700">{question.avgTimeSpent}s</TableCell>
-                  </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={6} className="text-center text-slate-500 py-8">
-                      No questions found matching "{searchQuery}"
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                        <TableCell className="font-semibold text-white max-w-md truncate py-5 px-6 drop-shadow-sm">
+                          {question.question}
+                        </TableCell>
+                        <TableCell className="py-5 px-6">
+                          <Badge variant="outline">{question.section}</Badge>
+                        </TableCell>
+                        <TableCell className="text-white font-bold py-5 px-6 drop-shadow-sm">{question.views}</TableCell>
+                        <TableCell className="text-white font-bold py-5 px-6 drop-shadow-sm">{question.completions}</TableCell>
+                        <TableCell className="py-5 px-6">
+                          <Badge
+                            variant={question.dropoffRate < 10 ? 'success' : question.dropoffRate < 20 ? 'warning' : 'destructive'}
+                          >
+                            {question.dropoffRate.toFixed(1)}%
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-white font-bold py-5 px-6 drop-shadow-sm">{question.avgTimeSpent}s</TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center text-white py-10 px-6 font-semibold drop-shadow-sm">
+                        No questions found matching "{searchQuery}"
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+              </div>
+            </div>
           </div>
         </GlassCard>
       </div>

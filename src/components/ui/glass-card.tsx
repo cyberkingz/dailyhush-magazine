@@ -14,32 +14,55 @@ function GlassCard({
   ...props
 }: GlassCardProps) {
   const intensityStyles = {
-    light: 'bg-slate-50/75 backdrop-blur-[12px]',
-    medium: 'bg-slate-50/85 backdrop-blur-[16px]',
-    heavy: 'bg-slate-50/95 backdrop-blur-[20px]'
+    // Monochrome emerald liquid glass - proper hierarchy
+    light: cn(
+      'bg-emerald-500/15',
+      'backdrop-blur-[16px]',
+      'backdrop-saturate-[180%]'
+    ),
+    medium: cn(
+      'bg-emerald-500/18',
+      'backdrop-blur-[32px]',
+      'backdrop-saturate-[200%]'
+    ),
+    heavy: cn(
+      'bg-emerald-500/22',
+      'backdrop-blur-[48px]',
+      'backdrop-saturate-[200%]'
+    )
   }
 
   return (
     <div
       className={cn(
-        // Base glass effect with warm tint
+        // Gray liquid glass base
         intensityStyles[intensity],
 
-        // Border & shadow - increased visibility
-        bordered && "border border-white/30",
-        "shadow-[0_12px_32px_-4px_rgba(0,0,0,0.16),0_6px_20px_-4px_rgba(0,0,0,0.12)]",
+        // Multi-layer borders and inner glow
+        bordered && "border border-[hsla(200,16%,80%,0.18)]",
 
-        // Structure
-        "rounded-2xl",
+        // Elevated shadow with water depth
+        "shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
 
-        // Support for backdrop
+        // Refined structure with visible border radius
+        "rounded-[20px]",
+
+        // Support for backdrop and fluid transitions
         "relative overflow-hidden",
+        "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
 
-        // Before pseudo-element for subtle gradient
+        // Before pseudo: refined gradient border overlay
         "before:absolute before:inset-0",
-        "before:rounded-2xl before:p-[1px]",
-        "before:bg-gradient-to-br before:from-white/20 before:to-transparent",
+        "before:rounded-[20px] before:p-[0.5px]",
+        "before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent",
         "before:-z-10",
+        "before:transition-opacity before:duration-[250ms]",
+
+        // Hover: delicate liquid rise
+        "hover:bg-[hsla(200,12%,50%,0.28)]",
+        "hover:shadow-[0_16px_32px_-8px_rgba(31,45,61,0.12),0_24px_48px_-12px_rgba(31,45,61,0.18),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+        "hover:-translate-y-[1px]",
+        "hover:scale-[1.002]",
 
         className
       )}

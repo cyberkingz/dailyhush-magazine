@@ -60,23 +60,95 @@ const Button: React.FC<ButtonProps> = ({
   'aria-label': ariaLabel,
   ...rest
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
-  
+  const baseClasses = cn(
+    'inline-flex items-center justify-center font-medium',
+    'transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0',
+    'disabled:opacity-50 disabled:cursor-not-allowed',
+    // Subtle liquid ripple on interaction
+    'active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.08)]'
+  );
+
   const variantClasses = {
-    primary: 'bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-emerald-400',
-    secondary: 'bg-emerald-100 text-emerald-900 hover:bg-emerald-200 focus:ring-emerald-500',
-    ghost: 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-500',
-    outline: 'border-2 border-emerald-300 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-400 focus:ring-emerald-500 focus:border-emerald-500'
+    primary: cn(
+      // Muted emerald glass - PRIMARY CTA ONLY
+      'bg-emerald-500/85 text-white',
+      'backdrop-blur-[16px] backdrop-saturate-[140%]',
+      'border border-emerald-500/20',
+      'shadow-[0_2px_4px_rgba(16,185,129,0.25),0_1px_0_0_rgba(255,255,255,0.15)_inset]',
+      'rounded-[12px]',
+      // Refined hover - delicate lift with muted emerald glow
+      'hover:bg-emerald-500/95',
+      'hover:shadow-[0_4px_8px_rgba(16,185,129,0.3),0_1px_0_0_rgba(255,255,255,0.18)_inset]',
+      'hover:border-emerald-500/30',
+      'hover:-translate-y-[1px] hover:scale-[1.005]',
+      // Active - gentle press
+      'active:translate-y-0 active:scale-[0.995]',
+      // Focus - muted emerald ring
+      'focus-visible:ring-emerald-500/40'
+    ),
+    secondary: cn(
+      // Gray liquid glass - subtle presence
+      'bg-[hsla(200,14%,78%,0.18)] text-white',
+      'backdrop-blur-[16px] backdrop-saturate-[180%]',
+      'border border-[hsla(200,18%,85%,0.14)]',
+      'shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_0_0_rgba(255,255,255,0.15)_inset]',
+      'rounded-[12px]',
+      // Hover - liquid rise
+      'hover:bg-[hsla(200,12%,70%,0.22)]',
+      'hover:shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.15)_inset]',
+      'hover:border-[hsla(200,16%,80%,0.18)]',
+      'hover:-translate-y-[1px] hover:scale-[1.005]',
+      // Active
+      'active:translate-y-0 active:scale-[0.995]',
+      // Focus
+      'focus-visible:ring-white/25'
+    ),
+    ghost: cn(
+      // Whisper glass - ultra-subtle
+      'bg-[hsla(200,18%,92%,0.10)] text-white/90',
+      'backdrop-blur-[8px] backdrop-saturate-[150%]',
+      'border border-[hsla(200,20%,98%,0.06)]',
+      'shadow-[0_1px_0_0_rgba(255,255,255,0.15)_inset]',
+      'rounded-[12px]',
+      // Hover - barely visible rise
+      'hover:bg-[hsla(200,16%,85%,0.14)]',
+      'hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04)]',
+      'hover:border-[hsla(200,18%,85%,0.14)]',
+      'hover:-translate-y-[0.5px] hover:scale-[1.003]',
+      // Active
+      'active:translate-y-0 active:scale-[0.998]',
+      // Focus
+      'focus-visible:ring-white/20'
+    ),
+    outline: cn(
+      // Outlined liquid glass
+      'bg-[hsla(200,20%,98%,0.06)] text-white',
+      'backdrop-blur-[8px] backdrop-saturate-[150%]',
+      'border-[1.5px] border-[hsla(200,16%,80%,0.18)]',
+      'shadow-[0_1px_0_0_rgba(255,255,255,0.15)_inset]',
+      'rounded-[12px]',
+      // Hover - fill with liquid
+      'hover:bg-[hsla(200,16%,85%,0.14)]',
+      'hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04)]',
+      'hover:border-[hsla(200,16%,80%,0.25)]',
+      'hover:-translate-y-[1px] hover:scale-[1.005]',
+      // Active
+      'active:translate-y-0 active:scale-[0.995]',
+      // Focus
+      'focus-visible:ring-white/25'
+    )
   };
-  
+
   const sizeClasses = {
-    sm: 'px-4 py-2 text-sm gap-1',
-    md: 'px-6 py-3 text-base gap-2',
-    lg: 'px-8 py-4 text-lg gap-2'
+    // Refined, less chunky proportions
+    sm: 'px-3 py-1.5 text-sm gap-1.5 h-[32px]',
+    md: 'px-4 py-2 text-sm gap-2 h-[36px]',
+    lg: 'px-5 py-2.5 text-base gap-2.5 h-[40px]'
   };
-  
+
   const fullWidthClass = fullWidth ? 'w-full' : '';
-  
+
   const combinedClassName = cn(
     baseClasses,
     variantClasses[variant],
@@ -130,7 +202,7 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   const { type = 'button', onClick, ...buttonProps } = rest as ButtonAsButton;
-  
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled && !loading && onClick) {
       onClick(event);

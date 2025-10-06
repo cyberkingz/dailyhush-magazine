@@ -12,9 +12,7 @@ import { FunnelActionItems } from '../../components/admin/analytics/FunnelAction
 import {
   getQuizFunnelMetrics,
   getQuestionLevelMetrics,
-  getCompletionTimeMetrics,
   getDailyTimeSeriesMetrics,
-  type QuestionMetrics as QuizQuestionMetrics,
 } from '../../lib/services/quiz'
 import {
   KPICardSkeleton,
@@ -281,7 +279,7 @@ export default function QuizAnalytics() {
       const realQuestionMetrics = await getQuestionLevelMetrics(analyticsDateRange)
 
       // Map real metrics to UI format and merge with quiz question data
-      const questionAnalytics = quizQuestions.map((q, index) => {
+      const questionAnalytics = quizQuestions.map((q) => {
         const realMetric = realQuestionMetrics.find(m => m.questionId === q.id)
         return {
           id: q.id,

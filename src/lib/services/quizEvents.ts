@@ -1,5 +1,4 @@
 import { supabase } from '../supabase'
-import { getCurrentTrackingContext } from './leads'
 import type { LeadTrackingContext } from '../types/leads'
 
 // Session storage key

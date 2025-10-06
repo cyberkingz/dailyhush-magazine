@@ -14,20 +14,20 @@ function GlassCard({
   ...props
 }: GlassCardProps) {
   const intensityStyles = {
-    light: 'bg-white/40 backdrop-blur-[8px]',
-    medium: 'bg-white/60 backdrop-blur-[12px]',
-    heavy: 'bg-white/80 backdrop-blur-[16px]'
+    light: 'bg-slate-50/75 backdrop-blur-[12px]',
+    medium: 'bg-slate-50/85 backdrop-blur-[16px]',
+    heavy: 'bg-slate-50/95 backdrop-blur-[20px]'
   }
 
   return (
     <div
       className={cn(
-        // Base glass effect
+        // Base glass effect with warm tint
         intensityStyles[intensity],
 
-        // Border & shadow
-        bordered && "border border-white/20",
-        "shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]",
+        // Border & shadow - increased visibility
+        bordered && "border border-white/30",
+        "shadow-[0_12px_32px_-4px_rgba(0,0,0,0.16),0_6px_20px_-4px_rgba(0,0,0,0.12)]",
 
         // Structure
         "rounded-2xl",

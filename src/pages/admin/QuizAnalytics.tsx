@@ -451,7 +451,7 @@ export default function QuizAnalytics() {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <GlassCard className="p-6">
+          <GlassCard intensity="heavy" className="p-6">
             <CardHeader className="p-0 pb-4">
               <CardDescription className="text-slate-600">Total Quiz Views</CardDescription>
               <CardTitle className="text-3xl text-slate-900">{metrics.totalViews.toLocaleString()}</CardTitle>
@@ -493,7 +493,7 @@ export default function QuizAnalytics() {
             </CardContent>
           </GlassCard>
 
-          <GlassCard className="p-6">
+          <GlassCard intensity="heavy" className="p-6">
             <CardHeader className="p-0 pb-4">
               <CardDescription className="text-slate-600">Completion Rate</CardDescription>
               <CardTitle className="text-3xl flex items-center gap-2 text-slate-900">
@@ -537,7 +537,7 @@ export default function QuizAnalytics() {
             </CardContent>
           </GlassCard>
 
-          <GlassCard className="p-6">
+          <GlassCard intensity="heavy" className="p-6">
             <CardHeader className="p-0 pb-4">
               <CardDescription className="text-slate-600">Email Capture</CardDescription>
               <CardTitle className="text-3xl text-slate-900">{metrics.emailCaptureRate.toFixed(1)}%</CardTitle>
@@ -582,7 +582,7 @@ export default function QuizAnalytics() {
             </CardContent>
           </GlassCard>
 
-          <GlassCard className="p-6">
+          <GlassCard intensity="heavy" className="p-6">
             <CardHeader className="p-0 pb-4">
               <CardDescription className="text-slate-600">Total Emails</CardDescription>
               <CardTitle className="text-3xl text-slate-900">{metrics.totalEmails.toLocaleString()}</CardTitle>
@@ -630,23 +630,23 @@ export default function QuizAnalytics() {
           {/* Left Column - Funnel & Trends */}
           <div className="lg:col-span-2 space-y-6">
             {/* Conversion Funnel */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Conversion Funnel</CardTitle>
-                <CardDescription>Step-by-step conversion breakdown</CardDescription>
-              </CardHeader>
-              <CardContent>
+            <GlassCard intensity="heavy">
+              <div className="px-6 pt-6 pb-4">
+                <h3 className="text-lg font-semibold text-slate-900">Conversion Funnel</h3>
+                <p className="text-sm text-slate-600 mt-1">Step-by-step conversion breakdown</p>
+              </div>
+              <div className="px-6 pb-6">
                 <QuizFunnelChart steps={funnelSteps} />
-              </CardContent>
-            </Card>
+              </div>
+            </GlassCard>
 
             {/* Trends Over Time */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">Trends Over Time</CardTitle>
-                <CardDescription className="text-sm">Last 30 days performance</CardDescription>
-              </CardHeader>
-              <CardContent>
+            <GlassCard intensity="heavy">
+              <div className="px-6 pt-6 pb-3">
+                <h3 className="text-base font-semibold text-slate-900">Trends Over Time</h3>
+                <p className="text-sm text-slate-600 mt-1">Last 30 days performance</p>
+              </div>
+              <div className="px-6 pb-6">
                 <ChartContainer config={chartConfig} className="h-[200px] w-full">
                   <AreaChart data={timeSeriesData} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
                     <XAxis
@@ -688,34 +688,34 @@ export default function QuizAnalytics() {
                     />
                   </AreaChart>
                 </ChartContainer>
-              </CardContent>
-            </Card>
+              </div>
+            </GlassCard>
           </div>
 
           {/* Quick Stats Sidebar */}
           <div className="space-y-6">
             {/* Action Items */}
-            <Card>
-              <CardContent className="pt-6 pb-6">
+            <GlassCard intensity="heavy">
+              <div className="p-6">
                 <FunnelActionItems steps={funnelSteps} />
-              </CardContent>
-            </Card>
+              </div>
+            </GlassCard>
             {/* Device Performance */}
             {deviceData.length > 0 && (
-              <Card>
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-sm font-semibold">Device Performance</CardTitle>
-                  <CardDescription className="text-xs">Conversion by device type</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2 py-0 pb-6">
+              <GlassCard intensity="heavy">
+                <div className="px-6 pt-6 pb-4">
+                  <h4 className="text-sm font-semibold text-slate-900">Device Performance</h4>
+                  <p className="text-xs text-slate-600 mt-1">Conversion by device type</p>
+                </div>
+                <div className="px-6 pb-6 space-y-2">
                   {deviceData.map((device) => (
-                    <div key={device.name} className="flex items-center justify-between py-2.5 border-b border-gray-100 last:border-0">
+                    <div key={device.name} className="flex items-center justify-between py-2.5 border-b border-slate-200/60 last:border-0">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-500" />
-                        <span className="text-sm font-medium capitalize">{device.name}</span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span className="text-sm font-medium capitalize text-slate-900">{device.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">{device.views} views</span>
+                        <span className="text-xs text-slate-600">{device.views} views</span>
                         <Badge
                           variant={device.conversionRate >= 70 ? 'success' : device.conversionRate >= 50 ? 'warning' : 'destructive'}
                           className="min-w-[48px] justify-center text-xs"
@@ -725,26 +725,26 @@ export default function QuizAnalytics() {
                       </div>
                     </div>
                   ))}
-                </CardContent>
-              </Card>
+                </div>
+              </GlassCard>
             )}
 
             {/* Source Performance */}
             {sourceData.length > 0 && (
-              <Card>
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-sm font-semibold">Top Sources</CardTitle>
-                  <CardDescription className="text-xs">Conversion by traffic source</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2 py-0 pb-6">
+              <GlassCard intensity="heavy">
+                <div className="px-6 pt-6 pb-4">
+                  <h4 className="text-sm font-semibold text-slate-900">Top Sources</h4>
+                  <p className="text-xs text-slate-600 mt-1">Conversion by traffic source</p>
+                </div>
+                <div className="px-6 pb-6 space-y-2">
                   {sourceData.slice(0, 5).map((source) => (
-                    <div key={source.name} className="flex items-center justify-between py-2.5 border-b border-gray-100 last:border-0">
+                    <div key={source.name} className="flex items-center justify-between py-2.5 border-b border-slate-200/60 last:border-0">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500" />
-                        <span className="text-sm font-medium capitalize">{source.name}</span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span className="text-sm font-medium capitalize text-slate-900">{source.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">{source.views} views</span>
+                        <span className="text-xs text-slate-600">{source.views} views</span>
                         <Badge
                           variant={source.conversionRate >= 70 ? 'success' : source.conversionRate >= 50 ? 'warning' : 'destructive'}
                           className="min-w-[48px] justify-center text-xs"
@@ -754,55 +754,55 @@ export default function QuizAnalytics() {
                       </div>
                     </div>
                   ))}
-                </CardContent>
-              </Card>
+                </div>
+              </GlassCard>
             )}
           </div>
         </div>
 
         {/* Question-Level Analysis */}
-        <Card>
-          <CardHeader>
+        <GlassCard intensity="heavy">
+          <div className="px-6 pt-6 pb-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <CardTitle>Question-Level Analysis</CardTitle>
-                <CardDescription>Drop-off rates and engagement per question</CardDescription>
+                <h3 className="text-lg font-semibold text-slate-900">Question-Level Analysis</h3>
+                <p className="text-sm text-slate-600 mt-1">Drop-off rates and engagement per question</p>
               </div>
               <div className="relative w-full sm:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <Input
                   placeholder="Search questions..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-white/50 border-slate-200/50 focus:bg-white/80"
                 />
               </div>
             </div>
-          </CardHeader>
-          <CardContent>
+          </div>
+          <div className="px-6 pb-6">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Question</TableHead>
-                  <TableHead>Section</TableHead>
-                  <TableHead>Views</TableHead>
-                  <TableHead>Completions</TableHead>
-                  <TableHead>Drop-off Rate</TableHead>
-                  <TableHead>Avg Time (s)</TableHead>
+                <TableRow className="border-b border-slate-200/60 hover:bg-transparent">
+                  <TableHead className="text-slate-700">Question</TableHead>
+                  <TableHead className="text-slate-700">Section</TableHead>
+                  <TableHead className="text-slate-700">Views</TableHead>
+                  <TableHead className="text-slate-700">Completions</TableHead>
+                  <TableHead className="text-slate-700">Drop-off Rate</TableHead>
+                  <TableHead className="text-slate-700">Avg Time (s)</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredQuestions.length > 0 ? (
                   filteredQuestions.map((question) => (
-                    <TableRow key={question.id}>
-                    <TableCell className="font-medium max-w-md truncate">
+                    <TableRow key={question.id} className="border-b border-slate-200/40 hover:bg-white/30">
+                    <TableCell className="font-medium text-slate-900 max-w-md truncate">
                       {question.question}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">{question.section}</Badge>
                     </TableCell>
-                    <TableCell>{question.views}</TableCell>
-                    <TableCell>{question.completions}</TableCell>
+                    <TableCell className="text-slate-700">{question.views}</TableCell>
+                    <TableCell className="text-slate-700">{question.completions}</TableCell>
                     <TableCell>
                       <Badge
                         variant={question.dropoffRate < 10 ? 'success' : question.dropoffRate < 20 ? 'warning' : 'destructive'}
@@ -810,20 +810,20 @@ export default function QuizAnalytics() {
                         {question.dropoffRate.toFixed(1)}%
                       </Badge>
                     </TableCell>
-                    <TableCell>{question.avgTimeSpent}s</TableCell>
+                    <TableCell className="text-slate-700">{question.avgTimeSpent}s</TableCell>
                   </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center text-gray-500 py-8">
+                    <TableCell colSpan={6} className="text-center text-slate-500 py-8">
                       No questions found matching "{searchQuery}"
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       </div>
     </AdminLayout>
   )

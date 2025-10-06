@@ -83,7 +83,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-gradient-to-br from-slate-50 to-slate-100 h-screen overflow-hidden">
+    <div className="flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 h-screen overflow-hidden">
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10 bg-white/70 backdrop-blur-[16px] border-r border-white/20">
           <div className="flex flex-col flex-1 overflow-x-hidden">
@@ -127,25 +127,25 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-white/60 backdrop-blur-[12px] border-b border-white/20 px-6 py-4 flex-shrink-0 shadow-sm">
+        <header className="bg-white/80 backdrop-blur-[12px] border-b border-white/30 px-6 py-4 flex-shrink-0 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-slate-900">
                 {getPageTitle(currentPage)}
               </h1>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-slate-600 mt-1">
                 {getPageDescription(currentPage)}
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-slate-500">
                 Last login: {new Date().toLocaleDateString()}
               </div>
             </div>
           </div>
         </header>
 
-        {/* Content */}
+        {/* Content - Dark emerald for glass effect */}
         <main className="flex-1 overflow-y-auto p-6">
           <div className="max-w-7xl mx-auto">
             {children}

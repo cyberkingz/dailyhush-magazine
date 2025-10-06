@@ -15,22 +15,22 @@ interface QuizFunnelChartProps {
 
 const colorStyles = {
   success: {
-    bg: 'bg-green-50',
-    border: 'border-green-200',
-    text: 'text-green-700',
-    bar: 'bg-green-500',
+    bg: 'bg-emerald-100/80',
+    border: 'border-emerald-300',
+    text: 'text-emerald-800',
+    bar: 'bg-emerald-600',
   },
   warning: {
-    bg: 'bg-amber-50',
-    border: 'border-amber-200',
-    text: 'text-amber-700',
-    bar: 'bg-amber-500',
+    bg: 'bg-amber-100/80',
+    border: 'border-amber-300',
+    text: 'text-amber-800',
+    bar: 'bg-amber-600',
   },
   error: {
-    bg: 'bg-red-50',
-    border: 'border-red-200',
-    text: 'text-red-700',
-    bar: 'bg-red-500',
+    bg: 'bg-red-100/80',
+    border: 'border-red-300',
+    text: 'text-red-800',
+    bar: 'bg-red-600',
   },
 }
 

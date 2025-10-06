@@ -183,13 +183,15 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
             <div
               key={index}
               className={cn(
-                // Apple HIG: Cards with subtle elevation
-                "bg-white rounded-[12px] p-4",
-                // Apple shadow: barely visible, natural light direction
-                "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.08)]",
+                // Nested glass card: subtle white tint on glass parent
+                "bg-white/40 rounded-xl p-4",
+                "border border-slate-200/50",
+                // Lighter shadow for nested card
+                "shadow-sm",
                 // Apple interaction: subtle hover state
                 "transition-all duration-200 ease-out",
-                "hover:shadow-[0_4px_12px_rgba(0,0,0,0.10),0_2px_4px_rgba(0,0,0,0.08)]",
+                "hover:bg-white/60",
+                "hover:shadow-md",
                 "hover:-translate-y-[0.5px]"
               )}
             >

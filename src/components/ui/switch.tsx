@@ -17,12 +17,12 @@ function Switch({
         // Unchecked - gray liquid glass
         "data-[state=unchecked]:bg-[hsla(200,14%,78%,0.28)] data-[state=unchecked]:backdrop-blur-[12px] data-[state=unchecked]:backdrop-saturate-[140%]",
         "data-[state=unchecked]:border data-[state=unchecked]:border-[hsla(200,16%,80%,0.18)]",
-        // Checked - muted emerald liquid glass
-        "data-[state=checked]:bg-emerald-500/50 data-[state=checked]:backdrop-blur-[16px] data-[state=checked]:backdrop-saturate-[140%]",
-        "data-[state=checked]:border data-[state=checked]:border-emerald-500/30",
-        "data-[state=checked]:shadow-[0_2px_4px_rgba(16,185,129,0.18)]",
+        // Checked - amber liquid glass
+        "data-[state=checked]:bg-amber-500/50 data-[state=checked]:backdrop-blur-[16px] data-[state=checked]:backdrop-saturate-[140%]",
+        "data-[state=checked]:border data-[state=checked]:border-amber-500/30",
+        "data-[state=checked]:shadow-[0_2px_4px_rgba(245,158,11,0.18)]",
         // Focus ring
-        "focus-visible:ring-[3px] focus-visible:ring-emerald-500/30",
+        "focus-visible:ring-[3px] focus-visible:ring-amber-500/30",
         className
       )}
       {...props}

@@ -374,7 +374,7 @@ export default function QuizAnalytics() {
     },
     emails: {
       label: "Emails",
-      color: "hsl(160, 60%, 50%)", // lightest muted emerald
+      color: "hsl(38, 92%, 50%)", // amber accent for email metrics
     },
   }
 
@@ -442,7 +442,7 @@ export default function QuizAnalytics() {
               variant="outline"
               size="md"
               onClick={handleExport}
-              className="whitespace-nowrap flex-shrink-0"
+              className="whitespace-nowrap flex-shrink-0 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-300"
             >
               <Download className="h-4 w-4" />
               Export CSV
@@ -538,7 +538,7 @@ export default function QuizAnalytics() {
             </CardContent>
           </GlassCard>
 
-          <GlassCard intensity="heavy" className="p-5">
+          <GlassCard intensity="heavy" className="p-5 ring-1 ring-amber-500/20 shadow-[0_0_20px_rgba(245,158,11,0.08)]">
             <CardHeader className="p-0 pb-3">
               <CardDescription className="text-white/70 text-sm">Email Capture</CardDescription>
               <CardTitle className="text-3xl text-white font-bold">{metrics.emailCaptureRate.toFixed(1)}%</CardTitle>
@@ -549,7 +549,7 @@ export default function QuizAnalytics() {
                   <Line
                     type="monotone"
                     dataKey="emails"
-                    stroke="hsl(160, 70%, 45%)"
+                    stroke="hsl(38, 92%, 50%)"
                     strokeWidth={2}
                     dot={false}
                   />
@@ -562,11 +562,11 @@ export default function QuizAnalytics() {
                     return (
                       <>
                         {change.isPositive ? (
-                          <TrendingUp className="h-3 w-3 text-emerald-400" />
+                          <TrendingUp className="h-3 w-3 text-amber-400" />
                         ) : (
                           <TrendingDown className="h-3 w-3 text-red-400" />
                         )}
-                        <span className={change.isPositive ? 'text-emerald-400' : 'text-red-400'}>
+                        <span className={change.isPositive ? 'text-amber-400' : 'text-red-400'}>
                           {change.isPositive ? '+' : '-'}{change.value.toFixed(1)}%
                         </span>
                         <span className="text-white/60">vs previous period</span>
@@ -577,13 +577,13 @@ export default function QuizAnalytics() {
               ) : (
                 <div className="flex items-center justify-between text-xs mt-1">
                   <span className="text-white/60">Last 7 days</span>
-                  <span className="font-medium text-white">{metrics.totalEmails} emails</span>
+                  <span className="font-medium text-amber-400">{metrics.totalEmails} emails</span>
                 </div>
               )}
             </CardContent>
           </GlassCard>
 
-          <GlassCard intensity="heavy" className="p-5">
+          <GlassCard intensity="heavy" className="p-5 ring-1 ring-amber-500/20 shadow-[0_0_20px_rgba(245,158,11,0.08)]">
             <CardHeader className="p-0 pb-3">
               <CardDescription className="text-white/70 text-sm">Total Emails</CardDescription>
               <CardTitle className="text-3xl text-white font-bold">{metrics.totalEmails.toLocaleString()}</CardTitle>
@@ -594,7 +594,7 @@ export default function QuizAnalytics() {
                   <Line
                     type="monotone"
                     dataKey="emails"
-                    stroke="hsl(160, 60%, 50%)"
+                    stroke="hsl(38, 92%, 50%)"
                     strokeWidth={2}
                     dot={false}
                   />
@@ -642,7 +642,7 @@ export default function QuizAnalytics() {
             </GlassCard>
 
             {/* Trends Over Time */}
-            <GlassCard intensity="heavy">
+            <GlassCard intensity="heavy" className="ring-1 ring-amber-500/10 shadow-[0_0_24px_rgba(245,158,11,0.06)]">
               <div className="px-6 pt-6 pb-3">
                 <h3 className="text-base font-semibold text-white">Trends Over Time</h3>
                 <p className="text-sm text-white/70 mt-1">Last 30 days performance</p>
@@ -650,14 +650,20 @@ export default function QuizAnalytics() {
               <div className="px-6 pb-6">
                 <ChartContainer config={chartConfig} className="h-[200px] w-full">
                   <AreaChart data={timeSeriesData} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="amberGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0.05} />
+                      </linearGradient>
+                    </defs>
                     <XAxis
                       dataKey="date"
-                      tick={{ fontSize: 11 }}
+                      tick={{ fontSize: 11, fill: 'rgba(255,255,255,0.6)' }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
-                      tick={{ fontSize: 11 }}
+                      tick={{ fontSize: 11, fill: 'rgba(255,255,255,0.6)' }}
                       tickLine={false}
                       axisLine={false}
                       width={30}
@@ -682,10 +688,9 @@ export default function QuizAnalytics() {
                     <Area
                       type="monotone"
                       dataKey="emails"
-                      stroke="hsl(160, 60%, 50%)"
-                      fill="hsl(160, 60%, 50%)"
-                      fillOpacity={0.2}
-                      strokeWidth={2}
+                      stroke="hsl(38, 92%, 50%)"
+                      fill="url(#amberGradient)"
+                      strokeWidth={2.5}
                     />
                   </AreaChart>
                 </ChartContainer>
@@ -712,7 +717,12 @@ export default function QuizAnalytics() {
                   {deviceData.map((device) => (
                     <div key={device.name} className="flex items-center justify-between py-2.5 border-b border-[hsla(200,16%,80%,0.18)] last:border-0">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                        <div className={cn(
+                          "w-2 h-2 rounded-full",
+                          device.conversionRate >= 70 ? "bg-emerald-400" :
+                          device.conversionRate >= 50 ? "bg-amber-400" :
+                          "bg-red-400"
+                        )} />
                         <span className="text-sm font-medium capitalize text-white">{device.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -741,7 +751,12 @@ export default function QuizAnalytics() {
                   {sourceData.slice(0, 5).map((source) => (
                     <div key={source.name} className="flex items-center justify-between py-2.5 border-b border-[hsla(200,16%,80%,0.18)] last:border-0">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                        <div className={cn(
+                          "w-2 h-2 rounded-full",
+                          source.conversionRate >= 70 ? "bg-emerald-400" :
+                          source.conversionRate >= 50 ? "bg-amber-400" :
+                          "bg-red-400"
+                        )} />
                         <span className="text-sm font-medium capitalize text-white">{source.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -762,7 +777,7 @@ export default function QuizAnalytics() {
         </div>
 
         {/* Question-Level Analysis */}
-        <GlassCard intensity="heavy">
+        <GlassCard intensity="heavy" className="ring-1 ring-amber-500/5">
           <div className="px-6 pt-6 pb-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
@@ -803,7 +818,9 @@ export default function QuizAnalytics() {
                         className={cn(
                           "border-b border-[hsla(200,16%,80%,0.18)] last:border-0",
                           "hover:bg-[hsla(200,14%,78%,0.22)] transition-all duration-200",
-                          index % 2 === 1 && "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px] backdrop-saturate-[140%]"
+                          index % 2 === 1 && "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px] backdrop-saturate-[140%]",
+                          // Subtle amber highlight for high drop-off rates
+                          question.dropoffRate >= 20 && "border-l-2 border-l-amber-500/30"
                         )}
                       >
                         <TableCell className="font-semibold text-white max-w-md truncate py-5 px-6 drop-shadow-sm">

@@ -186,8 +186,14 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
                 // Nested liquid glass card - ultra-subtle on glass parent
                 "bg-[hsla(200,12%,70%,0.18)] backdrop-blur-[24px] backdrop-saturate-[160%]",
                 "rounded-[16px] p-4",
-                "border border-[hsla(200,16%,80%,0.18)]",
+                "border",
                 "shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
+                // Amber accent for critical/warning items
+                (isCritical || insight.type === 'warning') && "border-amber-500/25 ring-1 ring-amber-500/15 shadow-[0_0_16px_rgba(245,158,11,0.1)]",
+                // Emerald accent for tips
+                insight.type === 'tip' && "border-emerald-500/25 ring-1 ring-emerald-500/15 shadow-[0_0_16px_rgba(16,185,129,0.1)]",
+                // Default border for others
+                insight.type !== 'tip' && !isCritical && insight.type !== 'warning' && "border-[hsla(200,16%,80%,0.18)]",
                 // Refined interaction
                 "transition-all duration-300",
                 "hover:bg-[hsla(200,12%,70%,0.22)]",
@@ -200,8 +206,12 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
                 {/* Icons with refined coloring */}
                 <div className={cn(
                   "mt-[1px] shrink-0",
-                  // Emerald ONLY for critical items
-                  isCritical ? "text-emerald-400" : "text-white/50"
+                  // Amber for critical/warning items
+                  (isCritical || insight.type === 'warning') ? "text-amber-400" :
+                  // Emerald for tips
+                  insight.type === 'tip' ? "text-emerald-400" :
+                  // Default
+                  "text-white/50"
                 )}>
                   <Icon className="w-4 h-4" />
                 </div>
@@ -226,12 +236,15 @@ export function FunnelActionItems({ steps, className, showHeader = true }: Funne
                       <button
                         onClick={() => setExpandedIndex(isExpanded ? null : index)}
                         className={cn(
-                          // Refined text button with emerald accent
+                          // Refined text button with context-aware accent
                           "inline-flex items-center gap-1 group",
-                          "text-[13px] font-medium text-emerald-400",
+                          "text-[13px] font-medium",
                           "transition-all duration-[var(--transition-normal)]",
-                          "hover:text-emerald-300",
-                          "focus:outline-none focus-visible:text-emerald-300"
+                          "focus:outline-none",
+                          // Amber for critical/warning
+                          (isCritical || insight.type === 'warning') && "text-amber-400 hover:text-amber-300 focus-visible:text-amber-300",
+                          // Emerald for tips
+                          insight.type === 'tip' && "text-emerald-400 hover:text-emerald-300 focus-visible:text-emerald-300"
                         )}
                       >
                         <span>Suggestion</span>

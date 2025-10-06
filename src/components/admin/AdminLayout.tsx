@@ -83,7 +83,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 h-screen overflow-hidden">
+    <div className="flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 min-h-screen md:h-screen md:overflow-hidden">
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className={cn(
           "justify-between gap-10",
@@ -93,7 +93,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
           "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.15),0_24px_48px_-12px_rgba(16,185,129,0.20),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
           "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
         )}>
-          <div className="flex flex-col flex-1 overflow-x-hidden">
+          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-1">
             {navigationLinks.map((link, idx) => (
@@ -117,7 +117,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
             ))}
             </div>
           </div>
-          <div>
+          <div className="flex-shrink-0">
             <button
               onClick={handleLogout}
               className={cn(
@@ -149,7 +149,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       </Sidebar>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col md:overflow-hidden">
         {/* Header - Ultra-refined liquid glass topbar */}
         <header className={cn(
           // Lighter emerald topbar - creates hierarchy through opacity
@@ -185,7 +185,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
         </header>
 
         {/* Content - Dark emerald for glass contrast */}
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 p-4 md:p-6 md:overflow-y-auto">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

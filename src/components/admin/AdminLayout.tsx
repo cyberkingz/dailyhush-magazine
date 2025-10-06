@@ -6,7 +6,8 @@ import {
   Settings,
   LogOut,
   MessageSquare,
-  ClipboardList
+  ClipboardList,
+  BarChart3
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -51,6 +52,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       icon: <ClipboardList className="h-5 w-5" />
     },
     {
+      label: "Quiz Analytics",
+      href: "/admin/quiz-analytics",
+      icon: <BarChart3 className="h-5 w-5" />
+    },
+    {
       label: "Cartography",
       href: "/admin/cartography",
       icon: <FileText className="h-5 w-5" />
@@ -77,15 +83,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-gray-50 min-h-screen">
+    <div className="flex flex-col md:flex-row bg-gray-50 h-screen overflow-hidden">
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="flex flex-col flex-1 overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
             {navigationLinks.map((link, idx) => (
-              <SidebarLink 
-                key={idx} 
+              <SidebarLink
+                key={idx}
                 link={link}
                 className={cn(
                   "hover:bg-yellow-50 rounded-lg px-3 py-2 transition-colors",
@@ -116,11 +122,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
           </div>
         </SidebarBody>
       </Sidebar>
-      
+
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4">
+        <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -181,6 +187,7 @@ const getPageTitle = (currentPage?: string): string => {
     '/admin/contact-submissions': 'Contact Submissions',
     '/admin/leads': 'Leads Management',
     '/admin/quiz-results': 'Quiz Results',
+    '/admin/quiz-analytics': 'Quiz Analytics',
     '/admin/cartography': 'Cartography',
     '/admin/posts': 'Posts Management',
     '/admin/settings': 'Settings',
@@ -197,6 +204,7 @@ const getPageDescription = (currentPage?: string): string => {
     '/admin/contact-submissions': 'View and manage contact form submissions',
     '/admin/leads': 'Manage newsletter subscribers and leads',
     '/admin/quiz-results': 'View and analyze quiz submissions and overthinker types',
+    '/admin/quiz-analytics': 'Track quiz performance, conversion funnel, and drop-off rates',
     '/admin/cartography': 'Market research, funnels and competitor mapping',
     '/admin/posts': 'Create and manage blog posts',
     '/admin/settings': 'Configure website settings',

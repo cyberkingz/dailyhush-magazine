@@ -8,16 +8,64 @@ export default {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
+      // Shadcn UI Theme Variables
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
             color: theme('colors.gray.700'),
-            a: { color: theme('colors.yellow.600'), textDecoration: 'none', '&:hover': { textDecoration: 'underline' } },
+            a: { color: theme('colors.emerald.600'), textDecoration: 'none', '&:hover': { textDecoration: 'underline' } },
             h1: { color: theme('colors.gray.900'), fontWeight: '700' },
             h2: { color: theme('colors.gray.900'), fontWeight: '700' },
             h3: { color: theme('colors.gray.900'), fontWeight: '700' },
-            blockquote: { borderLeftColor: theme('colors.yellow.400') },
+            blockquote: { borderLeftColor: theme('colors.emerald.400') },
             code: { backgroundColor: theme('colors.gray.100'), padding: '0.2rem 0.4rem', borderRadius: '0.375rem' },
             'ul > li::marker': { color: theme('colors.gray.400') },
             'ol > li::marker': { color: theme('colors.gray.400') },
@@ -27,7 +75,37 @@ export default {
       }),
       // Design System Foundation
       colors: {
-        // Brand Colors
+        // Brand Colors - Emerald Primary
+        emerald: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+        },
+        // Sage Supporting Colors
+        sage: {
+          100: '#e8f0ed',
+          200: '#d1e1da',
+          300: '#b9d2c7',
+          400: '#a2c3b4',
+          500: '#8bb4a1',
+          600: '#6d9280',
+          700: '#527060',
+          800: '#364d40',
+          900: '#1b2620',
+        },
+        // Glass Colors
+        glass: {
+          light: 'rgba(255, 255, 255, 0.4)',
+          medium: 'rgba(255, 255, 255, 0.6)',
+          heavy: 'rgba(255, 255, 255, 0.8)',
+        },
         brand: {
           50: '#f0f9ff',
           100: '#e0f2fe',
@@ -145,6 +223,18 @@ export default {
         'auth': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
         'input': '0 0 0 1px rgba(59, 130, 246, 0.5)',
         'input-error': '0 0 0 1px rgba(239, 68, 68, 0.5)',
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+        'glass-lg': '0 12px 40px 0 rgba(31, 38, 135, 0.20)',
+      },
+      // Backdrop Blur for Glass Effects
+      backdropBlur: {
+        'xs': '2px',
+        'glass': '12px',
+        'glass-heavy': '16px',
+      },
+      // Background Images
+      backgroundImage: {
+        'glass-gradient': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)',
       },
       // Animation
       animation: {

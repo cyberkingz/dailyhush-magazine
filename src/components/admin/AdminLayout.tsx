@@ -83,9 +83,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-gray-50 h-screen overflow-hidden">
+    <div className="flex flex-col md:flex-row bg-gradient-to-br from-slate-50 to-slate-100 h-screen overflow-hidden">
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
+        <SidebarBody className="justify-between gap-10 bg-white/70 backdrop-blur-[16px] border-r border-white/20">
           <div className="flex flex-col flex-1 overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
@@ -94,8 +94,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
                 key={idx}
                 link={link}
                 className={cn(
-                  "hover:bg-yellow-50 rounded-lg px-3 py-2 transition-colors",
-                  currentPage === link.href && "bg-yellow-100 text-yellow-800"
+                  "hover:bg-emerald-50/80 rounded-lg px-3 py-2 transition-all duration-200",
+                  "hover:shadow-sm hover:scale-[1.02]",
+                  currentPage === link.href && "bg-emerald-100/80 text-emerald-900 shadow-sm"
                 )}
               />
             ))}
@@ -126,7 +127,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
+        <header className="bg-white/60 backdrop-blur-[12px] border-b border-white/20 px-6 py-4 flex-shrink-0 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">

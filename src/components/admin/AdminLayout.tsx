@@ -110,8 +110,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
                   "hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_3px_-1px_rgba(31,45,61,0.06),0_0.5px_0_0_rgba(255,255,255,0.15)_inset]",
                   "hover:text-white",
                   "hover:-translate-y-[0.5px]",
-                  // Active - muted emerald accent ONLY for active state
-                  currentPage === link.href && "bg-emerald-500/50 backdrop-blur-[16px] backdrop-saturate-[140%] text-white font-medium shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_4px_8px_-2px_rgba(31,45,61,0.08),0_2px_8px_rgba(16,185,129,0.12),0_0.5px_0_0_rgba(255,255,255,0.15)_inset] border border-[hsla(160,84%,50%,0.15)]"
+                  // Active - amber accent ONLY for active state
+                  currentPage === link.href && "bg-amber-500/50 backdrop-blur-[16px] backdrop-saturate-[140%] text-white font-medium shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_4px_8px_-2px_rgba(31,45,61,0.08),0_2px_8px_rgba(245,158,11,0.12),0_0.5px_0_0_rgba(255,255,255,0.15)_inset] border border-amber-500/15"
                 )}
               />
             ))}

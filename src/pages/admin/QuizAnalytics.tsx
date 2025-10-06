@@ -442,7 +442,7 @@ export default function QuizAnalytics() {
               variant="outline"
               size="md"
               onClick={handleExport}
-              className="whitespace-nowrap flex-shrink-0 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-300"
+              className="whitespace-nowrap flex-shrink-0 border-white/20 text-white/80 hover:bg-white/10 hover:border-white/30 hover:text-white"
             >
               <Download className="h-4 w-4" />
               Export CSV

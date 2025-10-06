@@ -174,13 +174,13 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
     <div className="space-y-6">
       {/* Contact Submissions Alert */}
       {stats.overdueSubmissions > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <AlertTriangle className="h-5 w-5 text-red-600" />
+        <div className="bg-red-500/10 backdrop-blur-[16px] backdrop-saturate-[140%] border border-red-500/20 rounded-[12px] shadow-[0_4px_8px_rgba(239,68,68,0.1)] p-4 flex items-center gap-3">
+          <AlertTriangle className="h-5 w-5 text-red-400" />
           <div>
-            <div className="font-medium text-red-800">
+            <div className="font-medium text-red-300">
               {stats.overdueSubmissions} contact submission{stats.overdueSubmissions > 1 ? 's' : ''} overdue
             </div>
-            <div className="text-sm text-red-600">
+            <div className="text-sm text-red-200/80">
               These submissions have been waiting for more than 24 hours and need immediate attention.
             </div>
           </div>
@@ -189,40 +189,40 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
 
       {/* Contact Submissions Summary */}
       {contactSubmissions.length > 0 && (
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
+        <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] p-6 border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset]">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Contact Submissions</h3>
-            <MessageSquare className="h-5 w-5 text-gray-400" />
+            <h3 className="text-lg font-semibold text-white">Contact Submissions</h3>
+            <MessageSquare className="h-5 w-5 text-white/50" />
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full mb-2">
-                <MessageSquare className="h-5 w-5 text-yellow-600" />
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-amber-500/20 backdrop-blur-[8px] rounded-full mb-2">
+                <MessageSquare className="h-5 w-5 text-amber-400" />
               </div>
-              <div className="text-xl font-bold text-gray-900">{stats.newSubmissions}</div>
-              <div className="text-sm text-gray-500">New</div>
+              <div className="text-xl font-bold text-white">{stats.newSubmissions}</div>
+              <div className="text-sm text-white/60">New</div>
             </div>
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mb-2">
-                <Clock className="h-5 w-5 text-blue-600" />
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-emerald-500/20 backdrop-blur-[8px] rounded-full mb-2">
+                <Clock className="h-5 w-5 text-emerald-400" />
               </div>
-              <div className="text-xl font-bold text-gray-900">{stats.inProgressSubmissions}</div>
-              <div className="text-sm text-gray-500">In Progress</div>
+              <div className="text-xl font-bold text-white">{stats.inProgressSubmissions}</div>
+              <div className="text-sm text-white/60">In Progress</div>
             </div>
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-10 h-10 bg-green-100 rounded-full mb-2">
-                <CheckCircle className="h-5 w-5 text-green-600" />
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-emerald-500/20 backdrop-blur-[8px] rounded-full mb-2">
+                <CheckCircle className="h-5 w-5 text-emerald-400" />
               </div>
-              <div className="text-xl font-bold text-gray-900">{stats.repliedSubmissions}</div>
-              <div className="text-sm text-gray-500">Replied</div>
+              <div className="text-xl font-bold text-white">{stats.repliedSubmissions}</div>
+              <div className="text-sm text-white/60">Replied</div>
             </div>
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full mb-2">
-                <Calendar className="h-5 w-5 text-gray-600" />
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-white/10 backdrop-blur-[8px] rounded-full mb-2">
+                <Calendar className="h-5 w-5 text-white/60" />
               </div>
-              <div className="text-xl font-bold text-gray-900">{stats.todaySubmissions}</div>
-              <div className="text-sm text-gray-500">Today</div>
+              <div className="text-xl font-bold text-white">{stats.todaySubmissions}</div>
+              <div className="text-sm text-white/60">Today</div>
             </div>
           </div>
         </div>
@@ -233,41 +233,41 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
         {statCards.map((stat, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+            className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] p-6 border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset] hover:shadow-[0_12px_20px_-4px_rgba(31,45,61,0.12),0_20px_36px_-8px_rgba(31,45,61,0.16)] hover:-translate-y-0.5 transition-all duration-300"
           >
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600">
+                <p className="text-sm font-medium text-white/70">
                   {stat.title}
                 </p>
-                <p className="text-2xl font-bold text-gray-900  mt-2">
+                <p className="text-2xl font-bold text-white mt-2">
                   {loading ? (
-                    <div className="h-8 bg-gray-200  rounded animate-pulse"></div>
+                    <div className="h-8 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-[8px] animate-pulse"></div>
                   ) : (
                     stat.value
                   )}
                 </p>
                 <div className="flex items-center mt-2">
                   {stat.changeType === 'positive' && (
-                    <ArrowUp className="h-4 w-4 text-green-500 mr-1" />
+                    <ArrowUp className="h-4 w-4 text-emerald-400 mr-1" />
                   )}
                   {stat.changeType === 'negative' && (
-                    <ArrowDown className="h-4 w-4 text-red-500 mr-1" />
+                    <ArrowDown className="h-4 w-4 text-red-400 mr-1" />
                   )}
                   <span className={`text-sm font-medium ${
-                    stat.changeType === 'positive' ? 'text-green-600 ' :
-                    stat.changeType === 'negative' ? 'text-red-600' :
-                    'text-gray-500 '
+                    stat.changeType === 'positive' ? 'text-emerald-400' :
+                    stat.changeType === 'negative' ? 'text-red-400' :
+                    'text-amber-400'
                   }`}>
                     {loading ? '...' : stat.change}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500  mt-1">
+                <p className="text-xs text-white/60 mt-1">
                   {stat.description}
                 </p>
               </div>
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-yellow-100  rounded-lg flex items-center justify-center text-yellow-600 ">
+                <div className="w-12 h-12 bg-amber-500/20 backdrop-blur-[8px] rounded-[12px] flex items-center justify-center text-amber-400">
                   {stat.icon}
                 </div>
               </div>
@@ -279,20 +279,20 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
       {/* Quick Insights */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Sources */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
+        <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] p-6 border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset]">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               Top Sources
             </h3>
-            <Globe className="h-5 w-5 text-gray-400" />
+            <Globe className="h-5 w-5 text-white/50" />
           </div>
-          
+
           {loading ? (
             <div className="space-y-3">
               {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="flex justify-between items-center">
-                  <div className="h-4 bg-gray-200  rounded animate-pulse flex-1 mr-4"></div>
-                  <div className="h-4 w-12 bg-gray-200  rounded animate-pulse"></div>
+                  <div className="h-4 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-[8px] animate-pulse flex-1 mr-4"></div>
+                  <div className="h-4 w-12 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-[8px] animate-pulse"></div>
                 </div>
               ))}
             </div>
@@ -304,19 +304,19 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
                   <div key={source.source} className="flex items-center justify-between">
                     <div className="flex items-center">
                       <div className={`w-2 h-2 rounded-full mr-3 ${
-                        index === 0 ? 'bg-yellow-500' :
-                        index === 1 ? 'bg-blue-500' :
-                        'bg-green-500'
+                        index === 0 ? 'bg-amber-400' :
+                        index === 1 ? 'bg-emerald-400' :
+                        'bg-emerald-300'
                       }`}></div>
-                      <span className="text-sm font-medium text-gray-900  capitalize">
+                      <span className="text-sm font-medium text-white capitalize">
                         {source.source}
                       </span>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-semibold text-gray-900 ">
+                      <div className="text-sm font-semibold text-white">
                         {source.count}
                       </div>
-                      <div className="text-xs text-gray-500 ">
+                      <div className="text-xs text-white/60">
                         {percentage}%
                       </div>
                     </div>
@@ -326,8 +326,8 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
             </div>
           ) : (
             <div className="text-center py-4">
-              <Globe className="h-12 w-12 text-gray-300  mx-auto mb-2" />
-              <p className="text-sm text-gray-500 ">
+              <Globe className="h-12 w-12 text-white/30 mx-auto mb-2" />
+              <p className="text-sm text-white/60">
                 No source data available
               </p>
             </div>
@@ -335,22 +335,22 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
+        <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] p-6 border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset]">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               Recent Activity
             </h3>
-            <BarChart3 className="h-5 w-5 text-gray-400" />
+            <BarChart3 className="h-5 w-5 text-white/50" />
           </div>
-          
+
           {loading ? (
             <div className="space-y-4">
               {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gray-200  rounded-full animate-pulse"></div>
+                  <div className="w-8 h-8 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-full animate-pulse"></div>
                   <div className="flex-1">
-                    <div className="h-4 bg-gray-200  rounded animate-pulse mb-2"></div>
-                    <div className="h-3 bg-gray-200  rounded animate-pulse w-2/3"></div>
+                    <div className="h-4 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-[8px] animate-pulse mb-2"></div>
+                    <div className="h-3 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-[8px] animate-pulse w-2/3"></div>
                   </div>
                 </div>
               ))}
@@ -358,43 +358,43 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ leads, contactSubmissio
           ) : (
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-green-100  rounded-full flex items-center justify-center">
-                  <Users className="h-4 w-4 text-green-600 " />
+                <div className="w-8 h-8 bg-emerald-500/20 backdrop-blur-[8px] rounded-full flex items-center justify-center">
+                  <Users className="h-4 w-4 text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-900 ">
+                  <p className="text-sm font-medium text-white">
                     {stats.todayLeads} new leads today
                   </p>
-                  <p className="text-xs text-gray-500 ">
+                  <p className="text-xs text-white/60">
                     Keep up the great work!
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-100  rounded-full flex items-center justify-center">
-                  <Calendar className="h-4 w-4 text-blue-600 " />
+                <div className="w-8 h-8 bg-emerald-500/20 backdrop-blur-[8px] rounded-full flex items-center justify-center">
+                  <Calendar className="h-4 w-4 text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-900 ">
+                  <p className="text-sm font-medium text-white">
                     {stats.weekLeads} leads this week
                   </p>
-                  <p className="text-xs text-gray-500 ">
+                  <p className="text-xs text-white/60">
                     {stats.weekLeads > stats.lastMonthLeads ? 'Above' : 'Below'} last week's average
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-yellow-100  rounded-full flex items-center justify-center">
-                  <TrendingUp className="h-4 w-4 text-yellow-600 " />
+                <div className="w-8 h-8 bg-amber-500/20 backdrop-blur-[8px] rounded-full flex items-center justify-center">
+                  <TrendingUp className="h-4 w-4 text-amber-400" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-900 ">
+                  <p className="text-sm font-medium text-white">
                     {subscriptionRate}% subscription rate
                   </p>
-                  <p className="text-xs text-gray-500 ">
-                    {parseFloat(subscriptionRate) >= 80 ? 'Excellent' : 
+                  <p className="text-xs text-white/60">
+                    {parseFloat(subscriptionRate) >= 80 ? 'Excellent' :
                      parseFloat(subscriptionRate) >= 60 ? 'Good' : 'Needs improvement'}
                   </p>
                 </div>

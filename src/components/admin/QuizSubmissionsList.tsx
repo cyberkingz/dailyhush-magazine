@@ -59,10 +59,10 @@ export function QuizSubmissionsList({
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset] p-6">
         <div className="animate-pulse space-y-4">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-16 bg-gray-100 rounded"></div>
+            <div key={i} className="h-16 bg-[hsla(200,14%,78%,0.28)] backdrop-blur-[12px] rounded-[8px]"></div>
           ))}
         </div>
       </div>
@@ -72,7 +72,7 @@ export function QuizSubmissionsList({
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
+      <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset] p-4">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1">
@@ -81,7 +81,7 @@ export function QuizSubmissionsList({
               placeholder="Search by email or type..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+              className="w-full px-4 py-2 border border-white/20 bg-[hsla(200,14%,78%,0.18)] backdrop-blur-[12px] rounded-[10px] text-white placeholder:text-white/50 focus:ring-2 focus:ring-amber-500/30 focus:outline-none"
             />
           </div>
 
@@ -90,7 +90,7 @@ export function QuizSubmissionsList({
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value as OverthinkerType | 'all')}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+              className="px-4 py-2 border border-white/20 bg-[hsla(200,14%,78%,0.18)] backdrop-blur-[12px] rounded-[10px] text-white focus:ring-2 focus:ring-amber-500/30 focus:outline-none"
             >
               <option value="all">All Types</option>
               <option value="chronic-planner">Chronic Planner</option>
@@ -101,51 +101,51 @@ export function QuizSubmissionsList({
           </div>
         </div>
 
-        <div className="mt-3 text-sm text-gray-600">
+        <div className="mt-3 text-sm text-white/70">
           Showing {filteredSubmissions.length} of {submissions.length} submissions
         </div>
       </div>
 
       {/* Submissions list */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset] overflow-hidden">
         {filteredSubmissions.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">No submissions found</p>
-            <p className="text-sm text-gray-400 mt-1">Try adjusting your filters</p>
+            <p className="text-white/70">No submissions found</p>
+            <p className="text-sm text-white/50 mt-1">Try adjusting your filters</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-[hsla(200,10%,60%,0.18)] backdrop-blur-[8px] border-b border-[hsla(200,16%,80%,0.18)]">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">
                     Email
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">
                     Score
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-[hsla(200,16%,80%,0.12)]">
                 {filteredSubmissions.map((submission) => (
                   <tr
                     key={submission.id}
-                    className="hover:bg-gray-50 transition-colors cursor-pointer"
+                    className="hover:bg-[hsla(200,14%,78%,0.12)] transition-colors cursor-pointer"
                     onClick={() => onSelectSubmission?.(submission)}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{submission.email}</div>
+                      <div className="text-sm font-medium text-white">{submission.email}</div>
                       {submission.utm_source && (
-                        <div className="text-xs text-gray-500 mt-0.5">
+                        <div className="text-xs text-white/60 mt-0.5">
                           Source: {submission.utm_source}
                         </div>
                       )}
@@ -157,9 +157,9 @@ export function QuizSubmissionsList({
                       <div className="w-32">
                         <QuizScoreIndicator score={submission.score} size="sm" showLabel={false} />
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">{submission.score}/100</div>
+                      <div className="text-xs text-white/60 mt-1">{submission.score}/100</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70">
                       {formatDate(submission.created_at)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -168,7 +168,7 @@ export function QuizSubmissionsList({
                           e.stopPropagation()
                           onSelectSubmission?.(submission)
                         }}
-                        className="text-amber-600 hover:text-amber-700 font-medium"
+                        className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
                       >
                         View Details →
                       </button>

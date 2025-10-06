@@ -313,3 +313,425 @@ export async function getSubmissionsByType(
     return []
   }
 }
+
+// ============================================================================
+// QUIZ ANALYTICS FUNCTIONS (using quiz_events and quiz_sessions tables)
+// ============================================================================
+
+export interface DateRange {
+  startDate: string // ISO date string
+  endDate: string   // ISO date string
+}
+
+export interface QuizFunnelMetrics {
+  pageViews: number
+  quizStarts: number
+  quizCompletions: number
+  startRate: number // percentage
+  completionRate: number // percentage
+}
+
+export interface QuestionMetrics {
+  questionId: string
+  questionIndex: number
+  views: number
+  answers: number
+  completions: number
+  dropoffCount: number
+  dropoffRate: number // percentage
+  avgTimeSpent: number // seconds
+  medianTimeSpent: number // seconds
+}
+
+export interface CompletionTimeMetrics {
+  avgCompletionTime: number // seconds
+  medianCompletionTime: number // seconds
+  totalCompletions: number
+}
+
+export interface DropoffPoint {
+  questionIndex: number
+  dropoffCount: number
+  dropoffPercentage: number
+}
+
+export interface DailyMetrics {
+  date: string // YYYY-MM-DD format
+  pageViews: number
+  starts: number
+  completions: number
+  emails: number
+}
+
+/**
+ * Get quiz funnel metrics (page views → starts → completions)
+ */
+export async function getQuizFunnelMetrics(
+  dateRange?: DateRange
+): Promise<QuizFunnelMetrics> {
+  try {
+    // Build date filter
+    const startDate = dateRange?.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+    const endDate = dateRange?.endDate || new Date().toISOString()
+
+    // Count each event type
+    const { data: pageViewData } = await supabase
+      .from('quiz_events')
+      .select('session_id', { count: 'exact', head: false })
+      .eq('event_type', 'page_view')
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    const { data: startData } = await supabase
+      .from('quiz_events')
+      .select('session_id', { count: 'exact', head: false })
+      .eq('event_type', 'quiz_start')
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    const { data: completeData } = await supabase
+      .from('quiz_events')
+      .select('session_id', { count: 'exact', head: false })
+      .eq('event_type', 'quiz_complete')
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    // Count unique sessions for each stage
+    const pageViews = new Set(pageViewData?.map(d => d.session_id) || []).size
+    const quizStarts = new Set(startData?.map(d => d.session_id) || []).size
+    const quizCompletions = new Set(completeData?.map(d => d.session_id) || []).size
+
+    // Calculate rates
+    const startRate = pageViews > 0 ? (quizStarts / pageViews) * 100 : 0
+    const completionRate = quizStarts > 0 ? (quizCompletions / quizStarts) * 100 : 0
+
+    return {
+      pageViews,
+      quizStarts,
+      quizCompletions,
+      startRate: Math.round(startRate * 100) / 100,
+      completionRate: Math.round(completionRate * 100) / 100,
+    }
+  } catch (error) {
+    console.error('Error fetching quiz funnel metrics:', error)
+    return {
+      pageViews: 0,
+      quizStarts: 0,
+      quizCompletions: 0,
+      startRate: 0,
+      completionRate: 0,
+    }
+  }
+}
+
+/**
+ * Get question-level metrics (views, answers, dropoff, time spent)
+ */
+export async function getQuestionLevelMetrics(
+  dateRange?: DateRange
+): Promise<QuestionMetrics[]> {
+  try {
+    const startDate = dateRange?.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+    const endDate = dateRange?.endDate || new Date().toISOString()
+
+    // Fetch all question events
+    const { data: events, error } = await supabase
+      .from('quiz_events')
+      .select('event_type, question_id, question_index, session_id, time_spent_ms')
+      .in('event_type', ['question_view', 'question_answer', 'question_complete'])
+      .not('question_id', 'is', null)
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    if (error) {
+      console.error('Error fetching question events:', error)
+      return []
+    }
+
+    // Group events by question
+    const questionMap = new Map<string, {
+      questionId: string
+      questionIndex: number
+      views: Set<string>
+      answers: Set<string>
+      completions: Set<string>
+      timeSpents: number[]
+    }>()
+
+    events?.forEach(event => {
+      if (!event.question_id) return
+
+      if (!questionMap.has(event.question_id)) {
+        questionMap.set(event.question_id, {
+          questionId: event.question_id,
+          questionIndex: event.question_index || 0,
+          views: new Set(),
+          answers: new Set(),
+          completions: new Set(),
+          timeSpents: [],
+        })
+      }
+
+      const q = questionMap.get(event.question_id)!
+
+      if (event.event_type === 'question_view') {
+        q.views.add(event.session_id)
+      } else if (event.event_type === 'question_answer') {
+        q.answers.add(event.session_id)
+        if (event.time_spent_ms) {
+          q.timeSpents.push(event.time_spent_ms)
+        }
+      } else if (event.event_type === 'question_complete') {
+        q.completions.add(event.session_id)
+      }
+    })
+
+    // Calculate metrics for each question
+    const metrics: QuestionMetrics[] = Array.from(questionMap.values()).map(q => {
+      const views = q.views.size
+      const answers = q.answers.size
+      // Use answers for completions since we track 'question_answer' not 'question_complete'
+      const completions = q.answers.size
+      const dropoffCount = views - completions
+      const dropoffRate = views > 0 ? (dropoffCount / views) * 100 : 0
+
+      // Calculate average time spent (in seconds)
+      const avgTimeSpent = q.timeSpents.length > 0
+        ? q.timeSpents.reduce((sum, t) => sum + t, 0) / q.timeSpents.length / 1000
+        : 0
+
+      // Calculate median time spent (in seconds)
+      const sortedTimes = [...q.timeSpents].sort((a, b) => a - b)
+      const medianTimeSpent = sortedTimes.length > 0
+        ? sortedTimes[Math.floor(sortedTimes.length / 2)] / 1000
+        : 0
+
+      return {
+        questionId: q.questionId,
+        questionIndex: q.questionIndex,
+        views,
+        answers,
+        completions,
+        dropoffCount,
+        dropoffRate: Math.round(dropoffRate * 100) / 100,
+        avgTimeSpent: Math.round(avgTimeSpent * 10) / 10,
+        medianTimeSpent: Math.round(medianTimeSpent * 10) / 10,
+      }
+    })
+
+    // Sort by question index
+    return metrics.sort((a, b) => a.questionIndex - b.questionIndex)
+  } catch (error) {
+    console.error('Error fetching question-level metrics:', error)
+    return []
+  }
+}
+
+/**
+ * Get completion time metrics
+ */
+export async function getCompletionTimeMetrics(
+  dateRange?: DateRange
+): Promise<CompletionTimeMetrics> {
+  try {
+    const startDate = dateRange?.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+    const endDate = dateRange?.endDate || new Date().toISOString()
+
+    const { data: sessions, error } = await supabase
+      .from('quiz_sessions')
+      .select('completion_time_ms')
+      .eq('is_completed', true)
+      .not('completion_time_ms', 'is', null)
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    if (error) {
+      console.error('Error fetching completion times:', error)
+      return {
+        avgCompletionTime: 0,
+        medianCompletionTime: 0,
+        totalCompletions: 0,
+      }
+    }
+
+    const completionTimes = sessions?.map(s => s.completion_time_ms).filter(t => t != null) || []
+
+    if (completionTimes.length === 0) {
+      return {
+        avgCompletionTime: 0,
+        medianCompletionTime: 0,
+        totalCompletions: 0,
+      }
+    }
+
+    // Calculate average (in seconds)
+    const avgCompletionTime = completionTimes.reduce((sum, t) => sum + t, 0) / completionTimes.length / 1000
+
+    // Calculate median (in seconds)
+    const sortedTimes = [...completionTimes].sort((a, b) => a - b)
+    const medianCompletionTime = sortedTimes[Math.floor(sortedTimes.length / 2)] / 1000
+
+    return {
+      avgCompletionTime: Math.round(avgCompletionTime * 10) / 10,
+      medianCompletionTime: Math.round(medianCompletionTime * 10) / 10,
+      totalCompletions: completionTimes.length,
+    }
+  } catch (error) {
+    console.error('Error fetching completion time metrics:', error)
+    return {
+      avgCompletionTime: 0,
+      medianCompletionTime: 0,
+      totalCompletions: 0,
+    }
+  }
+}
+
+/**
+ * Get dropoff analysis (where users abandon the quiz)
+ */
+export async function getDropoffAnalysis(
+  dateRange?: DateRange
+): Promise<DropoffPoint[]> {
+  try {
+    const startDate = dateRange?.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+    const endDate = dateRange?.endDate || new Date().toISOString()
+
+    // Get all abandoned sessions and their last question
+    const { data: sessions, error } = await supabase
+      .from('quiz_sessions')
+      .select('session_id, last_question_index')
+      .eq('is_completed', false)
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    if (error) {
+      console.error('Error fetching dropoff data:', error)
+      return []
+    }
+
+    // Count dropoffs by question index
+    const dropoffMap = new Map<number, number>()
+    sessions?.forEach(session => {
+      const index = session.last_question_index || 0
+      dropoffMap.set(index, (dropoffMap.get(index) || 0) + 1)
+    })
+
+    // Calculate total dropoffs
+    const totalDropoffs = sessions?.length || 0
+
+    // Convert to array and calculate percentages
+    const dropoffPoints: DropoffPoint[] = Array.from(dropoffMap.entries()).map(([questionIndex, dropoffCount]) => ({
+      questionIndex,
+      dropoffCount,
+      dropoffPercentage: totalDropoffs > 0 ? Math.round((dropoffCount / totalDropoffs) * 10000) / 100 : 0,
+    }))
+
+    // Sort by question index
+    return dropoffPoints.sort((a, b) => a.questionIndex - b.questionIndex)
+  } catch (error) {
+    console.error('Error fetching dropoff analysis:', error)
+    return []
+  }
+}
+
+/**
+ * Get daily time series metrics for trends over time
+ */
+export async function getDailyTimeSeriesMetrics(
+  dateRange?: DateRange
+): Promise<DailyMetrics[]> {
+  try {
+    const startDate = dateRange?.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+    const endDate = dateRange?.endDate || new Date().toISOString()
+
+    // Fetch all quiz events
+    const { data: events, error: eventsError } = await supabase
+      .from('quiz_events')
+      .select('event_type, session_id, created_at')
+      .in('event_type', ['page_view', 'quiz_start', 'quiz_complete'])
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    if (eventsError) {
+      console.error('Error fetching events for time series:', eventsError)
+      return []
+    }
+
+    // Fetch quiz submissions for email count
+    const { data: submissions, error: submissionsError } = await supabase
+      .from('quiz_submissions')
+      .select('created_at')
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    if (submissionsError) {
+      console.error('Error fetching submissions for time series:', submissionsError)
+    }
+
+    // Group events by date
+    const dailyMap = new Map<string, {
+      date: string
+      pageViewSessions: Set<string>
+      startSessions: Set<string>
+      completionSessions: Set<string>
+      emails: number
+    }>()
+
+    // Process events
+    events?.forEach(event => {
+      const date = event.created_at.split('T')[0] // Get YYYY-MM-DD
+
+      if (!dailyMap.has(date)) {
+        dailyMap.set(date, {
+          date,
+          pageViewSessions: new Set(),
+          startSessions: new Set(),
+          completionSessions: new Set(),
+          emails: 0,
+        })
+      }
+
+      const dayData = dailyMap.get(date)!
+
+      if (event.event_type === 'page_view') {
+        dayData.pageViewSessions.add(event.session_id)
+      } else if (event.event_type === 'quiz_start') {
+        dayData.startSessions.add(event.session_id)
+      } else if (event.event_type === 'quiz_complete') {
+        dayData.completionSessions.add(event.session_id)
+      }
+    })
+
+    // Process email submissions
+    submissions?.forEach(submission => {
+      const date = submission.created_at.split('T')[0]
+
+      if (!dailyMap.has(date)) {
+        dailyMap.set(date, {
+          date,
+          pageViewSessions: new Set(),
+          startSessions: new Set(),
+          completionSessions: new Set(),
+          emails: 0,
+        })
+      }
+
+      dailyMap.get(date)!.emails += 1
+    })
+
+    // Convert to array and count unique sessions
+    const dailyMetrics: DailyMetrics[] = Array.from(dailyMap.values()).map(day => ({
+      date: day.date,
+      pageViews: day.pageViewSessions.size,
+      starts: day.startSessions.size,
+      completions: day.completionSessions.size,
+      emails: day.emails,
+    }))
+
+    // Sort by date
+    return dailyMetrics.sort((a, b) => a.date.localeCompare(b.date))
+  } catch (error) {
+    console.error('Error fetching daily time series metrics:', error)
+    return []
+  }
+}

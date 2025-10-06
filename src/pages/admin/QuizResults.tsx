@@ -60,7 +60,7 @@ export default function QuizResults() {
           <button
             onClick={handleExportCSV}
             disabled={allSubmissions.length === 0 || isLoading || isExporting}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/80 bg-[hsla(200,14%,78%,0.18)] backdrop-blur-[12px] border border-white/20 rounded-[12px] hover:bg-[hsla(200,14%,78%,0.28)] hover:text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download className={`h-4 w-4 ${isExporting ? 'animate-bounce' : ''}`} />
             {isLoading
@@ -73,13 +73,13 @@ export default function QuizResults() {
 
         {/* Stats overview */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Overview</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">Overview</h2>
           <QuizStatsCards />
         </div>
 
         {/* Submissions list */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">All Submissions</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">All Submissions</h2>
           <QuizSubmissionsList
             submissions={allSubmissions}
             isLoading={isLoading}

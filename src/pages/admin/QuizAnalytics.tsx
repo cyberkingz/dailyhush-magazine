@@ -10,6 +10,13 @@ import { BasicDateRangePicker } from '../../components/admin/BasicDateRangePicke
 import { QuizFunnelChart } from '../../components/admin/analytics/QuizFunnelChart'
 import { FunnelActionItems } from '../../components/admin/analytics/FunnelActionItems'
 import {
+  getQuizFunnelMetrics,
+  getQuestionLevelMetrics,
+  getCompletionTimeMetrics,
+  getDailyTimeSeriesMetrics,
+  type QuestionMetrics as QuizQuestionMetrics,
+} from '../../lib/services/quiz'
+import {
   KPICardSkeleton,
   FunnelChartSkeleton,
   TableSkeleton,
@@ -155,7 +162,18 @@ export default function QuizAnalytics() {
     try {
       setIsLoading(true)
 
-      // Get all quiz submissions
+      // Build date range for analytics functions
+      const analyticsDateRange = dateRange?.from && dateRange?.to
+        ? {
+            startDate: dateRange.from.toISOString(),
+            endDate: dateRange.to.toISOString(),
+          }
+        : undefined
+
+      // Get real funnel metrics from quiz_events table
+      const funnelMetrics = await getQuizFunnelMetrics(analyticsDateRange)
+
+      // Get all quiz submissions for email count
       const { data: allSubmissions, error } = await supabase
         .from('quiz_submissions')
         .select('*')
@@ -173,19 +191,14 @@ export default function QuizAnalytics() {
 
       const totalEmails = currentPeriodSubmissions.length
 
-      // For MVP, we'll use submission data to estimate funnel
-      const estimatedViews = Math.round(totalEmails * 1.5)
-      const totalStarts = totalEmails
-      const totalCompletions = totalEmails
-
       const calculatedMetrics: QuizMetrics = {
-        totalViews: estimatedViews,
-        totalStarts,
-        totalCompletions,
+        totalViews: funnelMetrics.pageViews,
+        totalStarts: funnelMetrics.quizStarts,
+        totalCompletions: funnelMetrics.quizCompletions,
         totalEmails,
-        startRate: totalStarts > 0 ? (totalStarts / estimatedViews) * 100 : 0,
-        completionRate: totalStarts > 0 ? (totalCompletions / totalStarts) * 100 : 0,
-        emailCaptureRate: totalCompletions > 0 ? (totalEmails / totalCompletions) * 100 : 0,
+        startRate: funnelMetrics.startRate,
+        completionRate: funnelMetrics.completionRate,
+        emailCaptureRate: funnelMetrics.quizCompletions > 0 ? (totalEmails / funnelMetrics.quizCompletions) * 100 : 0,
       }
 
       setMetrics(calculatedMetrics)
@@ -196,24 +209,27 @@ export default function QuizAnalytics() {
         const previousPeriodEnd = subDays(dateRange.from, 1)
         const previousPeriodStart = subDays(previousPeriodEnd, periodLength)
 
+        // Get previous period funnel metrics
+        const previousFunnelMetrics = await getQuizFunnelMetrics({
+          startDate: previousPeriodStart.toISOString(),
+          endDate: previousPeriodEnd.toISOString(),
+        })
+
         const previousPeriodSubmissions = allSubmissions?.filter(s => {
           const submissionDate = new Date(s.created_at)
           return submissionDate >= previousPeriodStart && submissionDate <= previousPeriodEnd
         }) || []
 
         const prevTotalEmails = previousPeriodSubmissions.length
-        const prevEstimatedViews = Math.round(prevTotalEmails * 1.5)
-        const prevTotalStarts = prevTotalEmails
-        const prevTotalCompletions = prevTotalEmails
 
         const previousCalculatedMetrics: QuizMetrics = {
-          totalViews: prevEstimatedViews,
-          totalStarts: prevTotalStarts,
-          totalCompletions: prevTotalCompletions,
+          totalViews: previousFunnelMetrics.pageViews,
+          totalStarts: previousFunnelMetrics.quizStarts,
+          totalCompletions: previousFunnelMetrics.quizCompletions,
           totalEmails: prevTotalEmails,
-          startRate: prevTotalStarts > 0 ? (prevTotalStarts / prevEstimatedViews) * 100 : 0,
-          completionRate: prevTotalStarts > 0 ? (prevTotalCompletions / prevTotalStarts) * 100 : 0,
-          emailCaptureRate: prevTotalCompletions > 0 ? (prevTotalEmails / prevTotalCompletions) * 100 : 0,
+          startRate: previousFunnelMetrics.startRate,
+          completionRate: previousFunnelMetrics.completionRate,
+          emailCaptureRate: previousFunnelMetrics.quizCompletions > 0 ? (prevTotalEmails / previousFunnelMetrics.quizCompletions) * 100 : 0,
         }
 
         setPreviousMetrics(previousCalculatedMetrics)
@@ -221,22 +237,9 @@ export default function QuizAnalytics() {
         setPreviousMetrics(null)
       }
 
-      // Time series data for current period
-      const dailyData = currentPeriodSubmissions
-        .reduce((acc: any, submission) => {
-          const date = new Date(submission.created_at).toISOString().split('T')[0]
-          if (!acc[date]) {
-            acc[date] = { date, starts: 0, completions: 0, emails: 0 }
-          }
-          acc[date].starts += 1
-          acc[date].completions += 1
-          acc[date].emails += 1
-          return acc
-        }, {})
-
-      setTimeSeriesData(Object.values(dailyData || {}).sort((a: any, b: any) =>
-        a.date.localeCompare(b.date)
-      ))
+      // Get real time series data from quiz_events
+      const dailyMetrics = await getDailyTimeSeriesMetrics(analyticsDateRange)
+      setTimeSeriesData(dailyMetrics)
 
       // Device breakdown
       const deviceBreakdown = currentPeriodSubmissions.reduce((acc: any, s) => {
@@ -274,16 +277,22 @@ export default function QuizAnalytics() {
 
       setSourceData(sourceArray)
 
-      // Question-level data
-      const questionAnalytics = quizQuestions.map((q, index) => ({
-        id: q.id,
-        question: q.question,
-        section: q.section,
-        views: totalStarts - index * 2,
-        completions: totalStarts - (index + 1) * 2,
-        dropoffRate: Math.max(0, Math.min(5 + index * 2, 30)),
-        avgTimeSpent: 8 + index * 2,
-      }))
+      // Get real question-level metrics
+      const realQuestionMetrics = await getQuestionLevelMetrics(analyticsDateRange)
+
+      // Map real metrics to UI format and merge with quiz question data
+      const questionAnalytics = quizQuestions.map((q, index) => {
+        const realMetric = realQuestionMetrics.find(m => m.questionId === q.id)
+        return {
+          id: q.id,
+          question: q.question,
+          section: q.section,
+          views: realMetric?.views || 0,
+          completions: realMetric?.completions || 0,
+          dropoffRate: realMetric?.dropoffRate || 0,
+          avgTimeSpent: realMetric?.avgTimeSpent || 0,
+        }
+      })
 
       setQuestionData(questionAnalytics)
 

@@ -17,27 +17,31 @@ export function QuizScoreIndicator({
   const getColorClasses = () => {
     if (percentage >= 75) {
       return {
-        bg: 'bg-red-100',
+        bg: 'bg-red-500/20',
         fill: 'bg-red-500',
-        text: 'text-red-700',
+        text: 'text-red-200',
+        border: 'border-red-500/30',
       }
     } else if (percentage >= 50) {
       return {
-        bg: 'bg-amber-100',
+        bg: 'bg-amber-500/20',
         fill: 'bg-amber-500',
-        text: 'text-amber-700',
+        text: 'text-amber-200',
+        border: 'border-amber-500/30',
       }
     } else if (percentage >= 25) {
       return {
-        bg: 'bg-blue-100',
-        fill: 'bg-blue-500',
-        text: 'text-blue-700',
+        bg: 'bg-emerald-500/15',
+        fill: 'bg-emerald-500',
+        text: 'text-emerald-200',
+        border: 'border-emerald-500/25',
       }
     } else {
       return {
-        bg: 'bg-green-100',
-        fill: 'bg-green-500',
-        text: 'text-green-700',
+        bg: 'bg-emerald-500/20',
+        fill: 'bg-emerald-500',
+        text: 'text-emerald-200',
+        border: 'border-emerald-500/30',
       }
     }
   }
@@ -62,7 +66,7 @@ export function QuizScoreIndicator({
   return (
     <div className="flex items-center gap-3">
       {/* Progress bar */}
-      <div className={`flex-1 rounded-full ${colors.bg} ${sizeClasses[size].container} overflow-hidden`}>
+      <div className={`flex-1 rounded-full border backdrop-blur-[8px] ${colors.bg} ${colors.border} ${sizeClasses[size].container} overflow-hidden`}>
         <div
           className={`h-full rounded-full ${colors.fill} transition-all duration-500`}
           style={{ width: `${percentage}%` }}

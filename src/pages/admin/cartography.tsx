@@ -87,10 +87,10 @@ const fluxDiagram = `flowchart LR
   classDef site fill:#1b3058,stroke:#89c8ff,stroke-width:1.2,color:#eaf1ff;`
 
 const Card: React.FC<{ title: string; children: React.ReactNode; hint?: string }> = ({ title, children, hint }) => (
-  <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6">
-    <h2 className="text-xl font-semibold text-gray-900 mb-3">{title}</h2>
+  <div className="bg-[hsla(200,12%,70%,0.22)] backdrop-blur-[32px] backdrop-saturate-[140%] rounded-[16px] border border-[hsla(200,16%,80%,0.18)] shadow-[0_8px_16px_-4px_rgba(31,45,61,0.1),0_16px_32px_-8px_rgba(31,45,61,0.14),0_1px_0_0_rgba(255,255,255,0.12)_inset] p-4 md:p-6">
+    <h2 className="text-xl font-semibold text-white mb-3">{title}</h2>
     {children}
-    {hint && <div className="text-xs text-gray-500 mt-4">{hint}</div>}
+    {hint && <div className="text-xs text-white/60 mt-4">{hint}</div>}
   </div>
 )
 
@@ -105,10 +105,10 @@ const AdminCartography: React.FC = () => {
             <button
               key={t}
               className={
-                'px-3 py-1.5 rounded-lg border text-sm ' +
+                'px-3 py-1.5 rounded-[10px] border text-sm transition-all duration-200 backdrop-blur-[12px] ' +
                 (tab === t
-                  ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
-                  : 'bg-white border-gray-200 hover:bg-gray-50')
+                  ? 'bg-amber-500/20 border-amber-500/30 text-amber-300 shadow-[0_2px_4px_rgba(245,158,11,0.1)]'
+                  : 'bg-[hsla(200,14%,78%,0.18)] border-white/20 text-white/80 hover:bg-[hsla(200,14%,78%,0.28)] hover:border-white/30 hover:text-white')
               }
               onClick={() => setTab(t as any)}
             >
@@ -152,10 +152,10 @@ const AdminCartography: React.FC = () => {
         <div className="mt-6">
           <Card title="Competitor Workspace">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-sm text-gray-600">Centralize notes, funnels, cadences and assets for each competitor.</p>
-              <button className="px-3 py-2 text-sm rounded-lg bg-yellow-400 text-black hover:bg-yellow-300">New competitor</button>
+              <p className="text-sm text-white/70">Centralize notes, funnels, cadences and assets for each competitor.</p>
+              <button className="px-3 py-2 text-sm rounded-[10px] bg-amber-500/20 backdrop-blur-[8px] border border-amber-500/30 text-amber-300 hover:bg-amber-500/30 hover:text-amber-200 transition-all duration-200 shadow-[0_2px_4px_rgba(245,158,11,0.1)]">New competitor</button>
             </div>
-            <div className="text-sm text-gray-500">Coming next: Supabase tables (competitors, funnels, touchpoints) and editable Mermaid blocks per entry.</div>
+            <div className="text-sm text-white/60">Coming next: Supabase tables (competitors, funnels, touchpoints) and editable Mermaid blocks per entry.</div>
           </Card>
         </div>
       </AdminLayout>

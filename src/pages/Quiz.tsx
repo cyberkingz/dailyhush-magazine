@@ -11,6 +11,14 @@ import { quizQuestions } from '../data/quizQuestions'
 import { submitQuiz } from '../lib/services/quiz'
 import { getCurrentTrackingContext } from '../lib/services/leads'
 import { supabase } from '../lib/supabase'
+import {
+  trackQuizPageView,
+  trackQuizStart,
+  trackQuestionView,
+  trackQuestionAnswer,
+  trackQuizComplete,
+  trackQuizAbandon
+} from '../lib/services/quizEvents'
 import '../styles/quiz.css'
 
 declare global {
@@ -30,6 +38,12 @@ export default function Quiz() {
   const answerSelectedOnQuestionRef = useRef<number | null>(null)
   const emailForRedirect = useRef('')
   const quizResultForRedirect = useRef<{ type: string; score: number } | null>(null)
+
+  // Quiz event tracking refs
+  const sessionIdRef = useRef<string | null>(null)
+  const questionStartTimeRef = useRef<number>(Date.now())
+  const quizStartTimeRef = useRef<number | null>(null)
+  const previousQuestionRef = useRef<{ id: string; index: number } | null>(null)
 
   const {
     currentQuestion,
@@ -51,6 +65,76 @@ export default function Quiz() {
       setShowEmailCapture(true)
     },
   })
+
+  // Track page view on mount and handle abandonment on unmount
+  useEffect(() => {
+    // Track page view and create session
+    trackQuizPageView(getCurrentTrackingContext())
+      .then(sessionId => {
+        sessionIdRef.current = sessionId
+        console.log('🎯 Quiz session initialized:', sessionId)
+      })
+      .catch(error => {
+        console.error('Failed to track page view:', error)
+      })
+
+    // Cleanup: track abandon on unmount if not completed
+    return () => {
+      if (sessionIdRef.current && !result && hasStarted) {
+        trackQuizAbandon(sessionIdRef.current, currentQuestionIndex)
+          .catch(error => {
+            console.error('Failed to track quiz abandon:', error)
+          })
+      }
+    }
+  }, []) // Empty dependency array - only run on mount/unmount
+
+  // Track quiz start
+  useEffect(() => {
+    if (hasStarted && sessionIdRef.current && !quizStartTimeRef.current) {
+      quizStartTimeRef.current = Date.now()
+      trackQuizStart(sessionIdRef.current, totalQuestions)
+        .catch(error => {
+          console.error('Failed to track quiz start:', error)
+        })
+    }
+  }, [hasStarted, totalQuestions])
+
+  // Track question views and answers
+  useEffect(() => {
+    if (!sessionIdRef.current || !hasStarted) return
+
+    const now = Date.now()
+
+    // Track answer for previous question if it was answered
+    if (previousQuestionRef.current && currentAnswer) {
+      const timeSpent = now - questionStartTimeRef.current
+      trackQuestionAnswer(
+        sessionIdRef.current,
+        previousQuestionRef.current.id,
+        previousQuestionRef.current.index,
+        timeSpent
+      ).catch(error => {
+        console.error('Failed to track question answer:', error)
+      })
+    }
+
+    // Track view for current question
+    trackQuestionView(
+      sessionIdRef.current,
+      currentQuestion.id,
+      currentQuestionIndex
+    ).catch(error => {
+      console.error('Failed to track question view:', error)
+    })
+
+    // Update refs for next iteration
+    previousQuestionRef.current = {
+      id: currentQuestion.id,
+      index: currentQuestionIndex
+    }
+    questionStartTimeRef.current = now
+  }, [currentQuestionIndex, hasStarted, currentQuestion])
 
   // Auto-advance to next question after 500ms delay
   // Only for single and scale questions (not multiple choice)
@@ -293,6 +377,18 @@ export default function Quiz() {
       console.log('Email captured:', email)
       console.log('Quiz result:', result.type)
       console.log('Quiz submission ID:', quizResponse.submissionId)
+
+      // Track quiz completion with event tracking
+      if (sessionIdRef.current && quizStartTimeRef.current && quizResponse.submissionId) {
+        const completionTime = Date.now() - quizStartTimeRef.current
+        await trackQuizComplete(
+          sessionIdRef.current,
+          quizResponse.submissionId,
+          completionTime
+        ).catch(error => {
+          console.error('Failed to track quiz completion:', error)
+        })
+      }
 
       // Store email and quiz result in refs for redirect
       emailForRedirect.current = email

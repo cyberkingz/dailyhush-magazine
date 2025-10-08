@@ -389,7 +389,7 @@ export default function FireStarterProduct() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="text-2xl font-bold text-emerald-900">$7</div>
-              <div className="text-xs text-emerald-600/60 line-through">$27</div>
+              <div className="text-xs text-emerald-600/60 line-through">$387</div>
             </div>
             <div className="flex-1">
               <ShopifyBuyButton

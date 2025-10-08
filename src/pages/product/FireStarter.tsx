@@ -41,12 +41,12 @@ export default function FireStarterProduct() {
       />
       <TopBar />
 
-      <main className="flex-1 bg-gradient-to-br from-emerald-50/20 via-white to-amber-50/10 relative overflow-hidden">
+      <main className="flex-1 bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 relative overflow-hidden">
         {/* Organic Background Blobs - Subtle Tropical Feel */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
-          <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/5 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+          <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
         </div>
 
       {/* Product Section - Shopify Style */}
@@ -65,7 +65,7 @@ export default function FireStarterProduct() {
           {/* LEFT - Product Image */}
           <div className="space-y-4">
             {/* Main Product Image */}
-            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-amber-50/50 shadow-[0_8px_32px_rgba(16,185,129,0.12),0_16px_48px_rgba(245,158,11,0.08)] ring-1 ring-white/40 backdrop-blur-xl relative">
+            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/80 via-emerald-50/60 to-amber-50/50 shadow-[0_8px_32px_rgba(16,185,129,0.12),0_16px_48px_rgba(245,158,11,0.08)] ring-1 ring-white/40 backdrop-blur-xl relative">
               {/* Subtle glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-amber-400/10 blur-2xl"></div>
               <img
@@ -84,9 +84,9 @@ export default function FireStarterProduct() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="aspect-square bg-white/60 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
-              <div className="aspect-square bg-white/60 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
-              <div className="aspect-square bg-white/60 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
+              <div className="aspect-square bg-white/70 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
+              <div className="aspect-square bg-white/70 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
+              <div className="aspect-square bg-white/70 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
             </div>
           </div>
 
@@ -94,9 +94,25 @@ export default function FireStarterProduct() {
           <div>
 
             {/* Product Title */}
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-emerald-900 mb-4">
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-emerald-900 mb-3">
               F.I.R.E. KIT
             </h1>
+
+            {/* Rating Stars */}
+            <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <svg
+                    key={i}
+                    className="w-5 h-5 text-amber-500 fill-current"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-emerald-700 text-sm font-medium">4.9 (847 reviews)</span>
+            </div>
 
             {/* Price */}
             <div className="mb-6">
@@ -115,7 +131,7 @@ export default function FireStarterProduct() {
             {/* Short Description */}
             <div className="mb-8 pb-8 border-b border-emerald-200/40">
               <p className="text-lg text-emerald-800 mb-4 leading-[1.7]">
-                The exact system that helped 127+ women stop 2 AM thought spirals and finally quiet their racing minds—after years of trying meditation apps that didn't work.
+                The exact system that helped 847 women stop 2 AM thought spirals and finally quiet their racing minds—after years of trying meditation apps that didn't work.
               </p>
               <p className="text-emerald-700/80 leading-[1.6]">
                 You took the quiz. You know your overthinker type. Now get the proven F.I.R.E. framework that breaks the mental loop the moment it starts.
@@ -180,7 +196,7 @@ export default function FireStarterProduct() {
             </div>
 
             {/* Guarantee Box */}
-            <div className="p-6 bg-amber-50/60 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(245,158,11,0.12)] ring-1 ring-white/40">
+            <div className="p-6 bg-amber-50/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(245,158,11,0.12)] ring-1 ring-white/40">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-[0_4px_20px_rgba(245,158,11,0.4)]">
                   <Shield className="w-6 h-6 text-white" />
@@ -198,10 +214,10 @@ export default function FireStarterProduct() {
         </div>
 
         {/* Feature Section 1 - Image Left | Text Right */}
-        <div className="p-8 md:p-10 mb-20 bg-white/60 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40 hover:shadow-[0_12px_48px_rgba(16,185,129,0.12)] transition-all duration-500 hover:-translate-y-1">
+        <div className="p-8 md:p-10 mb-20 bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40 hover:shadow-[0_12px_48px_rgba(16,185,129,0.12)] transition-all duration-500 hover:-translate-y-1">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
-            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1)] ring-1 ring-white/40 backdrop-blur-md">
+            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1),0_0_20px_rgba(52,211,153,0.15),inset_0_1px_1px_rgba(255,255,255,0.1)] ring-1 ring-white/40 backdrop-blur-md border-4 border-emerald-400/40 hover:border-emerald-400/60 transition-all duration-300">
               <img
                 src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_h9xlixh9xlixh9xl.png?v=1759927378"
                 alt="Stop Overthinking. Start Living."
@@ -238,7 +254,7 @@ export default function FireStarterProduct() {
         </div>
 
         {/* Feature Section 2 - Text Left | Image Right */}
-        <div className="p-8 md:p-10 mb-20 bg-white/60 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40 hover:shadow-[0_12px_48px_rgba(16,185,129,0.12)] transition-all duration-500 hover:-translate-y-1">
+        <div className="p-8 md:p-10 mb-20 bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40 hover:shadow-[0_12px_48px_rgba(16,185,129,0.12)] transition-all duration-500 hover:-translate-y-1">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-display font-bold text-emerald-900 mb-4 leading-[1.2]">
@@ -258,7 +274,7 @@ export default function FireStarterProduct() {
             </div>
           </div>
           <div>
-            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1)] ring-1 ring-white/40 backdrop-blur-md">
+            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1),0_0_20px_rgba(251,191,36,0.15),inset_0_1px_1px_rgba(255,255,255,0.1)] ring-1 ring-white/40 backdrop-blur-md border-4 border-amber-400/40 hover:border-amber-400/60 transition-all duration-300">
               <img
                 src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_3mejzc3mejzc3mej.png?v=1759927377"
                 alt="Built For Your Overthinker Type"
@@ -270,10 +286,10 @@ export default function FireStarterProduct() {
         </div>
 
         {/* Social Proof Section - Compact Row */}
-        <div className="py-4 md:py-6 mb-12 bg-amber-50/60 backdrop-blur-xl rounded-3xl shadow-[0_8px_24px_rgba(245,158,11,0.1)] ring-1 ring-white/40 max-w-2xl mx-auto">
+        <div className="py-4 md:py-6 mb-12 bg-amber-50/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_24px_rgba(245,158,11,0.1)] ring-1 ring-white/40 max-w-2xl mx-auto">
           <div className="flex flex-row items-center gap-3 md:gap-8 justify-center px-3">
             <div>
-              <div className="text-2xl md:text-3xl font-bold text-amber-700 leading-none">127+</div>
+              <div className="text-2xl md:text-3xl font-bold text-amber-700 leading-none">847</div>
               <div className="text-[10px] md:text-xs text-emerald-700/70 mt-1">Women Helped</div>
             </div>
             <div className="w-px h-8 md:h-9 bg-emerald-300/30"></div>
@@ -296,7 +312,7 @@ export default function FireStarterProduct() {
           </h2>
 
           <div className="space-y-4 md:space-y-5">
-            <details className="group bg-white/60 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
                 Do I need Notion to use this?
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
@@ -306,7 +322,7 @@ export default function FireStarterProduct() {
               </div>
             </details>
 
-            <details className="group bg-white/60 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
                 Will this actually stop my overthinking?
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
@@ -316,7 +332,7 @@ export default function FireStarterProduct() {
               </div>
             </details>
 
-            <details className="group bg-white/60 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
                 How is this different from meditation apps?
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
@@ -326,7 +342,7 @@ export default function FireStarterProduct() {
               </div>
             </details>
 
-            <details className="group bg-white/60 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
                 Can I get a refund?
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
@@ -339,7 +355,7 @@ export default function FireStarterProduct() {
         </div>
 
         {/* Sticky Add to Cart Bar (Mobile) */}
-        <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${
+        <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${
           showStickyBar ? 'translate-y-0' : 'translate-y-full'
         }`}>
           <div className="flex items-center justify-between gap-4">

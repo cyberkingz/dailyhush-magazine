@@ -28,15 +28,13 @@ export default function FireStarterProduct() {
   }, [])
 
   const handleCheckoutComplete = useCallback(() => {
-    console.log('Checkout initiated - track Facebook Pixel event here')
-    // TODO: Add Facebook Pixel tracking
-    // fbq('track', 'InitiateCheckout', { product: 'fire_starter_kit' })
+    console.log('Checkout initiated')
   }, [])
 
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>✨ New:</strong> The Digital Overthinking Protocol — Stop 2 AM thought spirals in under 5 minutes</>}
+        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. KIT for just $7</>}
         variant="emerald"
       />
       <TopBar />
@@ -93,6 +91,12 @@ export default function FireStarterProduct() {
           {/* RIGHT - Product Details */}
           <div>
 
+            {/* Quiz-Taker Access Badge */}
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border-2 border-amber-500/40 text-amber-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
+              <span>🎉</span>
+              <span>Quiz-Taker Access Unlocked</span>
+            </div>
+
             {/* Product Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-emerald-900 mb-3 leading-tight">
               Stop Your 2 AM Thought Spirals In Under 5 Minutes With The F.I.R.E. KIT
@@ -121,13 +125,10 @@ export default function FireStarterProduct() {
             <div className="mb-6">
               <div className="flex items-baseline gap-2 md:gap-3 mb-2 flex-wrap">
                 <span className="text-3xl md:text-4xl font-bold text-emerald-900">$7</span>
-                <span className="text-xl md:text-2xl text-emerald-600/60 line-through">$387</span>
-                <span className="bg-amber-500 text-white text-xs md:text-sm font-semibold px-2.5 md:px-3 py-1 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.4)]">
-                  Save $380
-                </span>
+                <span className="text-base md:text-lg text-emerald-700/70 font-medium">Quiz-Taker Price</span>
               </div>
-              <div className="text-sm text-amber-700 font-medium">
-                ⏰ Final offer — Last chance to get it at this price
+              <div className="text-sm text-emerald-700/80 leading-relaxed">
+                Because you completed our quiz, you're eligible for our 50K celebration rate — get the complete Overthinking Protocol for just $7 today. This price is reserved exclusively for quiz-takers.
               </div>
             </div>
 
@@ -145,28 +146,51 @@ export default function FireStarterProduct() {
             <div className="mb-4 pb-4 border-b border-emerald-200/40">
               <h3 className="font-display font-bold text-emerald-900 mb-2">5 Digital Tools You'll Implement:</h3>
               <p className="text-sm text-emerald-700/70 mb-4 italic">Instant digital download</p>
-              <ul className="space-y-3">
-                <li className="flex gap-3 items-start">
-                  <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90"><strong>Window of Tolerance</strong> — Catch your mind before it spirals into overwhelm.</span>
+              <ul className="space-y-3 mb-4">
+                <li className="flex gap-3 items-start justify-between">
+                  <div className="flex gap-3 items-start flex-1">
+                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-emerald-800/90"><strong>Window of Tolerance</strong> — Catch your mind before it spirals into overwhelm.</span>
+                  </div>
+                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$147</span>
                 </li>
-                <li className="flex gap-3 items-start">
-                  <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90"><strong>Cognitive Distortions</strong> — Name the thought trap, break the loop in seconds.</span>
+                <li className="flex gap-3 items-start justify-between">
+                  <div className="flex gap-3 items-start flex-1">
+                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-emerald-800/90"><strong>Cognitive Distortions</strong> — Name the thought trap, break the loop in seconds.</span>
+                  </div>
+                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$77</span>
                 </li>
-                <li className="flex gap-3 items-start">
-                  <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90"><strong>Coping Strategies Wheel</strong> — Find the right reset for your mood in 30 seconds, not 3 hours.</span>
+                <li className="flex gap-3 items-start justify-between">
+                  <div className="flex gap-3 items-start flex-1">
+                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-emerald-800/90"><strong>Coping Strategies Wheel</strong> — Find the right reset for your mood in 30 seconds, not 3 hours.</span>
+                  </div>
+                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$77</span>
                 </li>
-                <li className="flex gap-3 items-start">
-                  <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90"><strong>What Do You Value?</strong> — Stop chasing "what ifs," reconnect with what actually matters.</span>
+                <li className="flex gap-3 items-start justify-between">
+                  <div className="flex gap-3 items-start flex-1">
+                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-emerald-800/90"><strong>What Do You Value?</strong> — Stop chasing "what ifs," reconnect with what actually matters.</span>
+                  </div>
+                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$47</span>
                 </li>
-                <li className="flex gap-3 items-start">
-                  <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90"><strong>Overthinking Journal</strong> — Racing thoughts → clarity in 5 minutes flat.</span>
+                <li className="flex gap-3 items-start justify-between">
+                  <div className="flex gap-3 items-start flex-1">
+                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-emerald-800/90"><strong>Overthinking Journal</strong> — Racing thoughts → clarity in 5 minutes flat.</span>
+                  </div>
+                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$39</span>
                 </li>
               </ul>
+              <div className="pt-3 border-t border-emerald-200/40 flex justify-between items-center">
+                <span className="font-bold text-emerald-900">Total Value:</span>
+                <span className="text-xl font-bold text-emerald-900">$387</span>
+              </div>
+              <div className="mt-2 flex justify-between items-center">
+                <span className="font-bold text-amber-900">Your Quiz-Taker Price:</span>
+                <span className="text-2xl font-bold text-amber-900">$7</span>
+              </div>
             </div>
 
             {/* Buy Button */}
@@ -175,7 +199,7 @@ export default function FireStarterProduct() {
                 productId="10761049702703"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get F.I.R.E. Kit — $7"
+                buttonText="Claim Quiz-Taker Access — $7"
                 buttonColor="#f59e0b"
                 buttonHoverColor="#d97706"
                 onCheckoutComplete={handleCheckoutComplete}

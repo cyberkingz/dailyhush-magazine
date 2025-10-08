@@ -388,15 +388,21 @@ export default function FireStarterProduct() {
         }`}>
           <div className="flex items-center justify-between gap-4">
             <div>
-              <div className="text-2xl font-bold text-emerald-900">$27</div>
-              <div className="text-xs text-emerald-600/60 line-through">$97</div>
+              <div className="text-2xl font-bold text-emerald-900">$7</div>
+              <div className="text-xs text-emerald-600/60 line-through">$27</div>
             </div>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-full transition-all shadow-[0_4px_20px_rgba(245,158,11,0.4)] hover:shadow-[0_6px_28px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95"
-            >
-              Get F.I.R.E. Kit
-            </button>
+            <div className="flex-1">
+              <ShopifyBuyButton
+                productId="10761049702703"
+                domain="t7vyee-kc.myshopify.com"
+                storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                buttonText="Claim Quiz-Taker Access"
+                buttonColor="#f59e0b"
+                buttonHoverColor="#d97706"
+                onCheckoutComplete={handleCheckoutComplete}
+                className="w-full"
+              />
+            </div>
           </div>
         </div>
 

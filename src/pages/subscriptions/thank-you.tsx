@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
-import { CheckCircle, DollarSign, ArrowRight, Flame } from 'lucide-react'
-import { CheckoutButton } from '../../components/stripe/CheckoutButton'
+import { CheckCircle, DollarSign, Flame } from 'lucide-react'
+import ShopifyBuyButton from '../../components/ShopifyBuyButton'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'
@@ -78,9 +78,8 @@ function ThankYouPageContent() {
     spotsRemainingRef.current = spotsRemaining
   }, [spotsRemaining])
 
-  // Get email, quiz type, and score from URL params
+  // Get quiz type and score from URL params
   const urlParams = new URLSearchParams(window.location.search)
-  const userEmail = urlParams.get('email') || undefined
   const quizType = urlParams.get('type') as OverthinkerType | null
   const quizScore = urlParams.get('score') ? parseInt(urlParams.get('score')!) : null
 
@@ -262,31 +261,15 @@ function ThankYouPageContent() {
           )}
 
           {/* Primary CTA - Full width clean button */}
-          <CheckoutButton
-            email={userEmail}
-            variant="cta"
-            size="lg"
-            className="
-              w-full relative group
-              px-6 py-4
-              rounded-2xl
-              text-base font-bold tracking-wide
-              transition-all duration-300 ease-out
-              active:scale-[0.98]
-              bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30
-            "
-            showPricing={false}
-            showTrustSignals={false}
-          >
-            <span className="flex items-center justify-center gap-2">
-              <span>Get F.I.R.E. Kit</span>
-              <span className="text-amber-50/80">•</span>
-              <span className="font-black">$27</span>
-            </span>
-
-            {/* Subtle inner glow */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/5 via-transparent to-white/10 pointer-events-none" />
-          </CheckoutButton>
+          <ShopifyBuyButton
+            productId="10761797894447"
+            domain="t7vyee-kc.myshopify.com"
+            storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+            buttonText="Get F.I.R.E. Kit • $27"
+            buttonColor="#16a34a"
+            buttonHoverColor="#15803d"
+            className="w-full"
+          />
 
           {/* Trust signal - Simple */}
           <div className="flex items-center justify-center text-xs text-slate-600">
@@ -804,18 +787,15 @@ function ThankYouPageContent() {
 
                 {/* CTA Button */}
                 <div className="w-full space-y-1.5 sm:space-y-2">
-                  <CheckoutButton
-                    email={userEmail}
-                    variant="cta"
-                    size="lg"
-                    className="w-full px-6 py-3.5 sm:px-8 sm:py-4 md:py-5 text-sm sm:text-base md:text-lg font-black bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-                    showPricing={false}
-                    showTrustSignals={false}
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      Yes! I want the protocol → $27
-                    </span>
-                  </CheckoutButton>
+                  <ShopifyBuyButton
+                    productId="10761797894447"
+                    domain="t7vyee-kc.myshopify.com"
+                    storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                    buttonText="Yes! I want the protocol → $27"
+                    buttonColor="#16a34a"
+                    buttonHoverColor="#15803d"
+                    className="w-full"
+                  />
 
                   {/* Scarcity - Subtle */}
                   <p className="text-xs text-center text-gray-500">
@@ -849,17 +829,15 @@ function ThankYouPageContent() {
             </p>
 
             <div className="text-center space-y-4">
-              <CheckoutButton
-                email={userEmail}
-                variant="primary"
-                size="lg"
-                className="w-full sm:w-auto px-10 py-5 text-lg font-bold bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-green-400"
-                showPricing={false}
-              >
-                <DollarSign className="h-5 w-5" />
-                Stop Overthinking. Start Doing. ($27)
-                <ArrowRight className="h-4 w-4" />
-              </CheckoutButton>
+              <ShopifyBuyButton
+                productId="10761797894447"
+                domain="t7vyee-kc.myshopify.com"
+                storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                buttonText="Stop Overthinking. Start Doing. ($27)"
+                buttonColor="#16a34a"
+                buttonHoverColor="#15803d"
+                className="w-full sm:w-auto"
+              />
             </div>
 
             <div className="space-y-2 text-left">

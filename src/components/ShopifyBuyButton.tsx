@@ -174,6 +174,7 @@ export default function ShopifyBuyButton({
                   total: 'Subtotal',
                   button: 'Checkout'
                 },
+                popup: false,
                 events: {
                   afterInit: () => {
                     if (onCheckoutComplete) {

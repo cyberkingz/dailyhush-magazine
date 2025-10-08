@@ -192,7 +192,7 @@ export default function NewsletterInlineForm({
         <button
           type="submit"
           disabled={isSubmitting || !email.trim()}
-          className="bg-yellow-400 text-black font-semibold px-6 sm:px-8 py-3 rounded-full hover:bg-yellow-300 transition-colors w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="bg-yellow-400 text-black font-semibold px-8 sm:px-10 py-3 rounded-full hover:bg-yellow-300 transition-colors w-full sm:w-auto sm:min-w-[180px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
         >
           {isSubmitting ? (
             <>

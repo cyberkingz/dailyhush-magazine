@@ -4,7 +4,7 @@ import { Users } from 'lucide-react'
 import NewsletterInlineForm from '@/components/NewsletterInlineForm'
 
 export default function Home() {
-  useEffect(() => { document.title = 'DailyHush — Your Daily Dose of Insights' }, [])
+  useEffect(() => { document.title = 'DailyHush — Stop Overthinking & Quiet Your Mind' }, [])
 
   // Home page does not feature a specific edition anymore
 
@@ -16,36 +16,36 @@ export default function Home() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm font-semibold text-amber-600 mb-6">
               <Users className="w-4 h-4" />
-              <span>Trusted by 50,000+ Growth-Focused Readers</span>
+              <span>Join 50,000+ Women Who Finally Quieted Their Minds</span>
             </div>
-            
+
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight md:leading-none">
-              Take The<br />
+              You're Not Broken.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">
-                Planning Paralysis Test
-              </span>
-              <br />
-              <span className="text-2xl sm:text-3xl md:text-4xl text-gray-700 font-medium">
-                Free 60-Second Diagnosis
+                You're Just Overthinking Wrong.
               </span>
             </h1>
 
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Are you stuck in research mode? Find out if you have Chronic Planning Syndrome—plus get weekly insights on breaking free from planning paralysis and actually launching.
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed">
+              It's 2 AM. Eyes open. Replaying that conversation. Again.
+            </p>
+
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              You've tried meditation apps, therapy, positive thinking. Nothing works because you're using the wrong METHOD. 847 women discovered the F.I.R.E. framework and stopped spiraling in 7 days.
             </p>
 
             <div className="max-w-xl mx-auto">
               <NewsletterInlineForm
                 sourcePage="home-hero"
-                buttonLabel="Get Free Test"
+                buttonLabel="Take Quiz →"
                 showSparkLoop={true}
                 redirectOnSuccess={true}
               />
             </div>
 
             <div className="text-sm text-gray-500 mt-4 space-y-1 max-w-xl mx-auto text-center">
-              <p>Get instant access to the diagnostic plus weekly insights on breaking free from planning paralysis. Unsubscribe anytime.</p>
-              <p><Link to="/privacy" className="underline underline-offset-2 hover:text-gray-700">See our Privacy Policy</Link></p>
+              <p>✓ Free 60-second quiz  ✓ Your overthinker type  ✓ The F.I.R.E. protocol that works</p>
+              <p className="text-xs"><Link to="/privacy" className="underline underline-offset-2 hover:text-gray-700">Privacy Policy</Link> • Unsubscribe anytime</p>
             </div>
           </div>
         </div>

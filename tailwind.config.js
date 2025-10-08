@@ -16,6 +16,11 @@ export default {
       },
     },
     extend: {
+      // Font Family
+      fontFamily: {
+        sans: ['Arial', 'sans-serif'],
+        display: ['Space Grotesk'],
+      },
       // Shadcn UI Theme Variables
       colors: {
         border: "hsl(var(--border))",

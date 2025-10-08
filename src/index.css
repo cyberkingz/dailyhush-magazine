@@ -1,7 +1,19 @@
+/* Local Font Faces */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
   font-weight: 400;
+
+  /* Font families */
+  --font-sans: Arial, sans-serif;
+  --font-display: 'Space Grotesk';
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);

@@ -186,13 +186,13 @@ export default function NewsletterInlineForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={placeholder}
-          className="border border-gray-300 px-5 py-3 rounded-full w-full bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900 placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="border border-emerald-200/40 px-5 py-3 rounded-full w-full bg-white/90 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-emerald-900 placeholder-emerald-600/60 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-white/20 shadow-[0_4px_16px_rgba(16,185,129,0.06)]"
           disabled={isSubmitting}
         />
         <button
           type="submit"
           disabled={isSubmitting || !email.trim()}
-          className="bg-yellow-400 text-black font-semibold px-8 sm:px-10 py-3 rounded-full hover:bg-yellow-300 transition-colors w-full sm:w-auto sm:min-w-[180px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
+          className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 sm:px-10 py-3 rounded-full transition-all shadow-[0_4px_20px_rgba(245,158,11,0.4)] hover:shadow-[0_6px_28px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 w-full sm:w-auto sm:min-w-[180px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
         >
           {isSubmitting ? (
             <>

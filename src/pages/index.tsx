@@ -11,26 +11,33 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
-        <div className="mx-auto max-w-7xl px-6 py-20">
+      <section className="bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 relative overflow-hidden">
+        {/* Organic Background Blobs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+          <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="mx-auto max-w-7xl px-6 py-20 relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm font-semibold text-amber-600 mb-6">
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border-2 border-amber-500/40 text-amber-900 px-4 py-2 rounded-full text-sm font-bold mb-6 backdrop-blur-xl ring-1 ring-white/40 shadow-[0_4px_16px_rgba(245,158,11,0.15)]">
               <Users className="w-4 h-4" />
               <span>Join 50,000+ Women Who Finally Quieted Their Minds</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight md:leading-none">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-emerald-900 mb-6 leading-tight md:leading-none">
               You're Not Broken.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 You're Just Overthinking Wrong.
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl text-emerald-800 max-w-3xl mx-auto mb-8 leading-relaxed">
               It's 2 AM. Eyes open. Replaying that conversation. Again.
             </p>
 
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-lg text-emerald-700/80 max-w-3xl mx-auto mb-8">
               You've tried meditation apps, therapy, positive thinking. Nothing works because you're using the wrong METHOD. 847 women discovered the F.I.R.E. framework and stopped spiraling in 7 days.
             </p>
 
@@ -43,9 +50,9 @@ export default function Home() {
               />
             </div>
 
-            <div className="text-sm text-gray-500 mt-4 space-y-1 max-w-xl mx-auto text-center">
+            <div className="text-sm text-emerald-700/70 mt-4 space-y-1 max-w-xl mx-auto text-center">
               <p>✓ Free 60-second quiz  ✓ Your overthinker type  ✓ The F.I.R.E. protocol that works</p>
-              <p className="text-xs"><Link to="/privacy" className="underline underline-offset-2 hover:text-gray-700">Privacy Policy</Link> • Unsubscribe anytime</p>
+              <p className="text-xs"><Link to="/privacy" className="underline underline-offset-2 hover:text-emerald-800">Privacy Policy</Link> • Unsubscribe anytime</p>
             </div>
           </div>
         </div>

@@ -14,12 +14,12 @@ export function Header({ onSubscribeClick }: { onSubscribeClick?: () => void }) 
             <button
               type="button"
               onClick={onSubscribeClick}
-              className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 transition-colors"
+              className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-full transition-all shadow-[0_4px_12px_rgba(245,158,11,0.3)] hover:shadow-[0_6px_16px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95"
             >
               Subscribe
             </button>
           ) : (
-            <Link to="/newsletter" className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 transition-colors">Subscribe</Link>
+            <Link to="/newsletter" className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-full transition-all shadow-[0_4px_12px_rgba(245,158,11,0.3)] hover:shadow-[0_6px_16px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95">Subscribe</Link>
           )}
         </div>
       </div>

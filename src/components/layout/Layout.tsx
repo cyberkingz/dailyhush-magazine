@@ -14,7 +14,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <main className="flex-1 bg-white">
         {children}
       </main>
-      <Footer />
+      <Footer variant="emerald" />
       <SubscribeModal open={subscribeOpen} onClose={() => setSubscribeOpen(false)} />
     </div>
   )

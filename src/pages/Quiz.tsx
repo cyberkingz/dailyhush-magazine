@@ -416,11 +416,17 @@ export default function Quiz() {
 
   if (!hasStarted) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30">
         <AnnouncementBar />
         <TopBar />
-        <main className="flex-1 bg-white">
-          <div className="quiz-container">
+        <main className="flex-1 relative overflow-hidden">
+          {/* Organic Background Blobs */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+            <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
+          </div>
+          <div className="quiz-container relative z-10">
             <div className="quiz-intro">
           <h1 className="quiz-intro__title">
             What's Your Overthinkaolic Type?
@@ -444,20 +450,26 @@ export default function Quiz() {
             Start the Diagnostic →
           </button>
         </div>
-      </div>
+          </div>
         </main>
-        <Footer />
+        <Footer variant="emerald" />
       </div>
     )
   }
 
   if (showEmailCapture && result) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30">
         <AnnouncementBar />
         <TopBar />
-        <main className="flex-1 bg-white">
-          <div className="quiz-container">
+        <main className="flex-1 relative overflow-hidden">
+          {/* Organic Background Blobs */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+            <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
+          </div>
+          <div className="quiz-container relative z-10">
             <div className="quiz-email-capture">
           <div className="quiz-email-capture__icon">🎯</div>
           <h2 className="quiz-email-capture__title">
@@ -523,19 +535,25 @@ export default function Quiz() {
             shipping strategies.
           </p>
         </div>
-      </div>
+          </div>
         </main>
-        <Footer />
+        <Footer variant="emerald" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30">
       <AnnouncementBar />
       <TopBar />
-      <main className="flex-1 bg-white">
-        <div className="quiz-container">
+      <main className="flex-1 relative overflow-hidden">
+        {/* Organic Background Blobs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+          <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
+        </div>
+        <div className="quiz-container relative z-10">
           <QuizProgress
         current={currentQuestionIndex + 1}
         total={totalQuestions}

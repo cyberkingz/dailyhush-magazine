@@ -1,3 +1,6 @@
+/* Import Authentication Design System */
+@import './auth-design-system.css';
+
 /* Local Font Faces */
 @font-face {
   font-family: 'Space Grotesk';
@@ -14,9 +17,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* Import Authentication Design System */
-@import './auth-design-system.css';
 
 @tailwind base;
 @tailwind components;

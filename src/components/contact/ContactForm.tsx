@@ -99,19 +99,19 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
   // Show success state
   if (response && response.success) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-        <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-green-100 rounded-full">
-          <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 text-center">
+        <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-emerald-100 rounded-full">
+          <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-green-900 mb-2">Message Sent!</h3>
-        <p className="text-green-700 mb-4">
+        <h3 className="text-lg font-semibold text-emerald-900 mb-2">Message Sent!</h3>
+        <p className="text-emerald-700 mb-4">
           {response.message}
         </p>
         <button
           onClick={() => setResponse(null)}
-          className="text-green-600 hover:text-green-700 font-medium transition-colors"
+          className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
         >
           Send Another Message
         </button>

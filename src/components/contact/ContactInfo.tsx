@@ -9,21 +9,21 @@ interface ContactInfoItemProps {
 
 function ContactInfoItem({ icon, title, content, href }: ContactInfoItemProps) {
   const ContentWrapper = href ? 'a' : 'div'
-  const linkProps = href ? { 
-    href, 
-    className: "text-amber-600 hover:text-amber-700 transition-colors" 
+  const linkProps = href ? {
+    href,
+    className: "text-amber-600 hover:text-amber-700 transition-colors"
   } : {}
 
   return (
     <div className="flex items-start gap-4">
-      <div className="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+      <div className="flex-shrink-0 w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center ring-1 ring-emerald-200/40">
         <div className="text-amber-600">
           {icon}
         </div>
       </div>
       <div>
-        <h3 className="font-semibold text-gray-900 mb-1">{title}</h3>
-        <ContentWrapper {...linkProps} className={href ? "text-amber-600 hover:text-amber-700 transition-colors" : "text-gray-600"}>
+        <h3 className="font-semibold text-emerald-900 mb-1">{title}</h3>
+        <ContentWrapper {...linkProps} className={href ? "text-amber-600 hover:text-amber-700 transition-colors" : "text-emerald-700"}>
           {content}
         </ContentWrapper>
       </div>
@@ -35,9 +35,9 @@ export function ContactInfo() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Get in Touch</h2>
-        <p className="text-gray-600 leading-relaxed">
-          Have a question, suggestion, or just want to say hello? We'd love to hear from you. 
+        <h2 className="text-2xl font-bold text-emerald-900 mb-4">Get in Touch</h2>
+        <p className="text-emerald-700 leading-relaxed">
+          Have a question, suggestion, or just want to say hello? We'd love to hear from you.
           Reach out using the form or contact us directly.
         </p>
       </div>
@@ -76,9 +76,9 @@ export function ContactInfo() {
         />
       </div>
       
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-        <h3 className="font-semibold text-gray-900 mb-2">Quick Tips</h3>
-        <ul className="text-sm text-gray-600 space-y-1">
+      <div className="bg-emerald-50/80 border border-emerald-200/60 rounded-xl p-6 ring-1 ring-white/40">
+        <h3 className="font-semibold text-emerald-900 mb-2">Quick Tips</h3>
+        <ul className="text-sm text-emerald-700 space-y-1">
           <li>• Be specific about your question or request</li>
           <li>• Include relevant details to help us assist you better</li>
           <li>• Check your spam folder if you don't hear back within 48 hours</li>

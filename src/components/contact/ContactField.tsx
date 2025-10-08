@@ -23,7 +23,7 @@ export function ContactField({
   error,
   rows = 4
 }: ContactFieldProps) {
-  const baseClasses = "w-full px-5 py-3 border border-gray-300 rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900 placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+  const baseClasses = "w-full px-5 py-3 border border-emerald-200/40 rounded-full bg-white/90 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-emerald-900 placeholder-emerald-600/60 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-white/20 shadow-[0_4px_16px_rgba(16,185,129,0.06)]"
   const errorClasses = error ? "border-red-500 focus:ring-red-500" : ""
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,7 +32,7 @@ export function ContactField({
 
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-900">
+      <label htmlFor={id} className="block text-sm font-medium text-emerald-900">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>

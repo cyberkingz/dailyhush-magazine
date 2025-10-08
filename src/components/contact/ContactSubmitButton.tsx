@@ -17,7 +17,7 @@ export function ContactSubmitButton({
     <button
       type="submit"
       disabled={isLoading || isDisabled}
-      className="w-full bg-yellow-400 hover:bg-yellow-300 hover:text-black focus:text-black text-black font-semibold py-3 px-6 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-full transition-all shadow-[0_4px_20px_rgba(245,158,11,0.4)] hover:shadow-[0_6px_28px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
     >
       {isLoading && (
         <svg 

@@ -36,7 +36,7 @@ export default function FireStarterProduct() {
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>🎁 Quiz-Taker Special:</strong> You're getting $70 off — Your personalized F.I.R.E. KIT is waiting for just $27</>}
+        message={<><strong>✨ New:</strong> The Digital Overthinking Protocol — Stop 2 AM thought spirals in under 5 minutes</>}
         variant="emerald"
       />
       <TopBar />
@@ -94,9 +94,12 @@ export default function FireStarterProduct() {
           <div>
 
             {/* Product Title */}
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-emerald-900 mb-3">
-              F.I.R.E. KIT
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-emerald-900 mb-3 leading-tight">
+              Stop Your 2 AM Thought Spirals In Under 5 Minutes With The F.I.R.E. KIT
             </h1>
+            <p className="text-base md:text-lg text-emerald-700/80 font-medium mb-4">
+              5 Digital Tools That Helped 847 Women Finally Quiet Their Racing Minds
+            </p>
 
             {/* Rating Stars */}
             <div className="flex items-center gap-2 mb-4">
@@ -117,50 +120,51 @@ export default function FireStarterProduct() {
             {/* Price */}
             <div className="mb-6">
               <div className="flex items-baseline gap-2 md:gap-3 mb-2 flex-wrap">
-                <span className="text-3xl md:text-4xl font-bold text-emerald-900">$27</span>
-                <span className="text-xl md:text-2xl text-emerald-600/60 line-through">$97</span>
+                <span className="text-3xl md:text-4xl font-bold text-emerald-900">$7</span>
+                <span className="text-xl md:text-2xl text-emerald-600/60 line-through">$387</span>
                 <span className="bg-amber-500 text-white text-xs md:text-sm font-semibold px-2.5 md:px-3 py-1 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.4)]">
-                  Save $70
+                  Save $380
                 </span>
               </div>
               <div className="text-sm text-amber-700 font-medium">
-                ⏰ Limited time quiz-taker price
+                ⏰ Final offer — Last chance to get it at this price
               </div>
             </div>
 
             {/* Short Description */}
             <div className="mb-8 pb-8 border-b border-emerald-200/40">
               <p className="text-lg text-emerald-800 mb-4 leading-[1.7]">
-                The exact system that helped 847 women stop 2 AM thought spirals and finally quiet their racing minds—after years of trying meditation apps that didn't work.
+                <strong>A complete digital protocol</strong> with 5 implementation tools that helped 847 women stop 2 AM thought spirals and finally quiet their racing minds—after years of trying meditation apps that didn't work.
               </p>
               <p className="text-emerald-700/80 leading-[1.6]">
-                You took the quiz. You know your overthinker type. Now get the proven F.I.R.E. framework that breaks the mental loop the moment it starts.
+                You took the quiz. You know your overthinker type. Now get the <strong>digital tools and step-by-step protocol</strong> you'll implement in your daily life to break the mental loop the moment it starts.
               </p>
             </div>
 
             {/* What's Included */}
             <div className="mb-4 pb-4 border-b border-emerald-200/40">
-              <h3 className="font-display font-bold text-emerald-900 mb-4">What's included:</h3>
+              <h3 className="font-display font-bold text-emerald-900 mb-2">5 Digital Tools You'll Implement:</h3>
+              <p className="text-sm text-emerald-700/70 mb-4 italic">Instant digital download</p>
               <ul className="space-y-3">
                 <li className="flex gap-3 items-start">
                   <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Window of Tolerance — Catch your mind before it spirals into overwhelm.</span>
+                  <span className="text-emerald-800/90"><strong>Window of Tolerance</strong> — Catch your mind before it spirals into overwhelm.</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Cognitive Distortions — Name the thought trap, break the loop in seconds.</span>
+                  <span className="text-emerald-800/90"><strong>Cognitive Distortions</strong> — Name the thought trap, break the loop in seconds.</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Coping Strategies Wheel — Find the right reset for your mood in 30 seconds, not 3 hours.</span>
+                  <span className="text-emerald-800/90"><strong>Coping Strategies Wheel</strong> — Find the right reset for your mood in 30 seconds, not 3 hours.</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">What Do You Value? — Stop chasing "what ifs," reconnect with what actually matters.</span>
+                  <span className="text-emerald-800/90"><strong>What Do You Value?</strong> — Stop chasing "what ifs," reconnect with what actually matters.</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Overthinking Journal — Racing thoughts → clarity in 5 minutes flat.</span>
+                  <span className="text-emerald-800/90"><strong>Overthinking Journal</strong> — Racing thoughts → clarity in 5 minutes flat.</span>
                 </li>
               </ul>
             </div>
@@ -171,7 +175,7 @@ export default function FireStarterProduct() {
                 productId="10761049702703"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get F.I.R.E. Kit — $27"
+                buttonText="Get F.I.R.E. Kit — $7"
                 buttonColor="#f59e0b"
                 buttonHoverColor="#d97706"
                 onCheckoutComplete={handleCheckoutComplete}

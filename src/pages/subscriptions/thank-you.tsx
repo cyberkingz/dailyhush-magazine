@@ -479,36 +479,42 @@ function ThankYouPageContent() {
           {/* What You'll Get Inside */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              For Women Whose Brains Won't Shut Up
+              The Complete Digital Overthinking Protocol
             </h2>
             <p className="text-lg text-gray-900 mb-8 leading-relaxed">
-              4 proven tools, one calm system, zero fluff.
+              5 digital implementation tools — instant download, zero fluff.
             </p>
 
             <div className="space-y-8 text-lg text-gray-900 leading-relaxed">
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ The Spiral Tracker</p>
-                <p className="mb-2">→ Catch your patterns before they catch you.</p>
-                <p><strong>What you get:</strong> Thought pattern journal, trigger identification worksheet, 5-minute spiral interrupt script.</p>
+                <p className="font-bold text-xl mb-2">✅ Window of Tolerance</p>
+                <p className="mb-2">→ Catch your mind before it spirals into overwhelm.</p>
+                <p><strong>Digital tool:</strong> Visual framework to recognize when you're entering dysregulation before the spiral starts.</p>
               </div>
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ The F.I.R.E. Reset Protocol</p>
-                <p className="mb-2">→ From racing mind to calm presence.</p>
-                <p><strong>What you get:</strong> F.I.R.E. implementation guide, pattern break toolkit, bedtime reset ritual, decision-making framework.</p>
+                <p className="font-bold text-xl mb-2">✅ Cognitive Distortions</p>
+                <p className="mb-2">→ Name the thought trap, break the loop in seconds.</p>
+                <p><strong>Digital tool:</strong> Reference guide to identify the 10 most common thinking errors that fuel overthinking.</p>
               </div>
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ The Calm Routine Builder</p>
-                <p className="mb-2">→ Daily practices that actually work.</p>
-                <p><strong>What you get:</strong> Morning clarity script, social media boundary template, comparison detox guide.</p>
+                <p className="font-bold text-xl mb-2">✅ Coping Strategies Wheel</p>
+                <p className="mb-2">→ Find the right reset for your mood in 30 seconds, not 3 hours.</p>
+                <p><strong>Digital tool:</strong> Interactive decision wheel with 20+ proven pattern breaks matched to your current state.</p>
               </div>
 
               <div>
-                <p className="font-bold text-xl mb-2">✅ The Mental Freedom Roadmap</p>
-                <p className="mb-2">→ From chronic overthinking to confident living.</p>
-                <p><strong>What you get:</strong> Progress tracker, self-talk reframe cards, confidence-building checklist.</p>
+                <p className="font-bold text-xl mb-2">✅ What Do You Value?</p>
+                <p className="mb-2">→ Stop chasing "what ifs," reconnect with what actually matters.</p>
+                <p><strong>Digital tool:</strong> Values clarification framework to ground decisions in what you truly care about.</p>
+              </div>
+
+              <div>
+                <p className="font-bold text-xl mb-2">✅ Overthinking Journal</p>
+                <p className="mb-2">→ Racing thoughts → clarity in 5 minutes flat.</p>
+                <p><strong>Digital tool:</strong> Structured journaling prompts that transform thought spirals into actionable insights.</p>
               </div>
             </div>
           </div>
@@ -599,7 +605,7 @@ function ThankYouPageContent() {
                     But today you won't pay<br/>anywhere near that.
                   </p>
                   <p className="text-base text-gray-600 mb-6 leading-relaxed">
-                    For less than lunch, you can get the 4-step protocol that helped 847 women break free from chronic overthinking...
+                    For less than lunch, you can get the complete digital protocol with 5 implementation tools that helped 847 women break free from chronic overthinking...
                   </p>
                   <div className="bg-white/80 rounded-xl px-6 py-4 border-2 border-green-500">
                     <p className="text-sm text-gray-600 mb-1">One-time investment:</p>
@@ -738,25 +744,31 @@ function ThankYouPageContent() {
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">F.I.R.E. Reset Protocol (PDF + Notion template)</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Window of Tolerance framework</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Pattern Break Toolkit</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Cognitive Distortions guide</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Bedtime Reset Ritual</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Coping Strategies Wheel</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Spiral Interrupt Script</p>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">What Do You Value? worksheet</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Overthinking Journal prompts</p>
                     </div>
                   </div>
 

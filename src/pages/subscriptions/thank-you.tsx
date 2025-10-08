@@ -181,8 +181,15 @@ function ThankYouPageContent() {
   }, [currentNotification, decrementSpots])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex flex-col">
-      <TopBar />
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col relative overflow-hidden">
+      {/* Organic Background Blobs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+        <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
+      </div>
+
+      <TopBar variant="dark" />
 
       <div className="flex-1 flex justify-center items-stretch">
       {/* Floating Purchase Notification - iOS Glassmorphic Style */}
@@ -292,13 +299,13 @@ function ThankYouPageContent() {
         <div className="h-safe-area-inset-bottom bg-gradient-to-t from-white to-transparent" />
       </div>
 
-      <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1">
-        <div className="bg-white border-2 border-gray-300 flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0">
+      <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1 relative z-10">
+        <div className="bg-white/90 backdrop-blur-xl flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0 shadow-[0_16px_48px_-8px_rgba(16,185,129,0.15)]">
           <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
         {/* Letter Header */}
         <div className="mb-16">
           {/* Opening Hook - Gary Halbert Greased Slide */}
-          <div className="mb-12 space-y-6 text-lg text-gray-900 leading-relaxed">
+          <div className="mb-12 space-y-6 text-lg text-emerald-900 leading-relaxed">
             <p className="text-xl font-semibold">Listen… If your brain never shuts up — this will finally make sense.</p>
 
             <p>I know what just happened.</p>
@@ -311,15 +318,15 @@ function ThankYouPageContent() {
           </div>
 
           {resultData && quizScore !== null && (
-            <div className="mb-16 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border-4 border-amber-400 rounded-3xl p-10 md:p-12 shadow-2xl">
+            <div className="mb-16 bg-gradient-to-br from-amber-50 via-amber-100/50 to-orange-50 border-4 border-amber-400 rounded-3xl p-10 md:p-12 shadow-2xl">
               <div className="text-center mb-8">
                 <p className="text-base font-bold text-amber-800 mb-4 tracking-wide">🎯 YOUR QUIZ RESULTS</p>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">{resultData.title}</h1>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-emerald-900 mb-6 leading-tight">{resultData.title}</h1>
 
                 {/* Score with Progress Bar */}
                 <div className="max-w-md mx-auto mb-6">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-lg font-semibold text-gray-700">Overthinking Scale</span>
+                    <span className="text-lg font-semibold text-emerald-700">Overthinking Scale</span>
                     <span className="text-2xl font-black text-amber-900">{quizScore}/10</span>
                   </div>
                   <div className="relative w-full bg-amber-200 rounded-full h-4 overflow-hidden">
@@ -332,30 +339,30 @@ function ThankYouPageContent() {
                   </div>
                 </div>
 
-                <p className="text-lg md:text-xl text-gray-700 italic leading-relaxed max-w-2xl mx-auto">{resultData.description}</p>
+                <p className="text-lg md:text-xl text-emerald-700 italic leading-relaxed max-w-2xl mx-auto">{resultData.description}</p>
               </div>
 
               <div className="border-t-2 border-amber-300 pt-8 mt-8 bg-white/40 rounded-xl p-6">
-                <p className="text-xl md:text-2xl font-bold text-gray-900 text-center leading-relaxed">{resultData.insight}</p>
+                <p className="text-xl md:text-2xl font-bold text-emerald-900 text-center leading-relaxed">{resultData.insight}</p>
               </div>
             </div>
           )}
 
-          <p className="text-xl text-gray-900 leading-relaxed max-w-3xl mx-auto mb-16">
+          <p className="text-xl text-emerald-900 leading-relaxed max-w-3xl mx-auto mb-16">
             <strong>That number above? It's not a diagnosis. It's a warning signal.</strong>
           </p>
 
-          <p className="text-lg text-gray-900 leading-relaxed max-w-3xl mx-auto mb-16">
+          <p className="text-lg text-emerald-900 leading-relaxed max-w-3xl mx-auto mb-16">
             Because every day you've been doing this:
           </p>
 
           {/* Overthinking Reality Check */}
-          <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
+          <div className="space-y-6 text-lg text-emerald-900 leading-relaxed">
             {resultData ? (
               <>
                 <p>You've said <em>"I'll decide tomorrow"</em> about the same thing for weeks.</p>
                 <p>{resultData.symptom}</p>
-                <p className="text-xl font-bold text-gray-900">
+                <p className="text-xl font-bold text-emerald-900">
                   The brutal truth? You're not living your life.
                 </p>
                 <p className="text-xl">
@@ -372,7 +379,7 @@ function ThankYouPageContent() {
               <>
                 <p>You've said <em>"I'll decide tomorrow"</em> about the same thing for weeks.</p>
                 <p>You've replayed that conversation 47 times. You've changed your mind about what to wear, what to say, what to do.</p>
-                <p className="text-xl font-bold text-gray-900">
+                <p className="text-xl font-bold text-emerald-900">
                   The brutal truth? You're not living your life.
                 </p>
                 <p className="text-xl">
@@ -391,10 +398,10 @@ function ThankYouPageContent() {
           
           {/* Why Smart People Stay Stuck */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6">
               Why Your Smartest Thoughts Keep You Paralyzed
             </h2>
-            <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
+            <div className="space-y-6 text-lg text-emerald-900 leading-relaxed">
               {resultData ? (
                 <>
                   <p>{resultData.problem}</p>
@@ -424,10 +431,10 @@ function ThankYouPageContent() {
 
           {/* Hidden Addiction */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6">
               The Hidden Addiction You Never Noticed
             </h2>
-            <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
+            <div className="space-y-6 text-lg text-emerald-900 leading-relaxed">
               <p>It's not social media keeping you stuck.</p>
               <p>It's replaying moments you can never change.</p>
               <p>You don't need another self-help book.</p>
@@ -442,19 +449,19 @@ function ThankYouPageContent() {
 
           {/* The Cure: F.I.R.E. */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6">
               How To Stop A 2 AM Spiral Before It Steals Your Sleep
             </h2>
-            <p className="text-lg text-gray-900 mb-8 leading-relaxed">
+            <p className="text-lg text-emerald-900 mb-8 leading-relaxed">
               A 4-step reset that forces you to be present, not anxious:
             </p>
-            <div className="space-y-4 text-lg text-gray-900 leading-relaxed mb-8">
+            <div className="space-y-4 text-lg text-emerald-900 leading-relaxed mb-8">
               <p><strong>F — Feel</strong> → Notice the spiral before it swallows you.</p>
               <p><strong>I — Interrupt</strong> → Stop the loop with a pattern break.</p>
               <p><strong>R — Redirect</strong> → Channel your thoughts into something real.</p>
               <p><strong>E — Ease</strong> → Build calm without needing certainty.</p>
             </div>
-            <p className="text-xl font-semibold text-gray-900">
+            <p className="text-xl font-semibold text-emerald-900">
               With this 4-step protocol, you'll go from <em>"I can't stop thinking"</em> → to <em>"I know exactly how to stop this."</em>
             </p>
           </div>
@@ -462,10 +469,10 @@ function ThankYouPageContent() {
           {/* Step 0: Try It Now */}
           <div className="mb-16 flex justify-center">
             <div className="bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 border-4 border-dashed border-blue-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
-              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-black text-emerald-900 mb-6 tracking-tight">
                 Step 0: Try It Now <span className="text-blue-600">(Free)</span>
               </h2>
-              <div className="space-y-4 text-base text-gray-800 leading-relaxed">
+              <div className="space-y-4 text-base text-emerald-800 leading-relaxed">
                 <p>Notice the next thought spiral.</p>
                 <p>Say it out loud: "I'm overthinking again."</p>
                 <p className="font-bold bg-white/60 px-4 py-2 rounded-lg">
@@ -478,14 +485,14 @@ function ThankYouPageContent() {
 
           {/* What You'll Get Inside */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6">
               The Complete Digital Overthinking Protocol
             </h2>
-            <p className="text-lg text-gray-900 mb-8 leading-relaxed">
+            <p className="text-lg text-emerald-900 mb-8 leading-relaxed">
               5 digital implementation tools — instant download, zero fluff.
             </p>
 
-            <div className="space-y-8 text-lg text-gray-900 leading-relaxed">
+            <div className="space-y-8 text-lg text-emerald-900 leading-relaxed">
 
               <div>
                 <p className="font-bold text-xl mb-2">✅ Window of Tolerance</p>
@@ -521,11 +528,11 @@ function ThankYouPageContent() {
 
           {/* Real Results */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6">
               What 50,000 Overthinkers Discovered About That Voice In Their Head
             </h2>
 
-            <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8">
+            <div className="space-y-6 text-lg text-emerald-900 leading-relaxed mb-8">
               <p>
                 • <strong>Jessica (Austin)</strong>: 8 months replaying conversations → stopped the spiral in 3 days → sleeps through the night now.
               </p>
@@ -537,10 +544,10 @@ function ThankYouPageContent() {
               </p>
             </div>
 
-            <p className="text-xl font-bold text-gray-900">
+            <p className="text-xl font-bold text-emerald-900">
               Based on data from 847 women who applied this exact framework — and reported measurable drops in their mental spirals within the first week.
             </p>
-            <p className="text-base text-gray-600 italic mt-4">
+            <p className="text-base text-emerald-700 italic mt-4">
               Reviewed by licensed CBT coaches & behavior analysts.
             </p>
           </div>
@@ -548,10 +555,10 @@ function ThankYouPageContent() {
           {/* Limited-Time Subscriber Deal - Scarcity Introduction */}
           <div className="mb-16 flex justify-center">
             <div className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 border-4 border-dashed border-red-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
-              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-black text-emerald-900 mb-6 tracking-tight">
                 🎉 50K Celebration — Price Locks Soon
               </h2>
-              <div className="space-y-4 text-base text-gray-800 leading-relaxed">
+              <div className="space-y-4 text-base text-emerald-800 leading-relaxed">
                 {!isSoldOut ? (
                   <>
                     <p className="font-semibold">
@@ -578,7 +585,7 @@ function ThankYouPageContent() {
                     SOLD OUT - Price returning to $387
                   </p>
                 )}
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-emerald-700">
                   (Regular price: $387)
                 </p>
                 <p className="bg-white/60 px-4 py-2 rounded-lg font-semibold">
@@ -590,25 +597,25 @@ function ThankYouPageContent() {
 
           {/* Phase 1: Teaser - Price Curiosity Hook */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-8 text-center">
               Here's The Truth
             </h2>
 
-            <div className="space-y-6 text-lg text-gray-900 leading-relaxed mb-8 text-center">
+            <div className="space-y-6 text-lg text-emerald-900 leading-relaxed mb-8 text-center">
               <p>The regular price for this protocol is $387.</p>
               <p>That's what 847 women already paid to finally have a system that breaks the overthinking loop.</p>
 
               {/* Teaser Card - Creates Curiosity */}
               <div className="flex justify-center">
                 <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-4 border-dashed border-green-400 rounded-2xl p-10 text-center max-w-md w-full aspect-square flex flex-col justify-center items-center shadow-lg">
-                  <p className="text-xl font-bold text-gray-700 mb-4">
+                  <p className="text-xl font-bold text-emerald-700 mb-4">
                     But today you won't pay<br/>anywhere near that.
                   </p>
-                  <p className="text-base text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-base text-emerald-700 mb-6 leading-relaxed">
                     For less than lunch, you can get the complete digital protocol with 5 implementation tools that helped 847 women break free from chronic overthinking...
                   </p>
                   <div className="bg-white/80 rounded-xl px-6 py-4 border-2 border-green-500">
-                    <p className="text-sm text-gray-600 mb-1">One-time investment:</p>
+                    <p className="text-sm text-emerald-700 mb-1">One-time investment:</p>
                     <p className="text-4xl font-black text-green-600">$27</p>
                   </div>
                   <p className="text-xs text-gray-500 mt-4 italic">
@@ -625,11 +632,11 @@ function ThankYouPageContent() {
 
           {/* Let's Be Logical About Risk */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-8">
               Two Truths About Why You Replay Every Conversation
             </h2>
 
-            <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
+            <div className="space-y-6 text-lg text-emerald-900 leading-relaxed">
               <p>What's riskier?</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Spending $27 on a proven protocol that helped 847 women break the overthinking loop,</li>
@@ -649,11 +656,11 @@ function ThankYouPageContent() {
 
           {/* You Have Two Choices */}
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-8">
               You Have Two Choices Right Now
             </h2>
 
-            <div className="space-y-8 text-lg text-gray-900 leading-relaxed">
+            <div className="space-y-8 text-lg text-emerald-900 leading-relaxed">
               <div>
                 <p className="font-bold text-xl mb-2">Choice #1: Do Nothing</p>
                 <p>Stay stuck. Keep analyzing. 6 months from now, still replaying conversations.</p>
@@ -673,11 +680,11 @@ function ThankYouPageContent() {
 
             {/* My Unreasonable Guarantee */}
             <div className="mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-8">
                 My "Unreasonable" Guarantee
               </h2>
 
-              <div className="space-y-6 text-lg text-gray-900 leading-relaxed">
+              <div className="space-y-6 text-lg text-emerald-900 leading-relaxed">
                 <p>Use the protocol for 30 days.</p>
                 <p>If it doesn't give you a clear way to interrupt your overthinking pattern, I refund you.</p>
                 <p>Keep the kit. No questions asked.</p>
@@ -698,23 +705,23 @@ function ThankYouPageContent() {
 
             {/* Phase 2: Full Reveal Transition */}
             <div className="mb-12 text-center">
-              <div ref={youAskedBadgeRef} className="inline-block bg-gradient-to-r from-yellow-100 to-amber-100 border-2 border-yellow-400 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 mb-3 sm:mb-4">
-                <p className="text-sm sm:text-base md:text-lg font-black text-gray-900">
+              <div ref={youAskedBadgeRef} className="inline-block bg-gradient-to-r from-amber-100 to-amber-200 border-2 border-amber-400 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 mb-3 sm:mb-4">
+                <p className="text-sm sm:text-base md:text-lg font-black text-emerald-900">
                   Stop Overthinking For Less Than What You Spent Worrying About Dinner
                 </p>
               </div>
-              <p className="text-base sm:text-lg md:text-xl font-bold text-gray-900 max-w-2xl mx-auto px-4">
+              <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-900 max-w-2xl mx-auto px-4">
                 Here's everything inside the F.I.R.E. Starter Kit 👇
               </p>
             </div>
 
             {/* Phase 2: Full Offer Reveal - Compact Stack */}
             <div className="mb-16 flex justify-center">
-              <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-6 md:p-10 text-center max-w-lg w-full shadow-xl space-y-3 sm:space-y-4 md:space-y-6">
+              <div className="bg-white/90 backdrop-blur-sm border border-emerald-200/40 rounded-2xl p-4 sm:p-6 md:p-10 text-center max-w-lg w-full shadow-xl ring-1 ring-white/40 space-y-3 sm:space-y-4 md:space-y-6">
 
                 {/* Headline */}
                 <div className="space-y-1.5">
-                  <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight">
+                  <p className="text-lg sm:text-xl md:text-2xl font-bold text-emerald-900 leading-tight">
                     {resultData?.offerHeadline ? (
                       <>
                         {resultData.offerHeadline.line1}<br/>
@@ -732,50 +739,50 @@ function ThankYouPageContent() {
 
                 {/* Promise */}
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-lg px-4 py-2.5 sm:px-5 sm:py-3">
-                  <p className="text-sm sm:text-base md:text-lg font-bold text-gray-900">
+                  <p className="text-sm sm:text-base md:text-lg font-bold text-emerald-900">
                     💥 Finally, a system for women whose brains won't shut up.
                   </p>
                 </div>
 
                 {/* Value + Price Combined */}
-                <div className="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                <div className="bg-emerald-50/50 rounded-xl overflow-hidden border border-emerald-200/40">
                   <div className="p-3 sm:p-4 md:p-6 space-y-2">
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Window of Tolerance framework</p>
+                      <p className="text-xs sm:text-sm text-emerald-700 leading-snug">Window of Tolerance framework</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Cognitive Distortions guide</p>
+                      <p className="text-xs sm:text-sm text-emerald-700 leading-snug">Cognitive Distortions guide</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Coping Strategies Wheel</p>
+                      <p className="text-xs sm:text-sm text-emerald-700 leading-snug">Coping Strategies Wheel</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">What Do You Value? worksheet</p>
+                      <p className="text-xs sm:text-sm text-emerald-700 leading-snug">What Do You Value?</p>
                     </div>
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                       </svg>
-                      <p className="text-xs sm:text-sm text-gray-700 leading-snug">Overthinking Journal prompts</p>
+                      <p className="text-xs sm:text-sm text-emerald-700 leading-snug">Overthinking Journal prompts</p>
                     </div>
                   </div>
 
-                  <div className="border-t border-gray-200 bg-white px-4 py-3 sm:px-6 sm:py-4 md:py-5 text-center">
-                    <p className="text-xs text-gray-600 mb-2">Therapists charge $150/hour to teach the same techniques.</p>
+                  <div className="border-t border-emerald-200/40 bg-white px-4 py-3 sm:px-6 sm:py-4 md:py-5 text-center">
+                    <p className="text-xs text-emerald-700 mb-2">Therapists charge $150/hour to teach the same techniques.</p>
                     <p className="text-xs text-gray-500 mb-0.5">Was: <span className="line-through">$387</span></p>
-                    <p className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900">$27</p>
+                    <p className="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-900">$27</p>
                     <p className="text-xs text-gray-500 mt-1">One-time payment</p>
                   </div>
                 </div>
@@ -790,7 +797,7 @@ function ThankYouPageContent() {
 
                 {/* Pattern Interrupt */}
                 <div className="bg-amber-50 border-l-4 border-amber-400 rounded-lg px-4 py-2 sm:px-5 sm:py-2.5 text-center">
-                  <p className="text-xs sm:text-sm text-gray-800 leading-snug">
+                  <p className="text-xs sm:text-sm text-emerald-800 leading-snug">
                     Before you click away and tell yourself <em>"maybe later"</em> — <strong>that's the loop talking.</strong> Let's break it right now.
                   </p>
                 </div>
@@ -816,7 +823,7 @@ function ThankYouPageContent() {
                   </p>
 
                   {/* Emotional Micro-ROI */}
-                  <p className="text-xs text-center text-gray-600 italic mt-2">
+                  <p className="text-xs text-center text-emerald-700 italic mt-2">
                     If all it does is help you fall asleep without replaying your day — it's already worth it.
                   </p>
                 </div>
@@ -824,20 +831,20 @@ function ThankYouPageContent() {
             </div>
           </div>
 
-          <div className="border-t border-gray-200 pt-12 mt-16 px-8 md:px-16 pb-16 md:pb-20 space-y-8 max-w-3xl mx-auto">
-            <p className="text-lg text-gray-900 leading-relaxed">
+          <div className="border-t border-emerald-200/40 pt-12 mt-16 px-8 md:px-16 pb-16 md:pb-20 space-y-8 max-w-3xl mx-auto">
+            <p className="text-lg text-emerald-900 leading-relaxed">
               <strong>P.S.</strong> Right now, someone just like you — same thoughts, same doubts — finally stopped overthinking and did something real.
             </p>
-            <p className="text-lg text-gray-900 leading-relaxed">
+            <p className="text-lg text-emerald-900 leading-relaxed">
               The only difference? She stopped waiting to "feel ready."
             </p>
-            <p className="text-lg text-gray-900 leading-relaxed">
+            <p className="text-lg text-emerald-900 leading-relaxed">
               You're already subscribed to DailyHush. But reading about calm isn't the same as feeling it.
             </p>
-            <p className="text-lg text-gray-900 leading-relaxed">
+            <p className="text-lg text-emerald-900 leading-relaxed">
               This kit is what finally helped me break the loop — not because it's magic, but because it's practical.
             </p>
-            <p className="text-lg text-gray-900 leading-relaxed">
+            <p className="text-lg text-emerald-900 leading-relaxed">
               👉 If your brain's been loud all day, this is your sign to do something quiet for once.
             </p>
 
@@ -856,10 +863,10 @@ function ThankYouPageContent() {
             </div>
 
             <div className="space-y-2 text-left">
-              <p className="text-lg text-gray-900">
+              <p className="text-lg text-emerald-900">
                 — Anna
               </p>
-              <p className="text-gray-600">
+              <p className="text-emerald-700">
                 Recovering overthinker & creator of the F.I.R.E. method
               </p>
               <p className="text-sm text-gray-500 italic">

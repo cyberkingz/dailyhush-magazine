@@ -42,17 +42,25 @@ export default function Home() {
             </p>
 
             <div className="max-w-xl mx-auto">
+              <Link
+                to="/quiz"
+                className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold px-10 py-4 rounded-full transition-all shadow-[0_4px_20px_rgba(245,158,11,0.4)] hover:shadow-[0_6px_28px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 text-lg"
+              >
+                Take the Free Quiz →
+              </Link>
+
+              {/* Original email opt-in form - commented out because users should take quiz first
               <NewsletterInlineForm
                 sourcePage="home-hero"
                 buttonLabel="Take Quiz →"
                 showSparkLoop={true}
                 redirectOnSuccess={true}
               />
+              */}
             </div>
 
             <div className="text-sm text-emerald-700/70 mt-4 space-y-1 max-w-xl mx-auto text-center">
               <p>✓ Free 60-second quiz  ✓ Your overthinker type  ✓ The F.I.R.E. protocol that works</p>
-              <p className="text-xs"><Link to="/privacy" className="underline underline-offset-2 hover:text-emerald-800">Privacy Policy</Link> • Unsubscribe anytime</p>
             </div>
           </div>
         </div>

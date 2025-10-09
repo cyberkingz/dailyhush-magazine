@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Users } from 'lucide-react'
-import NewsletterInlineForm from '@/components/NewsletterInlineForm'
+// import NewsletterInlineForm from '@/components/NewsletterInlineForm'
 
 export default function Home() {
   useEffect(() => { document.title = 'DailyHush — Stop Overthinking & Quiet Your Mind' }, [])

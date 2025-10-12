@@ -631,7 +631,7 @@ function ThankYouPageContent() {
                       The F.I.R.E. Method Explained
                     </h2>
 
-                    <div className="max-w-3xl mx-auto mb-8 space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
+                    <div className="max-w-3xl mx-auto mb-12 space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
                       <p>
                         All of those clinical techniques you just read? They work. But here's the problem: <strong>they're too complicated to remember at 3 a.m. when your brain is spinning.</strong>
                       </p>
@@ -640,87 +640,203 @@ function ThankYouPageContent() {
                       </p>
                     </div>
 
-                    <div className="space-y-10 max-w-3xl mx-auto">
+                    <div className="max-w-4xl mx-auto space-y-6">
                       {/* F - Feel */}
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-full bg-rose-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">F</div>
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">FEEL → Notice the spiral without judgment</h3>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>What it is:</strong> The moment you catch yourself looping. Not 20 minutes in — the first 10 seconds.
-                          </p>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>Why it matters:</strong> Metacognitive Therapy (University of Manchester) shows that awareness is 50% of the battle. You can't interrupt what you don't notice.
-                          </p>
-                          <p className="text-sm text-emerald-700 italic">
-                            Example: "I'm ruminating about what Sarah said at lunch" vs. "Sarah's comment means I'm a terrible friend and..."
-                          </p>
+                      <div className="group relative">
+                        <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-6 md:p-8 border-2 border-rose-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-4 md:gap-6">
+                            <div className="relative flex-shrink-0">
+                              <div className="absolute inset-0 bg-rose-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                                F
+                              </div>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span className="text-xs font-bold tracking-wider text-rose-700 uppercase">Step 1</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-rose-300 to-transparent"></div>
+                              </div>
+                              <h3 className="text-xl md:text-2xl font-bold text-rose-900 mb-4">
+                                FEEL → Notice the spiral without judgment
+                              </h3>
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-rose-800 whitespace-nowrap">What it is:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    The moment you catch yourself looping. Not 20 minutes in — the first 10 seconds.
+                                  </p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-rose-800 whitespace-nowrap">Why it matters:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    Metacognitive Therapy (University of Manchester) shows that awareness is 50% of the battle. You can't interrupt what you don't notice.
+                                  </p>
+                                </div>
+                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-rose-200/50">
+                                  <p className="text-xs font-semibold text-rose-700 mb-1 uppercase tracking-wide">Example</p>
+                                  <p className="text-sm text-slate-600 italic">
+                                    "I'm ruminating about what Sarah said at lunch" vs. "Sarah's comment means I'm a terrible friend and..."
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Connector */}
-                      <div className="flex justify-start pl-6">
-                        <div className="w-0.5 h-8 bg-emerald-200"></div>
+                      {/* Connector - Enhanced */}
+                      <div className="flex justify-center items-center py-2">
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="w-0.5 h-6 bg-gradient-to-b from-rose-400/50 via-amber-400/50 to-amber-500/50"></div>
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-br from-amber-400 to-amber-500 shadow-sm"></div>
+                          <div className="w-0.5 h-6 bg-gradient-to-b from-amber-500/50 via-amber-400/50 to-amber-400/50"></div>
+                        </div>
                       </div>
 
                       {/* I - Interrupt */}
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">I</div>
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">INTERRUPT → Break the loop (physically)</h3>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>What it is:</strong> A physical pattern interrupt. Cold water on your face. 10 jumping jacks. Splashing your wrists. Humming.
-                          </p>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>Why it matters:</strong> Polyvagal Theory research shows rumination = nervous system dysregulation. You can't think your way out. You have to interrupt the physiological state.
-                          </p>
-                          <p className="text-sm text-emerald-700 italic">
-                            Example: Face in ice water for 30 seconds activates your vagus nerve and literally resets your nervous system.
-                          </p>
+                      <div className="group relative">
+                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 md:p-8 border-2 border-amber-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-4 md:gap-6">
+                            <div className="relative flex-shrink-0">
+                              <div className="absolute inset-0 bg-amber-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                                I
+                              </div>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span className="text-xs font-bold tracking-wider text-amber-700 uppercase">Step 2</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-amber-300 to-transparent"></div>
+                              </div>
+                              <h3 className="text-xl md:text-2xl font-bold text-amber-900 mb-4">
+                                INTERRUPT → Break the loop (physically)
+                              </h3>
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-amber-800 whitespace-nowrap">What it is:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    A physical pattern interrupt. Cold water on your face. 10 jumping jacks. Splashing your wrists. Humming.
+                                  </p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-amber-800 whitespace-nowrap">Why it matters:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    Polyvagal Theory research shows rumination = nervous system dysregulation. You can't think your way out. You have to interrupt the physiological state.
+                                  </p>
+                                </div>
+                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-amber-200/50">
+                                  <p className="text-xs font-semibold text-amber-700 mb-1 uppercase tracking-wide">Example</p>
+                                  <p className="text-sm text-slate-600 italic">
+                                    Face in ice water for 30 seconds activates your vagus nerve and literally resets your nervous system.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Connector */}
-                      <div className="flex justify-start pl-6">
-                        <div className="w-0.5 h-8 bg-emerald-200"></div>
+                      {/* Connector - Enhanced */}
+                      <div className="flex justify-center items-center py-2">
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="w-0.5 h-6 bg-gradient-to-b from-amber-400/50 via-emerald-400/50 to-emerald-500/50"></div>
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 shadow-sm"></div>
+                          <div className="w-0.5 h-6 bg-gradient-to-b from-emerald-500/50 via-emerald-400/50 to-emerald-400/50"></div>
+                        </div>
                       </div>
 
                       {/* R - Redirect */}
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">R</div>
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">REDIRECT → Shift from abstract to concrete</h3>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>What it is:</strong> Ask: "What's one small thing I can do RIGHT NOW?" Not "Why did this happen?" — that's a rumination trap.
-                          </p>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>Why it matters:</strong> RF-CBT from University of Exeter shows abstract thinking = brooding. Concrete thinking = problem-solving. This single shift accounts for 65% of rumination reduction in studies.
-                          </p>
-                          <p className="text-sm text-emerald-700 italic">
-                            Example: Instead of "Why do I always mess up?" → "I can text Sarah: 'Hey, was that comment about X? Want to clarify.'"
-                          </p>
+                      <div className="group relative">
+                        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 md:p-8 border-2 border-emerald-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-4 md:gap-6">
+                            <div className="relative flex-shrink-0">
+                              <div className="absolute inset-0 bg-emerald-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                                R
+                              </div>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span className="text-xs font-bold tracking-wider text-emerald-700 uppercase">Step 3</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
+                              </div>
+                              <h3 className="text-xl md:text-2xl font-bold text-emerald-900 mb-4">
+                                REDIRECT → Shift from abstract to concrete
+                              </h3>
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-emerald-800 whitespace-nowrap">What it is:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    Ask: "What's one small thing I can do RIGHT NOW?" Not "Why did this happen?" — that's a rumination trap.
+                                  </p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-emerald-800 whitespace-nowrap">Why it matters:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    RF-CBT from University of Exeter shows abstract thinking = brooding. Concrete thinking = problem-solving. This single shift accounts for 65% of rumination reduction in studies.
+                                  </p>
+                                </div>
+                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-emerald-200/50">
+                                  <p className="text-xs font-semibold text-emerald-700 mb-1 uppercase tracking-wide">Example</p>
+                                  <p className="text-sm text-slate-600 italic">
+                                    Instead of "Why do I always mess up?" → "I can text Sarah: 'Hey, was that comment about X? Want to clarify.'"
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Connector */}
-                      <div className="flex justify-start pl-6">
-                        <div className="w-0.5 h-8 bg-emerald-200"></div>
+                      {/* Connector - Enhanced */}
+                      <div className="flex justify-center items-center py-2">
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="w-0.5 h-6 bg-gradient-to-b from-emerald-400/50 via-blue-400/50 to-blue-500/50"></div>
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-blue-500 shadow-sm"></div>
+                          <div className="w-0.5 h-6 bg-gradient-to-b from-blue-500/50 via-blue-400/50 to-blue-400/50"></div>
+                        </div>
                       </div>
 
                       {/* E - Ease */}
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">E</div>
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">EASE → Build your window of tolerance</h3>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>What it is:</strong> Daily practices that widen your nervous system's "green zone" — so you don't spiral as easily in the first place.
-                          </p>
-                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                            <strong>Why it matters:</strong> Polyvagal Theory (Dr. Dan Siegel) shows chronic overthinkers have narrow windows of tolerance. The solution isn't just stopping spirals — it's preventing them.
-                          </p>
-                          <p className="text-sm text-emerald-700 italic">
-                            Example: Morning walks, co-regulation (safe relationships), breathwork, bilateral stimulation, somatic tracking.
-                          </p>
+                      <div className="group relative">
+                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 md:p-8 border-2 border-blue-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-4 md:gap-6">
+                            <div className="relative flex-shrink-0">
+                              <div className="absolute inset-0 bg-blue-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                                E
+                              </div>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span className="text-xs font-bold tracking-wider text-blue-700 uppercase">Step 4</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-blue-300 to-transparent"></div>
+                              </div>
+                              <h3 className="text-xl md:text-2xl font-bold text-blue-900 mb-4">
+                                EASE → Build your window of tolerance
+                              </h3>
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-blue-800 whitespace-nowrap">What it is:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    Daily practices that widen your nervous system's "green zone" — so you don't spiral as easily in the first place.
+                                  </p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <span className="text-sm font-semibold text-blue-800 whitespace-nowrap">Why it matters:</span>
+                                  <p className="text-sm md:text-base text-slate-700 leading-relaxed">
+                                    Polyvagal Theory (Dr. Dan Siegel) shows chronic overthinkers have narrow windows of tolerance. The solution isn't just stopping spirals — it's preventing them.
+                                  </p>
+                                </div>
+                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-blue-200/50">
+                                  <p className="text-xs font-semibold text-blue-700 mb-1 uppercase tracking-wide">Example</p>
+                                  <p className="text-sm text-slate-600 italic">
+                                    Morning walks, co-regulation (safe relationships), breathwork, bilateral stimulation, somatic tracking.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

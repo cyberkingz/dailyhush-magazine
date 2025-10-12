@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { CheckCircle, DollarSign, Flame, BookOpen, Brain, Lightbulb } from 'lucide-react'
+import { CheckCircle, Flame, BookOpen, Brain, Lightbulb } from 'lucide-react'
 import ShopifyBuyButton from '../../components/ShopifyBuyButton'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
@@ -292,19 +292,9 @@ const quizResultData: Record<OverthinkerType, {
 }
 
 function ThankYouPageContent() {
-  const [showNotification, setShowNotification] = useState(false)
-  const [isExiting, setIsExiting] = useState(false)
-  const [currentNotification, setCurrentNotification] = useState(0)
   const [showStickyBar, setShowStickyBar] = useState(false)
-  const { decrementSpots, spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
-
-  // Use ref to track latest spots value without triggering effect re-runs
-  const spotsRemainingRef = useRef(spotsRemaining)
+  const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
   const fireKitBadgeRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    spotsRemainingRef.current = spotsRemaining
-  }, [spotsRemaining])
 
   // Get quiz type and score from URL params
   const urlParams = new URLSearchParams(window.location.search)
@@ -313,15 +303,6 @@ function ThankYouPageContent() {
 
   // Get personalized quiz result data or use defaults
   const resultData = quizType ? quizResultData[quizType] : null
-
-  // Purchase notifications
-  const notifications = [
-    { name: "Sarah", location: "New York", action: "just purchased F.I.R.E. Kit", time: "Just now", isPurchase: true },
-    { name: "Mike", location: "San Francisco", action: "just purchased F.I.R.E. Kit", time: "1 min ago", isPurchase: true },
-    { name: "Jessica", location: "Austin", action: "just purchased F.I.R.E. Kit", time: "2 min ago", isPurchase: true },
-    { name: "David", location: "Miami", action: "just purchased F.I.R.E. Kit", time: "3 min ago", isPurchase: true },
-    { name: "Emma", location: "Seattle", action: "just purchased F.I.R.E. Kit", time: "4 min ago", isPurchase: true }
-  ]
 
   useEffect(() => {
     document.title = 'Your Overthinking Results — DailyHush'
@@ -341,7 +322,7 @@ function ThankYouPageContent() {
         isAboveBadge = viewportBottom < badgePosition
       }
 
-      setShowStickyBar(scrollPercentage >= 40 && isAboveBadge)
+      setShowStickyBar(scrollPercentage >= 20 && isAboveBadge)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -349,82 +330,18 @@ function ThankYouPageContent() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Purchase notifications effect
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null
-
-    const showNextNotification = () => {
-      if (spotsRemainingRef.current <= 0) {
-        if (intervalId) clearInterval(intervalId)
-        setShowNotification(false)
-        return
-      }
-
-      decrementSpots()
-      setShowNotification(true)
-      setIsExiting(false)
-
-      setTimeout(() => {
-        setIsExiting(true)
-        setTimeout(() => {
-          setShowNotification(false)
-          setCurrentNotification((prev) => (prev + 1) % notifications.length)
-        }, 500)
-      }, 4000)
-    }
-
-    const initialTimeout = setTimeout(() => {
-      showNextNotification()
-      intervalId = setInterval(showNextNotification, 28000)
-    }, 5000)
-
-    return () => {
-      clearTimeout(initialTimeout)
-      if (intervalId) clearInterval(intervalId)
-    }
-  }, [currentNotification, decrementSpots])
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col relative overflow-hidden">
-      {/* Organic Background Blobs */}
+      {/* Organic Background Blobs - Subtle */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
-        <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/3 rounded-full blur-3xl"></div>
+        <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/4 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/3 rounded-full blur-3xl"></div>
       </div>
 
       <TopBar variant="dark" />
 
       <div className="flex-1 flex justify-center items-stretch">
-        {/* Floating Purchase Notification */}
-        {showNotification && (
-          <div className={`fixed top-4 left-4 right-4 sm:top-auto sm:bottom-8 sm:left-8 sm:right-auto z-50 transition-all duration-500 ${
-            isExiting ? 'animate-slide-down' : 'animate-slide-from-top sm:animate-slide-up'
-          }`}>
-            <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-4 flex items-center gap-3 max-w-sm overflow-hidden mx-auto sm:mx-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/40 via-rose-50/20 to-orange-50/30 pointer-events-none" />
-              <div className="relative flex items-center gap-3 w-full">
-                <div className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg">
-                  <DollarSign className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">
-                    {notifications[currentNotification].name} from {notifications[currentNotification].location}
-                  </p>
-                  <p className="text-xs text-slate-600 truncate">
-                    {notifications[currentNotification].action} • {notifications[currentNotification].time}
-                  </p>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="text-xs font-semibold text-amber-700 bg-amber-100/80 backdrop-blur-sm px-2.5 py-1 rounded-full border border-amber-200/50">
-                    SOLD
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Mobile Sticky Bottom Bar */}
         <div className={`fixed bottom-0 left-0 right-0 z-40 sm:hidden transition-transform duration-500 ease-out ${
           showStickyBar ? 'translate-y-0' : 'translate-y-full'
@@ -529,6 +446,30 @@ function ThankYouPageContent() {
                   </div>
                 </div>
               )}
+
+              {/* ========== EARLY TEASER CARD ========== */}
+              <div className="mb-12 max-w-2xl mx-auto">
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-200">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+                        <Lightbulb className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-slate-900 mb-2">
+                        The F.I.R.E. Kit translates this research into daily practice
+                      </p>
+                      <p className="text-sm text-slate-700">
+                        40+ exercises based on the protocols you're reading below. $27.{' '}
+                        <a href="#offer-details" className="underline font-semibold hover:text-emerald-900">
+                          See details ↓
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               {/* ========== WHY YOUR SMARTEST THOUGHTS KEEP YOU PARALYZED ========== */}
               <div className="mb-16">
@@ -819,102 +760,166 @@ function ThankYouPageContent() {
                     </div>
                   </div>
 
-                  {/* ========== SECTION 5: BRIDGE TO F.I.R.E. KIT (5% - Natural Transition) ========== */}
-                  <div ref={fireKitBadgeRef} className="mb-16 max-w-3xl mx-auto">
-                    <hr className="border-t-2 border-emerald-200 mb-8" />
+                  {/* ========== COMPACT OFFER CARD ========== */}
+                  <div id="offer-details" ref={fireKitBadgeRef} className="mb-16 max-w-2xl mx-auto">
+                    {/* Transition Copy */}
+                    <div className="text-center mb-8 space-y-4">
+                      <p className="text-lg text-slate-700 leading-relaxed">
+                        You've seen the research. You understand <em>why</em> your brain works this way.
+                      </p>
+                      <p className="text-2xl font-bold text-slate-900">
+                        Here's the toolkit that translates it into action.
+                      </p>
+                    </div>
 
-                    <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 mb-6">
-                      PS: Why I Built the F.I.R.E. Kit
+                    {/* Compact Offer Card */}
+                    <div className="relative bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-200 shadow-xl overflow-hidden">
+                      {/* Scarcity Indicator (if applicable) */}
+                      {!isSoldOut && (
+                        <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-center py-2 text-sm font-semibold">
+                          <Flame className="inline h-4 w-4 mr-1" />
+                          {spotsRemaining} spots left today
+                        </div>
+                      )}
+
+                      <div className={`p-8 ${!isSoldOut ? 'pt-16' : ''}`}>
+                        {/* Header */}
+                        <div className="text-center mb-6">
+                          <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                            The F.I.R.E. Kit
+                          </h3>
+                          <p className="text-sm text-slate-600">
+                            Clinical protocols from University of Exeter & Manchester
+                          </p>
+                        </div>
+
+                        {/* What's Included - Condensed */}
+                        <div className="mb-6 space-y-2">
+                          <p className="text-sm font-semibold text-slate-900 mb-3">What You Get:</p>
+                          <div className="grid grid-cols-1 gap-2 text-sm text-slate-700">
+                            <div className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                              <span>40+ RF-CBT exercises (Watkins' protocols)</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                              <span>MCT detached mindfulness practices (Wells' clinic)</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                              <span>Polyvagal nervous system regulation tools</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                              <span>Window of Tolerance mapping (Siegel's model)</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Price & CTA */}
+                        <div className="bg-white rounded-xl p-6 mb-4 border border-emerald-200">
+                          <div className="flex items-baseline justify-center gap-2 mb-4">
+                            <span className="text-5xl font-black text-slate-900">$27</span>
+                            <span className="text-lg text-slate-500 line-through">$97</span>
+                          </div>
+                          <p className="text-center text-sm text-slate-600 mb-6">
+                            Less than one therapy co-pay. Same clinical frameworks.
+                          </p>
+
+                          <ShopifyBuyButton
+                            productId="10761797894447"
+                            domain="t7vyee-kc.myshopify.com"
+                            storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                            buttonText="Get the F.I.R.E. Kit"
+                            buttonColor="#16a34a"
+                            buttonHoverColor="#15803d"
+                            className="w-full"
+                          />
+                        </div>
+
+                        {/* Trust Badges */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-xs text-slate-600">
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-4 h-4 text-emerald-600" />
+                            <span>30-day money-back</span>
+                          </div>
+                          <div className="hidden sm:block w-1 h-1 rounded-full bg-slate-300" />
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-4 h-4 text-emerald-600" />
+                            <span>Instant download</span>
+                          </div>
+                          <div className="hidden sm:block w-1 h-1 rounded-full bg-slate-300" />
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-4 h-4 text-emerald-600" />
+                            <span>50,000+ users</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Subtle Risk Reversal - Outside Card */}
+                    <div className="mt-6 text-center">
+                      <p className="text-sm text-slate-600 italic">
+                        "This is what finally worked after 8 years of therapy and 3 a.m. spirals."
+                        <br />
+                        <span className="font-semibold">— Anna, Creator of F.I.R.E.</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* ========== FAQ SECTION ========== */}
+                  <div className="mb-16 max-w-3xl mx-auto">
+                    <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+                      Common Questions
                     </h2>
 
-                    <div className="space-y-6 text-base text-emerald-800 leading-relaxed">
-                      <p>
-                        These aren't theories. These are the frameworks used by clinical psychologists at University of Exeter and University of Manchester—translated into daily tools.
-                      </p>
-
-                      <p className="font-semibold">What you get:</p>
-                      <ul className="space-y-2 ml-6">
-                        <li className="flex items-start gap-2">
-                          <span className="text-emerald-600 mt-1">•</span>
-                          <span>RF-CBT concrete processing exercises (Watkins' protocols)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-emerald-600 mt-1">•</span>
-                          <span>MCT detached mindfulness practices (Wells' clinic protocols)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-emerald-600 mt-1">•</span>
-                          <span>Polyvagal regulation tools (Porges' nervous system work)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-emerald-600 mt-1">•</span>
-                          <span>Cognitive distortion tracking (Beck & Burns' frameworks)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-emerald-600 mt-1">•</span>
-                          <span>Window of Tolerance mapping (Siegel's regulation model)</span>
-                        </li>
-                      </ul>
-
-                      <p>
-                        <strong>50,000+ women</strong> use these frameworks daily. Not as inspiration—as clinical practice.
-                      </p>
-
-                      <div className="border-l-4 border-emerald-500 pl-6 py-4 bg-emerald-50/30">
-                        <p className="text-base text-emerald-700 mb-2">Today:</p>
-                        <p className="text-4xl font-black text-emerald-900 mb-2">$27</p>
-                        <p className="text-sm text-emerald-700">Less than one therapy co-pay. Same clinical frameworks, self-directed.</p>
-                      </div>
-
-                      <p className="font-semibold">Here's where you are right now:</p>
-
-                      <div className="border-l-4 border-red-400 pl-6 py-2">
-                        <p className="font-semibold text-red-900 mb-2">❌ Do Nothing</p>
-                        <p className="text-base text-slate-700">
-                          Keep replaying conversations. Keep waking up at 3 a.m. Keep feeling like your brain is your enemy.
-                          Hope it gets better on its own. <em>(Spoiler: Research shows it doesn't.)</em>
+                    <div className="space-y-4">
+                      <details className="group bg-white rounded-xl border border-slate-200 p-6">
+                        <summary className="cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                          <span>Is this just another workbook?</span>
+                          <span className="group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed">
+                          No. This is clinical protocols from University of Exeter and Manchester —
+                          the same frameworks therapists charge $150/hour to teach. We've translated
+                          them into exercises you can use tonight when your brain won't shut up.
                         </p>
-                      </div>
+                      </details>
 
-                      <div className="border-l-4 border-emerald-500 pl-6 py-2">
-                        <p className="font-semibold text-emerald-900 mb-2">✓ Try F.I.R.E. for $27</p>
-                        <p className="text-base text-slate-700 mb-2">
-                          Get the same clinical protocols used at University of Exeter and University of Manchester —
-                          translated into 4 steps you can use tonight when your brain won't shut up.
+                      <details className="group bg-white rounded-xl border border-slate-200 p-6">
+                        <summary className="cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                          <span>What if I've tried therapy and it didn't work?</span>
+                          <span className="group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed">
+                          Traditional CBT works for anxiety, but rumination needs specialized protocols.
+                          RF-CBT (Rumination-Focused CBT) is different — it targets the specific neural
+                          pathways causing overthinking. 65% of chronic ruminators see improvement with these techniques.
                         </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          30-day guarantee. If it doesn't help, email us. Full refund. No questions.
+                      </details>
+
+                      <details className="group bg-white rounded-xl border border-slate-200 p-6">
+                        <summary className="cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                          <span>Why $27? What's the catch?</span>
+                          <span className="group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed">
+                          No catch. We want this accessible. One therapy co-pay costs $30-$50.
+                          We charge $27 so price isn't the barrier. If it doesn't help, email us — full refund, no questions.
                         </p>
-                      </div>
+                      </details>
 
-                      <p className="text-sm text-slate-600 italic">
-                        The risk isn't trying F.I.R.E. The risk is spending another 6 months trapped in your head.
-                      </p>
-
-                      <div className="mt-8">
-                        <ShopifyBuyButton
-                          productId="10761797894447"
-                          domain="t7vyee-kc.myshopify.com"
-                          storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                          buttonText="Get the F.I.R.E. Kit • $27"
-                          buttonColor="#16a34a"
-                          buttonHoverColor="#15803d"
-                          className="w-full sm:w-auto"
-                        />
-                        <p className="text-xs text-gray-600 mt-3">
-                          <CheckCircle className="w-3 h-3 inline text-green-600 mr-1" />
-                          30-day money-back guarantee • Instant download
+                      <details className="group bg-white rounded-xl border border-slate-200 p-6">
+                        <summary className="cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                          <span>How is this different from meditation apps?</span>
+                          <span className="group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed">
+                          Meditation is great for general stress. F.I.R.E. is targeted rumination interruption —
+                          specific protocols designed for the moment your brain won't stop looping.
+                          Think of it as emergency tools, not daily maintenance.
                         </p>
-                      </div>
-
-                      <hr className="border-t border-emerald-200 my-8" />
-
-                      <p className="text-base text-emerald-800 italic">
-                        "This is what finally worked for me after 8 years of therapy, self-help books, and 3 a.m. spirals. I hope it helps you too."
-                      </p>
-                      <p className="text-base font-semibold text-emerald-900 mt-3">
-                        — Anna, Recovering overthinker & creator of the F.I.R.E. method
-                      </p>
+                      </details>
                     </div>
                   </div>
 

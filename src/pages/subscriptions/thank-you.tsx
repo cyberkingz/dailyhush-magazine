@@ -4,6 +4,7 @@ import ShopifyBuyButton from '../../components/ShopifyBuyButton'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'
+import Testimonials from '../../components/Testimonials'
 
 // Research-backed quiz result data with clinical profiles
 const quizResultData: Record<OverthinkerType, {
@@ -918,70 +919,7 @@ function ThankYouPageContent() {
                   </div>
 
                   {/* ========== TESTIMONIALS ========== */}
-                  <div className="mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6 text-center">
-                      What Happens When You Actually Use This
-                    </h2>
-
-                    <div className="space-y-8 max-w-3xl mx-auto">
-                      {/* Jessica */}
-                      <div className="border-l-4 border-emerald-500 pl-6">
-                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
-                          "I've been in therapy for 6 years. My therapist is great, but we kept circling the same patterns. <strong>F.I.R.E. gave me something I could DO at 2 a.m. when my brain wouldn't shut up.</strong> The 'Interrupt' step — cold water on my face — sounds ridiculously simple, but it's the first thing that's ever actually stopped a spiral in its tracks."
-                        </p>
-                        <p className="text-sm text-emerald-700 italic mb-4">
-                          Jessica went from ruminating 4-5 hours daily to under 30 minutes within 3 weeks.
-                        </p>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold flex-shrink-0">J</div>
-                          <div>
-                            <p className="font-bold text-emerald-900">Jessica M.</p>
-                            <p className="text-sm text-emerald-700">Marketing Director, Chicago</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Lauren */}
-                      <div className="border-l-4 border-amber-500 pl-6">
-                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
-                          "I literally teach CBT to clients. But I couldn't apply it to my own rumination because <strong>I was too deep in the spiral to remember the steps.</strong> F.I.R.E. is brilliant because it's simple enough to use when you're dysregulated. I've recommended it to 12 clients already."
-                        </p>
-                        <p className="text-sm text-emerald-700 italic mb-4">
-                          Lauren reported 70% reduction in evening rumination spirals after implementing the framework.
-                        </p>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">L</div>
-                          <div>
-                            <p className="font-bold text-emerald-900">Lauren K.</p>
-                            <p className="text-sm text-emerald-700">Therapist (yes, really), Portland</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Emma */}
-                      <div className="border-l-4 border-blue-500 pl-6">
-                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
-                          "I bought this thinking it was just another workbook I'd never finish. <strong>But the 'Redirect' step — shifting from 'Why?' to 'What can I do right now?' — changed how my brain processes stress.</strong> I used to replay dissertation feedback for days. Now I catch it, redirect it, and move on in under 10 minutes."
-                        </p>
-                        <p className="text-sm text-emerald-700 italic mb-4">
-                          Emma's sleep quality improved from 4/10 to 8/10 within 6 weeks of using F.I.R.E. protocols.
-                        </p>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">E</div>
-                          <div>
-                            <p className="font-bold text-emerald-900">Emma R.</p>
-                            <p className="text-sm text-emerald-700">PhD Student, Boston</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 text-center">
-                      <p className="text-base text-emerald-800 leading-relaxed max-w-2xl mx-auto">
-                        These aren't cherry-picked reviews. <strong>50,000+ women</strong> have used F.I.R.E. — from therapists to PhD students to stay-at-home moms who just wanted their brain to quiet down.
-                      </p>
-                    </div>
-                  </div>
+                  <Testimonials />
 
                   {/* ========== SECTION 6: FURTHER RESOURCES (5% - Authority Building) ========== */}
                   <div className="mb-16 max-w-3xl mx-auto">

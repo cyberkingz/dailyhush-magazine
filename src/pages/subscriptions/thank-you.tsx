@@ -586,7 +586,7 @@ function ThankYouPageContent() {
                     </div>
 
                     {/* Clinical Definition */}
-                    <div className="mb-8 bg-emerald-50/50 border-l-4 border-emerald-500 rounded-r-xl p-6">
+                    <div className="mb-8 border-l-4 border-emerald-500 pl-6">
                       <h3 className="text-xl font-bold text-emerald-900 mb-3">Clinical Definition:</h3>
                       <p className="text-lg text-emerald-800 leading-relaxed">{resultData.definition}</p>
                     </div>
@@ -603,7 +603,7 @@ function ThankYouPageContent() {
                     </div>
 
                     {/* The Neuroscience */}
-                    <div className="mb-8 bg-blue-50/50 border-l-4 border-blue-500 rounded-r-xl p-6">
+                    <div className="mb-8 border-l-4 border-blue-500 pl-6">
                       <h3 className="text-xl font-bold text-emerald-900 mb-3">The Neuroscience:</h3>
                       <p className="text-base text-emerald-800 leading-relaxed">{resultData.researchPattern.neuroscience}</p>
                     </div>
@@ -622,7 +622,7 @@ function ThankYouPageContent() {
                     </div>
 
                     {/* Why This Happens */}
-                    <div className="bg-amber-50/50 border-l-4 border-amber-500 rounded-r-xl p-6">
+                    <div className="border-l-4 border-amber-500 pl-6">
                       <h3 className="text-xl font-bold text-emerald-900 mb-3">Why This Happens:</h3>
                       <p className="text-base text-emerald-800 leading-relaxed">{resultData.whyThisHappens}</p>
                     </div>
@@ -637,7 +637,7 @@ function ThankYouPageContent() {
                       </h2>
                     </div>
 
-                    <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-8">
+                    <div className="border-l-4 border-blue-500 pl-6">
                       <h3 className="text-2xl font-bold text-emerald-900 mb-6">{resultData.evidence.title}</h3>
 
                       <ul className="space-y-4 mb-6">
@@ -649,7 +649,7 @@ function ThankYouPageContent() {
                         ))}
                       </ul>
 
-                      <div className="bg-white/80 rounded-xl p-6 border-2 border-blue-300">
+                      <div className="mt-6">
                         <p className="text-base font-bold text-blue-900 mb-2">Key Study:</p>
                         <p className="text-base text-emerald-800 leading-relaxed">{resultData.evidence.keyStudy}</p>
                       </div>
@@ -665,22 +665,18 @@ function ThankYouPageContent() {
                       </h2>
                     </div>
 
-                    <div className="space-y-8">
+                    <div className="space-y-10">
                       {resultData.solutions.primary.map((solution, idx) => (
-                        <div key={idx} className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-8">
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold text-emerald-900 mb-2">{idx + 1}. {solution.name}</h3>
-                            <p className="text-sm font-semibold text-emerald-700">Developer: {solution.developer}</p>
-                          </div>
+                        <div key={idx} className="border-l-4 border-emerald-500 pl-6">
+                          <h3 className="text-2xl font-bold text-emerald-900 mb-2">{idx + 1}. {solution.name}</h3>
+                          <p className="text-sm font-semibold text-emerald-700 mb-4">Developer: {solution.developer}</p>
 
                           <div className="mb-4">
-                            <h4 className="text-base font-bold text-emerald-900 mb-2">Technique:</h4>
-                            <p className="text-base text-emerald-800 leading-relaxed">{solution.technique}</p>
+                            <p className="text-base text-emerald-800 leading-relaxed"><strong>Technique:</strong> {solution.technique}</p>
                           </div>
 
-                          <div className="bg-white/60 rounded-xl p-4 border-2 border-emerald-400">
-                            <p className="text-sm font-bold text-emerald-900 mb-1">Evidence:</p>
-                            <p className="text-base text-emerald-800 leading-relaxed">{solution.evidence}</p>
+                          <div>
+                            <p className="text-base text-emerald-800 leading-relaxed"><strong>Evidence:</strong> {solution.evidence}</p>
                           </div>
                         </div>
                       ))}
@@ -702,73 +698,88 @@ function ThankYouPageContent() {
                       </p>
                     </div>
 
-                    <div className="space-y-8 max-w-4xl mx-auto">
+                    <div className="space-y-10 max-w-3xl mx-auto">
                       {/* F - Feel */}
-                      <div className="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-6 md:p-8">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-rose-600 flex items-center justify-center text-white font-black text-xl">F</div>
-                          <h3 className="text-2xl font-bold text-emerald-900">FEEL → Notice the spiral without judgment</h3>
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-rose-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">F</div>
+                        <div className="flex-1">
+                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">FEEL → Notice the spiral without judgment</h3>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>What it is:</strong> The moment you catch yourself looping. Not 20 minutes in — the first 10 seconds.
+                          </p>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>Why it matters:</strong> Metacognitive Therapy (University of Manchester) shows that awareness is 50% of the battle. You can't interrupt what you don't notice.
+                          </p>
+                          <p className="text-sm text-emerald-700 italic">
+                            Example: "I'm ruminating about what Sarah said at lunch" vs. "Sarah's comment means I'm a terrible friend and..."
+                          </p>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>What it is:</strong> The moment you catch yourself looping. Not 20 minutes in — the first 10 seconds.
-                        </p>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>Why it matters:</strong> Metacognitive Therapy (University of Manchester) shows that awareness is 50% of the battle. You can't interrupt what you don't notice.
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Example: "I'm ruminating about what Sarah said at lunch" vs. "Sarah's comment means I'm a terrible friend and..."
-                        </p>
+                      </div>
+
+                      {/* Connector */}
+                      <div className="flex justify-start pl-6">
+                        <div className="w-0.5 h-8 bg-emerald-200"></div>
                       </div>
 
                       {/* I - Interrupt */}
-                      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-6 md:p-8">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-black text-xl">I</div>
-                          <h3 className="text-2xl font-bold text-emerald-900">INTERRUPT → Break the loop (physically)</h3>
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">I</div>
+                        <div className="flex-1">
+                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">INTERRUPT → Break the loop (physically)</h3>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>What it is:</strong> A physical pattern interrupt. Cold water on your face. 10 jumping jacks. Splashing your wrists. Humming.
+                          </p>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>Why it matters:</strong> Polyvagal Theory research shows rumination = nervous system dysregulation. You can't think your way out. You have to interrupt the physiological state.
+                          </p>
+                          <p className="text-sm text-emerald-700 italic">
+                            Example: Face in ice water for 30 seconds activates your vagus nerve and literally resets your nervous system.
+                          </p>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>What it is:</strong> A physical pattern interrupt. Cold water on your face. 10 jumping jacks. Splashing your wrists. Humming.
-                        </p>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>Why it matters:</strong> Polyvagal Theory research shows rumination = nervous system dysregulation. You can't think your way out. You have to interrupt the physiological state.
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Example: Face in ice water for 30 seconds activates your vagus nerve and literally resets your nervous system.
-                        </p>
+                      </div>
+
+                      {/* Connector */}
+                      <div className="flex justify-start pl-6">
+                        <div className="w-0.5 h-8 bg-emerald-200"></div>
                       </div>
 
                       {/* R - Redirect */}
-                      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-6 md:p-8">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white font-black text-xl">R</div>
-                          <h3 className="text-2xl font-bold text-emerald-900">REDIRECT → Shift from abstract to concrete</h3>
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">R</div>
+                        <div className="flex-1">
+                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">REDIRECT → Shift from abstract to concrete</h3>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>What it is:</strong> Ask: "What's one small thing I can do RIGHT NOW?" Not "Why did this happen?" — that's a rumination trap.
+                          </p>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>Why it matters:</strong> RF-CBT from University of Exeter shows abstract thinking = brooding. Concrete thinking = problem-solving. This single shift accounts for 65% of rumination reduction in studies.
+                          </p>
+                          <p className="text-sm text-emerald-700 italic">
+                            Example: Instead of "Why do I always mess up?" → "I can text Sarah: 'Hey, was that comment about X? Want to clarify.'"
+                          </p>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>What it is:</strong> Ask: "What's one small thing I can do RIGHT NOW?" Not "Why did this happen?" — that's a rumination trap.
-                        </p>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>Why it matters:</strong> RF-CBT from University of Exeter shows abstract thinking = brooding. Concrete thinking = problem-solving. This single shift accounts for 65% of rumination reduction in studies.
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Example: Instead of "Why do I always mess up?" → "I can text Sarah: 'Hey, was that comment about X? Want to clarify.'"
-                        </p>
+                      </div>
+
+                      {/* Connector */}
+                      <div className="flex justify-start pl-6">
+                        <div className="w-0.5 h-8 bg-emerald-200"></div>
                       </div>
 
                       {/* E - Ease */}
-                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-300 rounded-2xl p-6 md:p-8">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xl">E</div>
-                          <h3 className="text-2xl font-bold text-emerald-900">EASE → Build your window of tolerance</h3>
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">E</div>
+                        <div className="flex-1">
+                          <h3 className="text-2xl font-bold text-emerald-900 mb-3">EASE → Build your window of tolerance</h3>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>What it is:</strong> Daily practices that widen your nervous system's "green zone" — so you don't spiral as easily in the first place.
+                          </p>
+                          <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                            <strong>Why it matters:</strong> Polyvagal Theory (Dr. Dan Siegel) shows chronic overthinkers have narrow windows of tolerance. The solution isn't just stopping spirals — it's preventing them.
+                          </p>
+                          <p className="text-sm text-emerald-700 italic">
+                            Example: Morning walks, co-regulation (safe relationships), breathwork, bilateral stimulation, somatic tracking.
+                          </p>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>What it is:</strong> Daily practices that widen your nervous system's "green zone" — so you don't spiral as easily in the first place.
-                        </p>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
-                          <strong>Why it matters:</strong> Polyvagal Theory (Dr. Dan Siegel) shows chronic overthinkers have narrow windows of tolerance. The solution isn't just stopping spirals — it's preventing them.
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Example: Morning walks, co-regulation (safe relationships), breathwork, bilateral stimulation, somatic tracking.
-                        </p>
                       </div>
                     </div>
 
@@ -966,56 +977,56 @@ function ThankYouPageContent() {
                       What Happens When You Actually Use This
                     </h2>
 
-                    <div className="space-y-6 max-w-4xl mx-auto">
+                    <div className="space-y-8 max-w-3xl mx-auto">
                       {/* Jessica */}
-                      <div className="bg-white border-2 border-emerald-200 rounded-2xl p-6 md:p-8 shadow-lg">
-                        <div className="flex items-start gap-4 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold flex-shrink-0">J</div>
+                      <div className="border-l-4 border-emerald-500 pl-6">
+                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
+                          "I've been in therapy for 6 years. My therapist is great, but we kept circling the same patterns. <strong>F.I.R.E. gave me something I could DO at 2 a.m. when my brain wouldn't shut up.</strong> The 'Interrupt' step — cold water on my face — sounds ridiculously simple, but it's the first thing that's ever actually stopped a spiral in its tracks."
+                        </p>
+                        <p className="text-sm text-emerald-700 italic mb-4">
+                          Jessica went from ruminating 4-5 hours daily to under 30 minutes within 3 weeks.
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold flex-shrink-0">J</div>
                           <div>
                             <p className="font-bold text-emerald-900">Jessica M.</p>
                             <p className="text-sm text-emerald-700">Marketing Director, Chicago</p>
                           </div>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
-                          "I've been in therapy for 6 years. My therapist is great, but we kept circling the same patterns. <strong>F.I.R.E. gave me something I could DO at 2 a.m. when my brain wouldn't shut up.</strong> The 'Interrupt' step — cold water on my face — sounds ridiculously simple, but it's the first thing that's ever actually stopped a spiral in its tracks."
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Jessica went from ruminating 4-5 hours daily to under 30 minutes within 3 weeks.
-                        </p>
                       </div>
 
                       {/* Lauren */}
-                      <div className="bg-white border-2 border-emerald-200 rounded-2xl p-6 md:p-8 shadow-lg">
-                        <div className="flex items-start gap-4 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">L</div>
+                      <div className="border-l-4 border-amber-500 pl-6">
+                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
+                          "I literally teach CBT to clients. But I couldn't apply it to my own rumination because <strong>I was too deep in the spiral to remember the steps.</strong> F.I.R.E. is brilliant because it's simple enough to use when you're dysregulated. I've recommended it to 12 clients already."
+                        </p>
+                        <p className="text-sm text-emerald-700 italic mb-4">
+                          Lauren reported 70% reduction in evening rumination spirals after implementing the framework.
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">L</div>
                           <div>
                             <p className="font-bold text-emerald-900">Lauren K.</p>
                             <p className="text-sm text-emerald-700">Therapist (yes, really), Portland</p>
                           </div>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
-                          "I literally teach CBT to clients. But I couldn't apply it to my own rumination because <strong>I was too deep in the spiral to remember the steps.</strong> F.I.R.E. is brilliant because it's simple enough to use when you're dysregulated. I've recommended it to 12 clients already."
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Lauren reported 70% reduction in evening rumination spirals after implementing the framework.
-                        </p>
                       </div>
 
                       {/* Emma */}
-                      <div className="bg-white border-2 border-emerald-200 rounded-2xl p-6 md:p-8 shadow-lg">
-                        <div className="flex items-start gap-4 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">E</div>
+                      <div className="border-l-4 border-blue-500 pl-6">
+                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
+                          "I bought this thinking it was just another workbook I'd never finish. <strong>But the 'Redirect' step — shifting from 'Why?' to 'What can I do right now?' — changed how my brain processes stress.</strong> I used to replay dissertation feedback for days. Now I catch it, redirect it, and move on in under 10 minutes."
+                        </p>
+                        <p className="text-sm text-emerald-700 italic mb-4">
+                          Emma's sleep quality improved from 4/10 to 8/10 within 6 weeks of using F.I.R.E. protocols.
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">E</div>
                           <div>
                             <p className="font-bold text-emerald-900">Emma R.</p>
                             <p className="text-sm text-emerald-700">PhD Student, Boston</p>
                           </div>
                         </div>
-                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
-                          "I bought this thinking it was just another workbook I'd never finish. <strong>But the 'Redirect' step — shifting from 'Why?' to 'What can I do right now?' — changed how my brain processes stress.</strong> I used to replay dissertation feedback for days. Now I catch it, redirect it, and move on in under 10 minutes."
-                        </p>
-                        <p className="text-sm text-emerald-700 italic">
-                          Emma's sleep quality improved from 4/10 to 8/10 within 6 weeks of using F.I.R.E. protocols.
-                        </p>
                       </div>
                     </div>
 
@@ -1027,43 +1038,47 @@ function ThankYouPageContent() {
                   </div>
 
                   {/* ========== SECTION 6: FURTHER RESOURCES (5% - Authority Building) ========== */}
-                  <div className="mb-16">
+                  <div className="mb-16 max-w-3xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6">
                       Further Resources
                     </h2>
 
-                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-8">
-                      <h3 className="text-xl font-bold text-emerald-900 mb-4">Essential Books for Your Profile:</h3>
-                      <ul className="space-y-2 mb-6">
-                        {resultData.books.map((book, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <BookOpen className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" />
-                            <span className="text-base text-emerald-800">{book}</span>
+                    <div className="space-y-8">
+                      <div>
+                        <h3 className="text-xl font-bold text-emerald-900 mb-4">Essential Books for Your Profile:</h3>
+                        <ul className="space-y-2 mb-6">
+                          {resultData.books.map((book, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <BookOpen className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" />
+                              <span className="text-base text-emerald-800">{book}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-bold text-emerald-900 mb-4">Key Research Papers:</h3>
+                        <ul className="space-y-2 mb-6">
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-emerald-800">Treynor et al. (2003): "Rumination Reconsidered" — Defines reflection vs. brooding</span>
                           </li>
-                        ))}
-                      </ul>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-emerald-800">Watkins & Roberts (2020): "Reflecting on rumination" (Behaviour Research & Therapy)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-emerald-800">Nature Reviews Psychology (2024): RNT as transdiagnostic process</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-emerald-800">Wells (2011): Metacognitive therapy foundations</span>
+                          </li>
+                        </ul>
+                      </div>
 
-                      <h3 className="text-xl font-bold text-emerald-900 mb-4">Key Research Papers:</h3>
-                      <ul className="space-y-2 mb-6">
-                        <li className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                          <span className="text-base text-emerald-800">Treynor et al. (2003): "Rumination Reconsidered" — Defines reflection vs. brooding</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                          <span className="text-base text-emerald-800">Watkins & Roberts (2020): "Reflecting on rumination" (Behaviour Research & Therapy)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                          <span className="text-base text-emerald-800">Nature Reviews Psychology (2024): RNT as transdiagnostic process</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                          <span className="text-base text-emerald-800">Wells (2011): Metacognitive therapy foundations</span>
-                        </li>
-                      </ul>
-
-                      <div className="bg-white/80 rounded-xl p-6 border-2 border-emerald-300">
+                      <div>
                         <h3 className="text-xl font-bold text-emerald-900 mb-3">Clinical Resources:</h3>
                         <ul className="space-y-2">
                           <li className="text-base text-emerald-800">• University of Exeter Mood Disorders Centre (Watkins' RF-CBT research)</li>
@@ -1072,8 +1087,8 @@ function ThankYouPageContent() {
                         </ul>
                       </div>
 
-                      <div className="mt-6 text-center">
-                        <p className="text-base text-emerald-800 mb-4">
+                      <div className="text-center pt-4">
+                        <p className="text-base text-emerald-800">
                           <strong>Join 50,000+ women</strong> at DailyHush using these frameworks daily.
                         </p>
                       </div>

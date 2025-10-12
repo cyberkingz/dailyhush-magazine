@@ -412,11 +412,23 @@ function ThankYouPageContent() {
                 </div>
               </div>
 
+              {/* ========== TRANSITION BEFORE RESULTS ========== */}
+              {resultData && quizScore !== null && (
+                <div className="mb-8 text-center max-w-2xl mx-auto">
+                  <p className="text-lg text-slate-700 leading-relaxed mb-4">
+                    Here's what the research reveals about your specific pattern:
+                  </p>
+                  <p className="text-base text-slate-600 italic">
+                    (This isn't a label. It's a map showing where you are and how to move forward.)
+                  </p>
+                </div>
+              )}
+
               {/* ========== SECTION 1: RESULT VALIDATION (5%) ========== */}
               {resultData && quizScore !== null && (
-                <div className="mb-16 bg-amber-50/30 border-l-4 border-amber-500 pl-6 md:pl-8 py-6 rounded-r-lg">
+                <div className="mb-20 bg-amber-50/30 border-l-4 border-amber-300/50 pl-6 md:pl-8 py-6 rounded-r-lg">
                   <div className="max-w-3xl">
-                    <p className="text-sm font-bold text-amber-800 mb-3 tracking-wide">🧠 YOUR CLINICAL PROFILE</p>
+                    <p className="text-sm font-bold text-amber-800 mb-3 tracking-wide">Your Pattern Explained</p>
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-900 mb-6 leading-tight">{resultData.title}</h1>
 
                     {/* Score with Progress Bar */}
@@ -446,30 +458,6 @@ function ThankYouPageContent() {
                   </div>
                 </div>
               )}
-
-              {/* ========== EARLY TEASER CARD ========== */}
-              <div className="mb-12 max-w-2xl mx-auto">
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-200">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white">
-                        <Lightbulb className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-slate-900 mb-2">
-                        The F.I.R.E. Kit translates this research into daily practice
-                      </p>
-                      <p className="text-sm text-slate-700">
-                        40+ exercises based on the protocols you're reading below. $27.{' '}
-                        <a href="#offer-details" className="underline font-semibold hover:text-emerald-900">
-                          See details ↓
-                        </a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               {/* ========== WHY YOUR SMARTEST THOUGHTS KEEP YOU PARALYZED ========== */}
               <div className="mb-16">
@@ -515,6 +503,20 @@ function ThankYouPageContent() {
                   </p>
                 </div>
               </div>
+
+              {/* ========== VISUAL BREAK: TRANSITION TO CLINICAL DATA ========== */}
+              {resultData && (
+                <div className="my-12 border-t border-emerald-200 pt-8">
+                  <div className="max-w-md mx-auto text-center">
+                    <div className="inline-flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-full">
+                      <Brain className="w-5 h-5 text-emerald-600" />
+                      <span className="text-sm font-medium text-emerald-800">
+                        Now let's break down YOUR specific pattern
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* ========== SECTION 2: WHAT THIS ACTUALLY MEANS (40% - Pure Education) ========== */}
               {resultData && (
@@ -625,6 +627,31 @@ function ThankYouPageContent() {
                     </div>
                   </div>
 
+                  {/* ========== BRIDGE: FROM RESEARCH TO REALITY ========== */}
+                  <div className="my-16 max-w-3xl mx-auto">
+                    <div className="border-t border-slate-200 pt-12">
+                      <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-full mb-6">
+                          <Lightbulb className="w-5 h-5 text-amber-600" />
+                          <span className="text-sm font-medium text-amber-800">
+                            FROM RESEARCH TO REALITY
+                          </span>
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+                          Now here's the problem...
+                        </h3>
+                        <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
+                          <p>
+                            Those protocols work. But at 3 a.m. when your brain is spinning, you're not going to remember <em>"engage in concrete processing mode via RF-CBT while applying detached mindfulness from MCT."</em>
+                          </p>
+                          <p className="font-semibold text-slate-900">
+                            You need something simple. Something you can remember when you're dysregulated. Something that actually works in the moment.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* ========== F.I.R.E. FRAMEWORK BREAKDOWN ========== */}
                   <div className="mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6 text-center">
@@ -643,38 +670,38 @@ function ThankYouPageContent() {
                     <div className="max-w-4xl mx-auto space-y-6">
                       {/* F - Feel */}
                       <div className="group relative">
-                        <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-6 md:p-8 border-2 border-rose-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
-                          <div className="flex items-start gap-4 md:gap-6">
+                        <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-5 sm:p-6 md:p-8 border-2 border-rose-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-3 sm:gap-4 md:gap-6">
                             <div className="relative flex-shrink-0">
                               <div className="absolute inset-0 bg-rose-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white font-black text-xl sm:text-2xl md:text-3xl shadow-lg">
                                 F
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-3">
+                              <div className="flex items-center gap-2 mb-2 sm:mb-3">
                                 <span className="text-xs font-bold tracking-wider text-rose-700 uppercase">Step 1</span>
                                 <div className="flex-1 h-px bg-gradient-to-r from-rose-300 to-transparent"></div>
                               </div>
-                              <h3 className="text-xl md:text-2xl font-bold text-rose-900 mb-4">
+                              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-rose-900 mb-3 sm:mb-4 leading-tight">
                                 FEEL → Notice the spiral without judgment
                               </h3>
                               <div className="space-y-3">
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-rose-800 whitespace-nowrap">What it is:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-rose-800 sm:whitespace-nowrap">What it is:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     The moment you catch yourself looping. Not 20 minutes in — the first 10 seconds.
                                   </p>
                                 </div>
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-rose-800 whitespace-nowrap">Why it matters:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-rose-800 sm:whitespace-nowrap">Why it matters:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     Metacognitive Therapy (University of Manchester) shows that awareness is 50% of the battle. You can't interrupt what you don't notice.
                                   </p>
                                 </div>
-                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-rose-200/50">
+                                <div className="mt-3 sm:mt-4 bg-white/60 rounded-lg p-3 sm:p-4 border border-rose-200/50">
                                   <p className="text-xs font-semibold text-rose-700 mb-1 uppercase tracking-wide">Example</p>
-                                  <p className="text-sm text-slate-600 italic">
+                                  <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                                     "I'm ruminating about what Sarah said at lunch" vs. "Sarah's comment means I'm a terrible friend and..."
                                   </p>
                                 </div>
@@ -695,38 +722,38 @@ function ThankYouPageContent() {
 
                       {/* I - Interrupt */}
                       <div className="group relative">
-                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 md:p-8 border-2 border-amber-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
-                          <div className="flex items-start gap-4 md:gap-6">
+                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 sm:p-6 md:p-8 border-2 border-amber-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-3 sm:gap-4 md:gap-6">
                             <div className="relative flex-shrink-0">
                               <div className="absolute inset-0 bg-amber-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white font-black text-xl sm:text-2xl md:text-3xl shadow-lg">
                                 I
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-3">
+                              <div className="flex items-center gap-2 mb-2 sm:mb-3">
                                 <span className="text-xs font-bold tracking-wider text-amber-700 uppercase">Step 2</span>
                                 <div className="flex-1 h-px bg-gradient-to-r from-amber-300 to-transparent"></div>
                               </div>
-                              <h3 className="text-xl md:text-2xl font-bold text-amber-900 mb-4">
+                              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-amber-900 mb-3 sm:mb-4 leading-tight">
                                 INTERRUPT → Break the loop (physically)
                               </h3>
                               <div className="space-y-3">
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-amber-800 whitespace-nowrap">What it is:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-amber-800 sm:whitespace-nowrap">What it is:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     A physical pattern interrupt. Cold water on your face. 10 jumping jacks. Splashing your wrists. Humming.
                                   </p>
                                 </div>
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-amber-800 whitespace-nowrap">Why it matters:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-amber-800 sm:whitespace-nowrap">Why it matters:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     Polyvagal Theory research shows rumination = nervous system dysregulation. You can't think your way out. You have to interrupt the physiological state.
                                   </p>
                                 </div>
-                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-amber-200/50">
+                                <div className="mt-3 sm:mt-4 bg-white/60 rounded-lg p-3 sm:p-4 border border-amber-200/50">
                                   <p className="text-xs font-semibold text-amber-700 mb-1 uppercase tracking-wide">Example</p>
-                                  <p className="text-sm text-slate-600 italic">
+                                  <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                                     Face in ice water for 30 seconds activates your vagus nerve and literally resets your nervous system.
                                   </p>
                                 </div>
@@ -747,38 +774,38 @@ function ThankYouPageContent() {
 
                       {/* R - Redirect */}
                       <div className="group relative">
-                        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 md:p-8 border-2 border-emerald-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
-                          <div className="flex items-start gap-4 md:gap-6">
+                        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-5 sm:p-6 md:p-8 border-2 border-emerald-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-3 sm:gap-4 md:gap-6">
                             <div className="relative flex-shrink-0">
                               <div className="absolute inset-0 bg-emerald-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-white font-black text-xl sm:text-2xl md:text-3xl shadow-lg">
                                 R
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-3">
+                              <div className="flex items-center gap-2 mb-2 sm:mb-3">
                                 <span className="text-xs font-bold tracking-wider text-emerald-700 uppercase">Step 3</span>
                                 <div className="flex-1 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
                               </div>
-                              <h3 className="text-xl md:text-2xl font-bold text-emerald-900 mb-4">
+                              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-emerald-900 mb-3 sm:mb-4 leading-tight">
                                 REDIRECT → Shift from abstract to concrete
                               </h3>
                               <div className="space-y-3">
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-emerald-800 whitespace-nowrap">What it is:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-emerald-800 sm:whitespace-nowrap">What it is:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     Ask: "What's one small thing I can do RIGHT NOW?" Not "Why did this happen?" — that's a rumination trap.
                                   </p>
                                 </div>
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-emerald-800 whitespace-nowrap">Why it matters:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-emerald-800 sm:whitespace-nowrap">Why it matters:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     RF-CBT from University of Exeter shows abstract thinking = brooding. Concrete thinking = problem-solving. This single shift accounts for 65% of rumination reduction in studies.
                                   </p>
                                 </div>
-                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-emerald-200/50">
+                                <div className="mt-3 sm:mt-4 bg-white/60 rounded-lg p-3 sm:p-4 border border-emerald-200/50">
                                   <p className="text-xs font-semibold text-emerald-700 mb-1 uppercase tracking-wide">Example</p>
-                                  <p className="text-sm text-slate-600 italic">
+                                  <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                                     Instead of "Why do I always mess up?" → "I can text Sarah: 'Hey, was that comment about X? Want to clarify.'"
                                   </p>
                                 </div>
@@ -799,38 +826,38 @@ function ThankYouPageContent() {
 
                       {/* E - Ease */}
                       <div className="group relative">
-                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 md:p-8 border-2 border-blue-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
-                          <div className="flex items-start gap-4 md:gap-6">
+                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-5 sm:p-6 md:p-8 border-2 border-blue-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                          <div className="flex items-start gap-3 sm:gap-4 md:gap-6">
                             <div className="relative flex-shrink-0">
                               <div className="absolute inset-0 bg-blue-600 rounded-2xl blur-md opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-black text-2xl md:text-3xl shadow-lg">
+                              <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-black text-xl sm:text-2xl md:text-3xl shadow-lg">
                                 E
                               </div>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-3">
+                              <div className="flex items-center gap-2 mb-2 sm:mb-3">
                                 <span className="text-xs font-bold tracking-wider text-blue-700 uppercase">Step 4</span>
                                 <div className="flex-1 h-px bg-gradient-to-r from-blue-300 to-transparent"></div>
                               </div>
-                              <h3 className="text-xl md:text-2xl font-bold text-blue-900 mb-4">
+                              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-900 mb-3 sm:mb-4 leading-tight">
                                 EASE → Build your window of tolerance
                               </h3>
                               <div className="space-y-3">
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-blue-800 whitespace-nowrap">What it is:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-blue-800 sm:whitespace-nowrap">What it is:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     Daily practices that widen your nervous system's "green zone" — so you don't spiral as easily in the first place.
                                   </p>
                                 </div>
-                                <div className="flex items-start gap-2">
-                                  <span className="text-sm font-semibold text-blue-800 whitespace-nowrap">Why it matters:</span>
+                                <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                  <span className="text-sm font-semibold text-blue-800 sm:whitespace-nowrap">Why it matters:</span>
                                   <p className="text-sm md:text-base text-slate-700 leading-relaxed">
                                     Polyvagal Theory (Dr. Dan Siegel) shows chronic overthinkers have narrow windows of tolerance. The solution isn't just stopping spirals — it's preventing them.
                                   </p>
                                 </div>
-                                <div className="mt-4 bg-white/60 rounded-lg p-4 border border-blue-200/50">
+                                <div className="mt-3 sm:mt-4 bg-white/60 rounded-lg p-3 sm:p-4 border border-blue-200/50">
                                   <p className="text-xs font-semibold text-blue-700 mb-1 uppercase tracking-wide">Example</p>
-                                  <p className="text-sm text-slate-600 italic">
+                                  <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                                     Morning walks, co-regulation (safe relationships), breathwork, bilateral stimulation, somatic tracking.
                                   </p>
                                 </div>
@@ -841,37 +868,78 @@ function ThankYouPageContent() {
                       </div>
                     </div>
 
-                    {/* Step 0: Try It Now */}
-                    <div className="mt-12 border-l-4 border-indigo-500 pl-6 md:pl-8 py-4">
-                      <h3 className="text-2xl font-bold text-emerald-900 mb-4">
-                        Step 0: Try It Now (Free)
-                      </h3>
-                      <p className="text-base text-emerald-800 leading-relaxed mb-6">
-                        Before you buy anything, <strong>test the framework right now</strong>:
-                      </p>
+                    {/* Step 0: Try It Now - Prominent Card */}
+                    <div className="mt-12 group relative">
+                      <div className="bg-gradient-to-br from-purple-50 via-indigo-50 to-violet-50 rounded-2xl p-6 md:p-8 border-2 border-purple-200/60 shadow-xl">
+                        {/* Header Badge */}
+                        <div className="flex items-center justify-center mb-6">
+                          <div className="inline-flex items-center gap-2 bg-purple-600 text-white px-5 py-2 rounded-full shadow-lg">
+                            <span className="text-sm font-bold uppercase tracking-wide">Step 0: Try It Free</span>
+                          </div>
+                        </div>
 
-                      <ol className="space-y-4 text-emerald-800 mb-6 list-decimal list-inside">
-                        <li className="text-base leading-relaxed">
-                          <strong>FEEL:</strong> Think of something you're currently ruminating about. Notice the physical sensation — tight chest? Stomach knot? That's your cue.
-                        </li>
-                        <li className="text-base leading-relaxed">
-                          <strong>INTERRUPT:</strong> Stand up right now. Run cold water over your wrists for 30 seconds OR do 10 jumping jacks. (Yes, really. Do it.)
-                        </li>
-                        <li className="text-base leading-relaxed">
-                          <strong>REDIRECT:</strong> Ask yourself: "What's ONE concrete action I can take in the next 10 minutes?" Write it down.
-                        </li>
-                        <li className="text-base leading-relaxed">
-                          <strong>EASE:</strong> Take 3 slow breaths. 4-count inhale. 8-count exhale. Feel your shoulders drop.
-                        </li>
-                      </ol>
+                        <h3 className="text-2xl md:text-3xl font-bold text-purple-900 mb-4 text-center">
+                          Test F.I.R.E. Right Now (90 Seconds)
+                        </h3>
 
-                      <div className="border-t border-indigo-300/50 pt-4">
-                        <p className="text-base text-emerald-800 leading-relaxed mb-2">
-                          <strong>Notice anything shift?</strong> That's 90 seconds of F.I.R.E.
+                        <p className="text-base md:text-lg text-slate-700 leading-relaxed mb-8 text-center max-w-2xl mx-auto">
+                          Before you buy anything, <strong>test the framework right now</strong>:
                         </p>
-                        <p className="text-sm text-emerald-700">
-                          The F.I.R.E. Kit gives you 40+ exercises like this — for every type of spiral, every time of day, every situation.
-                        </p>
+
+                        <div className="space-y-5 mb-8">
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                              1
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+                                <strong className="text-rose-700">FEEL:</strong> Think of something you're currently ruminating about. Notice the physical sensation — tight chest? Stomach knot? That's your cue.
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                              2
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+                                <strong className="text-amber-700">INTERRUPT:</strong> Stand up right now. Run cold water over your wrists for 30 seconds OR do 10 jumping jacks. (Yes, really. Do it.)
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                              3
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+                                <strong className="text-emerald-700">REDIRECT:</strong> Ask yourself: "What's ONE concrete action I can take in the next 10 minutes?" Write it down.
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                              4
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+                                <strong className="text-blue-700">EASE:</strong> Take 3 slow breaths. 4-count inhale. 8-count exhale. Feel your shoulders drop.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="border-t-2 border-purple-200 pt-6 bg-white/60 rounded-xl p-4 sm:p-6">
+                          <p className="text-base sm:text-lg font-bold text-purple-900 leading-relaxed mb-3 text-center">
+                            Notice anything shift? That's 90 seconds of F.I.R.E.
+                          </p>
+                          <p className="text-sm sm:text-base text-slate-700 text-center leading-relaxed">
+                            The F.I.R.E. Kit gives you <strong>40+ exercises like this</strong> — for every type of spiral, every time of day, every situation.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>

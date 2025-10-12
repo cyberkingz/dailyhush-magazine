@@ -473,11 +473,11 @@ function ThankYouPageContent() {
             <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
 
               {/* ========== EMOTIONAL OPENING ========== */}
-              <div className="mb-12 text-center">
+              <div className="mb-12">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-900 mb-6 leading-tight">
-                  Listen... If your brain never shuts up —<br />this will finally make sense.
+                  Listen... If your brain never shuts up — this will finally make sense.
                 </h1>
-                <div className="max-w-3xl mx-auto space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
+                <div className="max-w-3xl space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
                   <p>I know what just happened.</p>
                   <p>
                     You sat there answering those questions — some of them uncomfortably accurate — and with each click, you felt that familiar tightness in your chest. That voice in your head saying <em>"See? I KNEW something was wrong with me. This is proof."</em>

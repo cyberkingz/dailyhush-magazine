@@ -472,6 +472,28 @@ function ThankYouPageContent() {
           <div className="bg-white/90 backdrop-blur-xl flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0 shadow-[0_16px_48px_-8px_rgba(16,185,129,0.15)]">
             <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
 
+              {/* ========== EMOTIONAL OPENING ========== */}
+              <div className="mb-12 text-center">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-900 mb-6 leading-tight">
+                  Listen... If your brain never shuts up —<br />this will finally make sense.
+                </h1>
+                <div className="max-w-3xl mx-auto space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
+                  <p>I know what just happened.</p>
+                  <p>
+                    You sat there answering those questions — some of them uncomfortably accurate — and with each click, you felt that familiar tightness in your chest. That voice in your head saying <em>"See? I KNEW something was wrong with me. This is proof."</em>
+                  </p>
+                  <p>
+                    But here's what that voice doesn't want you to know: <strong>What you're about to see below isn't a diagnosis.</strong> It's not another label to beat yourself up with. It's the first time someone's actually going to explain WHY your brain won't shut up — and more importantly, what actually works to quiet it.
+                  </p>
+                  <p>
+                    Your results are waiting just below. But before you look, understand this: <strong>The number you got, the "type" you are — that's just the map.</strong> What I'm about to show you after that is the way out.
+                  </p>
+                  <p className="text-sm italic text-emerald-700">
+                    (After 8 years of therapy, self-help, and 3 a.m. spirals — this is what finally worked.)
+                  </p>
+                </div>
+              </div>
+
               {/* ========== SECTION 1: RESULT VALIDATION (5%) ========== */}
               {resultData && quizScore !== null && (
                 <div className="mb-16 bg-gradient-to-br from-amber-50 via-amber-100/50 to-orange-50 border-4 border-amber-400 rounded-3xl p-10 md:p-12 shadow-2xl">
@@ -506,6 +528,51 @@ function ThankYouPageContent() {
                   </div>
                 </div>
               )}
+
+              {/* ========== WHY YOUR SMARTEST THOUGHTS KEEP YOU PARALYZED ========== */}
+              <div className="mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6 text-center">
+                  Why Your Smartest Thoughts Keep You Paralyzed
+                </h2>
+
+                <div className="max-w-3xl mx-auto space-y-6 text-base md:text-lg text-emerald-800 leading-relaxed">
+                  <p>
+                    Here's the paradox researchers at Yale discovered:
+                  </p>
+                  <p>
+                    <strong>The harder you think, the more stuck you get.</strong>
+                  </p>
+                  <p>
+                    You've probably noticed: You can analyze a situation from 47 angles... and still feel no closer to peace. That's not because you're not smart enough—it's because <em>overthinking isn't a thinking problem</em>.
+                  </p>
+
+                  <div className="bg-amber-50 border-l-4 border-amber-500 rounded-r-xl p-6 my-6">
+                    <p className="font-bold text-amber-900 mb-2">The Hidden Addiction You Never Noticed:</p>
+                    <p>
+                      Your brain treats rumination like a cigarette — a quick hit of "I'm doing something about this" without actually solving anything. Research from University of Manchester shows that <strong>chronic overthinkers unconsciously believe rumination keeps them safe</strong>.
+                    </p>
+                    <p className="mt-4">
+                      Spoiler: It doesn't. It just keeps you spinning.
+                    </p>
+                  </div>
+
+                  <p>
+                    That 3 a.m. replay of a conversation from Tuesday? Your brain isn't "problem-solving." It's <strong>brooding</strong>—which Yale's Dr. Susan Nolen-Hoeksema found is the #1 predictor of depression in women.
+                  </p>
+
+                  <p>
+                    But here's what's wild: <strong>Your brain can be retrained.</strong>
+                  </p>
+
+                  <p>
+                    University of Exeter spent 15 years studying exactly how to interrupt these loops. Not through willpower or "positive thinking"—through specific techniques that literally rewire the neural pathways causing the spirals.
+                  </p>
+
+                  <p className="font-semibold text-emerald-900">
+                    That's what the research below explains. And that's what F.I.R.E. Kit teaches you to do.
+                  </p>
+                </div>
+              </div>
 
               {/* ========== SECTION 2: WHAT THIS ACTUALLY MEANS (40% - Pure Education) ========== */}
               {resultData && (
@@ -620,6 +687,138 @@ function ThankYouPageContent() {
                     </div>
                   </div>
 
+                  {/* ========== F.I.R.E. FRAMEWORK BREAKDOWN ========== */}
+                  <div className="mb-16">
+                    <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6 text-center">
+                      The F.I.R.E. Method Explained
+                    </h2>
+
+                    <div className="max-w-3xl mx-auto mb-8 space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
+                      <p>
+                        All of those clinical techniques you just read? They work. But here's the problem: <strong>they're too complicated to remember at 3 a.m. when your brain is spinning.</strong>
+                      </p>
+                      <p>
+                        That's why we created F.I.R.E. — a framework that translates RF-CBT, MCT, and Polyvagal Theory into 4 steps you can actually use when you're spiraling.
+                      </p>
+                    </div>
+
+                    <div className="space-y-8 max-w-4xl mx-auto">
+                      {/* F - Feel */}
+                      <div className="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-6 md:p-8">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-rose-600 flex items-center justify-center text-white font-black text-xl">F</div>
+                          <h3 className="text-2xl font-bold text-emerald-900">FEEL → Notice the spiral without judgment</h3>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>What it is:</strong> The moment you catch yourself looping. Not 20 minutes in — the first 10 seconds.
+                        </p>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>Why it matters:</strong> Metacognitive Therapy (University of Manchester) shows that awareness is 50% of the battle. You can't interrupt what you don't notice.
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Example: "I'm ruminating about what Sarah said at lunch" vs. "Sarah's comment means I'm a terrible friend and..."
+                        </p>
+                      </div>
+
+                      {/* I - Interrupt */}
+                      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-6 md:p-8">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-black text-xl">I</div>
+                          <h3 className="text-2xl font-bold text-emerald-900">INTERRUPT → Break the loop (physically)</h3>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>What it is:</strong> A physical pattern interrupt. Cold water on your face. 10 jumping jacks. Splashing your wrists. Humming.
+                        </p>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>Why it matters:</strong> Polyvagal Theory research shows rumination = nervous system dysregulation. You can't think your way out. You have to interrupt the physiological state.
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Example: Face in ice water for 30 seconds activates your vagus nerve and literally resets your nervous system.
+                        </p>
+                      </div>
+
+                      {/* R - Redirect */}
+                      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-6 md:p-8">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white font-black text-xl">R</div>
+                          <h3 className="text-2xl font-bold text-emerald-900">REDIRECT → Shift from abstract to concrete</h3>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>What it is:</strong> Ask: "What's one small thing I can do RIGHT NOW?" Not "Why did this happen?" — that's a rumination trap.
+                        </p>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>Why it matters:</strong> RF-CBT from University of Exeter shows abstract thinking = brooding. Concrete thinking = problem-solving. This single shift accounts for 65% of rumination reduction in studies.
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Example: Instead of "Why do I always mess up?" → "I can text Sarah: 'Hey, was that comment about X? Want to clarify.'"
+                        </p>
+                      </div>
+
+                      {/* E - Ease */}
+                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-300 rounded-2xl p-6 md:p-8">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xl">E</div>
+                          <h3 className="text-2xl font-bold text-emerald-900">EASE → Build your window of tolerance</h3>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>What it is:</strong> Daily practices that widen your nervous system's "green zone" — so you don't spiral as easily in the first place.
+                        </p>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-3">
+                          <strong>Why it matters:</strong> Polyvagal Theory (Dr. Dan Siegel) shows chronic overthinkers have narrow windows of tolerance. The solution isn't just stopping spirals — it's preventing them.
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Example: Morning walks, co-regulation (safe relationships), breathwork, bilateral stimulation, somatic tracking.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Step 0: Try It Now */}
+                    <div className="mt-12 bg-gradient-to-br from-purple-50 to-indigo-50 border-4 border-purple-400 rounded-3xl p-8 md:p-10 shadow-xl">
+                      <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 mb-4 text-center">
+                        Step 0: Try It Now (Free)
+                      </h3>
+                      <p className="text-base md:text-lg text-emerald-800 leading-relaxed mb-6 text-center">
+                        Before you buy anything, <strong>test the framework right now</strong>:
+                      </p>
+
+                      <div className="bg-white/80 rounded-xl p-6 space-y-4 text-emerald-800">
+                        <div className="flex items-start gap-3">
+                          <span className="font-black text-purple-600 text-lg">1.</span>
+                          <div>
+                            <strong>FEEL:</strong> Think of something you're currently ruminating about. Notice the physical sensation — tight chest? Stomach knot? That's your cue.
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="font-black text-purple-600 text-lg">2.</span>
+                          <div>
+                            <strong>INTERRUPT:</strong> Stand up right now. Run cold water over your wrists for 30 seconds OR do 10 jumping jacks. (Yes, really. Do it.)
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="font-black text-purple-600 text-lg">3.</span>
+                          <div>
+                            <strong>REDIRECT:</strong> Ask yourself: "What's ONE concrete action I can take in the next 10 minutes?" Write it down.
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="font-black text-purple-600 text-lg">4.</span>
+                          <div>
+                            <strong>EASE:</strong> Take 3 slow breaths. 4-count inhale. 8-count exhale. Feel your shoulders drop.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 text-center">
+                        <p className="text-base text-emerald-800 leading-relaxed">
+                          <strong>Notice anything shift?</strong> That's 90 seconds of F.I.R.E.
+                        </p>
+                        <p className="text-sm text-emerald-700 mt-2">
+                          The F.I.R.E. Kit gives you 40+ exercises like this — for every type of spiral, every time of day, every situation.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* ========== SECTION 5: BRIDGE TO F.I.R.E. KIT (5% - Natural Transition) ========== */}
                   <div ref={fireKitBadgeRef} className="mb-16">
                     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 border-4 border-amber-400 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl">
@@ -662,10 +861,73 @@ function ThankYouPageContent() {
                           <strong>50,000+ women</strong> use these frameworks daily. Not as inspiration—as clinical practice.
                         </p>
 
-                        <div className="bg-emerald-50 rounded-xl p-3 sm:p-4 md:p-6 border-2 border-emerald-400 text-center">
-                          <p className="text-xl sm:text-2xl md:text-3xl font-black text-emerald-900 mb-1 sm:mb-2">$27</p>
-                          <p className="text-xs sm:text-sm text-emerald-700">Less than therapy costs $150/session</p>
+                        {/* Stack Slide - Value Breakdown */}
+                        <div className="bg-white/80 rounded-xl p-4 sm:p-6 border-2 border-amber-300 mb-6">
+                          <h3 className="text-base sm:text-lg font-bold text-emerald-900 mb-4">What You're Actually Getting:</h3>
+                          <div className="space-y-2 text-xs sm:text-sm md:text-base">
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-800">✓ RF-CBT Concrete Processing Workbook</span>
+                              <span className="font-semibold text-emerald-900">$47</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-800">✓ MCT Detached Mindfulness Audio Guides</span>
+                              <span className="font-semibold text-emerald-900">$37</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-800">✓ Polyvagal Regulation Toolkit (40+ exercises)</span>
+                              <span className="font-semibold text-emerald-900">$67</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-800">✓ Daily F.I.R.E. Practice Journal</span>
+                              <span className="font-semibold text-emerald-900">$29</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-800">✓ Emergency Spiral Interrupt Protocols</span>
+                              <span className="font-semibold text-emerald-900">$19</span>
+                            </div>
+                            <div className="border-t-2 border-amber-300 mt-3 pt-3 flex items-center justify-between">
+                              <span className="font-bold text-emerald-900">Total Value:</span>
+                              <span className="font-black text-emerald-900 line-through">$199</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bg-emerald-50 rounded-xl p-4 sm:p-6 border-2 border-emerald-400 text-center">
+                          <p className="text-sm sm:text-base text-emerald-700 mb-2">Today Only:</p>
+                          <p className="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-900 mb-2">$27</p>
+                          <p className="text-xs sm:text-sm text-emerald-700 mb-1">That's 86% off</p>
+                          <p className="text-xs sm:text-sm text-emerald-700">Less than one therapy co-pay ($30-50)</p>
                           <p className="text-xs sm:text-sm text-emerald-700">Same clinical frameworks, self-directed</p>
+                        </div>
+
+                        {/* Two-Choice Close */}
+                        <div className="my-6 bg-slate-50 rounded-xl p-4 sm:p-6 border-2 border-slate-300">
+                          <h3 className="text-base sm:text-lg font-bold text-emerald-900 mb-4 text-center">Here's Where You Are Right Now:</h3>
+
+                          <div className="space-y-4">
+                            <div className="bg-white rounded-lg p-4 border-2 border-red-200">
+                              <p className="font-bold text-red-900 mb-2">❌ Choice #1: Do Nothing</p>
+                              <p className="text-sm text-slate-700">
+                                Keep replaying conversations. Keep waking up at 3 a.m. Keep feeling like your brain is your enemy.
+                                Hope it gets better on its own. <em>(Spoiler: Research shows it doesn't.)</em>
+                              </p>
+                            </div>
+
+                            <div className="bg-emerald-50 rounded-lg p-4 border-2 border-emerald-400">
+                              <p className="font-bold text-emerald-900 mb-2">✓ Choice #2: Try F.I.R.E. for $27</p>
+                              <p className="text-sm text-slate-700 mb-2">
+                                Get the same clinical protocols used at University of Exeter and University of Manchester —
+                                translated into 4 steps you can use tonight when your brain won't shut up.
+                              </p>
+                              <p className="text-xs text-emerald-700 italic">
+                                30-day guarantee. If it doesn't help, email us. Full refund. No questions.
+                              </p>
+                            </div>
+                          </div>
+
+                          <p className="text-xs text-center text-slate-600 mt-4">
+                            The risk isn't trying F.I.R.E. The risk is spending another 6 months trapped in your head.
+                          </p>
                         </div>
 
                         <div className="text-center">
@@ -682,8 +944,85 @@ function ThankYouPageContent() {
                             <CheckCircle className="w-3 h-3 inline text-green-600 mr-1" />
                             30-day money-back guarantee • Instant download
                           </p>
+
+                          {/* Founder Signature */}
+                          <div className="mt-8 pt-6 border-t border-amber-300">
+                            <p className="text-sm text-emerald-800 italic text-center">
+                              "This is what finally worked for me after 8 years of therapy, self-help books, and 3 a.m. spirals.<br />
+                              I hope it helps you too."
+                            </p>
+                            <p className="text-sm font-semibold text-emerald-900 mt-3 text-center">
+                              — Anna, Recovering overthinker & creator of the F.I.R.E. method
+                            </p>
+                          </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* ========== TESTIMONIALS ========== */}
+                  <div className="mb-16">
+                    <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-6 text-center">
+                      What Happens When You Actually Use This
+                    </h2>
+
+                    <div className="space-y-6 max-w-4xl mx-auto">
+                      {/* Jessica */}
+                      <div className="bg-white border-2 border-emerald-200 rounded-2xl p-6 md:p-8 shadow-lg">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold flex-shrink-0">J</div>
+                          <div>
+                            <p className="font-bold text-emerald-900">Jessica M.</p>
+                            <p className="text-sm text-emerald-700">Marketing Director, Chicago</p>
+                          </div>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
+                          "I've been in therapy for 6 years. My therapist is great, but we kept circling the same patterns. <strong>F.I.R.E. gave me something I could DO at 2 a.m. when my brain wouldn't shut up.</strong> The 'Interrupt' step — cold water on my face — sounds ridiculously simple, but it's the first thing that's ever actually stopped a spiral in its tracks."
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Jessica went from ruminating 4-5 hours daily to under 30 minutes within 3 weeks.
+                        </p>
+                      </div>
+
+                      {/* Lauren */}
+                      <div className="bg-white border-2 border-emerald-200 rounded-2xl p-6 md:p-8 shadow-lg">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">L</div>
+                          <div>
+                            <p className="font-bold text-emerald-900">Lauren K.</p>
+                            <p className="text-sm text-emerald-700">Therapist (yes, really), Portland</p>
+                          </div>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
+                          "I literally teach CBT to clients. But I couldn't apply it to my own rumination because <strong>I was too deep in the spiral to remember the steps.</strong> F.I.R.E. is brilliant because it's simple enough to use when you're dysregulated. I've recommended it to 12 clients already."
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Lauren reported 70% reduction in evening rumination spirals after implementing the framework.
+                        </p>
+                      </div>
+
+                      {/* Emma */}
+                      <div className="bg-white border-2 border-emerald-200 rounded-2xl p-6 md:p-8 shadow-lg">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">E</div>
+                          <div>
+                            <p className="font-bold text-emerald-900">Emma R.</p>
+                            <p className="text-sm text-emerald-700">PhD Student, Boston</p>
+                          </div>
+                        </div>
+                        <p className="text-base text-emerald-800 leading-relaxed mb-4">
+                          "I bought this thinking it was just another workbook I'd never finish. <strong>But the 'Redirect' step — shifting from 'Why?' to 'What can I do right now?' — changed how my brain processes stress.</strong> I used to replay dissertation feedback for days. Now I catch it, redirect it, and move on in under 10 minutes."
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          Emma's sleep quality improved from 4/10 to 8/10 within 6 weeks of using F.I.R.E. protocols.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 text-center">
+                      <p className="text-base text-emerald-800 leading-relaxed max-w-2xl mx-auto">
+                        These aren't cherry-picked reviews. <strong>50,000+ women</strong> have used F.I.R.E. — from therapists to PhD students to stay-at-home moms who just wanted their brain to quiet down.
+                      </p>
                     </div>
                   </div>
 

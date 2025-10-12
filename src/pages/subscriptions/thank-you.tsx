@@ -496,18 +496,18 @@ function ThankYouPageContent() {
 
               {/* ========== SECTION 1: RESULT VALIDATION (5%) ========== */}
               {resultData && quizScore !== null && (
-                <div className="mb-16 bg-gradient-to-br from-amber-50 via-amber-100/50 to-orange-50 border-4 border-amber-400 rounded-3xl p-10 md:p-12 shadow-2xl">
-                  <div className="text-center mb-8">
-                    <p className="text-base font-bold text-amber-800 mb-4 tracking-wide">🧠 YOUR CLINICAL PROFILE</p>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-emerald-900 mb-6 leading-tight">{resultData.title}</h1>
+                <div className="mb-16 bg-amber-50/30 border-l-4 border-amber-500 pl-6 md:pl-8 py-6 rounded-r-lg">
+                  <div className="max-w-3xl">
+                    <p className="text-sm font-bold text-amber-800 mb-3 tracking-wide">🧠 YOUR CLINICAL PROFILE</p>
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-900 mb-6 leading-tight">{resultData.title}</h1>
 
                     {/* Score with Progress Bar */}
-                    <div className="max-w-md mx-auto mb-6">
+                    <div className="max-w-md mb-6">
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-lg font-semibold text-emerald-700">Rumination Scale</span>
+                        <span className="text-base font-semibold text-emerald-700">Rumination Scale</span>
                         <span className="text-2xl font-black text-amber-900">{quizScore}/10</span>
                       </div>
-                      <div className="relative w-full bg-amber-200 rounded-full h-4 overflow-hidden">
+                      <div className="relative w-full bg-amber-200 rounded-full h-3 overflow-hidden">
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 transition-all duration-1000 ease-out"
                           style={{ width: `${(quizScore / 10) * 100}%` }}
@@ -517,14 +517,14 @@ function ThankYouPageContent() {
                       </div>
                     </div>
 
-                    <p className="text-lg md:text-xl text-emerald-700 font-semibold leading-relaxed max-w-2xl mx-auto mb-4">{resultData.clinicalProfile}</p>
-                    <p className="text-base text-emerald-600 italic">{resultData.score}</p>
-                  </div>
+                    <p className="text-base md:text-lg text-emerald-700 font-semibold leading-relaxed mb-3">{resultData.clinicalProfile}</p>
+                    <p className="text-base text-emerald-600 italic mb-6">{resultData.score}</p>
 
-                  <div className="border-t-2 border-amber-300 pt-6 mt-6 bg-white/40 rounded-xl p-6">
-                    <p className="text-base text-emerald-700 text-center leading-relaxed">
-                      What you're about to read isn't Instagram quotes. It's clinical research from University of Exeter, Yale, Stanford, and University of Manchester—translated into real explanations of why your brain works this way.
-                    </p>
+                    <div className="border-t border-amber-300/50 pt-6 mt-6">
+                      <p className="text-base text-emerald-700 leading-relaxed">
+                        What you're about to read isn't Instagram quotes. It's clinical research from University of Exeter, Yale, Stanford, and University of Manchester—translated into real explanations of why your brain works this way.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -784,46 +784,34 @@ function ThankYouPageContent() {
                     </div>
 
                     {/* Step 0: Try It Now */}
-                    <div className="mt-12 bg-gradient-to-br from-purple-50 to-indigo-50 border-4 border-purple-400 rounded-3xl p-8 md:p-10 shadow-xl">
-                      <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 mb-4 text-center">
+                    <div className="mt-12 border-l-4 border-indigo-500 pl-6 md:pl-8 py-4">
+                      <h3 className="text-2xl font-bold text-emerald-900 mb-4">
                         Step 0: Try It Now (Free)
                       </h3>
-                      <p className="text-base md:text-lg text-emerald-800 leading-relaxed mb-6 text-center">
+                      <p className="text-base text-emerald-800 leading-relaxed mb-6">
                         Before you buy anything, <strong>test the framework right now</strong>:
                       </p>
 
-                      <div className="bg-white/80 rounded-xl p-6 space-y-4 text-emerald-800">
-                        <div className="flex items-start gap-3">
-                          <span className="font-black text-purple-600 text-lg">1.</span>
-                          <div>
-                            <strong>FEEL:</strong> Think of something you're currently ruminating about. Notice the physical sensation — tight chest? Stomach knot? That's your cue.
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="font-black text-purple-600 text-lg">2.</span>
-                          <div>
-                            <strong>INTERRUPT:</strong> Stand up right now. Run cold water over your wrists for 30 seconds OR do 10 jumping jacks. (Yes, really. Do it.)
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="font-black text-purple-600 text-lg">3.</span>
-                          <div>
-                            <strong>REDIRECT:</strong> Ask yourself: "What's ONE concrete action I can take in the next 10 minutes?" Write it down.
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="font-black text-purple-600 text-lg">4.</span>
-                          <div>
-                            <strong>EASE:</strong> Take 3 slow breaths. 4-count inhale. 8-count exhale. Feel your shoulders drop.
-                          </div>
-                        </div>
-                      </div>
+                      <ol className="space-y-4 text-emerald-800 mb-6 list-decimal list-inside">
+                        <li className="text-base leading-relaxed">
+                          <strong>FEEL:</strong> Think of something you're currently ruminating about. Notice the physical sensation — tight chest? Stomach knot? That's your cue.
+                        </li>
+                        <li className="text-base leading-relaxed">
+                          <strong>INTERRUPT:</strong> Stand up right now. Run cold water over your wrists for 30 seconds OR do 10 jumping jacks. (Yes, really. Do it.)
+                        </li>
+                        <li className="text-base leading-relaxed">
+                          <strong>REDIRECT:</strong> Ask yourself: "What's ONE concrete action I can take in the next 10 minutes?" Write it down.
+                        </li>
+                        <li className="text-base leading-relaxed">
+                          <strong>EASE:</strong> Take 3 slow breaths. 4-count inhale. 8-count exhale. Feel your shoulders drop.
+                        </li>
+                      </ol>
 
-                      <div className="mt-6 text-center">
-                        <p className="text-base text-emerald-800 leading-relaxed">
+                      <div className="border-t border-indigo-300/50 pt-4">
+                        <p className="text-base text-emerald-800 leading-relaxed mb-2">
                           <strong>Notice anything shift?</strong> That's 90 seconds of F.I.R.E.
                         </p>
-                        <p className="text-sm text-emerald-700 mt-2">
+                        <p className="text-sm text-emerald-700">
                           The F.I.R.E. Kit gives you 40+ exercises like this — for every type of spiral, every time of day, every situation.
                         </p>
                       </div>
@@ -831,143 +819,101 @@ function ThankYouPageContent() {
                   </div>
 
                   {/* ========== SECTION 5: BRIDGE TO F.I.R.E. KIT (5% - Natural Transition) ========== */}
-                  <div ref={fireKitBadgeRef} className="mb-16">
-                    <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 border-4 border-amber-400 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl">
-                      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-900 mb-3 sm:mb-4 md:mb-6 text-center leading-tight">
-                        Why F.I.R.E. KIT Matters for Your Profile
-                      </h2>
+                  <div ref={fireKitBadgeRef} className="mb-16 max-w-3xl mx-auto">
+                    <hr className="border-t-2 border-emerald-200 mb-8" />
 
-                      <div className="space-y-3 sm:space-y-4 md:space-y-6 text-sm sm:text-base md:text-lg text-emerald-900 leading-relaxed">
-                        <p className="font-semibold text-center text-xs sm:text-sm md:text-base">
-                          These aren't theories. These are the frameworks used by clinical psychologists at University of Exeter and University of Manchester—translated into daily tools.
-                        </p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 mb-6">
+                      PS: Why I Built the F.I.R.E. Kit
+                    </h2>
 
-                        <div className="bg-white/60 rounded-xl p-3 sm:p-4 md:p-6 border-2 border-amber-300">
-                          <p className="font-bold mb-2 text-xs sm:text-sm md:text-base">What's Inside:</p>
-                          <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm md:text-base">
-                            <li className="flex items-start gap-1.5 sm:gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <span>RF-CBT concrete processing exercises (Watkins' protocols)</span>
-                            </li>
-                            <li className="flex items-start gap-1.5 sm:gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <span>MCT detached mindfulness practices (Wells' clinic protocols)</span>
-                            </li>
-                            <li className="flex items-start gap-1.5 sm:gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <span>Polyvagal regulation tools (Porges' nervous system work)</span>
-                            </li>
-                            <li className="flex items-start gap-1.5 sm:gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <span>Cognitive distortion tracking (Beck & Burns' frameworks)</span>
-                            </li>
-                            <li className="flex items-start gap-1.5 sm:gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <span>Window of Tolerance mapping (Siegel's regulation model)</span>
-                            </li>
-                          </ul>
-                        </div>
+                    <div className="space-y-6 text-base text-emerald-800 leading-relaxed">
+                      <p>
+                        These aren't theories. These are the frameworks used by clinical psychologists at University of Exeter and University of Manchester—translated into daily tools.
+                      </p>
 
-                        <p className="text-center text-xs sm:text-sm md:text-base">
-                          <strong>50,000+ women</strong> use these frameworks daily. Not as inspiration—as clinical practice.
-                        </p>
+                      <p className="font-semibold">What you get:</p>
+                      <ul className="space-y-2 ml-6">
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-600 mt-1">•</span>
+                          <span>RF-CBT concrete processing exercises (Watkins' protocols)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-600 mt-1">•</span>
+                          <span>MCT detached mindfulness practices (Wells' clinic protocols)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-600 mt-1">•</span>
+                          <span>Polyvagal regulation tools (Porges' nervous system work)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-600 mt-1">•</span>
+                          <span>Cognitive distortion tracking (Beck & Burns' frameworks)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-600 mt-1">•</span>
+                          <span>Window of Tolerance mapping (Siegel's regulation model)</span>
+                        </li>
+                      </ul>
 
-                        {/* Stack Slide - Value Breakdown */}
-                        <div className="bg-white/80 rounded-xl p-4 sm:p-6 border-2 border-amber-300 mb-6">
-                          <h3 className="text-base sm:text-lg font-bold text-emerald-900 mb-4">What You're Actually Getting:</h3>
-                          <div className="space-y-2 text-xs sm:text-sm md:text-base">
-                            <div className="flex items-center justify-between">
-                              <span className="text-emerald-800">✓ RF-CBT Concrete Processing Workbook</span>
-                              <span className="font-semibold text-emerald-900">$47</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-emerald-800">✓ MCT Detached Mindfulness Audio Guides</span>
-                              <span className="font-semibold text-emerald-900">$37</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-emerald-800">✓ Polyvagal Regulation Toolkit (40+ exercises)</span>
-                              <span className="font-semibold text-emerald-900">$67</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-emerald-800">✓ Daily F.I.R.E. Practice Journal</span>
-                              <span className="font-semibold text-emerald-900">$29</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-emerald-800">✓ Emergency Spiral Interrupt Protocols</span>
-                              <span className="font-semibold text-emerald-900">$19</span>
-                            </div>
-                            <div className="border-t-2 border-amber-300 mt-3 pt-3 flex items-center justify-between">
-                              <span className="font-bold text-emerald-900">Total Value:</span>
-                              <span className="font-black text-emerald-900 line-through">$199</span>
-                            </div>
-                          </div>
-                        </div>
+                      <p>
+                        <strong>50,000+ women</strong> use these frameworks daily. Not as inspiration—as clinical practice.
+                      </p>
 
-                        <div className="bg-emerald-50 rounded-xl p-4 sm:p-6 border-2 border-emerald-400 text-center">
-                          <p className="text-sm sm:text-base text-emerald-700 mb-2">Today Only:</p>
-                          <p className="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-900 mb-2">$27</p>
-                          <p className="text-xs sm:text-sm text-emerald-700 mb-1">That's 86% off</p>
-                          <p className="text-xs sm:text-sm text-emerald-700">Less than one therapy co-pay ($30-50)</p>
-                          <p className="text-xs sm:text-sm text-emerald-700">Same clinical frameworks, self-directed</p>
-                        </div>
-
-                        {/* Two-Choice Close */}
-                        <div className="my-6 bg-slate-50 rounded-xl p-4 sm:p-6 border-2 border-slate-300">
-                          <h3 className="text-base sm:text-lg font-bold text-emerald-900 mb-4 text-center">Here's Where You Are Right Now:</h3>
-
-                          <div className="space-y-4">
-                            <div className="bg-white rounded-lg p-4 border-2 border-red-200">
-                              <p className="font-bold text-red-900 mb-2">❌ Choice #1: Do Nothing</p>
-                              <p className="text-sm text-slate-700">
-                                Keep replaying conversations. Keep waking up at 3 a.m. Keep feeling like your brain is your enemy.
-                                Hope it gets better on its own. <em>(Spoiler: Research shows it doesn't.)</em>
-                              </p>
-                            </div>
-
-                            <div className="bg-emerald-50 rounded-lg p-4 border-2 border-emerald-400">
-                              <p className="font-bold text-emerald-900 mb-2">✓ Choice #2: Try F.I.R.E. for $27</p>
-                              <p className="text-sm text-slate-700 mb-2">
-                                Get the same clinical protocols used at University of Exeter and University of Manchester —
-                                translated into 4 steps you can use tonight when your brain won't shut up.
-                              </p>
-                              <p className="text-xs text-emerald-700 italic">
-                                30-day guarantee. If it doesn't help, email us. Full refund. No questions.
-                              </p>
-                            </div>
-                          </div>
-
-                          <p className="text-xs text-center text-slate-600 mt-4">
-                            The risk isn't trying F.I.R.E. The risk is spending another 6 months trapped in your head.
-                          </p>
-                        </div>
-
-                        <div className="text-center">
-                          <ShopifyBuyButton
-                            productId="10761797894447"
-                            domain="t7vyee-kc.myshopify.com"
-                            storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                            buttonText="Get the F.I.R.E. Kit • $27"
-                            buttonColor="#16a34a"
-                            buttonHoverColor="#15803d"
-                            className="w-full sm:w-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-2">
-                            <CheckCircle className="w-3 h-3 inline text-green-600 mr-1" />
-                            30-day money-back guarantee • Instant download
-                          </p>
-
-                          {/* Founder Signature */}
-                          <div className="mt-8 pt-6 border-t border-amber-300">
-                            <p className="text-sm text-emerald-800 italic text-center">
-                              "This is what finally worked for me after 8 years of therapy, self-help books, and 3 a.m. spirals.<br />
-                              I hope it helps you too."
-                            </p>
-                            <p className="text-sm font-semibold text-emerald-900 mt-3 text-center">
-                              — Anna, Recovering overthinker & creator of the F.I.R.E. method
-                            </p>
-                          </div>
-                        </div>
+                      <div className="border-l-4 border-emerald-500 pl-6 py-4 bg-emerald-50/30">
+                        <p className="text-base text-emerald-700 mb-2">Today:</p>
+                        <p className="text-4xl font-black text-emerald-900 mb-2">$27</p>
+                        <p className="text-sm text-emerald-700">Less than one therapy co-pay. Same clinical frameworks, self-directed.</p>
                       </div>
+
+                      <p className="font-semibold">Here's where you are right now:</p>
+
+                      <div className="border-l-4 border-red-400 pl-6 py-2">
+                        <p className="font-semibold text-red-900 mb-2">❌ Do Nothing</p>
+                        <p className="text-base text-slate-700">
+                          Keep replaying conversations. Keep waking up at 3 a.m. Keep feeling like your brain is your enemy.
+                          Hope it gets better on its own. <em>(Spoiler: Research shows it doesn't.)</em>
+                        </p>
+                      </div>
+
+                      <div className="border-l-4 border-emerald-500 pl-6 py-2">
+                        <p className="font-semibold text-emerald-900 mb-2">✓ Try F.I.R.E. for $27</p>
+                        <p className="text-base text-slate-700 mb-2">
+                          Get the same clinical protocols used at University of Exeter and University of Manchester —
+                          translated into 4 steps you can use tonight when your brain won't shut up.
+                        </p>
+                        <p className="text-sm text-emerald-700 italic">
+                          30-day guarantee. If it doesn't help, email us. Full refund. No questions.
+                        </p>
+                      </div>
+
+                      <p className="text-sm text-slate-600 italic">
+                        The risk isn't trying F.I.R.E. The risk is spending another 6 months trapped in your head.
+                      </p>
+
+                      <div className="mt-8">
+                        <ShopifyBuyButton
+                          productId="10761797894447"
+                          domain="t7vyee-kc.myshopify.com"
+                          storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                          buttonText="Get the F.I.R.E. Kit • $27"
+                          buttonColor="#16a34a"
+                          buttonHoverColor="#15803d"
+                          className="w-full sm:w-auto"
+                        />
+                        <p className="text-xs text-gray-600 mt-3">
+                          <CheckCircle className="w-3 h-3 inline text-green-600 mr-1" />
+                          30-day money-back guarantee • Instant download
+                        </p>
+                      </div>
+
+                      <hr className="border-t border-emerald-200 my-8" />
+
+                      <p className="text-base text-emerald-800 italic">
+                        "This is what finally worked for me after 8 years of therapy, self-help books, and 3 a.m. spirals. I hope it helps you too."
+                      </p>
+                      <p className="text-base font-semibold text-emerald-900 mt-3">
+                        — Anna, Recovering overthinker & creator of the F.I.R.E. method
+                      </p>
                     </div>
                   </div>
 

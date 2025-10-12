@@ -487,7 +487,7 @@ function ThankYouPageContent() {
                       </div>
                       <div className="relative w-full bg-amber-200 rounded-full h-4 overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500 transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 transition-all duration-1000 ease-out"
                           style={{ width: `${(quizScore / 10) * 100}%` }}
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer" />

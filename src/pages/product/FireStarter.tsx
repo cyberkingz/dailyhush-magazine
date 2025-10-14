@@ -1,15 +1,22 @@
 import { useEffect, useState, useCallback } from 'react'
-import { CheckCircle, Shield, Truck, Clock } from 'lucide-react'
+import { CheckCircle, Shield } from 'lucide-react'
 import ShopifyBuyButton from '@/components/ShopifyBuyButton'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import { TopBar } from '@/components/layout/TopBar'
 import { Footer } from '@/components/layout/Footer'
+import {
+  ComparisonTable,
+  CostOfDelaySection,
+  ProductFeatureSection,
+  TrustSignals,
+} from '@/components/product'
+import { fireStarterProductData } from '@/data/fireStarterProductData'
 
 export default function FireStarterProduct() {
   const [showStickyBar, setShowStickyBar] = useState(false)
 
   useEffect(() => {
-    document.title = '🔥 F.I.R.E. KIT — Stop Your 2 AM Thought Spirals'
+    document.title = 'F.I.R.E. KIT — $27 Quiz-Taker Rate (Regular $97)'
   }, [])
 
   // Show sticky bar after scrolling past 40% of page
@@ -34,7 +41,7 @@ export default function FireStarterProduct() {
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. KIT for just $7</>}
+        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. KIT for just $27 (Regular $97)</>}
         variant="emerald"
       />
       <TopBar />
@@ -91,137 +98,94 @@ export default function FireStarterProduct() {
           {/* RIGHT - Product Details */}
           <div>
 
-            {/* Quiz-Taker Access Badge */}
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border-2 border-amber-500/40 text-amber-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
-              <span>🎉</span>
-              <span>Quiz-Taker Access Unlocked</span>
+            {/* Rating + Social Proof Combined */}
+            <div className="mb-6 p-4 bg-emerald-50/50 rounded-2xl border border-emerald-200/30">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <svg
+                      key={i}
+                      className="w-4 h-4 text-amber-500 fill-current"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-emerald-700 text-sm font-medium">4.9/5 (847 reviews)</span>
+              </div>
+              <p className="text-xs text-emerald-800/80">
+                847 analytical thinkers • 90-sec avg. reset • 90% decided within 48 hours
+              </p>
             </div>
 
             {/* Product Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-emerald-900 mb-3 leading-tight">
-              Stop Your 2 AM Thought Spirals In Under 5 Minutes With The F.I.R.E. KIT
+              You're Still Here Because Nothing Else Worked
             </h1>
-            <p className="text-base md:text-lg text-emerald-700/80 font-medium mb-4">
-              5 Digital Tools That Helped 847 Women Finally Quiet Their Racing Minds
+            <p className="text-base md:text-lg text-emerald-700/80 font-medium mb-6">
+              The clinical protocol therapists charge $750 to teach—available for $27 (quiz-takers only)
             </p>
-
-            {/* Rating Stars */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    className="w-5 h-5 text-amber-500 fill-current"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-emerald-700 text-sm font-medium">4.9 (847 reviews)</span>
-            </div>
 
             {/* Price */}
             <div className="mb-6">
               <div className="flex items-baseline gap-2 md:gap-3 mb-2 flex-wrap">
-                <span className="text-3xl md:text-4xl font-bold text-emerald-900">$7</span>
+                <span className="text-3xl md:text-4xl font-bold text-emerald-900">$27</span>
                 <span className="text-base md:text-lg text-emerald-700/70 font-medium">Quiz-Taker Price</span>
               </div>
               <div className="text-sm text-emerald-700/80 leading-relaxed">
-                Because you completed our quiz, you're eligible for our 50K celebration rate — get the complete Overthinking Protocol for just $7 today. This price is reserved exclusively for quiz-takers.
+                Because you completed our quiz, you're eligible for our quiz-taker rate — get the complete Overthinking Protocol for just $27 today. Regular price: $97. This price is reserved exclusively for quiz-takers.
               </div>
             </div>
 
-            {/* Short Description */}
-            <div className="mb-8 pb-8 border-b border-emerald-200/40">
-              <p className="text-lg text-emerald-800 mb-4 leading-[1.7]">
-                <strong>A complete digital protocol</strong> with 5 implementation tools that helped 847 women stop 2 AM thought spirals and finally quiet their racing minds—after years of trying meditation apps that didn't work.
+            {/* Mechanism - Condensed */}
+            <div className="mb-6 pb-6 border-b border-emerald-200/40">
+              <p className="text-emerald-700/90 leading-[1.6] mb-3 text-sm">
+                Every meditation app targets your <strong>thoughts</strong>. F.I.R.E. targets the <strong className="text-amber-700">physiological shutdown</strong> that happens 3-7 seconds <em>before</em> the thought spiral—the vagal response that traps you in your head. <strong>You can't think your way out of a nervous system response.</strong>
               </p>
-              <p className="text-emerald-700/80 leading-[1.6]">
-                You took the quiz. You know your overthinker type. Now get the <strong>digital tools and step-by-step protocol</strong> you'll implement in your daily life to break the mental loop the moment it starts.
+              <p className="text-emerald-700/90 leading-[1.6] text-sm">
+                You get the same clinical frameworks therapists charge $150/hour to teach: <strong>RF-CBT (Exeter), Polyvagal Theory (Yale), MCT (Manchester)</strong>—in a system you can actually use at 2 AM.
               </p>
             </div>
 
-            {/* What's Included */}
-            <div className="mb-4 pb-4 border-b border-emerald-200/40">
-              <h3 className="font-display font-bold text-emerald-900 mb-2">5 Digital Tools You'll Implement:</h3>
-              <p className="text-sm text-emerald-700/70 mb-4 italic">Instant digital download</p>
-              <ul className="space-y-3 mb-4">
-                <li className="flex gap-3 items-start justify-between">
-                  <div className="flex gap-3 items-start flex-1">
-                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-emerald-800/90"><strong>Window of Tolerance</strong> — Catch your mind before it spirals into overwhelm.</span>
-                  </div>
-                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$147</span>
+            {/* What's Included - Condensed */}
+            <div className="mb-6 pb-6 border-b border-emerald-200/40">
+              <h3 className="font-display font-bold text-emerald-900 mb-3 text-sm">What You Get (Instant Download):</h3>
+              <ul className="space-y-2 mb-4">
+                <li className="flex gap-2 items-start text-sm">
+                  <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-emerald-800/90">Complete F.I.R.E. System (4-step protocol, emergency cards, rumination diary)</span>
                 </li>
-                <li className="flex gap-3 items-start justify-between">
-                  <div className="flex gap-3 items-start flex-1">
-                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-emerald-800/90"><strong>Cognitive Distortions</strong> — Name the thought trap, break the loop in seconds.</span>
-                  </div>
-                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$77</span>
+                <li className="flex gap-2 items-start text-sm">
+                  <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-emerald-800/90">Clinical Exercise Library (RF-CBT, Polyvagal Theory, MCT)</span>
                 </li>
-                <li className="flex gap-3 items-start justify-between">
-                  <div className="flex gap-3 items-start flex-1">
-                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-emerald-800/90"><strong>Coping Strategies Wheel</strong> — Find the right reset for your mood in 30 seconds, not 3 hours.</span>
-                  </div>
-                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$77</span>
-                </li>
-                <li className="flex gap-3 items-start justify-between">
-                  <div className="flex gap-3 items-start flex-1">
-                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-emerald-800/90"><strong>What Do You Value?</strong> — Stop chasing "what ifs," reconnect with what actually matters.</span>
-                  </div>
-                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$47</span>
-                </li>
-                <li className="flex gap-3 items-start justify-between">
-                  <div className="flex gap-3 items-start flex-1">
-                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-emerald-800/90"><strong>Overthinking Journal</strong> — Racing thoughts → clarity in 5 minutes flat.</span>
-                  </div>
-                  <span className="text-emerald-700/70 font-medium text-sm whitespace-nowrap ml-2">$39</span>
+                <li className="flex gap-2 items-start text-sm">
+                  <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-emerald-800/90">Lifetime updates as research evolves</span>
                 </li>
               </ul>
-              <div className="pt-3 border-t border-emerald-200/40 flex justify-between items-center">
-                <span className="font-bold text-emerald-900">Total Value:</span>
-                <span className="text-xl font-bold text-emerald-900">$387</span>
-              </div>
-              <div className="mt-2 flex justify-between items-center">
-                <span className="font-bold text-amber-900">Your Quiz-Taker Price:</span>
-                <span className="text-2xl font-bold text-amber-900">$7</span>
-              </div>
+              <p className="text-xs text-emerald-700/70">
+                <strong>$27</strong> vs. $750-900 for 6 therapy sessions teaching the same protocols
+              </p>
             </div>
 
             {/* Buy Button */}
             <div className="mb-6">
               <ShopifyBuyButton
-                productId="10761049702703"
+                productId="10761797894447"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Claim Quiz-Taker Access — $7"
-                buttonColor="#f59e0b"
-                buttonHoverColor="#d97706"
+                buttonText="Get F.I.R.E. Kit — $27"
+                buttonColor="#16a34a"
+                buttonHoverColor="#15803d"
                 onCheckoutComplete={handleCheckoutComplete}
                 className="w-full"
               />
             </div>
 
             {/* Trust Signals */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="flex flex-col items-center text-center gap-2 text-sm text-emerald-700/80">
-                <Truck className="w-5 h-5 text-amber-600" />
-                <span>Instant digital delivery via email</span>
-              </div>
-              <div className="flex flex-col items-center text-center gap-2 text-sm text-emerald-700/80">
-                <Shield className="w-5 h-5 text-amber-600" />
-                <span>Secure checkout powered by Shopify</span>
-              </div>
-              <div className="flex flex-col items-center text-center gap-2 text-sm text-emerald-700/80">
-                <Clock className="w-5 h-5 text-amber-600" />
-                <span>Set up in your Notion in under 2 minutes</span>
-              </div>
-            </div>
+            <TrustSignals signals={fireStarterProductData.trustSignals} />
 
             {/* Guarantee Box */}
             <div className="p-6 bg-amber-50/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(245,158,11,0.12)] ring-1 ring-white/40">
@@ -230,9 +194,9 @@ export default function FireStarterProduct() {
                   <Shield className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-emerald-900 mb-2">Your Brain Feels Lighter — Or Your Money Back</h4>
+                  <h4 className="font-display font-bold text-emerald-900 mb-2">30-Day "Break Overthinking or It's Free" Guarantee</h4>
                   <p className="text-sm text-emerald-800/80 leading-[1.6]">
-                    Use the F.I.R.E. protocol for 30 days. If you're still stuck in the same thought loops, email me and I'll refund you—no questions asked.
+                    Try F.I.R.E. for 30 days. If you don't break your pattern, email us for a full refund. Keep everything.
                   </p>
                 </div>
               </div>
@@ -241,97 +205,61 @@ export default function FireStarterProduct() {
           </div>
         </div>
 
-        {/* Feature Section 1 - Image Left | Text Right */}
-        <div className="p-8 md:p-10 mb-20 bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40 hover:shadow-[0_12px_48px_rgba(16,185,129,0.12)] transition-all duration-500 hover:-translate-y-1">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
-            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1),0_0_20px_rgba(52,211,153,0.15),inset_0_1px_1px_rgba(255,255,255,0.1)] ring-1 ring-white/40 backdrop-blur-md border-4 border-emerald-400/40 hover:border-emerald-400/60 transition-all duration-300">
-              <img
-                src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_h9xlixh9xlixh9xl.png?v=1759927378"
-                alt="Stop Overthinking. Start Living."
-                className="w-full h-full object-cover"
-              />
-            </div>
+        {/* Research-Backed Section */}
+        <div className="p-8 md:p-10 mb-20 bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40">
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-emerald-900 mb-6 text-center leading-[1.2]">
+            {fireStarterProductData.research.title}
+          </h2>
+          <p className="text-center text-emerald-700/80 mb-10 max-w-2xl mx-auto">
+            {fireStarterProductData.research.subtitle}
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            {fireStarterProductData.research.items.map((item, index) => (
+              <div key={index} className="p-6 bg-emerald-50/50 rounded-2xl border border-emerald-200/30">
+                <h3 className="font-bold text-emerald-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-emerald-700/70 mb-3">{item.institution}</p>
+                <p className="text-sm text-emerald-800/80 leading-[1.6]">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
-          <div className="order-1 md:order-2">
-            <h2 className="text-3xl font-display font-bold text-emerald-900 mb-4 leading-[1.2]">
-              Stop Overthinking. Start Living.
-            </h2>
-            <p className="text-lg text-emerald-800 mb-4 leading-[1.7]">
-              Most tools try to help you "think better." This helps you <strong className="text-amber-700">stop thinking so much</strong>.
-            </p>
-            <p className="text-emerald-700/80 mb-6 leading-[1.6]">
-              The F.I.R.E. framework forces you to interrupt the spiral the moment it starts—before it steals hours of your life replaying conversations you can't change.
-            </p>
-            <ul className="space-y-3">
-              <li className="flex gap-3 items-start">
-                <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-1" />
-                <span className="text-emerald-800/90">Pre-made pattern break scripts (no more "I can't turn my brain off")</span>
-              </li>
-              <li className="flex gap-3 items-start">
-                <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-1" />
-                <span className="text-emerald-800/90">Thought loop tracker to spot triggers before they spiral</span>
-              </li>
-              <li className="flex gap-3 items-start">
-                <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-1" />
-                <span className="text-emerald-800/90">Bedtime reset ritual that quiets your mind in under 5 minutes</span>
-              </li>
-            </ul>
-          </div>
-        </div>
         </div>
 
-        {/* Feature Section 2 - Text Left | Image Right */}
-        <div className="p-8 md:p-10 mb-20 bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(16,185,129,0.08)] ring-1 ring-white/40 hover:shadow-[0_12px_48px_rgba(16,185,129,0.12)] transition-all duration-500 hover:-translate-y-1">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl font-display font-bold text-emerald-900 mb-4 leading-[1.2]">
-              Built For Your Overthinker Type
-            </h2>
-            <p className="text-lg text-emerald-800 mb-4 leading-[1.7]">
-              You already know your type from the quiz. This kit gives you the exact tools to break <em className="text-amber-700 not-italic font-semibold">your</em> specific pattern.
-            </p>
-            <p className="text-emerald-700/80 mb-6 leading-[1.6]">
-              Whether you're a Mindful Thinker, Gentle Analyzer, Chronic Overthinker, or Overthinkaholic—the F.I.R.E. framework gives you the exact steps to interrupt your mental loops before they take over.
-            </p>
-            <div className="border-l-4 border-amber-500 p-6 bg-amber-50/60 backdrop-blur-xl rounded-r-2xl shadow-[0_4px_16px_rgba(245,158,11,0.08)] ring-1 ring-white/30">
-              <p className="text-emerald-800/90 italic">
-                "I used to lie awake for 2 hours replaying my workday. With F.I.R.E., I fall asleep in 10 minutes now. My brain finally shuts up."
-              </p>
-              <p className="text-sm text-emerald-700/70 mt-3">— Sarah K., Chronic Overthinker</p>
-            </div>
-          </div>
-          <div>
-            <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1),0_0_20px_rgba(251,191,36,0.15),inset_0_1px_1px_rgba(255,255,255,0.1)] ring-1 ring-white/40 backdrop-blur-md border-4 border-amber-400/40 hover:border-amber-400/60 transition-all duration-300">
-              <img
-                src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_3mejzc3mejzc3mej.png?v=1759927377"
-                alt="Built For Your Overthinker Type"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-        </div>
+        {/* Feature Sections */}
+        {fireStarterProductData.features.map((feature, index) => (
+          <ProductFeatureSection
+            key={index}
+            title={feature.title}
+            description={feature.description}
+            subdescription={feature.subdescription}
+            features={feature.features}
+            imageUrl={feature.imageUrl}
+            imageAlt={feature.imageAlt}
+            imagePosition={feature.imagePosition}
+            testimonial={feature.testimonial}
+          />
+        ))}
 
-        {/* Social Proof Section - Compact Row */}
-        <div className="py-4 md:py-6 mb-12 bg-amber-50/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_24px_rgba(245,158,11,0.1)] ring-1 ring-white/40 max-w-2xl mx-auto">
-          <div className="flex flex-row items-center gap-3 md:gap-8 justify-center px-3">
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-amber-700 leading-none">847</div>
-              <div className="text-[10px] md:text-xs text-emerald-700/70 mt-1">Women Helped</div>
-            </div>
-            <div className="w-px h-8 md:h-9 bg-emerald-300/30"></div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-amber-700 leading-none">90sec</div>
-              <div className="text-[10px] md:text-xs text-emerald-700/70 mt-1">Avg. Reset Time</div>
-            </div>
-            <div className="w-px h-8 md:h-9 bg-emerald-300/30"></div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-amber-700 leading-none">4.9/5</div>
-              <div className="text-[10px] md:text-xs text-emerald-700/70 mt-1">Customer Rating</div>
-            </div>
-          </div>
-        </div>
+        {/* Comparison Table */}
+        <ComparisonTable
+          title={fireStarterProductData.comparison.title}
+          columns={fireStarterProductData.comparison.columns}
+          rows={fireStarterProductData.comparison.rows}
+          highlightColumn={0}
+        />
+
+        {/* Cost of Delay Section */}
+        <CostOfDelaySection
+          title={fireStarterProductData.costOfDelay.title}
+          intro={fireStarterProductData.costOfDelay.intro}
+          callout={fireStarterProductData.costOfDelay.callout}
+          delayTitle={fireStarterProductData.costOfDelay.delayTitle}
+          delayPeriod={fireStarterProductData.costOfDelay.delayPeriod}
+          costs={fireStarterProductData.costOfDelay.costs}
+          behavioralProof={fireStarterProductData.costOfDelay.behavioralProof}
+          conclusion={fireStarterProductData.costOfDelay.conclusion}
+        />
 
         {/* FAQ Section */}
         <div className="max-w-3xl mx-auto mb-20">
@@ -340,16 +268,6 @@ export default function FireStarterProduct() {
           </h2>
 
           <div className="space-y-4 md:space-y-5">
-            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
-              <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
-                Do I need Notion to use this?
-                <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
-              </summary>
-              <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                Yes, but Notion is free! You can use the F.I.R.E. KIT with a free Notion account. Just click the "Duplicate" button and it's yours forever.
-              </div>
-            </details>
-
             <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
                 Will this actually stop my overthinking?
@@ -372,11 +290,66 @@ export default function FireStarterProduct() {
 
             <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
-                Can I get a refund?
+                What if F.I.R.E. doesn't work for me?
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                Yes. Use the F.I.R.E. protocol for 30 days. If you're still stuck in the same thought loops, email me at hello@daily-hush.com and I'll refund you—no questions asked.
+                We've got you covered. Try F.I.R.E. for 30 days. If you don't break your pattern, email us for a full refund—keep everything. We're confident in the research. We know it works. But if it doesn't work for YOU, we don't want your money.
+              </div>
+            </details>
+
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+              <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
+                I've tried everything. How is F.I.R.E. different?
+                <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
+              </summary>
+              <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
+                <p className="mb-3">That's the right question. Here's the difference:</p>
+                <p className="mb-2"><strong>Meditation apps</strong> target your thoughts. By the time you're thinking, you're already dysregulated. Too late.</p>
+                <p className="mb-2"><strong>Therapy</strong> teaches these same frameworks over 6-8 sessions at $150/hour. Total cost: $750-900.</p>
+                <p className="mb-2"><strong>Journaling</strong> helps you process after, but doesn't give you a tool to interrupt in the moment.</p>
+                <p className="mb-3"><strong className="text-amber-700">F.I.R.E.</strong> gives you the SAME clinical frameworks (RF-CBT, MCT, Polyvagal regulation) in a system you can use at 2 AM when you're spiraling. It targets the physiological shutdown that happens <em>before</em> the thought spiral—the vagal response that traps you in your head.</p>
+                <p>If this doesn't work, keep everything and get your money back. That's not a risk—that's me putting my money where my research is.</p>
+              </div>
+            </details>
+
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+              <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
+                Can't I just Google these techniques?
+                <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
+              </summary>
+              <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
+                You could. But here's what happens: You'll find 47 articles, 12 conflicting techniques, and no clear system. You'll spend 3 hours researching, bookmark everything, and never implement it. F.I.R.E. is the distilled version—3 clinical frameworks, 1 system, ready to use tonight. No research rabbit holes.
+              </div>
+            </details>
+
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+              <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
+                Why is this only $27? What's the catch?
+                <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
+              </summary>
+              <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
+                No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Kit stands alone. You don't need anything else. The $27 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
+              </div>
+            </details>
+
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+              <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
+                Is this just a PDF?
+                <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
+              </summary>
+              <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
+                Yes—and that's intentional. You don't need another app cluttering your phone or a subscription you'll forget about. You need tools you can access at 2 AM when your brain won't shut up. F.I.R.E. is a digital download: protocol guide, emergency cards, trigger tracker, and clinical exercises. Use it digitally, print it, or both. It's designed for accessibility, not recurring revenue.
+              </div>
+            </details>
+
+            <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
+              <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
+                I'm skeptical. How do I know this isn't just pop psychology?
+                <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
+              </summary>
+              <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
+                You should be skeptical—that's why you scored high on the quiz. F.I.R.E. isn't based on Instagram infographics. It's compiled from peer-reviewed research: RF-CBT (University of Exeter, 78% reduction in rumination episodes), Polyvagal Theory (Yale), and MCT (University of Manchester, 70% improvement in worry reduction). We cite our sources. We show the data. If you're analytical, you'll appreciate the research section above.
               </div>
             </details>
           </div>
@@ -388,17 +361,17 @@ export default function FireStarterProduct() {
         }`}>
           <div className="flex items-center justify-between gap-4">
             <div>
-              <div className="text-2xl font-bold text-emerald-900">$7</div>
+              <div className="text-2xl font-bold text-emerald-900">$27</div>
               <div className="text-xs text-emerald-600/60 line-through">$387</div>
             </div>
             <div className="flex-1">
               <ShopifyBuyButton
-                productId="10761049702703"
+                productId="10761797894447"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Claim Quiz-Taker Access"
-                buttonColor="#f59e0b"
-                buttonHoverColor="#d97706"
+                buttonText="Get F.I.R.E. Kit"
+                buttonColor="#16a34a"
+                buttonHoverColor="#15803d"
                 onCheckoutComplete={handleCheckoutComplete}
                 className="w-full"
               />

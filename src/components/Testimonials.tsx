@@ -8,27 +8,27 @@ const testimonials: Testimonial[] = [
     role: "Marketing Director, 34",
   },
   {
-    text: "The breathing exercises actually worked when I woke up spiraling at 3am. I don't know if it's supposed to work that fast but it did. Still using them.",
+    text: "Scored 7/10. The breathing exercises actually worked when I woke up mid-panic. I don't know if it's supposed to work that fast but it did. Still using them.",
     name: "Jessica T.",
     role: "Software Engineer, 29",
   },
   {
-    text: "okay so I've done years of therapy and this gave me more tools in 2 weeks than I got in 6 months of sessions. wish I'd found it sooner honestly",
+    text: "okay so I've done years of therapy and this gave me more tools in 2 weeks than I got in 6 months of sessions. wish I'd found it sooner honestly (scored 7/10 btw)",
     name: "Rachel K.",
     role: "Therapist, 41",
   },
   {
-    text: "The exercises helped me stop getting stuck in 'what if' loops before presentations. Took a while to get the hang of it but it works now.",
+    text: "Quiz score 6/10. Before presentations, I'd spiral through every possible way it could go wrong. The exercises helped me stop getting stuck in those 'what if' loops. Took a while to get the hang of it but it works now.",
     name: "Amanda L.",
     role: "Teacher, 37",
   },
   {
-    text: "I didn't realize how much the physical stuff mattered. The body-based exercises are the only thing that's actually helped when I'm spiraling.",
+    text: "I scored 8/10. After difficult patient conversations, I'd physically tense up and replay everything I said. I didn't realize how much the physical stuff mattered. The body-based exercises are the only thing that's actually helped when I'm spiraling.",
     name: "Emily R.",
     role: "Physician, 44",
   },
   {
-    text: "Was skeptical. But after using the reframe exercises for family stuff... I don't replay conversations for hours anymore. Actually surprised it worked.",
+    text: "Was skeptical. But after my mom's comments at Sunday dinner, I'd replay the conversation for days. The reframe exercises helped me stop the loop. I don't replay conversations for hours anymore. Actually surprised it worked. (scored 6/10)",
     name: "Priya S.",
     role: "HR Manager, 32",
   },
@@ -38,12 +38,12 @@ const testimonials: Testimonial[] = [
     role: "Researcher, 39",
   },
   {
-    text: "Used the interrupt technique during a panic attack last week. It worked. I've been doing F.I.R.E. every morning for 3 weeks now.",
+    text: "Scored 9/10. After sending a tough email to an investor, I had a full panic attack. Used the interrupt technique for the first time. It worked. I've been doing F.I.R.E. every morning for 3 weeks now.",
     name: "Maria G.",
     role: "Entrepreneur, 28",
   },
   {
-    text: "The thought pattern tracking made me realize I was doing the same mental loops every single day. Seeing it written out was... eye opening. Worth it.",
+    text: "Quiz score 7/10. Every time I'd hit publish on an article, I'd spiral for hours about typos or unclear sentences. The thought pattern tracking made me realize I was doing the same mental loops every single day. Seeing it written out was... eye opening. Worth it.",
     name: "Diana W.",
     role: "Writer, 36",
   },

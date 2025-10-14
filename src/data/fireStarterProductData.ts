@@ -58,7 +58,7 @@ export const fireStarterProductData = {
   // Comparison Table Data
   comparison: {
     title: 'F.I.R.E. vs Other Solutions',
-    columns: ['F.I.R.E. Kit', 'Therapy', 'Meditation Apps', 'Journaling'],
+    columns: ['F.I.R.E. Protocol', 'Therapy', 'Meditation Apps', 'Journaling'],
     rows: [
       { feature: 'Targets rumination specifically', values: [true, true, false, false] },
       { feature: 'Works when dysregulated', values: [true, true, false, false] },
@@ -82,7 +82,7 @@ export const fireStarterProductData = {
       { metric: '~28 hours', description: "replaying conversations you can't change" },
       { metric: "Risk that you'll talk yourself out of this entirely", description: '' },
     ],
-    behavioralProof: "Join the 90% of F.I.R.E. Kit buyers who made their decision within 48 hours—analytical thinkers who recognized that overthinking this purchase is exactly what they're trying to stop.",
+    behavioralProof: "Join the 90% of F.I.R.E. Protocol buyers who made their decision within 48 hours—analytical thinkers who recognized that overthinking this purchase is exactly what they're trying to stop.",
     conclusion: "Smart people recognize when they have enough information to make a decision. You have the research (university-backed clinical frameworks with published trial results). You have social proof (847 analytical thinkers, 4.9 rating, 90-sec average reset). You have risk coverage (30-day guarantee, full refund if it doesn't work). The only thing stopping you is the pattern you're trying to break. Break it now.",
   },
 

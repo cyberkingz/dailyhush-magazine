@@ -156,7 +156,7 @@ function getResultForType(
       insight:
         'You have healthy awareness. Keep using it to make intentional choices.',
       ctaHook:
-        'Take your mental clarity to the next level with the F.I.R.E. Kit.',
+        'Take your mental clarity to the next level with the F.I.R.E. Protocol.',
     },
     'gentle-analyzer': {
       type: 'gentle-analyzer',
@@ -166,7 +166,7 @@ function getResultForType(
       insight:
         'Your overthinking is manageable — with the right system in place.',
       ctaHook:
-        'Get the F.I.R.E. Kit to turn your analysis into action.',
+        'Get the F.I.R.E. Protocol to turn your analysis into action.',
     },
     'chronic-overthinker': {
       type: 'chronic-overthinker',
@@ -176,7 +176,7 @@ function getResultForType(
       insight:
         'You don\'t need more certainty. You need a system that works without it.',
       ctaHook:
-        'Break the loop with the F.I.R.E. Kit built for chronic overthinkers.',
+        'Break the loop with the F.I.R.E. Protocol built for chronic overthinkers.',
     },
     'overthinkaholic': {
       type: 'overthinkaholic',
@@ -186,7 +186,7 @@ function getResultForType(
       insight:
         'This isn\'t about willpower. It\'s about interrupting the pattern.',
       ctaHook:
-        'Get the F.I.R.E. Kit — the 48-hour protocol for people whose brains won\'t shut up.',
+        'Get the F.I.R.E. Protocol — the 48-hour protocol for people whose brains won\'t shut up.',
     },
   }
 

@@ -395,7 +395,7 @@ function ThankYouPageContent() {
           productId="10761797894447"
           domain="t7vyee-kc.myshopify.com"
           storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-          buttonText="Get F.I.R.E. Kit • $27"
+          buttonText="Get F.I.R.E. Protocol • $27"
           buttonColor="#16a34a"
           buttonHoverColor="#15803d"
         />
@@ -945,7 +945,7 @@ function ThankYouPageContent() {
                   <div ref={offerCardRef} className="bg-white border-2 border-slate-200 rounded-2xl p-4 md:p-8">
                     <div className="text-center mb-3">
                       <h3 className="text-xl md:text-3xl font-bold text-slate-900 mb-1">
-                        The F.I.R.E. Kit — $27
+                        The F.I.R.E. Protocol — $27
                       </h3>
                       <p className="text-sm md:text-base text-slate-600">
                         Everything you need to interrupt overthinking tonight
@@ -979,7 +979,7 @@ function ThankYouPageContent() {
                         productId="10761797894447"
                         domain="t7vyee-kc.myshopify.com"
                         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                        buttonText="Get the F.I.R.E. Kit"
+                        buttonText="Get the F.I.R.E. Protocol"
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"
@@ -1503,7 +1503,7 @@ function ThankYouPageContent() {
                       Want to dig deeper into the research?
                     </h2>
                     <p className="text-lg text-slate-700 mb-10">
-                      Everything in the F.I.R.E. Kit is built on actual clinical research. Here's where it all comes from:
+                      Everything in the F.I.R.E. Protocol is built on actual clinical research. Here's where it all comes from:
                     </p>
 
                     <div className="space-y-8">
@@ -1571,7 +1571,7 @@ function ThankYouPageContent() {
                         That's the overthinking talking. Here's what actually happens when you act: The next time your brain starts spiraling, you'll have a protocol. Four steps. Ninety seconds. Real interruption instead of hours of mental loops.
                       </p>
                       <p>
-                        <strong>The F.I.R.E. Kit won't magically make your brain quiet overnight.</strong> But it will give you something you've been missing: a map.
+                        <strong>The F.I.R.E. Protocol won't magically make your brain quiet overnight.</strong> But it will give you something you've been missing: a map.
                       </p>
                       <p>
                         Not another self-help platitude. Not another "just think positive" bandaid. An actual, research-backed protocol you can use when you need it most.
@@ -1598,7 +1598,7 @@ function ThankYouPageContent() {
                         productId="10761797894447"
                         domain="t7vyee-kc.myshopify.com"
                         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                        buttonText="Get the F.I.R.E. Kit • $27"
+                        buttonText="Get the F.I.R.E. Protocol • $27"
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"

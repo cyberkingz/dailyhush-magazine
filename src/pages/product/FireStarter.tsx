@@ -16,7 +16,7 @@ export default function FireStarterProduct() {
   const [showStickyBar, setShowStickyBar] = useState(false)
 
   useEffect(() => {
-    document.title = 'F.I.R.E. KIT — $27 Quiz-Taker Rate (Regular $97)'
+    document.title = 'F.I.R.E. Protocol — $27 Quiz-Taker Rate (Regular $97)'
   }, [])
 
   // Show sticky bar after scrolling past 40% of page
@@ -41,7 +41,7 @@ export default function FireStarterProduct() {
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. KIT for just $27 (Regular $97)</>}
+        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. Protocol for just $27 (Regular $97)</>}
         variant="emerald"
       />
       <TopBar />
@@ -61,7 +61,7 @@ export default function FireStarterProduct() {
         <div className="hidden md:block text-sm text-emerald-700/70 mb-8">
           <a href="/" className="hover:text-emerald-800 transition-colors">Home</a>
           <span className="mx-2">/</span>
-          <span className="text-emerald-900 font-medium">F.I.R.E. KIT</span>
+          <span className="text-emerald-900 font-medium">F.I.R.E. Protocol</span>
         </div>
 
         {/* Product Grid - Image Left | Details Right */}
@@ -75,7 +75,7 @@ export default function FireStarterProduct() {
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-amber-400/10 blur-2xl"></div>
               <img
                 src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_xlokz8xlokz8xlok.png?v=1759926873"
-                alt="F.I.R.E. KIT - Stop Your 2 AM Thought Spirals"
+                alt="F.I.R.E. Protocol - Stop Your 2 AM Thought Spirals"
                 className="w-full h-full object-cover relative z-10"
               />
             </div>
@@ -85,7 +85,7 @@ export default function FireStarterProduct() {
               <div className="aspect-square rounded-2xl border-2 border-amber-400/30 ring-1 ring-white/40 overflow-hidden shadow-[0_4px_16px_rgba(245,158,11,0.15)]">
                 <img
                   src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_xlokz8xlokz8xlok.png?v=1759926873"
-                  alt="F.I.R.E. KIT thumbnail"
+                  alt="F.I.R.E. Protocol thumbnail"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -131,10 +131,10 @@ export default function FireStarterProduct() {
             <div className="mb-6">
               <div className="flex items-baseline gap-2 md:gap-3 mb-2 flex-wrap">
                 <span className="text-3xl md:text-4xl font-bold text-emerald-900">$27</span>
-                <span className="text-base md:text-lg text-emerald-700/70 font-medium">Quiz-Taker Price</span>
+                <span className="text-base md:text-lg text-emerald-700/70 font-medium">48-Hour Quiz-Taker Rate</span>
               </div>
               <div className="text-sm text-emerald-700/80 leading-relaxed">
-                Because you completed our quiz, you're eligible for our quiz-taker rate — get the complete Overthinking Protocol for just $27 today. Regular price: $97. This price is reserved exclusively for quiz-takers.
+                Because you completed our quiz, you have 48 hours to get the complete Overthinking Protocol at this rate. Regular price: $97. Your quiz results are calibrated and fresh—this window helps you implement while your pattern is clear.
               </div>
             </div>
 
@@ -176,7 +176,7 @@ export default function FireStarterProduct() {
                 productId="10761797894447"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get F.I.R.E. Kit — $27"
+                buttonText="Get F.I.R.E. Protocol — $27"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
                 onCheckoutComplete={handleCheckoutComplete}
@@ -329,7 +329,7 @@ export default function FireStarterProduct() {
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Kit stands alone. You don't need anything else. The $27 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
+                No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Protocol stands alone. You don't need anything else. The $27 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
               </div>
             </details>
 
@@ -339,7 +339,7 @@ export default function FireStarterProduct() {
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                Yes—and that's intentional. You don't need another app cluttering your phone or a subscription you'll forget about. You need tools you can access at 2 AM when your brain won't shut up. F.I.R.E. is a digital download: protocol guide, emergency cards, trigger tracker, and clinical exercises. Use it digitally, print it, or both. It's designed for accessibility, not recurring revenue.
+                No—it's an interactive digital workspace. You don't need another app cluttering your phone or a subscription you'll forget about. You need a system you can access at 2 AM when your brain won't shut up. F.I.R.E. is a customizable digital system: the 4-step protocol, emergency reset cards, trigger tracker, rumination diary, and all clinical exercises—organized in one place you can access from any device. It's designed for accessibility and actual use, not recurring revenue.
               </div>
             </details>
 
@@ -369,7 +369,7 @@ export default function FireStarterProduct() {
                 productId="10761797894447"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get F.I.R.E. Kit"
+                buttonText="Get F.I.R.E. Protocol"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
                 onCheckoutComplete={handleCheckoutComplete}

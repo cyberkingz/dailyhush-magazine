@@ -5,6 +5,7 @@ import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'
 import Testimonials from '../../components/Testimonials'
+import { StickyCheckoutBar } from '../../components/StickyCheckoutBar'
 
 // Research-backed quiz result data with clinical profiles
 const quizResultData: Record<OverthinkerType, {
@@ -385,37 +386,19 @@ function ThankYouPageContent() {
       <TopBar variant="dark" />
 
       <div className="flex-1 flex justify-center items-stretch">
-        {/* Sticky Bottom Bar */}
-        <div className={`fixed bottom-0 left-0 right-0 z-40 transition-transform duration-500 ease-out ${
-          showStickyBar ? 'translate-y-0' : 'translate-y-full'
-        }`}>
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/98 to-white/95 backdrop-blur-2xl" />
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-200/40 to-transparent" />
-          <div className="relative px-4 py-3 md:py-4">
-            <div className="max-w-2xl mx-auto space-y-3">
-            {!isSoldOut && (
-              <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-amber-900 bg-amber-50 px-4 py-2 rounded-full border border-amber-200">
-                <Flame className="h-3.5 w-3.5 text-amber-600" />
-                <span>48-hour quiz window — personalized access ends soon</span>
-              </div>
-            )}
-            <ShopifyBuyButton
-              productId="10761797894447"
-              domain="t7vyee-kc.myshopify.com"
-              storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-              buttonText="Get F.I.R.E. Kit • $27"
-              buttonColor="#16a34a"
-              buttonHoverColor="#15803d"
-              className="w-full"
-            />
-            <div className="flex items-center justify-center text-xs text-slate-600">
-              <CheckCircle className="h-3 w-3 text-emerald-600 flex-shrink-0 mr-1" />
-              <span>30-day money-back guarantee</span>
-            </div>
-            </div>
-          </div>
-          <div className="h-safe-area-inset-bottom bg-gradient-to-t from-white to-transparent" />
-        </div>
+        <StickyCheckoutBar
+          show={showStickyBar}
+          spotsRemaining={spotsRemaining}
+          totalSpots={totalSpots}
+          isCritical={isCritical}
+          isSoldOut={isSoldOut}
+          productId="10761797894447"
+          domain="t7vyee-kc.myshopify.com"
+          storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+          buttonText="Get F.I.R.E. Kit • $27"
+          buttonColor="#16a34a"
+          buttonHoverColor="#15803d"
+        />
 
         <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1 relative z-10">
           <div className="bg-white/90 backdrop-blur-xl flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0 shadow-[0_16px_48px_-8px_rgba(16,185,129,0.15)]">

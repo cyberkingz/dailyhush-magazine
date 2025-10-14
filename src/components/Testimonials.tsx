@@ -3,56 +3,47 @@ import { TestimonialsColumn, type Testimonial } from "./ui/testimonials-column";
 
 const testimonials: Testimonial[] = [
   {
-    text: "I used to replay work conversations for hours. The F.I.R.E. method gave me a way to interrupt that spiral in under 2 minutes. Game changer.",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    text: "I scored 8/10 on the quiz. Week 3 of F.I.R.E. and I'm sleeping through the night for the first time in months. Not perfect but way better.",
     name: "Sarah M.",
     role: "Marketing Director, 34",
   },
   {
-    text: "The polyvagal exercises actually worked when I was spiraling at 3 AM. First time I've found something that helps in the moment, not just theory.",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
+    text: "The breathing exercises actually worked when I woke up spiraling at 3am. I don't know if it's supposed to work that fast but it did. Still using them.",
     name: "Jessica T.",
     role: "Software Engineer, 29",
   },
   {
-    text: "I've done years of therapy. This is the first resource that gave me concrete tools I could use when my brain wouldn't shut up. Wish I'd found it sooner.",
-    image: "https://randomuser.me/api/portraits/women/3.jpg",
+    text: "okay so I've done years of therapy and this gave me more tools in 2 weeks than I got in 6 months of sessions. wish I'd found it sooner honestly",
     name: "Rachel K.",
     role: "Therapist, 41",
   },
   {
-    text: "The detached mindfulness practices from MCT are exactly what I needed. No more getting stuck in 'what if' loops before presentations.",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+    text: "The exercises helped me stop getting stuck in 'what if' loops before presentations. Took a while to get the hang of it but it works now.",
     name: "Amanda L.",
     role: "Teacher, 37",
   },
   {
-    text: "Finally, something that addresses the physical symptoms of overthinking. The nervous system regulation tools are surprisingly effective.",
-    image: "https://randomuser.me/api/portraits/women/5.jpg",
+    text: "I didn't realize how much the physical stuff mattered. The body-based exercises are the only thing that's actually helped when I'm spiraling.",
     name: "Emily R.",
     role: "Physician, 44",
   },
   {
-    text: "I was skeptical, but the RF-CBT concrete processing exercises helped me stop ruminating about family conflicts. Actually works.",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
+    text: "Was skeptical. But after using the reframe exercises for family stuff... I don't replay conversations for hours anymore. Actually surprised it worked.",
     name: "Priya S.",
     role: "HR Manager, 32",
   },
   {
-    text: "The Window of Tolerance mapping helped me understand why I spiral. Now I can catch it before I'm fully dysregulated. Brilliant.",
-    image: "https://randomuser.me/api/portraits/women/7.jpg",
+    text: "I scored 9/10 (chronic overthinker lol). The tracking tools helped me see why I spiral. Now I can catch it before it gets bad. Huge difference.",
     name: "Lauren B.",
     role: "Researcher, 39",
   },
   {
-    text: "Used the emergency interrupt protocol during a panic attack. It worked. I've been using F.I.R.E. daily for 3 weeks now.",
-    image: "https://randomuser.me/api/portraits/women/8.jpg",
+    text: "Used the interrupt technique during a panic attack last week. It worked. I've been doing F.I.R.E. every morning for 3 weeks now.",
     name: "Maria G.",
     role: "Entrepreneur, 28",
   },
   {
-    text: "The cognitive distortion tracking opened my eyes to patterns I didn't know I had. Worth every penny for that alone.",
-    image: "https://randomuser.me/api/portraits/women/9.jpg",
+    text: "The thought pattern tracking made me realize I was doing the same mental loops every single day. Seeing it written out was... eye opening. Worth it.",
     name: "Diana W.",
     role: "Writer, 36",
   },
@@ -65,7 +56,7 @@ const thirdColumn = testimonials.slice(6, 9);
 const Testimonials = () => {
   return (
     <section className="bg-background my-20 relative">
-      <div className="container z-10 mx-auto">
+      <div className="container z-10 mx-auto px-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

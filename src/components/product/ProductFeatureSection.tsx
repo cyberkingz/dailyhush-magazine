@@ -10,7 +10,8 @@ interface ProductFeatureSectionProps {
   description: string;
   subdescription?: string;
   features: FeatureItem[];
-  imageUrl: string;
+  imageUrl?: string;
+  videoUrl?: string;
   imageAlt: string;
   imagePosition?: 'left' | 'right';
   testimonial?: {
@@ -25,6 +26,7 @@ export const ProductFeatureSection: React.FC<ProductFeatureSectionProps> = ({
   subdescription,
   features,
   imageUrl,
+  videoUrl,
   imageAlt,
   imagePosition = 'left',
   testimonial,
@@ -32,11 +34,23 @@ export const ProductFeatureSection: React.FC<ProductFeatureSectionProps> = ({
   const ImageComponent = (
     <div className={imagePosition === 'left' ? 'order-2 md:order-1' : 'order-2'}>
       <div className="aspect-square flex items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-white/70 via-emerald-50/60 to-teal-50/50 shadow-[0_8px_24px_rgba(16,185,129,0.1),0_0_20px_rgba(52,211,153,0.15),inset_0_1px_1px_rgba(255,255,255,0.1)] ring-1 ring-white/40 backdrop-blur-md border-4 border-emerald-400/40 hover:border-emerald-400/60 transition-all duration-300">
-        <img
-          src={imageUrl}
-          alt={imageAlt}
-          className="w-full h-full object-cover"
-        />
+        {videoUrl ? (
+          <video
+            src={videoUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            style={{ objectPosition: 'center 25%' }}
+          />
+        ) : (
+          <img
+            src={imageUrl}
+            alt={imageAlt}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
     </div>
   );

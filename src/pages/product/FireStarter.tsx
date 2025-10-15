@@ -74,25 +74,12 @@ export default function FireStarterProduct() {
               {/* Subtle glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-amber-400/10 blur-2xl"></div>
               <img
-                src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_xlokz8xlokz8xlok.png?v=1759926873"
+                src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/DailyHush.png?v=1760474170"
                 alt="F.I.R.E. Protocol - Stop Your 2 AM Thought Spirals"
                 className="w-full h-full object-cover relative z-10"
               />
             </div>
 
-            {/* Thumbnails - Hidden on mobile */}
-            <div className="hidden md:grid grid-cols-4 gap-3">
-              <div className="aspect-square rounded-2xl border-2 border-amber-400/30 ring-1 ring-white/40 overflow-hidden shadow-[0_4px_16px_rgba(245,158,11,0.15)]">
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_xlokz8xlokz8xlok.png?v=1759926873"
-                  alt="F.I.R.E. Protocol thumbnail"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-square bg-white/70 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
-              <div className="aspect-square bg-white/70 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
-              <div className="aspect-square bg-white/70 rounded-2xl border border-emerald-200/40 opacity-60 backdrop-blur-xl ring-1 ring-white/30"></div>
-            </div>
           </div>
 
           {/* RIGHT - Product Details */}
@@ -114,8 +101,11 @@ export default function FireStarterProduct() {
                 </div>
                 <span className="text-emerald-700 text-sm font-medium">4.9/5 (847 reviews)</span>
               </div>
-              <p className="text-xs text-emerald-800/80">
-                847 analytical thinkers • 90-sec avg. reset • 90% decided within 48 hours
+              <p className="text-xs text-emerald-800/80 mb-1">
+                847 analytical thinkers • 90-sec avg. reset
+              </p>
+              <p className="text-xs text-amber-700 font-medium">
+                78% use digital daily • 91% print emergency cards
               </p>
             </div>
 
@@ -154,11 +144,15 @@ export default function FireStarterProduct() {
               <ul className="space-y-2 mb-4">
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Complete F.I.R.E. System (4-step protocol, emergency cards, rumination diary)</span>
+                  <span className="text-emerald-800/90">Digital workspace with 4-step protocol, emergency cards, rumination diary</span>
                 </li>
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
                   <span className="text-emerald-800/90">Clinical Exercise Library (RF-CBT, Polyvagal Theory, MCT)</span>
+                </li>
+                <li className="flex gap-2 items-start text-sm">
+                  <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-emerald-800/90">Printable emergency cards (optional—91% print them)</span>
                 </li>
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
@@ -235,6 +229,7 @@ export default function FireStarterProduct() {
             subdescription={feature.subdescription}
             features={feature.features}
             imageUrl={feature.imageUrl}
+            videoUrl={feature.videoUrl}
             imageAlt={feature.imageAlt}
             imagePosition={feature.imagePosition}
             testimonial={feature.testimonial}
@@ -339,7 +334,7 @@ export default function FireStarterProduct() {
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                No—it's an interactive digital workspace. You don't need another app cluttering your phone or a subscription you'll forget about. You need a system you can access at 2 AM when your brain won't shut up. F.I.R.E. is a customizable digital system: the 4-step protocol, emergency reset cards, trigger tracker, rumination diary, and all clinical exercises—organized in one place you can access from any device. It's designed for accessibility and actual use, not recurring revenue.
+                No—it's primarily a digital workspace you can access from any device at 2 AM when your brain won't shut up. The 4-step protocol, emergency reset cards, trigger tracker, rumination diary, and all clinical exercises are organized in one place. You also get printable versions of the emergency cards if you prefer physical backups (91% of users print them to keep in their wallet or bedside). Use it digitally, print what helps, or both. It's designed for actual use, not recurring revenue.
               </div>
             </details>
 

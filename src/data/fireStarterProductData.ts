@@ -36,8 +36,8 @@ export const fireStarterProductData = {
         { text: '<strong>Reframe:</strong> Apply cognitive restructuring (RF-CBT technique)' },
         { text: '<strong>Execute:</strong> Take the smallest next action to close the loop' },
       ],
-      imageUrl: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_h9xlixh9xlixh9xl.png?v=1759927378',
-      imageAlt: 'How F.I.R.E. Interrupts the Loop',
+      imageUrl: '/src/assets/woman-holding-protocol-2.png',
+      imageAlt: 'Woman with F.I.R.E. Protocol - Stop Overthinking',
       imagePosition: 'left' as const,
     },
     {
@@ -45,7 +45,7 @@ export const fireStarterProductData = {
       description: 'You already know your type from the quiz. This kit gives you the exact tools to break <em class="text-amber-700 not-italic font-semibold">your</em> specific pattern.',
       subdescription: "Whether you're a Mindful Thinker, Gentle Analyzer, Chronic Overthinker, or Overthinkaholic—the F.I.R.E. framework gives you the exact steps to interrupt your mental loops before they take over.",
       features: [],
-      imageUrl: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_3mejzc3mejzc3mej.png?v=1759927377',
+      videoUrl: 'https://cdn.shopify.com/videos/c/o/v/a74214ac5a09432f95196a34001eaedd.mp4',
       imageAlt: 'Built For Your Overthinker Type',
       imagePosition: 'right' as const,
       testimonial: {

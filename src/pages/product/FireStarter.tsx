@@ -10,6 +10,7 @@ import {
   ProductFeatureSection,
   TrustSignals,
 } from '@/components/product'
+import { ReviewsSection } from '@/components/product/ReviewsSection'
 import { fireStarterProductData } from '@/data/fireStarterProductData'
 
 export default function FireStarterProduct() {
@@ -334,7 +335,7 @@ export default function FireStarterProduct() {
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                No—it's primarily a digital workspace you can access from any device at 2 AM when your brain won't shut up. The 4-step protocol, emergency reset cards, trigger tracker, rumination diary, and all clinical exercises are organized in one place. You also get printable versions of the emergency cards if you prefer physical backups (91% of users print them to keep in their wallet or bedside). Use it digitally, print what helps, or both. It's designed for actual use, not recurring revenue.
+                No—it's primarily a digital workspace you can access from any device at 2 AM when your brain won't shut up. The 4-step protocol, emergency reset cards, trigger tracker, rumination diary, and all clinical exercises are organized in one place. 78% of users access it digitally every day. You also get printable versions of the emergency cards if you prefer physical backups—91% print them to keep in their wallet or bedside. Use it digitally, print what helps, or both. It's designed for actual use, not recurring revenue.
               </div>
             </details>
 
@@ -349,6 +350,13 @@ export default function FireStarterProduct() {
             </details>
           </div>
         </div>
+
+        {/* Reviews Section */}
+        <ReviewsSection
+          overallRating={fireStarterProductData.reviews.overallRating}
+          totalReviews={fireStarterProductData.reviews.totalReviews}
+          reviews={fireStarterProductData.reviews.featured}
+        />
 
         {/* Sticky Add to Cart Bar (Mobile) */}
         <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${

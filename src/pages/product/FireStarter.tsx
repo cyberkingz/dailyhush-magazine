@@ -121,11 +121,12 @@ export default function FireStarterProduct() {
             {/* Price */}
             <div className="mb-6">
               <div className="flex items-baseline gap-2 md:gap-3 mb-2 flex-wrap">
+                <span className="text-2xl md:text-3xl text-emerald-600/60 line-through">$97</span>
                 <span className="text-3xl md:text-4xl font-bold text-emerald-900">$27</span>
                 <span className="text-base md:text-lg text-emerald-700/70 font-medium">48-Hour Quiz-Taker Rate</span>
               </div>
               <div className="text-sm text-emerald-700/80 leading-relaxed">
-                Because you completed our quiz, you have 48 hours to get the complete Overthinking Protocol at this rate. Regular price: $97. Your quiz results are calibrated and fresh—this window helps you implement while your pattern is clear.
+                Because you completed our quiz, you have 48 hours to get the complete Overthinking Protocol at this rate. Your quiz results are calibrated and fresh—this window helps you implement while your pattern is clear.
               </div>
             </div>
 
@@ -365,7 +366,7 @@ export default function FireStarterProduct() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="text-2xl font-bold text-emerald-900">$27</div>
-              <div className="text-xs text-emerald-600/60 line-through">$387</div>
+              <div className="text-xs text-emerald-600/60 line-through">$97</div>
             </div>
             <div className="flex-1">
               <ShopifyBuyButton

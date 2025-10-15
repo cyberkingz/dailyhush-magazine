@@ -407,7 +407,7 @@ function ThankYouPageContent() {
               {/* ========== EMOTIONAL OPENING ========== */}
               <div className="mb-12">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                  50,000+ Women With Racing Thoughts Used This To Sleep Through the Night
+                  850+ Women With Racing Thoughts Used This To Sleep Through the Night
                 </h1>
                 <div className="max-w-3xl space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p><strong>I know what just happened.</strong></p>
@@ -492,7 +492,7 @@ function ThankYouPageContent() {
                   </p>
 
                   <p className="text-base text-slate-700 leading-relaxed">
-                    F.I.R.E. wasn't born in a lab. It was built in those desperate moments when I needed something that actually worked. Now it's helped 50,000+ women interrupt their spirals—clinical research meets real life.
+                    F.I.R.E. wasn't born in a lab. It was built in those desperate moments when I needed something that actually worked. Now it's helped 850+ women interrupt their spirals—clinical research meets real life.
                   </p>
                 </div>
               </div>
@@ -895,7 +895,7 @@ function ThankYouPageContent() {
                   </p>
 
                   <p>
-                    This is what 50,000+ women are using every night when their brain hijacks them. Not theory. Not worksheets. <strong>A protocol that works when you're dysregulated and need it most.</strong>
+                    This is what 850+ women are using every night when their brain hijacks them. Not theory. Not worksheets. <strong>A protocol that works when you're dysregulated and need it most.</strong>
                   </p>
                 </div>
               </div>
@@ -920,7 +920,7 @@ function ThankYouPageContent() {
                       Every woman on the DailyHush team scored 7+ on this quiz. We built F.I.R.E. because we needed it. Because therapy helped us understand our overthinking, but didn't give us the tools to interrupt it when it mattered most.
                     </p>
                     <p className="font-semibold text-slate-900">
-                      You're joining 50,000+ women who refuse to let their brain run the show anymore. Women who are done researching and ready to use something that actually works.
+                      You're joining 850+ women who refuse to let their brain run the show anymore. Women who are done researching and ready to use something that actually works.
                     </p>
                     <p className="text-base italic text-slate-700 mt-2">
                       This is your tribe. We're here with you.
@@ -1068,7 +1068,7 @@ function ThankYouPageContent() {
                       </div>
                       <div className="flex flex-col items-center gap-1.5">
                         <CheckCircle className="w-4 h-4 text-emerald-600" />
-                        <span className="leading-normal">50,000+ users</span>
+                        <span className="leading-normal">850+ users</span>
                       </div>
                     </div>
                   </div>
@@ -1183,7 +1183,7 @@ function ThankYouPageContent() {
                       </div>
 
                       <div>
-                        <div className="font-black text-2xl text-slate-900">50,000+</div>
+                        <div className="font-black text-2xl text-slate-900">850+</div>
                         <div className="text-xs text-slate-600 mt-1">total users</div>
                       </div>
 
@@ -1552,7 +1552,7 @@ function ThankYouPageContent() {
 
                       <div className="text-center pt-6">
                         <p className="text-base text-slate-700 font-semibold">
-                          You're joining 50,000+ women at DailyHush who are using these frameworks every day.
+                          You're joining 850+ women at DailyHush who are using these frameworks every day.
                         </p>
                       </div>
                     </div>

@@ -429,7 +429,7 @@ export default function Quiz() {
           <div className="quiz-container relative z-10">
             <div className="quiz-intro">
           <h1 className="quiz-intro__title">
-            What's Your Overthinkaolic Type?
+            What's Your Overthinkaholic Type?
           </h1>
           <p className="quiz-intro__subtitle">
             Take the 48h Action Diagnostic

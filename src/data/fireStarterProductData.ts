@@ -36,8 +36,8 @@ export const fireStarterProductData = {
         { text: '<strong>Reframe:</strong> Apply cognitive restructuring (RF-CBT technique)' },
         { text: '<strong>Execute:</strong> Take the smallest next action to close the loop' },
       ],
-      imageUrl: '/src/assets/woman-holding-protocol-2.png',
-      imageAlt: 'Woman with F.I.R.E. Protocol - Stop Overthinking',
+      imageUrl: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/enhanced-image_2.png?v=1760559446',
+      imageAlt: 'F.I.R.E. Protocol 4-Step Framework',
       imagePosition: 'left' as const,
     },
     {

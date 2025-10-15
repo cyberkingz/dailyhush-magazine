@@ -17,7 +17,7 @@ export default function FireStarterProduct() {
   const [showStickyBar, setShowStickyBar] = useState(false)
 
   useEffect(() => {
-    document.title = 'F.I.R.E. Protocol — $27 Quiz-Taker Rate (Regular $97)'
+    document.title = 'F.I.R.E. Protocol — Stop the Shame Loop Before It Starts ($67)'
   }, [])
 
   // Show sticky bar after scrolling past 40% of page
@@ -42,7 +42,7 @@ export default function FireStarterProduct() {
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. Protocol for just $27 (Regular $97)</>}
+        message={<><strong>🎉 Quiz-Taker Access Unlocked:</strong> Get the F.I.R.E. Protocol for $67 (Regular $197)</>}
         variant="emerald"
       />
       <TopBar />
@@ -112,58 +112,62 @@ export default function FireStarterProduct() {
 
             {/* Product Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-emerald-900 mb-3 leading-tight">
-              You're Still Here Because Nothing Else Worked
+              Your Body Decides to Panic 7 Seconds Before Your Brain Knows.
             </h1>
-            <p className="text-base md:text-lg text-emerald-700/80 font-medium mb-6">
-              The clinical protocol therapists charge $750 to teach—available for $27 (quiz-takers only)
+
+            {/* Opening Hook - Shame Core (Tightened) */}
+            <p className="text-base md:text-lg text-emerald-800 mb-4 leading-[1.7]">
+              "I should've known better." You've said that 100 times this month. And every time, you think you're analyzing—figuring out what went wrong. But you're not. <strong className="text-amber-700">You're punishing.</strong> That's not overthinking. That's shame wearing an anxiety mask. The reason nothing has worked yet isn't because you're broken. It's because you've been treating the wrong problem.
+            </p>
+
+            {/* Product Bridge (Tightened) */}
+            <p className="text-base md:text-lg text-emerald-800 mb-4 leading-[1.7]">
+              <strong>F.I.R.E. targets the 7-second window before the thought spiral starts</strong>—the pre-conscious moment when your body decides you're unsafe. That's why journaling hasn't stopped the replay. It tries to change your thoughts. But by then, the rumination signal is already firing. F.I.R.E. intercepts before the thought forms.
+            </p>
+
+            {/* Mechanism (Merged & Tightened) */}
+            <p className="text-base text-emerald-800 mb-4 leading-[1.7]">
+              You can't think your way out of a nervous system response. Every meditation app targets your thoughts. F.I.R.E. targets the physiological shutdown that happens 3-7 seconds before—the vagal response that traps you in your head.
+            </p>
+
+            {/* Clinical Frameworks */}
+            <p className="text-base text-emerald-800 mb-6 leading-[1.7]">
+              <strong>You get the same clinical frameworks therapists charge $150/hour to teach:</strong> Polyvagal Theory (Yale), Metacognitive Therapy (Manchester), Rumination-Focused techniques (Exeter)—in a system you can actually use at 2 AM.
             </p>
 
             {/* Price */}
-            <div className="mb-6">
+            <div className="mb-6 pb-6 border-b border-emerald-200/40">
               <div className="flex items-baseline gap-2 md:gap-3 mb-2 flex-wrap">
-                <span className="text-2xl md:text-3xl text-emerald-600/60 line-through">$97</span>
-                <span className="text-3xl md:text-4xl font-bold text-emerald-900">$27</span>
-                <span className="text-base md:text-lg text-emerald-700/70 font-medium">48-Hour Quiz-Taker Rate</span>
+                <span className="text-2xl md:text-3xl text-emerald-600/60 line-through">$197</span>
+                <span className="text-3xl md:text-4xl font-bold text-emerald-900">$67</span>
+                <span className="text-base md:text-lg text-emerald-700/70 font-medium">Quiz-Taker Rate</span>
               </div>
               <div className="text-sm text-emerald-700/80 leading-relaxed">
-                Because you completed our quiz, you have 48 hours to get the complete Overthinking Protocol at this rate. Your quiz results are calibrated and fresh—this window helps you implement while your pattern is clear.
+                The same protocol trauma therapists charge $750 to teach over 6 sessions. Quiz-takers who've proven they're coachable get immediate access.
               </div>
             </div>
 
-            {/* Mechanism - Condensed */}
+            {/* What's Included - Tightened */}
             <div className="mb-6 pb-6 border-b border-emerald-200/40">
-              <p className="text-emerald-700/90 leading-[1.6] mb-3 text-sm">
-                Every meditation app targets your <strong>thoughts</strong>. F.I.R.E. targets the <strong className="text-amber-700">physiological shutdown</strong> that happens 3-7 seconds <em>before</em> the thought spiral—the vagal response that traps you in your head. <strong>You can't think your way out of a nervous system response.</strong>
-              </p>
-              <p className="text-emerald-700/90 leading-[1.6] text-sm">
-                You get the same clinical frameworks therapists charge $150/hour to teach: <strong>RF-CBT (Exeter), Polyvagal Theory (Yale), MCT (Manchester)</strong>—in a system you can actually use at 2 AM.
-              </p>
-            </div>
-
-            {/* What's Included - Condensed */}
-            <div className="mb-6 pb-6 border-b border-emerald-200/40">
-              <h3 className="font-display font-bold text-emerald-900 mb-3 text-sm">What You Get (Instant Download):</h3>
-              <ul className="space-y-2 mb-4">
+              <h3 className="font-display font-bold text-emerald-900 mb-3 text-sm">What You Get:</h3>
+              <ul className="space-y-2">
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Digital workspace with 4-step protocol, emergency cards, rumination diary</span>
+                  <span className="text-emerald-800/90"><strong>Digital workspace</strong> with 4-step protocol, emergency cards, rumination diary</span>
                 </li>
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Clinical Exercise Library (RF-CBT, Polyvagal Theory, MCT)</span>
+                  <span className="text-emerald-800/90"><strong>Clinical Exercise Library</strong> — Body-based interruption techniques. No thought-challenging. Just intercept, reset, redirect.</span>
                 </li>
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Printable emergency cards (optional—91% print them)</span>
+                  <span className="text-emerald-800/90"><strong>Printable emergency cards</strong> (91% print them)</span>
                 </li>
                 <li className="flex gap-2 items-start text-sm">
                   <CheckCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-emerald-800/90">Lifetime updates as research evolves</span>
+                  <span className="text-emerald-800/90"><strong>Lifetime updates</strong> as research evolves</span>
                 </li>
               </ul>
-              <p className="text-xs text-emerald-700/70">
-                <strong>$27</strong> vs. $750-900 for 6 therapy sessions teaching the same protocols
-              </p>
             </div>
 
             {/* Buy Button */}
@@ -172,7 +176,7 @@ export default function FireStarterProduct() {
                 productId="10761797894447"
                 domain="t7vyee-kc.myshopify.com"
                 storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get F.I.R.E. Protocol — $27"
+                buttonText="Get F.I.R.E. Protocol — $67"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
                 onCheckoutComplete={handleCheckoutComplete}
@@ -305,7 +309,7 @@ export default function FireStarterProduct() {
                 <p className="mb-2"><strong>Meditation apps</strong> target your thoughts. By the time you're thinking, you're already dysregulated. Too late.</p>
                 <p className="mb-2"><strong>Therapy</strong> teaches these same frameworks over 6-8 sessions at $150/hour. Total cost: $750-900.</p>
                 <p className="mb-2"><strong>Journaling</strong> helps you process after, but doesn't give you a tool to interrupt in the moment.</p>
-                <p className="mb-3"><strong className="text-amber-700">F.I.R.E.</strong> gives you the SAME clinical frameworks (RF-CBT, MCT, Polyvagal regulation) in a system you can use at 2 AM when you're spiraling. It targets the physiological shutdown that happens <em>before</em> the thought spiral—the vagal response that traps you in your head.</p>
+                <p className="mb-3"><strong className="text-amber-700">F.I.R.E.</strong> gives you the SAME clinical frameworks (Polyvagal regulation, Metacognitive Therapy, Rumination-Focused techniques) in a system you can use at 2 AM when you're spiraling. It targets the physiological shutdown that happens <em>before</em> the thought spiral—the vagal response that traps you in your head.</p>
                 <p>If this doesn't work, keep everything and get your money back. That's not a risk—that's me putting my money where my research is.</p>
               </div>
             </details>
@@ -322,11 +326,11 @@ export default function FireStarterProduct() {
 
             <details className="group bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/30 shadow-[0_4px_16px_rgba(16,185,129,0.06)] ring-1 ring-white/30 hover:shadow-[0_6px_24px_rgba(16,185,129,0.1)] transition-all duration-300">
               <summary className="cursor-pointer list-none p-4 md:p-6 font-semibold text-emerald-900 hover:text-amber-700 transition text-sm md:text-base">
-                Why is this only $27? What's the catch?
+                Why is this only $67? What's the catch?
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Protocol stands alone. You don't need anything else. The $27 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
+                No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Protocol stands alone. You don't need anything else. The $67 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
               </div>
             </details>
 
@@ -346,7 +350,7 @@ export default function FireStarterProduct() {
                 <span className="float-right group-open:rotate-180 transition-transform text-amber-600">▼</span>
               </summary>
               <div className="px-4 md:px-6 pb-4 md:pb-6 text-emerald-800/80 text-sm md:text-base leading-[1.6]">
-                You should be skeptical—that's why you scored high on the quiz. F.I.R.E. isn't based on Instagram infographics. It's compiled from peer-reviewed research: RF-CBT (University of Exeter, 78% reduction in rumination episodes), Polyvagal Theory (Yale), and MCT (University of Manchester, 70% improvement in worry reduction). We cite our sources. We show the data. If you're analytical, you'll appreciate the research section above.
+                You should be skeptical—that's why you scored high on the quiz. F.I.R.E. isn't based on Instagram infographics. It's compiled from peer-reviewed research: Rumination-Focused CBT (University of Exeter, 78% reduction in rumination episodes), Polyvagal Theory (Yale), and Metacognitive Therapy (University of Manchester, 70% improvement in worry reduction). We cite our sources. We show the data. If you're analytical, you'll appreciate the research section above.
               </div>
             </details>
           </div>
@@ -365,8 +369,8 @@ export default function FireStarterProduct() {
         }`}>
           <div className="flex items-center justify-between gap-4">
             <div>
-              <div className="text-2xl font-bold text-emerald-900">$27</div>
-              <div className="text-xs text-emerald-600/60 line-through">$97</div>
+              <div className="text-2xl font-bold text-emerald-900">$67</div>
+              <div className="text-xs text-emerald-600/60 line-through">$197</div>
             </div>
             <div className="flex-1">
               <ShopifyBuyButton

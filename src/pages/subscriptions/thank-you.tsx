@@ -395,7 +395,7 @@ function ThankYouPageContent() {
           productId="10761797894447"
           domain="t7vyee-kc.myshopify.com"
           storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-          buttonText="Get F.I.R.E. Protocol • $27"
+          buttonText="Get F.I.R.E. Protocol • $67"
           buttonColor="#16a34a"
           buttonHoverColor="#15803d"
         />
@@ -650,16 +650,16 @@ function ThankYouPageContent() {
                   </div>
 
                   <p className="font-semibold text-slate-900 text-lg">
-                    F.I.R.E. is different because it combines RF-CBT (Rumination-Focused CBT), MCT (Metacognitive Therapy), and Polyvagal Theory into one 90-second protocol.
+                    F.I.R.E. is different because it combines Rumination-Focused CBT, Metacognitive Therapy, and Polyvagal Theory into one 90-second protocol.
                   </p>
 
                   <div className="grid md:grid-cols-3 gap-4 my-6">
                     <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                      <p className="font-bold text-emerald-900 mb-2 text-sm">RF-CBT Component:</p>
+                      <p className="font-bold text-emerald-900 mb-2 text-sm">Rumination-Focused Component:</p>
                       <p className="text-xs text-slate-700">Catches rumination <em>before</em> it becomes a spiral—targets the unconscious trigger moment</p>
                     </div>
                     <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                      <p className="font-bold text-blue-900 mb-2 text-sm">MCT Component:</p>
+                      <p className="font-bold text-blue-900 mb-2 text-sm">Metacognitive Component:</p>
                       <p className="text-xs text-slate-700">Changes your <em>relationship</em> with overthinking itself—stops treating worry as productive problem-solving</p>
                     </div>
                     <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
@@ -945,7 +945,7 @@ function ThankYouPageContent() {
                   <div ref={offerCardRef} className="bg-white border-2 border-slate-200 rounded-2xl p-4 md:p-8">
                     <div className="text-center mb-3">
                       <h3 className="text-xl md:text-3xl font-bold text-slate-900 mb-1">
-                        The F.I.R.E. Protocol — $27
+                        The F.I.R.E. Protocol — $67
                       </h3>
                       <p className="text-sm md:text-base text-slate-600">
                         Everything you need to interrupt overthinking tonight
@@ -964,7 +964,7 @@ function ThankYouPageContent() {
                     <div className="text-center mb-4">
                       <p className="text-sm md:text-base text-slate-600 mb-1">Your Investment Today:</p>
                       <div className="flex items-baseline justify-center gap-2 mb-1">
-                        <span className="text-4xl md:text-5xl font-black text-slate-900">$27</span>
+                        <span className="text-4xl md:text-5xl font-black text-slate-900">$67</span>
                       </div>
                       <p className="text-sm md:text-base text-slate-600 mb-1">
                         Less than one therapy co-pay. Same clinical frameworks.
@@ -991,7 +991,7 @@ function ThankYouPageContent() {
                       <div className="space-y-2.5">
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-sm md:text-base text-slate-700 leading-normal">Catch spirals in 10 seconds (RF-CBT protocol)</p>
+                          <p className="text-sm md:text-base text-slate-700 leading-normal">Catch spirals in 10 seconds (Rumination-Focused protocol)</p>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
@@ -1026,9 +1026,9 @@ function ThankYouPageContent() {
                             <span className="text-slate-500 text-xs md:text-sm">2-3 therapy sessions</span>
                           </div>
                           <ul className="space-y-1.5 text-xs md:text-sm text-slate-600 pl-4">
-                            <li>→ RF-CBT exercises therapists charge $150/hour to teach</li>
+                            <li>→ Rumination-Focused exercises therapists charge $150/hour to teach</li>
                             <li>→ Polyvagal regulation to stop physical anxiety spirals</li>
-                            <li>→ MCT reframe templates without toxic positivity</li>
+                            <li>→ Metacognitive reframe templates without toxic positivity</li>
                           </ul>
                         </div>
 
@@ -1437,12 +1437,12 @@ function ThankYouPageContent() {
 
                       <details className="group bg-white rounded-xl border border-slate-200 p-6">
                         <summary className="cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
-                          <span>Why $27? What's the catch?</span>
+                          <span>Why $67? What's the catch?</span>
                           <span className="group-open:rotate-180 transition-transform">▼</span>
                         </summary>
                         <p className="mt-4 text-sm text-slate-700 leading-relaxed">
-                          No catch. We want this accessible. One therapy co-pay costs $30-$50.
-                          We charge $27 so price isn't the barrier. If it doesn't help, email us — full refund, no questions.
+                          No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Protocol stands alone. You don't need anything else.
+                          The $67 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
                         </p>
                       </details>
 
@@ -1476,7 +1476,7 @@ function ThankYouPageContent() {
                         Another week will pass. Another month. You'll keep lying awake. Keep analyzing every decision. Keep exhausting yourself with thoughts that go nowhere.
                       </p>
                       <p className="font-semibold text-slate-900">
-                        The cost of waiting isn't $27. It's every night your brain steals from you. Every quiet moment that turns into a spiral. Every decision that becomes paralysis.
+                        The cost of waiting isn't $67. It's every night your brain steals from you. Every quiet moment that turns into a spiral. Every decision that becomes paralysis.
                       </p>
                       <p>
                         You took the quiz because something in you knows this can't continue. That same part of you? It's ready for something that actually works.
@@ -1565,7 +1565,7 @@ function ThankYouPageContent() {
                         The Women Who Act Now Sleep Better Tonight
                       </h3>
                       <p>
-                        I know your brain is already analyzing this. <em>"But what if this doesn't work for me? What if I'm too far gone? What if I waste $27 and nothing changes?"</em>
+                        I know your brain is already analyzing this. <em>"But what if this doesn't work for me? What if I'm too far gone? What if I waste $67 and nothing changes?"</em>
                       </p>
                       <p>
                         That's the overthinking talking. Here's what actually happens when you act: The next time your brain starts spiraling, you'll have a protocol. Four steps. Ninety seconds. Real interruption instead of hours of mental loops.
@@ -1583,7 +1583,7 @@ function ThankYouPageContent() {
                         So here's my promise: If you try the F.I.R.E. method and it doesn't help, email me. I'll refund you myself. No forms, no questions, no hassle.
                       </p>
                       <p>
-                        But if there's even a chance this could be the thing that finally works — the thing that gives you your brain back — isn't that worth 27 dollars and 60 seconds of your time?
+                        But if there's even a chance this could be the thing that finally works — the thing that gives you your brain back — isn't that worth 67 dollars and 60 seconds of your time?
                       </p>
                       <p>
                         You've already taken the quiz. You've read the research. You know why your brain does this.
@@ -1598,7 +1598,7 @@ function ThankYouPageContent() {
                         productId="10761797894447"
                         domain="t7vyee-kc.myshopify.com"
                         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                        buttonText="Get the F.I.R.E. Protocol • $27"
+                        buttonText="Get the F.I.R.E. Protocol • $67"
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"

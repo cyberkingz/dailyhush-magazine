@@ -3,6 +3,7 @@ import { KPICard } from './KPICard'
 import { DataTable, PercentageBadge, type Column } from './DataTable'
 import { StatsList } from './StatsList'
 import { DeviceBreakdownChart } from './DeviceBreakdownChart'
+import { FunnelVisualization } from './FunnelVisualization'
 import { GlassCard } from '../../ui/glass-card'
 import { useProductAnalytics } from '../../../hooks/useTrackingAnalytics'
 import type { DateRange } from '../../../lib/services/trackingAnalytics'
@@ -13,7 +14,7 @@ interface ProductPageViewProps {
 }
 
 export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) => {
-  const { metrics, utmCampaignData, faqData, deviceData, loading } = useProductAnalytics(dateRange)
+  const { metrics, utmCampaignData, faqData, deviceData, funnelData, loading } = useProductAnalytics(dateRange)
 
   if (!metrics && !loading) {
     return (
@@ -65,6 +66,13 @@ export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) =
           loading={loading}
         />
       </div>
+
+      {/* Conversion Funnel */}
+      <FunnelVisualization
+        stages={funnelData}
+        loading={loading}
+        title="Product Page Conversion Funnel"
+      />
 
       {/* UTM Campaigns Table */}
       {utmCampaignData.length > 0 && (

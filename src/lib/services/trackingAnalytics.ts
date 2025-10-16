@@ -318,6 +318,12 @@ export interface FAQStats {
   percentage: number
 }
 
+export interface FunnelStage {
+  name: string
+  value: number
+  percentage: number
+}
+
 export async function getProductPageMetrics(dateRange?: DateRange): Promise<ProductPageMetrics> {
   try {
     let query = supabase
@@ -481,6 +487,51 @@ export async function getProductDeviceData(dateRange?: DateRange): Promise<Array
   }
 }
 
+export async function getProductFunnelData(dateRange?: DateRange): Promise<FunnelStage[]> {
+  try {
+    let query = supabase
+      .from('product_page_sessions')
+      .select('viewed_price, clicked_buy_button')
+
+    if (dateRange) {
+      query = query
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+    if (error) throw error
+
+    const sessions = data || []
+    const totalSessions = sessions.length
+    const viewedPrice = sessions.filter(s => s.viewed_price).length
+    const clickedBuy = sessions.filter(s => s.clicked_buy_button).length
+
+    if (totalSessions === 0) return []
+
+    return [
+      {
+        name: 'Page Views',
+        value: totalSessions,
+        percentage: 100
+      },
+      {
+        name: 'Viewed Pricing',
+        value: viewedPrice,
+        percentage: (viewedPrice / totalSessions) * 100
+      },
+      {
+        name: 'Clicked Buy',
+        value: clickedBuy,
+        percentage: (clickedBuy / totalSessions) * 100
+      }
+    ]
+  } catch (error) {
+    console.error('Error fetching product funnel data:', error)
+    return []
+  }
+}
+
 // ============================================================
 // USER JOURNEY ANALYTICS
 // ============================================================
@@ -607,6 +658,292 @@ export async function getJourneySummary(dateRange?: DateRange): Promise<JourneyS
       convertedOnProduct: 0,
       avgQuizScore: 0,
       topRetargetingCampaign: null,
+    }
+  }
+}
+
+export interface TimeToConvertDistribution {
+  range: string
+  users: number
+  conversions: number
+  conversionRate: number
+}
+
+export async function getTimeToConvertDistribution(dateRange?: DateRange): Promise<TimeToConvertDistribution[]> {
+  try {
+    const journeys = await getUserJourneys(dateRange, 1000)
+
+    // Filter to only users who visited product page
+    const completedJourneys = journeys.filter(j => j.productDate !== null)
+
+    const ranges = [
+      { range: '< 1 hour', minHours: 0, maxHours: 1 },
+      { range: '1-6 hours', minHours: 1, maxHours: 6 },
+      { range: '6-24 hours', minHours: 6, maxHours: 24 },
+      { range: '1-3 days', minHours: 24, maxHours: 72 },
+      { range: '3-7 days', minHours: 72, maxHours: 168 },
+      { range: '7+ days', minHours: 168, maxHours: Infinity },
+    ]
+
+    return ranges.map(({ range, minHours, maxHours }) => {
+      const usersInRange = completedJourneys.filter(j => {
+        const thankYouTime = new Date(j.thankYouDate).getTime()
+        const productTime = new Date(j.productDate!).getTime()
+        const hoursDiff = (productTime - thankYouTime) / (1000 * 60 * 60)
+        return hoursDiff >= minHours && hoursDiff < maxHours
+      })
+
+      const conversions = usersInRange.filter(j => j.productClicked).length
+
+      return {
+        range,
+        users: usersInRange.length,
+        conversions,
+        conversionRate: usersInRange.length > 0 ? (conversions / usersInRange.length) * 100 : 0,
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching time to convert distribution:', error)
+    return []
+  }
+}
+
+// ============================================================
+// EMAIL ATTRIBUTION ANALYTICS
+// ============================================================
+
+export interface EmailAttributionMetrics {
+  totalEmailsCaptured: number
+  visitedProductPage: number
+  convertedOnProductPage: number
+  productVisitRate: number
+  emailConversionRate: number
+  avgTimeToReturn: number // in hours
+  topCampaign: string | null
+  topCampaignConversions: number
+}
+
+export async function getEmailAttributionMetrics(dateRange?: DateRange): Promise<EmailAttributionMetrics> {
+  try {
+    const journeys = await getUserJourneys(dateRange, 1000)
+
+    const totalEmailsCaptured = journeys.length
+    const visitedProductPage = journeys.filter(j => j.productDate !== null).length
+    const convertedOnProductPage = journeys.filter(j => j.productClicked === true).length
+
+    // Calculate average time to return (in hours)
+    const returningUsers = journeys.filter(j => j.productDate !== null)
+    const avgTimeToReturn = returningUsers.length > 0
+      ? returningUsers.reduce((sum, j) => {
+          const thankYouTime = new Date(j.thankYouDate).getTime()
+          const productTime = new Date(j.productDate!).getTime()
+          const hoursDiff = (productTime - thankYouTime) / (1000 * 60 * 60)
+          return sum + hoursDiff
+        }, 0) / returningUsers.length
+      : 0
+
+    // Find top performing campaign
+    const campaignConversions = journeys.reduce((acc, j) => {
+      if (j.retargetingCampaign && j.productClicked) {
+        acc[j.retargetingCampaign] = (acc[j.retargetingCampaign] || 0) + 1
+      }
+      return acc
+    }, {} as Record<string, number>)
+
+    const topCampaignEntry = Object.entries(campaignConversions)
+      .sort(([, a], [, b]) => b - a)[0]
+
+    return {
+      totalEmailsCaptured,
+      visitedProductPage,
+      convertedOnProductPage,
+      productVisitRate: totalEmailsCaptured > 0 ? (visitedProductPage / totalEmailsCaptured) * 100 : 0,
+      emailConversionRate: totalEmailsCaptured > 0 ? (convertedOnProductPage / totalEmailsCaptured) * 100 : 0,
+      avgTimeToReturn: Math.round(avgTimeToReturn),
+      topCampaign: topCampaignEntry?.[0] || null,
+      topCampaignConversions: topCampaignEntry?.[1] || 0,
+    }
+  } catch (error) {
+    console.error('Error fetching email attribution metrics:', error)
+    return {
+      totalEmailsCaptured: 0,
+      visitedProductPage: 0,
+      convertedOnProductPage: 0,
+      productVisitRate: 0,
+      emailConversionRate: 0,
+      avgTimeToReturn: 0,
+      topCampaign: null,
+      topCampaignConversions: 0,
+    }
+  }
+}
+
+export interface CampaignAttributionStats {
+  campaign: string
+  emailsReached: number
+  visited: number
+  converted: number
+  visitRate: number
+  conversionRate: number
+  avgTimeToVisit: number // in hours
+}
+
+export async function getCampaignAttributionStats(dateRange?: DateRange): Promise<CampaignAttributionStats[]> {
+  try {
+    const journeys = await getUserJourneys(dateRange, 1000)
+
+    // Group by campaign
+    const campaignGroups = journeys.reduce((acc, j) => {
+      const campaign = j.retargetingCampaign || 'No Campaign'
+      if (!acc[campaign]) {
+        acc[campaign] = []
+      }
+      acc[campaign].push(j)
+      return acc
+    }, {} as Record<string, UserJourney[]>)
+
+    return Object.entries(campaignGroups)
+      .map(([campaign, users]) => {
+        const emailsReached = users.length
+        const visited = users.filter(u => u.productDate !== null).length
+        const converted = users.filter(u => u.productClicked === true).length
+
+        // Calculate avg time to visit
+        const visitingUsers = users.filter(u => u.productDate !== null)
+        const avgTimeToVisit = visitingUsers.length > 0
+          ? visitingUsers.reduce((sum, u) => {
+              const thankYouTime = new Date(u.thankYouDate).getTime()
+              const productTime = new Date(u.productDate!).getTime()
+              const hoursDiff = (productTime - thankYouTime) / (1000 * 60 * 60)
+              return sum + hoursDiff
+            }, 0) / visitingUsers.length
+          : 0
+
+        return {
+          campaign,
+          emailsReached,
+          visited,
+          converted,
+          visitRate: emailsReached > 0 ? (visited / emailsReached) * 100 : 0,
+          conversionRate: emailsReached > 0 ? (converted / emailsReached) * 100 : 0,
+          avgTimeToVisit: Math.round(avgTimeToVisit),
+        }
+      })
+      .filter(c => c.campaign !== 'No Campaign') // Exclude users without campaigns
+      .sort((a, b) => b.converted - a.converted)
+  } catch (error) {
+    console.error('Error fetching campaign attribution stats:', error)
+    return []
+  }
+}
+
+// ============================================================
+// SHOPIFY ORDERS / REVENUE ANALYTICS
+// ============================================================
+
+export interface ShopifyOrder {
+  id: string
+  shopify_order_id: number
+  order_number: number
+  order_name: string
+  customer_email: string | null
+  customer_first_name: string | null
+  customer_last_name: string | null
+  total_price: number
+  currency: string
+  product_name: string | null
+  quantity: number
+  financial_status: string | null
+  utm_campaign: string | null
+  billing_country: string | null
+  order_created_at: string
+  created_at: string
+}
+
+export interface RevenueMetrics {
+  totalRevenue: number
+  totalOrders: number
+  averageOrderValue: number
+  todayRevenue: number
+  todayOrders: number
+  weekRevenue: number
+  weekOrders: number
+}
+
+export async function getShopifyOrders(dateRange?: DateRange, limit: number = 50): Promise<ShopifyOrder[]> {
+  try {
+    let query = supabase
+      .from('shopify_orders')
+      .select('*')
+      .order('order_created_at', { ascending: false })
+      .limit(limit)
+
+    if (dateRange) {
+      query = query
+        .gte('order_created_at', dateRange.startDate)
+        .lte('order_created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+
+    if (error) throw error
+    return data || []
+  } catch (error) {
+    console.error('Error fetching Shopify orders:', error)
+    return []
+  }
+}
+
+export async function getRevenueMetrics(dateRange?: DateRange): Promise<RevenueMetrics> {
+  try {
+    let query = supabase
+      .from('shopify_orders')
+      .select('total_price, order_created_at')
+
+    if (dateRange) {
+      query = query
+        .gte('order_created_at', dateRange.startDate)
+        .lte('order_created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+
+    if (error) throw error
+
+    const orders = data || []
+    const totalOrders = orders.length
+    const totalRevenue = orders.reduce((sum, o) => sum + Number(o.total_price), 0)
+
+    // Calculate today's metrics
+    const now = new Date()
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const todayOrders = orders.filter(o => new Date(o.order_created_at) >= startOfToday)
+    const todayRevenue = todayOrders.reduce((sum, o) => sum + Number(o.total_price), 0)
+
+    // Calculate this week's metrics
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    const weekOrders = orders.filter(o => new Date(o.order_created_at) >= weekAgo)
+    const weekRevenue = weekOrders.reduce((sum, o) => sum + Number(o.total_price), 0)
+
+    return {
+      totalRevenue,
+      totalOrders,
+      averageOrderValue: totalOrders > 0 ? totalRevenue / totalOrders : 0,
+      todayRevenue,
+      todayOrders: todayOrders.length,
+      weekRevenue,
+      weekOrders: weekOrders.length,
+    }
+  } catch (error) {
+    console.error('Error fetching revenue metrics:', error)
+    return {
+      totalRevenue: 0,
+      totalOrders: 0,
+      averageOrderValue: 0,
+      todayRevenue: 0,
+      todayOrders: 0,
+      weekRevenue: 0,
+      weekOrders: 0,
     }
   }
 }

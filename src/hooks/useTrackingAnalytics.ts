@@ -10,8 +10,11 @@ import {
   getUTMCampaignStats,
   getFAQStats,
   getProductDeviceData,
+  getProductFunnelData,
   getUserJourneys,
   getJourneySummary,
+  getTimeToConvertDistribution,
+  getEmailAttributionMetrics,
   type DateRange,
   type ThankYouPageMetrics,
   type QuizScoreConversion,
@@ -21,8 +24,11 @@ import {
   type ProductPageMetrics,
   type UTMCampaignStats,
   type FAQStats,
+  type FunnelStage,
   type UserJourney,
   type JourneySummary,
+  type TimeToConvertDistribution,
+  type EmailAttributionMetrics,
 } from '../lib/services/trackingAnalytics'
 
 interface UseThankYouAnalyticsResult {
@@ -86,6 +92,7 @@ interface UseProductAnalyticsResult {
   utmCampaignData: UTMCampaignStats[]
   faqData: FAQStats[]
   deviceData: Array<{ device_type?: string }>
+  funnelData: FunnelStage[]
   loading: boolean
   error: Error | null
 }
@@ -95,6 +102,7 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
   const [utmCampaignData, setUTMCampaignData] = useState<UTMCampaignStats[]>([])
   const [faqData, setFAQData] = useState<FAQStats[]>([])
   const [deviceData, setDeviceData] = useState<Array<{ device_type?: string }>>([])
+  const [funnelData, setFunnelData] = useState<FunnelStage[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -104,17 +112,19 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
         setLoading(true)
         setError(null)
 
-        const [metricsData, utmCampaigns, faqs, devices] = await Promise.all([
+        const [metricsData, utmCampaigns, faqs, devices, funnel] = await Promise.all([
           getProductPageMetrics(dateRange),
           getUTMCampaignStats(dateRange),
           getFAQStats(dateRange),
           getProductDeviceData(dateRange),
+          getProductFunnelData(dateRange),
         ])
 
         setMetrics(metricsData)
         setUTMCampaignData(utmCampaigns)
         setFAQData(faqs)
         setDeviceData(devices)
+        setFunnelData(funnel)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch analytics'))
         console.error('Error fetching product analytics:', err)
@@ -126,12 +136,14 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { metrics, utmCampaignData, faqData, deviceData, loading, error }
+  return { metrics, utmCampaignData, faqData, deviceData, funnelData, loading, error }
 }
 
 interface UseUserJourneyAnalyticsResult {
   journeyData: UserJourney[]
   journeySummary: JourneySummary | null
+  timeToConvertData: TimeToConvertDistribution[]
+  emailAttributionMetrics: EmailAttributionMetrics | null
   loading: boolean
   error: Error | null
 }
@@ -139,6 +151,8 @@ interface UseUserJourneyAnalyticsResult {
 export function useUserJourneyAnalytics(dateRange?: DateRange, limit: number = 50): UseUserJourneyAnalyticsResult {
   const [journeyData, setJourneyData] = useState<UserJourney[]>([])
   const [journeySummary, setJourneySummary] = useState<JourneySummary | null>(null)
+  const [timeToConvertData, setTimeToConvertData] = useState<TimeToConvertDistribution[]>([])
+  const [emailAttributionMetrics, setEmailAttributionMetrics] = useState<EmailAttributionMetrics | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -148,13 +162,17 @@ export function useUserJourneyAnalytics(dateRange?: DateRange, limit: number = 5
         setLoading(true)
         setError(null)
 
-        const [journeys, summary] = await Promise.all([
+        const [journeys, summary, timeToConvert, emailAttribution] = await Promise.all([
           getUserJourneys(dateRange, limit),
           getJourneySummary(dateRange),
+          getTimeToConvertDistribution(dateRange),
+          getEmailAttributionMetrics(dateRange),
         ])
 
         setJourneyData(journeys)
         setJourneySummary(summary)
+        setTimeToConvertData(timeToConvert)
+        setEmailAttributionMetrics(emailAttribution)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch analytics'))
         console.error('Error fetching user journey analytics:', err)
@@ -166,5 +184,5 @@ export function useUserJourneyAnalytics(dateRange?: DateRange, limit: number = 5
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate, limit])
 
-  return { journeyData, journeySummary, loading, error }
+  return { journeyData, journeySummary, timeToConvertData, emailAttributionMetrics, loading, error }
 }

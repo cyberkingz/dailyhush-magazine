@@ -1,6 +1,8 @@
 import React from 'react'
 import { KPICard } from './KPICard'
 import { DataTable, BooleanBadge, type Column } from './DataTable'
+import { TimeToConvertHistogram } from './TimeToConvertHistogram'
+import { EmailAttributionCard } from './EmailAttributionCard'
 import { GlassCard } from '../../ui/glass-card'
 import { useUserJourneyAnalytics } from '../../../hooks/useTrackingAnalytics'
 import type { DateRange } from '../../../lib/services/trackingAnalytics'
@@ -11,7 +13,7 @@ interface UserJourneyViewProps {
 }
 
 export const UserJourneyView: React.FC<UserJourneyViewProps> = ({ dateRange }) => {
-  const { journeyData, journeySummary, loading } = useUserJourneyAnalytics(dateRange, 50)
+  const { journeyData, journeySummary, timeToConvertData, emailAttributionMetrics, loading } = useUserJourneyAnalytics(dateRange, 50)
 
   if (!journeySummary && !loading) {
     return (
@@ -71,6 +73,12 @@ export const UserJourneyView: React.FC<UserJourneyViewProps> = ({ dateRange }) =
         />
       </div>
 
+      {/* Email Attribution Performance */}
+      <EmailAttributionCard
+        metrics={emailAttributionMetrics}
+        loading={loading}
+      />
+
       {/* Top Campaign & Avg Score */}
       {journeySummary?.topRetargetingCampaign && (
         <GlassCard intensity="heavy" className="p-6">
@@ -86,6 +94,13 @@ export const UserJourneyView: React.FC<UserJourneyViewProps> = ({ dateRange }) =
           </div>
         </GlassCard>
       )}
+
+      {/* Time to Convert Histogram */}
+      <TimeToConvertHistogram
+        data={timeToConvertData}
+        loading={loading}
+        title="Time to Convert Distribution"
+      />
 
       {/* User Journey Table */}
       {journeyData.length > 0 && (

@@ -1,0 +1,133 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Transform Shopify order data for Supabase\nconst order = $input.item.json;\n\n// Extract first line item (assuming single product)\nconst lineItem = order.line_items?.[0] || {};\n\n// Parse UTM parameters from landing_site if present\nconst landingSite = order.landing_site || '';\nconst urlParams = new URLSearchParams(landingSite.split('?')[1] || '');\n\nreturn {\n  shopify_order_id: order.id,\n  order_number: order.order_number,\n  order_name: order.name,\n  \n  // Customer info\n  customer_id: order.customer?.id || null,\n  customer_email: order.customer?.email || order.contact_email || null,\n  customer_first_name: order.customer?.first_name || order.billing_address?.first_name || null,\n  customer_last_name: order.customer?.last_name || order.billing_address?.last_name || null,\n  \n  // Order details\n  total_price: parseFloat(order.current_total_price || order.total_price || 0),\n  subtotal_price: parseFloat(order.current_subtotal_price || order.subtotal_price || 0),\n  total_tax: parseFloat(order.current_total_tax || order.total_tax || 0),\n  currency: order.currency || 'USD',\n  \n  // Product info\n  product_id: lineItem.product_id || null,\n  product_name: lineItem.name || lineItem.title || null,\n  product_variant_id: lineItem.variant_id || null,\n  quantity: lineItem.quantity || 1,\n  \n  // Order status\n  financial_status: order.financial_status,\n  fulfillment_status: order.fulfillment_status,\n  \n  // Source tracking\n  referring_site: order.referring_site,\n  landing_site: order.landing_site,\n  utm_source: urlParams.get('utm_source') || null,\n  utm_medium: urlParams.get('utm_medium') || null,\n  utm_campaign: urlParams.get('utm_campaign') || null,\n  \n  // Browser/device info\n  browser_ip: order.browser_ip || order.client_details?.browser_ip || null,\n  user_agent: order.client_details?.user_agent || null,\n  \n  // Location\n  billing_country: order.billing_address?.country || null,\n  billing_province: order.billing_address?.province || null,\n  billing_country_code: order.billing_address?.country_code || null,\n  \n  // Timestamps\n  order_created_at: order.created_at,\n  order_processed_at: order.processed_at,\n  \n  // Store raw data for debugging\n  raw_order_data: order\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        848,
+        2752
+      ],
+      "id": "668c42df-0aa7-497e-ab0b-f5515e7e5707",
+      "name": "Transform Order Data"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        2752
+      ],
+      "id": "20875730-0294-4a90-b4fd-caeee3e9856b",
+      "name": "Insert to Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "azNkq1pEPYLgxuPF",
+          "name": "DailyHush - Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6487277209",
+        "text": "=🔥 New order on Shopify!\n\nOrder: {{ $('Shopify Trigger1').item.json.name }}\nProduct: {{ $('Shopify Trigger1').item.json.line_items[0].name }}\nAmount: ${{ $('Shopify Trigger1').item.json.current_total_price }}\nCustomer: {{ $('Shopify Trigger1').item.json.customer?.email || 'Guest' }}\n\n✅ Saved to Supabase",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1280,
+        2752
+      ],
+      "id": "e9aa3826-2513-49a6-9b31-7d2d0a405898",
+      "name": "Send Telegram Notification",
+      "webhookId": "601a593c-ad01-40f7-b15d-704e97befa6e",
+      "credentials": {
+        "telegramApi": {
+          "id": "dmz6VlOtEeDUsFUx",
+          "name": "MagmaBoy - Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Shopify → Supabase Workflow\n\n**Flow:**\n1. Shopify triggers on new order\n2. Transform order data to match Supabase schema\n3. Insert into shopify_orders table\n4. Send Telegram notification\n\n**Setup:**\n- Add Supabase credentials in n8n\n- Update Supabase credential ID in workflow\n- Make sure migration 007 is applied\n\n**Tracked Data:**\n- Order details (amount, products)\n- Customer info (email, name, location)\n- UTM parameters for attribution\n- Browser/device info",
+        "height": 464,
+        "width": 1326,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        224,
+        2592
+      ],
+      "id": "f446296a-9978-46ff-8b47-5d95468e67ae",
+      "name": "Workflow Instructions"
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "orders/create"
+      },
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        624,
+        2752
+      ],
+      "id": "334c0c7e-cb92-4f1f-b2f0-da16aab77984",
+      "name": "Shopify Trigger1",
+      "webhookId": "47df739f-da1c-4975-a15b-db8caea6479d",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "Z7AIaK3XaQuv1aZg",
+          "name": "Shopify Access Token account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Transform Order Data": {
+      "main": [
+        [
+          {
+            "node": "Insert to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shopify Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Transform Order Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4d450aedc73ee1980004d36386b41e63bcd8086572d6b15bc2558c9fcca7ece0"
+  }
+}

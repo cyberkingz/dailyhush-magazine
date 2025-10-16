@@ -3,8 +3,11 @@ import { KPICard } from './KPICard'
 import { LeadAcquisitionChart } from './LeadAcquisitionChart'
 import { LeadSourceChart } from './LeadSourceChart'
 import { DeviceBreakdownChart } from './DeviceBreakdownChart'
+import { TrafficSourceChart } from './TrafficSourceChart'
+import { useOverviewAnalytics } from '../../../hooks/useTrackingAnalytics'
 import type { Lead } from '../../../lib/types/leads'
 import type { ContactSubmission } from '../../../lib/types/contact'
+import type { DateRange } from '../../../lib/services/trackingAnalytics'
 
 interface OverviewViewProps {
   leads: Lead[]
@@ -19,6 +22,29 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
   loading,
   dateRange,
 }) => {
+  // Convert react-day-picker date range to analytics DateRange
+  const analyticsDateRange: DateRange | undefined = dateRange?.from && dateRange?.to
+    ? {
+        startDate: dateRange.from.toISOString(),
+        endDate: (() => {
+          const endOfDay = new Date(dateRange.to)
+          endOfDay.setHours(23, 59, 59, 999)
+          return endOfDay.toISOString()
+        })(),
+      }
+    : undefined
+
+  // Fetch revenue and traffic source data
+  const { revenueMetrics, trafficSourceStats, loading: revenueLoading } = useOverviewAnalytics(analyticsDateRange)
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount)
+  }
   // Filter leads by date range if provided
   const filteredLeads = dateRange?.from && dateRange?.to
     ? leads.filter(lead => {
@@ -110,7 +136,42 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* KPI Cards */}
+      {/* Revenue KPI Cards */}
+      {revenueMetrics && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <KPICard
+            label="Total Revenue"
+            value={formatCurrency(revenueMetrics.totalRevenue)}
+            subtitle="All orders in period"
+            variant="amber"
+            loading={revenueLoading}
+          />
+
+          <KPICard
+            label="Total Orders"
+            value={revenueMetrics.totalOrders}
+            subtitle={`AOV: ${formatCurrency(revenueMetrics.averageOrderValue)}`}
+            variant="success"
+            loading={revenueLoading}
+          />
+
+          <KPICard
+            label="Today's Revenue"
+            value={formatCurrency(revenueMetrics.todayRevenue)}
+            subtitle={`${revenueMetrics.todayOrders} orders today`}
+            loading={revenueLoading}
+          />
+
+          <KPICard
+            label="This Week"
+            value={formatCurrency(revenueMetrics.weekRevenue)}
+            subtitle={`${revenueMetrics.weekOrders} orders`}
+            loading={revenueLoading}
+          />
+        </div>
+      )}
+
+      {/* Lead KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         <KPICard
           label="Total Leads"
@@ -152,6 +213,11 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           loading={loading}
         />
       </div>
+
+      {/* Traffic Source Chart */}
+      {trafficSourceStats.length > 0 && (
+        <TrafficSourceChart data={trafficSourceStats} loading={revenueLoading} />
+      )}
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

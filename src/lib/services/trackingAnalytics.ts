@@ -947,3 +947,236 @@ export async function getRevenueMetrics(dateRange?: DateRange): Promise<RevenueM
     }
   }
 }
+
+// ============================================================
+// TRAFFIC SOURCE & ATTRIBUTION ANALYTICS
+// ============================================================
+
+export interface TrafficSourceStats {
+  source: string
+  displayName: string
+  sessions: number
+  orders: number
+  revenue: number
+  conversionRate: number
+  averageOrderValue: number
+}
+
+export async function getTrafficSourceStats(dateRange?: DateRange): Promise<TrafficSourceStats[]> {
+  try {
+    let query = supabase
+      .from('shopify_orders')
+      .select('utm_source, utm_medium, referring_site, total_price')
+
+    if (dateRange) {
+      query = query
+        .gte('order_created_at', dateRange.startDate)
+        .lte('order_created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+    if (error) throw error
+
+    // Normalize traffic sources
+    const normalizeSource = (order: any): string => {
+      const source = (order.utm_source || '').toLowerCase()
+      const medium = (order.utm_medium || '').toLowerCase()
+      const referring = (order.referring_site || '').toLowerCase()
+
+      // Google
+      if (source.includes('google') || referring.includes('google')) return 'google'
+      // Facebook
+      if (source.includes('facebook') || source.includes('fb') || referring.includes('facebook')) return 'facebook'
+      // Instagram
+      if (source.includes('instagram') || source.includes('ig') || referring.includes('instagram')) return 'instagram'
+      // TikTok
+      if (source.includes('tiktok') || referring.includes('tiktok')) return 'tiktok'
+      // Twitter/X
+      if (source.includes('twitter') || source.includes('x.com') || referring.includes('twitter')) return 'twitter'
+      // LinkedIn
+      if (source.includes('linkedin') || referring.includes('linkedin')) return 'linkedin'
+      // Pinterest
+      if (source.includes('pinterest') || referring.includes('pinterest')) return 'pinterest'
+      // Email
+      if (medium.includes('email') || source.includes('email')) return 'email'
+      // Direct
+      if (!source && !referring) return 'direct'
+      // Other
+      return 'other'
+    }
+
+    const getDisplayName = (source: string): string => {
+      const names: Record<string, string> = {
+        google: 'Google',
+        facebook: 'Facebook',
+        instagram: 'Instagram',
+        tiktok: 'TikTok',
+        twitter: 'Twitter/X',
+        linkedin: 'LinkedIn',
+        pinterest: 'Pinterest',
+        email: 'Email',
+        direct: 'Direct',
+        other: 'Other',
+      }
+      return names[source] || source
+    }
+
+    // Group by normalized source
+    const grouped = (data || []).reduce((acc, order) => {
+      const source = normalizeSource(order)
+      if (!acc[source]) {
+        acc[source] = {
+          orders: 0,
+          revenue: 0,
+        }
+      }
+      acc[source].orders++
+      acc[source].revenue += Number(order.total_price)
+      return acc
+    }, {} as Record<string, { orders: number; revenue: number }>)
+
+    // Get total sessions from thank you page (as proxy for total traffic)
+    let sessionsQuery = supabase
+      .from('thank_you_page_sessions')
+      .select('id')
+
+    if (dateRange) {
+      sessionsQuery = sessionsQuery
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data: sessionsData } = await sessionsQuery
+    const totalSessions = (sessionsData || []).length
+
+    return Object.entries(grouped)
+      .map(([source, stats]) => ({
+        source,
+        displayName: getDisplayName(source),
+        sessions: totalSessions, // Approximate - we don't have per-source session tracking yet
+        orders: stats.orders,
+        revenue: stats.revenue,
+        conversionRate: totalSessions > 0 ? (stats.orders / totalSessions) * 100 : 0,
+        averageOrderValue: stats.orders > 0 ? stats.revenue / stats.orders : 0,
+      }))
+      .sort((a, b) => b.revenue - a.revenue)
+  } catch (error) {
+    console.error('Error fetching traffic source stats:', error)
+    return []
+  }
+}
+
+export interface PageRevenueAttribution {
+  totalRevenue: number
+  totalOrders: number
+  averageOrderValue: number
+  conversionValue: number // Revenue per visitor
+}
+
+export async function getThankYouPageRevenue(dateRange?: DateRange): Promise<PageRevenueAttribution> {
+  try {
+    // Get thank you page sessions with emails
+    let sessionsQuery = supabase
+      .from('thank_you_page_sessions')
+      .select('email, created_at')
+      .not('email', 'is', null)
+
+    if (dateRange) {
+      sessionsQuery = sessionsQuery
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data: sessions, error: sessionsError } = await sessionsQuery
+    if (sessionsError) throw sessionsError
+
+    const emails = [...new Set((sessions || []).map(s => s.email))]
+
+    if (emails.length === 0) {
+      return { totalRevenue: 0, totalOrders: 0, averageOrderValue: 0, conversionValue: 0 }
+    }
+
+    // Get orders from these emails
+    let ordersQuery = supabase
+      .from('shopify_orders')
+      .select('total_price, customer_email')
+      .in('customer_email', emails)
+
+    if (dateRange) {
+      ordersQuery = ordersQuery
+        .gte('order_created_at', dateRange.startDate)
+        .lte('order_created_at', dateRange.endDate)
+    }
+
+    const { data: orders, error: ordersError } = await ordersQuery
+    if (ordersError) throw ordersError
+
+    const totalOrders = (orders || []).length
+    const totalRevenue = (orders || []).reduce((sum, o) => sum + Number(o.total_price), 0)
+    const totalVisitors = (sessions || []).length
+
+    return {
+      totalRevenue,
+      totalOrders,
+      averageOrderValue: totalOrders > 0 ? totalRevenue / totalOrders : 0,
+      conversionValue: totalVisitors > 0 ? totalRevenue / totalVisitors : 0,
+    }
+  } catch (error) {
+    console.error('Error fetching thank you page revenue:', error)
+    return { totalRevenue: 0, totalOrders: 0, averageOrderValue: 0, conversionValue: 0 }
+  }
+}
+
+export async function getProductPageRevenue(dateRange?: DateRange): Promise<PageRevenueAttribution> {
+  try {
+    // Get product page sessions with emails
+    let sessionsQuery = supabase
+      .from('product_page_sessions')
+      .select('email, created_at')
+      .not('email', 'is', null)
+
+    if (dateRange) {
+      sessionsQuery = sessionsQuery
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data: sessions, error: sessionsError } = await sessionsQuery
+    if (sessionsError) throw sessionsError
+
+    const emails = [...new Set((sessions || []).map(s => s.email))]
+
+    if (emails.length === 0) {
+      return { totalRevenue: 0, totalOrders: 0, averageOrderValue: 0, conversionValue: 0 }
+    }
+
+    // Get orders from these emails
+    let ordersQuery = supabase
+      .from('shopify_orders')
+      .select('total_price, customer_email')
+      .in('customer_email', emails)
+
+    if (dateRange) {
+      ordersQuery = ordersQuery
+        .gte('order_created_at', dateRange.startDate)
+        .lte('order_created_at', dateRange.endDate)
+    }
+
+    const { data: orders, error: ordersError } = await ordersQuery
+    if (ordersError) throw ordersError
+
+    const totalOrders = (orders || []).length
+    const totalRevenue = (orders || []).reduce((sum, o) => sum + Number(o.total_price), 0)
+    const totalVisitors = (sessions || []).length
+
+    return {
+      totalRevenue,
+      totalOrders,
+      averageOrderValue: totalOrders > 0 ? totalRevenue / totalOrders : 0,
+      conversionValue: totalVisitors > 0 ? totalRevenue / totalVisitors : 0,
+    }
+  } catch (error) {
+    console.error('Error fetching product page revenue:', error)
+    return { totalRevenue: 0, totalOrders: 0, averageOrderValue: 0, conversionValue: 0 }
+  }
+}

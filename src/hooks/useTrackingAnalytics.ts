@@ -15,6 +15,8 @@ import {
   getJourneySummary,
   getTimeToConvertDistribution,
   getEmailAttributionMetrics,
+  getThankYouPageRevenue,
+  getProductPageRevenue,
   type DateRange,
   type ThankYouPageMetrics,
   type QuizScoreConversion,
@@ -29,10 +31,12 @@ import {
   type JourneySummary,
   type TimeToConvertDistribution,
   type EmailAttributionMetrics,
+  type PageRevenueAttribution,
 } from '../lib/services/trackingAnalytics'
 
 interface UseThankYouAnalyticsResult {
   metrics: ThankYouPageMetrics | null
+  revenueData: PageRevenueAttribution | null
   quizScoreData: QuizScoreConversion[]
   scrollDepthData: ScrollDepthDistribution[]
   buttonLocationData: ButtonLocationStats[]
@@ -44,6 +48,7 @@ interface UseThankYouAnalyticsResult {
 
 export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalyticsResult {
   const [metrics, setMetrics] = useState<ThankYouPageMetrics | null>(null)
+  const [revenueData, setRevenueData] = useState<PageRevenueAttribution | null>(null)
   const [quizScoreData, setQuizScoreData] = useState<QuizScoreConversion[]>([])
   const [scrollDepthData, setScrollDepthData] = useState<ScrollDepthDistribution[]>([])
   const [buttonLocationData, setButtonLocationData] = useState<ButtonLocationStats[]>([])
@@ -58,8 +63,9 @@ export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalytic
         setLoading(true)
         setError(null)
 
-        const [metricsData, quizScores, scrollDepth, buttonLocations, conversionTrend, devices] = await Promise.all([
+        const [metricsData, revenue, quizScores, scrollDepth, buttonLocations, conversionTrend, devices] = await Promise.all([
           getThankYouPageMetrics(dateRange),
+          getThankYouPageRevenue(dateRange),
           getQuizScoreConversions(dateRange),
           getScrollDepthDistribution(dateRange),
           getButtonLocationStats(dateRange),
@@ -68,6 +74,7 @@ export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalytic
         ])
 
         setMetrics(metricsData)
+        setRevenueData(revenue)
         setQuizScoreData(quizScores)
         setScrollDepthData(scrollDepth)
         setButtonLocationData(buttonLocations)
@@ -84,11 +91,12 @@ export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalytic
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { metrics, quizScoreData, scrollDepthData, buttonLocationData, conversionTrendData, deviceData, loading, error }
+  return { metrics, revenueData, quizScoreData, scrollDepthData, buttonLocationData, conversionTrendData, deviceData, loading, error }
 }
 
 interface UseProductAnalyticsResult {
   metrics: ProductPageMetrics | null
+  revenueData: PageRevenueAttribution | null
   utmCampaignData: UTMCampaignStats[]
   faqData: FAQStats[]
   deviceData: Array<{ device_type?: string }>
@@ -99,6 +107,7 @@ interface UseProductAnalyticsResult {
 
 export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsResult {
   const [metrics, setMetrics] = useState<ProductPageMetrics | null>(null)
+  const [revenueData, setRevenueData] = useState<PageRevenueAttribution | null>(null)
   const [utmCampaignData, setUTMCampaignData] = useState<UTMCampaignStats[]>([])
   const [faqData, setFAQData] = useState<FAQStats[]>([])
   const [deviceData, setDeviceData] = useState<Array<{ device_type?: string }>>([])
@@ -112,8 +121,9 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
         setLoading(true)
         setError(null)
 
-        const [metricsData, utmCampaigns, faqs, devices, funnel] = await Promise.all([
+        const [metricsData, revenue, utmCampaigns, faqs, devices, funnel] = await Promise.all([
           getProductPageMetrics(dateRange),
+          getProductPageRevenue(dateRange),
           getUTMCampaignStats(dateRange),
           getFAQStats(dateRange),
           getProductDeviceData(dateRange),
@@ -121,6 +131,7 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
         ])
 
         setMetrics(metricsData)
+        setRevenueData(revenue)
         setUTMCampaignData(utmCampaigns)
         setFAQData(faqs)
         setDeviceData(devices)
@@ -136,7 +147,7 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { metrics, utmCampaignData, faqData, deviceData, funnelData, loading, error }
+  return { metrics, revenueData, utmCampaignData, faqData, deviceData, funnelData, loading, error }
 }
 
 interface UseUserJourneyAnalyticsResult {
@@ -185,4 +196,51 @@ export function useUserJourneyAnalytics(dateRange?: DateRange, limit: number = 5
   }, [dateRange?.startDate, dateRange?.endDate, limit])
 
   return { journeyData, journeySummary, timeToConvertData, emailAttributionMetrics, loading, error }
+}
+
+// ============================================================
+// OVERVIEW ANALYTICS (with Revenue & Traffic Sources)
+// ============================================================
+
+interface UseOverviewAnalyticsResult {
+  revenueMetrics: any | null
+  trafficSourceStats: any[]
+  loading: boolean
+  error: Error | null
+}
+
+export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalyticsResult {
+  const [revenueMetrics, setRevenueMetrics] = useState<any | null>(null)
+  const [trafficSourceStats, setTrafficSourceStats] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        // Dynamically import to avoid circular dependencies
+        const { getRevenueMetrics, getTrafficSourceStats } = await import('../lib/services/trackingAnalytics')
+
+        const [revenue, trafficSources] = await Promise.all([
+          getRevenueMetrics(dateRange),
+          getTrafficSourceStats(dateRange),
+        ])
+
+        setRevenueMetrics(revenue)
+        setTrafficSourceStats(trafficSources)
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to fetch overview analytics'))
+        console.error('Error fetching overview analytics:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [dateRange?.startDate, dateRange?.endDate])
+
+  return { revenueMetrics, trafficSourceStats, loading, error }
 }

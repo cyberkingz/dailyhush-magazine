@@ -14,7 +14,7 @@ interface ProductPageViewProps {
 }
 
 export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) => {
-  const { metrics, utmCampaignData, faqData, deviceData, funnelData, loading } = useProductAnalytics(dateRange)
+  const { metrics, revenueData, utmCampaignData, faqData, deviceData, funnelData, loading } = useProductAnalytics(dateRange)
 
   if (!metrics && !loading) {
     return (
@@ -22,6 +22,15 @@ export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) =
         No data available for the selected period
       </div>
     )
+  }
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount)
   }
 
   const utmCampaignColumns: Column<UTMCampaignStats>[] = [
@@ -35,7 +44,42 @@ export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) =
 
   return (
     <div className="space-y-6">
-      {/* KPI Cards */}
+      {/* Revenue KPI Cards */}
+      {revenueData && (revenueData.totalRevenue > 0 || revenueData.totalOrders > 0) && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <KPICard
+            label="Total Revenue"
+            value={formatCurrency(revenueData.totalRevenue)}
+            subtitle="From product page visitors"
+            variant="amber"
+            loading={loading}
+          />
+
+          <KPICard
+            label="Orders"
+            value={revenueData.totalOrders}
+            subtitle="Completed purchases"
+            loading={loading}
+          />
+
+          <KPICard
+            label="Avg Order Value"
+            value={formatCurrency(revenueData.averageOrderValue)}
+            subtitle="Per transaction"
+            loading={loading}
+          />
+
+          <KPICard
+            label="Revenue Per Visitor"
+            value={formatCurrency(revenueData.conversionValue)}
+            subtitle="Retargeting ROI indicator"
+            variant="success"
+            loading={loading}
+          />
+        </div>
+      )}
+
+      {/* Engagement KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <KPICard
           label="Total Sessions"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Users, Target, ShoppingCart, Route } from 'lucide-react'
+import { Users, Target, ShoppingCart, Route, DollarSign } from 'lucide-react'
 import { subDays } from 'date-fns'
 import type { DateRange } from 'react-day-picker'
 import { AdminLayout } from '../../components/admin'
@@ -15,10 +15,11 @@ import {
   ThankYouPageView,
   ProductPageView,
   UserJourneyView,
+  OrdersView,
 } from '../../components/admin/tracking'
 import type { DateRange as AnalyticsDateRange } from '../../lib/services/trackingAnalytics'
 
-type ViewMode = 'overview' | 'thank-you' | 'product' | 'journey'
+type ViewMode = 'overview' | 'thank-you' | 'product' | 'journey' | 'orders'
 
 interface ViewTab {
   id: ViewMode
@@ -31,6 +32,7 @@ const VIEW_TABS: ViewTab[] = [
   { id: 'thank-you', label: 'Thank You Page', icon: <Target className="inline h-4 w-4 mr-2" /> },
   { id: 'product', label: 'Product Page', icon: <ShoppingCart className="inline h-4 w-4 mr-2" /> },
   { id: 'journey', label: 'User Journey', icon: <Route className="inline h-4 w-4 mr-2" /> },
+  { id: 'orders', label: 'Orders & Revenue', icon: <DollarSign className="inline h-4 w-4 mr-2" /> },
 ]
 
 const AdminDashboard: React.FC = () => {
@@ -88,6 +90,8 @@ const AdminDashboard: React.FC = () => {
         return 'Product Page performance metrics'
       case 'journey':
         return 'Complete user journey tracking'
+      case 'orders':
+        return 'Shopify orders and revenue tracking'
     }
   }
 
@@ -150,6 +154,10 @@ const AdminDashboard: React.FC = () => {
 
           {viewMode === 'journey' && (
             <UserJourneyView dateRange={analyticsDateRange} />
+          )}
+
+          {viewMode === 'orders' && analyticsDateRange && (
+            <OrdersView dateRange={analyticsDateRange} />
           )}
         </div>
       </AdminLayout>

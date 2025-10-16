@@ -73,12 +73,12 @@ export default function FireStarterProduct() {
     },
   })
 
-  const handleCheckoutComplete = useCallback((buttonLocation: string) => {
+  const handleBuyClick = useCallback((buttonLocation: string) => {
     if (sessionIdRef.current) {
       const timeSincePageLoad = Date.now() - pageLoadTime.current
       trackBuyButtonClick(sessionIdRef.current, timeSincePageLoad, buttonLocation)
     }
-    console.log('Checkout initiated from:', buttonLocation)
+    console.log('Buy button clicked from:', buttonLocation)
   }, [])
 
   return (
@@ -221,7 +221,7 @@ export default function FireStarterProduct() {
                 buttonText="Get F.I.R.E. Protocol — $67"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
-                onCheckoutComplete={() => handleCheckoutComplete('hero')}
+                onClick={() => handleBuyClick('hero')}
                 className="w-full"
               />
             </div>
@@ -422,7 +422,7 @@ export default function FireStarterProduct() {
                 buttonText="Get F.I.R.E. Protocol"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
-                onCheckoutComplete={() => handleCheckoutComplete('sticky-bar')}
+                onClick={() => handleBuyClick('sticky-bar')}
                 className="w-full"
               />
             </div>

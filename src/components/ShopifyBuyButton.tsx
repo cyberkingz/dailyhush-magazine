@@ -7,6 +7,7 @@ interface ShopifyBuyButtonProps {
   buttonText?: string
   buttonColor?: string
   buttonHoverColor?: string
+  onClick?: () => void
   onCheckoutComplete?: () => void
   className?: string
 }
@@ -22,6 +23,7 @@ export default function ShopifyBuyButton({
   buttonText = 'Buy now',
   buttonColor = '#079250',
   buttonHoverColor = '#068348',
+  onClick,
   onCheckoutComplete,
   className = ''
 }: ShopifyBuyButtonProps) {
@@ -101,6 +103,19 @@ export default function ShopifyBuyButton({
                 },
                 text: {
                   button: buttonText
+                },
+                events: {
+                  afterRender: () => {
+                    console.log('✅ Shopify button rendered')
+                  }
+                },
+                DOMEvents: {
+                  'click button': () => {
+                    console.log('🔥 Shopify button clicked via DOMEvents')
+                    if (onClick) {
+                      onClick()
+                    }
+                  }
                 }
               },
               productSet: {
@@ -251,7 +266,7 @@ export default function ShopifyBuyButton({
       loadScript()
     }
 
-    // Cleanup - destroy the Shopify UI and clear container
+    // Cleanup - clear container
     return () => {
       const container = document.getElementById(containerId)
       if (container) {
@@ -259,7 +274,7 @@ export default function ShopifyBuyButton({
       }
       initAttempted.current = false
     }
-  }, [productId, domain, storefrontAccessToken, containerId])
+  }, [productId, domain, storefrontAccessToken, containerId, onClick])
 
   // Separate effect to handle prop changes without reinitializing
   // (buttonColor, buttonHoverColor, buttonText, onCheckoutComplete changes won't trigger full reinitialization)

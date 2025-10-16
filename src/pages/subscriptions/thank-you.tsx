@@ -1046,7 +1046,7 @@ function ThankYouPageContent() {
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"
-                        onCheckoutComplete={() => handleBuyClick('main-offer-card')}
+                        onClick={() => handleBuyClick('main-offer-card')}
                       />
                     </div>
 
@@ -1666,7 +1666,7 @@ function ThankYouPageContent() {
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"
-                        onCheckoutComplete={() => handleBuyClick('final-cta')}
+                        onClick={() => handleBuyClick('final-cta')}
                       />
                       <p className="text-sm text-slate-600 mt-3 text-center">
                         30-day money-back guarantee • Instant download

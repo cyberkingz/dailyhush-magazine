@@ -69,7 +69,12 @@ const AdminDashboard: React.FC = () => {
   const analyticsDateRange: AnalyticsDateRange | undefined = dateRange?.from && dateRange?.to
     ? {
         startDate: dateRange.from.toISOString(),
-        endDate: dateRange.to.toISOString(),
+        endDate: (() => {
+          // Set end date to end of day to include full day
+          const endOfDay = new Date(dateRange.to)
+          endOfDay.setHours(23, 59, 59, 999)
+          return endOfDay.toISOString()
+        })(),
       }
     : undefined
 
@@ -100,12 +105,10 @@ const AdminDashboard: React.FC = () => {
                 {getPageDescription()}
               </p>
             </div>
-            {viewMode !== 'overview' && (
-              <BasicDateRangePicker
-                date={dateRange}
-                onDateChange={setDateRange}
-              />
-            )}
+            <BasicDateRangePicker
+              date={dateRange}
+              onDateChange={setDateRange}
+            />
           </div>
 
           {/* View Mode Tabs */}
@@ -133,6 +136,7 @@ const AdminDashboard: React.FC = () => {
               leads={leads}
               contactSubmissions={contactSubmissions}
               loading={loading}
+              dateRange={dateRange}
             />
           )}
 

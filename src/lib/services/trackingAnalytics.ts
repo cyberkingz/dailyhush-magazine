@@ -41,6 +41,13 @@ export interface ButtonLocationStats {
   percentage: number
 }
 
+export interface DailyConversionTrend {
+  date: string
+  sessions: number
+  conversions: number
+  conversionRate: number
+}
+
 export async function getThankYouPageMetrics(dateRange?: DateRange): Promise<ThankYouPageMetrics> {
   try {
     let query = supabase
@@ -218,6 +225,69 @@ export async function getButtonLocationStats(dateRange?: DateRange): Promise<But
   }
 }
 
+export async function getDailyConversionTrend(dateRange?: DateRange): Promise<DailyConversionTrend[]> {
+  try {
+    let query = supabase
+      .from('thank_you_page_sessions')
+      .select('created_at, clicked_buy_button')
+
+    if (dateRange) {
+      query = query
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+
+    if (error) throw error
+
+    // Group by date
+    const dailyStats = (data || []).reduce((acc, session) => {
+      const date = new Date(session.created_at).toISOString().split('T')[0]
+      if (!acc[date]) {
+        acc[date] = { sessions: 0, conversions: 0 }
+      }
+      acc[date].sessions++
+      if (session.clicked_buy_button) acc[date].conversions++
+      return acc
+    }, {} as Record<string, { sessions: number; conversions: number }>)
+
+    // Convert to array and calculate conversion rates
+    return Object.entries(dailyStats)
+      .map(([date, stats]) => ({
+        date: new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        sessions: stats.sessions,
+        conversions: stats.conversions,
+        conversionRate: stats.sessions > 0 ? (stats.conversions / stats.sessions) * 100 : 0,
+      }))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  } catch (error) {
+    console.error('Error fetching daily conversion trend:', error)
+    return []
+  }
+}
+
+export async function getThankYouDeviceData(dateRange?: DateRange): Promise<Array<{ device_type?: string }>> {
+  try {
+    let query = supabase
+      .from('thank_you_page_sessions')
+      .select('device_type')
+
+    if (dateRange) {
+      query = query
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+    if (error) throw error
+    return data || []
+  } catch (error) {
+    console.error('Error fetching thank you device data:', error)
+    return []
+  }
+}
+
 // ============================================================
 // PRODUCT PAGE ANALYTICS
 // ============================================================
@@ -386,6 +456,27 @@ export async function getFAQStats(dateRange?: DateRange): Promise<FAQStats[]> {
       .slice(0, 10) // Top 10 FAQs
   } catch (error) {
     console.error('Error fetching FAQ stats:', error)
+    return []
+  }
+}
+
+export async function getProductDeviceData(dateRange?: DateRange): Promise<Array<{ device_type?: string }>> {
+  try {
+    let query = supabase
+      .from('product_page_sessions')
+      .select('device_type')
+
+    if (dateRange) {
+      query = query
+        .gte('created_at', dateRange.startDate)
+        .lte('created_at', dateRange.endDate)
+    }
+
+    const { data, error } = await query
+    if (error) throw error
+    return data || []
+  } catch (error) {
+    console.error('Error fetching product device data:', error)
     return []
   }
 }

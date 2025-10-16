@@ -1,4 +1,5 @@
 import React from 'react'
+import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import { GlassCard } from '../../ui/glass-card'
 import { cn } from '../../../lib/utils'
 
@@ -8,6 +9,10 @@ interface KPICardProps {
   subtitle?: string
   variant?: 'default' | 'success' | 'warning' | 'amber'
   loading?: boolean
+  trend?: {
+    value: number // percentage change
+    direction: 'up' | 'down' | 'neutral'
+  }
 }
 
 export const KPICard: React.FC<KPICardProps> = ({
@@ -16,6 +21,7 @@ export const KPICard: React.FC<KPICardProps> = ({
   subtitle,
   variant = 'default',
   loading = false,
+  trend,
 }) => {
   const ringClass = {
     default: '',
@@ -31,9 +37,31 @@ export const KPICard: React.FC<KPICardProps> = ({
     amber: 'text-amber-400',
   }[variant]
 
+  const getTrendColor = () => {
+    if (!trend) return ''
+    if (trend.direction === 'up') return 'text-emerald-400'
+    if (trend.direction === 'down') return 'text-red-400'
+    return 'text-white/40'
+  }
+
+  const getTrendIcon = () => {
+    if (!trend) return null
+    if (trend.direction === 'up') return <TrendingUp className="w-4 h-4" />
+    if (trend.direction === 'down') return <TrendingDown className="w-4 h-4" />
+    return <Minus className="w-4 h-4" />
+  }
+
   return (
     <GlassCard intensity="heavy" className={cn('p-5', ringClass)}>
-      <div className="text-sm text-white/70 mb-2">{label}</div>
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-sm text-white/70">{label}</div>
+        {trend && !loading && (
+          <div className={cn('flex items-center gap-1 text-xs font-medium', getTrendColor())}>
+            {getTrendIcon()}
+            <span>{Math.abs(trend.value).toFixed(1)}%</span>
+          </div>
+        )}
+      </div>
       {loading ? (
         <div className="h-10 bg-white/10 rounded animate-pulse mb-2" />
       ) : (

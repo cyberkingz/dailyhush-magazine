@@ -2,6 +2,8 @@ import React from 'react'
 import { KPICard } from './KPICard'
 import { DataTable, PercentageBadge, type Column } from './DataTable'
 import { StatsList } from './StatsList'
+import { ConversionTrendChart } from './ConversionTrendChart'
+import { DeviceBreakdownChart } from './DeviceBreakdownChart'
 import { GlassCard } from '../../ui/glass-card'
 import { useThankYouAnalytics } from '../../../hooks/useTrackingAnalytics'
 import type { DateRange } from '../../../lib/services/trackingAnalytics'
@@ -12,7 +14,7 @@ interface ThankYouPageViewProps {
 }
 
 export const ThankYouPageView: React.FC<ThankYouPageViewProps> = ({ dateRange }) => {
-  const { metrics, quizScoreData, scrollDepthData, buttonLocationData, loading } = useThankYouAnalytics(dateRange)
+  const { metrics, quizScoreData, scrollDepthData, buttonLocationData, conversionTrendData, deviceData, loading } = useThankYouAnalytics(dateRange)
 
   if (!metrics && !loading) {
     return (
@@ -65,6 +67,9 @@ export const ThankYouPageView: React.FC<ThankYouPageViewProps> = ({ dateRange })
         />
       </div>
 
+      {/* Conversion Trend Chart */}
+      <ConversionTrendChart data={conversionTrendData} loading={loading} />
+
       {/* Quiz Score Conversions Table */}
       {quizScoreData.length > 0 && (
         <GlassCard intensity="heavy">
@@ -112,6 +117,11 @@ export const ThankYouPageView: React.FC<ThankYouPageViewProps> = ({ dateRange })
             />
           </GlassCard>
         )}
+      </div>
+
+      {/* Device Breakdown */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <DeviceBreakdownChart data={deviceData} loading={loading} title="Device Breakdown - Thank You Page" />
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import { KPICard } from './KPICard'
 import { DataTable, PercentageBadge, type Column } from './DataTable'
 import { StatsList } from './StatsList'
+import { DeviceBreakdownChart } from './DeviceBreakdownChart'
 import { GlassCard } from '../../ui/glass-card'
 import { useProductAnalytics } from '../../../hooks/useTrackingAnalytics'
 import type { DateRange } from '../../../lib/services/trackingAnalytics'
@@ -12,7 +13,7 @@ interface ProductPageViewProps {
 }
 
 export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) => {
-  const { metrics, utmCampaignData, faqData, loading } = useProductAnalytics(dateRange)
+  const { metrics, utmCampaignData, faqData, deviceData, loading } = useProductAnalytics(dateRange)
 
   if (!metrics && !loading) {
     return (
@@ -79,22 +80,26 @@ export const ProductPageView: React.FC<ProductPageViewProps> = ({ dateRange }) =
         </GlassCard>
       )}
 
-      {/* FAQ Stats */}
-      {faqData.length > 0 && (
-        <GlassCard intensity="heavy" className="p-6">
-          <StatsList
-            title="Most Clicked FAQs"
-            items={faqData.map(row => ({
-              label: row.question,
-              value: `${row.clicks} clicks`,
-              badge: {
-                value: `${row.percentage.toFixed(1)}%`,
-                variant: 'default'
-              }
-            }))}
-          />
-        </GlassCard>
-      )}
+      {/* FAQ Stats & Device Breakdown */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {faqData.length > 0 && (
+          <GlassCard intensity="heavy" className="p-6">
+            <StatsList
+              title="Most Clicked FAQs"
+              items={faqData.map(row => ({
+                label: row.question,
+                value: `${row.clicks} clicks`,
+                badge: {
+                  value: `${row.percentage.toFixed(1)}%`,
+                  variant: 'default'
+                }
+              }))}
+            />
+          </GlassCard>
+        )}
+
+        <DeviceBreakdownChart data={deviceData} loading={loading} title="Device Breakdown - Product Page" />
+      </div>
     </div>
   )
 }

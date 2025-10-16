@@ -4,9 +4,12 @@ import {
   getQuizScoreConversions,
   getScrollDepthDistribution,
   getButtonLocationStats,
+  getDailyConversionTrend,
+  getThankYouDeviceData,
   getProductPageMetrics,
   getUTMCampaignStats,
   getFAQStats,
+  getProductDeviceData,
   getUserJourneys,
   getJourneySummary,
   type DateRange,
@@ -14,6 +17,7 @@ import {
   type QuizScoreConversion,
   type ScrollDepthDistribution,
   type ButtonLocationStats,
+  type DailyConversionTrend,
   type ProductPageMetrics,
   type UTMCampaignStats,
   type FAQStats,
@@ -26,6 +30,8 @@ interface UseThankYouAnalyticsResult {
   quizScoreData: QuizScoreConversion[]
   scrollDepthData: ScrollDepthDistribution[]
   buttonLocationData: ButtonLocationStats[]
+  conversionTrendData: DailyConversionTrend[]
+  deviceData: Array<{ device_type?: string }>
   loading: boolean
   error: Error | null
 }
@@ -35,6 +41,8 @@ export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalytic
   const [quizScoreData, setQuizScoreData] = useState<QuizScoreConversion[]>([])
   const [scrollDepthData, setScrollDepthData] = useState<ScrollDepthDistribution[]>([])
   const [buttonLocationData, setButtonLocationData] = useState<ButtonLocationStats[]>([])
+  const [conversionTrendData, setConversionTrendData] = useState<DailyConversionTrend[]>([])
+  const [deviceData, setDeviceData] = useState<Array<{ device_type?: string }>>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -44,17 +52,21 @@ export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalytic
         setLoading(true)
         setError(null)
 
-        const [metricsData, quizScores, scrollDepth, buttonLocations] = await Promise.all([
+        const [metricsData, quizScores, scrollDepth, buttonLocations, conversionTrend, devices] = await Promise.all([
           getThankYouPageMetrics(dateRange),
           getQuizScoreConversions(dateRange),
           getScrollDepthDistribution(dateRange),
           getButtonLocationStats(dateRange),
+          getDailyConversionTrend(dateRange),
+          getThankYouDeviceData(dateRange),
         ])
 
         setMetrics(metricsData)
         setQuizScoreData(quizScores)
         setScrollDepthData(scrollDepth)
         setButtonLocationData(buttonLocations)
+        setConversionTrendData(conversionTrend)
+        setDeviceData(devices)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch analytics'))
         console.error('Error fetching thank you analytics:', err)
@@ -66,13 +78,14 @@ export function useThankYouAnalytics(dateRange?: DateRange): UseThankYouAnalytic
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { metrics, quizScoreData, scrollDepthData, buttonLocationData, loading, error }
+  return { metrics, quizScoreData, scrollDepthData, buttonLocationData, conversionTrendData, deviceData, loading, error }
 }
 
 interface UseProductAnalyticsResult {
   metrics: ProductPageMetrics | null
   utmCampaignData: UTMCampaignStats[]
   faqData: FAQStats[]
+  deviceData: Array<{ device_type?: string }>
   loading: boolean
   error: Error | null
 }
@@ -81,6 +94,7 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
   const [metrics, setMetrics] = useState<ProductPageMetrics | null>(null)
   const [utmCampaignData, setUTMCampaignData] = useState<UTMCampaignStats[]>([])
   const [faqData, setFAQData] = useState<FAQStats[]>([])
+  const [deviceData, setDeviceData] = useState<Array<{ device_type?: string }>>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -90,15 +104,17 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
         setLoading(true)
         setError(null)
 
-        const [metricsData, utmCampaigns, faqs] = await Promise.all([
+        const [metricsData, utmCampaigns, faqs, devices] = await Promise.all([
           getProductPageMetrics(dateRange),
           getUTMCampaignStats(dateRange),
           getFAQStats(dateRange),
+          getProductDeviceData(dateRange),
         ])
 
         setMetrics(metricsData)
         setUTMCampaignData(utmCampaigns)
         setFAQData(faqs)
+        setDeviceData(devices)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch analytics'))
         console.error('Error fetching product analytics:', err)
@@ -110,7 +126,7 @@ export function useProductAnalytics(dateRange?: DateRange): UseProductAnalyticsR
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { metrics, utmCampaignData, faqData, loading, error }
+  return { metrics, utmCampaignData, faqData, deviceData, loading, error }
 }
 
 interface UseUserJourneyAnalyticsResult {

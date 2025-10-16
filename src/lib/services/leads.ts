@@ -151,19 +151,26 @@ export async function createLead(email: string, context?: Partial<LeadTrackingCo
 }
 
 // Get all leads (for admin)
+// Pass limit = 0 to fetch ALL leads without pagination
 export async function getLeads(limit = 50, offset = 0): Promise<{ leads: Lead[], count: number }> {
   try {
-    const { data, error, count } = await supabase
+    let query = supabase
       .from('leads')
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1)
-    
+
+    // Only apply pagination if limit is specified (limit > 0)
+    if (limit > 0) {
+      query = query.range(offset, offset + limit - 1)
+    }
+
+    const { data, error, count } = await query
+
     if (error) {
       console.error('Error fetching leads:', error)
       return { leads: [], count: 0 }
     }
-    
+
     return { leads: data || [], count: count || 0 }
   } catch (error) {
     console.error('Unexpected error fetching leads:', error)

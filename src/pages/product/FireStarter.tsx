@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { CheckCircle, Shield } from 'lucide-react'
 import ShopifyBuyButton from '@/components/ShopifyBuyButton'
 import AnnouncementBar from '@/components/AnnouncementBar'
@@ -12,12 +12,39 @@ import {
 } from '@/components/product'
 import { ReviewsSection } from '@/components/product/ReviewsSection'
 import { fireStarterProductData } from '@/data/fireStarterProductData'
+import { useScrollDepth } from '@/hooks/useScrollDepth'
+import {
+  trackProductPageView,
+  trackScrollDepth,
+  trackBuyButtonClick,
+  trackPageExit,
+} from '@/lib/services/productPageEvents'
 
 export default function FireStarterProduct() {
   const [showStickyBar, setShowStickyBar] = useState(false)
 
+  // Tracking state
+  const sessionIdRef = useRef<string | undefined>(undefined)
+  const pageLoadTime = useRef(Date.now())
+
   useEffect(() => {
     document.title = 'F.I.R.E. Protocol — Stop the Shame Loop Before It Starts ($67)'
+
+    // Track page view with product ID
+    trackProductPageView('fire-starter').then((sessionId) => {
+      sessionIdRef.current = sessionId
+    })
+
+    // Track page exit when user leaves
+    const handleBeforeUnload = () => {
+      if (sessionIdRef.current) {
+        const timeOnPage = Date.now() - pageLoadTime.current
+        trackPageExit(sessionIdRef.current, timeOnPage)
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
   // Show sticky bar after scrolling past 40% of page
@@ -35,8 +62,23 @@ export default function FireStarterProduct() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleCheckoutComplete = useCallback(() => {
-    console.log('Checkout initiated')
+  // Track scroll depth milestones
+  useScrollDepth({
+    milestones: [25, 50, 75, 90, 100],
+    onMilestone: (milestone) => {
+      if (sessionIdRef.current) {
+        const timeSincePageLoad = Date.now() - pageLoadTime.current
+        trackScrollDepth(sessionIdRef.current, milestone, timeSincePageLoad)
+      }
+    },
+  })
+
+  const handleCheckoutComplete = useCallback((buttonLocation: string) => {
+    if (sessionIdRef.current) {
+      const timeSincePageLoad = Date.now() - pageLoadTime.current
+      trackBuyButtonClick(sessionIdRef.current, timeSincePageLoad, buttonLocation)
+    }
+    console.log('Checkout initiated from:', buttonLocation)
   }, [])
 
   return (
@@ -179,7 +221,7 @@ export default function FireStarterProduct() {
                 buttonText="Get F.I.R.E. Protocol — $67"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
-                onCheckoutComplete={handleCheckoutComplete}
+                onCheckoutComplete={() => handleCheckoutComplete('hero')}
                 className="w-full"
               />
             </div>
@@ -380,7 +422,7 @@ export default function FireStarterProduct() {
                 buttonText="Get F.I.R.E. Protocol"
                 buttonColor="#16a34a"
                 buttonHoverColor="#15803d"
-                onCheckoutComplete={handleCheckoutComplete}
+                onCheckoutComplete={() => handleCheckoutComplete('sticky-bar')}
                 className="w-full"
               />
             </div>

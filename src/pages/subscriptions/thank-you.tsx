@@ -6,6 +6,13 @@ import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'
 import Testimonials from '../../components/Testimonials'
 import { StickyCheckoutBar } from '../../components/StickyCheckoutBar'
+import { useScrollDepth } from '../../hooks/useScrollDepth'
+import {
+  trackThankYouPageView,
+  trackScrollDepth,
+  trackBuyButtonClick,
+  trackPageExit,
+} from '../../lib/services/thankYouPageEvents'
 
 // Research-backed quiz result data with clinical profiles
 const quizResultData: Record<OverthinkerType, {
@@ -307,8 +314,32 @@ function ThankYouPageContent() {
   // Get personalized quiz result data or use defaults
   const resultData = quizType ? quizResultData[quizType] : null
 
+  // Tracking state
+  const sessionIdRef = useRef<string | undefined>(undefined)
+  const pageLoadTime = useRef(Date.now())
+
+  // Initialize tracking on page load
   useEffect(() => {
     document.title = 'Your Overthinking Results — DailyHush'
+
+    // Track page view with quiz data
+    trackThankYouPageView({
+      score: quizScore ?? undefined,
+      type: quizType ?? undefined,
+    }).then((sessionId) => {
+      sessionIdRef.current = sessionId
+    })
+
+    // Track page exit when user leaves
+    const handleBeforeUnload = () => {
+      if (sessionIdRef.current) {
+        const timeOnPage = Date.now() - pageLoadTime.current
+        trackPageExit(sessionIdRef.current, timeOnPage)
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
   // Track sticky bar visibility using Intersection Observer
@@ -373,6 +404,25 @@ function ThankYouPageContent() {
       badgeObserver.disconnect()
     }
   }, [])
+
+  // Track scroll depth milestones
+  useScrollDepth({
+    milestones: [25, 50, 75, 90, 100],
+    onMilestone: (milestone) => {
+      if (sessionIdRef.current) {
+        const timeSincePageLoad = Date.now() - pageLoadTime.current
+        trackScrollDepth(sessionIdRef.current, milestone, timeSincePageLoad)
+      }
+    },
+  })
+
+  // Handle buy button clicks with tracking
+  const handleBuyClick = (buttonLocation: string) => {
+    if (sessionIdRef.current) {
+      const timeSincePageLoad = Date.now() - pageLoadTime.current
+      trackBuyButtonClick(sessionIdRef.current, timeSincePageLoad, buttonLocation)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col relative overflow-hidden">
@@ -996,6 +1046,7 @@ function ThankYouPageContent() {
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"
+                        onCheckoutComplete={() => handleBuyClick('main-offer-card')}
                       />
                     </div>
 
@@ -1615,6 +1666,7 @@ function ThankYouPageContent() {
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"
+                        onCheckoutComplete={() => handleBuyClick('final-cta')}
                       />
                       <p className="text-sm text-slate-600 mt-3 text-center">
                         30-day money-back guarantee • Instant download

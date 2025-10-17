@@ -1180,3 +1180,64 @@ export async function getProductPageRevenue(dateRange?: DateRange): Promise<Page
     return { totalRevenue: 0, totalOrders: 0, averageOrderValue: 0, conversionValue: 0 }
   }
 }
+
+// ============================================================
+// BUY BUTTON CLICK RATE ANALYTICS
+// ============================================================
+
+export interface BuyButtonClickRates {
+  // Global metrics (across both pages)
+  globalClickRate: number
+  globalClicks: number
+  globalSessions: number
+
+  // Thank You page metrics
+  thankYouClickRate: number
+  thankYouClicks: number
+  thankYouSessions: number
+
+  // Product page metrics
+  productClickRate: number
+  productClicks: number
+  productSessions: number
+}
+
+export async function getBuyButtonClickRates(dateRange?: DateRange): Promise<BuyButtonClickRates> {
+  try {
+    // Fetch Thank You page metrics
+    const thankYouMetrics = await getThankYouPageMetrics(dateRange)
+
+    // Fetch Product page metrics
+    const productMetrics = await getProductPageMetrics(dateRange)
+
+    // Calculate global metrics
+    const globalSessions = thankYouMetrics.totalSessions + productMetrics.totalSessions
+    const globalClicks = thankYouMetrics.clickedBuyButton + productMetrics.clickedBuyButton
+    const globalClickRate = globalSessions > 0 ? (globalClicks / globalSessions) * 100 : 0
+
+    return {
+      globalClickRate,
+      globalClicks,
+      globalSessions,
+      thankYouClickRate: thankYouMetrics.conversionRate,
+      thankYouClicks: thankYouMetrics.clickedBuyButton,
+      thankYouSessions: thankYouMetrics.totalSessions,
+      productClickRate: productMetrics.conversionRate,
+      productClicks: productMetrics.clickedBuyButton,
+      productSessions: productMetrics.totalSessions,
+    }
+  } catch (error) {
+    console.error('Error fetching buy button click rates:', error)
+    return {
+      globalClickRate: 0,
+      globalClicks: 0,
+      globalSessions: 0,
+      thankYouClickRate: 0,
+      thankYouClicks: 0,
+      thankYouSessions: 0,
+      productClickRate: 0,
+      productClicks: 0,
+      productSessions: 0,
+    }
+  }
+}

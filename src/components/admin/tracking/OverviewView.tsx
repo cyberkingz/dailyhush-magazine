@@ -35,7 +35,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
     : undefined
 
   // Fetch revenue and traffic source data
-  const { revenueMetrics, trafficSourceStats, loading: revenueLoading } = useOverviewAnalytics(analyticsDateRange)
+  const { revenueMetrics, trafficSourceStats, buyButtonMetrics, loading: revenueLoading } = useOverviewAnalytics(analyticsDateRange)
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -166,6 +166,35 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             label="This Week"
             value={formatCurrency(revenueMetrics.weekRevenue)}
             subtitle={`${revenueMetrics.weekOrders} orders`}
+            loading={revenueLoading}
+          />
+        </div>
+      )}
+
+      {/* Buy Button Click Rate KPI Cards */}
+      {buyButtonMetrics && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <KPICard
+            label="Global Buy Button Click Rate"
+            value={`${buyButtonMetrics.globalClickRate.toFixed(1)}%`}
+            subtitle={`${buyButtonMetrics.globalClicks} clicks / ${buyButtonMetrics.globalSessions} sessions`}
+            variant="amber"
+            loading={revenueLoading}
+          />
+
+          <KPICard
+            label="Thank You Page Click Rate"
+            value={`${buyButtonMetrics.thankYouClickRate.toFixed(1)}%`}
+            subtitle={`${buyButtonMetrics.thankYouClicks} clicks / ${buyButtonMetrics.thankYouSessions} sessions`}
+            variant="success"
+            loading={revenueLoading}
+          />
+
+          <KPICard
+            label="Product Page Click Rate"
+            value={`${buyButtonMetrics.productClickRate.toFixed(1)}%`}
+            subtitle={`${buyButtonMetrics.productClicks} clicks / ${buyButtonMetrics.productSessions} sessions`}
+            variant="success"
             loading={revenueLoading}
           />
         </div>

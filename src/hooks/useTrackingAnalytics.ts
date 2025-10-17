@@ -32,6 +32,7 @@ import {
   type TimeToConvertDistribution,
   type EmailAttributionMetrics,
   type PageRevenueAttribution,
+  type BuyButtonClickRates,
 } from '../lib/services/trackingAnalytics'
 
 interface UseThankYouAnalyticsResult {
@@ -205,6 +206,7 @@ export function useUserJourneyAnalytics(dateRange?: DateRange, limit: number = 5
 interface UseOverviewAnalyticsResult {
   revenueMetrics: any | null
   trafficSourceStats: any[]
+  buyButtonMetrics: BuyButtonClickRates | null
   loading: boolean
   error: Error | null
 }
@@ -212,6 +214,7 @@ interface UseOverviewAnalyticsResult {
 export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalyticsResult {
   const [revenueMetrics, setRevenueMetrics] = useState<any | null>(null)
   const [trafficSourceStats, setTrafficSourceStats] = useState<any[]>([])
+  const [buyButtonMetrics, setBuyButtonMetrics] = useState<BuyButtonClickRates | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -222,15 +225,17 @@ export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalytic
         setError(null)
 
         // Dynamically import to avoid circular dependencies
-        const { getRevenueMetrics, getTrafficSourceStats } = await import('../lib/services/trackingAnalytics')
+        const { getRevenueMetrics, getTrafficSourceStats, getBuyButtonClickRates } = await import('../lib/services/trackingAnalytics')
 
-        const [revenue, trafficSources] = await Promise.all([
+        const [revenue, trafficSources, buyButtonData] = await Promise.all([
           getRevenueMetrics(dateRange),
           getTrafficSourceStats(dateRange),
+          getBuyButtonClickRates(dateRange),
         ])
 
         setRevenueMetrics(revenue)
         setTrafficSourceStats(trafficSources)
+        setBuyButtonMetrics(buyButtonData)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch overview analytics'))
         console.error('Error fetching overview analytics:', err)
@@ -242,5 +247,5 @@ export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalytic
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { revenueMetrics, trafficSourceStats, loading, error }
+  return { revenueMetrics, trafficSourceStats, buyButtonMetrics, loading, error }
 }

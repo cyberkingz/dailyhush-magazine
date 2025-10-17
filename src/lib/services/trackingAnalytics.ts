@@ -1241,3 +1241,119 @@ export async function getBuyButtonClickRates(dateRange?: DateRange): Promise<Buy
     }
   }
 }
+
+// ============================================================
+// FACEBOOK ADS & ROAS ANALYTICS
+// ============================================================
+
+export interface FacebookAdsROASMetrics {
+  // Ad spend metrics
+  adSpend: number
+  impressions: number
+  clicks: number
+  cpc: number
+  cpm: number
+  ctr: number
+  reach: number
+
+  // Revenue metrics
+  revenue: number
+  orders: number
+
+  // Calculated ROI metrics
+  roas: number // Return on Ad Spend (Revenue / Spend)
+  cpa: number // Cost Per Acquisition (Spend / Orders)
+  profit: number // Revenue - Ad Spend
+  roi: number // ROI percentage
+  revenuePerClick: number // Revenue / Clicks
+}
+
+export async function getFacebookAdsROASMetrics(dateRange?: DateRange): Promise<FacebookAdsROASMetrics> {
+  try {
+    console.log('🔄 Fetching Facebook Ads ROAS metrics with date range:', {
+      hasDateRange: !!dateRange,
+      startDate: dateRange?.startDate,
+      endDate: dateRange?.endDate
+    })
+
+    // Import Facebook Ads service
+    const { getFacebookAdsInsights } = await import('./facebookAds')
+
+    // Fetch both Facebook Ads and Shopify revenue data in parallel
+    const [facebookMetrics, revenueMetrics] = await Promise.all([
+      getFacebookAdsInsights(dateRange),
+      getRevenueMetrics(dateRange),
+    ])
+
+    console.log('📊 Raw metrics fetched:', {
+      facebookSpend: facebookMetrics.spend,
+      facebookImpressions: facebookMetrics.impressions,
+      shopifyRevenue: revenueMetrics.totalRevenue,
+      shopifyOrders: revenueMetrics.totalOrders,
+      dateRange: dateRange || 'default (last 30 days)'
+    })
+
+    // Calculate derived metrics
+    const revenue = revenueMetrics.totalRevenue
+    const orders = revenueMetrics.totalOrders
+    const spend = facebookMetrics.spend
+
+    const roas = spend > 0 ? revenue / spend : 0
+    const cpa = orders > 0 ? spend / orders : 0
+    const profit = revenue - spend
+    const roi = spend > 0 ? (profit / spend) * 100 : 0
+    const revenuePerClick = facebookMetrics.clicks > 0 ? revenue / facebookMetrics.clicks : 0
+
+    console.log('✅ Facebook Ads ROAS calculated:', {
+      roas: roas.toFixed(2),
+      cpa: cpa.toFixed(2),
+      profit: profit.toFixed(2),
+      roi: roi.toFixed(2) + '%',
+      dateRange: dateRange || 'default (last 30 days)'
+    })
+
+    return {
+      // Ad spend metrics
+      adSpend: spend,
+      impressions: facebookMetrics.impressions,
+      clicks: facebookMetrics.clicks,
+      cpc: facebookMetrics.cpc,
+      cpm: facebookMetrics.cpm,
+      ctr: facebookMetrics.ctr,
+      reach: facebookMetrics.reach,
+
+      // Revenue metrics
+      revenue,
+      orders,
+
+      // Calculated ROI metrics
+      roas,
+      cpa,
+      profit,
+      roi,
+      revenuePerClick,
+    }
+  } catch (error) {
+    console.error('❌ Error fetching Facebook Ads ROAS metrics:', {
+      error: error instanceof Error ? error.message : error,
+      stack: error instanceof Error ? error.stack : undefined,
+      dateRange: dateRange || 'default (last 30 days)'
+    })
+    return {
+      adSpend: 0,
+      impressions: 0,
+      clicks: 0,
+      cpc: 0,
+      cpm: 0,
+      ctr: 0,
+      reach: 0,
+      revenue: 0,
+      orders: 0,
+      roas: 0,
+      cpa: 0,
+      profit: 0,
+      roi: 0,
+      revenuePerClick: 0,
+    }
+  }
+}

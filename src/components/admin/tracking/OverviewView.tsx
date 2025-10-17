@@ -22,7 +22,17 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
   loading,
   dateRange,
 }) => {
-  // Convert react-day-picker date range to analytics DateRange
+  /**
+   * Date Range Conversion Flow:
+   * 1. React date picker provides { from: Date, to: Date }
+   * 2. Convert to ISO strings for analytics service
+   * 3. Set end date to end of day (23:59:59.999) to include full last day
+   * 4. Analytics services will:
+   *    - Validate the date range
+   *    - Convert ISO strings to YYYY-MM-DD format for Facebook API
+   *    - Use same date range for both Facebook Ads and Shopify revenue queries
+   *    - Default to last 30 days if no date range provided
+   */
   const analyticsDateRange: DateRange | undefined = dateRange?.from && dateRange?.to
     ? {
         startDate: dateRange.from.toISOString(),
@@ -35,7 +45,8 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
     : undefined
 
   // Fetch revenue and traffic source data
-  const { revenueMetrics, trafficSourceStats, buyButtonMetrics, loading: revenueLoading } = useOverviewAnalytics(analyticsDateRange)
+  // This will trigger comprehensive logging in the browser console for debugging
+  const { revenueMetrics, trafficSourceStats, buyButtonMetrics, facebookAdsMetrics, loading: revenueLoading } = useOverviewAnalytics(analyticsDateRange)
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -135,73 +146,132 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
   const todayTrend = hasCustomDateRange ? undefined : calculateTrend(todayLeads, yesterdayLeads)
 
   return (
-    <div className="space-y-6">
-      {/* Revenue KPI Cards */}
+    <div className="space-y-8">
+      {/* Revenue & Sales Performance Section */}
       {revenueMetrics && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <KPICard
-            label="Total Revenue"
-            value={formatCurrency(revenueMetrics.totalRevenue)}
-            subtitle="All orders in period"
-            variant="amber"
-            loading={revenueLoading}
-          />
+        <div>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">💰 Revenue & Sales Performance</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Overall revenue and order metrics</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <KPICard
+              label="Total Revenue"
+              value={formatCurrency(revenueMetrics.totalRevenue)}
+              subtitle="All orders in period"
+              variant="amber"
+              loading={revenueLoading}
+            />
 
-          <KPICard
-            label="Total Orders"
-            value={revenueMetrics.totalOrders}
-            subtitle={`AOV: ${formatCurrency(revenueMetrics.averageOrderValue)}`}
-            variant="success"
-            loading={revenueLoading}
-          />
+            <KPICard
+              label="Total Orders"
+              value={revenueMetrics.totalOrders}
+              subtitle={`AOV: ${formatCurrency(revenueMetrics.averageOrderValue)}`}
+              variant="success"
+              loading={revenueLoading}
+            />
 
-          <KPICard
-            label="Today's Revenue"
-            value={formatCurrency(revenueMetrics.todayRevenue)}
-            subtitle={`${revenueMetrics.todayOrders} orders today`}
-            loading={revenueLoading}
-          />
+            <KPICard
+              label="Today's Revenue"
+              value={formatCurrency(revenueMetrics.todayRevenue)}
+              subtitle={`${revenueMetrics.todayOrders} orders today`}
+              loading={revenueLoading}
+            />
 
-          <KPICard
-            label="This Week"
-            value={formatCurrency(revenueMetrics.weekRevenue)}
-            subtitle={`${revenueMetrics.weekOrders} orders`}
-            loading={revenueLoading}
-          />
+            <KPICard
+              label="This Week"
+              value={formatCurrency(revenueMetrics.weekRevenue)}
+              subtitle={`${revenueMetrics.weekOrders} orders`}
+              loading={revenueLoading}
+            />
+          </div>
         </div>
       )}
 
-      {/* Buy Button Click Rate KPI Cards */}
+      {/* Marketing Performance Section */}
+      {facebookAdsMetrics && (
+        <div>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">📊 Marketing Performance (Facebook Ads)</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Ad spend, ROAS, and profitability metrics</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <KPICard
+              label="ROAS (Return on Ad Spend)"
+              value={`${facebookAdsMetrics.roas.toFixed(2)}x`}
+              subtitle={`$${facebookAdsMetrics.revenue.toFixed(0)} revenue / $${facebookAdsMetrics.adSpend.toFixed(0)} spend`}
+              variant="amber"
+              loading={revenueLoading}
+            />
+
+            <KPICard
+              label="Ad Spend"
+              value={formatCurrency(facebookAdsMetrics.adSpend)}
+              subtitle={`${facebookAdsMetrics.impressions.toLocaleString()} impressions`}
+              variant="success"
+              loading={revenueLoading}
+            />
+
+            <KPICard
+              label="Profit (Revenue - Ad Spend)"
+              value={formatCurrency(facebookAdsMetrics.profit)}
+              subtitle={`ROI: ${facebookAdsMetrics.roi.toFixed(1)}%`}
+              variant={facebookAdsMetrics.profit >= 0 ? 'success' : 'amber'}
+              loading={revenueLoading}
+            />
+
+            <KPICard
+              label="Cost Per Acquisition (CPA)"
+              value={formatCurrency(facebookAdsMetrics.cpa)}
+              subtitle={`${facebookAdsMetrics.clicks.toLocaleString()} clicks • ${facebookAdsMetrics.ctr.toFixed(2)}% CTR`}
+              loading={revenueLoading}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Conversion Performance Section */}
       {buyButtonMetrics && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <KPICard
-            label="Global Buy Button Click Rate"
-            value={`${buyButtonMetrics.globalClickRate.toFixed(1)}%`}
-            subtitle={`${buyButtonMetrics.globalClicks} clicks / ${buyButtonMetrics.globalSessions} sessions`}
-            variant="amber"
-            loading={revenueLoading}
-          />
+        <div>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">🎯 Conversion Performance</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Buy button click rates across pages</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <KPICard
+              label="Global Buy Button Click Rate"
+              value={`${buyButtonMetrics.globalClickRate.toFixed(1)}%`}
+              subtitle={`${buyButtonMetrics.globalClicks} clicks / ${buyButtonMetrics.globalSessions} sessions`}
+              variant="amber"
+              loading={revenueLoading}
+            />
 
-          <KPICard
-            label="Thank You Page Click Rate"
-            value={`${buyButtonMetrics.thankYouClickRate.toFixed(1)}%`}
-            subtitle={`${buyButtonMetrics.thankYouClicks} clicks / ${buyButtonMetrics.thankYouSessions} sessions`}
-            variant="success"
-            loading={revenueLoading}
-          />
+            <KPICard
+              label="Thank You Page Click Rate"
+              value={`${buyButtonMetrics.thankYouClickRate.toFixed(1)}%`}
+              subtitle={`${buyButtonMetrics.thankYouClicks} clicks / ${buyButtonMetrics.thankYouSessions} sessions`}
+              variant="success"
+              loading={revenueLoading}
+            />
 
-          <KPICard
-            label="Product Page Click Rate"
-            value={`${buyButtonMetrics.productClickRate.toFixed(1)}%`}
-            subtitle={`${buyButtonMetrics.productClicks} clicks / ${buyButtonMetrics.productSessions} sessions`}
-            variant="success"
-            loading={revenueLoading}
-          />
+            <KPICard
+              label="Product Page Click Rate"
+              value={`${buyButtonMetrics.productClickRate.toFixed(1)}%`}
+              subtitle={`${buyButtonMetrics.productClicks} clicks / ${buyButtonMetrics.productSessions} sessions`}
+              variant="success"
+              loading={revenueLoading}
+            />
+          </div>
         </div>
       )}
 
-      {/* Lead KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      {/* Lead Generation Section */}
+      <div>
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">📧 Lead Generation</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Email captures and contact form submissions</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         <KPICard
           label="Total Leads"
           value={totalLeads}
@@ -241,22 +311,33 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           variant="amber"
           loading={loading}
         />
+        </div>
       </div>
 
-      {/* Traffic Source Chart */}
-      {trafficSourceStats.length > 0 && (
-        <TrafficSourceChart data={trafficSourceStats} loading={revenueLoading} />
-      )}
+      {/* Traffic & Analytics Section */}
+      <div>
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">📈 Traffic & Analytics</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Traffic sources, acquisition trends, and device breakdown</p>
+        </div>
 
-      {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <LeadAcquisitionChart leads={filteredLeads} days={30} loading={loading} />
-        <LeadSourceChart leads={filteredLeads} loading={loading} />
-      </div>
+        {/* Traffic Source Chart */}
+        {trafficSourceStats.length > 0 && (
+          <div className="mb-6">
+            <TrafficSourceChart data={trafficSourceStats} loading={revenueLoading} />
+          </div>
+        )}
 
-      {/* Device Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <DeviceBreakdownChart data={filteredLeads} loading={loading} title="Device Breakdown - Leads" />
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <LeadAcquisitionChart leads={filteredLeads} days={30} loading={loading} />
+          <LeadSourceChart leads={filteredLeads} loading={loading} />
+        </div>
+
+        {/* Device Breakdown */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <DeviceBreakdownChart data={filteredLeads} loading={loading} title="Device Breakdown - Leads" />
+        </div>
       </div>
     </div>
   )

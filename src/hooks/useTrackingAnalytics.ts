@@ -33,6 +33,7 @@ import {
   type EmailAttributionMetrics,
   type PageRevenueAttribution,
   type BuyButtonClickRates,
+  type FacebookAdsROASMetrics,
 } from '../lib/services/trackingAnalytics'
 
 interface UseThankYouAnalyticsResult {
@@ -207,6 +208,7 @@ interface UseOverviewAnalyticsResult {
   revenueMetrics: any | null
   trafficSourceStats: any[]
   buyButtonMetrics: BuyButtonClickRates | null
+  facebookAdsMetrics: FacebookAdsROASMetrics | null
   loading: boolean
   error: Error | null
 }
@@ -215,6 +217,7 @@ export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalytic
   const [revenueMetrics, setRevenueMetrics] = useState<any | null>(null)
   const [trafficSourceStats, setTrafficSourceStats] = useState<any[]>([])
   const [buyButtonMetrics, setBuyButtonMetrics] = useState<BuyButtonClickRates | null>(null)
+  const [facebookAdsMetrics, setFacebookAdsMetrics] = useState<FacebookAdsROASMetrics | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -224,21 +227,34 @@ export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalytic
         setLoading(true)
         setError(null)
 
-        // Dynamically import to avoid circular dependencies
-        const { getRevenueMetrics, getTrafficSourceStats, getBuyButtonClickRates } = await import('../lib/services/trackingAnalytics')
+        console.log('🔄 useOverviewAnalytics: Fetching data with date range:', {
+          hasDateRange: !!dateRange,
+          startDate: dateRange?.startDate,
+          endDate: dateRange?.endDate
+        })
 
-        const [revenue, trafficSources, buyButtonData] = await Promise.all([
+        // Dynamically import to avoid circular dependencies
+        const { getRevenueMetrics, getTrafficSourceStats, getBuyButtonClickRates, getFacebookAdsROASMetrics } = await import('../lib/services/trackingAnalytics')
+
+        const [revenue, trafficSources, buyButtonData, facebookAds] = await Promise.all([
           getRevenueMetrics(dateRange),
           getTrafficSourceStats(dateRange),
           getBuyButtonClickRates(dateRange),
+          getFacebookAdsROASMetrics(dateRange),
         ])
+
+        console.log('✅ useOverviewAnalytics: All metrics fetched successfully')
 
         setRevenueMetrics(revenue)
         setTrafficSourceStats(trafficSources)
         setBuyButtonMetrics(buyButtonData)
+        setFacebookAdsMetrics(facebookAds)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch overview analytics'))
-        console.error('Error fetching overview analytics:', err)
+        console.error('❌ useOverviewAnalytics: Error fetching analytics:', {
+          error: err instanceof Error ? err.message : err,
+          dateRange: dateRange || 'no date range provided'
+        })
       } finally {
         setLoading(false)
       }
@@ -247,5 +263,5 @@ export function useOverviewAnalytics(dateRange?: DateRange): UseOverviewAnalytic
     fetchData()
   }, [dateRange?.startDate, dateRange?.endDate])
 
-  return { revenueMetrics, trafficSourceStats, buyButtonMetrics, loading, error }
+  return { revenueMetrics, trafficSourceStats, buyButtonMetrics, facebookAdsMetrics, loading, error }
 }

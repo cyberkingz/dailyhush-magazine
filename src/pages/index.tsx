@@ -2,6 +2,11 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Users } from 'lucide-react'
 // import NewsletterInlineForm from '@/components/NewsletterInlineForm'
+import ProblemRecognitionSection from '../components/home/ProblemRecognitionSection'
+import MisdiagnosisComparisonSection from '../components/home/MisdiagnosisComparisonSection'
+import TestimonialsSection from '../components/home/TestimonialsSection'
+import FireProtocolSection from '../components/home/FireProtocolSection'
+import FinalCTASection from '../components/home/FinalCTASection'
 
 export default function Home() {
   useEffect(() => { document.title = 'DailyHush — Stop Overthinking & Quiet Your Mind' }, [])
@@ -66,9 +71,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* New Home Page Sections */}
+      <ProblemRecognitionSection />
+      <MisdiagnosisComparisonSection />
+      <TestimonialsSection />
+      <FireProtocolSection />
+      <FinalCTASection />
 
-
-      
       {/* <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="flex items-center mb-8">
           <div>

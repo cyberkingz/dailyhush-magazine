@@ -87,7 +87,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-screen hidden md:flex md:flex-col w-[240px] flex-shrink-0",
+        "h-screen hidden md:flex md:flex-col flex-shrink-0",
         open ? "px-4" : "px-2",
         "py-4",
         className

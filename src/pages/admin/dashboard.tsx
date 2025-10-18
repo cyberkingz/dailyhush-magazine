@@ -98,31 +98,33 @@ const AdminDashboard: React.FC = () => {
   return (
     <AdminGuard>
       <AdminLayout currentPage="/admin/dashboard">
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {/* Header with View Selector */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <h1 className="text-2xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+            <div className="flex-shrink min-w-0">
+              <h1 className="text-xl md:text-2xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                 Analytics Dashboard
               </h1>
-              <p className="text-white/70 mt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
+              <p className="text-sm md:text-base text-white/70 mt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)] truncate">
                 {getPageDescription()}
               </p>
             </div>
-            <BasicDateRangePicker
-              date={dateRange}
-              onDateChange={setDateRange}
-            />
+            <div className="flex-shrink-0 w-full md:w-auto">
+              <BasicDateRangePicker
+                date={dateRange}
+                onDateChange={setDateRange}
+              />
+            </div>
           </div>
 
           {/* View Mode Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-2">
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
             {VIEW_TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setViewMode(tab.id)}
                 className={cn(
-                  'px-4 py-2 rounded-lg font-medium text-sm transition-all whitespace-nowrap',
+                  'px-3 md:px-4 py-2 rounded-lg font-medium text-xs md:text-sm transition-all whitespace-nowrap flex-shrink-0',
                   viewMode === tab.id
                     ? 'bg-amber-500/50 backdrop-blur-[16px] text-white shadow-[0_2px_8px_rgba(245,158,11,0.2)]'
                     : 'bg-white/10 text-white/70 hover:bg-white/20'

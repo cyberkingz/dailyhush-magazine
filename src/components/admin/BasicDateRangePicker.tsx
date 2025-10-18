@@ -24,8 +24,17 @@ export function BasicDateRangePicker({
 }: BasicDateRangePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false)
   const [tempDate, setTempDate] = React.useState<DateRange | undefined>(date)
+  const [isMobile, setIsMobile] = React.useState(false)
 
   const today = new Date()
+
+  // Check if mobile on mount and resize
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Sync tempDate with date when modal opens
   React.useEffect(() => {
@@ -149,8 +158,8 @@ export function BasicDateRangePicker({
               </button>
             </div>
 
-            {/* Presets */}
-            <div className="flex flex-wrap gap-2 pb-4 border-b border-emerald-500/15">
+            {/* Presets - Stack on mobile */}
+            <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-2 pb-4 border-b border-emerald-500/15">
               {presets.map((preset) => (
                 <button
                   key={preset.label}
@@ -175,11 +184,11 @@ export function BasicDateRangePicker({
               ))}
             </div>
 
-            {/* Calendar */}
+            {/* Calendar - Shows 1 month on mobile, 2 on desktop */}
             <div className="w-fit mx-auto [--cell-size:2.125rem]">
               <Calendar
                 mode="range"
-                numberOfMonths={2}
+                numberOfMonths={isMobile ? 1 : 2}
                 defaultMonth={initialMonth}
                 selected={tempDate}
                 onSelect={handleSelect}
@@ -190,13 +199,13 @@ export function BasicDateRangePicker({
               />
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-emerald-500/15">
+            {/* Actions - Full width on mobile */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 pt-3 border-t border-emerald-500/15">
               <button
                 type="button"
                 onClick={handleCancel}
                 className={cn(
-                  "px-4 py-2 text-sm font-medium rounded-[12px]",
+                  "px-4 py-2 text-sm font-medium rounded-[12px] w-full sm:w-auto",
                   "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
                   // Gray liquid glass button
                   "bg-[hsla(200,14%,78%,0.18)] text-white",
@@ -218,7 +227,7 @@ export function BasicDateRangePicker({
                 onClick={handleApply}
                 variant="primary"
                 size="md"
-                className="px-4 py-2"
+                className="px-4 py-2 w-full sm:w-auto"
               >
                 Apply
               </Button>

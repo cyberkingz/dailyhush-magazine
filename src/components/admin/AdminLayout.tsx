@@ -85,14 +85,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   return (
     <div className="flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 min-h-screen md:h-screen md:overflow-hidden">
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className={cn(
-          "justify-between gap-10",
-          // Muted emerald liquid glass sidebar
-          "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
-          "border-r border-emerald-500/25",
-          "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.15),0_24px_48px_-12px_rgba(16,185,129,0.20),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
-          "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
-        )}>
+        <SidebarBody
+          className={cn(
+            "justify-between gap-10",
+            // Muted emerald liquid glass sidebar
+            "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
+            "border-r border-emerald-500/25",
+            "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.15),0_24px_48px_-12px_rgba(16,185,129,0.20),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
+            "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+          )}
+          pageTitle={getPageTitle(currentPage)}
+        >
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-1">
@@ -150,8 +153,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:overflow-hidden">
-        {/* Header - Ultra-refined liquid glass topbar */}
+        {/* Desktop Header - Hidden on mobile */}
         <header className={cn(
+          "hidden md:flex",
           // Lighter emerald topbar - creates hierarchy through opacity
           "bg-emerald-500/25 backdrop-blur-[48px] backdrop-saturate-[200%]",
           "border-b border-emerald-400/20",
@@ -159,7 +163,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
           "px-6 py-4 flex-shrink-0",
           "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
         )}>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between w-full">
             <div>
               <h1 className="text-2xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                 {getPageTitle(currentPage)}

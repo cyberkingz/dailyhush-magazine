@@ -69,11 +69,11 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
+export const SidebarBody = (props: React.ComponentProps<typeof motion.div> & { pageTitle?: string }) => {
   return (
     <>
       <DesktopSidebar {...props} />
-      <MobileSidebar {...(props as React.ComponentProps<"div">)} />
+      <MobileSidebar {...(props as React.ComponentProps<"div"> & { pageTitle?: string })} />
     </>
   );
 };
@@ -107,52 +107,122 @@ export const DesktopSidebar = ({
 export const MobileSidebar = ({
   className,
   children,
+  pageTitle,
   ...props
-}: React.ComponentProps<"div">) => {
+}: React.ComponentProps<"div"> & {
+  pageTitle?: string;
+}) => {
   const { open, setOpen } = useSidebar();
   return (
     <>
+      {/* Enhanced Mobile Header - Emerald Liquid Glass */}
       <div
         className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between w-full"
+          // Container structure - optimized height for content
+          "h-16 px-4 flex flex-row md:hidden items-center justify-between w-full gap-3",
+          // Emerald liquid glass background
+          "bg-emerald-500/25 backdrop-blur-[48px] backdrop-saturate-[200%]",
+          // Refined border and shadow system
+          "border-b border-emerald-400/20",
+          "shadow-[0_8px_16px_-4px_rgba(16,185,129,0.12),0_16px_32px_-8px_rgba(16,185,129,0.18),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
+          // Smooth transitions
+          "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
         )}
         {...props}
       >
-        <div className="flex justify-end z-20 w-full">
-          <Menu
-            className="text-white cursor-pointer"
-            onClick={() => setOpen(!open)}
+        {/* Left: Logo/Brand */}
+        <Link
+          to="/admin/dashboard"
+          className="flex-shrink-0 flex items-center gap-2"
+          aria-label="DailyHush Admin Home"
+        >
+          <img
+            src="/rounded-logo.png"
+            alt="DailyHush"
+            className="h-8 w-8 rounded-full flex-shrink-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
           />
-        </div>
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
-              className={cn(
-                "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between",
-                // Emerald liquid glass mobile sidebar
-                "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
-                "border-r border-emerald-500/25",
-                className
-              )}
-            >
-              <div
-                className="absolute right-10 top-10 z-50 text-white cursor-pointer"
-                onClick={() => setOpen(!open)}
-              >
-                <X />
-              </div>
-              {children}
-            </motion.div>
+          <span className="text-white font-semibold text-base drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] hidden xs:inline">
+            DailyHush
+          </span>
+        </Link>
+
+        {/* Center: Page Title (collapses on small screens) */}
+        {pageTitle && (
+          <div className="flex-1 flex justify-center px-2 min-w-0 hidden sm:flex">
+            <h1 className="text-white/90 text-sm font-medium truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
+              {pageTitle}
+            </h1>
+          </div>
+        )}
+
+        {/* Right: Menu Button - Liquid Glass Interactive */}
+        <button
+          onClick={() => setOpen(!open)}
+          className={cn(
+            // Touch target - 44x44px minimum
+            "flex-shrink-0 w-11 h-11 flex items-center justify-center",
+            // Liquid glass button
+            "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px] backdrop-saturate-[180%]",
+            "rounded-[12px]",
+            "border border-emerald-400/15",
+            "shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+            // Interactive states
+            "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+            "active:scale-95",
+            "hover:bg-[hsla(200,14%,78%,0.18)]",
+            "hover:shadow-[0_4px_8px_-2px_rgba(31,45,61,0.08),0_2px_4px_rgba(16,185,129,0.08),0_1px_0_0_rgba(255,255,255,0.2)_inset]",
+            "hover:-translate-y-[0.5px]",
+            // Focus states for accessibility
+            "focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:ring-offset-2 focus:ring-offset-emerald-950"
           )}
-        </AnimatePresence>
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
+          <Menu className="text-white h-5 w-5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]" />
+        </button>
       </div>
+
+      {/* Mobile Sidebar Overlay */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+            }}
+            className={cn(
+              "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between",
+              // Emerald liquid glass mobile sidebar
+              "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
+              "border-r border-emerald-500/25",
+              className
+            )}
+          >
+            {/* Close Button - Enhanced with liquid glass */}
+            <button
+              className={cn(
+                "absolute right-6 top-6 z-50",
+                "w-11 h-11 flex items-center justify-center",
+                "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px]",
+                "rounded-[12px]",
+                "border border-emerald-400/15",
+                "shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
+                "transition-all duration-[250ms]",
+                "active:scale-95",
+                "hover:bg-[hsla(200,14%,78%,0.18)]"
+              )}
+              onClick={() => setOpen(!open)}
+              aria-label="Close menu"
+            >
+              <X className="text-white h-5 w-5" />
+            </button>
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

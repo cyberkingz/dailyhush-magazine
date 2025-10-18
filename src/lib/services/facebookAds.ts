@@ -215,6 +215,8 @@ export async function getFacebookAdsInsights(
       ctr: parseFloat(insights.ctr || 0),
       reach: parseInt(insights.reach || 0),
       frequency: parseFloat(insights.frequency || 0),
+
+      // Purchase metrics
       purchases: parseInt(purchases),
       purchase_value: parseFloat(purchaseValue),
     }
@@ -381,10 +383,9 @@ export async function getFacebookAdsCampaigns(dateRange?: DateRange) {
         cpm: parseFloat(campaign.cpm || 0),
         ctr: parseFloat(campaign.ctr || 0),
         reach: parseInt(campaign.reach || 0),
-        purchases:
-          parseInt(
-            campaign.actions?.find((a: any) => a.action_type === 'purchase')?.value || 0
-          ),
+        purchases: parseInt(
+          campaign.actions?.find((a: any) => a.action_type === 'purchase')?.value || 0
+        ),
         purchase_value: parseFloat(
           campaign.action_values?.find((a: any) => a.action_type === 'purchase')?.value || 0
         ),

@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import { Users } from 'lucide-react'
 // import NewsletterInlineForm from '@/components/NewsletterInlineForm'
 import ProblemRecognitionSection from '../components/home/ProblemRecognitionSection'
-import MisdiagnosisComparisonSection from '../components/home/MisdiagnosisComparisonSection'
-import TestimonialsSection from '../components/home/TestimonialsSection'
 import FireProtocolSection from '../components/home/FireProtocolSection'
 import FinalCTASection from '../components/home/FinalCTASection'
 
@@ -73,8 +71,6 @@ export default function Home() {
 
       {/* New Home Page Sections */}
       <ProblemRecognitionSection />
-      <MisdiagnosisComparisonSection />
-      <TestimonialsSection />
       <FireProtocolSection />
       <FinalCTASection />
 

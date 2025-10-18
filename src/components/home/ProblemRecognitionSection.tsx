@@ -1,5 +1,4 @@
 import { Brain, Eye, Repeat } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
 
 interface PhraseCard {
   phrase: string
@@ -30,80 +29,51 @@ const phrases: PhraseCard[] = [
 ]
 
 export default function ProblemRecognitionSection() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section
-      ref={sectionRef}
-      className="relative overflow-hidden bg-gradient-to-br from-emerald-50/50 via-white to-amber-50/30 py-16 md:py-20 lg:py-24"
+      className="bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 relative overflow-hidden"
       aria-labelledby="problem-recognition-heading"
     >
-      {/* Background organic blobs */}
+      {/* Organic Background Blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
+        <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
+      <div className="mx-auto max-w-7xl px-6 py-20 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-16">
           <h2
             id="problem-recognition-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-900 mb-4"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-emerald-900 mb-6 leading-tight md:leading-none"
           >
             You're Not Replaying Tuesday's Meeting Because You're Anxious.
           </h2>
-          <p className="text-xl md:text-2xl text-amber-600 max-w-3xl mx-auto font-semibold mb-4">
+          <p className="text-xl md:text-2xl text-amber-600 max-w-3xl mx-auto font-bold mb-4">
             You're Punishing Yourself For Being Seen.
           </p>
-          <p className="text-lg text-emerald-700 max-w-3xl mx-auto">
+          <p className="text-lg text-emerald-700/80 max-w-3xl mx-auto">
             If you've ever thought these three phrases, you don't have anxiety—you have <strong>shame-driven rumination</strong>.
           </p>
         </div>
 
         {/* Phrase Cards Grid */}
-        <div className="grid gap-6 md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {phrases.map((item, index) => {
+        <div className="grid gap-8 md:grid-cols-3 mb-16">
+          {phrases.map((item) => {
             const Icon = item.icon
             return (
               <div
                 key={item.phrase}
-                className={`
-                  group relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 md:p-8
-                  border border-white/40 shadow-sm
-                  hover:bg-white/70 hover:shadow-lg hover:scale-[1.02]
-                  transition-all duration-300
-                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-                `}
-                style={{
-                  transitionDelay: `${index * 100}ms`
-                }}
+                className="bg-white/60 backdrop-blur-xl rounded-2xl p-8 border-2 border-white/40 ring-1 ring-white/40 shadow-[0_8px_32px_rgba(16,185,129,0.08)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.12)] transition-all"
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-emerald-500/10 mb-4 group-hover:bg-emerald-500/15 transition-colors">
-                  <Icon className="w-7 h-7 md:w-8 md:h-8 text-emerald-600" aria-hidden="true" />
+                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-emerald-600" aria-hidden="true" />
                 </div>
 
                 {/* Phrase */}
-                <h3 className="text-xl md:text-2xl font-bold text-amber-600 mb-3 leading-tight">
+                <h3 className="text-xl font-bold text-amber-600 mb-3">
                   "{item.phrase}"
                 </h3>
 
@@ -122,12 +92,14 @@ export default function ProblemRecognitionSection() {
         </div>
 
         {/* Bottom insight */}
-        <div className="mt-12 text-center">
-          <p className="text-lg md:text-xl text-emerald-900 max-w-4xl mx-auto leading-relaxed">
-            <strong>Anxiety</strong> is worry about the FUTURE: "What if something bad happens?"<br />
+        <div className="text-center max-w-4xl mx-auto">
+          <p className="text-lg md:text-xl text-emerald-900 mb-3 leading-relaxed">
+            <strong>Anxiety</strong> is worry about the FUTURE: "What if something bad happens?"
+          </p>
+          <p className="text-lg md:text-xl text-emerald-900 mb-6 leading-relaxed">
             <strong className="text-amber-600">Shame</strong> is punishment about the PAST: "I can't believe I did that."
           </p>
-          <p className="text-lg md:text-xl text-emerald-900 font-bold max-w-4xl mx-auto mt-4">
+          <p className="text-xl md:text-2xl font-bold text-emerald-900">
             You've been treating the wrong condition for years.
           </p>
         </div>

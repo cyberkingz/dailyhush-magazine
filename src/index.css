@@ -46,6 +46,16 @@
   --ring: 160 84% 39%; /* emerald-500 */
   --radius: 0.5rem;
 
+  /* Sidebar Theme Variables */
+  --sidebar-background: 158 64% 18%; /* emerald-900 - dark emerald background */
+  --sidebar-foreground: 0 0% 100%; /* white text */
+  --sidebar-primary: 160 84% 39%; /* emerald-500 */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 152 81% 96%; /* emerald-50 for hover states */
+  --sidebar-accent-foreground: 158 64% 18%; /* emerald-900 */
+  --sidebar-border: 160 84% 35%; /* emerald-600 */
+  --sidebar-ring: 160 84% 39%; /* emerald-500 */
+
   /* Emerald Color System */
   --emerald-50: 152 81% 96%;
   --emerald-100: 149 80% 90%;

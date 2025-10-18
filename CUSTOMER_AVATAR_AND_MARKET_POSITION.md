@@ -597,15 +597,26 @@ This is a market that has been:
 
 **THE REFRAME THAT CHANGES EVERYTHING:**
 
-"You're not overthinking. You're punishing. That's not overthinking. That's shame wearing an anxiety mask."
+"You don't have an overthinking problem. You have a shame-anxiety loop that FUELS your overthinking.
+
+Past shame reactivates → Creates anxiety about future exposure → Both trigger present overthinking.
+
+That's why 'stop overthinking' doesn't work. You're not addressing the dual triggers that feed it."
 
 **The Unique Mechanism:**
 
-**THE 7-SECOND PRE-CONSCIOUS INTERRUPTION**
+**THE SHAME-ANXIETY LOOP INTERRUPTION IN THE 7-SECOND PRE-CONSCIOUS WINDOW**
 
-Most tools target conscious thoughts (which happen AFTER the hijack).
+Most tools target:
+- Overthinking (the symptom in the PRESENT)
+- OR anxiety (future worry)
+- OR shame (past events)
 
-F.I.R.E. targets the 3-7 second window BEFORE thought forms - when the vagal nerve decides "you're unsafe" based on shame memories.
+F.I.R.E. targets the LOOP between all three:
+- Interrupts in the 3-7 second window BEFORE thought forms
+- Stops PAST shame from triggering FUTURE anxiety
+- Prevents both from spiraling into PRESENT overthinking
+- Addresses the temporal loop, not individual components
 
 **Why This Works (The Science Story):**
 
@@ -628,28 +639,35 @@ Trying to challenge the thought is like trying to close the barn door after the 
 
 ### The F.I.R.E. Mechanism (What It Actually Does)
 
-**F = FOCUS (Detect the body signal before the thought)**
-- Train to recognize body sensations 3-7 seconds before narrative forms
-- Identify the physical shame-signature: chest tightness, stomach drop, breath change
-- Learn YOUR specific shame-body pattern
-- **Timing:** Catch it in the pre-conscious window
+**F = FOCUS (Detect the loop activation before thought forms)**
+- Train to recognize when your body detects PAST SHAME (chest tightness, stomach drop, breath change)
+- This happens 3-7 seconds before your brain creates FUTURE ANXIETY
+- And before both trigger PRESENT OVERTHINKING
+- Learn YOUR specific shame-body signature
+- **Timing:** Catch it in the pre-conscious window before the loop activates
 
-**I = INTERRUPT (Disrupt the pattern at the nervous system level)**
+**I = INTERRUPT (Stop the shame-anxiety loop at the source)**
 - Body-based interruption (not thought-challenging)
 - Vagal nerve reset technique
-- Physical pattern interrupt that breaks the shame-activation
-- **Mechanism:** Stop the nervous system hijack before it completes
+- Stops PAST shame from triggering FUTURE anxiety
+- Prevents both from spiraling into PRESENT overthinking
+- **Mechanism:** Interrupt the loop before it cascades through all three time-points
 
-**R = REFRAME (Install new narrative AFTER nervous system calms)**
-- Once body is calm, THEN reframe
-- Not "challenge anxious thoughts" (that's too early)
-- But "install new interpretation after nervous system reset"
-- **Difference:** Reframe from calm nervous system, not during hijack
+**R = REFRAME (Address BOTH temporal triggers after nervous system calms)**
+- Once body is calm, reframe BOTH:
+  - PAST: "That moment doesn't define me" (shame reframe)
+  - FUTURE: "I'm safe being visible" (anxiety reframe)
+- Not "challenge overthinking thoughts" (too late, that's the symptom)
+- But "address the dual triggers that feed overthinking"
+- **Difference:** Reframe from calm nervous system, targeting the root causes
 
-**E = EXECUTE (Return to present without punishment)**
-- Complete the interruption cycle
-- Return to current moment without shame-replay
-- **Result:** The replay doesn't start. The punishment ritual doesn't activate.
+**E = EXECUTE (Return to present without the loop)**
+- Complete the 90-second cycle
+- Return to current moment WITHOUT:
+  - Replaying the past (shame interrupt successful)
+  - Rehearsing the future (anxiety interrupt successful)
+  - Spiraling into overthinking (loop broken)
+- **Result:** The temporal loop doesn't activate. The overthinking doesn't start.
 
 ### The 90-Second Protocol (Why This Timing Matters)
 
@@ -870,20 +888,33 @@ This speaks directly to their cynicism:
 
 ### Headlines That Break Through Stage 5 Cynicism
 
-#### The Misdiagnosis Pattern:
-> "You Don't Have Anxiety. You Have Shame-Driven Rumination. And You've Been Treating The Wrong Thing."
+#### The Avatar Filter Pattern (Option C):
+> "Decision Paralysis vs. Shame Spirals: If You Can't Stop Replaying Social Interactions, You Don't Have Anxiety. You Have a Shame-Anxiety Loop."
+
+> "Some People Overthink Decisions. You Overthink INTERACTIONS. That's Different—And It Requires a Different Solution."
+
+#### The Temporal Loop Pattern (UPDATED):
+> "You're Not 'Just Overthinking.' You're Caught in a Shame-Anxiety Loop. Past Regret + Future Fear = Present Spiral."
+
+> "Shame Lives in the PAST. Anxiety Lives in the FUTURE. Overthinking Lives in the PRESENT. Here's How to Break the Loop."
+
+#### The Misdiagnosis Pattern (UPDATED):
+> "You Don't Have an Overthinking Problem. You Have a Shame-Anxiety Loop That FUELS Your Overthinking. Here's The Difference."
 
 #### The Pre-Conscious Pattern:
-> "Your Vagal Nerve Fires 3-7 Seconds Before Thought. That's Why You Can't Think Your Way Out."
+> "Your Vagal Nerve Fires 3-7 Seconds Before Thought. That's Why You Can't Think Your Way Out of the Loop."
 
-#### The Recognition Pattern:
-> "You're Not Overthinking. You're Punishing. And There's A 90-Second Protocol That Interrupts It."
+#### The Recognition Pattern (UPDATED):
+> "If You're Replaying Conversations for 72 Hours, You're Not Overthinking. You're Caught in a Temporal Loop. And There's A 90-Second Protocol That Interrupts It."
 
-#### The Phrase Pattern:
-> "If You've Ever Thought 'I Should've Known Better,' Read This. That's Not Anxiety. That's Shame."
+#### The Phrase Pattern (UPDATED - Temporal):
+> "If You've Ever Thought 'I Should've Known Better' (Past), 'Afraid of Doing It Wrong' (Future), and 'Can't Stop Replaying' (Present)—Read This. That's the Shame-Anxiety Loop."
 
 #### The Timing Pattern:
-> "By The Time You Notice You're Spiraling, Your Body Decided 7 Seconds Ago. Here's How To Interrupt Earlier."
+> "By The Time You Notice You're Spiraling, Your Body Activated the Shame-Anxiety Loop 7 Seconds Ago. Here's How To Interrupt Earlier."
+
+#### The Filtering + Mechanism Pattern:
+> "If You're Still Replaying Tuesday's Meeting on Friday, Stop Reading Anxiety Advice. You Have a Shame-Anxiety Loop—And You've Been Treating The Wrong Thing."
 
 ### Body Copy Structure (For Shame-Driven Rumination)
 
@@ -1275,15 +1306,25 @@ The relief comes from finally being SEEN correctly, then given a tool that works
 
 ## Document Version & Updates
 
-**Version:** 2.0 - SHAME-DRIVEN RUMINATION FRAMEWORK
+**Version:** 3.0 - TEMPORAL LOOP FRAMEWORK + AVATAR SEGMENTATION
 **Created:** 2025-10-16 (complete revision based on actual customer copy analysis)
-**Last Updated:** 2025-10-16
+**Last Updated:** 2025-10-18
+
+**Major Update (v3.0 - 2025-10-18):**
+- **Avatar Targeting Clarified:** Target Avatar 2 (Shame-Driven Overthinker) ONLY
+- **Temporal Loop Framework Added:** Past shame → Future anxiety → Present overthinking
+- **Filtering Strategy (Option C):** Acknowledge Avatar 1 exists, then filter them out
+- **Quiz Data Integration:** 92 "almost always" can't stop replaying, 100 "should've known better"
+- **Strategic Analysis:** Eugene Schwartz + Russell Brunson validation
+- **Positioning Updated:** "Shame-anxiety loop that fuels overthinking" vs. "shame-driven rumination"
+- **F.I.R.E. Mechanism Updated:** Now targets the LOOP, not just shame alone
 
 **Update Protocol:**
 - Review as more customer language is collected
 - Update as mechanism understanding deepens
 - Refine as success stories provide proof
 - Adjust as market becomes aware of shame vs. anxiety distinction
+- Monitor Avatar 1 vs Avatar 2 conversion rates to validate targeting decision
 
 ---
 

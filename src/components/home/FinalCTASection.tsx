@@ -1,4 +1,4 @@
-import { CheckCircle2, Shield, Lock, Users, ArrowRight } from 'lucide-react'
+import { CheckCircle2, Lock, Users, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const benefits = [
@@ -97,11 +97,11 @@ export default function FinalCTASection() {
           {/* Right: CTA Box */}
           <div className="lg:sticky lg:top-24">
             <div className="bg-white/60 backdrop-blur-xl rounded-2xl p-8 md:p-10 border-2 border-white/40 ring-1 ring-white/40 shadow-[0_8px_32px_rgba(16,185,129,0.08)] relative">
-              {/* Guarantee badge */}
+              {/* Free badge */}
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <div className="bg-amber-500/20 border-2 border-amber-500/40 text-amber-900 px-4 py-2 rounded-full font-bold text-sm backdrop-blur-xl ring-1 ring-white/40 shadow-[0_4px_16px_rgba(245,158,11,0.15)] flex items-center gap-2">
-                  <Shield className="w-4 h-4" aria-hidden="true" />
-                  90-Day Money-Back Guarantee
+                <div className="bg-emerald-500/20 border-2 border-emerald-500/40 text-emerald-900 px-4 py-2 rounded-full font-bold text-sm backdrop-blur-xl ring-1 ring-white/40 shadow-[0_4px_16px_rgba(16,185,129,0.15)] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+                  Free • No Credit Card Required
                 </div>
               </div>
 
@@ -143,14 +143,14 @@ export default function FinalCTASection() {
                   </div>
                 </div>
 
-                {/* Guarantee details */}
+                {/* Why take the quiz */}
                 <div className="mt-6 pt-6 border-t border-emerald-200/50">
                   <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <div className="text-sm text-emerald-800">
-                      <p className="font-semibold mb-1 text-emerald-900">90-Day Shame-Interruption Guarantee</p>
+                      <p className="font-semibold mb-1 text-emerald-900">Why Take The Quiz?</p>
                       <p className="text-xs leading-relaxed text-emerald-700/80">
-                        If you're still replaying conversations for 72 hours after learning and practicing F.I.R.E., we refund everything. We can make this guarantee because nervous system interruption works when targeted correctly.
+                        This 60-second quiz identifies your specific shame-anxiety pattern using the same three phrases 296 women shared. You'll discover if you're Avatar 2 (shame-driven overthinker) and get your personalized F.I.R.E. protocol insights instantly.
                       </p>
                     </div>
                   </div>

@@ -10,6 +10,12 @@ interface Links {
   icon: React.JSX.Element | React.ReactNode;
 }
 
+interface SidebarLinkProps {
+  link: Links;
+  className?: string;
+  onClick?: (e: React.MouseEvent) => void;
+}
+
 interface SidebarContextProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -69,11 +75,14 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props: React.ComponentProps<typeof motion.div> & { pageTitle?: string }) => {
+export const SidebarBody = (props: React.ComponentProps<typeof motion.div> & {
+  mobileLogo?: React.ReactNode;
+}) => {
+  const { mobileLogo, ...rest } = props;
   return (
     <>
-      <DesktopSidebar {...props} />
-      <MobileSidebar {...(props as React.ComponentProps<"div"> & { pageTitle?: string })} />
+      <DesktopSidebar {...rest} />
+      <MobileSidebar {...(rest as React.ComponentProps<"div">)} mobileLogo={mobileLogo} />
     </>
   );
 };
@@ -85,146 +94,96 @@ export const DesktopSidebar = ({
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
   return (
-    <div
-      className="relative hidden md:block"
+    <motion.div
+      className={cn(
+        "h-full px-4 py-4 hidden md:flex md:flex-col bg-emerald-500/20 backdrop-blur-[48px] backdrop-saturate-[140%] border-r border-emerald-500/25 w-[300px] flex-shrink-0",
+        className
+      )}
+      animate={{
+        width: animate ? (open ? "300px" : "80px") : "300px",
+      }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      {...props}
     >
-      <motion.div
-        className={cn(
-          "h-screen flex flex-col flex-shrink-0",
-          open ? "px-4" : "px-2",
-          "py-4",
-          className
-        )}
-        animate={{
-          width: animate ? (open ? "240px" : "60px") : "240px",
-        }}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    </div>
+      {children}
+    </motion.div>
   );
 };
 
 export const MobileSidebar = ({
   className,
   children,
-  pageTitle,
+  mobileLogo,
   ...props
 }: React.ComponentProps<"div"> & {
-  pageTitle?: string;
+  mobileLogo?: React.ReactNode;
 }) => {
   const { open, setOpen } = useSidebar();
   return (
     <>
-      {/* Enhanced Mobile Header - Emerald Liquid Glass */}
+      {/* Mobile Header Bar */}
       <div
         className={cn(
-          // Container structure - optimized height for content
-          "h-16 px-4 flex flex-row md:hidden items-center justify-between w-full gap-3",
-          // Emerald liquid glass background
-          "bg-emerald-500/25 backdrop-blur-[48px] backdrop-saturate-[200%]",
-          // Refined border and shadow system
-          "border-b border-emerald-400/20",
-          "shadow-[0_8px_16px_-4px_rgba(16,185,129,0.12),0_16px_32px_-8px_rgba(16,185,129,0.18),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
-          // Smooth transitions
-          "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+          "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-emerald-500/20 backdrop-blur-[48px] backdrop-saturate-[140%] border-b border-emerald-500/25 w-full relative z-10"
         )}
         {...props}
       >
-        {/* Left: Logo/Brand */}
-        <Link
-          to="/admin/dashboard"
-          className="flex-shrink-0 flex items-center gap-2"
-          aria-label="DailyHush Admin Home"
-        >
-          <img
-            src="/rounded-logo.png"
-            alt="DailyHush"
-            className="h-8 w-8 rounded-full flex-shrink-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
-          />
-          <span className="text-white font-semibold text-base drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] hidden xs:inline">
-            DailyHush
-          </span>
-        </Link>
-
-        {/* Center: Page Title (collapses on small screens) */}
-        {pageTitle && (
-          <div className="flex-1 flex justify-center px-2 min-w-0 hidden sm:flex">
-            <h1 className="text-white/90 text-sm font-medium truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
-              {pageTitle}
-            </h1>
-          </div>
-        )}
-
-        {/* Right: Menu Button - Liquid Glass Interactive */}
+        <div className="flex items-center z-10">
+          {mobileLogo}
+        </div>
         <button
+          className="flex items-center z-10 p-2 -mr-2 hover:bg-emerald-500/20 rounded-lg transition-colors"
           onClick={() => setOpen(!open)}
-          className={cn(
-            // Touch target - 44x44px minimum
-            "flex-shrink-0 w-11 h-11 flex items-center justify-center",
-            // Liquid glass button
-            "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px] backdrop-saturate-[180%]",
-            "rounded-[12px]",
-            "border border-emerald-400/15",
-            "shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
-            // Interactive states
-            "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
-            "active:scale-95",
-            "hover:bg-[hsla(200,14%,78%,0.18)]",
-            "hover:shadow-[0_4px_8px_-2px_rgba(31,45,61,0.08),0_2px_4px_rgba(16,185,129,0.08),0_1px_0_0_rgba(255,255,255,0.2)_inset]",
-            "hover:-translate-y-[0.5px]",
-            // Focus states for accessibility
-            "focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:ring-offset-2 focus:ring-offset-emerald-950"
-          )}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
+          aria-label="Toggle menu"
         >
-          <Menu className="text-white h-5 w-5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]" />
+          <Menu className="text-white h-6 w-6" />
         </button>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0 }}
-            transition={{
-              duration: 0.3,
-              ease: "easeInOut",
-            }}
-            className={cn(
-              "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between",
-              // Emerald liquid glass mobile sidebar
-              "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
-              "border-r border-emerald-500/25",
-              className
-            )}
-          >
-            {/* Close Button - Enhanced with liquid glass */}
-            <button
-              className={cn(
-                "absolute right-6 top-6 z-50",
-                "w-11 h-11 flex items-center justify-center",
-                "bg-[hsla(200,14%,78%,0.12)] backdrop-blur-[16px]",
-                "rounded-[12px]",
-                "border border-emerald-400/15",
-                "shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
-                "transition-all duration-[250ms]",
-                "active:scale-95",
-                "hover:bg-[hsla(200,14%,78%,0.18)]"
-              )}
-              onClick={() => setOpen(!open)}
-              aria-label="Close menu"
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] md:hidden"
+              onClick={() => setOpen(false)}
+            />
+
+            {/* Drawer Panel */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "-100%", opacity: 0 }}
+              transition={{
+                duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
+              }}
+              className="fixed inset-y-0 left-0 w-[85vw] max-w-sm bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 z-[100] md:hidden shadow-2xl"
             >
-              <X className="text-white h-5 w-5" />
-            </button>
-            {children}
-          </motion.div>
+              {/* Close Button */}
+              <button
+                className="absolute right-4 top-4 z-50 text-white/80 hover:text-white p-2 hover:bg-white/10 rounded-lg transition-all duration-200"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" />
+              </button>
+
+              {/* Drawer Content */}
+              <div className="relative h-full w-full flex flex-col px-6 pt-16 pb-8 overflow-y-auto overflow-x-hidden">
+                {/* Explicitly render children with forced visibility */}
+                <div className="flex flex-col gap-8 w-full text-white">
+                  {children}
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
@@ -234,35 +193,33 @@ export const MobileSidebar = ({
 export const SidebarLink = ({
   link,
   className,
-  ...props
-}: {
-  link: Links;
-  className?: string;
-  props?: any;
-}) => {
+  onClick,
+}: SidebarLinkProps) => {
   const { open, animate } = useSidebar();
   return (
     <Link
       to={link.href}
       className={cn(
-        "flex items-center group/sidebar rounded-lg transition-colors min-w-0",
-        open ? "py-2 px-3 gap-3 justify-start" : "py-2 px-0 justify-center",
+        "flex items-center justify-start gap-3 group/sidebar py-2 relative",
         className
       )}
-      {...props}
+      onClick={onClick}
     >
-      <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+      <span className="flex-shrink-0 flex items-center justify-center">
         {link.icon}
-      </div>
-      <motion.span
-        animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
-          opacity: animate ? (open ? 1 : 0) : 1,
-        }}
-        className="text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-nowrap overflow-hidden"
+      </span>
+      <span
+        className={cn(
+          "text-sm group-hover/sidebar:translate-x-1 transition-transform duration-150 whitespace-pre flex-1",
+          // Desktop behavior: hide text when collapsed
+          animate && !open && "md:hidden md:opacity-0",
+          (!animate || open) && "md:inline-block md:opacity-100",
+          // Mobile behavior: always show text
+          "opacity-100 inline-block"
+        )}
       >
         {link.label}
-      </motion.span>
+      </span>
     </Link>
   );
 };

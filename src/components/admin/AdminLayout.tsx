@@ -7,13 +7,14 @@ import {
   LogOut,
   MessageSquare,
   ClipboardList,
-  BarChart3
+  BarChart3,
+  Home
 } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import { Sidebar, SidebarBody, SidebarLink } from '../ui/sidebar';
 import { signOut } from '../../lib/services/auth';
+import { Sidebar, SidebarBody, SidebarLink } from '../ui/sidebar';
+import { motion } from 'framer-motion';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -24,52 +25,52 @@ interface NavigationLink {
   label: string;
   href: string;
   icon: React.ReactNode;
-  badge?: number;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
 
   const navigationLinks: NavigationLink[] = [
     {
       label: "Dashboard",
       href: "/admin/dashboard",
-      icon: <LayoutDashboard className="h-5 w-5" />
+      icon: <LayoutDashboard className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Contact Submissions",
       href: "/admin/contact-submissions",
-      icon: <MessageSquare className="h-5 w-5" />
+      icon: <MessageSquare className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Leads",
       href: "/admin/leads",
-      icon: <Users className="h-5 w-5" />
+      icon: <Users className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Quiz Results",
       href: "/admin/quiz-results",
-      icon: <ClipboardList className="h-5 w-5" />
+      icon: <ClipboardList className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Quiz Analytics",
       href: "/admin/quiz-analytics",
-      icon: <BarChart3 className="h-5 w-5" />
+      icon: <BarChart3 className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Cartography",
       href: "/admin/cartography",
-      icon: <FileText className="h-5 w-5" />
+      icon: <FileText className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Posts",
       href: "/admin/posts",
-      icon: <FileText className="h-5 w-5" />
+      icon: <FileText className="text-white h-5 w-5 flex-shrink-0" />
     },
     {
       label: "Settings",
       href: "/admin/settings",
-      icon: <Settings className="h-5 w-5" />
+      icon: <Settings className="text-white h-5 w-5 flex-shrink-0" />
     }
   ];
 
@@ -83,114 +84,136 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 min-h-screen md:h-screen md:overflow-hidden">
+    <div className={cn(
+      "flex flex-col md:flex-row bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950 w-full flex-1 mx-auto overflow-hidden",
+      "h-screen"
+    )}>
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody
           className={cn(
             "justify-between gap-10",
-            // Muted emerald liquid glass sidebar
-            "bg-emerald-500/35 backdrop-blur-[48px] backdrop-saturate-[140%]",
-            "border-r border-emerald-500/25",
-            "shadow-[0_16px_32px_-8px_rgba(16,185,129,0.15),0_24px_48px_-12px_rgba(16,185,129,0.20),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
-            "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+            "bg-emerald-500/20 backdrop-blur-[48px] backdrop-saturate-[140%]",
+            "border-r border-emerald-500/25"
           )}
-          pageTitle={getPageTitle(currentPage)}
+          mobileLogo={<MobileLogo />}
         >
-          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          {/* Desktop Content */}
+          <div className="hidden md:flex md:flex-col md:flex-1 md:overflow-y-auto md:overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-1">
-            {navigationLinks.map((link, idx) => (
-              <SidebarLink
-                key={idx}
-                link={link}
-                className={cn(
-                  // Refined liquid glass navigation items
-                  "rounded-[12px] px-3 py-2",
-                  "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
-                  "text-white/80",
-                  // Hover - delicate gray liquid rise
-                  "hover:bg-[hsla(200,14%,78%,0.18)]",
-                  "hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_3px_-1px_rgba(31,45,61,0.06),0_0.5px_0_0_rgba(255,255,255,0.15)_inset]",
-                  "hover:text-white",
-                  "hover:-translate-y-[0.5px]",
-                  // Active - amber accent ONLY for active state
-                  currentPage === link.href && "bg-amber-500/50 backdrop-blur-[16px] backdrop-saturate-[140%] text-white font-medium shadow-[0_2px_4px_-2px_rgba(31,45,61,0.06),0_4px_8px_-2px_rgba(31,45,61,0.08),0_2px_8px_rgba(245,158,11,0.12),0_0.5px_0_0_rgba(255,255,255,0.15)_inset] border border-amber-500/15"
-                )}
-              />
-            ))}
+            <div className="mt-8 flex flex-col gap-2">
+              {navigationLinks.map((link, idx) => (
+                <SidebarLink
+                  key={idx}
+                  link={{
+                    ...link,
+                    icon: link.icon
+                  }}
+                  className={cn(
+                    "text-white/70 hover:text-white hover:bg-emerald-500/20 rounded-lg px-3",
+                    "transition-all duration-200",
+                    (location.pathname === link.href || currentPage === link.href) &&
+                    "bg-gradient-to-r from-amber-500/50 to-amber-600/40 text-white font-semibold hover:from-amber-500/60 hover:to-amber-600/50 shadow-[0_2px_8px_rgba(245,158,11,0.25)]"
+                  )}
+                />
+              ))}
             </div>
           </div>
-          <div className="flex-shrink-0">
-            <button
-              onClick={handleLogout}
-              className={cn(
-                "flex items-center gap-3 rounded-[12px] px-3 py-2 w-full text-left min-w-0",
-                "text-red-300/80",
-                "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
-                // Red tinted liquid glass on hover
-                "hover:bg-red-500/10",
-                "hover:text-red-300",
-                "hover:shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_3px_-1px_rgba(31,45,61,0.06)]",
-                "hover:-translate-y-[0.5px]"
-              )}
-            >
-              <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                <LogOut className="h-5 w-5" />
-              </div>
-              <motion.span
-                animate={{
-                  display: open ? "inline-block" : "none",
-                  opacity: open ? 1 : 0,
+
+          {/* Mobile Content */}
+          <div className="flex md:hidden flex-col w-full gap-8">
+            {/* Mobile Logo Section */}
+            <div className="flex flex-col gap-1 pb-4 border-b border-white/10">
+              <Logo />
+              <p className="text-xs text-white/50 pl-11">Admin Dashboard</p>
+            </div>
+
+            {/* Mobile Navigation Links */}
+            <nav className="flex flex-col gap-2 w-full" aria-label="Mobile navigation">
+              {navigationLinks.map((link, idx) => (
+                <SidebarLink
+                  key={idx}
+                  link={{
+                    ...link,
+                    icon: link.icon
+                  }}
+                  className={cn(
+                    "text-white/80 hover:text-white hover:bg-emerald-500/20 rounded-lg px-3 py-3",
+                    "transition-all duration-200 text-base",
+                    (location.pathname === link.href || currentPage === link.href) &&
+                    "bg-gradient-to-r from-amber-500/50 to-amber-600/40 text-white font-semibold hover:from-amber-500/60 hover:to-amber-600/50 shadow-[0_2px_8px_rgba(245,158,11,0.25)]"
+                  )}
+                  onClick={() => setOpen(false)}
+                />
+              ))}
+            </nav>
+
+            {/* Mobile Logout Button */}
+            <div className="mt-auto pt-4 border-t border-white/10">
+              <SidebarLink
+                link={{
+                  label: "Logout",
+                  href: "#",
+                  icon: <LogOut className="text-red-300/80 h-5 w-5 flex-shrink-0" />
                 }}
-                className="text-sm whitespace-nowrap overflow-hidden"
-              >
-                Logout
-              </motion.span>
-            </button>
+                className="text-red-300/80 hover:text-white hover:bg-red-500/20 rounded-lg px-3 py-3 text-base transition-all duration-200"
+                onClick={(e: React.MouseEvent) => {
+                  e.preventDefault();
+                  setOpen(false);
+                  handleLogout();
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Desktop Logout */}
+          <div className="hidden md:block">
+            <SidebarLink
+              link={{
+                label: "Logout",
+                href: "#",
+                icon: <LogOut className="text-red-300/80 h-5 w-5 flex-shrink-0" />
+              }}
+              className="text-red-300/80 hover:text-red-200 hover:bg-red-500/15 rounded-lg px-3"
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault();
+                handleLogout();
+              }}
+            />
           </div>
         </SidebarBody>
       </Sidebar>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col md:overflow-hidden">
-        {/* Desktop Header - Hidden on mobile */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Top Bar */}
         <header className={cn(
-          "hidden md:flex",
-          // Lighter emerald topbar - creates hierarchy through opacity
+          "flex h-14 shrink-0 items-center gap-3 border-b px-4 md:px-6",
           "bg-emerald-500/25 backdrop-blur-[48px] backdrop-saturate-[200%]",
-          "border-b border-emerald-400/20",
-          "shadow-[0_8px_16px_-4px_rgba(16,185,129,0.12),0_16px_32px_-8px_rgba(16,185,129,0.18),0_1px_0_0_rgba(255,255,255,0.12)_inset]",
-          "px-6 py-4 flex-shrink-0",
-          "transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+          "border-emerald-400/20",
+          "shadow-[0_2px_8px_-2px_rgba(16,185,129,0.08)]"
         )}>
-          <div className="flex items-center justify-between w-full">
-            <div>
-              <h1 className="text-2xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-                {getPageTitle(currentPage)}
-              </h1>
-              <p className="text-sm text-white/70 mt-0.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
-                {getPageDescription(currentPage)}
-              </p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className={cn(
-                "text-sm font-medium text-white/80",
-                "bg-[hsla(200,16%,85%,0.14)] backdrop-blur-[16px] backdrop-saturate-[180%]",
-                "px-3 py-1.5 rounded-[10px]",
-                "border border-[hsla(200,18%,85%,0.14)]",
-                "shadow-[0_1px_2px_-1px_rgba(31,45,61,0.04),0_1px_0_0_rgba(255,255,255,0.15)_inset]",
-                "transition-all duration-[250ms]"
-              )}>
-                <span className="text-white/60">Last login:</span>{" "}
-                <span className="text-white">{new Date().toLocaleDateString()}</span>
-              </div>
-            </div>
+          <div className="flex flex-1 items-center gap-2 min-w-0">
+            <Home className="h-4 w-4 text-white/60" />
+            <span className="text-sm text-white/60">Admin</span>
+            <span className="text-white/40">/</span>
+            <span className="text-sm text-white font-medium">{getPageTitle(currentPage)}</span>
           </div>
         </header>
 
-        {/* Content - Dark emerald for glass contrast */}
-        <main className="flex-1 p-4 md:p-6 md:overflow-y-auto">
-          <div className="max-w-7xl mx-auto">
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="max-w-7xl mx-auto p-4 md:p-6">
+            {/* Page Header */}
+            <div className="mb-6">
+              <h1 className="text-2xl md:text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] mb-2">
+                {getPageTitle(currentPage)}
+              </h1>
+              <p className="text-sm text-white/70 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]">
+                {getPageDescription(currentPage)}
+              </p>
+            </div>
+
+            {/* Page Content */}
             {children}
           </div>
         </main>
@@ -200,26 +223,66 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, currentPage }) => {
 };
 
 // Logo Components
-const Logo = () => {
+export const Logo = () => {
   return (
     <Link
       to="/admin/dashboard"
-      className="font-normal flex space-x-2 items-center text-sm text-white py-1 relative z-20"
-      aria-label="DailyHush Admin"
+      className="font-normal flex space-x-2 items-center text-sm py-1 relative z-20"
     >
-      <img src="/inline-logo.png" alt="DailyHush" className="h-6 w-auto flex-shrink-0 invert" />
+      <div className="relative">
+        <img
+          src="/rounded-logo.png"
+          alt="DailyHush"
+          className="h-9 w-9 rounded-full flex-shrink-0 ring-2 ring-emerald-500/30"
+        />
+        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-emerald-900" />
+      </div>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="font-bold text-white whitespace-pre text-base"
+      >
+        DailyHush
+      </motion.span>
     </Link>
   );
 };
 
-const LogoIcon = () => {
+export const LogoIcon = () => {
   return (
     <Link
       to="/admin/dashboard"
-      className="font-normal flex items-center text-sm text-white py-1 relative z-20"
-      aria-label="DailyHush Admin"
+      className="font-normal flex space-x-2 items-center text-sm py-1 relative z-20"
     >
-      <img src="/rounded-logo.png" alt="DailyHush" className="h-8 w-8 rounded-full flex-shrink-0" />
+      <div className="relative">
+        <img
+          src="/rounded-logo.png"
+          alt="DailyHush"
+          className="h-9 w-9 rounded-full flex-shrink-0 ring-2 ring-emerald-500/30"
+        />
+        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-emerald-900" />
+      </div>
+    </Link>
+  );
+};
+
+export const MobileLogo = () => {
+  return (
+    <Link
+      to="/admin/dashboard"
+      className="font-normal flex space-x-2 items-center text-sm py-1 relative z-20"
+    >
+      <div className="relative">
+        <img
+          src="/rounded-logo.png"
+          alt="DailyHush"
+          className="h-8 w-8 rounded-full flex-shrink-0 ring-2 ring-emerald-500/30"
+        />
+        <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-emerald-900" />
+      </div>
+      <span className="font-bold text-white whitespace-pre text-base">
+        DailyHush
+      </span>
     </Link>
   );
 };

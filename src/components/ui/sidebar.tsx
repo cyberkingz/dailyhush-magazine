@@ -85,22 +85,26 @@ export const DesktopSidebar = ({
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
   return (
-    <motion.div
-      className={cn(
-        "h-screen hidden md:flex md:flex-col flex-shrink-0",
-        open ? "px-4" : "px-2",
-        "py-4",
-        className
-      )}
-      animate={{
-        width: animate ? (open ? "240px" : "60px") : "240px",
-      }}
+    <div
+      className="relative hidden md:block"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      {...props}
     >
-      {children}
-    </motion.div>
+      <motion.div
+        className={cn(
+          "h-screen flex flex-col flex-shrink-0",
+          open ? "px-4" : "px-2",
+          "py-4",
+          className
+        )}
+        animate={{
+          width: animate ? (open ? "240px" : "60px") : "240px",
+        }}
+        {...props}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 };
 

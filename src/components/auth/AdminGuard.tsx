@@ -35,7 +35,7 @@ const AdminGuard: React.FC<AdminGuardProps> = ({ children, fallback }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950">
+      <div className="min-h-screen flex items-center justify-center bg-white/80 backdrop-blur-xl">
         <div className="flex flex-col items-center gap-8">
           {/* Logo with pulsing ring */}
           <div className="relative w-20 h-20 animate-float">
@@ -52,7 +52,7 @@ const AdminGuard: React.FC<AdminGuardProps> = ({ children, fallback }) => {
             </div>
 
             {/* Status indicator dot */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-400 rounded-full border-2 border-emerald-900 animate-pulse" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse" />
           </div>
 
           {/* Spinner */}
@@ -62,13 +62,13 @@ const AdminGuard: React.FC<AdminGuardProps> = ({ children, fallback }) => {
 
           {/* Loading text */}
           <div className="text-center space-y-2">
-            <p className="text-white/90 font-medium text-base tracking-wide animate-fade">
+            <p className="text-emerald-900 font-medium text-base tracking-wide animate-fade">
               Verifying access...
             </p>
             <div className="flex gap-1 justify-center">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
           </div>
         </div>

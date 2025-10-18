@@ -17,7 +17,7 @@ export function BrandLoader({
       aria-live="polite"
       className={cn(
         'w-full flex items-center justify-center',
-        fullScreen && 'fixed inset-0 z-50 bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950',
+        fullScreen && 'fixed inset-0 z-50 bg-white/80 backdrop-blur-xl',
         !fullScreen && 'min-h-[400px] py-12',
         className,
       )}
@@ -38,7 +38,7 @@ export function BrandLoader({
           </div>
 
           {/* Status indicator dot */}
-          <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-400 rounded-full border-2 border-emerald-900 animate-pulse" />
+          <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse" />
         </div>
 
         {/* Spinner */}
@@ -48,13 +48,13 @@ export function BrandLoader({
 
         {/* Loading text */}
         <div className="text-center space-y-2">
-          <p className="text-white/90 font-medium text-base tracking-wide animate-fade">
+          <p className="text-emerald-900 font-medium text-base tracking-wide animate-fade">
             {message}
           </p>
           <div className="flex gap-1 justify-center">
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
           </div>
         </div>
       </div>

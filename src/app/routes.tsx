@@ -1,7 +1,13 @@
 import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
 import { BrandLoader } from '@/components/ui/BrandLoader'
+
+function RouteLoader() {
+  const location = useLocation()
+  const isAdminRoute = location.pathname.startsWith('/admin')
+  return <BrandLoader variant={isAdminRoute ? 'admin' : 'public'} />
+}
 
 const Home = lazy(() => import('@/pages/index'))
 const BlogList = lazy(() => import('@/pages/blog/index'))
@@ -39,7 +45,7 @@ const AdminQuizAnalytics = lazy(() => import('@/pages/admin/QuizAnalytics'))
 
 export function AppRoutes() {
   return (
-    <Suspense fallback={<BrandLoader /> }>
+    <Suspense fallback={<RouteLoader />}>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/blog" element={<Layout><BlogList /></Layout>} />

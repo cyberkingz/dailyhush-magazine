@@ -266,6 +266,9 @@ export default {
         'slide-down': 'slideDown 0.5s ease-in',
         'slide-from-top': 'slideFromTop 0.3s ease-out',
         'pulse-soft': 'pulseSoft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-ring': 'pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade': 'fade 2s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -287,6 +290,24 @@ export default {
         pulseSoft: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.9' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        pulseRing: {
+          '0%, 100%': {
+            transform: 'scale(1)',
+            opacity: '1'
+          },
+          '50%': {
+            transform: 'scale(1.1)',
+            opacity: '0.5'
+          },
+        },
+        fade: {
+          '0%, 100%': { opacity: '0.7' },
+          '50%': { opacity: '1' },
         },
       },
       // Container Sizes

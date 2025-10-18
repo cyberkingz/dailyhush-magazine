@@ -634,6 +634,181 @@ export async function getDropoffAnalysis(
   }
 }
 
+export interface CampaignMetrics {
+  campaign: string
+  campaignType: 'cold_email' | 'post_quiz_retargeting'
+  utmSource?: string
+  utmMedium?: string
+  views: number
+  starts: number
+  completions: number
+  startRate: number
+  completionRate: number
+  overallConversionRate: number
+}
+
+/**
+ * Get campaign-level metrics grouped by utm_campaign
+ * Distinguishes between cold email campaigns (quiz invites) and post-quiz retargeting
+ */
+export async function getCampaignMetrics(
+  dateRange?: DateRange
+): Promise<CampaignMetrics[]> {
+  try {
+    const startDate = dateRange?.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+    const endDate = dateRange?.endDate || new Date().toISOString()
+
+    // Get all quiz sessions with utm_campaign
+    const { data: sessions, error: sessionsError } = await supabase
+      .from('quiz_sessions')
+      .select('session_id, utm_campaign, utm_source, utm_medium, is_completed, started_at')
+      .not('utm_campaign', 'is', null)
+      .gte('created_at', startDate)
+      .lte('created_at', endDate)
+
+    if (sessionsError) {
+      console.error('Error fetching campaign sessions:', sessionsError)
+      return []
+    }
+
+    if (!sessions || sessions.length === 0) {
+      return []
+    }
+
+    // Get all quiz events for these sessions
+    const sessionIds = sessions.map(s => s.session_id)
+    const { data: events, error: eventsError } = await supabase
+      .from('quiz_events')
+      .select('session_id, event_type')
+      .in('session_id', sessionIds)
+      .in('event_type', ['page_view', 'quiz_start', 'quiz_complete'])
+
+    if (eventsError) {
+      console.error('Error fetching campaign events:', eventsError)
+      return []
+    }
+
+    // Create maps for quick lookup
+    const startedSessions = new Set(
+      events?.filter(e => e.event_type === 'quiz_start').map(e => e.session_id) || []
+    )
+    const completedSessions = new Set(
+      events?.filter(e => e.event_type === 'quiz_complete').map(e => e.session_id) || []
+    )
+
+    // Group sessions by campaign
+    const campaignMap = new Map<string, {
+      campaign: string
+      utmSource?: string
+      utmMedium?: string
+      views: Set<string>
+      starts: Set<string>
+      completions: Set<string>
+    }>()
+
+    sessions.forEach(session => {
+      const campaign = session.utm_campaign!
+
+      if (!campaignMap.has(campaign)) {
+        campaignMap.set(campaign, {
+          campaign,
+          utmSource: session.utm_source || undefined,
+          utmMedium: session.utm_medium || undefined,
+          views: new Set(),
+          starts: new Set(),
+          completions: new Set(),
+        })
+      }
+
+      const c = campaignMap.get(campaign)!
+      c.views.add(session.session_id)
+
+      if (startedSessions.has(session.session_id)) {
+        c.starts.add(session.session_id)
+      }
+
+      if (completedSessions.has(session.session_id)) {
+        c.completions.add(session.session_id)
+      }
+    })
+
+    // Calculate metrics for each campaign
+    const metrics: CampaignMetrics[] = Array.from(campaignMap.values()).map(c => {
+      const views = c.views.size
+      const starts = c.starts.size
+      const completions = c.completions.size
+
+      const startRate = views > 0 ? (starts / views) * 100 : 0
+      const completionRate = starts > 0 ? (completions / starts) * 100 : 0
+      const overallConversionRate = views > 0 ? (completions / views) * 100 : 0
+
+      // Determine campaign type based on utm_campaign value
+      const campaignType = determineCampaignType(c.campaign)
+
+      return {
+        campaign: c.campaign,
+        campaignType,
+        utmSource: c.utmSource,
+        utmMedium: c.utmMedium,
+        views,
+        starts,
+        completions,
+        startRate: Math.round(startRate * 10) / 10,
+        completionRate: Math.round(completionRate * 10) / 10,
+        overallConversionRate: Math.round(overallConversionRate * 10) / 10,
+      }
+    })
+
+    // Sort by views descending
+    return metrics.sort((a, b) => b.views - a.views)
+  } catch (error) {
+    console.error('Error fetching campaign metrics:', error)
+    return []
+  }
+}
+
+/**
+ * Determine if a campaign is cold email or post-quiz retargeting
+ */
+function determineCampaignType(campaign: string): 'cold_email' | 'post_quiz_retargeting' {
+  // Cold email campaigns target quiz page
+  const coldEmailCampaigns = [
+    'quiz_invite',
+    'email_2',
+    'email_3',
+    'email_4',
+    'email_5_final',
+    'email_sequence',
+    'google_sheet_invite'
+  ]
+
+  // Post-quiz retargeting campaigns target product page
+  const postQuizCampaigns = [
+    'quiz-retargeting',
+    'day-0',
+    'day-1',
+    'day-3',
+    'day-5',
+    'day-7'
+  ]
+
+  if (coldEmailCampaigns.some(c => campaign.includes(c))) {
+    return 'cold_email'
+  }
+
+  if (postQuizCampaigns.some(c => campaign.includes(c))) {
+    return 'post_quiz_retargeting'
+  }
+
+  // Default: if it mentions "email" or "invite", it's cold email
+  if (campaign.toLowerCase().includes('email') || campaign.toLowerCase().includes('invite')) {
+    return 'cold_email'
+  }
+
+  // Otherwise, assume post-quiz retargeting
+  return 'post_quiz_retargeting'
+}
+
 /**
  * Get daily time series metrics for trends over time
  */

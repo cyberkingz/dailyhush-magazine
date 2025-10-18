@@ -10,19 +10,19 @@ interface PhraseCard {
 const phrases: PhraseCard[] = [
   {
     phrase: "I should've known better",
-    description: "This isn't analysis. This is self-punishment. Not 'What could I learn?' but 'Why am I so stupid?'",
+    description: "Self-punishment disguised as analysis. Not 'What can I learn from this?' but a shame ritual your nervous system now expects. This was MY phrase for 8 years.",
     icon: Brain,
     statistic: "100 women wrote this exact phrase"
   },
   {
     phrase: "Afraid of doing it wrong",
-    description: "Not fear of failure. Fear of being exposed as inadequate. Not about the outcome—about being seen.",
+    description: "Not fear of failure. Fear of being exposed as inadequate. Not about the outcome—about being seen. This is what keeps you from speaking up.",
     icon: Eye,
     statistic: "104 women shared this fear"
   },
   {
     phrase: "Can't stop replaying",
-    description: "Not processing. Punishing. Re-enacting the moment you felt exposed. A ritual your nervous system now expects.",
+    description: "The compulsive loop. Your brain replaying that conversation, that email, that moment—obsessing over whether they saw you were faking it. A pattern I recognized immediately.",
     icon: Repeat,
     statistic: "92 women experience this daily"
   }
@@ -51,7 +51,7 @@ export default function ProblemRecognitionSection() {
             You're Not Replaying Tuesday's Meeting Because You're Anxious.
           </h2>
           <p className="text-xl md:text-2xl text-amber-600 max-w-3xl mx-auto font-bold mb-4">
-            You're Punishing Yourself For Being Seen.
+            It's Because You Can't Stop Replaying Whether They Saw Through You.
           </p>
           <p className="text-lg text-emerald-700/80 max-w-3xl mx-auto">
             If you've ever thought these three phrases, you don't have anxiety—you have <strong>shame-driven rumination</strong>.

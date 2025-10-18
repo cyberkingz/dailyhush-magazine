@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Users, Target, ShoppingCart, Route, DollarSign } from 'lucide-react'
-import { subDays } from 'date-fns'
+import { Users, Target, ShoppingCart, Route, DollarSign, Mail, ClipboardList } from 'lucide-react'
 import type { DateRange } from 'react-day-picker'
 import { AdminLayout } from '../../components/admin'
 import { AdminGuard } from '../../components/auth'
@@ -16,10 +15,12 @@ import {
   ProductPageView,
   UserJourneyView,
   OrdersView,
+  EmailCampaignsView,
+  QuizAnalyticsView,
 } from '../../components/admin/tracking'
 import type { DateRange as AnalyticsDateRange } from '../../lib/services/trackingAnalytics'
 
-type ViewMode = 'overview' | 'thank-you' | 'product' | 'journey' | 'orders'
+type ViewMode = 'overview' | 'thank-you' | 'product' | 'journey' | 'orders' | 'email-campaigns' | 'quiz-analytics'
 
 interface ViewTab {
   id: ViewMode
@@ -31,6 +32,8 @@ const VIEW_TABS: ViewTab[] = [
   { id: 'overview', label: 'Overview', icon: <Users className="inline h-4 w-4 mr-2" /> },
   { id: 'thank-you', label: 'Thank You Page', icon: <Target className="inline h-4 w-4 mr-2" /> },
   { id: 'product', label: 'Product Page', icon: <ShoppingCart className="inline h-4 w-4 mr-2" /> },
+  { id: 'email-campaigns', label: 'Email Campaigns', icon: <Mail className="inline h-4 w-4 mr-2" /> },
+  { id: 'quiz-analytics', label: 'Quiz Analytics', icon: <ClipboardList className="inline h-4 w-4 mr-2" /> },
   { id: 'journey', label: 'User Journey', icon: <Route className="inline h-4 w-4 mr-2" /> },
   { id: 'orders', label: 'Orders & Revenue', icon: <DollarSign className="inline h-4 w-4 mr-2" /> },
 ]
@@ -40,9 +43,10 @@ const AdminDashboard: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([])
   const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([])
   const [loading, setLoading] = useState(true)
+  const today = new Date()
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: subDays(new Date(), 30),
-    to: new Date(),
+    from: today,
+    to: today,
   })
 
   useEffect(() => {
@@ -88,6 +92,10 @@ const AdminDashboard: React.FC = () => {
         return 'Thank You Page conversion analytics'
       case 'product':
         return 'Product Page performance metrics'
+      case 'email-campaigns':
+        return 'Email campaign performance and conversion tracking'
+      case 'quiz-analytics':
+        return 'Quiz performance, funnel metrics, and campaign tracking'
       case 'journey':
         return 'Complete user journey tracking'
       case 'orders':
@@ -117,23 +125,68 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* View Mode Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
-            {VIEW_TABS.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setViewMode(tab.id)}
-                className={cn(
-                  'px-3 md:px-4 py-2 rounded-lg font-medium text-xs md:text-sm transition-all whitespace-nowrap flex-shrink-0',
-                  viewMode === tab.id
-                    ? 'bg-amber-500/50 backdrop-blur-[16px] text-white shadow-[0_2px_8px_rgba(245,158,11,0.2)]'
-                    : 'bg-white/10 text-white/70 hover:bg-white/20'
-                )}
-              >
-                {tab.icon}
-                {tab.label}
-              </button>
-            ))}
+          {/* View Mode Tabs - Airbnb-style mobile scrolling */}
+          <div
+            className="relative -mx-4 md:mx-0"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            <div
+              className="flex gap-2 overflow-x-auto px-4 md:px-0 pb-3 snap-x snap-mandatory scroll-smooth scrollbar-hide"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              }}
+            >
+              {VIEW_TABS.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={(e) => {
+                    setViewMode(tab.id)
+                    // Smooth scroll active tab into view on mobile
+                    e.currentTarget.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'nearest',
+                      inline: 'center'
+                    })
+                  }}
+                  className={cn(
+                    'px-4 md:px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 snap-center',
+                    'flex items-center gap-2',
+                    viewMode === tab.id
+                      ? 'bg-gradient-to-r from-amber-500/60 to-amber-600/50 backdrop-blur-[20px] text-white shadow-[0_4px_12px_rgba(245,158,11,0.25)] border border-amber-400/30 scale-[1.02]'
+                      : 'bg-white/8 backdrop-blur-[16px] text-white/70 hover:bg-white/15 hover:text-white border border-white/10 hover:border-white/20 active:scale-95'
+                  )}
+                >
+                  <span className={cn(
+                    'transition-transform duration-200',
+                    viewMode === tab.id && 'scale-110'
+                  )}>
+                    {tab.icon}
+                  </span>
+                  <span className="font-semibold">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Blur fade edges for mobile and desktop */}
+            <div
+              className="absolute left-0 top-0 bottom-3 w-16 pointer-events-none z-10"
+              style={{
+                backdropFilter: 'blur(3px)',
+                WebkitBackdropFilter: 'blur(3px)',
+                maskImage: 'linear-gradient(to right, rgba(0,0,0,0.8), transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0.8), transparent)',
+              }}
+            />
+            <div
+              className="absolute right-0 top-0 bottom-3 w-16 pointer-events-none z-10"
+              style={{
+                backdropFilter: 'blur(3px)',
+                WebkitBackdropFilter: 'blur(3px)',
+                maskImage: 'linear-gradient(to left, rgba(0,0,0,0.8), transparent)',
+                WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.8), transparent)',
+              }}
+            />
           </div>
 
           {/* View Content */}
@@ -152,6 +205,14 @@ const AdminDashboard: React.FC = () => {
 
           {viewMode === 'product' && (
             <ProductPageView dateRange={analyticsDateRange} />
+          )}
+
+          {viewMode === 'email-campaigns' && (
+            <EmailCampaignsView dateRange={analyticsDateRange} />
+          )}
+
+          {viewMode === 'quiz-analytics' && (
+            <QuizAnalyticsView dateRange={analyticsDateRange} />
           )}
 
           {viewMode === 'journey' && (

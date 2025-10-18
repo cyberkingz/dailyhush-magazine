@@ -9,10 +9,13 @@ import { quizQuestions } from '../../data/quizQuestions'
 import { BasicDateRangePicker } from '../../components/admin/BasicDateRangePicker'
 import { QuizFunnelChart } from '../../components/admin/analytics/QuizFunnelChart'
 import { FunnelActionItems } from '../../components/admin/analytics/FunnelActionItems'
+import { CampaignPerformanceTable } from '../../components/admin/analytics/CampaignPerformanceTable'
 import {
   getQuizFunnelMetrics,
   getQuestionLevelMetrics,
   getDailyTimeSeriesMetrics,
+  getCampaignMetrics,
+  type CampaignMetrics,
 } from '../../lib/services/quiz'
 import {
   KPICardSkeleton,
@@ -91,6 +94,7 @@ export default function QuizAnalytics() {
   const [questionData, setQuestionData] = useState<QuestionMetrics[]>([])
   const [deviceData, setDeviceData] = useState<DeviceMetrics[]>([])
   const [sourceData, setSourceData] = useState<DeviceMetrics[]>([])
+  const [campaignData, setCampaignData] = useState<CampaignMetrics[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [comparisonMode, setComparisonMode] = useState(false)
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -293,6 +297,10 @@ export default function QuizAnalytics() {
       })
 
       setQuestionData(questionAnalytics)
+
+      // Get campaign-level metrics (cold email performance)
+      const campaignMetrics = await getCampaignMetrics(analyticsDateRange)
+      setCampaignData(campaignMetrics)
 
     } catch (error) {
       console.error('Error loading analytics:', error)
@@ -782,6 +790,9 @@ export default function QuizAnalytics() {
             )}
           </div>
         </div>
+
+        {/* Campaign Performance */}
+        <CampaignPerformanceTable campaigns={campaignData} isLoading={isLoading} />
 
         {/* Question-Level Analysis */}
         <GlassCard intensity="heavy" className="ring-1 ring-amber-500/5">

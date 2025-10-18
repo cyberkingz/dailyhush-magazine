@@ -45,6 +45,20 @@ export function BasicDateRangePicker({
 
   const presets = [
     {
+      label: "Today",
+      value: {
+        from: today,
+        to: today,
+      },
+    },
+    {
+      label: "Yesterday",
+      value: {
+        from: subDays(today, 1),
+        to: subDays(today, 1),
+      },
+    },
+    {
       label: "Last 7 days",
       value: {
         from: subDays(today, 7),

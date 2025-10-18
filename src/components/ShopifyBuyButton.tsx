@@ -29,6 +29,14 @@ export default function ShopifyBuyButton({
 }: ShopifyBuyButtonProps) {
   const [containerId] = useState(() => `shopify-buy-${Math.random().toString(36).substr(2, 9)}`)
   const initAttempted = useRef(false)
+  const onClickRef = useRef(onClick)
+  const onCheckoutCompleteRef = useRef(onCheckoutComplete)
+
+  // Update refs when callbacks change (doesn't trigger re-initialization)
+  useEffect(() => {
+    onClickRef.current = onClick
+    onCheckoutCompleteRef.current = onCheckoutComplete
+  }, [onClick, onCheckoutComplete])
 
   useEffect(() => {
     const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js'
@@ -112,8 +120,8 @@ export default function ShopifyBuyButton({
                 DOMEvents: {
                   'click button': () => {
                     console.log('🔥 Shopify button clicked via DOMEvents')
-                    if (onClick) {
-                      onClick()
+                    if (onClickRef.current) {
+                      onClickRef.current()
                     }
                   }
                 }
@@ -192,8 +200,8 @@ export default function ShopifyBuyButton({
                 popup: false,
                 events: {
                   afterInit: () => {
-                    if (onCheckoutComplete) {
-                      onCheckoutComplete()
+                    if (onCheckoutCompleteRef.current) {
+                      onCheckoutCompleteRef.current()
                     }
                   }
                 }
@@ -274,7 +282,7 @@ export default function ShopifyBuyButton({
       }
       initAttempted.current = false
     }
-  }, [productId, domain, storefrontAccessToken, containerId, onClick])
+  }, [productId, domain, storefrontAccessToken, containerId])
 
   // Separate effect to handle prop changes without reinitializing
   // (buttonColor, buttonHoverColor, buttonText, onCheckoutComplete changes won't trigger full reinitialization)

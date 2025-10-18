@@ -154,27 +154,32 @@ export default function FireStarterProduct() {
 
             {/* Product Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-emerald-900 mb-3 leading-tight">
-              Your Body Decides to Panic 7 Seconds Before Your Brain Knows.
+              Your Body Decides You're Exposed 7 Seconds Before Your Thoughts Form.
             </h1>
 
-            {/* Opening Hook - Shame Core (Tightened) */}
-            <p className="text-base md:text-lg text-emerald-800 mb-4 leading-[1.7]">
-              "I should've known better." You've said that 100 times this month. And every time, you think you're analyzing—figuring out what went wrong. But you're not. <strong className="text-amber-700">You're punishing.</strong> That's not overthinking. That's shame wearing an anxiety mask. The reason nothing has worked yet isn't because you're broken. It's because you've been treating the wrong problem.
+            {/* Opening Hook */}
+            <p className="text-base md:text-lg text-emerald-800 mb-3 leading-[1.7]">
+              "I should've known better." If you've said that phrase even once this month, you're experiencing what 296 women described in our research: not regular overthinking, but something deeper.
             </p>
 
-            {/* Product Bridge (Tightened) */}
-            <p className="text-base md:text-lg text-emerald-800 mb-4 leading-[1.7]">
-              <strong>F.I.R.E. targets the 7-second window before the thought spiral starts</strong>—the pre-conscious moment when your body decides you're unsafe. That's why journaling hasn't stopped the replay. It tries to change your thoughts. But by then, the rumination signal is already firing. F.I.R.E. intercepts before the thought forms.
+            {/* What it's actually about */}
+            <p className="text-base md:text-lg text-emerald-800 mb-3 leading-[1.7]">
+              You can't stop replaying how you came across, what they thought, whether they saw through you. That email you sent—did it expose you don't understand this? That meeting where you spoke up—did they notice you were faking it? That exam you took—did it reveal you don't know enough? You're not overthinking <strong>outcomes</strong>. You're obsessing over whether you <strong>exposed your inadequacy</strong>.
             </p>
 
-            {/* Mechanism (Merged & Tightened) */}
+            {/* F.I.R.E. mechanism - tightened */}
+            <p className="text-base md:text-lg text-emerald-800 mb-3 leading-[1.7]">
+              Nothing has worked because you've been treating the wrong problem. <strong>F.I.R.E. targets the 7-second window before the spiral starts</strong>—when your body decides you're unsafe.
+            </p>
+
+            {/* Why thought-based tools fail */}
             <p className="text-base text-emerald-800 mb-4 leading-[1.7]">
-              You can't think your way out of a nervous system response. Every meditation app targets your thoughts. F.I.R.E. targets the physiological shutdown that happens 3-7 seconds before—the vagal response that traps you in your head.
+              You can't think your way out of a nervous system response. Journaling, meditation, CBT—they target thoughts. F.I.R.E. targets the physiological shutdown <em>before</em> thoughts form.
             </p>
 
-            {/* Clinical Frameworks */}
+            {/* Clinical proof */}
             <p className="text-base text-emerald-800 mb-6 leading-[1.7]">
-              <strong>You get the same clinical frameworks therapists charge $150/hour to teach:</strong> Polyvagal Theory (Yale), Metacognitive Therapy (Manchester), Rumination-Focused techniques (Exeter)—in a system you can actually use at 2 AM.
+              <strong>Clinical frameworks therapists charge $150/hour to teach:</strong> Polyvagal Theory (Yale), Metacognitive Therapy (Manchester), Rumination-Focused CBT (Exeter)—in a system you can use at 2 AM.
             </p>
 
             {/* Price */}

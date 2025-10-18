@@ -504,7 +504,7 @@ function ThankYouPageContent() {
                     For 8 years, I was in therapy. Good therapy. The kind where you talk about childhood, process emotions, learn coping skills. And it helped — sort of.
                   </p>
                   <p>
-                    But every night, my brain would still hijack me. That email I sent my boss. The thing I said at dinner. Hypothetical disasters that would never happen. I'd lie there, eyes wide open, replaying and replaying until my alarm went off.
+                    But every night, my brain would still hijack me. That email I sent my boss—did I sound stupid? The thing I said at dinner—did they notice I was faking it? The moment I stumbled over my words and everyone saw I'm a fraud. I'd lie there, eyes wide open, replaying and replaying until my alarm went off.
                   </p>
                   <p className="font-semibold text-slate-900">
                     The breakthrough happened at 3 a.m.:
@@ -532,6 +532,24 @@ function ThankYouPageContent() {
                   </p>
                   <p className="font-semibold text-slate-900">
                     That's when it hit me. This wasn't anxiety. This was shame.
+                  </p>
+                  <p>
+                    <strong>But wait—</strong> I need to clarify something I discovered.
+                  </p>
+                  <p>
+                    When I looked closer at those 296 responses, I noticed the three phrases they used—"I should've known better," "Afraid of doing it wrong," "Can't stop replaying"—weren't about future outcomes.
+                  </p>
+                  <p className="font-semibold text-slate-900">
+                    They were about past moments. About being seen.
+                  </p>
+                  <p>
+                    Because that's what <em>I</em> was replaying. Not "What if the presentation fails?" but "Did they see I'm inadequate?" I couldn't stop replaying how I <strong>came across</strong>, what they <strong>thought of me</strong>, whether they <strong>noticed I was faking it</strong>. That email I sent—did it expose that I don't understand this? That exam I took—did it reveal I don't know enough? That meeting where I spoke up—did they see I was unprepared?
+                  </p>
+                  <p>
+                    Not "What if something goes wrong?" but "Did I just expose myself?"
+                  </p>
+                  <p className="font-semibold text-slate-900">
+                    That's when I realized: This wasn't anxiety about the future. This was shame about being <strong>seen</strong>. And when I saw those 296 women write the same phrases I'd been saying to myself—I knew I wasn't alone.
                   </p>
                   <p>
                     Not shame about specific events. <strong>Shame as an operating system.</strong> A nervous system pattern that hijacks your body before your brain even knows it's happening. That's why CBT alone wasn't enough. It was trying to change thoughts. But shame operates pre-consciously — in that 3-7 second window before thought even forms.
@@ -769,11 +787,11 @@ function ThankYouPageContent() {
                     <ul className="space-y-3">
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
-                        <span className="text-slate-700">You lie awake replaying every decision you made today</span>
+                        <span className="text-slate-700">You lie awake replaying how you LOOKED in every conversation today—terrified they saw through you</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
-                        <span className="text-slate-700">Your brain hijacks every quiet moment with "what if" spirals</span>
+                        <span className="text-slate-700">Your brain hijacks every quiet moment with "what if they think I'm stupid" spirals</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
@@ -879,7 +897,7 @@ function ThankYouPageContent() {
                   </p>
 
                   <p className="italic text-slate-600 pl-4 border-l-2 border-slate-300">
-                    "Why did I phrase it that way? Did I sound defensive? Should I send a follow-up? What if she thinks I'm incompetent? What if this affects my review? Why do I always do this?"
+                    "Why did I phrase it that way? Did I sound defensive? What if she thinks I'm incompetent? What if she realized I don't know what I'm doing? Why did I expose myself like that? What do they all think of me now?"
                   </p>
 
                   <p>

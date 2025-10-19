@@ -12,12 +12,12 @@ import {
 } from '@/components/product/shift'
 
 export default function TheShiftPage() {
-  // Product Images
+  // Product Images (Gold version from Shopify)
   const productImages = [
-    '/products/shift-rose-gold-main.jpg',
-    '/products/shift-rose-gold-2.jpg',
-    '/products/shift-in-use.jpg',
-    '/products/shift-detail.jpg',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicBoxChainProductImage1Gold.webp?v=1760872375',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage2Gold.webp?v=1760872375',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/gold_lifestyle1.webp?v=1760872696',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup.webp?v=1760872688',
   ]
 
   // Variant Options
@@ -93,8 +93,8 @@ export default function TheShiftPage() {
         "As an overthinker, your brain replays the same thoughts over and over. The more you try to 'think your way out,' the deeper you spiral. You need a pattern interrupt.",
         'The Shift gives you something physical to DO when thoughts won\'t stop. Instead of fighting your brain, you redirect it.',
       ],
-      imageSrc: '/products/shift-education-1.jpg',
-      imageAlt: 'Woman experiencing overthinking',
+      imageSrc: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/gold_lifestyle1.webp?v=1760872696',
+      imageAlt: 'The Shift breathing necklace in use',
       layout: 'image-left' as const,
     },
     {
@@ -103,8 +103,8 @@ export default function TheShiftPage() {
         "When you exhale for 2x longer than you inhale, it signals your vagus nerve to activate. This is your body's 'rest and digest' mode - the opposite of overthinking/anxiety.",
         "The Shift's design naturally extends your exhale. You don't have to count or think. Just breathe.",
       ],
-      imageSrc: '/products/shift-education-2.jpg',
-      imageAlt: 'Diagram showing vagus nerve activation',
+      imageSrc: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup.webp?v=1760872688',
+      imageAlt: 'Close-up of The Shift breathing mechanism',
       layout: 'image-right' as const,
     },
   ]
@@ -219,7 +219,7 @@ export default function TheShiftPage() {
 
       {/* Final CTA */}
       <FinalCTA
-        backgroundImage="/images/woman-breathing-final.jpg"
+        backgroundImage="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage4Gold.webp?v=1760872696"
         heading="Just Breathe Through It"
         subheading="Stop overthinking spirals in 90 seconds"
         ctaText="Get The Shift - $37"

@@ -9,6 +9,7 @@ import {
   ShiftHowItWorks,
   ShiftEducational,
   ShiftTestimonials,
+  ShiftBonusOffer,
 } from '@/components/product/shift'
 
 export default function TheShiftPage() {
@@ -200,6 +201,15 @@ export default function TheShiftPage() {
         reviewCount={379}
         reviewRating={4.8}
         description="The discreet breathing necklace designed specifically for women who can't turn their brain off. When racing thoughts won't stop, grab your necklace and breathe - it works like a reset button for your nervous system."
+      />
+
+      {/* Bonus Offer Section */}
+      <ShiftBonusOffer
+        imageSrc="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/animated.webp?v=1760876323"
+        imageAlt="FIRE Protocol course included free"
+        title="FIRE Protocol course is FREE with any Shift purchase."
+        description="A tool without action is just a wish. Likewise, the Shift without a program is like a guitar without lessons or daily practice. Within minutes, the FIRE Protocol transforms the Shift from a tool into a mindfulness instrument that transforms your day."
+        layout="image-left"
       />
 
       {/* Social Proof Stats */}

@@ -20,11 +20,11 @@ export function ShiftBonusOffer({
 
           {/* Image */}
           <div className={layout === 'image-right' ? 'lg:order-2' : 'lg:order-1'}>
-            <div className="relative rounded-2xl overflow-hidden bg-white shadow-lg">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-lg">
               <img
                 src={imageSrc}
                 alt={imageAlt}
-                className="w-full h-auto"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>

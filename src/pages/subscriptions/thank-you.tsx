@@ -355,46 +355,28 @@ function ThankYouPageContent() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
-  // Toggle sticky bar visibility when the hero is out of view (~200px offset)
+  // Toggle sticky bar visibility when user scrolls past the sentinel
   useEffect(() => {
     const sentinel = stickySentinelRef.current
-    if (!sentinel) return
-
-    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          setShowStickyBar(!entry.isIntersecting)
-        },
-        {
-          rootMargin: '200px 0px 0px 0px',
-          threshold: 0,
-        },
-      )
-
-      observer.observe(sentinel)
-      return () => observer.disconnect()
+    if (!sentinel) {
+      console.log('⚠️ Sentinel not found')
+      return
     }
 
-    const getScrollTop = () => {
-      if (typeof window === 'undefined') return 0
-      return (
-        window.scrollY ||
-        window.pageYOffset ||
-        document.documentElement?.scrollTop ||
-        document.body?.scrollTop ||
-        0
-      )
-    }
-
+    // Use scroll-based detection for precise control
     const handleScroll = () => {
-      const scrollTop = getScrollTop()
-      const shouldShow = scrollTop > 200
-      console.log('📜 Scroll (thank-you):', scrollTop, 'Show sticky:', shouldShow)
-      setShowStickyBar(shouldShow)
+      const sentinelRect = sentinel.getBoundingClientRect()
+      // Show sticky bar when sentinel is 200px above viewport (scrolled past)
+      const scrolledPast = sentinelRect.top < -200
+      console.log('📜 Scroll (thank-you):', {
+        top: sentinelRect.top.toFixed(1),
+        scrolledPast
+      })
+      setShowStickyBar(scrolledPast)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
+    handleScroll() // Check initial position
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -429,7 +411,6 @@ function ThankYouPageContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col">
       <TopBar variant="dark" />
-      <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
 
       <div className="flex-1 flex justify-center items-stretch">
         <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1 relative z-10">
@@ -1144,10 +1125,14 @@ function ThankYouPageContent() {
                       <span className="font-semibold">— Anna, Creator of F.I.R.E.</span>
                     </p>
                   </div>
+
+                  {/* Sentinel for sticky bar - Shows sticky bar when user scrolls past the offer card */}
+                  <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
                 </div>
               )}
 
               {/* ========== STATS + TESTIMONIALS AFTER OFFER (POST-PURCHASE JUSTIFICATION) ========== */}
+
               {resultData && (
                 <div className="mb-12 max-w-4xl mx-auto">
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">

@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import { TopBar } from '@/components/layout/TopBar'
 import { Footer } from '@/components/layout/Footer'
-import ShopifyBuyButton from '@/components/ShopifyBuyButton'
-import { TestStickyBar } from '@/components/TestStickyBar'
+import { StickyCheckoutBar } from '@/components/StickyCheckoutBar'
+import { ScarcityProvider, useScarcity } from '@/contexts/ScarcityContext'
 import {
   ProductHero,
   SocialProofStats,
@@ -17,7 +17,8 @@ import {
   ShiftHighlights,
 } from '@/components/product/shift'
 
-export default function TheShiftPage() {
+function TheShiftPage() {
+  const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -504,19 +505,30 @@ export default function TheShiftPage() {
 
       </main>
 
-      {/* TEST STICKY BAR - Moved outside <main> to escape relative positioning */}
-      {isMounted && isMobile && showStickyBar && (
-        <TestStickyBar
-          price={37}
-          originalPrice={49}
-          productName="The Shift"
-          onBuyClick={() => {
-            console.log('🔥 TEST STICKY BAR CLICKED')
-          }}
-        />
-      )}
+      {/* STICKY CHECKOUT BAR - Moved outside <main> to escape relative positioning */}
+      <StickyCheckoutBar
+        show={isMounted && isMobile && showStickyBar}
+        spotsRemaining={spotsRemaining}
+        totalSpots={totalSpots}
+        isCritical={isCritical}
+        isSoldOut={isSoldOut}
+        productId="10770901434671"
+        domain="t7vyee-kc.myshopify.com"
+        storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+        buttonText="Get The Shift • $37"
+        buttonColor="#16a34a"
+        buttonHoverColor="#15803d"
+      />
 
       <Footer variant="emerald" />
     </div>
+  )
+}
+
+export default function TheShiftPageWithScarcity() {
+  return (
+    <ScarcityProvider>
+      <TheShiftPage />
+    </ScarcityProvider>
   )
 }

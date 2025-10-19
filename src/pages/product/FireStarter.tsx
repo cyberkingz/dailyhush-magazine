@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { CheckCircle, Shield } from 'lucide-react'
 import ShopifyBuyButton from '@/components/ShopifyBuyButton'
-import { TestStickyBar } from '@/components/TestStickyBar'
+import { StickyCheckoutBar } from '@/components/StickyCheckoutBar'
+import { ScarcityProvider, useScarcity } from '@/contexts/ScarcityContext'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import { TopBar } from '@/components/layout/TopBar'
 import { Footer } from '@/components/layout/Footer'
@@ -21,7 +22,8 @@ import {
   trackPageExit,
 } from '@/lib/services/productPageEvents'
 
-export default function FireStarterProduct() {
+function FireStarterProduct() {
+  const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -465,20 +467,30 @@ export default function FireStarterProduct() {
 
       </main>
 
-      {/* TEST STICKY BAR - Moved outside <main> to escape relative positioning */}
-      {isMounted && isMobile && showStickyBar && (
-        <TestStickyBar
-          price={67}
-          originalPrice={197}
-          productName="F.I.R.E. Protocol"
-          onBuyClick={() => {
-            console.log('🔥 TEST STICKY BAR CLICKED')
-            handleBuyClick('sticky-bar')
-          }}
-        />
-      )}
+      {/* STICKY CHECKOUT BAR - Moved outside <main> to escape relative positioning */}
+      <StickyCheckoutBar
+        show={isMounted && isMobile && showStickyBar}
+        spotsRemaining={spotsRemaining}
+        totalSpots={totalSpots}
+        isCritical={isCritical}
+        isSoldOut={isSoldOut}
+        productId="10761797894447"
+        domain="t7vyee-kc.myshopify.com"
+        storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+        buttonText="Get F.I.R.E. Protocol • $67"
+        buttonColor="#16a34a"
+        buttonHoverColor="#15803d"
+      />
 
       <Footer variant="emerald" />
     </div>
+  )
+}
+
+export default function FireStarterProductWithScarcity() {
+  return (
+    <ScarcityProvider>
+      <FireStarterProduct />
+    </ScarcityProvider>
   )
 }

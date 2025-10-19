@@ -71,7 +71,10 @@ function FireStarterProduct() {
     const sentinel = stickySentinelRef.current
     if (!sentinel) return
 
-    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+    const hasIntersectionObserver = typeof IntersectionObserver !== 'undefined'
+
+    // Use IntersectionObserver if available
+    if (hasIntersectionObserver) {
       const observer = new IntersectionObserver(
         ([entry]) => {
           setShowStickyBar(!entry.isIntersecting)
@@ -84,27 +87,25 @@ function FireStarterProduct() {
 
       observer.observe(sentinel)
       return () => observer.disconnect()
-    }
+    } else {
+      // Fallback to scroll listener for older browsers
+      const getScrollTop = () => {
+        return (
+          window.scrollY ||
+          window.pageYOffset ||
+          document.documentElement?.scrollTop ||
+          document.body?.scrollTop ||
+          0
+        )
+      }
 
-    const getScrollTop = () => {
-      if (typeof window === 'undefined') return 0
-      return (
-        window.scrollY ||
-        window.pageYOffset ||
-        document.documentElement?.scrollTop ||
-        document.body?.scrollTop ||
-        0
-      )
-    }
+      const handleScroll = () => {
+        const scrollTop = getScrollTop()
+        const shouldShow = scrollTop > 200
+        console.log('📜 Scroll:', scrollTop, 'Show sticky:', shouldShow)
+        setShowStickyBar(shouldShow)
+      }
 
-    const handleScroll = () => {
-      const scrollTop = getScrollTop()
-      const shouldShow = scrollTop > 200
-      console.log('📜 Scroll:', scrollTop, 'Show sticky:', shouldShow)
-      setShowStickyBar(shouldShow)
-    }
-
-    if (typeof window !== 'undefined') {
       window.addEventListener('scroll', handleScroll, { passive: true })
       handleScroll()
 

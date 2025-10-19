@@ -20,7 +20,7 @@ export function SocialProofStats({
   subtitle,
 }: SocialProofStatsProps) {
   const bgClass = {
-    white: 'bg-white',
+    white: 'bg-emerald-800',
     cream: 'bg-cream-50',
     emerald: 'bg-emerald-50',
   }[backgroundColor]
@@ -31,28 +31,32 @@ export function SocialProofStats({
         {(title || subtitle) && (
           <div className="text-center mb-12">
             {title && (
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-white max-w-3xl mx-auto">
                 {subtitle}
               </p>
             )}
           </div>
         )}
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
           {stats.map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-5xl lg:text-6xl font-bold text-emerald-600 mb-3">
-                {stat.number}
-                {stat.suffix && (
-                  <span className="text-3xl lg:text-4xl">{stat.suffix}</span>
-                )}
+            <div key={i} className="text-center flex flex-col items-center">
+              {/* Circular stat background */}
+              <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-white flex items-center justify-center mb-6">
+                <div className="text-5xl lg:text-6xl font-bold text-gray-900">
+                  {stat.suffix === ':' ? ':' : ''}{stat.number}
+                  {stat.suffix && stat.suffix !== ':' && (
+                    <span className="text-3xl lg:text-4xl">{stat.suffix}</span>
+                  )}
+                </div>
               </div>
-              <p className="text-gray-600 text-base lg:text-lg leading-relaxed">
+              {/* Description */}
+              <p className="text-white text-base lg:text-lg leading-relaxed max-w-xs">
                 {stat.description}
               </p>
             </div>

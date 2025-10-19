@@ -22,6 +22,7 @@ import {
 
 export default function FireStarterProduct() {
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [isButtonReady, setIsButtonReady] = useState(true) // Optimistic - assume button loads fast
 
   // Tracking state
   const sessionIdRef = useRef<string | undefined>(undefined)
@@ -47,16 +48,16 @@ export default function FireStarterProduct() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
-  // Show sticky bar after scrolling past 40% of page
+  // Show sticky bar after scrolling 200px down the page
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollPercentage = (scrollTop / docHeight) * 100
-      setShowStickyBar(scrollPercentage >= 40)
+      const shouldShow = scrollTop > 200
+      console.log('[Sticky Bar Debug] Scroll position:', scrollTop, 'Show bar:', shouldShow)
+      setShowStickyBar(shouldShow)
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
 
     return () => window.removeEventListener('scroll', handleScroll)
@@ -89,7 +90,7 @@ export default function FireStarterProduct() {
       />
       <TopBar />
 
-      <main className="flex-1 bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 relative overflow-hidden">
+      <main className="flex-1 bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 relative">
         {/* Organic Background Blobs - Subtle Tropical Feel */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
@@ -410,10 +411,20 @@ export default function FireStarterProduct() {
           reviews={fireStarterProductData.reviews.featured}
         />
 
-        {/* Sticky Add to Cart Bar (Mobile) */}
-        <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${
-          showStickyBar ? 'translate-y-0' : 'translate-y-full'
-        }`}>
+      </div>
+
+      </main>
+
+      {/* Sticky Add to Cart Bar - MOVED TO ROOT LEVEL */}
+      {showStickyBar && (
+        <div
+          className="fixed bottom-0 left-0 right-0 z-[9999] p-4"
+          style={{
+            backgroundColor: 'red',
+            minHeight: '80px',
+            display: 'block',
+          }}
+        >
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="text-2xl font-bold text-emerald-900">$67</div>
@@ -433,10 +444,7 @@ export default function FireStarterProduct() {
             </div>
           </div>
         </div>
-
-      </div>
-
-      </main>
+      )}
 
       <Footer variant="emerald" />
     </div>

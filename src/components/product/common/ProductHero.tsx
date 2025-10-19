@@ -1,15 +1,25 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import ShopifyBuyButton from '@/components/ShopifyBuyButton'
+
+interface Tab {
+  id: string
+  label: string
+  content: React.ReactNode
+  collapsible?: boolean
+}
 
 interface ProductHeroProps {
   productName: string
   tagline: string
   badge?: string
+  scarcityMessage?: string
   price: {
     current: number
     original?: number
   }
   images: string[]
+  tabs?: Tab[]
   variantOptions?: {
     name: string
     options: Array<{
@@ -25,14 +35,20 @@ interface ProductHeroProps {
   ctaText?: string
   ctaLink?: string
   description?: string
+  // Shopify Integration
+  shopifyProductId?: string
+  shopifyDomain?: string
+  shopifyStorefrontAccessToken?: string
 }
 
 export function ProductHero({
   productName,
   tagline,
   badge,
+  scarcityMessage,
   price,
   images,
+  tabs,
   variantOptions,
   guarantees,
   reviewCount,
@@ -40,11 +56,16 @@ export function ProductHero({
   ctaText = 'Add to Cart',
   ctaLink = '#buy',
   description,
+  shopifyProductId,
+  shopifyDomain,
+  shopifyStorefrontAccessToken,
 }: ProductHeroProps) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedVariant, setSelectedVariant] = useState(
     variantOptions?.options.find(o => o.default)?.value || variantOptions?.options[0]?.value
   )
+  const [activeTab, setActiveTab] = useState(tabs?.[0]?.id || '')
+  const [isTabExpanded, setIsTabExpanded] = useState(false)
 
   const savings = price.original ? price.original - price.current : 0
 
@@ -105,6 +126,11 @@ export function ProductHero({
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
                 {productName}
               </h1>
+              {scarcityMessage && (
+                <p className="text-base text-gray-700 mb-3">
+                  {scarcityMessage}
+                </p>
+              )}
               <p className="text-xl lg:text-2xl text-gray-600">
                 {tagline}
               </p>
@@ -112,7 +138,7 @@ export function ProductHero({
 
             {/* Reviews */}
             {reviewCount && reviewRating && (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <svg
@@ -135,13 +161,6 @@ export function ProductHero({
               </div>
             )}
 
-            {/* Description */}
-            {description && (
-              <p className="text-gray-700 leading-relaxed">
-                {description}
-              </p>
-            )}
-
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <span className="text-4xl font-bold text-gray-900">
@@ -158,6 +177,83 @@ export function ProductHero({
                 </>
               )}
             </div>
+
+            {/* Product Details Tabs */}
+            {tabs && tabs.length > 0 && (
+              <div className="space-y-4">
+                {/* Tab Navigation */}
+                <div className="border-b border-gray-200">
+                  <nav className="flex gap-6" aria-label="Product details tabs">
+                    {tabs.map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveTab(tab.id)
+                          setIsTabExpanded(false)
+                        }}
+                        className={cn(
+                          'pb-3 text-sm font-medium transition-colors relative whitespace-nowrap',
+                          activeTab === tab.id
+                            ? 'text-gray-900'
+                            : 'text-gray-500 hover:text-gray-700'
+                        )}
+                      >
+                        {tab.label}
+                        {activeTab === tab.id && (
+                          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />
+                        )}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+
+                {/* Tab Content with Expand/Collapse */}
+                <div>
+                  {tabs.map((tab) => {
+                    const isCollapsible = tab.collapsible !== false
+                    return (
+                      <div
+                        key={tab.id}
+                        className={cn(
+                          activeTab === tab.id ? 'block' : 'hidden'
+                        )}
+                      >
+                        {isCollapsible ? (
+                          <>
+                            <div className="relative">
+                              <div className={cn(
+                                'overflow-hidden transition-all',
+                                !isTabExpanded && 'max-h-40'
+                              )}>
+                                {tab.content}
+                              </div>
+                              {!isTabExpanded && (
+                                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+                              )}
+                            </div>
+                            <button
+                              onClick={() => setIsTabExpanded(!isTabExpanded)}
+                              className="text-sm text-gray-600 hover:text-gray-900 font-medium mt-2 underline"
+                            >
+                              {isTabExpanded ? 'Show less' : 'Read more'}
+                            </button>
+                          </>
+                        ) : (
+                          <div>{tab.content}</div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Description */}
+            {description && (
+              <p className="text-gray-700 leading-relaxed">
+                {description}
+              </p>
+            )}
 
             {/* Variant Selector */}
             {variantOptions && (
@@ -199,12 +295,24 @@ export function ProductHero({
             )}
 
             {/* CTA Button */}
-            <a
-              href={ctaLink}
-              className="block w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-center py-4 px-8 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-            >
-              {ctaText} - ${price.current}
-            </a>
+            {shopifyProductId && shopifyDomain && shopifyStorefrontAccessToken ? (
+              <ShopifyBuyButton
+                productId={shopifyProductId}
+                domain={shopifyDomain}
+                storefrontAccessToken={shopifyStorefrontAccessToken}
+                buttonText={`${ctaText} - $${price.current}`}
+                buttonColor="#f59e0b"
+                buttonHoverColor="#d97706"
+                className="w-full"
+              />
+            ) : (
+              <a
+                href={ctaLink}
+                className="block w-full bg-amber-500 hover:bg-amber-600 text-white text-center py-4 px-8 rounded-full font-bold text-lg shadow-[0_4px_12px_rgba(245,158,11,0.3)] hover:shadow-[0_6px_16px_rgba(245,158,11,0.4)] transition-all transform hover:scale-105 active:scale-95"
+              >
+                {ctaText} - ${price.current}
+              </a>
+            )}
 
             {/* Guarantees */}
             <div className="space-y-2 pt-4 border-t border-gray-200">

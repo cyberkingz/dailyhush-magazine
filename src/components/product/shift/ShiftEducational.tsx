@@ -6,6 +6,7 @@ interface EducationalBlock {
   imageSrc: string
   imageAlt: string
   layout: 'image-left' | 'image-right'
+  backgroundColor?: 'white' | 'emerald' | 'cream'
 }
 
 interface ShiftEducationalProps {
@@ -19,30 +20,52 @@ export function ShiftEducational({
   sectionTitle,
   sectionSubtitle,
 }: ShiftEducationalProps) {
-  return (
-    <section className="py-16 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        {(sectionTitle || sectionSubtitle) && (
-          <div className="text-center mb-16">
-            {sectionTitle && (
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-                {sectionTitle}
-              </h2>
-            )}
-            {sectionSubtitle && (
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                {sectionSubtitle}
-              </p>
-            )}
-          </div>
-        )}
+  const getBgClass = (bg?: string) => {
+    switch (bg) {
+      case 'emerald':
+        return 'bg-emerald-800'
+      case 'cream':
+        return 'bg-cream-50'
+      default:
+        return 'bg-white'
+    }
+  }
 
-        {/* Educational Blocks */}
-        <div className="space-y-20">
-          {blocks.map((block, idx) => (
+  const getTextColor = (bg?: string) => {
+    return bg === 'emerald' ? 'text-white' : 'text-gray-900'
+  }
+
+  const getSubTextColor = (bg?: string) => {
+    return bg === 'emerald' ? 'text-white' : 'text-gray-700'
+  }
+
+  return (
+    <>
+      {/* Section Header */}
+      {(sectionTitle || sectionSubtitle) && (
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              {sectionTitle && (
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+                  {sectionTitle}
+                </h2>
+              )}
+              {sectionSubtitle && (
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  {sectionSubtitle}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Educational Blocks */}
+      {blocks.map((block, idx) => (
+        <section key={idx} className={cn('py-16 lg:py-24', getBgClass(block.backgroundColor))}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div
-              key={idx}
               className={cn(
                 'grid lg:grid-cols-2 gap-8 lg:gap-16 items-center',
                 block.layout === 'image-right' && 'lg:flex-row-reverse'
@@ -67,21 +90,21 @@ export function ShiftEducational({
                 'order-2 space-y-4',
                 block.layout === 'image-right' && 'lg:order-1'
               )}>
-                <h3 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                <h3 className={cn('text-3xl lg:text-4xl font-bold', getTextColor(block.backgroundColor))}>
                   {block.title}
                 </h3>
                 <div className="space-y-4">
                   {block.content.map((paragraph, pIdx) => (
-                    <p key={pIdx} className="text-lg text-gray-700 leading-relaxed">
+                    <p key={pIdx} className={cn('text-lg leading-relaxed', getSubTextColor(block.backgroundColor))}>
                       {paragraph}
                     </p>
                   ))}
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          </div>
+        </section>
+      ))}
+    </>
   )
 }

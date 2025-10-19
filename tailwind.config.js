@@ -123,6 +123,19 @@ export default {
           800: '#364d40',
           900: '#1b2620',
         },
+        // Cream Background Colors
+        cream: {
+          50: '#fefdf9',
+          100: '#fdfbf3',
+          200: '#fbf7e7',
+          300: '#f8f2db',
+          400: '#f5edcf',
+          500: '#f2e8c3',
+          600: '#e8d9a0',
+          700: '#d4be77',
+          800: '#b89f4e',
+          900: '#8f7a3c',
+        },
         // Glass Colors
         glass: {
           light: 'rgba(255, 255, 255, 0.4)',

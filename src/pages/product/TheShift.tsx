@@ -18,14 +18,23 @@ import {
 
 export default function TheShiftPage() {
   const [showStickyBar, setShowStickyBar] = useState(false)
-  const [isButtonReady, setIsButtonReady] = useState(true) // Optimistic - assume button loads fast
 
   // Show sticky bar after scrolling 200px down the page
   useEffect(() => {
+    const getScrollTop = () => {
+      if (typeof window === 'undefined') return 0
+      return (
+        window.scrollY ||
+        window.pageYOffset ||
+        document.documentElement?.scrollTop ||
+        document.body?.scrollTop ||
+        0
+      )
+    }
+
     const handleScroll = () => {
-      const scrollTop = window.scrollY
+      const scrollTop = getScrollTop()
       const shouldShow = scrollTop > 200
-      console.log('[Sticky Bar Debug] Scroll position:', scrollTop, 'Show bar:', shouldShow)
       setShowStickyBar(shouldShow)
     }
 
@@ -463,37 +472,30 @@ export default function TheShiftPage() {
         guarantee="60-Day Money-Back Guarantee"
       />
 
-      </main>
-
-      {/* Sticky Add to Cart Bar - MOVED TO ROOT LEVEL */}
-      {showStickyBar && (
-        <div
-          className="fixed bottom-0 left-0 right-0 z-[9999] p-4"
-          style={{
-            backgroundColor: 'red',
-            minHeight: '80px',
-            display: 'block',
-          }}
-        >
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <div className="text-2xl font-bold text-emerald-900">$37</div>
-              <div className="text-xs text-emerald-600/60 line-through">$49</div>
-            </div>
-            <div className="flex-1">
-              <ShopifyBuyButton
-                productId="10770901434671"
-                domain="t7vyee-kc.myshopify.com"
-                storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get The Shift"
-                buttonColor="#f59e0b"
-                buttonHoverColor="#d97706"
-                className="w-full"
-              />
-            </div>
+      {/* Sticky Add to Cart Bar - Using conditional className (not conditional rendering) */}
+      <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${
+        showStickyBar ? 'translate-y-0' : 'translate-y-full'
+      }`}>
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="text-2xl font-bold text-emerald-900">$37</div>
+            <div className="text-xs text-emerald-600/60 line-through">$49</div>
+          </div>
+          <div className="flex-1">
+            <ShopifyBuyButton
+              productId="10770901434671"
+              domain="t7vyee-kc.myshopify.com"
+              storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+              buttonText="Get The Shift"
+              buttonColor="#f59e0b"
+              buttonHoverColor="#d97706"
+              className="w-full"
+            />
           </div>
         </div>
-      )}
+      </div>
+
+      </main>
 
       <Footer variant="emerald" />
     </div>

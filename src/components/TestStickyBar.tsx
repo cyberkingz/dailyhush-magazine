@@ -5,7 +5,7 @@ interface TestStickyBarProps {
   onBuyClick: () => void
 }
 
-export function TestStickyBar({ price, originalPrice, productName, onBuyClick }: TestStickyBarProps) {
+export function TestStickyBar({ price, originalPrice, productName: _productName, onBuyClick }: TestStickyBarProps) {
   console.log('🟥 TEST STICKY BAR RENDERED!')
 
   return (

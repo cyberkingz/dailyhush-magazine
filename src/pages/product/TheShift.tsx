@@ -68,10 +68,12 @@ function TheShiftPage() {
       setShowStickyBar(getScrollTop() > 200)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll, { passive: true })
+      handleScroll()
 
-    return () => window.removeEventListener('scroll', handleScroll)
+      return () => window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   // Product Images (Gold version from Shopify)

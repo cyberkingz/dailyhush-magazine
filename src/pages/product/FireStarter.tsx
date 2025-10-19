@@ -104,10 +104,12 @@ function FireStarterProduct() {
       setShowStickyBar(shouldShow)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll, { passive: true })
+      handleScroll()
 
-    return () => window.removeEventListener('scroll', handleScroll)
+      return () => window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   // Track scroll depth milestones

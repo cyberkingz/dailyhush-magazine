@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import { TopBar } from '@/components/layout/TopBar'
 import { Footer } from '@/components/layout/Footer'
 import ShopifyBuyButton from '@/components/ShopifyBuyButton'
+import { TestStickyBar } from '@/components/TestStickyBar'
 import {
   ProductHero,
   SocialProofStats,
@@ -18,9 +19,39 @@ import {
 
 export default function TheShiftPage() {
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const stickySentinelRef = useRef<HTMLDivElement | null>(null)
 
-  // Show sticky bar after scrolling 200px down the page
+  // Track mount state and mobile viewport to avoid hydration issues
   useEffect(() => {
+    setIsMounted(true)
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Show sticky bar once the hero has scrolled ~200px out of view. Uses IntersectionObserver with scroll fallback.
+  useEffect(() => {
+    const sentinel = stickySentinelRef.current
+    if (!sentinel) return
+
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setShowStickyBar(!entry.isIntersecting)
+        },
+        {
+          rootMargin: '200px 0px 0px 0px',
+          threshold: 0,
+        },
+      )
+
+      observer.observe(sentinel)
+      return () => observer.disconnect()
+    }
+
     const getScrollTop = () => {
       if (typeof window === 'undefined') return 0
       return (
@@ -33,9 +64,7 @@ export default function TheShiftPage() {
     }
 
     const handleScroll = () => {
-      const scrollTop = getScrollTop()
-      const shouldShow = scrollTop > 200
-      setShowStickyBar(shouldShow)
+      setShowStickyBar(getScrollTop() > 200)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -405,6 +434,7 @@ export default function TheShiftPage() {
       <TopBar />
 
       <main className="flex-1">
+        <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
         {/* Hero Section */}
         <ProductHero
         productName="The Shift"
@@ -472,30 +502,19 @@ export default function TheShiftPage() {
         guarantee="60-Day Money-Back Guarantee"
       />
 
-      {/* Sticky Add to Cart Bar - Using conditional className (not conditional rendering) */}
-      <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${
-        showStickyBar ? 'translate-y-0' : 'translate-y-full'
-      }`}>
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <div className="text-2xl font-bold text-emerald-900">$37</div>
-            <div className="text-xs text-emerald-600/60 line-through">$49</div>
-          </div>
-          <div className="flex-1">
-            <ShopifyBuyButton
-              productId="10770901434671"
-              domain="t7vyee-kc.myshopify.com"
-              storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-              buttonText="Get The Shift"
-              buttonColor="#f59e0b"
-              buttonHoverColor="#d97706"
-              className="w-full"
-            />
-          </div>
-        </div>
-      </div>
-
       </main>
+
+      {/* TEST STICKY BAR - Moved outside <main> to escape relative positioning */}
+      {isMounted && isMobile && showStickyBar && (
+        <TestStickyBar
+          price={37}
+          originalPrice={49}
+          productName="The Shift"
+          onBuyClick={() => {
+            console.log('🔥 TEST STICKY BAR CLICKED')
+          }}
+        />
+      )}
 
       <Footer variant="emerald" />
     </div>

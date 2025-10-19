@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { CheckCircle, Shield } from 'lucide-react'
 import ShopifyBuyButton from '@/components/ShopifyBuyButton'
+import { TestStickyBar } from '@/components/TestStickyBar'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import { TopBar } from '@/components/layout/TopBar'
 import { Footer } from '@/components/layout/Footer'
@@ -22,6 +23,22 @@ import {
 
 export default function FireStarterProduct() {
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const stickySentinelRef = useRef<HTMLDivElement | null>(null)
+
+  // Track mount state and mobile viewport to avoid hydration issues
+  useEffect(() => {
+    setIsMounted(true)
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      console.log('📱 Mobile check:', mobile, 'Width:', window.innerWidth)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Tracking state
   const sessionIdRef = useRef<string | undefined>(undefined)
@@ -47,8 +64,26 @@ export default function FireStarterProduct() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
-  // Show sticky bar after scrolling 200px down the page
+  // Toggle sticky bar visibility when the hero is out of view (~200px offset)
   useEffect(() => {
+    const sentinel = stickySentinelRef.current
+    if (!sentinel) return
+
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setShowStickyBar(!entry.isIntersecting)
+        },
+        {
+          rootMargin: '200px 0px 0px 0px',
+          threshold: 0,
+        },
+      )
+
+      observer.observe(sentinel)
+      return () => observer.disconnect()
+    }
+
     const getScrollTop = () => {
       if (typeof window === 'undefined') return 0
       return (
@@ -63,6 +98,7 @@ export default function FireStarterProduct() {
     const handleScroll = () => {
       const scrollTop = getScrollTop()
       const shouldShow = scrollTop > 200
+      console.log('📜 Scroll:', scrollTop, 'Show sticky:', shouldShow)
       setShowStickyBar(shouldShow)
     }
 
@@ -91,6 +127,16 @@ export default function FireStarterProduct() {
     console.log('Buy button clicked from:', buttonLocation)
   }, [])
 
+  // Debug: Log when sticky bar should show
+  useEffect(() => {
+    console.log('🎯 Sticky conditions:', {
+      isMounted,
+      isMobile,
+      showStickyBar,
+      shouldRender: isMounted && isMobile && showStickyBar
+    })
+  }, [isMounted, isMobile, showStickyBar])
+
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
@@ -99,13 +145,8 @@ export default function FireStarterProduct() {
       />
       <TopBar />
 
-      <main className="flex-1 bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 relative overflow-hidden">
-        {/* Organic Background Blobs - Subtle Tropical Feel */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl"></div>
-          <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/8 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/8 rounded-full blur-3xl"></div>
-        </div>
+      <main className="flex-1 bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30">
+        <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
 
       {/* Product Section - Shopify Style */}
       <div className="mx-auto max-w-7xl px-4 md:px-6 py-8 md:py-16 relative z-10">
@@ -420,33 +461,22 @@ export default function FireStarterProduct() {
           reviews={fireStarterProductData.reviews.featured}
         />
 
-        {/* Sticky Add to Cart Bar - Using conditional className (not conditional rendering) */}
-        <div className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-emerald-200/30 p-4 shadow-[0_-8px_32px_rgba(16,185,129,0.12)] ring-1 ring-white/20 z-50 transition-transform duration-500 ${
-          showStickyBar ? 'translate-y-0' : 'translate-y-full'
-        }`}>
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <div className="text-2xl font-bold text-emerald-900">$67</div>
-              <div className="text-xs text-emerald-600/60 line-through">$197</div>
-            </div>
-            <div className="flex-1">
-              <ShopifyBuyButton
-                productId="10761797894447"
-                domain="t7vyee-kc.myshopify.com"
-                storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                buttonText="Get F.I.R.E. Protocol"
-                buttonColor="#16a34a"
-                buttonHoverColor="#15803d"
-                onClick={() => handleBuyClick('sticky-bar')}
-                className="w-full"
-              />
-            </div>
-          </div>
-        </div>
-
       </div>
 
       </main>
+
+      {/* TEST STICKY BAR - Moved outside <main> to escape relative positioning */}
+      {isMounted && isMobile && showStickyBar && (
+        <TestStickyBar
+          price={67}
+          originalPrice={197}
+          productName="F.I.R.E. Protocol"
+          onBuyClick={() => {
+            console.log('🔥 TEST STICKY BAR CLICKED')
+            handleBuyClick('sticky-bar')
+          }}
+        />
+      )}
 
       <Footer variant="emerald" />
     </div>

@@ -301,10 +301,10 @@ const quizResultData: Record<OverthinkerType, {
 
 function ThankYouPageContent() {
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
-  const fireKitBadgeRef = useRef<HTMLDivElement>(null)
-  const offerCardRef = useRef<HTMLDivElement>(null)
-  const womenWhoActRef = useRef<HTMLDivElement>(null)
+  const stickySentinelRef = useRef<HTMLDivElement | null>(null)
 
   // Get quiz type and score from URL params
   const urlParams = new URLSearchParams(window.location.search)
@@ -317,6 +317,19 @@ function ThankYouPageContent() {
   // Tracking state
   const sessionIdRef = useRef<string | undefined>(undefined)
   const pageLoadTime = useRef(Date.now())
+
+  // Track mount state and mobile viewport to avoid hydration issues
+  useEffect(() => {
+    setIsMounted(true)
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      console.log('📱 Mobile check (thank-you):', mobile, 'Width:', window.innerWidth)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Initialize tracking on page load
   useEffect(() => {
@@ -342,67 +355,48 @@ function ThankYouPageContent() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
-  // Track sticky bar visibility using Intersection Observer
+  // Toggle sticky bar visibility when the hero is out of view (~200px offset)
   useEffect(() => {
-    const state = {
-      offerCardPassed: false,
-      womenWhoActVisible: false,
-      badgeVisible: false
+    const sentinel = stickySentinelRef.current
+    if (!sentinel) return
+
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setShowStickyBar(!entry.isIntersecting)
+        },
+        {
+          rootMargin: '200px 0px 0px 0px',
+          threshold: 0,
+        },
+      )
+
+      observer.observe(sentinel)
+      return () => observer.disconnect()
     }
 
-    const updateStickyBar = () => {
-      // Show sticky bar only after offer card is passed and before "Women Who Act" section or badge
-      setShowStickyBar(state.offerCardPassed && !state.womenWhoActVisible && !state.badgeVisible)
+    const getScrollTop = () => {
+      if (typeof window === 'undefined') return 0
+      return (
+        window.scrollY ||
+        window.pageYOffset ||
+        document.documentElement?.scrollTop ||
+        document.body?.scrollTop ||
+        0
+      )
     }
 
-    // Observer for offer card - track when it's scrolled past (leaves viewport from top)
-    const offerCardObserver = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        // Mark as passed when it's not intersecting and is above the viewport
-        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-          state.offerCardPassed = true
-        } else if (entry.isIntersecting) {
-          state.offerCardPassed = false
-        }
-        updateStickyBar()
-      },
-      { threshold: 0, rootMargin: '0px' }
-    )
-
-    // Observer for "Women Who Act" section - when it enters viewport, hide sticky bar
-    const womenWhoActObserver = new IntersectionObserver(
-      (entries) => {
-        state.womenWhoActVisible = entries[0].isIntersecting
-        updateStickyBar()
-      },
-      { threshold: 0.1 }
-    )
-
-    // Observer for badge - when it enters viewport, hide sticky bar
-    const badgeObserver = new IntersectionObserver(
-      (entries) => {
-        state.badgeVisible = entries[0].isIntersecting
-        updateStickyBar()
-      },
-      { threshold: 0.1 }
-    )
-
-    if (offerCardRef.current) {
-      offerCardObserver.observe(offerCardRef.current)
-    }
-    if (womenWhoActRef.current) {
-      womenWhoActObserver.observe(womenWhoActRef.current)
-    }
-    if (fireKitBadgeRef.current) {
-      badgeObserver.observe(fireKitBadgeRef.current)
+    const handleScroll = () => {
+      const scrollTop = getScrollTop()
+      const shouldShow = scrollTop > 200
+      console.log('📜 Scroll (thank-you):', scrollTop, 'Show sticky:', shouldShow)
+      setShowStickyBar(shouldShow)
     }
 
-    return () => {
-      offerCardObserver.disconnect()
-      womenWhoActObserver.disconnect()
-      badgeObserver.disconnect()
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   // Track scroll depth milestones
@@ -424,32 +418,20 @@ function ThankYouPageContent() {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col relative overflow-hidden">
-      {/* Organic Background Blobs - Subtle */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 -left-40 w-96 h-96 bg-emerald-500/3 rounded-full blur-3xl"></div>
-        <div className="absolute top-60 right-20 w-80 h-80 bg-amber-500/4 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-emerald-400/3 rounded-full blur-3xl"></div>
-      </div>
+  // Debug: Log final sticky bar render state
+  console.log('🎯 Sticky render state (thank-you):', {
+    isMounted,
+    isMobile,
+    showStickyBar,
+    shouldRender: isMounted && isMobile && showStickyBar
+  })
 
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col">
       <TopBar variant="dark" />
+      <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
 
       <div className="flex-1 flex justify-center items-stretch">
-        <StickyCheckoutBar
-          show={showStickyBar}
-          spotsRemaining={spotsRemaining}
-          totalSpots={totalSpots}
-          isCritical={isCritical}
-          isSoldOut={isSoldOut}
-          productId="10761797894447"
-          domain="t7vyee-kc.myshopify.com"
-          storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-          buttonText="Get F.I.R.E. Protocol • $67"
-          buttonColor="#16a34a"
-          buttonHoverColor="#15803d"
-        />
-
         <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1 relative z-10">
           <div className="bg-white/90 backdrop-blur-xl flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0 shadow-[0_16px_48px_-8px_rgba(16,185,129,0.15)]">
             <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
@@ -1012,7 +994,7 @@ function ThankYouPageContent() {
 
               {/* ========== OFFER SECTION (MOVED TO LINE ~672) ========== */}
               {resultData && (
-                <div id="offer-details" ref={fireKitBadgeRef} className="mb-16 max-w-xl mx-auto">
+                <div id="offer-details" className="mb-16 max-w-xl mx-auto">
 
                   {!isSoldOut && (
                     <div className="mb-8 text-center">
@@ -1023,7 +1005,7 @@ function ThankYouPageContent() {
                     </div>
                   )}
 
-                  <div ref={offerCardRef} className="bg-white border-2 border-slate-200 rounded-2xl p-4 md:p-8">
+                  <div className="bg-white border-2 border-slate-200 rounded-2xl p-4 md:p-8">
                     <div className="text-center mb-3">
                       <h3 className="text-xl md:text-3xl font-bold text-slate-900 mb-1">
                         The F.I.R.E. Protocol — $67
@@ -1641,7 +1623,7 @@ function ThankYouPageContent() {
                   </div>
 
                   {/* ========== PERSONAL CLOSING FROM ANNA ========== */}
-                  <div ref={womenWhoActRef} className="mb-16 max-w-3xl mx-auto">
+                  <div className="mb-16 max-w-3xl mx-auto">
                     <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                       <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
                         The Women Who Act Now Sleep Better Tonight
@@ -1728,6 +1710,21 @@ function ThankYouPageContent() {
           </div>
         </div>
       </div>
+
+      {/* STICKY CHECKOUT BAR - Moved outside flex wrapper to escape positioning constraints */}
+      <StickyCheckoutBar
+        show={isMounted && isMobile && showStickyBar}
+        spotsRemaining={spotsRemaining}
+        totalSpots={totalSpots}
+        isCritical={isCritical}
+        isSoldOut={isSoldOut}
+        productId="10761797894447"
+        domain="t7vyee-kc.myshopify.com"
+        storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+        buttonText="Get F.I.R.E. Protocol • $67"
+        buttonColor="#16a34a"
+        buttonHoverColor="#15803d"
+      />
     </div>
   )
 }

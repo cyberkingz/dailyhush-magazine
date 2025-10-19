@@ -639,9 +639,11 @@ export interface CampaignMetrics {
   campaignType: 'cold_email' | 'post_quiz_retargeting'
   utmSource?: string
   utmMedium?: string
-  views: number
+  sends: number // Total emails sent (from email_sends table)
+  views: number // People who landed on the page (clicks)
   starts: number
   completions: number
+  ctr: number // Click-through rate: (views / sends) * 100
   startRate: number
   completionRate: number
   overallConversionRate: number
@@ -675,6 +677,19 @@ export async function getCampaignMetrics(
       return []
     }
 
+    // Get email sends data grouped by campaign
+    const { data: emailSends, error: sendsError } = await supabase
+      .from('email_sends')
+      .select('utm_campaign, utm_medium, utm_source, recipient_email')
+      .not('utm_campaign', 'is', null)
+      .gte('sent_at', startDate)
+      .lte('sent_at', endDate)
+
+    if (sendsError) {
+      console.error('Error fetching email sends:', sendsError)
+      // Continue without sends data - CTR will show 0
+    }
+
     // Get all quiz events for these sessions
     const sessionIds = sessions.map(s => s.session_id)
     const { data: events, error: eventsError } = await supabase
@@ -696,11 +711,21 @@ export async function getCampaignMetrics(
       events?.filter(e => e.event_type === 'quiz_complete').map(e => e.session_id) || []
     )
 
+    // Group email sends by campaign
+    const sendsMap = new Map<string, number>()
+    if (emailSends && emailSends.length > 0) {
+      emailSends.forEach(send => {
+        const campaign = send.utm_campaign!
+        sendsMap.set(campaign, (sendsMap.get(campaign) || 0) + 1)
+      })
+    }
+
     // Group sessions by campaign
     const campaignMap = new Map<string, {
       campaign: string
       utmSource?: string
       utmMedium?: string
+      sends: number
       views: Set<string>
       starts: Set<string>
       completions: Set<string>
@@ -714,6 +739,7 @@ export async function getCampaignMetrics(
           campaign,
           utmSource: session.utm_source || undefined,
           utmMedium: session.utm_medium || undefined,
+          sends: sendsMap.get(campaign) || 0,
           views: new Set(),
           starts: new Set(),
           completions: new Set(),
@@ -734,10 +760,12 @@ export async function getCampaignMetrics(
 
     // Calculate metrics for each campaign
     const metrics: CampaignMetrics[] = Array.from(campaignMap.values()).map(c => {
+      const sends = c.sends
       const views = c.views.size
       const starts = c.starts.size
       const completions = c.completions.size
 
+      const ctr = sends > 0 ? (views / sends) * 100 : 0
       const startRate = views > 0 ? (starts / views) * 100 : 0
       const completionRate = starts > 0 ? (completions / starts) * 100 : 0
       const overallConversionRate = views > 0 ? (completions / views) * 100 : 0
@@ -750,9 +778,11 @@ export async function getCampaignMetrics(
         campaignType,
         utmSource: c.utmSource,
         utmMedium: c.utmMedium,
+        sends,
         views,
         starts,
         completions,
+        ctr: Math.round(ctr * 10) / 10,
         startRate: Math.round(startRate * 10) / 10,
         completionRate: Math.round(completionRate * 10) / 10,
         overallConversionRate: Math.round(overallConversionRate * 10) / 10,

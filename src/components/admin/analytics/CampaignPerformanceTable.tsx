@@ -11,16 +11,20 @@ import {
   Eye,
   Target,
   ArrowRight,
-  Zap
+  Zap,
+  Send,
+  BarChart3
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
 export interface CampaignMetrics {
   campaign: string
   campaignType: 'cold_email' | 'post_quiz_retargeting'
-  views: number
+  sends: number // Total emails sent
+  views: number // Clicks (people who landed)
   starts: number
   completions: number
+  ctr: number // Click-through rate: (views / sends) * 100
   startRate: number
   completionRate: number
   overallConversionRate: number
@@ -155,14 +159,17 @@ export function CampaignPerformanceTable({ campaigns, isLoading }: CampaignPerfo
     const sortedCampaigns = [...campaignList].sort((a, b) => b.views - a.views)
 
     // Calculate max values for sparklines
+    const maxSends = Math.max(...sortedCampaigns.map(c => c.sends))
     const maxViews = Math.max(...sortedCampaigns.map(c => c.views))
     const maxStarts = Math.max(...sortedCampaigns.map(c => c.starts))
     const maxCompletions = Math.max(...sortedCampaigns.map(c => c.completions))
 
     // Calculate totals
+    const totalSends = sortedCampaigns.reduce((sum, c) => sum + c.sends, 0)
     const totalViews = sortedCampaigns.reduce((sum, c) => sum + c.views, 0)
     const totalStarts = sortedCampaigns.reduce((sum, c) => sum + c.starts, 0)
     const totalCompletions = sortedCampaigns.reduce((sum, c) => sum + c.completions, 0)
+    const avgCTR = calculateAverage(sortedCampaigns, 'ctr')
     const avgStartRate = calculateAverage(sortedCampaigns, 'startRate')
     const avgCompletionRate = calculateAverage(sortedCampaigns, 'completionRate')
     const avgOverallConv = calculateAverage(sortedCampaigns, 'overallConversionRate')
@@ -191,13 +198,27 @@ export function CampaignPerformanceTable({ campaigns, isLoading }: CampaignPerfo
           </div>
 
           {/* Summary Stats Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-white/10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-4 pt-4 border-t border-white/10">
+            <div className="bg-white/5 rounded-lg p-3 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-200">
+              <div className="flex items-center gap-2 text-white/70 text-xs mb-1">
+                <Send className="h-3.5 w-3.5" />
+                <span>Total Sends</span>
+              </div>
+              <div className="text-xl font-bold text-white tabular-nums">{totalSends.toLocaleString()}</div>
+            </div>
             <div className="bg-white/5 rounded-lg p-3 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-200">
               <div className="flex items-center gap-2 text-white/70 text-xs mb-1">
                 <Eye className="h-3.5 w-3.5" />
-                <span>Total Views</span>
+                <span>Total Clicks</span>
               </div>
               <div className="text-xl font-bold text-white tabular-nums">{totalViews.toLocaleString()}</div>
+            </div>
+            <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-lg p-3 backdrop-blur-sm border border-blue-500/30 hover:from-blue-500/30 hover:to-blue-600/20 transition-all duration-200">
+              <div className="flex items-center gap-2 text-blue-300 text-xs mb-1">
+                <BarChart3 className="h-3.5 w-3.5" />
+                <span>Avg CTR</span>
+              </div>
+              <div className="text-xl font-bold text-blue-300 tabular-nums">{avgCTR}%</div>
             </div>
             <div className="bg-white/5 rounded-lg p-3 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-200">
               <div className="flex items-center gap-2 text-white/70 text-xs mb-1">
@@ -226,7 +247,7 @@ export function CampaignPerformanceTable({ campaigns, isLoading }: CampaignPerfo
         <CardContent className="p-0">
           {/* Responsive table wrapper */}
           <div className="overflow-x-auto">
-            <div className="min-w-[900px]">
+            <div className="min-w-[1200px]">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-white/5 backdrop-blur-sm border-b border-white/10 hover:bg-white/5">
@@ -238,8 +259,20 @@ export function CampaignPerformanceTable({ campaigns, isLoading }: CampaignPerfo
                     </TableHead>
                     <TableHead className="text-center font-bold text-white/90 py-4 px-4">
                       <div className="flex flex-col items-center gap-1">
+                        <Send className="h-4 w-4 text-white/70" />
+                        <span>Sends</span>
+                      </div>
+                    </TableHead>
+                    <TableHead className="text-center font-bold text-white/90 py-4 px-4">
+                      <div className="flex flex-col items-center gap-1">
                         <Eye className="h-4 w-4 text-white/70" />
-                        <span>Views</span>
+                        <span>Clicks</span>
+                      </div>
+                    </TableHead>
+                    <TableHead className="text-center font-bold text-white/90 py-4 px-4">
+                      <div className="flex flex-col items-center gap-1">
+                        <BarChart3 className="h-4 w-4 text-blue-400" />
+                        <span className="text-blue-300">CTR</span>
                       </div>
                     </TableHead>
                     <TableHead className="text-center font-bold text-white/90 py-4 px-4">
@@ -290,12 +323,31 @@ export function CampaignPerformanceTable({ campaigns, isLoading }: CampaignPerfo
                       <TableCell className="py-4 px-4">
                         <div className="flex flex-col items-center gap-1.5">
                           <span className="text-sm font-bold tabular-nums text-white">
+                            {campaign.sends.toLocaleString()}
+                          </span>
+                          <div className="w-16">
+                            <MetricSparkline value={campaign.sends} maxValue={maxSends} />
+                          </div>
+                        </div>
+                      </TableCell>
+
+                      <TableCell className="py-4 px-4">
+                        <div className="flex flex-col items-center gap-1.5">
+                          <span className="text-sm font-bold tabular-nums text-white">
                             {campaign.views.toLocaleString()}
                           </span>
                           <div className="w-16">
                             <MetricSparkline value={campaign.views} maxValue={maxViews} />
                           </div>
                         </div>
+                      </TableCell>
+
+                      <TableCell className="text-center py-4 px-4">
+                        <MetricBadge
+                          value={campaign.ctr}
+                          label="%"
+                          trend={campaign.ctr >= 5 ? 'up' : campaign.ctr < 2 ? 'down' : 'neutral'}
+                        />
                       </TableCell>
 
                       <TableCell className="py-4 px-4">
@@ -366,7 +418,18 @@ export function CampaignPerformanceTable({ campaigns, isLoading }: CampaignPerfo
                         </div>
                       </TableCell>
                       <TableCell className="text-center tabular-nums text-white py-4 px-4">
+                        <span className="text-sm font-bold">{totalSends.toLocaleString()}</span>
+                      </TableCell>
+                      <TableCell className="text-center tabular-nums text-white py-4 px-4">
                         <span className="text-sm font-bold">{totalViews.toLocaleString()}</span>
+                      </TableCell>
+                      <TableCell className="text-center py-4 px-4">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/30 to-blue-600/20 rounded-full border border-blue-500/40 backdrop-blur-sm">
+                          <BarChart3 className="h-4 w-4 text-blue-300" />
+                          <span className="text-sm font-bold text-blue-300 tabular-nums">
+                            {avgCTR}%
+                          </span>
+                        </div>
                       </TableCell>
                       <TableCell className="text-center tabular-nums text-white py-4 px-4">
                         <span className="text-sm font-bold">{totalStarts.toLocaleString()}</span>

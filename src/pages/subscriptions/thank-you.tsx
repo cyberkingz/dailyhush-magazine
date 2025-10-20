@@ -1002,13 +1002,13 @@ function ThankYouPageContent() {
                             </li>
                           </ul>
                           <div className="border-t border-gray-200 pt-3 mb-6">
-                            <div className="flex justify-between text-sm text-gray-600 mb-1">
+                            <div className="flex justify-between text-sm text-gray-600 mb-2">
                               <span>Total Value:</span>
                               <span className="line-through">$128</span>
                             </div>
-                            <div className="flex justify-between text-xl font-bold text-emerald-700 mb-1">
-                              <span>Your Price:</span>
-                              <span>$37</span>
+                            <div className="flex justify-between items-baseline mb-2">
+                              <span className="text-lg font-semibold text-gray-700">Your Price:</span>
+                              <span className="text-4xl font-bold text-emerald-700">$37</span>
                             </div>
                             <div className="text-base text-emerald-600 font-semibold">
                               You Save $91 (71% off)

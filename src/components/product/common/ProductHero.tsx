@@ -224,22 +224,24 @@ export function ProductHero({
               </div>
             )}
 
-            {/* Price */}
-            <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-gray-900">
-                ${price.current}
-              </span>
-              {price.original && (
-                <>
-                  <span className="text-2xl text-gray-400 line-through">
-                    ${price.original}
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-semibold">
-                    Save ${savings}
-                  </span>
-                </>
-              )}
-            </div>
+            {/* Price - Only show if no description (value stack) is provided */}
+            {!description && (
+              <div className="flex items-baseline gap-3">
+                <span className="text-4xl font-bold text-gray-900">
+                  ${price.current}
+                </span>
+                {price.original && (
+                  <>
+                    <span className="text-2xl text-gray-400 line-through">
+                      ${price.original}
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-semibold">
+                      Save ${savings}
+                    </span>
+                  </>
+                )}
+              </div>
+            )}
 
             {/* Product Details Tabs */}
             {tabs && tabs.length > 0 && (

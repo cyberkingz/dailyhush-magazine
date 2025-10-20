@@ -315,13 +315,29 @@ function TheShiftPage() {
     {
       id: 'in-the-box',
       label: 'In the Box',
-      collapsible: false,
+      collapsible: true,
       content: (
         <ul className="space-y-3">
-          <li className="text-gray-700">1 The Shift Breathing Tool</li>
-          <li className="text-gray-700">1 Premium 26" chain (wear it daily—that's when it works best)</li>
-          <li className="text-gray-700">1 Travel pouch (for overthinkers on the go)</li>
-          <li className="text-gray-700">1 Quick-Start Guide: F.I.R.E. in 3 Steps (get results tonight, not next week)</li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">The Shift Breathing Necklace</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Premium 26" Luxe Box Chain</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Travel pouch (to store and keep your Shift secure)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Quick-Start Guide: F.I.R.E. in 3 Steps</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Access to F.I.R.E. Protocol (digital course)</span>
+          </li>
         </ul>
       ),
     },
@@ -338,10 +354,10 @@ function TheShiftPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <ProductHero
-        productName="The Shift"
-        tagline="The Physical Tool for Chronic Overthinkers Who've Tried Everything Else"
-        badge="FOR THE 50,000+ WOMEN WHO THINK TOO MUCH"
-        scarcityMessage="Your quiz results are most actionable in the next 48 hours—act while self-awareness is fresh"
+        productName="Clinical Breathing Necklace for Chronic Overthinkers"
+        tagline="When your thoughts won't stop, you need something you can touch"
+        badge="F.I.R.E. PROTOCOL INCLUDED FREE"
+        scarcityMessage="Due to order surge, inventory running low"
         price={{
           current: 37,
           original: 49,
@@ -350,10 +366,63 @@ function TheShiftPage() {
         tabs={productDetailsTabs}
         variantOptions={variantOptions}
         variantImages={variantImages}
+        description={
+          <div className="border-t border-gray-200 pt-6">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Complete System Value:</h4>
+            <ul className="space-y-3 mb-4">
+              <li className="flex justify-between items-start gap-3">
+                <div className="flex items-start gap-2 flex-1">
+                  <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">The Shift Necklace + Chain</span>
+                </div>
+                <span className="font-semibold text-gray-900">$67</span>
+              </li>
+              <li className="flex justify-between items-start gap-3">
+                <div className="flex items-start gap-2 flex-1">
+                  <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">F.I.R.E. Protocol</span>
+                </div>
+                <span className="font-semibold text-gray-900">$27</span>
+              </li>
+              <li className="flex justify-between items-start gap-3">
+                <div className="flex items-start gap-2 flex-1">
+                  <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Guides + Resources</span>
+                </div>
+                <span className="font-semibold text-gray-900">$34</span>
+              </li>
+            </ul>
+            <div className="border-t border-gray-200 pt-3 mb-6">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>Total Value:</span>
+                <span className="line-through">$128</span>
+              </div>
+              <div className="flex justify-between items-baseline mb-2">
+                <span className="text-lg font-semibold text-gray-700">Your Price:</span>
+                <span className="text-4xl font-bold text-emerald-700">$37</span>
+              </div>
+              <div className="text-base text-emerald-600 font-semibold">
+                You Save $91 (71% off)
+              </div>
+            </div>
+            <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
+              <p className="text-base text-gray-700 italic leading-relaxed mb-3">
+                "You're getting the F.I.R.E. Protocol as my gift to you. The Shift necklace is your tool while the F.I.R.E. Protocol teaches you exactly when and how to use it for maximum relief."
+              </p>
+              <p className="text-sm text-gray-600">— Anna, Founder</p>
+            </div>
+          </div>
+        }
         guarantees={[
-          '100% Money back guarantee',
-          'Free Breathwork Course with purchase',
-          'Free delivery',
+          '60-Day Money-Back Guarantee',
+          'Keep F.I.R.E. even if returned',
+          'Free shipping',
         ]}
         reviewCount={379}
         reviewRating={4.8}

@@ -35,7 +35,7 @@ interface ProductHeroProps {
   reviewRating?: number
   ctaText?: string
   ctaLink?: string
-  description?: string
+  description?: React.ReactNode
   // Shopify Integration
   shopifyProductId?: string
   shopifyDomain?: string
@@ -194,11 +194,6 @@ export function ProductHero({
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
                 {productName}
               </h1>
-              {scarcityMessage && (
-                <p className="text-base text-gray-700 mb-3">
-                  {scarcityMessage}
-                </p>
-              )}
               <p className="text-xl lg:text-2xl text-gray-600">
                 {tagline}
               </p>
@@ -318,9 +313,9 @@ export function ProductHero({
 
             {/* Description */}
             {description && (
-              <p className="text-gray-700 leading-relaxed">
+              <div>
                 {description}
-              </p>
+              </div>
             )}
 
             {/* Variant Selector */}
@@ -427,6 +422,13 @@ export function ProductHero({
               >
                 {ctaText} - ${price.current}
               </a>
+            )}
+
+            {/* Scarcity Message */}
+            {scarcityMessage && (
+              <p className="text-sm text-gray-600 text-center -mt-2">
+                {scarcityMessage}
+              </p>
             )}
 
             {/* Guarantees */}

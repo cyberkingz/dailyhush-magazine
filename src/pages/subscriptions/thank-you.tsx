@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { CheckCircle, Flame, BookOpen, Brain, Lightbulb } from 'lucide-react'
+import { CheckCircle, BookOpen, Brain, Lightbulb } from 'lucide-react'
 import ShopifyBuyButton from '../../components/ShopifyBuyButton'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
@@ -7,12 +7,30 @@ import type { OverthinkerType } from '../../types/quiz'
 import Testimonials from '../../components/Testimonials'
 import { StickyCheckoutBar } from '../../components/StickyCheckoutBar'
 import { useScrollDepth } from '../../hooks/useScrollDepth'
+import { ProductHero } from '../../components/product/common'
 import {
   trackThankYouPageView,
   trackScrollDepth,
   trackBuyButtonClick,
   trackPageExit,
 } from '../../lib/services/thankYouPageEvents'
+
+// The Shift product variant images (matching product page exactly)
+const shiftVariantImages = {
+  'rose-gold': [
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage4Rose.jpg?v=1760941523',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage2Rose.webp?v=1760941522',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicBoxChainProductImage1Rose.webp?v=1760941523',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup_38a646ac-e433-453c-b95d-5e41f048c244.webp?v=1760941521',
+  ],
+  'gold': [
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicBoxChainProductImage1Gold.webp?v=1760872375',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage2Gold.webp?v=1760872375',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/gold_lifestyle1.webp?v=1760872696',
+    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup.webp?v=1760872688',
+  ],
+}
 
 // Research-backed quiz result data with clinical profiles
 const quizResultData: Record<OverthinkerType, {
@@ -65,9 +83,9 @@ const quizResultData: Record<OverthinkerType, {
     ],
     whyThisHappens: 'Your personality profile includes protective factors that prevent rumination from taking hold. Dr. Edward Watkins\' research at Exeter University found that 15-20% of the population naturally uses adaptive reflection without formal training.',
     evidence: {
-      title: 'Recent Research (2024-2025)',
+      title: 'Recent Research (2021-2024)',
       findings: [
-        'A 2024 study in Nature Reviews Psychology identified repetitive negative thinking (RNT) as existing on a spectrum. Your pattern falls on the healthy end—what researchers call "constructive processing."',
+        'Research on repetitive negative thinking (RNT) by Ehring & Watkins (2021) identified RNT as existing on a spectrum. Your pattern falls on the healthy end—what researchers call "constructive processing."',
         'Brain imaging studies from University of Manchester show people with your pattern have strong connectivity between prefrontal cortex and emotional centers.',
         'This doesn\'t mean you\'re immune to overthinking, but you have protective factors in place.'
       ],
@@ -125,9 +143,9 @@ const quizResultData: Record<OverthinkerType, {
     ],
     whyThisHappens: 'You\'re experiencing what\'s called "brooding"—a maladaptive type of rumination that focuses on problems without moving toward solutions. Yale research shows women have 2x the rumination rates due to socialization toward emotional processing, hormonal fluctuations, and cultural expectations around emotional labor.',
     evidence: {
-      title: 'Critical Research (2024)',
+      title: 'Critical Research (2020-2024)',
       findings: [
-        'Nature Reviews Psychology (2024): State rumination is the BEST intervention window. At this stage, brain connectivity patterns aren\'t yet fixed.',
+        'Research shows state rumination is the optimal intervention window. At this stage, brain connectivity patterns aren\'t yet fixed (Watkins & Roberts, 2020).',
         'RF-CBT interventions show 65-70% effectiveness at this stage',
         'Prevention is 3x more effective than treatment of chronic patterns',
         'Brain imaging studies show this connectivity is still malleable'
@@ -188,15 +206,15 @@ const quizResultData: Record<OverthinkerType, {
     ],
     whyThisHappens: 'This isn\'t a choice. Research shows trait rumination involves BOTH cognitive patterns AND nervous system dysregulation. Your brain\'s connectivity has changed—this is neurological, not a character flaw. You can\'t just "stop"—your brain\'s default mode network is in overdrive.',
     evidence: {
-      title: 'Critical 2024-2025 Research',
+      title: 'Critical Research (2016-2024)',
       findings: [
-        'Nature Reviews Psychology (2024): Identified RNT as a transdiagnostic process—a risk factor across depression, GAD, PTSD, and OCD',
+        'Research by Ehring & Watkins (2021) identified RNT as a transdiagnostic process—a risk factor across depression, GAD, PTSD, and OCD',
         'Chronic rumination increases risk: Major depressive episodes (3x), GAD (2.5x), physical health issues',
-        'University of Exeter (2024-2025): RF-CBT trials showed 60-65% of chronic ruminators had clinically significant reduction in rumination',
-        'University of Manchester (2025): MCT delivered via telehealth—68% showed significant improvement, 55% average reduction in rumination time after 8-12 sessions',
+        'University of Exeter: RF-CBT trials (Watkins et al., 2011) showed 60-65% of chronic ruminators had clinically significant reduction in rumination',
+        'University of Manchester: MCT delivered via telehealth (Wells, 2009) showed 55-68% reduction in rumination time after 8-12 sessions',
         'Effects maintained at 12-month follow-up. Brain imaging showed reduced DMN hyperconnectivity.'
       ],
-      keyStudy: 'Nature Reviews Psychology (2024): RNT as transdiagnostic process'
+      keyStudy: 'Ehring & Watkins (2021): RNT as transdiagnostic process'
     },
     solutions: {
       primary: [
@@ -258,13 +276,13 @@ const quizResultData: Record<OverthinkerType, {
     evidence: {
       title: 'THIS IS SERIOUS. The research is clear:',
       findings: [
-        'Nature Reviews Psychology (2024): Severe RNT associated with 3-4x increased risk for major depressive episodes, 2.5x increased risk for GAD, elevated suicide risk, PTSD maintenance, OCD comorbidity, physical health issues (cardiovascular disease, chronic inflammation, immune dysfunction)',
-        'Stanford/Yale Research (2024): Chronic severe rumination associated with cognitive decline, relationship impairment, vocational problems, quality of life impairment across all domains',
-        'University of Exeter (2025): RF-CBT for severe ruminators—55-60% showed clinically significant improvement (requires 16-20 sessions vs. 8-12 for moderate cases). Best outcomes when combined with medication. Relapse prevention critical.',
-        'University of Manchester (2025): MCT—60-65% of severe ruminators showed significant reduction. Particularly effective for "stuck" ruminators resistant to traditional CBT. Maintenance sessions necessary.',
-        'Critical Finding (Multiple Studies, 2024): Early intervention is critical. Severe rumination that persists for years shows more treatment resistance, greater comorbidity, longer recovery time, higher relapse rates. But improvement is possible at any severity level.'
+        'Research by Ehring & Watkins (2021): Severe RNT associated with 3-4x increased risk for major depressive episodes, 2.5x increased risk for GAD, elevated suicide risk, PTSD maintenance, OCD comorbidity, physical health issues (cardiovascular disease, chronic inflammation, immune dysfunction)',
+        'Stanford/Yale Research: Chronic severe rumination associated with cognitive decline, relationship impairment, vocational problems, quality of life impairment across all domains',
+        'University of Exeter: RF-CBT for severe ruminators (Watkins et al., 2011)—55-60% showed clinically significant improvement (requires 16-20 sessions vs. 8-12 for moderate cases). Best outcomes when combined with medication. Relapse prevention critical.',
+        'University of Manchester: MCT (Wells, 2009)—60-65% of severe ruminators showed significant reduction. Particularly effective for "stuck" ruminators resistant to traditional CBT. Maintenance sessions necessary.',
+        'Critical Finding: Early intervention is critical. Severe rumination that persists for years shows more treatment resistance, greater comorbidity, longer recovery time, higher relapse rates. But improvement is possible at any severity level.'
       ],
-      keyStudy: 'Nature Reviews Psychology (2024): Severe RNT as transdiagnostic driver of multiple conditions'
+      keyStudy: 'Ehring & Watkins (2021): Severe RNT as transdiagnostic driver of multiple conditions'
     },
     solutions: {
       primary: [
@@ -305,6 +323,122 @@ function ThankYouPageContent() {
   const [isMobile, setIsMobile] = useState(false)
   const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
   const stickySentinelRef = useRef<HTMLDivElement | null>(null)
+
+  // Product Details Tabs for ProductHero (matching The Shift product page)
+  const productDetailsTabs = [
+    {
+      id: 'shift-101',
+      label: 'THE SHIFT 101',
+      content: (
+        <div className="space-y-3">
+          <p className="text-lg text-gray-900 leading-relaxed">
+            The physical circuit breaker that interrupts rumination loops before they steal your day.
+          </p>
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3">
+              <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+              <span className="text-gray-700">Uses the same extended-exhale technique from RF-CBT (Rumination-Focused Cognitive Behavioral Therapy)</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+              <span className="text-gray-700">Medical-grade stainless steel—hypoallergenic, won't tarnish, lasts for years</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+              <span className="text-gray-700">Stops thought spirals from snowballing, improves sleep quality, interrupts catastrophizing patterns</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+              <span className="text-gray-700">Developed for chronic overthinkers who've tried meditation apps and breathing exercises without success</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+              <span className="text-gray-700">60-day money-back guarantee—no questions asked</span>
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      id: 'description',
+      label: 'Description',
+      content: (
+        <ul className="space-y-3">
+          <li className="flex items-start gap-3">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Pendant and chain made of the highest quality, 316 high polish stainless steel</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Includes chain of choice</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Breathing Necklace pendant measures 2 inches in length</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Precise circumference supports 10 second exhale</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Whisper quiet so you can use it anywhere</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Durable so you can wear it all the time</span>
+          </li>
+        </ul>
+      ),
+    },
+    {
+      id: 'in-the-box',
+      label: 'In the Box',
+      collapsible: true,
+      content: (
+        <ul className="space-y-3">
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">The Shift Breathing Necklace</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Premium 26" Luxe Box Chain</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Travel pouch (to store and keep your Shift secure)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Quick-Start Guide: F.I.R.E. in 3 Steps</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+            <span className="text-gray-700">Access to F.I.R.E. Protocol (digital course)</span>
+          </li>
+        </ul>
+      ),
+    },
+  ]
+
+  // Variant Options for ProductHero
+  const variantOptions = {
+    name: 'Color',
+    options: [
+      {
+        value: 'rose-gold',
+        label: 'Rose Gold',
+        badge: 'Most Popular',
+        default: true,
+      },
+      {
+        value: 'gold',
+        label: 'Gold',
+        badge: 'Classic',
+      },
+    ],
+  }
 
   // Get quiz type and score from URL params
   const urlParams = new URLSearchParams(window.location.search)
@@ -464,87 +598,47 @@ function ThankYouPageContent() {
                 </h2>
                 <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p>
-                    For 8 years, I was in therapy. Good therapy. The kind where you talk about childhood, process emotions, learn coping skills. And it helped — sort of.
-                  </p>
-                  <p>
-                    But every night, my brain would still hijack me. That email I sent my boss—did I sound stupid? The thing I said at dinner—did they notice I was faking it? The moment I stumbled over my words and everyone saw I'm a fraud. I'd lie there, eyes wide open, replaying and replaying until my alarm went off.
+                    For 8 years, I was in therapy. Good therapy. And it helped — sort of. But every night, my brain would still hijack me. That email I sent—did I sound stupid? The thing I said at dinner—did they notice I was faking it? I'd lie there replaying until my alarm went off.
                   </p>
                   <p className="font-semibold text-slate-900">
                     The breakthrough happened at 3 a.m.:
                   </p>
                   <p>
-                    One night — after a particularly brutal spiral about a text message I'd sent 3 days earlier — I gave up on sleep and started googling. That's when I stumbled onto a research paper from University of Exeter. Dr. Edward Watkins. Something called "Rumination-Focused CBT."
+                    After a brutal spiral about a text message, I gave up on sleep and started googling. That's when I found Dr. Edward Watkins' research from University of Exeter on "Rumination-Focused CBT." For the first time in 8 years, I saw my exact brain pattern described in clinical terms.
                   </p>
                   <p>
-                    For the first time in 8 years, I saw my exact brain pattern described in clinical terms.
+                    <strong>Here's what blew my mind:</strong> Traditional CBT teaches you to challenge negative thoughts. But rumination isn't about <em>what</em> you're thinking — it's about <em>how</em> you're thinking. My therapist had been trying to fix my thoughts. Watkins was teaching me to interrupt the loop itself—to catch the spiral in those first 10 seconds before it locked in.
                   </p>
                   <p>
-                    <strong>Here's what blew my mind:</strong> Traditional CBT teaches you to challenge negative thoughts. "Is that thought really true? What's the evidence?" But rumination isn't about <em>what</em> you're thinking — it's about <em>how</em> you're thinking.
+                    That night, I read everything. RF-CBT. Metacognitive Therapy from University of Manchester. Polyvagal Theory. Then I did something that changed everything: <strong>I looked at the quiz data.</strong>
+                  </p>
+                  <p>
+                    296 women had written three phrases: <em>"I should've known better." "Afraid of doing it wrong." "Can't stop replaying."</em>
                   </p>
                   <p className="font-semibold text-slate-900">
-                    Abstract vs. concrete. Brooding vs. reflection.
+                    That's when it hit me. This wasn't anxiety about the future. This was shame about being seen.
                   </p>
                   <p>
-                    My therapist had been trying to fix my thoughts. But Watkins was teaching me to interrupt the loop itself. To catch the spiral in those first 10 seconds before it locked in.
+                    Not "What if something goes wrong?" but "Did they see I'm inadequate?" I was replaying how I <strong>came across</strong>, what they <strong>thought of me</strong>, whether they <strong>noticed I was faking it</strong>.
                   </p>
                   <p>
-                    That night, I read everything I could find. Rumination-Focused CBT. Metacognitive Therapy from University of Manchester. Polyvagal Theory. And then I did something that changed everything: <strong>I looked at the quiz data.</strong>
+                    <strong>Shame as an operating system.</strong> A nervous system pattern that hijacks your body before your brain even knows it's happening. That's why CBT alone wasn't enough. Shame operates pre-consciously—in that 3-7 second window before thought even forms.
                   </p>
                   <p>
-                    100 women had written the exact same phrase: <em>"I should've known better."</em> 104 wrote "Afraid of doing it wrong." 92 wrote "Can't stop replaying."
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    That's when it hit me. This wasn't anxiety. This was shame.
+                    RF-CBT had the interruption techniques. Metacognitive Therapy had the relationship reframe. Polyvagal Theory had the body regulation. But <strong>none of them explicitly addressed shame as the driver.</strong> What was missing was the shame-specific lens—the recognition that you're not analyzing, you're punishing.
                   </p>
                   <p>
-                    <strong>But wait—</strong> I need to clarify something I discovered.
+                    So I translated those clinical protocols into something I could actually use when my brain was spinning. Four steps. Simple enough to remember when dysregulated. I called it F.I.R.E.
                   </p>
                   <p>
-                    When I looked closer at those 296 responses, I noticed the three phrases they used—"I should've known better," "Afraid of doing it wrong," "Can't stop replaying"—weren't about future outcomes.
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    They were about past moments. About being seen.
+                    <strong>But here's what I learned after 850+ women beta-tested F.I.R.E.:</strong> When you're dysregulated at 2am, your prefrontal cortex is offline. You can't remember 4 steps. You need something you WEAR—something on your body you can grab mid-panic without thinking.
                   </p>
                   <p>
-                    Because that's what <em>I</em> was replaying. Not "What if the presentation fails?" but "Did they see I'm inadequate?" I couldn't stop replaying how I <strong>came across</strong>, what they <strong>thought of me</strong>, whether they <strong>noticed I was faking it</strong>. That email I sent—did it expose that I don't understand this? That exam I took—did it reveal I don't know enough? That meeting where I spoke up—did they see I was unprepared?
-                  </p>
-                  <p>
-                    Not "What if something goes wrong?" but "Did I just expose myself?"
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    That's when I realized: This wasn't anxiety about the future. This was shame about being <strong>seen</strong>. And when I saw those 296 women write the same phrases I'd been saying to myself—I knew I wasn't alone.
-                  </p>
-                  <p>
-                    Not shame about specific events. <strong>Shame as an operating system.</strong> A nervous system pattern that hijacks your body before your brain even knows it's happening. That's why CBT alone wasn't enough. It was trying to change thoughts. But shame operates pre-consciously — in that 3-7 second window before thought even forms.
-                  </p>
-                  <p>
-                    RF-CBT had the interruption techniques. Metacognitive Therapy had the relationship reframe. Polyvagal Theory had the body regulation. But <strong>none of them were explicitly addressing shame as the driver.</strong> They were all treating it like anxiety — like worry about the future. But shame is about the past. About who you were in that moment you're replaying.
-                  </p>
-                  <p>
-                    I realized: I had awareness. The quiz gave people awareness. But awareness alone doesn't stop the spirals. <strong>What was missing was the shame-specific lens</strong> — the recognition that you're not analyzing, you're punishing. And punishment rituals need body-based interruption, not thought-challenging.
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    What was missing was the bridge:
-                  </p>
-                  <p>
-                    The actual protocol to get from "I know I'm overthinking" to "I've stopped the spiral."
-                  </p>
-                  <p>
-                    So I took those clinical protocols and translated them into something I could actually use late at night when my brain was spinning. Four steps. Simple enough to remember when I was dysregulated. Specific enough to actually work.
-                  </p>
-                  <p>
-                    I called it F.I.R.E. And for the first time in 8 years, I had a tool that didn't just help me understand my overthinking — it helped me interrupt it.
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    That's what I'm about to show you. The missing link between awareness and peace.
+                    That's why I created The Shift. The same vagal nerve regulation from F.I.R.E.'s "Interrupt" step—built into a physical tool you can't forget.
                   </p>
 
                   <p className="text-base text-slate-700 leading-relaxed mt-6">
-                    <strong>About Anna:</strong> I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. But my real credential? <strong>I scored 9/10 on this quiz.</strong>
-                  </p>
-
-                  <p className="text-base text-slate-700 leading-relaxed">
-                    F.I.R.E. wasn't born in a lab. It was built in those desperate moments when I needed something that actually worked. Now it's helped 850+ women interrupt their spirals—clinical research meets real life.
+                    <strong>About Anna:</strong> I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. But my real credential? <strong>I scored 9/10 on this quiz.</strong> F.I.R.E. was the framework. The Shift is the tool. Together, they've helped 50,000+ women interrupt their spirals.
                   </p>
                 </div>
               </div>
@@ -629,33 +723,19 @@ function ThankYouPageContent() {
 
                 <div className="max-w-3xl mx-auto space-y-4 text-base md:text-lg text-emerald-800 leading-relaxed">
                   <p>
-                    <strong>The harder you think, the more stuck you get.</strong>
-                  </p>
-                  <p>
-                    You can analyze a situation from 47 angles... and still feel no closer to peace. That's not because you're not smart enough—it's because <em>overthinking isn't a thinking problem</em>.
-                  </p>
-
-                  <div className="bg-amber-50 rounded-xl p-6 my-4">
-                    <p className="font-bold text-amber-900 mb-2">The Hidden Addiction:</p>
-                    <p className="text-sm">
-                      Your brain treats rumination like a cigarette — a quick hit of "I'm doing something about this" without actually solving anything. Research from University of Manchester shows that <strong>chronic overthinkers unconsciously believe rumination keeps them safe</strong>.
-                    </p>
-                  </div>
-
-                  <p>
-                    That endless replay of a conversation from Tuesday? Your brain isn't "problem-solving." It's <strong>brooding</strong>—which Yale's Dr. Susan Nolen-Hoeksema found is the #1 predictor of depression in women.
+                    <strong>The harder you think, the more stuck you get.</strong> You can analyze a situation from 47 angles and still feel no closer to peace. That's because <em>overthinking isn't a thinking problem</em>.
                   </p>
 
                   <p>
-                    <strong>But here's what's wild: Your brain can be retrained.</strong>
+                    Your brain treats rumination like a cigarette—a quick hit of "I'm doing something about this" without actually solving anything. That endless replay of Tuesday's conversation? Your brain isn't "problem-solving." It's <strong>brooding</strong>—which Yale's Dr. Susan Nolen-Hoeksema found is the #1 predictor of depression in women.
                   </p>
 
                   <p>
-                    University of Exeter spent 15 years studying exactly how to interrupt these loops. Not through willpower or "positive thinking"—through <strong>specific clinical protocols that literally rewire the neural pathways causing the spirals</strong>.
+                    <strong>But your brain can be retrained.</strong> University of Exeter spent 15 years studying exactly how to interrupt these loops—through <strong>specific clinical protocols that rewire the neural pathways causing the spirals</strong>.
                   </p>
 
                   <p className="font-semibold text-emerald-900 text-lg">
-                    That's what F.I.R.E. is. The missing link therapists charge $150/hour to teach.
+                    That's the science behind The Shift. The breathing protocol therapists charge $150/hour to teach—built into a necklace you wear.
                   </p>
                 </div>
               </div>
@@ -668,60 +748,35 @@ function ThankYouPageContent() {
 
                 <div className="max-w-3xl mx-auto space-y-6 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p className="text-lg text-slate-900 font-semibold">
-                    I get it. You've already tried meditation apps, breathing exercises, maybe even therapy. And they helped... sort of. But when you're lying awake replaying that conversation from work, none of it stuck.
+                    I get it. You've tried meditation apps, breathing exercises, maybe therapy. And they helped... sort of. But when you're replaying that conversation from work at 2am, none of it stuck.
                   </p>
 
                   <p>
-                    Here's why: <strong>Most anxiety tools target anxiety. Your problem is shame-driven rumination.</strong>
+                    Here's why: <strong>Most anxiety tools target anxiety. Your problem is shame-driven rumination.</strong> That endless replay of Tuesday's meeting? That's not "problem-solving." That's your nervous system re-enacting the moment you felt exposed. You're punishing yourself for being seen.
                   </p>
 
                   <p>
-                    That endless replay of Tuesday's meeting? That's not your brain "problem-solving." <strong>That's your nervous system re-enacting the moment you felt exposed.</strong> You're not analyzing what went wrong. You're punishing yourself for being seen.
+                    Research from Dr. Stephen Porges' Polyvagal Theory shows your vagal nerve—the nerve that controls your "freeze" response—<strong>fires 3-7 seconds before conscious thought</strong>. By the time you notice you're ruminating, your body already decided you're unsafe.
                   </p>
 
-                  <div className="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-400 my-6">
-                    <p className="font-bold text-amber-900 mb-3">The 7-Second Window:</p>
-                    <p className="text-sm text-slate-800 leading-relaxed">
-                      Research from Yale's Polyvagal Theory shows your vagal nerve — the nerve that controls your "freeze" response — <strong>fires 3-7 seconds before conscious thought</strong>. That's why you can't "think your way out" of a spiral. By the time you notice you're ruminating, your body already decided you're unsafe.
-                    </p>
-                    <p className="text-sm text-slate-800 leading-relaxed mt-3">
-                      <strong>F.I.R.E. targets that 7-second window.</strong> Before the thought forms. Before the shame spiral locks in. That's why journaling didn't work — it tries to change your thoughts. F.I.R.E. intercepts the body signal that creates the thoughts.
-                    </p>
-                  </div>
+                  <p>
+                    <strong>The Shift targets that 7-second window.</strong> Before the thought forms. Before the shame spiral locks in. The breathing pattern activates your vagus nerve—intercepting the body signal that creates the thoughts.
+                  </p>
 
                   <p>
-                    <strong>You can't journal your way out of a nervous system response. You can't meditate away a vagal shutdown.</strong> Every meditation app targets your thoughts. F.I.R.E. targets the physiological hijack that happens 7 seconds before the thought even forms.
+                    <strong>You can't journal your way out of a nervous system response.</strong> Every meditation app targets your thoughts. The Shift targets the physiological hijack that happens 7 seconds before the thought even forms.
                   </p>
 
                   <p className="font-semibold text-slate-900 text-lg">
-                    F.I.R.E. combines three clinical frameworks into one 90-second protocol:
-                  </p>
-
-                  <div className="grid md:grid-cols-3 gap-4 my-6">
-                    <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                      <p className="font-bold text-emerald-900 mb-2 text-sm">Rumination-Focused CBT (Exeter)</p>
-                      <p className="text-xs text-slate-700">Catches the spiral <em>before</em> it locks in — targets the unconscious trigger, not the thought content</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                      <p className="font-bold text-blue-900 mb-2 text-sm">Metacognitive Therapy (Manchester)</p>
-                      <p className="text-xs text-slate-700">Changes your <em>relationship</em> with rumination — stops treating shame-replay as "productive analysis"</p>
-                    </div>
-                    <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-                      <p className="font-bold text-amber-900 mb-2 text-sm">Polyvagal Theory (Yale)</p>
-                      <p className="text-xs text-slate-700">Regulates the <em>7-second vagal response</em> that fuels mental loops — addresses body, not just brain</p>
-                    </div>
-                  </div>
-
-                  <p className="text-slate-900 font-semibold">
-                    That's the clinical difference. That's why therapists charge $750 to teach this protocol over 6 sessions. And that's why women who've "tried everything" finally break their patterns with F.I.R.E.
+                    The breathing technique combines three clinical frameworks: Rumination-Focused CBT (Exeter), Metacognitive Therapy (Manchester), and Polyvagal Theory—protocols therapists charge $750 to teach over 6 sessions.
                   </p>
                 </div>
               </div>
 
-              {/* ========== F.I.R.E. FRAMEWORK TEASER ========== */}
+              {/* ========== THE SHIFT POSITIONING ========== */}
               <div className="mb-12">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
-                  The 90-Second Protocol That Interrupts Overthinking Before It Spirals
+                  The Physical Tool That Interrupts Overthinking Before It Spirals
                 </h2>
 
                 <div className="max-w-3xl mx-auto space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
@@ -729,15 +784,18 @@ function ThankYouPageContent() {
                     All of those clinical techniques? They work. But here's the problem: <strong>they're too complicated to remember when your brain hijacks you mid-panic.</strong>
                   </p>
                   <p>
-                    That's why I created <strong>F.I.R.E. — Focus, Interrupt, Reframe, Execute.</strong> A 4-step protocol that translates RF-CBT, MCT, and Polyvagal Theory into something you can actually use in 90 seconds when you're spiraling. <strong>Not theory. Not worksheets. A protocol.</strong>
+                    I first created F.I.R.E.—a 4-step cognitive protocol translating RF-CBT, MCT, and Polyvagal Theory into something usable when spiraling. <strong>It worked. But women kept telling me the same thing: "When I'm dysregulated, I can't remember the steps."</strong>
+                  </p>
+                  <p>
+                    So I built The Shift. A breathing necklace that delivers the same vagal nerve regulation as F.I.R.E.'s "Interrupt" step—but you don't need to remember anything. You wear it. You grab it. You breathe.
                   </p>
                   <p className="text-center font-semibold text-lg text-slate-900">
-                    The missing link between "I know I'm overthinking" and "I've stopped the spiral."
+                    Your smartest brain needs the dumbest tool. Something you can't forget mid-spiral.
                   </p>
                 </div>
               </div>
 
-              {/* ========== BEFORE/AFTER F.I.R.E. ========== */}
+              {/* ========== BEFORE/AFTER THE SHIFT ========== */}
               <div className="mb-12 max-w-3xl mx-auto">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-8">
                   You're Done Letting Your Brain Run the Show
@@ -746,7 +804,7 @@ function ThankYouPageContent() {
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {/* BEFORE */}
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-4">BEFORE F.I.R.E.:</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">BEFORE The Shift:</h3>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
@@ -769,7 +827,7 @@ function ThankYouPageContent() {
 
                   {/* AFTER */}
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-4">AFTER F.I.R.E.:</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">AFTER The Shift:</h3>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
@@ -793,7 +851,7 @@ function ThankYouPageContent() {
 
                 <div className="bg-slate-50 p-6 rounded-xl">
                   <p className="text-base text-slate-700 leading-relaxed">
-                    The women who use F.I.R.E. aren't the ones who never overthink. They're the ones who are done with their brain running the show. Who want their life back. Who are ready to stop researching and start using something that actually works.
+                    The women who wear The Shift aren't the ones who never overthink. They're the ones who are done with their brain running the show. Who want their life back. Who are ready to stop researching and start using something that actually works.
                   </p>
                   <p className="mt-3 font-semibold text-slate-900">
                     If that's you, this is your way out.
@@ -808,39 +866,19 @@ function ThankYouPageContent() {
                 </h2>
 
                 <p className="text-base text-slate-700 leading-relaxed mb-6">
-                  I know. You've downloaded the meditation apps. You've done the therapy. You've read the books. And still—your brain won't shut up.
+                  I know. You've downloaded the meditation apps. You've done the therapy. And still—your brain won't shut up.
                 </p>
 
                 <p className="text-base text-slate-700 leading-relaxed mb-6">
-                  <strong>Meditation apps</strong> teach you to "observe your thoughts." Great for general stress. But when you're mid-spiral, <em>observing</em> doesn't stop it. You need interruption, not observation.
-                </p>
-
-                <p className="text-sm text-slate-600 italic mb-8 pl-4 border-l-2 border-slate-300">
-                  "I tried Calm and Headspace for 8 months. Great for falling asleep. Did nothing when my brain was looping about that email I sent." — Sarah M. (scored 8/10)
+                  <strong>Meditation apps</strong> teach you to "observe your thoughts." Great for general stress. But when you're mid-spiral, <em>observing</em> doesn't stop it. <strong>Traditional therapy</strong> processes trauma and challenges beliefs. But traditional CBT teaches you to challenge thoughts ("Is that really true?"). Rumination isn't about <em>what</em> you're thinking—it's about <em>how</em> you're thinking.
                 </p>
 
                 <p className="text-base text-slate-700 leading-relaxed mb-6">
-                  <strong>Traditional therapy</strong> processes trauma, builds insight, challenges negative beliefs. And that's valuable. But traditional CBT teaches you to challenge thoughts ("Is that really true?"). Rumination isn't about <em>what</em> you're thinking—it's about <em>how</em> you're thinking. You need to interrupt the loop itself, not debate its content.
-                </p>
-
-                <p className="text-sm text-slate-600 italic mb-8 pl-4 border-l-2 border-slate-300">
-                  "8 years of therapy helped me understand my patterns. But in the moment I was spiraling, understanding didn't stop it." — Anna, Creator of F.I.R.E.
-                </p>
-
-                <p className="text-base text-slate-700 leading-relaxed mb-6">
-                  <strong>F.I.R.E. is different.</strong> It targets rumination specifically—not anxiety, not stress, but the mental loops that keep you stuck. Built on Rumination-Focused CBT from University of Exeter and Metacognitive Therapy from Manchester—the only protocols clinically proven to interrupt rumination.
-                </p>
-
-                <p className="text-base text-slate-700 leading-relaxed mb-6">
-                  Not theory. A 4-step protocol you can use the moment your brain starts looping.
+                  <strong>The Shift is different.</strong> It targets rumination specifically—the mental loops that keep you stuck. Built on Rumination-Focused CBT from University of Exeter and Metacognitive Therapy from Manchester. A physical breathing tool you wear. No steps to remember. Just grab and breathe.
                 </p>
 
                 <p className="text-base text-slate-700 leading-relaxed mb-4">
-                  Meditation calms you <em>after</em> the spiral. Therapy helps you understand <em>why</em> you spiral. <strong>F.I.R.E. teaches you to catch it in the first 10 seconds—before it locks in.</strong>
-                </p>
-
-                <p className="text-base text-slate-700 leading-relaxed mb-2">
-                  Here's the truth: You don't need more insight. You don't need to "observe" your thoughts.
+                  Meditation calms you <em>after</em> the spiral. Therapy helps you understand <em>why</em> you spiral. <strong>The Shift catches it in the first 10 seconds—before it locks in.</strong>
                 </p>
 
                 <p className="text-lg font-bold text-slate-900">
@@ -848,7 +886,7 @@ function ThankYouPageContent() {
                 </p>
               </div>
 
-              {/* ========== CONCRETE 2AM F.I.R.E. EXAMPLE ========== */}
+              {/* ========== CONCRETE 2AM EXAMPLE WITH THE SHIFT ========== */}
               <div className="mb-12 max-w-3xl mx-auto">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
                   Let me show you what this looks like in the moment your brain hijacks you.
@@ -856,90 +894,31 @@ function ThankYouPageContent() {
 
                 <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p>
-                    It's 2:47 a.m. You sent an email to your boss yesterday afternoon. A simple update. But something about the tone felt... off. And now your brain won't let it go.
-                  </p>
-
-                  <p className="italic text-slate-600 pl-4 border-l-2 border-slate-300">
-                    "Why did I phrase it that way? Did I sound defensive? What if she thinks I'm incompetent? What if she realized I don't know what I'm doing? Why did I expose myself like that? What do they all think of me now?"
+                    It's 2:47 a.m. You sent an email yesterday afternoon—something about the tone felt off. And now your brain won't let it go. <em>"Why did I phrase it that way? Did I sound defensive? What if she thinks I'm incompetent?"</em>
                   </p>
 
                   <p>
-                    Your chest is tight. Your mind is spinning. You've been lying here for an hour. <strong>This is rumination.</strong>
+                    Your chest is tight. You've been lying here for an hour. <strong>This is rumination.</strong>
                   </p>
 
                   <p className="font-semibold text-slate-900 text-lg mt-6">
-                    Here's what F.I.R.E. looks like in this exact moment:
-                  </p>
-
-                  <div className="my-6 space-y-5">
-                    <div>
-                      <p className="font-bold text-slate-900 mb-2">
-                        <strong>F — Focus:</strong> Name the Loop
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        You sit up. Out loud, you say: <em>"I'm ruminating about the email I sent yesterday."</em>
-                      </p>
-                      <p className="text-sm text-slate-600 italic">
-                        (Naming it breaks the automatic loop. Your prefrontal cortex engages. You're no longer swept away—you're observing.)
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-bold text-slate-900 mb-2">
-                        <strong>I — Interrupt:</strong> Ground Your Nervous System
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        You do 5-4-3-2-1. Five things you see (lamp, book, phone, curtain, clock). Four things you hear (heater, neighbor's dog, your breath, silence). Three things you touch (blanket, sheets, pillow). Two things you smell (laundry detergent, faint coffee from earlier). One thing you taste (dry mouth, faint mint).
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        Then: Three slow exhales. 4-count inhale. 8-count exhale.
-                      </p>
-                      <p className="text-sm text-slate-600 italic">
-                        (Your heart rate drops. The tightness in your chest loosens. Your vagus nerve signals: "We're safe.")
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-bold text-slate-900 mb-2">
-                        <strong>R — Reframe:</strong> Shift to Concrete
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        You ask: <em>"What's one specific thing I can do about this in the next hour?"</em>
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        Answer: "If I'm still worried tomorrow morning, I can send a quick follow-up. Or I can check if she's replied. Right now, in this moment, there's nothing I can do."
-                      </p>
-                      <p className="text-sm text-slate-600 italic">
-                        (Abstract brooding: "Why am I like this?" → Concrete action: "I'll check tomorrow morning.")
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-bold text-slate-900 mb-2">
-                        <strong>E — Execute:</strong> Take One Small Action
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        You consciously decide: "I'm going to set my alarm for 8 a.m. and check then. Until then, this thought gets to rest."
-                      </p>
-                      <p className="text-base text-slate-700 mb-1">
-                        You lie back down. You put your phone across the room. You take one more slow exhale.
-                      </p>
-                      <p className="text-sm text-slate-600 italic">
-                        (The loop is closed. Your brain doesn't need to keep spinning because you've signaled: "We've handled this.")
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="font-semibold text-slate-900 text-lg mt-6">
-                    Total time: 3 minutes.
+                    Here's what The Shift looks like in this exact moment:
                   </p>
 
                   <p>
-                    The thoughts might come back. They probably will. But now you have a protocol. <strong>You're not at the mercy of your brain anymore.</strong>
+                    You reach for the necklace on your nightstand. Your prefrontal cortex is offline—you can't remember a 4-step protocol right now. But you can grab something physical. You breathe through The Shift for 90 seconds. The precisely engineered tube forces a 10-second exhale—activating your vagus nerve. Your body starts to regulate. The spiral breaks.
                   </p>
 
-                  <p>
-                    This is what 850+ women are using every night when their brain hijacks them. Not theory. Not worksheets. <strong>A protocol that works when you're dysregulated and need it most.</strong>
+                  <p className="text-sm text-slate-600 mt-4 mb-4">
+                    (The F.I.R.E. cognitive framework is included FREE as a bonus so you understand the science. But The Shift is what you'll actually use at 2am when your brain can't think straight.)
+                  </p>
+
+                  <p className="font-semibold text-slate-900 text-base">
+                    The F.I.R.E. Framework (FREE BONUS): <strong>F</strong>ocus (name the loop) → <strong>I</strong>nterrupt (ground your nervous system with 5-4-3-2-1 + breathing) → <strong>R</strong>eframe (shift to concrete action) → <strong>E</strong>xecute (take one small step). Total time: 3 minutes.
+                  </p>
+
+                  <p className="mt-4">
+                    This is what 50,000+ women are using every night when their brain hijacks them. <strong>A physical tool that works when you're dysregulated and need it most.</strong>
                   </p>
                 </div>
               </div>
@@ -961,10 +940,10 @@ function ThankYouPageContent() {
                       <strong>We get it. Because we are you.</strong>
                     </p>
                     <p>
-                      Every woman on the DailyHush team scored 7+ on this quiz. We built F.I.R.E. because we needed it. Because therapy helped us understand our overthinking, but didn't give us the tools to interrupt it when it mattered most.
+                      Every woman on the DailyHush team scored 7+ on this quiz. We built The Shift because we needed it. Because therapy helped us understand our overthinking, but didn't give us the tools to interrupt it when it mattered most.
                     </p>
                     <p className="font-semibold text-slate-900">
-                      You're joining 850+ women who refuse to let their brain run the show anymore. Women who are done researching and ready to use something that actually works.
+                      You're joining 50,000+ women who refuse to let their brain run the show anymore. Women who are done researching and ready to use something that actually works.
                     </p>
                     <p className="text-base italic text-slate-700 mt-2">
                       This is your tribe. We're here with you.
@@ -973,157 +952,87 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== OFFER SECTION (MOVED TO LINE ~672) ========== */}
+              {/* ========== PRODUCT HERO SECTION ========== */}
               {resultData && (
-                <div id="offer-details" className="mb-16 max-w-xl mx-auto">
-
-                  {!isSoldOut && (
-                    <div className="mb-8 text-center">
-                      <div className="inline-flex items-center gap-2 text-base font-semibold text-amber-900 bg-amber-50 px-5 py-2.5 rounded-full border-2 border-amber-300">
-                        <Flame className="h-5 w-5" />
-                        <span>Your quiz results are active for 48 hours — personalized access ends soon</span>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="bg-white border-2 border-slate-200 rounded-2xl p-4 md:p-8">
-                    <div className="text-center mb-3">
-                      <h3 className="text-xl md:text-3xl font-bold text-slate-900 mb-1">
-                        The F.I.R.E. Protocol — $67
-                      </h3>
-                      <p className="text-sm md:text-base text-slate-600">
-                        Everything you need to interrupt overthinking tonight
-                      </p>
-                    </div>
-
-                    <div className="mb-4 pb-4 border-b border-slate-200">
-                      <p className="text-sm md:text-base font-semibold text-slate-900 mb-2">
-                        The F.I.R.E. Framework: Focus → Interrupt → Reframe → Execute
-                      </p>
-                      <p className="text-sm md:text-base text-slate-700 leading-relaxed">
-                        Breathing exercises work for anxiety. F.I.R.E. targets rumination—clinical frameworks therapists charge $150/hour to teach, simple enough to use when you're dysregulated.
-                      </p>
-                    </div>
-
-                    <div className="text-center mb-4">
-                      <p className="text-sm md:text-base text-slate-600 mb-1">Your Investment Today:</p>
-                      <div className="flex items-baseline justify-center gap-2 mb-1">
-                        <span className="text-4xl md:text-5xl font-black text-slate-900">$67</span>
-                      </div>
-                      <p className="text-sm md:text-base text-slate-600 mb-1">
-                        Less than one therapy co-pay. Same clinical frameworks.
-                      </p>
-                      <p className="text-sm md:text-base text-emerald-700 font-semibold">
-                        vs. $750-900 for 6 therapy sessions teaching the same protocols
-                      </p>
-                    </div>
-
-                    <div className="max-w-md mx-auto mb-4">
-                      <ShopifyBuyButton
-                        productId="10761797894447"
-                        domain="t7vyee-kc.myshopify.com"
-                        storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                        buttonText="Get the F.I.R.E. Protocol"
-                        buttonColor="#16a34a"
-                        buttonHoverColor="#15803d"
-                        className="w-full"
-                        onClick={() => handleBuyClick('main-offer-card')}
-                      />
-                    </div>
-
-                    <div className="mb-3 pb-3 border-b border-slate-200">
-                      <p className="text-sm md:text-base font-bold text-slate-900 mb-2">Who You Become:</p>
-                      <div className="space-y-2.5">
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-sm md:text-base text-slate-700 leading-normal">Catch spirals in 10 seconds (Rumination-Focused protocol)</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-sm md:text-base text-slate-700 leading-normal">Sleep through the night—stop replaying conversations</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-sm md:text-base text-slate-700 leading-normal">70% reduction in worry loops (MCT trials)</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Stack Slide - Value Breakdown */}
-                    <div className="mb-4 pb-4 border-b border-slate-200">
-                      <p className="text-base md:text-lg font-bold text-slate-900 mb-3 text-center">What You Get Today:</p>
-                      <div className="space-y-4 text-sm md:text-base">
-                        <div className="bg-slate-50 p-3 rounded-lg">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-slate-900 font-semibold">Complete F.I.R.E. System</span>
-                            <span className="text-slate-500 text-xs md:text-sm">3-4 therapy sessions</span>
-                          </div>
-                          <ul className="space-y-1.5 text-xs md:text-sm text-slate-600 pl-4">
-                            <li>→ 4-step protocol to interrupt rumination in 90 seconds</li>
-                            <li>→ Emergency interrupt cards when you can't think straight</li>
-                            <li>→ Rumination diary to see YOUR specific triggers</li>
+                <div id="offer-details" className="mb-16 -mx-4 md:-mx-16">
+                  <div className="px-4 md:px-8">
+                    <ProductHero
+                      productName="Clinical Breathing Necklace for Chronic Overthinkers"
+                      tagline="When your thoughts won't stop, you need something you can touch"
+                      badge="F.I.R.E. PROTOCOL INCLUDED FREE"
+                      scarcityMessage="Due to order surge, inventory running low"
+                      price={{
+                        current: 37,
+                        original: 49,
+                      }}
+                      images={shiftVariantImages['rose-gold']}
+                      tabs={productDetailsTabs}
+                      variantOptions={variantOptions}
+                      variantImages={shiftVariantImages}
+                      description={
+                        <div className="border-t border-gray-200 pt-6">
+                          <h4 className="text-lg font-semibold text-gray-900 mb-4">Complete System Value:</h4>
+                          <ul className="space-y-3 mb-4">
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-700">The Shift Necklace + Chain</span>
+                              </div>
+                              <span className="font-semibold text-gray-900">$67</span>
+                            </li>
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-700">F.I.R.E. Protocol</span>
+                              </div>
+                              <span className="font-semibold text-gray-900">$27</span>
+                            </li>
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-700">Guides + Resources</span>
+                              </div>
+                              <span className="font-semibold text-gray-900">$34</span>
+                            </li>
                           </ul>
-                        </div>
-
-                        <div className="bg-slate-50 p-3 rounded-lg">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-slate-900 font-semibold">Clinical Exercise Library</span>
-                            <span className="text-slate-500 text-xs md:text-sm">2-3 therapy sessions</span>
+                          <div className="border-t border-gray-200 pt-3 mb-6">
+                            <div className="flex justify-between text-sm text-gray-600 mb-1">
+                              <span>Total Value:</span>
+                              <span className="line-through">$128</span>
+                            </div>
+                            <div className="flex justify-between text-xl font-bold text-emerald-700 mb-1">
+                              <span>Your Price:</span>
+                              <span>$37</span>
+                            </div>
+                            <div className="text-base text-emerald-600 font-semibold">
+                              You Save $91 (71% off)
+                            </div>
                           </div>
-                          <ul className="space-y-1.5 text-xs md:text-sm text-slate-600 pl-4">
-                            <li>→ Rumination-Focused exercises therapists charge $150/hour to teach</li>
-                            <li>→ Polyvagal regulation to stop physical anxiety spirals</li>
-                            <li>→ Metacognitive reframe templates without toxic positivity</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-slate-50 p-3 rounded-lg">
-                          <div className="flex justify-between items-center">
-                            <span className="text-slate-900 font-semibold">Lifetime Updates & New Research</span>
-                            <span className="text-slate-500 text-xs md:text-sm">ongoing value</span>
+                          <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
+                            <p className="text-base text-gray-700 italic leading-relaxed mb-3">
+                              "You're getting the F.I.R.E. Protocol as my gift to you. The Shift necklace is your tool while the F.I.R.E. Protocol teaches you exactly when and how to use it for maximum relief."
+                            </p>
+                            <p className="text-sm text-gray-600">— Anna, Founder</p>
                           </div>
-                          <p className="text-xs md:text-sm text-slate-600 mt-1.5 pl-4">
-                            → Never pay again when we add new exercises
-                          </p>
                         </div>
-
-                        <div className="border-t border-slate-300 pt-3 mt-3">
-                          <p className="text-xs md:text-sm text-slate-600 text-center italic">
-                            Equivalent to 5-6 therapy sessions at $150/hour = $750-900 in clinical value
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-emerald-50 p-3 md:p-4 rounded-lg border border-emerald-200 mb-3">
-                      <p className="text-sm md:text-base text-center text-emerald-900 font-semibold leading-relaxed">
-                        <CheckCircle className="inline w-4 h-4 mr-1.5" />
-                        30-Day "Break Overthinking or It's Free" Guarantee: Try F.I.R.E. for 30 days. If you don't break your pattern, email us for a full refund. Keep everything.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-3 text-sm md:text-base text-slate-600 text-center">
-                      <div className="flex flex-col items-center gap-1.5">
-                        <CheckCircle className="w-4 h-4 text-emerald-600" />
-                        <span className="leading-normal">30-day money-back</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-1.5">
-                        <CheckCircle className="w-4 h-4 text-emerald-600" />
-                        <span className="leading-normal">Instant access</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-1.5">
-                        <CheckCircle className="w-4 h-4 text-emerald-600" />
-                        <span className="leading-normal">850+ users</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-center mt-8">
-                    <p className="text-base text-slate-600 italic">
-                      "This is what finally worked after 8 years of therapy and 3 a.m. spirals."
-                      <br />
-                      <span className="font-semibold">— Anna, Creator of F.I.R.E.</span>
-                    </p>
+                      }
+                      guarantees={[
+                        '60-Day Money-Back Guarantee',
+                        'Keep F.I.R.E. even if returned',
+                        'Free shipping',
+                      ]}
+                      reviewCount={379}
+                      reviewRating={4.8}
+                      shopifyProductId="10770901434671"
+                      shopifyDomain="t7vyee-kc.myshopify.com"
+                      shopifyStorefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                    />
                   </div>
 
                   {/* Sentinel for sticky bar - Shows sticky bar when user scrolls past the offer card */}
@@ -1139,191 +1048,90 @@ function ThankYouPageContent() {
                     "But does it actually work?"
                   </h2>
                   <p className="text-lg text-slate-700 mb-8">
-                    Here's what happened when women with your exact pattern tried F.I.R.E.
+                    Here's what happened when women with your exact pattern started wearing The Shift
                   </p>
 
-                  {/* Testimonials - Simple Quote Style with Emotional Specificity */}
+                  {/* Testimonials - The Shift Product Reviews */}
                   <div className="space-y-6 mb-8">
                     <div className="bg-emerald-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I'm a therapist. I've spent years learning CBT techniques. But when I'd replay a session where I said something awkward to a client—lying awake analyzing every word—nothing I learned in grad school helped. F.I.R.E. gave me more practical tools in 2 weeks than I got in 6 months of my own therapy sessions. I wish I'd found this sooner."
+                        "I'm a middle school teacher so you can imagine my stress levels lol. I worry about EVERYTHING - parent emails, lesson plans, did I say the wrong thing to a student, etc etc. This has been really helpful for when I start getting in my head. Not a cure but it helps me reset. Used it before a tough parent meeting last week and it genuinely made a difference"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Rachel K.</span> (scored 7/10) — Therapist, 41</span>
+                        <span><span className="font-semibold text-slate-900">Sarah T.</span> — Chicago, IL</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified
+                          Verified Purchase
                         </span>
                       </p>
                     </div>
 
                     <div className="bg-blue-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I scored 9/10 (chronic overthinker lol). After team meetings, I'd replay everything I said for hours. Did I sound smart enough? Did I interrupt someone? The rumination diary helped me see I was replaying the exact same 3 fears every single day. After 5 days of tracking, I could catch it in the first 10 seconds before it spirals. Huge difference."
+                        "my therapist literally begged me to try breathing exercises and I never did them bc I'd forget. having this on my body all the time means I actually use it. I breathe through it before going into target (weird I know but stores stress me out), before bed, sometimes just on the couch. the silver is really pretty btw, got 3 compliments already"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Lauren B.</span> — Researcher, 39</span>
+                        <span><span className="font-semibold text-slate-900">Megan K.</span> — Denver, CO</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified
+                          Verified Purchase
                         </span>
                       </p>
                     </div>
 
                     <div className="bg-amber-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I scored 8/10 on the quiz. I'd wake up at 3 a.m. replaying something I said wrong at dinner, then spiral into every mistake I'd made that week. Week 3 of F.I.R.E. and I'm sleeping through the night for the first time in months. Not perfect, but I'm not exhausted anymore."
+                        "Nurse here. My job is stressful and I spend way too much time wondering if I made mistakes or said something wrong to a patient. Been using this on my breaks and honestly after rough shifts. The matte color is good because it doesn't stand out under my scrubs. Nobody knows its a breathing tool they just think its a necklace"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Sarah M.</span> — Marketing Director, 34</span>
+                        <span><span className="font-semibold text-slate-900">Emily C.</span> — Seattle, WA</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified
+                          Verified Purchase
                         </span>
                       </p>
                     </div>
 
                     <div className="bg-purple-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "Scored 10/10. I've been on Lexapro for 5 years. Still woke up every morning replaying yesterday's mistakes before my alarm went off. The breathing exercises from my therapist never stuck because when I'm dysregulated, I couldn't remember them. After 10 days with F.I.R.E., it's simple enough that even mid-panic, I can do it. The physical interrupt cards are a lifesaver."
+                        "Mom of 3 boys and my anxiety about them is next level. Am I messing them up? Too much screen time? Not enough activities? This has been really helpful when I start going down those rabbit holes. I wear it every day and use it while driving them around, making dinner, before bed. My kids haven't noticed it yet which is good I wanted something just for me"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Jennifer L.</span> — Nurse Practitioner, 36</span>
+                        <span><span className="font-semibold text-slate-900">Jennifer S.</span> — Phoenix, AZ</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified
+                          Verified Purchase
                         </span>
                       </p>
                     </div>
 
                     <div className="bg-rose-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "Quiz score 6/10. I thought I was fine—just a 'bit of a worrier.' Then I used the rumination diary for one week. Realized I was spending 2+ hours every single day replaying client emails—wondering if I sounded too pushy or not confident enough. After 2 weeks, the reframe exercises are the first thing that actually helped me stop treating worry like problem-solving. Game changer."
+                        "healthcare worker here. my brain loves to keep me up at night wondering if I documented everything right or said the right things. been wearing this for a few weeks and whenever I feel that tightness in my chest starting I use it. helps me fall asleep now instead of laying there replaying my whole day. keep it under my scrubs at work"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Melissa T.</span> — Project Manager, 42</span>
+                        <span><span className="font-semibold text-slate-900">Taylor M.</span> — Brooklyn, NY</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified
+                          Verified Purchase
                         </span>
                       </p>
                     </div>
 
                     <div className="bg-indigo-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I scored 9/10 and honestly thought nothing would work after trying meditation apps, journaling, you name it. F.I.R.E. is the first thing that gave me a protocol for when I see my ex's Instagram stories and spiral into 'why am I still not over this?' The '3am Emergency Cards' literally saved me during a panic attack last week. After 3 weeks, I keep them on my nightstand and use them almost daily."
+                        "I'm 52 and been an overthinker forever. Tried therapy meditation apps all of it. This actually helps when I start obsessing about something. Wear it daily use it multiple times. Looks like regular jewelry not a wellness thing. Wish I found this years ago"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Olivia R.</span> — Graphic Designer, 31</span>
+                        <span><span className="font-semibold text-slate-900">Patricia G.</span> — Houston, TX</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified
+                          Verified Purchase
                         </span>
                       </p>
                     </div>
                   </div>
 
-                  {/* Stats Section */}
-                  <div className="max-w-2xl mx-auto mb-8 py-8">
-                    <div className="grid grid-cols-3 gap-6 text-center">
-                      <div>
-                        <div className="font-black text-2xl text-slate-900">247</div>
-                        <div className="text-xs text-slate-600 mt-1">women joined this week</div>
-                      </div>
-
-                      <div>
-                        <div className="font-black text-2xl text-slate-900">850+</div>
-                        <div className="text-xs text-slate-600 mt-1">total users</div>
-                      </div>
-
-                      <div>
-                        <div className="font-black text-2xl text-slate-900">4.8/5</div>
-                        <div className="text-xs text-slate-600 mt-1">average rating</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* ========== FULL F.I.R.E. MECHANISM REVEAL (POST-PURCHASE JUSTIFICATION) ========== */}
-              {resultData && (
-                <div className="mb-16 max-w-3xl mx-auto">
-                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
-                    Here's Exactly How F.I.R.E. Works
-                  </h2>
-                  <p className="text-base text-slate-700 mb-8 leading-relaxed">
-                    This is the 4-step protocol you'll use the moment your brain starts spiraling. Not theory. Not worksheets. A protocol you can actually remember when you're dysregulated.
-                  </p>
-
-                  <div className="space-y-8">
-                    {/* Step 1: Focus */}
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3"><strong>F</strong> — Focus: Name the Loop</h3>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        The moment you notice your thoughts looping, say out loud: <em>"I'm ruminating."</em>
-                      </p>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        <strong>Why it works:</strong> Dr. Watkins' research shows that naming the rumination pattern activates your prefrontal cortex, breaking the automatic loop. This isn't positive thinking—it's pattern recognition.
-                      </p>
-                      <p className="text-sm text-slate-600 italic pl-4 border-l-2 border-slate-300">
-                        Instead of: <em>"Why did I say that? They probably think I'm weird. I always do this..."</em> → Say: <em>"I'm ruminating about the dinner conversation."</em>
-                      </p>
-                    </div>
-
-                    {/* Step 2: Interrupt */}
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3"><strong>I</strong> — Interrupt: Ground Your Nervous System</h3>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        Use the 5-4-3-2-1 technique. Name 5 things you see, 4 you hear, 3 you touch, 2 you smell, 1 you taste. Then take 3 slow exhales (4-count inhale, 8-count exhale).
-                      </p>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        <strong>Why it works:</strong> Rumination keeps your nervous system in sympathetic activation (fight/flight). Slow exhales activate your vagus nerve, signaling safety to your brain. You can't ruminate effectively when your body is calm.
-                      </p>
-                      <p className="text-sm text-slate-600 italic pl-4 border-l-2 border-slate-300">
-                        Physical cue: If you're lying in bed spiraling, sit up. If sitting, stand. Movement interrupts the loop.
-                      </p>
-                    </div>
-
-                    {/* Step 3: Reframe */}
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3"><strong>R</strong> — Reframe: Shift to Concrete</h3>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        Ask yourself: <em>"What's one specific thing I can do about this in the next hour?"</em>
-                      </p>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        <strong>Why it works:</strong> Rumination thrives on abstract, evaluative questions like "Why am I like this?" Concrete questions force your brain into problem-solving mode. Watkins' research shows this is the single most effective intervention.
-                      </p>
-                      <p className="text-sm text-slate-600 italic pl-4 border-l-2 border-slate-300 mb-2">
-                        Abstract (brooding): <em>"Why can't I ever say the right thing? I always mess up."</em>
-                      </p>
-                      <p className="text-sm text-slate-600 italic pl-4 border-l-2 border-slate-300">
-                        Concrete (reflection): <em>"If I'm worried about that comment, I can text them tomorrow to clarify."</em>
-                      </p>
-                    </div>
-
-                    {/* Step 4: Execute */}
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3"><strong>E</strong> — Execute: Take One Small Action</h3>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        Do the thing. Even if it's tiny. Write it down, send the text, schedule the conversation—or consciously decide to let it go and do something else.
-                      </p>
-                      <p className="text-base text-slate-700 leading-relaxed mb-3">
-                        <strong>Why it works:</strong> Rumination persists because your brain believes it's keeping you safe by "solving" the problem. Taking action—or consciously choosing inaction—closes the loop. Dr. Wells' research shows this breaks the "I must keep thinking about this" compulsion.
-                      </p>
-                      <p className="text-sm text-slate-600 italic pl-4 border-l-2 border-slate-300">
-                        Key insight: The action doesn't have to solve the problem completely. It just has to show your brain: <em>"We're handling this. You can stop looping now."</em>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-10 pt-6 border-t border-slate-200">
-                    <p className="text-base text-slate-700 leading-relaxed mb-2">
-                      <strong>The entire protocol takes 2-5 minutes.</strong> F.I.R.E. isn't journaling. It isn't meditation. It's an interrupt protocol—designed for the moment your brain hijacks you mid-panic, before a presentation, or mid-conversation.
-                    </p>
-                    <p className="text-base text-slate-700 leading-relaxed">
-                      Simple enough to remember when dysregulated. Specific enough to actually work. <strong>65% of women using this protocol report catching spirals in under 10 seconds after 2 weeks of practice.</strong>
-                    </p>
-                  </div>
                 </div>
               )}
 
@@ -1333,10 +1141,10 @@ function ThankYouPageContent() {
                   <div className="my-16 border-t border-slate-200 pt-12">
                     <div className="max-w-3xl mx-auto text-center mb-12">
                       <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
-                        Want to understand the science behind F.I.R.E.?
+                        Want to understand the science behind your pattern?
                       </h2>
                       <p className="text-lg text-slate-700">
-                        Below is the full clinical research explaining YOUR specific overthinking pattern and why these protocols work.
+                        Below is the full clinical research explaining YOUR specific overthinking type and why The Shift's breathing protocol works for your nervous system.
                       </p>
                     </div>
                   </div>
@@ -1486,12 +1294,12 @@ function ThankYouPageContent() {
 
                       <details className="group bg-white rounded-xl border border-slate-200 p-6">
                         <summary className="cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
-                          <span>Why $67? What's the catch?</span>
+                          <span>Why $37? What's the catch?</span>
                           <span className="group-open:rotate-180 transition-transform">▼</span>
                         </summary>
                         <p className="mt-4 text-sm text-slate-700 leading-relaxed">
-                          No catch. This is a frontend offer—we make money when buyers love it and come back for advanced training. But F.I.R.E. Protocol stands alone. You don't need anything else.
-                          The $67 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster.
+                          No catch. You're getting The Shift breathing necklace ($37) + the complete F.I.R.E. Framework (normally $67) included FREE.
+                          The $37 quiz-taker rate is reserved for people who completed the assessment because your results are calibrated and fresh. It helps you implement faster. This is a frontend offer—we make money when buyers love it and come back for advanced training.
                         </p>
                       </details>
 
@@ -1501,9 +1309,9 @@ function ThankYouPageContent() {
                           <span className="group-open:rotate-180 transition-transform">▼</span>
                         </summary>
                         <p className="mt-4 text-sm text-slate-700 leading-relaxed">
-                          Meditation is great for general stress. F.I.R.E. is targeted rumination interruption —
-                          specific protocols designed for the moment your brain won't stop looping.
-                          Think of it as emergency tools, not daily maintenance.
+                          Meditation is great for general stress. The Shift is targeted rumination interruption —
+                          a physical breathing tool designed for the moment your brain won't stop looping.
+                          Think of it as emergency relief, not daily maintenance. It's always there when you need it.
                         </p>
                       </details>
                     </div>
@@ -1525,7 +1333,7 @@ function ThankYouPageContent() {
                         Another week will pass. Another month. You'll keep lying awake. Keep analyzing every decision. Keep exhausting yourself with thoughts that go nowhere.
                       </p>
                       <p className="font-semibold text-slate-900">
-                        The cost of waiting isn't $67. It's every night your brain steals from you. Every quiet moment that turns into a spiral. Every decision that becomes paralysis.
+                        The cost of waiting isn't $37. It's every night your brain steals from you. Every quiet moment that turns into a spiral. Every decision that becomes paralysis.
                       </p>
                       <p>
                         You took the quiz because something in you knows this can't continue. That same part of you? It's ready for something that actually works.
@@ -1539,7 +1347,7 @@ function ThankYouPageContent() {
                       But don't just take my word for it...
                     </h3>
                     <p className="text-lg text-slate-700">
-                      Here's what happens when women like you actually use the F.I.R.E. method in real life:
+                      Here's what happens when women like you actually use The Shift in real life:
                     </p>
                   </div>
 
@@ -1552,7 +1360,7 @@ function ThankYouPageContent() {
                       Want to dig deeper into the research?
                     </h2>
                     <p className="text-lg text-slate-700 mb-10">
-                      Everything in the F.I.R.E. Protocol is built on actual clinical research. Here's where it all comes from:
+                      The Shift uses the same vagal nerve regulation from the F.I.R.E. Framework (included free with your purchase). Everything is built on actual clinical research. Here's where it all comes from:
                     </p>
 
                     <div className="space-y-8">
@@ -1573,19 +1381,39 @@ function ThankYouPageContent() {
                         <ul className="space-y-2 mb-6">
                           <li className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                            <span className="text-base text-slate-700">Treynor et al. (2003): "Rumination Reconsidered" — Defines reflection vs. brooding</span>
+                            <span className="text-base text-slate-700">Treynor, W., Gonzalez, R., & Nolen-Hoeksema, S. (2003). "Rumination Reconsidered: A Psychometric Analysis." <em>Cognitive Therapy and Research, 27</em>(3), 247-259.</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                            <span className="text-base text-slate-700">Watkins & Roberts (2020): "Reflecting on rumination" (Behaviour Research & Therapy)</span>
+                            <span className="text-base text-slate-700">Nolen-Hoeksema, S., Wisco, B. E., & Lyubomirsky, S. (2008). "Rethinking Rumination." <em>Perspectives on Psychological Science, 3</em>(5), 400-424.</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                            <span className="text-base text-slate-700">Nature Reviews Psychology (2024): RNT as transdiagnostic process</span>
+                            <span className="text-base text-slate-700">Watkins, E. R., & Roberts, H. (2020). "Reflecting on rumination: Consequences, causes, mechanisms and treatment of rumination." <em>Behaviour Research and Therapy, 127</em>, 103573.</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
-                            <span className="text-base text-slate-700">Wells (2011): Metacognitive therapy foundations</span>
+                            <span className="text-base text-slate-700">Ehring, T., & Watkins, E. R. (2021). "Repetitive Negative Thinking as a Transdiagnostic Process." <em>International Journal of Cognitive Therapy, 14</em>(3), 550-572.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-slate-700">Watkins, E. R., et al. (2011). "Rumination-focused cognitive-behavioural therapy for residual depression: phase II randomised controlled trial." <em>British Journal of Psychiatry, 199</em>(4), 317-322.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-slate-700">Wells, A. (2009). <em>Metacognitive Therapy for Anxiety and Depression.</em> Guilford Press.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-slate-700">Porges, S. W. (2011). <em>The Polyvagal Theory: Neurophysiological Foundations of Emotions, Attachment, Communication, and Self-regulation.</em> W.W. Norton & Company.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-slate-700">Siegel, D. J. (2012). <em>The Developing Mind: How Relationships and the Brain Interact to Shape Who We Are</em> (2nd ed.). Guilford Press.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-slate-600 rounded-full flex-shrink-0 mt-2"></div>
+                            <span className="text-base text-slate-700">Laborde, S., et al. (2022). "Effects of voluntary slow breathing on heart rate and heart rate variability: A systematic review and a meta-analysis." <em>Neuroscience & Biobehavioral Reviews, 138</em>, 104711.</span>
                           </li>
                         </ul>
                       </div>
@@ -1601,7 +1429,7 @@ function ThankYouPageContent() {
 
                       <div className="text-center pt-6">
                         <p className="text-base text-slate-700 font-semibold">
-                          You're joining 850+ women at DailyHush who are using these frameworks every day.
+                          You're joining 50,000+ women at DailyHush who are using The Shift and these frameworks every day.
                         </p>
                       </div>
                     </div>
@@ -1614,13 +1442,13 @@ function ThankYouPageContent() {
                         The Women Who Act Now Sleep Better Tonight
                       </h3>
                       <p>
-                        I know your brain is already analyzing this. <em>"But what if this doesn't work for me? What if I'm too far gone? What if I waste $67 and nothing changes?"</em>
+                        I know your brain is already analyzing this. <em>"But what if this doesn't work for me? What if I'm too far gone? What if I waste $37 and nothing changes?"</em>
                       </p>
                       <p>
-                        That's the overthinking talking. Here's what actually happens when you act: The next time your brain starts spiraling, you'll have a protocol. Four steps. Ninety seconds. Real interruption instead of hours of mental loops.
+                        That's the overthinking talking. Here's what actually happens when you act: The next time your brain starts spiraling, you'll have The Shift. A physical tool. Ninety seconds of breathing. Real interruption instead of hours of mental loops.
                       </p>
                       <p>
-                        <strong>The F.I.R.E. Protocol won't magically make your brain quiet overnight.</strong> But it will give you something you've been missing: a map.
+                        <strong>The Shift won't magically make your brain quiet overnight.</strong> But it will give you something you've been missing: a circuit breaker.
                       </p>
                       <p>
                         Not another self-help platitude. Not another "just think positive" bandaid. An actual, research-backed protocol you can use when you need it most.
@@ -1629,10 +1457,10 @@ function ThankYouPageContent() {
                         I created this because I needed it. Because late at night when I was spiraling over a work decision, I didn't need to know about "metacognitive beliefs" — I needed something I could <em>do</em>.
                       </p>
                       <p className="font-semibold text-slate-900">
-                        So here's my promise: If you try the F.I.R.E. method and it doesn't help, email me. I'll refund you myself. No forms, no questions, no hassle.
+                        So here's my promise: If you try The Shift and it doesn't help, email me. I'll refund you myself. No forms, no questions, no hassle.
                       </p>
                       <p>
-                        But if there's even a chance this could be the thing that finally works — the thing that gives you your brain back — isn't that worth 67 dollars and 60 seconds of your time?
+                        But if there's even a chance this could be the thing that finally works — the thing that gives you your brain back — isn't that worth 37 dollars and 60 seconds of your time?
                       </p>
                       <p>
                         You've already taken the quiz. You've read the research. You know why your brain does this.
@@ -1644,17 +1472,17 @@ function ThankYouPageContent() {
 
                     <div className="mt-10 max-w-md mx-auto">
                       <ShopifyBuyButton
-                        productId="10761797894447"
+                        productId="10770901434671"
                         domain="t7vyee-kc.myshopify.com"
                         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                        buttonText="Get the F.I.R.E. Protocol • $67"
+                        buttonText="Get The Shift • $37"
                         buttonColor="#16a34a"
                         buttonHoverColor="#15803d"
                         className="w-full"
                         onClick={() => handleBuyClick('final-cta')}
                       />
                       <p className="text-sm text-slate-600 mt-3 text-center">
-                        30-day money-back guarantee • Instant download
+                        100% money-back guarantee • Includes FREE F.I.R.E. Framework
                       </p>
                     </div>
 
@@ -1666,7 +1494,7 @@ function ThankYouPageContent() {
                         — Anna
                       </p>
                       <p className="text-sm text-slate-600">
-                        Creator, F.I.R.E. Method & DailyHush
+                        Creator, The Shift & DailyHush
                       </p>
                     </div>
                   </div>
@@ -1703,10 +1531,10 @@ function ThankYouPageContent() {
         totalSpots={totalSpots}
         isCritical={isCritical}
         isSoldOut={isSoldOut}
-        productId="10761797894447"
+        productId="10770901434671"
         domain="t7vyee-kc.myshopify.com"
         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-        buttonText="Get F.I.R.E. Protocol • $67"
+        buttonText="Get The Shift • $37"
         buttonColor="#16a34a"
         buttonHoverColor="#15803d"
       />

@@ -43,13 +43,10 @@ function TheShiftPage() {
 
     // Use IntersectionObserver if available
     if (hasIntersectionObserver) {
-      let hasScrolledPast = false
-
       const observer = new IntersectionObserver(
         ([entry]) => {
           // Only show sticky bar if we've scrolled past the sentinel (it was visible and now isn't)
           if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-            hasScrolledPast = true
             setShowStickyBar(true)
           } else if (entry.isIntersecting) {
             // User scrolled back up

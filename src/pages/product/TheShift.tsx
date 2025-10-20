@@ -16,6 +16,7 @@ import {
   ShiftBonusOffer,
   ShiftHighlights,
 } from '@/components/product/shift'
+import { shiftProductReviews } from '@/data/shiftProductReviews'
 
 function TheShiftPage() {
   const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
@@ -192,141 +193,8 @@ function TheShiftPage() {
     },
   ]
 
-  // Reviews (written by Robert Cialdini using anti-fake review detection principles)
-  const productReviews = [
-    {
-      id: '1',
-      author: 'Jessica M.',
-      location: 'Portland, OR',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Rose Gold / Luxe Box Chain',
-      text: "I bought this after scoring an 8/10 on the overthinking quiz (yikes). Honestly wasn't expecting much because I've tried breathing exercises before and could never stick with them. But having it right there on my chest means I actually USE it. I reach for it during my 3pm afternoon crash when work anxiety peaks. The 90-second thing is real - it's just long enough to interrupt whatever spiral I'm in but short enough that I don't feel like I'm \"taking a break\" at my desk. My coworker asked where I got it yesterday, which felt good because it really does look like jewelry, not a wellness tool.",
-      date: '2 weeks ago',
-      helpful: 12,
-    },
-    {
-      id: '2',
-      author: 'Amanda R.',
-      location: 'Austin, TX',
-      rating: 4,
-      verified: true,
-      productVariant: 'Classic Shift Matte Slate / Luxe Box Chain',
-      text: "This actually works, which surprised me. I'm a catastrophizer (always imagining worst-case scenarios) and I use this probably 4-5 times a day now. The exhale is longer than I'm used to, so it took me about 3 days to get the rhythm down without feeling like I was forcing it. Also wish the chain was maybe an inch longer - I'm 5'9\" and it sits a bit higher than I'd prefer. But those are minor things. The fact that I can use it in meetings without anyone knowing what I'm doing is honestly the main selling point for me.",
-      date: '5 days ago',
-      helpful: 8,
-    },
-    {
-      id: '3',
-      author: 'Sarah T.',
-      location: 'Chicago, IL',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Gold / Luxe Box Chain',
-      text: "I'm a teacher and I spiral constantly - replaying conversations with parents, worrying about lesson plans, thinking about that one kid who's struggling. I started wearing this 10 days ago and I've used it every single day. Sometimes multiple times. The moment I feel that familiar tightness in my chest starting, I breathe through it. It's not magic - I still overthink - but it gives me a circuit breaker. I used it right before a difficult parent conference last week and it genuinely helped. Worth every penny.",
-      date: '1 week ago',
-      helpful: 15,
-    },
-    {
-      id: '4',
-      author: 'Megan K.',
-      location: 'Denver, CO',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Sterling Silver / Luxe Box Chain',
-      text: "Been wearing this for almost 3 weeks now. I have generalized anxiety and my therapist has been trying to get me to do breathwork for YEARS but I could never remember to do it. Having it physically on my body changed everything. I use it in my car before walking into Target (weird anxiety trigger for me), before bed when my brain starts the 'what if' parade, and honestly sometimes just while watching TV when I notice I'm clenching my jaw. The sterling silver looks expensive btw - I've gotten so many compliments.",
-      date: '4 days ago',
-      helpful: 9,
-    },
-    {
-      id: '5',
-      author: 'Rachel B.',
-      location: 'Nashville, TN',
-      rating: 4,
-      verified: true,
-      productVariant: 'Classic Shift Rose Gold / Luxe Box Chain',
-      text: "At first I was skeptical because $37 for a necklace that \"helps you breathe\" seemed gimmicky. But I'm a rethink-every-conversation-I've-ever-had type of person and I was desperate. It's been about 2 weeks and I do reach for it more than I expected. I use it mainly at night when I'm trying to sleep and my brain decides to replay every awkward thing I said in 2019. The only reason I'm not giving 5 stars is because I sometimes forget I'm wearing it during the day, so I wish there was some kind of gentle reminder feature? But maybe that defeats the purpose. Anyway, it helps when I remember to use it.",
-      date: '3 days ago',
-      helpful: 4,
-    },
-    {
-      id: '6',
-      author: 'Emily C.',
-      location: 'Seattle, WA',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Matte Slate / Luxe Box Chain',
-      text: "I'm a nurse and my overthinking gets dangerous because I'll spiral about whether I gave the right medication, said the right thing to a patient's family, documented everything correctly. I've been using this for 6 days now and it's become part of my routine. I breathe through it during my lunch break, after difficult shifts, and honestly sometimes in the supply closet when things get overwhelming. The matte slate was the right choice for me because it's subtle and professional-looking. It just looks like a simple necklace. Nobody needs to know it's my anxiety management tool.",
-      date: '6 days ago',
-      helpful: 11,
-    },
-    {
-      id: '7',
-      author: 'Lauren H.',
-      location: 'Boston, MA',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Gold / Luxe Box Chain',
-      text: "This is going to sound dramatic but this little necklace has changed my daily experience. I'm a freelancer which means I have zero structure and infinite time to catastrophize about money, clients, whether I made the right career choice, etc. I wear this every day now (2.5 weeks in) and I use it probably 6-8 times a day. Morning coffee spiral? Breathe. Client email anxiety? Breathe. 2am existential crisis? Breathe. It doesn't make the thoughts go away but it stops them from snowballing. Also it's actually pretty, which matters because I work from home and don't always put effort into my appearance lol.",
-      date: '1 week ago',
-      helpful: 7,
-    },
-    {
-      id: '8',
-      author: 'Kristen P.',
-      location: 'San Diego, CA',
-      rating: 4,
-      verified: true,
-      productVariant: 'Classic Shift Rose Gold / Luxe Box Chain',
-      text: "I'm a ruminator - I replay the same thoughts over and over until I'm exhausted. Got this about 10 days ago and I'm still figuring out the best times to use it, but when I DO use it, it works. The 90 seconds feels longer than you'd think, which is good. My only complaint is that the breathing technique felt a bit awkward at first - I kept thinking I was doing it wrong? But I watched the video again and now it's more natural. I use it most before presentations at work and it genuinely takes the edge off.",
-      date: '1 day ago',
-      helpful: 3,
-    },
-    {
-      id: '9',
-      author: 'Jennifer S.',
-      location: 'Phoenix, AZ',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Sterling Silver / Luxe Box Chain',
-      text: "Mom of three here and my anxiety manifests as catastrophizing about my kids constantly. Are they developing normally? Did I mess them up by letting them have too much screen time? Should we be doing more educational activities? It's exhausting. I've had this for about 12 days and I use it throughout the day - while driving carpool, during lunch prep when things feel chaotic, before bed when mom guilt kicks in. It's discreet enough that my kids haven't even asked about it, which is important to me. I just wanted something that was MINE. This is it.",
-      date: '4 days ago',
-      helpful: 14,
-    },
-    {
-      id: '10',
-      author: 'Nicole D.',
-      location: 'Minneapolis, MN',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Matte Slate / Luxe Box Chain',
-      text: "I'm in sales and I overthink every single client interaction. Did I talk too much? Not enough? Should I follow up again or will that be annoying? It's a cycle. I've been wearing this for 9 days and it's become my pre-call ritual. Before every client call, I spend 90 seconds breathing through it. It centers me in a way that nothing else has. I also use it after calls that didn't go well - helps me move on instead of ruminating for 3 hours. The matte slate matches everything in my wardrobe which is a bonus I didn't expect to care about but totally do.",
-      date: '2 days ago',
-      helpful: 5,
-    },
-    {
-      id: '11',
-      author: 'Danielle W.',
-      location: 'Atlanta, GA',
-      rating: 4,
-      verified: true,
-      productVariant: 'Classic Shift Gold / Luxe Box Chain',
-      text: "Grad student here, chronic overthinker, anxiety diagnosis since age 19. I've tried meditation apps, therapy, journaling - all helpful but hard to sustain. This is different because it's just... there. Been using it for about a week. I reach for it before exams, during research spirals, when imposter syndrome hits. It works well for acute anxiety moments. The only thing I'd change is maybe having a slightly shorter chain option? I have a short torso and it hangs lower than ideal. But functionally it does what it promises. I'm keeping it.",
-      date: '5 days ago',
-      helpful: 6,
-    },
-    {
-      id: '12',
-      author: 'Alison F.',
-      location: 'Charlotte, NC',
-      rating: 5,
-      verified: true,
-      productVariant: 'Classic Shift Rose Gold / Luxe Box Chain',
-      text: "I mean, it's not magic but it really does help. I'm someone who spirals about everything - social interactions, work performance, things I said 5 years ago. I got this 2 weeks ago and now it's part of my morning routine (coffee, Shift breathing, face the day). I also use it during my commute when traffic anxiety hits, and at night when my brain wants to replay every cringey moment from the day. The rose gold is gorgeous and feels more expensive than $37. Multiple people have asked where I got it. I just tell them it's a breathing necklace and half of them look confused and the other half immediately want one lol.",
-      date: '3 days ago',
-      helpful: 10,
-    },
-  ]
+  // Reviews imported from separate file (see /src/data/shiftProductReviews.ts)
+  const productReviews = shiftProductReviews
 
   // FAQs
   const faqs = [
@@ -453,10 +321,10 @@ function TheShiftPage() {
       collapsible: false,
       content: (
         <ul className="space-y-3">
-          <li className="text-gray-700">1 Komuso Shift Pendant</li>
-          <li className="text-gray-700">1 High quality Luxe Box chain, 26"</li>
-          <li className="text-gray-700">1 Microfiber pouch (to store and keep your Shift secure)</li>
-          <li className="text-gray-700">1 Komuso "how to" guide... it's as easy as 1,2,3</li>
+          <li className="text-gray-700">1 The Shift Breathing Tool</li>
+          <li className="text-gray-700">1 Premium 26" chain (wear it daily—that's when it works best)</li>
+          <li className="text-gray-700">1 Travel pouch (for overthinkers on the go)</li>
+          <li className="text-gray-700">1 Quick-Start Guide: F.I.R.E. in 3 Steps (get results tonight, not next week)</li>
         </ul>
       ),
     },

@@ -33,7 +33,7 @@ function TheShiftPage() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Show sticky bar once the hero has scrolled ~200px out of view. Uses IntersectionObserver with scroll fallback.
+  // Show sticky bar once the hero has scrolled out of view. Uses IntersectionObserver with scroll fallback.
   useEffect(() => {
     const sentinel = stickySentinelRef.current
     if (!sentinel) return
@@ -42,12 +42,21 @@ function TheShiftPage() {
 
     // Use IntersectionObserver if available
     if (hasIntersectionObserver) {
+      let hasScrolledPast = false
+
       const observer = new IntersectionObserver(
         ([entry]) => {
-          setShowStickyBar(!entry.isIntersecting)
+          // Only show sticky bar if we've scrolled past the sentinel (it was visible and now isn't)
+          if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+            hasScrolledPast = true
+            setShowStickyBar(true)
+          } else if (entry.isIntersecting) {
+            // User scrolled back up
+            setShowStickyBar(false)
+          }
         },
         {
-          rootMargin: '200px 0px 0px 0px',
+          rootMargin: '0px',
           threshold: 0,
         },
       )
@@ -77,13 +86,25 @@ function TheShiftPage() {
     }
   }, [])
 
-  // Product Images (Gold version from Shopify)
-  const productImages = [
-    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicBoxChainProductImage1Gold.webp?v=1760872375',
-    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage2Gold.webp?v=1760872375',
-    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/gold_lifestyle1.webp?v=1760872696',
-    'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup.webp?v=1760872688',
-  ]
+  // Product Images - Variant Specific
+  const variantImages = {
+    'rose-gold': [
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage4Rose.jpg?v=1760941523',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage2Rose.webp?v=1760941522',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicBoxChainProductImage1Rose.webp?v=1760941523',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup_38a646ac-e433-453c-b95d-5e41f048c244.webp?v=1760941521',
+    ],
+    'gold': [
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicBoxChainProductImage1Gold.webp?v=1760872375',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ClassicProductImage2Gold.webp?v=1760872375',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/gold_lifestyle1.webp?v=1760872696',
+      'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/closeup.webp?v=1760872688',
+    ],
+  }
+
+  // Default product images (fallback to rose-gold as it's default)
+  const productImages = variantImages['rose-gold']
 
   // Variant Options
   const variantOptions = {
@@ -438,7 +459,6 @@ function TheShiftPage() {
       <TopBar />
 
       <main className="flex-1">
-        <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
         {/* Hero Section */}
         <ProductHero
         productName="The Shift"
@@ -452,6 +472,7 @@ function TheShiftPage() {
         images={productImages}
         tabs={productDetailsTabs}
         variantOptions={variantOptions}
+        variantImages={variantImages}
         guarantees={[
           '100% Money back guarantee',
           'Free Breathwork Course with purchase',
@@ -463,6 +484,8 @@ function TheShiftPage() {
         shopifyDomain="t7vyee-kc.myshopify.com"
         shopifyStorefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
       />
+
+      <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
 
       {/* Bonus Offer Section */}
       <ShiftBonusOffer

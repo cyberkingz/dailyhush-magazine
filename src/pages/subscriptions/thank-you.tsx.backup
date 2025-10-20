@@ -1029,9 +1029,9 @@ function ThankYouPageContent() {
                           </div>
                           <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
                             <p className="text-base text-gray-700 italic leading-relaxed mb-3">
-                              "You're getting the research-backed F.I.R.E. Protocol as my gift to you. The Shift gives you something physical to reach for while F.I.R.E. teaches you exactly when and how to use it for maximum relief."
+                              "The Shift necklace is going to change how you handle stress and overthinking. To help you get results FASTER, I'm including the F.I.R.E. Protocol as my gift to you. It's the exact 4-step system I use when anxiety hits."
                             </p>
-                            <p className="text-sm text-gray-600">Anna, Founder</p>
+                            <p className="text-sm text-gray-600">— Anna, Founder</p>
                           </div>
                         </div>
                       }

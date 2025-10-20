@@ -938,7 +938,7 @@ function ThankYouPageContent() {
                       You've spent decades worrying about everyone else—your kids, your partner, your job, your aging parents. <strong>You've earned the right to quiet your mind.</strong>
                     </p>
                     <p>
-                      The women who lie awake replaying today's conversation with their adult daughter. Who second-guess the email they sent. Who can't stop worrying about their aging parents—or their own health. Who've been carrying everyone else's worries for so long, they forgot what quiet feels like.
+                      The women who lie awake replaying today's conversation with their daughter. Who second-guess the email they sent. Who can't stop worrying about their aging parents—or their own health. Who've been carrying everyone else's worries for so long, they forgot what quiet feels like.
                     </p>
                     <p>
                       <strong>We get it. Because we are you.</strong>
@@ -1029,7 +1029,7 @@ function ThankYouPageContent() {
                           </div>
                           <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
                             <p className="text-base text-gray-700 italic leading-relaxed mb-3">
-                              "I'm including the complete F.I.R.E. Protocol as my gift to you—not because I'm generous, but because after decades of overthinking, you deserve the full solution, not just a tool. The Shift gives you something to reach for. F.I.R.E. teaches you exactly when and how to use it. You've earned both."
+                              "The Shift necklace is going to change how you handle stress and overthinking. To help you get results FASTER, I'm including the F.I.R.E. Protocol as my gift to you. It's the exact 4-step system I use when anxiety hits."
                             </p>
                             <p className="text-sm text-gray-600">— Anna, Founder</p>
                           </div>

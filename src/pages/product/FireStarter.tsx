@@ -480,7 +480,7 @@ function FireStarterProduct() {
         productId="10761797894447"
         domain="t7vyee-kc.myshopify.com"
         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-        buttonText="Get F.I.R.E. Protocol • $67"
+        buttonText="Get F.I.R.E. Protocol™ Pack • $67"
         buttonColor="#16a34a"
         buttonHoverColor="#15803d"
       />

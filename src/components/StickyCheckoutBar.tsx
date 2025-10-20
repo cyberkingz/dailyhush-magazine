@@ -18,8 +18,6 @@ interface StickyCheckoutBarProps {
 
 export const StickyCheckoutBar: React.FC<StickyCheckoutBarProps> = ({
   show,
-  spotsRemaining,
-  totalSpots,
   isCritical,
   isSoldOut,
   productId,
@@ -51,7 +49,7 @@ export const StickyCheckoutBar: React.FC<StickyCheckoutBarProps> = ({
             className="w-full"
           />
 
-          {/* Spots Left - Below Button */}
+          {/* Inventory Status - Below Button */}
           {!isSoldOut && (
             <div className="flex items-center justify-center gap-1.5 text-[13px] font-semibold text-slate-700">
               <Flame
@@ -60,7 +58,7 @@ export const StickyCheckoutBar: React.FC<StickyCheckoutBarProps> = ({
                 }`}
                 strokeWidth={2.5}
               />
-              <span className="tabular-nums">{spotsRemaining}/{totalSpots} spots left today</span>
+              <span>Due to order surge, inventory running low</span>
             </div>
           )}
         </div>

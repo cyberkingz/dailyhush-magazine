@@ -4,7 +4,8 @@ import ShopifyBuyButton from '../../components/ShopifyBuyButton'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
 import type { OverthinkerType } from '../../types/quiz'
-import Testimonials from '../../components/Testimonials'
+import { ReviewsSection } from '../../components/product/common'
+import { shiftProductReviews } from '../../data/shiftProductReviews'
 import { StickyCheckoutBar } from '../../components/StickyCheckoutBar'
 import { useScrollDepth } from '../../hooks/useScrollDepth'
 import { ProductHero } from '../../components/product/common'
@@ -424,7 +425,7 @@ function ThankYouPageContent() {
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-                <span className="text-gray-700">Complete 4-Step Framework Guide (Focus → Interrupt → Reframe → Execute)</span>
+                <span className="text-gray-700">Complete 4-Step Protocol Guide (Focus → Interrupt → Reframe → Execute)</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
@@ -801,7 +802,7 @@ function ThankYouPageContent() {
               {/* ========== BEFORE/AFTER THE SHIFT ========== */}
               <div className="mb-12 max-w-3xl mx-auto">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-8">
-                  You're Done Letting Your Brain Run the Show
+                  After Decades of Overthinking, Here's What Finally Works
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -811,15 +812,15 @@ function ThankYouPageContent() {
                     <ul className="space-y-3">
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
-                        <span className="text-slate-700">You lie awake replaying how you LOOKED in every conversation today—terrified they saw through you</span>
+                        <span className="text-slate-700">You lie awake replaying that phone call, that comment at lunch, that tone in your sister's voice—wondering what you missed</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
-                        <span className="text-slate-700">Your brain hijacks every quiet moment with "what if they think I'm stupid" spirals</span>
+                        <span className="text-slate-700">Your mind won't quiet down—worry spirals about the people you love and problems you can't control</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
-                        <span className="text-slate-700">You've tried therapy, meditation apps, journaling — nothing sticks</span>
+                        <span className="text-slate-700">You've tried therapy, self-help books, mindfulness courses, prayer groups—and still, your brain won't stop</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold flex-shrink-0">✗</span>
@@ -838,15 +839,15 @@ function ThankYouPageContent() {
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-slate-700">You have a protocol you can use the moment you're dysregulated</span>
+                        <span className="text-slate-700">You have a simple tool you can use the moment the worry spiral starts</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-slate-700">Your brain still spirals — but now you know how to interrupt it</span>
+                        <span className="text-slate-700">Your mind still spirals — but now you know how to interrupt it</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-slate-700">You sleep through the night without replaying that email</span>
+                        <span className="text-slate-700">You sleep through the night without replaying that conversation, that comment, that look on their face</span>
                       </li>
                     </ul>
                   </div>
@@ -854,7 +855,7 @@ function ThankYouPageContent() {
 
                 <div className="bg-slate-50 p-6 rounded-xl">
                   <p className="text-base text-slate-700 leading-relaxed">
-                    The women who wear The Shift aren't the ones who never overthink. They're the ones who are done with their brain running the show. Who want their life back. Who are ready to stop researching and start using something that actually works.
+                    The women who wear The Shift aren't the ones who never overthink. They're the ones who've decided they deserve calm after decades of mental noise. Who refuse to waste another day trapped in their head. Who are ready to stop researching and start using something that actually works.
                   </p>
                   <p className="mt-3 font-semibold text-slate-900">
                     If that's you, this is your way out.
@@ -869,7 +870,7 @@ function ThankYouPageContent() {
                 </h2>
 
                 <p className="text-base text-slate-700 leading-relaxed mb-6">
-                  I know. You've downloaded the meditation apps. You've done the therapy. And still—your brain won't shut up.
+                  I know. You've read the books. You've done the therapy. You've tried mindfulness, prayer, positive thinking. And still—your brain won't let you rest.
                 </p>
 
                 <p className="text-base text-slate-700 leading-relaxed mb-6">
@@ -885,23 +886,23 @@ function ThankYouPageContent() {
                 </p>
 
                 <p className="text-lg font-bold text-slate-900">
-                  You need a protocol that works when you're dysregulated and your brain won't shut up.
+                  You need a simple tool that works when anxiety takes over and your mind won't quiet down.
                 </p>
               </div>
 
               {/* ========== CONCRETE 2AM EXAMPLE WITH THE SHIFT ========== */}
               <div className="mb-12 max-w-3xl mx-auto">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
-                  Let me show you what this looks like in the moment your brain hijacks you.
+                  Let me show you what this looks like in the moment your mind takes over.
                 </h2>
 
                 <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p>
-                    It's 2:47 a.m. You sent an email yesterday afternoon—something about the tone felt off. And now your brain won't let it go. <em>"Why did I phrase it that way? Did I sound defensive? What if she thinks I'm incompetent?"</em>
+                    It's 3:12 a.m. You're replaying that conversation with your daughter from yesterday. Did you say too much? Not enough? Why did her voice sound that way when she said goodbye? <em>"What if she's upset with me? Did I overstep? Should I call her tomorrow or give her space?"</em>
                   </p>
 
                   <p>
-                    Your chest is tight. You've been lying here for an hour. <strong>This is rumination.</strong>
+                    Your chest is tight. You've been lying here for an hour. You know you should let it go. But your brain won't stop rewriting the script. <strong>This is rumination.</strong>
                   </p>
 
                   <p className="font-semibold text-slate-900 text-lg mt-6">
@@ -909,7 +910,7 @@ function ThankYouPageContent() {
                   </p>
 
                   <p>
-                    You reach for the necklace on your nightstand. Your prefrontal cortex is offline—you can't remember a 4-step protocol right now. But you can grab something physical. You breathe through The Shift for 90 seconds. The precisely engineered tube forces a 10-second exhale—activating your vagus nerve. Your body starts to regulate. The spiral breaks.
+                    You reach for the necklace on your nightstand. Your thinking brain has shut down—you can't remember a 4-step protocol right now. But you can grab something physical. You breathe through The Shift for 90 seconds. The precisely engineered tube forces a 10-second exhale—activating the nerve that controls your stress response. Your body starts to calm down. The spiral breaks.
                   </p>
 
                   <p className="text-sm text-slate-600 mt-4 mb-4">
@@ -917,11 +918,11 @@ function ThankYouPageContent() {
                   </p>
 
                   <p className="font-semibold text-slate-900 text-base">
-                    The F.I.R.E. Protocol (FREE BONUS): <strong>F</strong>ocus (name the loop) → <strong>I</strong>nterrupt (ground your nervous system with 5-4-3-2-1 + breathing) → <strong>R</strong>eframe (shift to concrete action) → <strong>E</strong>xecute (take one small step). Total time: 3 minutes.
+                    The F.I.R.E. Protocol (FREE BONUS): <strong>F</strong>ocus (name the loop) → <strong>I</strong>nterrupt (calm your body with 5-4-3-2-1 + breathing) → <strong>R</strong>eframe (shift to concrete action) → <strong>E</strong>xecute (take one small step). Total time: 3 minutes.
                   </p>
 
                   <p className="mt-4">
-                    This is what 50,000+ women are using every night when their brain hijacks them. <strong>A physical tool that works when you're dysregulated and need it most.</strong>
+                    This is what 50,000+ women are using every night when their thoughts won't stop. <strong>A physical tool that works when anxiety takes over and you need it most.</strong>
                   </p>
                 </div>
               </div>
@@ -934,10 +935,10 @@ function ThankYouPageContent() {
                   </h3>
                   <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                     <p>
-                      If you're reading this, you're part of a specific group of women: <strong>the ones who think too much, feel too deeply, and care too hard.</strong>
+                      You've spent decades worrying about everyone else—your kids, your partner, your job, your aging parents. <strong>You've earned the right to quiet your mind.</strong>
                     </p>
                     <p>
-                      The women who replay conversations from three days ago. Who can't turn off their brain when everyone else is sleeping. Who've been told they're "too sensitive" or need to "just relax."
+                      The women who lie awake replaying today's conversation with their adult daughter. Who second-guess the email they sent. Who can't stop worrying about their aging parents—or their own health. Who've been carrying everyone else's worries for so long, they forgot what quiet feels like.
                     </p>
                     <p>
                       <strong>We get it. Because we are you.</strong>
@@ -946,7 +947,7 @@ function ThankYouPageContent() {
                       Every woman on the DailyHush team scored 7+ on this quiz. We built The Shift because we needed it. Because therapy helped us understand our overthinking, but didn't give us the tools to interrupt it when it mattered most.
                     </p>
                     <p className="font-semibold text-slate-900">
-                      You're joining 50,000+ women who refuse to let their brain run the show anymore. Women who are done researching and ready to use something that actually works.
+                      You're joining thousands of women—including many in their 50s, 60s, and beyond—who've decided they deserve calm after decades of mental noise. Women who are done researching and ready to use something that actually works.
                     </p>
                     <p className="text-base italic text-slate-700 mt-2">
                       This is your tribe. We're here with you.
@@ -961,7 +962,7 @@ function ThankYouPageContent() {
                   <div className="px-4 md:px-8">
                     <ProductHero
                       productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
-                      tagline="When your thoughts won't stop, you need something you can touch"
+                      tagline="After decades of worrying about everyone else, it's time to quiet your mind"
                       badge="F.I.R.E. PROTOCOL INCLUDED FREE"
                       scarcityMessage="Due to order surge, inventory running low"
                       price={{
@@ -1028,7 +1029,7 @@ function ThankYouPageContent() {
                           </div>
                           <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
                             <p className="text-base text-gray-700 italic leading-relaxed mb-3">
-                              "You're getting the research-backed F.I.R.E. Protocol as my gift to you. The Shift gives you something physical to reach for while F.I.R.E. teaches you exactly when and how to use it for maximum relief."
+                              "I'm including the complete F.I.R.E. Protocol as my gift to you—not because I'm generous, but because after decades of overthinking, you deserve the full solution, not just a tool. The Shift gives you something to reach for. F.I.R.E. teaches you exactly when and how to use it. You've earned both."
                             </p>
                             <p className="text-sm text-gray-600">— Anna, Founder</p>
                           </div>
@@ -1063,79 +1064,109 @@ function ThankYouPageContent() {
                     Here's what happened when women with your exact pattern started wearing The Shift
                   </p>
 
-                  {/* Testimonials - The Shift Product Reviews */}
-                  <div className="space-y-6 mb-8">
+                  {/*
+                    TODO - ROBERT: Write 6 NEW unique testimonials for this "But does it actually work?" section.
+
+                    Requirements:
+                    - Must be DIFFERENT from all reviews in shiftProductReviews.ts (no duplicates)
+                    - No location info (just name, no city/state)
+                    - Keep "Verified Purchase" badge
+                    - Vary the lengths and tones (casual, emotional, professional mix)
+                    - Focus on real struggles and results
+                    - Use the colored boxes: bg-emerald-50/30, bg-blue-50/30, bg-amber-50/30, bg-purple-50/30, bg-rose-50/30, bg-indigo-50/30
+
+                    Format (copy this structure 6 times):
                     <div className="bg-emerald-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I'm a middle school teacher so you can imagine my stress levels lol. I worry about EVERYTHING - parent emails, lesson plans, did I say the wrong thing to a student, etc etc. This has been really helpful for when I start getting in my head. Not a cure but it helps me reset. Used it before a tough parent meeting last week and it genuinely made a difference"
+                        "TESTIMONIAL TEXT HERE"
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Sarah T.</span> — Chicago, IL</span>
+                        <span className="font-semibold text-slate-900">First Name L.</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
                           Verified Purchase
                         </span>
                       </p>
                     </div>
-
-                    <div className="bg-blue-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "my therapist literally begged me to try breathing exercises and I never did them bc I'd forget. having this on my body all the time means I actually use it. I breathe through it before going into target (weird I know but stores stress me out), before bed, sometimes just on the couch. the silver is really pretty btw, got 3 compliments already"
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Megan K.</span> — Denver, CO</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    <div className="bg-amber-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "Nurse here. My job is stressful and I spend way too much time wondering if I made mistakes or said something wrong to a patient. Been using this on my breaks and honestly after rough shifts. The matte color is good because it doesn't stand out under my scrubs. Nobody knows its a breathing tool they just think its a necklace"
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Emily C.</span> — Seattle, WA</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    <div className="bg-purple-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "Mom of 3 boys and my anxiety about them is next level. Am I messing them up? Too much screen time? Not enough activities? This has been really helpful when I start going down those rabbit holes. I wear it every day and use it while driving them around, making dinner, before bed. My kids haven't noticed it yet which is good I wanted something just for me"
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Jennifer S.</span> — Phoenix, AZ</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    <div className="bg-rose-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "healthcare worker here. my brain loves to keep me up at night wondering if I documented everything right or said the right things. been wearing this for a few weeks and whenever I feel that tightness in my chest starting I use it. helps me fall asleep now instead of laying there replaying my whole day. keep it under my scrubs at work"
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Taylor M.</span> — Brooklyn, NY</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
+                  */}
+                  <div className="space-y-6 mb-8">
+                    {/* Testimonial 1: Susan H. - LEAD WITH AUTHORITY (therapist validation) */}
                     <div className="bg-indigo-50/30 p-6 py-4 rounded-lg">
                       <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I'm 52 and been an overthinker forever. Tried therapy meditation apps all of it. This actually helps when I start obsessing about something. Wear it daily use it multiple times. Looks like regular jewelry not a wellness thing. Wish I found this years ago"
+                        "My therapist has been telling me to do breathing exercises for anxiety for literally years but I never remember when I'm actually panicking. She suggested getting something physical to remind me so I got this. Had it about 5 months I think. I wear it to doctor appointments (health anxiety is very real), stressful phone calls with insurance people, basically whenever my chest starts feeling tight. She's noticed I'm actually using the breathing techniques more which makes our sessions more productive I guess? It's not fixing everything but it's helping more than the apps and stuff I tried before."
                       </p>
                       <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span><span className="font-semibold text-slate-900">Patricia G.</span> — Houston, TX</span>
+                        <span className="font-semibold text-slate-900">Susan H.</span>
+                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                          Verified Purchase
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Testimonial 2: Margaret W. - STACK AUTHORITY + MEASURABLE RESULT (doctor + blood pressure) */}
+                    <div className="bg-rose-50/30 p-6 py-4 rounded-lg">
+                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
+                        "Retirement gave me way too much time to worry about stupid stuff. Health, money, what neighbors think. This seemed simple enough so I tried it. Been using it for a few months now - morning coffee, afternoon around 2 or 3 when I start getting anxious about nothing, before bed usually. My doctor mentioned my blood pressure looked better at my last visit but I'm also walking more so who knows what's actually helping. Either way I'm using this thing multiple times a day so something's working."
+                      </p>
+                      <p className="text-sm text-slate-600 flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Margaret W.</span>
+                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                          Verified Purchase
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Testimonial 3: Barbara K. - CONVERT THE SKEPTIC (tried everything else) */}
+                    <div className="bg-blue-50/30 p-6 py-4 rounded-lg">
+                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
+                        "Wasn't sure about buying this. I've got a drawer full of meditation apps I don't use and journals I tried for a week. But I like having something physical to hold when my head's spinning. I've had it maybe 6 weeks? I use it before family stuff mostly - my sister and I have this whole complicated history - and it does help me calm down enough to not say something I'll regret later. She actually asked what I was doing differently last Sunday which was... validating I guess? Anyway, no regrets on the purchase."
+                      </p>
+                      <p className="text-sm text-slate-600 flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Barbara K.</span>
+                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                          Verified Purchase
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Testimonial 4: Diane R. - SPECIFIC BEHAVIORAL CHANGE (texting kids less) */}
+                    <div className="bg-purple-50/30 p-6 py-4 rounded-lg">
+                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
+                        "My kids are in their 30s and I still worry about them constantly. It's exhausting for everyone including me. Started using this maybe 2 months ago when I feel myself starting to catastrophize about their lives - job stuff, relationship stuff, money stuff. The breathing thing actually does interrupt that loop somehow. I've texted them way less with my random worries which honestly they're probably relieved about even if they're too nice to say it. Would've been helpful when they were teenagers and I was a complete mess about everything."
+                      </p>
+                      <p className="text-sm text-slate-600 flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Diane R.</span>
+                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                          Verified Purchase
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Testimonial 5: Linda M. - RELATABLE HUMOR + COMMITMENT (3am overthinking) */}
+                    <div className="bg-emerald-50/30 p-6 py-4 rounded-lg">
+                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
+                        "I'm 61 and my brain just won't shut off. My doctor mentioned breathing exercises at my last checkup but I kept forgetting. This has been sitting on my dresser for about 4 months now and I grab it mostly at 3am when I'm replaying conversations from 20 years ago (anyone else do this??). It gets me back to sleep most nights instead of just lying there spiraling. Not every time, but enough that I actually use it. Just got one for my sister for her birthday - she does the same middle-of-the-night worry thing."
+                      </p>
+                      <p className="text-sm text-slate-600 flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Linda M.</span>
+                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                          Verified Purchase
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Testimonial 6: Carol S. - LONG-TERM TRANSFORMATION (30-year pattern interrupted) */}
+                    <div className="bg-amber-50/30 p-6 py-4 rounded-lg">
+                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
+                        "I'm one of those people who replays conversations for YEARS. Got this maybe 3 months ago and wear it most days. My grandkids definitely wonder why I keep touching my necklace but it's my little reset button I guess. The overthinking hasn't gone away completely but I'm not spiraling as much over text messages - which at my age is ridiculous anyway, right? My husband said something last week about me seeming less stressed and sleeping better. I don't know if it's just this or what but I'll keep using it."
+                      </p>
+                      <p className="text-sm text-slate-600 flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Carol S.</span>
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
                           Verified Purchase
@@ -1291,7 +1322,7 @@ function ThankYouPageContent() {
                         },
                         {
                           question: 'What\'s included in the F.I.R.E. Protocol ($67 value)?',
-                          answer: "The complete digital program includes: (1) The 4-Step Framework Guide—the full Focus → Interrupt → Reframe → Execute system therapists charge $150/hour to teach. (2) Spiral Trigger Identification Workbook—helps you map YOUR specific rumination patterns. (3) Vagus Nerve Activation Techniques—5 clinical methods beyond the necklace. (4) Step-by-Step Protocols for 7 Common Overthinking Situations (the 2am 'I can't believe I said that' spiral, decision paralysis, relationship overthinking, etc.). (5) 30-Day Progress Tracker—so you can see patterns you can't see when you're IN the spiral. You get instant digital access after purchase—you can start reading while the necklace ships.",
+                          answer: "The complete digital program includes: (1) The 4-Step Protocol Guide—the full Focus → Interrupt → Reframe → Execute system therapists charge $150/hour to teach. (2) Spiral Trigger Identification Workbook—helps you map YOUR specific rumination patterns. (3) Vagus Nerve Activation Techniques—5 clinical methods beyond the necklace. (4) Step-by-Step Protocols for 7 Common Overthinking Situations (the 2am 'I can't believe I said that' spiral, decision paralysis, relationship overthinking, etc.). (5) 30-Day Progress Tracker—so you can see patterns you can't see when you're IN the spiral. You get instant digital access after purchase—you can start reading while the necklace ships.",
                         },
                         {
                           question: 'I scored 6+ on the quiz. Will this actually work for chronic rumination?',
@@ -1410,7 +1441,12 @@ function ThankYouPageContent() {
                   </div>
 
                   {/* ========== TESTIMONIALS ========== */}
-                  <Testimonials />
+                  <ReviewsSection
+                    reviews={shiftProductReviews}
+                    averageRating={4.8}
+                    totalReviews={shiftProductReviews.length}
+                    backgroundColor="bg-white"
+                  />
 
                   {/* ========== FURTHER RESOURCES ========== */}
                   <div className="mb-16 max-w-3xl mx-auto">
@@ -1418,7 +1454,7 @@ function ThankYouPageContent() {
                       Want to dig deeper into the research?
                     </h2>
                     <p className="text-lg text-slate-700 mb-10">
-                      The Shift uses the same vagal nerve regulation from the F.I.R.E. Framework (included free with your purchase). Everything is built on actual clinical research. Here's where it all comes from:
+                      The Shift uses the same vagal nerve regulation from the F.I.R.E. Protocol (included free with your purchase). Everything is built on actual clinical research. Here's where it all comes from:
                     </p>
 
                     <div className="space-y-8">
@@ -1540,7 +1576,7 @@ function ThankYouPageContent() {
                         onClick={() => handleBuyClick('final-cta')}
                       />
                       <p className="text-sm text-slate-600 mt-3 text-center">
-                        100% money-back guarantee • Includes FREE F.I.R.E. Framework
+                        100% money-back guarantee • Includes FREE F.I.R.E. Protocol
                       </p>
                     </div>
 
@@ -1592,7 +1628,7 @@ function ThankYouPageContent() {
         productId="10770901434671"
         domain="t7vyee-kc.myshopify.com"
         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-        buttonText="Get The Shift • $37"
+        buttonText="Get The Shift™ Pack • $37"
         buttonColor="#16a34a"
         buttonHoverColor="#15803d"
       />

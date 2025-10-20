@@ -205,7 +205,7 @@ function TheShiftPage() {
     },
     {
       question: 'What\'s included in the F.I.R.E. Protocol ($67 value)?',
-      answer: "The complete digital program includes: (1) The 4-Step Framework Guide—the full Focus → Interrupt → Reframe → Execute system therapists charge $150/hour to teach. (2) Spiral Trigger Identification Workbook—helps you map YOUR specific rumination patterns. (3) Vagus Nerve Activation Techniques—5 clinical methods beyond the necklace. (4) Step-by-Step Protocols for 7 Common Overthinking Situations (the 2am 'I can't believe I said that' spiral, decision paralysis, relationship overthinking, etc.). (5) 30-Day Progress Tracker—so you can see patterns you can't see when you're IN the spiral. You get instant digital access after purchase—you can start reading while the necklace ships.",
+      answer: "The complete digital program includes: (1) The 4-Step Protocol Guide—the full Focus → Interrupt → Reframe → Execute system therapists charge $150/hour to teach. (2) Spiral Trigger Identification Workbook—helps you map YOUR specific rumination patterns. (3) Vagus Nerve Activation Techniques—5 clinical methods beyond the necklace. (4) Step-by-Step Protocols for 7 Common Overthinking Situations (the 2am 'I can't believe I said that' spiral, decision paralysis, relationship overthinking, etc.). (5) 30-Day Progress Tracker—so you can see patterns you can't see when you're IN the spiral. You get instant digital access after purchase—you can start reading while the necklace ships.",
     },
     {
       question: 'I scored 6+ on the quiz. Will this actually work for chronic rumination?',
@@ -381,7 +381,7 @@ function TheShiftPage() {
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-                <span className="text-gray-700">Complete 4-Step Framework Guide (Focus → Interrupt → Reframe → Execute)</span>
+                <span className="text-gray-700">Complete 4-Step Protocol Guide (Focus → Interrupt → Reframe → Execute)</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
@@ -559,7 +559,7 @@ function TheShiftPage() {
         productId="10770901434671"
         domain="t7vyee-kc.myshopify.com"
         storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-        buttonText="Get The Shift • $37"
+        buttonText="Get The Shift™ Pack • $37"
         buttonColor="#16a34a"
         buttonHoverColor="#15803d"
       />

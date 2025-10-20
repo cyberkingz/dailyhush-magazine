@@ -170,7 +170,7 @@ export default function ShopifyBuyButton({
                   }
                 },
                 text: {
-                  button: 'Get Your Pack'
+                  button: 'Get The Shift™ Pack'
                 }
               },
               option: {},

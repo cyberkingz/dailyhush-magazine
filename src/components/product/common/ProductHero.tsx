@@ -55,7 +55,7 @@ export function ProductHero({
   guarantees,
   reviewCount,
   reviewRating,
-  ctaText = 'Get Your Pack',
+  ctaText = 'Get The Shift™ Pack',
   ctaLink = '#buy',
   description,
   shopifyProductId,

@@ -17,6 +17,7 @@ interface ReviewsSectionProps {
   averageRating: number
   totalReviews: number
   title?: string
+  backgroundColor?: string
 }
 
 function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'md' | 'lg' }) {
@@ -54,6 +55,7 @@ export function ReviewsSection({
   averageRating,
   totalReviews,
   title = 'Customer Reviews',
+  backgroundColor = 'bg-cream-50',
 }: ReviewsSectionProps) {
   const [activeTab, setActiveTab] = useState<'reviews' | 'questions'>('reviews')
   const [displayCount, setDisplayCount] = useState(6)
@@ -66,7 +68,7 @@ export function ReviewsSection({
   }
 
   return (
-    <section className="py-16 lg:py-20 bg-cream-50">
+    <section className={`py-16 lg:py-20 ${backgroundColor}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
         <div className="text-center mb-12">

@@ -1,46 +1,47 @@
 import { motion } from "framer-motion";
 import { TestimonialsColumn, type Testimonial } from "./ui/testimonials-column";
 
+// Using customer reviews from product page for authenticity
 const testimonials: Testimonial[] = [
   {
-    text: "I scored 8/10 on the quiz. Week 3 of F.I.R.E. and I'm sleeping through the night for the first time in months. Not perfect but way better.",
-    name: "Sarah M.",
-    role: "Marketing Director, 34",
+    text: "my therapist literally begged me to try breathing exercises and I never did them bc I'd forget. having this on my body all the time means I actually use it. I breathe through it before going into target (weird I know but stores stress me out), before bed, sometimes just on the couch. the silver is really pretty btw, got 3 compliments already",
+    name: "Megan K.",
+    role: "Denver, CO",
   },
   {
-    text: "Scored 7/10. The breathing exercises actually worked when I woke up mid-panic. I don't know if it's supposed to work that fast but it did. Still using them.",
-    name: "Jessica T.",
-    role: "Software Engineer, 29",
+    text: "I replay stuff in my head alllll the time its exhausting. Got this and it does work when I remember to use it. The breathing felt weird at first like I was doing it wrong?? Watched the video again and figured it out. Good for before presentations. Shipping was fast too which was nice",
+    name: "Kristen P.",
+    role: "San Diego, CA",
   },
   {
-    text: "okay so I've done years of therapy and this gave me more tools in 2 weeks than I got in 6 months of sessions. wish I'd found it sooner honestly (scored 7/10 btw)",
-    name: "Rachel K.",
-    role: "Therapist, 41",
+    text: "I'm a middle school teacher so you can imagine my stress levels lol. I worry about EVERYTHING - parent emails, lesson plans, did I say the wrong thing to a student, etc etc. This has been really helpful for when I start getting in my head. Not a cure but it helps me reset. Used it before a tough parent meeting last week and it genuinely made a difference",
+    name: "Sarah T.",
+    role: "Chicago, IL",
   },
   {
-    text: "Quiz score 6/10. Before presentations, I'd spiral through every possible way it could go wrong. The exercises helped me stop getting stuck in those 'what if' loops. Took a while to get the hang of it but it works now.",
-    name: "Amanda L.",
-    role: "Teacher, 37",
+    text: "freelance graphic designer = constant anxiety about money and clients. This has become part of my morning routine now. Coffee, breathing necklace, open laptop lol. I use it throughout the day when I start stressing about stuff. Doesn't make my problems go away but stops me from spiraling for hours. Also its actually cute so thats a bonus",
+    name: "Lauren H.",
+    role: "Boston, MA",
   },
   {
-    text: "I scored 8/10. After difficult patient conversations, I'd physically tense up and replay everything I said. I didn't realize how much the physical stuff mattered. The body-based exercises are the only thing that's actually helped when I'm spiraling.",
-    name: "Emily R.",
-    role: "Physician, 44",
+    text: "work in sales and I stress about every client call. Did I talk too much? Should I follow up? This has become my ritual before calls. Takes 90 seconds and I feel way more centered. Also after bad calls it helps me move on instead of obsessing. Color matches all my work clothes",
+    name: "Nicole D.",
+    role: "Minneapolis, MN",
   },
   {
-    text: "Was skeptical. But after my mom's comments at Sunday dinner, I'd replay the conversation for days. The reframe exercises helped me stop the loop. I don't replay conversations for hours anymore. Actually surprised it worked. (scored 6/10)",
-    name: "Priya S.",
-    role: "HR Manager, 32",
+    text: "I overthink social stuff constantly, like things I said years ago will randomly pop in my head and I cringe. Started using this and its part of my routine now. Morning coffee then breathing then I can function lol. Use it during my commute too. Rose gold is gorgeous btw and people keep asking where I got it. I tell them its a breathing necklace and they look at me like im crazy",
+    name: "Alison F.",
+    role: "Charlotte, NC",
   },
   {
-    text: "I scored 9/10 (chronic overthinker lol). The tracking tools helped me see why I spiral. Now I can catch it before it gets bad. Huge difference.",
-    name: "Lauren B.",
-    role: "Researcher, 39",
+    text: "chronic what if person. this interrupts that loop when I use it. not instant but way better than trying to just tell myself to stop which never worked. good for meetings when I start panicking about something I said",
+    name: "Rebecca H.",
+    role: "San Francisco, CA",
   },
   {
-    text: "Scored 9/10. After sending a tough email to an investor, I had a full panic attack. Used the interrupt technique for the first time. It worked. I've been doing F.I.R.E. every morning for 3 weeks now.",
-    name: "Maria G.",
-    role: "Entrepreneur, 28",
+    text: "I'm 52 and been an overthinker forever. Tried therapy meditation apps all of it. This actually helps when I start obsessing about something. Wear it daily use it multiple times. Looks like regular jewelry not a wellness thing. Wish I found this years ago",
+    name: "Patricia G.",
+    role: "Houston, TX",
   },
 ];
 

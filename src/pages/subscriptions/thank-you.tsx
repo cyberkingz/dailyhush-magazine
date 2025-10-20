@@ -396,28 +396,55 @@ function ThankYouPageContent() {
       label: 'In the Box',
       collapsible: true,
       content: (
-        <ul className="space-y-3">
-          <li className="flex items-start gap-2">
-            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-            <span className="text-gray-700">The Shift Breathing Necklace</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-            <span className="text-gray-700">Premium 26" Luxe Box Chain</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-            <span className="text-gray-700">Travel pouch (to store and keep your Shift secure)</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-            <span className="text-gray-700">Quick-Start Guide: F.I.R.E. in 3 Steps</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-            <span className="text-gray-700">Access to F.I.R.E. Protocol (digital course)</span>
-          </li>
-        </ul>
+        <div className="space-y-4">
+          <div>
+            <p className="text-gray-900 font-semibold mb-2">The Shift Complete Kit:</p>
+            <ul className="space-y-3 ml-4">
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">The Shift Breathing Necklace</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Premium 26" Luxe Box Chain</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Travel pouch (to store and keep your Shift secure)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Quick-Start Guide: F.I.R.E. in 3 Steps</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-gray-900 font-semibold mb-2">F.I.R.E. Protocol (Digital Program) - $67 Value:</p>
+            <ul className="space-y-2 ml-4">
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Complete 4-Step Framework Guide (Focus → Interrupt → Reframe → Execute)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Spiral Trigger Identification Workbook</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Vagus Nerve Activation Techniques</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">Step-by-Step Protocols for 7 Common Overthinking Situations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
+                <span className="text-gray-700">30-Day Progress Tracker</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       ),
     },
   ]
@@ -989,7 +1016,7 @@ function ThankYouPageContent() {
                                 </svg>
                                 <span className="text-gray-700">F.I.R.E. Protocol</span>
                               </div>
-                              <span className="font-semibold text-gray-900">$27</span>
+                              <span className="font-semibold text-gray-900">$67</span>
                             </li>
                             <li className="flex justify-between items-start gap-3">
                               <div className="flex items-start gap-2 flex-1">
@@ -1002,21 +1029,21 @@ function ThankYouPageContent() {
                             </li>
                           </ul>
                           <div className="border-t border-gray-200 pt-3 mb-6">
-                            <div className="flex justify-between text-sm text-gray-600 mb-2">
-                              <span>Total Value:</span>
-                              <span className="line-through">$128</span>
+                            <div className="flex justify-between text-sm mb-2">
+                              <span className="text-gray-600">Total Value:</span>
+                              <span className="text-red-600 line-through font-semibold">$168</span>
                             </div>
                             <div className="flex justify-between items-baseline mb-2">
                               <span className="text-lg font-semibold text-gray-700">Your Price:</span>
                               <span className="text-4xl font-bold text-emerald-700">$37</span>
                             </div>
                             <div className="text-base text-emerald-600 font-semibold">
-                              You Save $91 (71% off)
+                              You Save $131 (78% off)
                             </div>
                           </div>
                           <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
                             <p className="text-base text-gray-700 italic leading-relaxed mb-3">
-                              "You're getting the F.I.R.E. Protocol as my gift to you. The Shift necklace is your tool while the F.I.R.E. Protocol teaches you exactly when and how to use it for maximum relief."
+                              "You're getting the research-backed F.I.R.E. Protocol as my gift to you. The Shift gives you something physical to reach for while F.I.R.E. teaches you exactly when and how to use it for maximum relief."
                             </p>
                             <p className="text-sm text-gray-600">— Anna, Founder</p>
                           </div>

@@ -225,7 +225,7 @@ function FireStarterProduct() {
 
             {/* F.I.R.E. mechanism - tightened */}
             <p className="text-base md:text-lg text-emerald-800 mb-3 leading-[1.7]">
-              Nothing has worked because you've been treating the wrong problem. <strong>F.I.R.E. targets the 7-second window before the spiral starts</strong>—when your body decides you're unsafe.
+              Nothing has worked because you've been treating the wrong problem. <strong>F.I.R.E. targets the first ~10 seconds before the spiral starts</strong>—when your body decides you're unsafe.
             </p>
 
             {/* Why thought-based tools fail */}

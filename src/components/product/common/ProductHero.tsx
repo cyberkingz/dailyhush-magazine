@@ -55,7 +55,7 @@ export function ProductHero({
   guarantees,
   reviewCount,
   reviewRating,
-  ctaText = 'Add to Cart',
+  ctaText = 'Get Your Pack',
   ctaLink = '#buy',
   description,
   shopifyProductId,

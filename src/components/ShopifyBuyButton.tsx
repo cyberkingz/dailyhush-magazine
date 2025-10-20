@@ -170,7 +170,7 @@ export default function ShopifyBuyButton({
                   }
                 },
                 text: {
-                  button: 'Add to cart'
+                  button: 'Get Your Pack'
                 }
               },
               option: {},

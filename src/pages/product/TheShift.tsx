@@ -165,7 +165,7 @@ function TheShiftPage() {
     {
       title: 'Why We Built This',
       content: [
-        "We're chronic overthinkers who tried everything—meditation apps we forgot to open, therapy that explained WHY we ruminate but didn't stop it, breathing exercises we couldn't remember mid-spiral. Then our therapist taught us a technique with ONE difference: a physical tool you wear. Not something you remember to use—something you reach for the moment spiraling starts. 50,000+ overthinkers later, this simple idea keeps working. If you scored 6+ on the quiz, you know the feeling. This is your circuit breaker.",
+        "We're chronic overthinkers who tried everything—meditation apps we forgot to open, therapy that explained WHY we ruminate but didn't stop it, breathing exercises we couldn't remember mid-spiral. Then our therapist taught us a technique with ONE difference: a physical tool you wear. Not something you remember to use—something you reach for the moment spiraling starts. 50,000+ women later, this simple idea keeps working. If you scored 6+ on the quiz, you know the feeling. This is your circuit breaker.",
       ],
       imageSrc: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_pefq89pefq89pefq.png?v=1760950438',
       imageAlt: 'DailyHush founders story',
@@ -196,48 +196,84 @@ function TheShiftPage() {
   // FAQs
   const faqs = [
     {
-      question: 'I scored 6+ on the quiz. Will this actually work for chronic rumination?',
-      answer: "The technique in The Shift (extended exhale for vagus nerve activation) is the SAME technique used in RF-CBT (Rumination-Focused Cognitive Behavioral Therapy) at University of Exeter. Clinical trials show 60-65% of chronic ruminators experience significant improvement. The difference between therapy and The Shift: you're wearing the tool, so you can't forget to use it when spiraling. It won't cure rumination, but it gives you a circuit breaker.",
+      question: 'What exactly is The Shift™ Complete Kit?',
+      answer: "You get two things: (1) The Shift™ Breathing Necklace—a medical-grade stainless steel tool that extends your exhale to 10 seconds to activate your vagus nerve and interrupt rumination spirals in 90 seconds. (2) The F.I.R.E. Protocol—a complete digital program teaching you the 4-step clinical framework (Focus → Interrupt → Reframe → Execute) used in Rumination-Focused CBT at University of Exeter. The necklace is your emergency brake. The F.I.R.E. Protocol teaches you to drive differently.",
     },
     {
-      question: 'How is this different from meditation apps I\'ve already tried?',
-      answer: "Meditation apps ask you to 'observe your thoughts' or 'let them pass.' For chronic ruminators, observation becomes another spiral. The Shift is a physiological interrupt, not a mindfulness practice. You're not observing anything—you're activating your vagus nerve to signal your nervous system: 'You're safe.' It's biology, not meditation. Your brain can argue with thoughts. It can't argue with your nervous system.",
+      question: 'What comes in the physical package when it arrives?',
+      answer: "Your Complete Kit includes: The Shift™ Breathing Necklace (the tool itself), a premium 26-inch adjustable luxe box chain (so you can wear it immediately), a protective travel pouch (keeps it safe in your purse when not wearing), and a Quick-Start Guide with the F.I.R.E. in 3 Steps (so you can use it the moment it arrives—no learning curve).",
+    },
+    {
+      question: 'What\'s included in the F.I.R.E. Protocol ($67 value)?',
+      answer: "The complete digital program includes: (1) The 4-Step Framework Guide—the full Focus → Interrupt → Reframe → Execute system therapists charge $150/hour to teach. (2) Spiral Trigger Identification Workbook—helps you map YOUR specific rumination patterns. (3) Vagus Nerve Activation Techniques—5 clinical methods beyond the necklace. (4) Step-by-Step Protocols for 7 Common Overthinking Situations (the 2am 'I can't believe I said that' spiral, decision paralysis, relationship overthinking, etc.). (5) 30-Day Progress Tracker—so you can see patterns you can't see when you're IN the spiral. You get instant digital access after purchase—you can start reading while the necklace ships.",
+    },
+    {
+      question: 'I scored 6+ on the quiz. Will this actually work for chronic rumination?',
+      answer: "The technique in The Shift (extended exhale for vagus nerve activation) is the SAME technique used in RF-CBT (Rumination-Focused Cognitive Behavioral Therapy) at University of Exeter. Clinical trials show 60-65% of chronic ruminators experience significant improvement. The difference between therapy and The Shift: you're wearing the tool, so you can't forget to use it when spiraling. It won't cure rumination, but it gives you a circuit breaker you can trigger in 90 seconds when your brain starts the loop.",
+    },
+    {
+      question: 'What if I\'ve tried therapy and it didn\'t work?',
+      answer: "Traditional CBT works for anxiety, but rumination needs specialized protocols. Rumination-Focused CBT is different—it targets the specific neural pathways causing overthinking loops, not general anxiety. If your therapist wasn't trained in RF-CBT or Metacognitive Therapy (MCT), they likely used anxiety techniques that don't work for rumination. The F.I.R.E. Protocol gives you the RF-CBT framework that 65% of chronic ruminators respond to. You're not broken—you just haven't had the right tools for YOUR specific brain pattern.",
     },
     {
       question: 'How does it actually work?',
-      answer: "The necklace has a small opening that naturally extends your exhale to 10 seconds (vs. your normal 3-4). When you exhale this long, it activates your vagus nerve—your body's 'off switch' for rumination loops. First breath interrupts the spiral. Second breath downregulates your nervous system. Third breath stops the catastrophizing from escalating. 90 seconds total.",
+      answer: "The necklace has a small opening that naturally extends your exhale to 10 seconds (vs. your normal 3-4 seconds). When you exhale this long, it activates your vagus nerve—your body's biological 'off switch' for rumination loops. First breath interrupts the spiral. Second breath downregulates your nervous system. Third breath stops the catastrophizing from escalating. 90 seconds total. It's not meditation or mindfulness—it's direct nervous system intervention. Your brain can argue with thoughts. It can't argue with your vagus nerve.",
     },
     {
-      question: 'Do I have to wear it all the time?',
-      answer: "No. Many people wear it daily as a reminder, but you can also keep it in your pocket or purse and use only when spiraling. Whatever works for you.",
+      question: 'How is this different from meditation apps I\'ve already tried?',
+      answer: "Meditation apps ask you to 'observe your thoughts' or 'let them pass.' For chronic ruminators, observation becomes another spiral—you end up analyzing your analyzing. The Shift is a physiological interrupt, not a mindfulness practice. You're not observing anything—you're activating your vagus nerve to signal your nervous system: 'You're safe. Turn off the threat response.' It's biology, not meditation. And unlike an app you have to remember to open when you're already spiraling, The Shift is a physical object you're wearing—impossible to forget when you need it most.",
     },
     {
-      question: "Will people think it's weird I'm breathing through jewelry?",
-      answer: "It looks like you're taking a slow breath. Most people won't even notice. (And if they do, just say 'anxiety relief tool' - you'll be surprised how many ask where to get one!)",
-    },
-    {
-      question: 'How long does it take to work?',
-      answer: "90 seconds (2-3 slow breaths). The first breath interrupts the spiral. By the third breath, you'll feel noticeably calmer.",
-    },
-    {
-      question: 'What if I lose it or it breaks?',
-      answer: "It's stainless steel (durable), but if anything happens within 60 days, email us and we'll replace it free.",
+      question: 'What if my overthinking is different? I don\'t just ruminate about the past—I spiral about the future too.',
+      answer: "Rumination includes past-focused loops ('I can't believe I said that') AND future-focused catastrophizing ('What if everything goes wrong?'). Both are the same neural pattern: your brain treating uncertainty as a threat and trying to 'solve' it with thinking. The F.I.R.E. Protocol includes specific protocols for 7 common spiral types—past regret, future catastrophizing, decision paralysis, relationship overthinking, body image spirals, work performance anxiety, and existential spirals. The vagus nerve activation works the same regardless of what content your brain is looping on.",
     },
     {
       question: 'Will this stop my overthinking completely?',
-      answer: "No. And anyone who promises that is lying to you. What it DOES: Gives you a circuit breaker for when spirals start. You'll still overthink (you're an overthinker—that's not changing). But instead of losing 3 hours to 'I can't believe I said that,' you interrupt it in 90 seconds. You can't stop rumination thoughts from STARTING. But you can stop them from SNOWBALLING. That's what this does.",
+      answer: "No. And anyone who promises that is lying to you. What it DOES: Gives you a circuit breaker for when spirals start. You'll still overthink (you're an overthinker—that's wired into your nervous system, and that's not changing). But instead of losing 3 hours to 'I can't believe I said that,' you interrupt it in 90 seconds. You can't stop rumination thoughts from STARTING. But you can stop them from SNOWBALLING into 2am exhaustion spirals. That's what this does. It doesn't cure you. It gives you control when you need it most.",
     },
     {
-      question: 'Does this replace therapy/medication?',
-      answer: "No. This is a TOOL, not a replacement for professional help. It works alongside therapy/medication to give you something physical to do when spiraling.",
+      question: 'Does this replace therapy or medication?',
+      answer: "No. This is a TOOL, not a replacement for professional help. If you're in therapy, this gives you something physical to do when spiraling between sessions. If you're on medication, this works alongside it—they target different mechanisms (medication adjusts neurotransmitters, The Shift activates your vagus nerve). Many therapists actually recommend breathing tools like this as part of RF-CBT protocols. Think of it as another tool in your toolkit, not a replacement for the whole toolkit.",
     },
     {
-      question: 'What material is it made from?',
-      answer: "Medical-grade stainless steel - hypoallergenic, nickel-free, and won't tarnish. The chain is adjustable from 18-24 inches to fit everyone.",
+      question: 'How long does it take to work?',
+      answer: "90 seconds (2-3 slow breaths). The first breath interrupts the spiral—you'll feel the shift from 'racing thoughts' to 'I'm breathing.' By the third breath, your heart rate slows and the catastrophizing loses momentum. It won't make the thoughts disappear instantly, but it will downregulate the panic response that makes rumination feel so urgent and overwhelming. Most people report feeling noticeably calmer within 2 minutes.",
     },
     {
-      question: 'Can I use it while driving?',
-      answer: "Yes, it's safe to use while driving (unlike meditation apps). Just keep your eyes on the road and breathe through the necklace when you feel stress rising.",
+      question: 'Do I have to wear it all the time?',
+      answer: "No. Many people wear it daily as a visual reminder ('I have a tool when I need it'), but you can also keep it in your pocket, purse, or on your nightstand and only use it when spiraling. Some people wear it during high-stress periods (work presentations, difficult conversations) and store it other times. Whatever works for you. The chain is adjustable and comes with a travel pouch, so you have options.",
+    },
+    {
+      question: 'Will people think it\'s weird I\'m breathing through jewelry?',
+      answer: "It looks like you're taking a slow, deep breath—which is what you're doing. Most people won't even notice (they're too busy with their own thoughts). If someone asks, just say 'anxiety relief tool'—you'll be surprised how many people respond with 'Where did you get that? I need one.' The women who've been using The Shift report the opposite problem: too many people asking where to buy it.",
+    },
+    {
+      question: 'Can I use it while driving, working, or in public?',
+      answer: "Yes. Unlike meditation apps that require you to close your eyes or focus inward, The Shift is just breathing—you can do it anywhere. Driving, in meetings, at your desk, during conversations. It's silent and subtle. You're just breathing slower through a necklace. The only place you can't use it: underwater (obviously). Everywhere else is fair game.",
+    },
+    {
+      question: 'What if I lose it or it breaks?',
+      answer: "The necklace is medical-grade stainless steel (hypoallergenic, nickel-free, won't tarnish)—it's built to last. But if anything happens within 60 days, email us at support@dailyhush.co and we'll replace it free. After 60 days, we offer replacement necklaces at cost ($12). The chain is adjustable from 18-26 inches, and we include a protective travel pouch to keep it safe when not wearing it.",
+    },
+    {
+      question: 'What\'s your guarantee? What if it doesn\'t work for me?',
+      answer: "60-day money-back guarantee. Use The Shift for two full months. If you don't feel it helps interrupt your rumination spirals, email us for a full refund—no questions, no hassle. You even keep the F.I.R.E. Protocol digital program (we can't 'take back' a PDF you've already read). We can afford this guarantee because 60-65% of chronic ruminators respond to vagus nerve activation techniques in clinical trials. The worst case: you get your money back AND keep a $67 clinical framework. The best case: you finally have a tool that works when your brain won't shut up.",
+    },
+    {
+      question: 'Why is it only $37? What\'s the catch?',
+      answer: "No catch. Here's the math: The Shift Necklace normally sells for $37. The F.I.R.E. Protocol (the complete digital program) normally sells separately for $67. That's $104 total value. You're getting both for $37 because you completed the overthinking quiz—your results are fresh and calibrated, which means you can implement the F.I.R.E. Protocol immediately with accurate self-knowledge. This is a frontend offer. We make money when buyers love it and come back for advanced training (like our $197 Rumination Recovery Intensive). We'd rather get The Shift in your hands at breakeven and earn your trust than charge full price and have you wait another month while rumination steals your sleep.",
+    },
+    {
+      question: 'How much does rumination cost if I don\'t fix it?',
+      answer: "Research shows chronic rumination costs an average of 2-4 hours per day in lost productivity, plus sleep deprivation (worth $200-400/month in health costs), relationship strain, and career stagnation from decision paralysis. One University of Michigan study found ruminators earn 14% less over their careers due to missed opportunities and avoidance behavior. The question isn't 'Can I afford $37?' It's 'Can I afford another year of 2am spirals, exhausted mornings, and decisions I'm too paralyzed to make?' The Shift isn't an expense. It's a circuit breaker for a pattern that's already costing you thousands.",
+    },
+    {
+      question: 'Why should I order now instead of thinking about it?',
+      answer: "Two reasons: (1) Clinical timing—your quiz results are fresh. The Spiral Trigger Identification Workbook in the F.I.R.E. Protocol works best when your recent overthinking patterns are still top-of-mind. Waiting means re-analyzing what you've already analyzed (which is... more rumination). (2) The $37 quiz-taker rate is time-sensitive. Once you leave this page, you'll pay the standard $67 rate for the necklace alone (without the F.I.R.E. bonus). The real cost of waiting isn't the price difference—it's every night this week your brain steals from you while you 'think about' getting a tool to stop thinking so much. The irony isn't lost on me.",
+    },
+    {
+      question: 'What happens after I order?',
+      answer: "Immediate: You get instant access to the F.I.R.E. Protocol digital program (check your email within 5 minutes). You can start reading the framework tonight while the necklace ships. Shipping: The Shift™ Complete Kit ships within 1-2 business days via USPS. Typical delivery is 5-7 days in the US (international 10-14 days). You'll get tracking info via email. First use: When it arrives, read the Quick-Start Guide (3-minute read) and try your first 90-second breath cycle. Most people report feeling the vagus nerve activation on the first try. 30-day mark: Use the Progress Tracker in F.I.R.E. to see patterns you couldn't see when you were IN the spirals. You'll likely notice you're interrupting spirals earlier, losing less time to rumination, and sleeping better.",
     },
   ]
 
@@ -319,11 +355,11 @@ function TheShiftPage() {
       content: (
         <div className="space-y-4">
           <div>
-            <p className="text-gray-900 font-semibold mb-2">The Shift Complete Kit:</p>
+            <p className="text-gray-900 font-semibold mb-2">The Shift™ Complete Kit:</p>
             <ul className="space-y-3 ml-4">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-                <span className="text-gray-700">The Shift Breathing Necklace</span>
+                <span className="text-gray-700">The Shift™ Breathing Necklace</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
@@ -373,7 +409,7 @@ function TheShiftPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>Limited Time:</strong> Get The Shift for $37 (Regular $49)</>}
+        message={<><strong>Quiz-Taker Offer:</strong> Get The Shift™ Complete Kit ($168 value) for just $37 — F.I.R.E. Protocol included FREE</>}
         variant="emerald"
       />
       <TopBar />
@@ -381,7 +417,7 @@ function TheShiftPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <ProductHero
-        productName="Clinical Breathing Necklace for Chronic Overthinkers"
+        productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
         tagline="When your thoughts won't stop, you need something you can touch"
         badge="F.I.R.E. PROTOCOL INCLUDED FREE"
         scarcityMessage="Due to order surge, inventory running low"
@@ -402,27 +438,36 @@ function TheShiftPage() {
                   <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">The Shift Necklace + Chain</span>
+                  <span className="text-gray-700">The Shift™ Necklace + Chain</span>
                 </div>
-                <span className="font-semibold text-gray-900">$67</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400 line-through text-sm">$67</span>
+                  <span className="font-semibold text-gray-900">$37</span>
+                </div>
               </li>
               <li className="flex justify-between items-start gap-3">
                 <div className="flex items-start gap-2 flex-1">
                   <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">F.I.R.E. Protocol</span>
+                  <span className="text-gray-700">F.I.R.E. Protocol <span className="text-emerald-600 font-semibold">(FREE)</span></span>
                 </div>
-                <span className="font-semibold text-gray-900">$67</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400 line-through text-sm">$67</span>
+                  <span className="font-semibold text-emerald-600">$0</span>
+                </div>
               </li>
               <li className="flex justify-between items-start gap-3">
                 <div className="flex items-start gap-2 flex-1">
                   <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Guides + Resources</span>
+                  <span className="text-gray-700">Guides + Resources <span className="text-emerald-600 font-semibold">(FREE)</span></span>
                 </div>
-                <span className="font-semibold text-gray-900">$34</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400 line-through text-sm">$34</span>
+                  <span className="font-semibold text-emerald-600">$0</span>
+                </div>
               </li>
             </ul>
             <div className="border-t border-gray-200 pt-3 mb-6">

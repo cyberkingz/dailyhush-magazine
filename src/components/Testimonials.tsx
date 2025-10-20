@@ -42,16 +42,11 @@ const testimonials: Testimonial[] = [
     name: "Maria G.",
     role: "Entrepreneur, 28",
   },
-  {
-    text: "Quiz score 7/10. Every time I'd hit publish on an article, I'd spiral for hours about typos or unclear sentences. The thought pattern tracking made me realize I was doing the same mental loops every single day. Seeing it written out was... eye opening. Worth it.",
-    name: "Diana W.",
-    role: "Writer, 36",
-  },
 ];
 
 const firstColumn = testimonials.slice(0, 3);
 const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+const thirdColumn = testimonials.slice(6, 8);
 
 const Testimonials = () => {
   return (

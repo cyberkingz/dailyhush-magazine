@@ -1,9 +1,13 @@
+import ShopifyBuyButton from '@/components/ShopifyBuyButton'
+
 interface FinalCTAProps {
   backgroundImage: string
   heading: string
   subheading?: string
   ctaText: string
-  ctaLink: string
+  productId: string
+  domain: string
+  storefrontAccessToken: string
   guarantee?: string
 }
 
@@ -12,7 +16,9 @@ export function FinalCTA({
   heading,
   subheading,
   ctaText,
-  ctaLink,
+  productId,
+  domain,
+  storefrontAccessToken,
   guarantee,
 }: FinalCTAProps) {
   return (
@@ -37,12 +43,17 @@ export function FinalCTA({
             {subheading}
           </p>
         )}
-        <a
-          href={ctaLink}
-          className="inline-block bg-white hover:bg-gray-50 text-emerald-600 px-10 py-4 rounded-xl font-bold text-lg shadow-2xl hover:shadow-xl transition-all transform hover:scale-105 active:scale-95"
-        >
-          {ctaText}
-        </a>
+        <div className="flex justify-center max-w-sm mx-auto">
+          <ShopifyBuyButton
+            productId={productId}
+            domain={domain}
+            storefrontAccessToken={storefrontAccessToken}
+            buttonText={ctaText}
+            buttonColor="#f59e0b"
+            buttonHoverColor="#d97706"
+            className="w-full"
+          />
+        </div>
         {guarantee && (
           <p className="mt-6 text-white/80 text-sm">
             {guarantee}

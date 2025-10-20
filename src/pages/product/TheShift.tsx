@@ -418,7 +418,7 @@ function TheShiftPage() {
         {/* Hero Section */}
         <ProductHero
         productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
-        tagline="When your thoughts won't stop, you need something you can touch"
+        tagline="After decades of worrying about everyone else, it's time to quiet your mind"
         badge="F.I.R.E. PROTOCOL INCLUDED FREE"
         scarcityMessage="Due to order surge, inventory running low"
         price={{

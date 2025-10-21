@@ -652,64 +652,136 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== QUIZ-SPECIFIC TESTIMONIALS ========== */}
+              {/* ========== TRUSTPILOT-STYLE REVIEWS ========== */}
               {resultData && (
                 <div className="mb-12 max-w-4xl mx-auto">
+                  {/* Overall Rating Header */}
+                  <div className="text-center mb-8">
+                    <div className="inline-flex items-center gap-2 bg-[#00B67A] text-white px-6 py-3 rounded-lg mb-2">
+                      <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                      </svg>
+                      <span className="font-bold text-2xl">4.8</span>
+                      <span className="text-sm opacity-90">out of 5</span>
+                    </div>
+                    <p className="text-sm text-slate-600">Based on 379 verified reviews</p>
+                  </div>
+
                   <div className="grid md:grid-cols-3 gap-6">
-                    {/* Testimonial 1 - Chronic Overthinker */}
-                    <div className="bg-white border border-emerald-100 rounded-xl p-6 shadow-sm">
-                      <div className="flex items-start gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                          <span className="text-emerald-700 font-bold text-sm">8/10</span>
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Chronic Overthinker</p>
-                          <p className="text-sm text-slate-600 mt-0.5">Sarah M.</p>
-                        </div>
+                    {/* Review 1 */}
+                    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                      {/* Star Rating */}
+                      <div className="flex items-center gap-1 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                          </svg>
+                        ))}
                       </div>
-                      <p className="text-sm text-slate-700 leading-relaxed italic">
-                        "I scored 8/10 on the quiz. Used The Shift 4x daily for 2 weeks and finally slept through the night without replaying that dinner conversation. Not every time, but enough that I actually trust it now."
+
+                      {/* Review Title */}
+                      <h4 className="font-bold text-slate-900 mb-2">Finally sleeping through the night</h4>
+
+                      {/* Review Text */}
+                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                        I scored 8/10 on the quiz. Used The Shift 4x daily for 2 weeks and finally slept through the night without replaying that dinner conversation. Not every time, but enough that I actually trust it now.
                       </p>
-                      <div className="mt-4 pt-4 border-t border-slate-100">
-                        <p className="text-xs text-slate-500">Verified Purchase • 3 months ago</p>
+
+                      {/* Reviewer Info */}
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                            <span className="text-emerald-700 font-semibold text-xs">SM</span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-slate-900">Sarah M.</p>
+                            <p className="text-xs text-slate-500">3 months ago</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 text-[#00B67A]">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-xs font-medium">Verified</span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Testimonial 2 - Gentle Analyzer */}
-                    <div className="bg-white border border-amber-100 rounded-xl p-6 shadow-sm">
-                      <div className="flex items-start gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                          <span className="text-amber-700 font-bold text-sm">6/10</span>
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide">Gentle Analyzer</p>
-                          <p className="text-sm text-slate-600 mt-0.5">Linda K.</p>
-                        </div>
+                    {/* Review 2 */}
+                    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                      {/* Star Rating */}
+                      <div className="flex items-center gap-1 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                          </svg>
+                        ))}
                       </div>
-                      <p className="text-sm text-slate-700 leading-relaxed italic">
-                        "Quiz said I was a 'Gentle Analyzer' (6/10). The Shift helped me catch spirals BEFORE they took 3 hours. I wear it every day. My therapist noticed I'm actually using breathing techniques now instead of just forgetting when I panic."
+
+                      {/* Review Title */}
+                      <h4 className="font-bold text-slate-900 mb-2">My therapist noticed the difference</h4>
+
+                      {/* Review Text */}
+                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                        Quiz said I was a 'Gentle Analyzer' (6/10). The Shift helped me catch spirals BEFORE they took 3 hours. I wear it every day. My therapist noticed I'm actually using breathing techniques now instead of just forgetting when I panic.
                       </p>
-                      <div className="mt-4 pt-4 border-t border-slate-100">
-                        <p className="text-xs text-slate-500">Verified Purchase • 5 months ago</p>
+
+                      {/* Reviewer Info */}
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                            <span className="text-amber-700 font-semibold text-xs">LK</span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-slate-900">Linda K.</p>
+                            <p className="text-xs text-slate-500">5 months ago</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 text-[#00B67A]">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-xs font-medium">Verified</span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Testimonial 3 - Overthinkaholic */}
-                    <div className="bg-white border border-red-100 rounded-xl p-6 shadow-sm">
-                      <div className="flex items-start gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-                          <span className="text-red-700 font-bold text-sm">10/10</span>
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide">Overthinkaholic</p>
-                          <p className="text-sm text-slate-600 mt-0.5">Jennifer R.</p>
-                        </div>
+                    {/* Review 3 */}
+                    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                      {/* Star Rating */}
+                      <div className="flex items-center gap-1 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                          </svg>
+                        ))}
                       </div>
-                      <p className="text-sm text-slate-700 leading-relaxed italic">
-                        "I maxed out the quiz (10/10). I've tried therapy, meds, meditation apps—this is the first thing that worked in 90 seconds like they said. Grabbed it at 2am during a spiral about a text I sent. Actually interrupted the loop."
+
+                      {/* Review Title */}
+                      <h4 className="font-bold text-slate-900 mb-2">First thing that actually worked</h4>
+
+                      {/* Review Text */}
+                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                        I maxed out the quiz (10/10). I've tried therapy, meds, meditation apps—this is the first thing that worked in 90 seconds like they said. Grabbed it at 2am during a spiral about a text I sent. Actually interrupted the loop.
                       </p>
-                      <div className="mt-4 pt-4 border-t border-slate-100">
-                        <p className="text-xs text-slate-500">Verified Purchase • 2 months ago</p>
+
+                      {/* Reviewer Info */}
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                            <span className="text-purple-700 font-semibold text-xs">JR</span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-slate-900">Jennifer R.</p>
+                            <p className="text-xs text-slate-500">2 months ago</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 text-[#00B67A]">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-xs font-medium">Verified</span>
+                        </div>
                       </div>
                     </div>
                   </div>

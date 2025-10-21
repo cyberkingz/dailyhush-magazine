@@ -686,9 +686,9 @@ function ThankYouPageContent() {
               {resultData && (
                 <div className="mb-12 max-w-5xl mx-auto">
                   {/* Header */}
-                  <div className="mb-8 text-center">
-                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Customer Reviews</h3>
-                    <div className="flex items-center justify-center gap-2 mb-1">
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2 text-center">Customer Reviews</h3>
+                    <div className="flex items-center gap-2 mb-1">
                       <span className="text-3xl font-bold text-slate-900">4.80</span>
                       <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, i) => (

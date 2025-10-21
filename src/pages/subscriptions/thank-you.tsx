@@ -10,6 +10,7 @@ import { shiftProductReviews } from '../../data/shiftProductReviews'
 import { StickyCheckoutBar } from '../../components/StickyCheckoutBar'
 import { useScrollDepth } from '../../hooks/useScrollDepth'
 import { ProductHero } from '../../components/product/common'
+import { useCountdown } from '../../hooks/useCountdown'
 import {
   trackThankYouPageView,
   trackScrollDepth,
@@ -325,6 +326,35 @@ function ThankYouPageContent() {
   const [isMobile, setIsMobile] = useState(false)
   const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
   const stickySentinelRef = useRef<HTMLDivElement | null>(null)
+
+  // Initialize countdown target date with safe default
+  const [countdownTarget, setCountdownTarget] = useState<Date>(() => {
+    // Default to 48 hours from now (will be updated from localStorage)
+    return new Date(Date.now() + 48 * 60 * 60 * 1000)
+  })
+
+  // Load countdown target from localStorage after mount
+  useEffect(() => {
+    const COUNTDOWN_KEY = 'quiz_countdown_target'
+
+    // Check if we have a stored target date
+    const stored = localStorage.getItem(COUNTDOWN_KEY)
+    if (stored) {
+      const targetDate = new Date(stored)
+      // If the stored date is in the future, use it
+      if (targetDate.getTime() > Date.now()) {
+        setCountdownTarget(targetDate)
+        return
+      }
+    }
+
+    // Create new target date (48 hours from now)
+    const target = new Date(Date.now() + 48 * 60 * 60 * 1000)
+    localStorage.setItem(COUNTDOWN_KEY, target.toISOString())
+    setCountdownTarget(target)
+  }, [])
+
+  const countdown = useCountdown({ targetDate: countdownTarget })
 
   // Product Details Tabs for ProductHero (matching The Shift product page)
   const productDetailsTabs = [
@@ -801,35 +831,6 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== COUNTDOWN TIMER ========== */}
-              {resultData && (
-                <div className="mb-8 max-w-2xl mx-auto">
-                  <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6">
-                    <div className="flex flex-col items-center text-center">
-                      <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-3">Quiz-Taker Rate Expires In:</p>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="bg-amber-900 text-white px-4 py-3 rounded-lg font-mono text-2xl font-bold">
-                          48
-                        </div>
-                        <span className="text-amber-900 font-bold text-xl">:</span>
-                        <div className="bg-amber-900 text-white px-4 py-3 rounded-lg font-mono text-2xl font-bold">
-                          00
-                        </div>
-                        <span className="text-amber-900 font-bold text-xl">:</span>
-                        <div className="bg-amber-900 text-white px-4 py-3 rounded-lg font-mono text-2xl font-bold">
-                          00
-                        </div>
-                      </div>
-                      <p className="text-xs text-amber-600 mb-4">Your results stay fresh for 48 hours</p>
-
-                      <p className="text-sm text-amber-900 pt-4 border-t border-amber-200 w-full">
-                        <strong>Lock in your $30 discount</strong> — This quiz-taker rate won't be available after your results expire
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {/* ========== PRODUCT HERO SECTION ========== */}
               {resultData && (
                 <div id="offer-details" className="mb-16 -mx-4 md:-mx-16">
@@ -837,7 +838,7 @@ function ThankYouPageContent() {
                     <ProductHero
                       productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
                       tagline="After decades of worrying about everyone else, it's time to quiet your mind"
-                      badge="F.I.R.E. PROTOCOL INCLUDED FREE"
+                      badge={`QUIZ RATE EXPIRES IN: ${countdown}`}
                       scarcityMessage="Due to order surge, inventory running low"
                       price={{
                         current: 37,

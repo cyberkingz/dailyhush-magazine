@@ -620,7 +620,7 @@ function ThankYouPageContent() {
                   Your Brain Isn't Broken—It's Stuck in a Pattern
                 </h1>
                 <p className="text-lg md:text-xl text-slate-700 leading-relaxed">
-                  Here's what your quiz results reveal about why you can't stop overthinking—and what 50,000+ women with your exact pattern discovered actually works.
+                  Here's what your quiz results reveal about why you can't stop overthinking—and what thousands of women who've taken this quiz discovered actually works.
                 </p>
               </div>
 
@@ -682,7 +682,7 @@ function ThankYouPageContent() {
                         The breakthrough: <strong>Vagus nerve interruption in the first 10 seconds.</strong> Not cognitive. Physiological. You're not "managing thoughts"—you're signaling your nervous system to exit threat mode before the spiral locks in.
                       </p>
                       <p className="font-semibold text-slate-900">
-                        That's F.I.R.E. And that's why 50,000+ women with your pattern are finally sleeping through the night.
+                        That's F.I.R.E. And that's why 5,000+ women who use The Shift are finally sleeping through the night.
                       </p>
                     </div>
                   </div>
@@ -738,8 +738,11 @@ function ThankYouPageContent() {
                     <p>
                       That's why I created The Shift. The same vagal nerve regulation from F.I.R.E.'s "Interrupt" step—built into a physical tool you can't forget.
                     </p>
+                    <p>
+                      Designed by a leading psychotherapist, this anxiety relief necklace slows your exhale, calming the nervous system and reducing stress within seconds. It helps build a mindful breathing habit for long-term relaxation.
+                    </p>
                     <p className="italic text-slate-600 mt-4">
-                      (I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. Now 50,000+ women with your pattern are using The Shift + F.I.R.E. to interrupt their spirals—you'll see their reviews below.)
+                      (I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. Over 50,000 women have taken our quiz. 5,000+ now use The Shift + F.I.R.E. daily to interrupt their spirals—you'll see their 1,800+ verified reviews below.)
                     </p>
 
                     {/* Bridge to CEO framework */}
@@ -938,7 +941,7 @@ function ThankYouPageContent() {
                     </p>
 
                     <p className="font-semibold">
-                      Or you can try what's working for 50,000+ women—with zero risk for 60 days.
+                      Or you can try what's working for 5,000+ women who use The Shift daily—with zero risk for 60 days.
                     </p>
 
                     <p className="text-slate-900 italic">
@@ -1371,6 +1374,10 @@ function ThankYouPageContent() {
 
                     <div className="space-y-4">
                       {[
+                        {
+                          question: 'How does the Breathing Necklace help with anxiety and stress?',
+                          answer: "Designed by a leading psychotherapist, this anxiety relief necklace slows your exhale, calming the nervous system and reducing stress within seconds. It helps build a mindful breathing habit for long-term relaxation. The extended exhale activates your vagus nerve—your body's natural 'calm down' signal—which downregulates the fight-or-flight response that creates anxiety spirals. Unlike techniques that require you to 'think your way out' of anxiety, this is a direct physiological intervention your body responds to automatically.",
+                        },
                         {
                           question: 'What exactly is The Shift™ Complete Kit?',
                           answer: "You get two things: (1) The Shift™ Breathing Necklace—a medical-grade stainless steel tool that extends your exhale to 10 seconds to activate your vagus nerve and interrupt rumination spirals in 90 seconds. (2) The F.I.R.E. Protocol—a complete digital program teaching you the 4-step clinical framework (Focus → Interrupt → Reframe → Execute) used in Rumination-Focused CBT at University of Exeter. The necklace is your emergency brake. The F.I.R.E. Protocol teaches you to drive differently.",

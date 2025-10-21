@@ -446,37 +446,30 @@ function TheShiftPage() {
                   <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">F.I.R.E. Protocol <span className="text-emerald-600 font-semibold">(FREE)</span></span>
+                  <span className="text-gray-700">F.I.R.E. Protocol</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-400 line-through text-sm">$67</span>
-                  <span className="font-semibold text-emerald-600">$0</span>
-                </div>
+                <span className="font-semibold text-emerald-600">Free Bonus</span>
               </li>
               <li className="flex justify-between items-start gap-3">
                 <div className="flex items-start gap-2 flex-1">
                   <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Guides + Resources <span className="text-emerald-600 font-semibold">(FREE)</span></span>
+                  <span className="text-gray-700">Guides + Resources</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-400 line-through text-sm">$34</span>
-                  <span className="font-semibold text-emerald-600">$0</span>
-                </div>
+                <span className="font-semibold text-emerald-600">Free Bonus</span>
               </li>
             </ul>
-            <div className="border-t border-gray-200 pt-3 mb-6">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">Total Value:</span>
-                <span className="text-red-600 line-through font-semibold">$168</span>
-              </div>
+            <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between items-baseline mb-2">
-                <span className="text-lg font-semibold text-gray-700">Your Price:</span>
-                <span className="text-4xl font-bold text-emerald-700">$37</span>
+                <span className="text-gray-700">The Shift™ Necklace:</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400 line-through">$67</span>
+                  <span className="text-2xl font-bold text-emerald-700">$37</span>
+                </div>
               </div>
-              <div className="text-base text-emerald-600 font-semibold">
-                You Save $131 (78% off)
+              <div className="text-sm text-emerald-600 font-semibold">
+                Quiz-Taker Rate (Save $30)
               </div>
             </div>
             <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">

@@ -667,17 +667,219 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== BRIDGE TO OFFER ========== */}
+              {/* ========== CEO SECTION 1: JUSTIFY FAILURES ========== */}
+              {resultData && (
+                <div className="mb-16 max-w-3xl mx-auto">
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                    This Isn't Your Fault (And Here's Why Everything Else Failed)
+                  </h2>
+
+                  <div className="space-y-4 text-base text-slate-700 leading-relaxed">
+                    <p>
+                      <strong>The meditation apps didn't work</strong> because they require you to "clear your mind" when your brain is biologically incapable of stopping mid-rumination. You can't meditate your way out of a neural loop that's already running.
+                    </p>
+
+                    <p>
+                      <strong>Therapy helped you understand why you overthink</strong>—childhood patterns, anxiety triggers, perfectionism—but understanding doesn't stop the 3 AM spiral about your husband's health or whether your daughter is managing okay with the kids.
+                    </p>
+
+                    <p>
+                      <strong>The breathing exercises feel good in the moment</strong>, but ten minutes later you're right back in the loop because you never interrupted the mechanism. You treated the symptom, not the system.
+                    </p>
+
+                    <p className="font-semibold text-slate-900 pt-2 bg-amber-50/50 p-4 rounded-lg border-l-4 border-amber-500">
+                      None of this failed because you weren't trying hard enough. It failed because you were never given a tool that actually interrupts the rumination spiral at the neural level.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* ========== CEO SECTION 2: THROW ROCKS AT ENEMIES ========== */}
+              {resultData && (
+                <div className="mb-16 max-w-3xl mx-auto">
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                    Let's Be Honest About What's Really Happening
+                  </h2>
+
+                  <div className="space-y-5 text-base text-slate-700 leading-relaxed">
+                    <div className="pl-4 border-l-2 border-rose-300">
+                      <p className="font-semibold text-slate-900 mb-1">
+                        "Just try to relax" from doctors who've never experienced chronic rumination
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Easy to say when your brain doesn't replay conversations from 1987 at 2 AM.
+                      </p>
+                    </div>
+
+                    <div className="pl-4 border-l-2 border-rose-300">
+                      <p className="font-semibold text-slate-900 mb-1">
+                        $15/month meditation apps designed by Silicon Valley millennials
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Who think "mindfulness" solves everything when you've got real worries—aging parents, retirement savings, your husband's diabetes numbers.
+                      </p>
+                    </div>
+
+                    <div className="pl-4 border-l-2 border-rose-300">
+                      <p className="font-semibold text-slate-900 mb-1">
+                        Family who says "you worry too much" instead of understanding
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        They don't see the mental load you carry or the loops you can't escape. They just see you as anxious.
+                      </p>
+                    </div>
+
+                    <div className="pl-4 border-l-2 border-rose-300">
+                      <p className="font-semibold text-slate-900 mb-1">
+                        Therapists charging $200/hour to help you "process" the same thoughts again
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Understanding why you overthink doesn't stop you from doing it. You need interruption, not interpretation.
+                      </p>
+                    </div>
+
+                    <p className="italic text-slate-600 pt-4">
+                      You don't need someone to tell you <em>why</em> you overthink. You already know. You need something that actually <strong>stops it</strong> when it starts.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* ========== CEO SECTION 3: ENCOURAGE THE DREAM ========== */}
+              {resultData && (
+                <div className="mb-16 max-w-3xl mx-auto">
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                    Picture This: Life Without the Mental Loop
+                  </h2>
+
+                  <div className="space-y-5 text-base text-slate-700 leading-relaxed">
+                    <div>
+                      <p className="font-semibold text-emerald-900 mb-2">
+                        🌙 You lie down at night, and you actually fall asleep.
+                      </p>
+                      <p>
+                        No replaying the conversation with your son. No running through worst-case scenarios about your daughter's marriage. No calculating retirement funds at 3 AM. Just sleep. Real, restorative sleep.
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-emerald-900 mb-2">
+                        👨‍👩‍👧‍👦 You're fully present with your grandkids—really there.
+                      </p>
+                      <p>
+                        Not half-listening while your brain runs through your husband's doctor appointment or whether you said the wrong thing to your daughter-in-law. You're building the Lego castle, laughing at their stories, making memories instead of loops.
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-emerald-900 mb-2">
+                        ☕ You have coffee with friends without the mental fog.
+                      </p>
+                      <p>
+                        No forcing yourself to focus while secretly spiraling about whether your mammogram results will come back okay or if you should've pushed harder for your mom's care. You're actually <em>enjoying</em> the conversation.
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-emerald-900 mb-2">
+                        💭 Your brain finally feels like it's on your side.
+                      </p>
+                      <p>
+                        Instead of your greatest enemy, it becomes a tool you control. When a worry starts, you catch it in 90 seconds—before it becomes a 3-hour spiral. You feel calm. Capable. <em>Free.</em>
+                      </p>
+                    </div>
+
+                    <p className="font-bold text-slate-900 text-lg pt-4 border-t border-emerald-200 mt-6 bg-emerald-50/50 p-4 rounded-lg">
+                      This isn't wishful thinking. This is what 50,000+ women report after learning to interrupt rumination at the source.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* ========== CEO SECTION 4: ALLAY FEARS ========== */}
+              {resultData && (
+                <div className="mb-16 max-w-3xl mx-auto">
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                    "But What If This Doesn't Work For Me?"
+                  </h2>
+
+                  <div className="space-y-5 text-base text-slate-700 leading-relaxed">
+                    <p>
+                      I hear you. You've been burned before. You've bought the apps, read the books, maybe even done the therapy. You've heard promises that didn't pan out.
+                    </p>
+
+                    <p>
+                      <strong>So let me make this as risk-free as humanly possible:</strong>
+                    </p>
+
+                    <div className="bg-emerald-50 p-6 rounded-lg border-2 border-emerald-600 space-y-4 my-8">
+                      <p className="text-xl font-bold text-emerald-900">
+                        60-Day "Quiet Mind" Guarantee
+                      </p>
+
+                      <p>
+                        Try The Shift + F.I.R.E. Protocol for two full months. Wear it daily. Use the framework when overthinking starts. If you don't notice measurable interruption of your rumination spirals—if you're still lying awake replaying conversations or catastrophizing about health scares—<strong>I don't want your money.</strong>
+                      </p>
+
+                      <p className="font-semibold text-emerald-800">
+                        Send it back. Full refund. No questions asked. No "restocking fees." No making you jump through hoops.
+                      </p>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <p className="font-semibold text-slate-900 mb-2 italic">
+                          "What if this is just another thing that doesn't work for me?"
+                        </p>
+                        <p>
+                          Fair question. You've tried meditation apps, therapy, breathing exercises. Here's the difference: those treat the <em>thoughts</em>. The Shift + F.I.R.E. Protocol interrupt the <em>mechanism</em> that creates the loop.
+                        </p>
+                      </div>
+
+                      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <p className="font-semibold text-slate-900 mb-2 italic">
+                          "This looks complicated. I'm not good with new technology or systems."
+                        </p>
+                        <p>
+                          This isn't an app with 47 features you'll never use. The Shift is a necklace—you wear it, you breathe through it when needed, done. F.I.R.E. is 4 steps you can learn in 15 minutes. Women in their 70s and 80s use this daily.
+                        </p>
+                      </div>
+
+                      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <p className="font-semibold text-slate-900 mb-2 italic">
+                          "What if people notice I'm using something? I don't want to draw attention."
+                        </p>
+                        <p>
+                          The Shift looks like jewelry. It's whisper-quiet. No one knows unless you tell them. Use it anywhere—meetings, church, family dinners, alone at night.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-amber-50/50 p-6 rounded-lg border-l-4 border-amber-600 mt-8">
+                      <p className="font-semibold text-amber-900 mb-3">
+                        Here's the bottom line:
+                      </p>
+
+                      <p>
+                        You can keep trying the expensive therapists who are solving for different problems. You can keep downloading apps that blame you when they don't work. You can keep telling yourself you'll "just stop overthinking."
+                      </p>
+
+                      <p className="mt-4 font-semibold">
+                        Or you can try the mechanism 50,000+ women are using—with zero risk for 60 days.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ========== TRANSITION TO REVIEWS ========== */}
               {resultData && (
                 <div className="mb-12 max-w-3xl mx-auto text-center">
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                    Here's What You Can Do About It
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+                    Don't Take My Word For It
                   </h2>
-                  <p className="text-lg text-slate-700 leading-relaxed mb-4">
-                    The Shift is the physical tool that interrupts overthinking before it spirals. F.I.R.E. Protocol is the clinical framework that teaches you exactly when and how to use it.
-                  </p>
-                  <p className="text-base text-slate-600 italic">
-                    Together, they're the complete system 50,000+ women use to finally quiet their minds.
+                  <p className="text-lg text-slate-700 leading-relaxed">
+                    Here's what women with your exact pattern are saying after using The Shift + F.I.R.E. Protocol:
                   </p>
                 </div>
               )}

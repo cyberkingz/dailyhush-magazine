@@ -3,6 +3,7 @@ import { CheckCircle, BookOpen, Brain, Lightbulb } from 'lucide-react'
 import ShopifyBuyButton from '../../components/ShopifyBuyButton'
 import { ScarcityProvider, useScarcity } from '../../contexts/ScarcityContext'
 import { TopBar } from '../../components/layout/TopBar'
+import AnnouncementBar from '../../components/AnnouncementBar'
 import type { OverthinkerType } from '../../types/quiz'
 import { ReviewsSection } from '../../components/product/common'
 import { shiftProductReviews } from '../../data/shiftProductReviews'
@@ -573,6 +574,10 @@ function ThankYouPageContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col">
       <TopBar variant="dark" />
+      <AnnouncementBar
+        message={<>Quiz Complete: Your Shift™ Kit $37 (Reg. $67) + Free Guide</>}
+        variant="emerald"
+      />
 
       <div className="flex-1 flex justify-center items-stretch">
         <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1 relative z-10">
@@ -1371,7 +1376,7 @@ function ThankYouPageContent() {
                         },
                         {
                           question: 'Why is it only $37? What\'s the catch?',
-                          answer: "No catch. Here's the math: The Shift Necklace normally sells for $37. The F.I.R.E. Protocol (the complete digital program) normally sells separately for $67. That's $104 total value. You're getting both for $37 because you completed the overthinking quiz—your results are fresh and calibrated, which means you can implement the F.I.R.E. Protocol immediately with accurate self-knowledge. This is a frontend offer. We make money when buyers love it and come back for advanced training (like our $197 Rumination Recovery Intensive). We'd rather get The Shift in your hands at breakeven and earn your trust than charge full price and have you wait another month while rumination steals your sleep.",
+                          answer: "No catch. Here's the honest breakdown: The Shift™ Necklace + Chain normally sells for $67. You're getting it for $37 as an introductory offer. The F.I.R.E. Protocol is my free bonus to you. This is a frontend offer. We make money when buyers love it and come back for advanced training (like our $197 Rumination Recovery Intensive). We'd rather get The Shift in your hands at a fair price and earn your trust than charge full price and have you wait another month while rumination steals your sleep.",
                         },
                         {
                           question: 'How much does rumination cost if I don\'t fix it?',

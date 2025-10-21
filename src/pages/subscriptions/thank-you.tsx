@@ -716,47 +716,28 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== SCARCITY INDICATORS ========== */}
+              {/* ========== COUNTDOWN TIMER ========== */}
               {resultData && (
-                <div className="mb-8 max-w-3xl mx-auto">
+                <div className="mb-8 max-w-2xl mx-auto">
                   <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      {/* Spot Counter */}
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">{spotsRemaining}</span>
+                    <div className="flex flex-col items-center text-center">
+                      <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-3">Quiz-Taker Rate Expires In:</p>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="bg-amber-900 text-white px-4 py-3 rounded-lg font-mono text-2xl font-bold">
+                          48
                         </div>
-                        <div>
-                          <p className="text-sm font-bold text-amber-900 uppercase tracking-wide">Spots Remaining</p>
-                          <p className="text-xs text-amber-700">At quiz-taker rate • Updates every 10 min</p>
+                        <span className="text-amber-900 font-bold text-xl">:</span>
+                        <div className="bg-amber-900 text-white px-4 py-3 rounded-lg font-mono text-2xl font-bold">
+                          00
                         </div>
-                      </div>
-
-                      {/* Countdown Timer */}
-                      <div className="flex items-center gap-3 md:border-l-2 md:border-amber-200 md:pl-6">
-                        <div className="flex flex-col items-center md:items-end">
-                          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">Quiz-Taker Rate Expires In:</p>
-                          <div className="flex items-center gap-2">
-                            <div className="bg-amber-900 text-white px-3 py-2 rounded font-mono text-lg font-bold">
-                              48
-                            </div>
-                            <span className="text-amber-900 font-bold">:</span>
-                            <div className="bg-amber-900 text-white px-3 py-2 rounded font-mono text-lg font-bold">
-                              00
-                            </div>
-                            <span className="text-amber-900 font-bold">:</span>
-                            <div className="bg-amber-900 text-white px-3 py-2 rounded font-mono text-lg font-bold">
-                              00
-                            </div>
-                          </div>
-                          <p className="text-xs text-amber-600 mt-1">Your results stay fresh for 48 hours</p>
+                        <span className="text-amber-900 font-bold text-xl">:</span>
+                        <div className="bg-amber-900 text-white px-4 py-3 rounded-lg font-mono text-2xl font-bold">
+                          00
                         </div>
                       </div>
-                    </div>
+                      <p className="text-xs text-amber-600 mb-4">Your results stay fresh for 48 hours</p>
 
-                    {/* Urgency Message */}
-                    <div className="mt-4 pt-4 border-t border-amber-200">
-                      <p className="text-sm text-amber-900 text-center">
+                      <p className="text-sm text-amber-900 pt-4 border-t border-amber-200 w-full">
                         <strong>Lock in your $30 discount</strong> — This quiz-taker rate won't be available after your results expire
                       </p>
                     </div>

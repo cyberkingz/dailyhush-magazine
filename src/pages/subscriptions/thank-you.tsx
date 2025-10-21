@@ -1372,11 +1372,11 @@ function ThankYouPageContent() {
                         },
                         {
                           question: 'What\'s your guarantee? What if it doesn\'t work for me?',
-                          answer: "60-day money-back guarantee. Use The Shift for two full months. If you don't feel it helps interrupt your rumination spirals, email us for a full refund—no questions, no hassle. You even keep the F.I.R.E. Protocol digital program (we can't 'take back' a PDF you've already read). We can afford this guarantee because 60-65% of chronic ruminators respond to vagus nerve activation techniques in clinical trials. The worst case: you get your money back AND keep a $67 clinical framework. The best case: you finally have a tool that works when your brain won't shut up.",
+                          answer: "60-day money-back guarantee. Use The Shift for two full months. If you don't feel it helps interrupt your rumination spirals, email us for a full refund—no questions, no hassle. You even keep the F.I.R.E. Protocol digital program (we can't 'take back' a PDF you've already read). We can afford this guarantee because 60-65% of chronic ruminators respond to vagus nerve activation techniques in clinical trials. The worst case: you get your money back AND keep the complete F.I.R.E. framework. The best case: you finally have a tool that works when your brain won't shut up.",
                         },
                         {
                           question: 'Why is it only $37? What\'s the catch?',
-                          answer: "No catch. Here's the honest breakdown: The Shift™ Necklace + Chain normally sells for $67. You're getting it for $37 as an introductory offer. The F.I.R.E. Protocol is my free bonus to you. This is a frontend offer. We make money when buyers love it and come back for advanced training (like our $197 Rumination Recovery Intensive). We'd rather get The Shift in your hands at a fair price and earn your trust than charge full price and have you wait another month while rumination steals your sleep.",
+                          answer: "No catch. Here's the honest breakdown: The Shift™ Necklace + Chain normally sells for $67. You're getting it for $37 as an introductory offer. The F.I.R.E. Protocol is my free bonus to you. We'd rather get The Shift in your hands at a fair price and earn your trust than have you wait another month while rumination steals your sleep.",
                         },
                         {
                           question: 'How much does rumination cost if I don\'t fix it?',

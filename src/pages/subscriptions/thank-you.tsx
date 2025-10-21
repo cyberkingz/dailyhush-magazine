@@ -723,6 +723,120 @@ function ThankYouPageContent() {
                 </div>
               )}
 
+              {/* ========== BRIDGE TO OFFER ========== */}
+              {resultData && (
+                <div className="mb-12 max-w-3xl mx-auto text-center">
+                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                    Here's What You Can Do About It
+                  </h2>
+                  <p className="text-lg text-slate-700 leading-relaxed mb-4">
+                    The Shift is the physical tool that interrupts overthinking before it spirals. F.I.R.E. Protocol is the clinical framework that teaches you exactly when and how to use it.
+                  </p>
+                  <p className="text-base text-slate-600 italic">
+                    Together, they're the complete system 50,000+ women use to finally quiet their minds.
+                  </p>
+                </div>
+              )}
+
+              {/* ========== PRODUCT HERO SECTION ========== */}
+              {resultData && (
+                <div id="offer-details" className="mb-16 -mx-4 md:-mx-16">
+                  <div className="px-4 md:px-8">
+                    <ProductHero
+                      productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
+                      tagline="After decades of worrying about everyone else, it's time to quiet your mind"
+                      badge="F.I.R.E. PROTOCOL INCLUDED FREE"
+                      scarcityMessage="Due to order surge, inventory running low"
+                      price={{
+                        current: 37,
+                        original: 67,
+                      }}
+                      images={shiftVariantImages['rose-gold']}
+                      tabs={productDetailsTabs}
+                      variantOptions={variantOptions}
+                      variantImages={shiftVariantImages}
+                      description={
+                        <div className="border-t border-gray-200 pt-6">
+                          <h4 className="text-lg font-semibold text-gray-900 mb-4">Complete System Value:</h4>
+                          <ul className="space-y-3 mb-4">
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-700">The Shift™ Necklace + Chain</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-400 line-through text-sm">$67</span>
+                                <span className="font-semibold text-gray-900">$37</span>
+                              </div>
+                            </li>
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-700">F.I.R.E. Protocol</span>
+                              </div>
+                              <span className="font-semibold text-emerald-600">Free Bonus</span>
+                            </li>
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-700">Guides + Resources</span>
+                              </div>
+                              <span className="font-semibold text-emerald-600">Free Bonus</span>
+                            </li>
+                          </ul>
+                          <div className="border-t border-gray-200 pt-4 mb-6">
+                            <div className="flex justify-between items-baseline mb-3">
+                              <span className="text-gray-700">The Shift™ Necklace:</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-400 line-through">$67</span>
+                                <span className="text-2xl font-bold text-emerald-700">$37</span>
+                              </div>
+                            </div>
+                            <div className="text-sm text-emerald-600 font-semibold">
+                              Quiz-Taker Rate (Save $30)
+                            </div>
+                          </div>
+                          <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
+                            <p className="text-base text-gray-700 italic leading-relaxed mb-3">
+                              "You're getting the research-backed F.I.R.E. Protocol as my gift to you. The Shift gives you something physical to reach for while F.I.R.E. teaches you exactly when and how to use it for maximum relief."
+                            </p>
+                            <p className="text-sm text-gray-600">Anna, Founder</p>
+                          </div>
+                        </div>
+                      }
+                      guarantees={[
+                        '60-Day Money-Back Guarantee',
+                        'Keep F.I.R.E. even if returned',
+                        'Free shipping',
+                      ]}
+                      reviewCount={379}
+                      reviewRating={4.8}
+                      shopifyProductId="10770901434671"
+                      shopifyDomain="t7vyee-kc.myshopify.com"
+                      shopifyStorefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                    />
+                  </div>
+
+                  {/* Sentinel for sticky bar - Shows sticky bar when user scrolls past the offer card */}
+                  <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
+                </div>
+              )}
+
+              {/* ========== WANT TO UNDERSTAND THE SCIENCE? ========== */}
+              <div className="mb-12 max-w-3xl mx-auto text-center">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+                  Want to understand the science behind it?
+                </h2>
+                <p className="text-base text-slate-600 mb-8">
+                  Click any section below to dive deeper into the clinical research and why this works when everything else failed.
+                </p>
+              </div>
 
               {/* ========== WHY YOUR SMARTEST THOUGHTS KEEP YOU PARALYZED (SHORTENED) ========== */}
               <div className="mb-12">
@@ -958,96 +1072,6 @@ function ThankYouPageContent() {
                       This is your tribe. We're here with you.
                     </p>
                   </div>
-                </div>
-              )}
-
-              {/* ========== PRODUCT HERO SECTION ========== */}
-              {resultData && (
-                <div id="offer-details" className="mb-16 -mx-4 md:-mx-16">
-                  <div className="px-4 md:px-8">
-                    <ProductHero
-                      productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
-                      tagline="After decades of worrying about everyone else, it's time to quiet your mind"
-                      badge="F.I.R.E. PROTOCOL INCLUDED FREE"
-                      scarcityMessage="Due to order surge, inventory running low"
-                      price={{
-                        current: 37,
-                        original: 67,
-                      }}
-                      images={shiftVariantImages['rose-gold']}
-                      tabs={productDetailsTabs}
-                      variantOptions={variantOptions}
-                      variantImages={shiftVariantImages}
-                      description={
-                        <div className="border-t border-gray-200 pt-6">
-                          <h4 className="text-lg font-semibold text-gray-900 mb-4">Complete System Value:</h4>
-                          <ul className="space-y-3 mb-4">
-                            <li className="flex justify-between items-start gap-3">
-                              <div className="flex items-start gap-2 flex-1">
-                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                                <span className="text-gray-700">The Shift™ Necklace + Chain</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-400 line-through text-sm">$67</span>
-                                <span className="font-semibold text-gray-900">$37</span>
-                              </div>
-                            </li>
-                            <li className="flex justify-between items-start gap-3">
-                              <div className="flex items-start gap-2 flex-1">
-                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                                <span className="text-gray-700">F.I.R.E. Protocol</span>
-                              </div>
-                              <span className="font-semibold text-emerald-600">Free Bonus</span>
-                            </li>
-                            <li className="flex justify-between items-start gap-3">
-                              <div className="flex items-start gap-2 flex-1">
-                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                                <span className="text-gray-700">Guides + Resources</span>
-                              </div>
-                              <span className="font-semibold text-emerald-600">Free Bonus</span>
-                            </li>
-                          </ul>
-                          <div className="border-t border-gray-200 pt-4 mb-6">
-                            <div className="flex justify-between items-baseline mb-3">
-                              <span className="text-gray-700">The Shift™ Necklace:</span>
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-400 line-through">$67</span>
-                                <span className="text-2xl font-bold text-emerald-700">$37</span>
-                              </div>
-                            </div>
-                            <div className="text-sm text-emerald-600 font-semibold">
-                              Quiz-Taker Rate (Save $30)
-                            </div>
-                          </div>
-                          <div className="bg-amber-50 border-l-4 border-amber-400 p-5 rounded">
-                            <p className="text-base text-gray-700 italic leading-relaxed mb-3">
-                              "You're getting the research-backed F.I.R.E. Protocol as my gift to you. The Shift gives you something physical to reach for while F.I.R.E. teaches you exactly when and how to use it for maximum relief."
-                            </p>
-                            <p className="text-sm text-gray-600">Anna, Founder</p>
-                          </div>
-                        </div>
-                      }
-                      guarantees={[
-                        '60-Day Money-Back Guarantee',
-                        'Keep F.I.R.E. even if returned',
-                        'Free shipping',
-                      ]}
-                      reviewCount={379}
-                      reviewRating={4.8}
-                      shopifyProductId="10770901434671"
-                      shopifyDomain="t7vyee-kc.myshopify.com"
-                      shopifyStorefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
-                    />
-                  </div>
-
-                  {/* Sentinel for sticky bar - Shows sticky bar when user scrolls past the offer card */}
-                  <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
                 </div>
               )}
 

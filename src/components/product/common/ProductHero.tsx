@@ -93,6 +93,21 @@ export function ProductHero({
                 alt={`${productName} - View ${selectedImage + 1}`}
                 className="w-full h-full object-cover"
               />
+
+              {/* F.I.R.E. Protocol Badge - Bottom Right */}
+              <div className="absolute bottom-3 right-3 bg-white rounded-xl shadow-lg p-2.5 flex items-center gap-2 max-w-[220px]">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-emerald-100 flex-shrink-0">
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/ChatGPT_Image_Oct_21_2025_03_11_32_PM.png?v=1761045148"
+                    alt="F.I.R.E. Protocol"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs font-bold text-gray-900 leading-tight">F.I.R.E. Protocol Included</span>
+                  <span className="text-[10px] text-emerald-700 font-medium leading-tight">Trusted by 50,000+ women</span>
+                </div>
+              </div>
             </div>
 
             {/* Thumbnail Gallery - Horizontal Slider */}

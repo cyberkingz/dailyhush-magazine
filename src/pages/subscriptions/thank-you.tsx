@@ -967,7 +967,7 @@ function ThankYouPageContent() {
                       scarcityMessage="Due to order surge, inventory running low"
                       price={{
                         current: 37,
-                        original: 49,
+                        original: 67,
                       }}
                       images={shiftVariantImages['rose-gold']}
                       tabs={productDetailsTabs}

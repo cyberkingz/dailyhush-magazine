@@ -405,7 +405,7 @@ function TheShiftPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <AnnouncementBar
-        message={<><strong>Quiz-Taker Offer:</strong> Get The Shift™ Complete Kit ($168 value) for just $37. F.I.R.E. Protocol included FREE</>}
+        message={<>Quiz Complete: Your Shift™ Kit $37 (Reg. $67) + Free Guide</>}
         variant="emerald"
       />
       <TopBar />
@@ -419,7 +419,7 @@ function TheShiftPage() {
         scarcityMessage="Due to order surge, inventory running low"
         price={{
           current: 37,
-          original: 49,
+          original: 67,
         }}
         images={productImages}
         tabs={productDetailsTabs}

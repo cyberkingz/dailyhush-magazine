@@ -17,6 +17,7 @@ import {
   ShiftHighlights,
 } from '@/components/product/shift'
 import { shiftProductReviews } from '@/data/shiftProductReviews'
+import { useCountdown } from '@/hooks/useCountdown'
 
 function TheShiftPage() {
   const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
@@ -24,6 +25,35 @@ function TheShiftPage() {
   const [isMounted, setIsMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const stickySentinelRef = useRef<HTMLDivElement | null>(null)
+
+  // Initialize countdown target date with safe default
+  const [countdownTarget, setCountdownTarget] = useState<Date>(() => {
+    // Default to 48 hours from now (will be updated from localStorage)
+    return new Date(Date.now() + 48 * 60 * 60 * 1000)
+  })
+
+  // Load countdown target from localStorage after mount
+  useEffect(() => {
+    const COUNTDOWN_KEY = 'quiz_countdown_target'
+
+    // Check if we have a stored target date
+    const stored = localStorage.getItem(COUNTDOWN_KEY)
+    if (stored) {
+      const targetDate = new Date(stored)
+      // If the stored date is in the future, use it
+      if (targetDate.getTime() > Date.now()) {
+        setCountdownTarget(targetDate)
+        return
+      }
+    }
+
+    // Create new target date (48 hours from now)
+    const target = new Date(Date.now() + 48 * 60 * 60 * 1000)
+    localStorage.setItem(COUNTDOWN_KEY, target.toISOString())
+    setCountdownTarget(target)
+  }, [])
+
+  const countdown = useCountdown({ targetDate: countdownTarget })
 
   // Track mount state and mobile viewport to avoid hydration issues
   useEffect(() => {
@@ -415,7 +445,7 @@ function TheShiftPage() {
         <ProductHero
         productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
         tagline="After decades of worrying about everyone else, it's time to quiet your mind"
-        badge="F.I.R.E. PROTOCOL INCLUDED FREE"
+        badge={`SPECIAL RATE EXPIRES IN: ${countdown}`}
         scarcityMessage="Due to order surge, inventory running low"
         price={{
           current: 37,

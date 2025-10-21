@@ -615,11 +615,11 @@ function ThankYouPageContent() {
             <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
 
               {/* ========== NEW MECHANISM-FOCUSED OPENING ========== */}
-              <div className="mb-8 text-center max-w-3xl mx-auto">
+              <div className="mb-8">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight">
                   Your Overthinking Results Are Ready — And You're Not Alone
                 </h1>
-                <div className="max-w-2xl mx-auto space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
+                <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p>
                     <strong>850+ women scored the same pattern as you.</strong> The good news? There's a research-backed tool that interrupts rumination spirals in 90 seconds—without meditation apps or years of therapy.
                   </p>
@@ -686,9 +686,9 @@ function ThankYouPageContent() {
               {resultData && (
                 <div className="mb-12 max-w-5xl mx-auto">
                   {/* Header */}
-                  <div className="mb-8">
+                  <div className="mb-8 text-center">
                     <h3 className="text-2xl font-bold text-slate-900 mb-2">Customer Reviews</h3>
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center justify-center gap-2 mb-1">
                       <span className="text-3xl font-bold text-slate-900">4.80</span>
                       <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, i) => (

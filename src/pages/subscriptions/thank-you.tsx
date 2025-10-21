@@ -573,11 +573,11 @@ function ThankYouPageContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50/80 via-emerald-50/50 to-amber-50/30 flex flex-col">
-      <TopBar variant="dark" />
       <AnnouncementBar
         message={<>Quiz Complete: Your Shift™ Kit $37 (Reg. $67) + Free Guide</>}
         variant="emerald"
       />
+      <TopBar />
 
       <div className="flex-1 flex justify-center items-stretch">
         <div className="w-full max-w-5xl px-0 md:px-4 flex flex-1 relative z-10">

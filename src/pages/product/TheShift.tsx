@@ -261,7 +261,7 @@ function TheShiftPage() {
     },
     {
       question: 'Why is it only $37? What\'s the catch?',
-      answer: "No catch. Here's the math: The Shift Necklace normally sells for $37. The F.I.R.E. Protocol (the complete digital program) normally sells separately for $67. That's $104 total value. You're getting both for $37 because you completed the overthinking quiz. Your results are fresh and calibrated, which means you can implement the F.I.R.E. Protocol immediately with accurate self-knowledge. This is a frontend offer. We make money when buyers love it and come back for advanced training (like our $197 Rumination Recovery Intensive). We'd rather get The Shift in your hands at breakeven and earn your trust than charge full price and have you wait another month while rumination steals your sleep.",
+      answer: "No catch. Here's the math: The Shift Necklace + Chain normally sells for $67. The F.I.R.E. Protocol (the complete digital program) normally sells separately for $67. The Guides + Resources are valued at $34. That's $168 total value. You're getting everything for $37 because you completed the overthinking quiz. Your results are fresh and calibrated, which means you can implement the F.I.R.E. Protocol immediately with accurate self-knowledge. The clinical timing matters: your recent overthinking patterns are still top-of-mind, making the Spiral Trigger Identification Workbook most effective right now. We'd rather get The Shift in your hands when it can help most, not make you wait while rumination steals more of your sleep.",
     },
     {
       question: 'How much does rumination cost if I don\'t fix it?',
@@ -340,10 +340,6 @@ function TheShiftPage() {
           <li className="flex items-start gap-3">
             <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
             <span className="text-gray-700">Durable so you can wear it all the time</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="text-emerald-500 flex-shrink-0 mt-1">•</span>
-            <span className="text-gray-700">Hand to mouth replacement to quit smoking and vaping</span>
           </li>
         </ul>
       ),

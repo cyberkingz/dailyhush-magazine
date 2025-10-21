@@ -584,111 +584,25 @@ function ThankYouPageContent() {
           <div className="bg-white/90 backdrop-blur-xl flex-1 flex flex-col overflow-hidden pb-20 sm:pb-0 shadow-[0_16px_48px_-8px_rgba(16,185,129,0.15)]">
             <div className="flex-1 max-w-4xl w-full mx-auto px-4 md:px-16 py-12 md:py-16 pb-16 md:pb-20">
 
-              {/* ========== EMOTIONAL OPENING ========== */}
-              <div className="mb-12">
+              {/* ========== NEW MECHANISM-FOCUSED OPENING ========== */}
+              <div className="mb-8 text-center max-w-3xl mx-auto">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                  "I Should've Known Better." — 100 Women Wrote That. You Just Thought It.
+                  Your Overthinking Results Are Ready — And You're Not Alone
                 </h1>
-                <div className="max-w-3xl space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
-                  <p><strong>I know what just happened.</strong></p>
+                <div className="max-w-2xl mx-auto space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
                   <p>
-                    You sat there answering those questions — some of them uncomfortably accurate — and with each click, that familiar voice got louder: <em>See? This is proof I'm broken.</em>
-                  </p>
-                  <p className="italic text-slate-900">
-                    "I should've known better."
+                    <strong>850+ women scored the same pattern as you.</strong> The good news? There's a research-backed tool that interrupts rumination spirals in 90 seconds—without meditation apps or years of therapy.
                   </p>
                   <p>
-                    You've said that 47 times this month. And every time, you think you're analyzing — figuring out what went wrong. But you're not.
+                    The Shift™ + F.I.R.E. Protocol has helped 50,000+ women finally quiet their minds. It works when everything else failed because it targets the <strong>neural mechanism</strong> driving the loop, not just the thoughts themselves.
                   </p>
-                  <p>
-                    <strong>You're punishing. That's not overthinking. That's shame wearing an anxiety mask.</strong>
-                  </p>
-                  <p>
-                    The reason nothing has worked yet — not therapy, not meditation apps, not the breathing exercises your sister sent you — isn't because you're broken.
-                  </p>
-                  <p>
-                    <strong>It's because you've been treating the wrong problem.</strong>
-                  </p>
-                  <p>
-                    When you replay that conversation from Tuesday for the 14th time, you're not "processing." You're performing a ritual. A self-punishment ritual your nervous system now expects. That's why journaling didn't stop it. That's why "letting it go" feels impossible.
-                  </p>
-                  <p>
-                    <strong>Shame operates pre-consciously. It hijacks your body in the first ~10 seconds before your brain forms the thought.</strong> By the time you're aware you're ruminating, your nervous system has already decided you're unsafe. You're already trapped.
-                  </p>
-                  <p>
-                    That's what the quiz revealed. Not that you're anxious. That you're shame-locked. And shame doesn't respond to thought-challenging or positive affirmations. It responds to body-based interruption.
-                  </p>
-                  <p className="text-sm italic text-slate-600">
-                    (After 8 years of therapy, self-help, and 3 a.m. spirals — this is what finally worked.)
+                  <p className="text-base text-slate-600">
+                    First, here's what the clinical research reveals about your specific pattern:
                   </p>
                 </div>
               </div>
 
-              {/* ========== STORY: HOW I FIGURED THIS OUT ========== */}
-              <div className="mb-16 max-w-3xl mx-auto">
-                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
-                  Let me tell you how I figured this out.
-                </h2>
-                <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
-                  <p>
-                    For 8 years, I was in therapy. Good therapy. And it helped — sort of. But every night, my brain would still hijack me. That email I sent—did I sound stupid? The thing I said at dinner—did they notice I was faking it? I'd lie there replaying until my alarm went off.
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    The breakthrough happened at 3 a.m.:
-                  </p>
-                  <p>
-                    After a brutal spiral about a text message, I gave up on sleep and started googling. That's when I found Dr. Edward Watkins' research from University of Exeter on "Rumination-Focused CBT." For the first time in 8 years, I saw my exact brain pattern described in clinical terms.
-                  </p>
-                  <p>
-                    <strong>Here's what blew my mind:</strong> Traditional CBT teaches you to challenge negative thoughts. But rumination isn't about <em>what</em> you're thinking — it's about <em>how</em> you're thinking. My therapist had been trying to fix my thoughts. Watkins was teaching me to interrupt the loop itself—to catch the spiral in the first ~10 seconds before it locked in.
-                  </p>
-                  <p>
-                    That night, I read everything. RF-CBT. Metacognitive Therapy from University of Manchester. Polyvagal Theory. Then I did something that changed everything: <strong>I looked at the quiz data.</strong>
-                  </p>
-                  <p>
-                    850+ beta testers had written three phrases: <em>"I should've known better." "Afraid of doing it wrong." "Can't stop replaying."</em>
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    That's when it hit me. This wasn't anxiety about the future. This was shame about being seen.
-                  </p>
-                  <p>
-                    Not "What if something goes wrong?" but "Did they see I'm inadequate?" I was replaying how I <strong>came across</strong>, what they <strong>thought of me</strong>, whether they <strong>noticed I was faking it</strong>.
-                  </p>
-                  <p>
-                    <strong>Shame as an operating system.</strong> A nervous system pattern that hijacks your body before your brain even knows it's happening. That's why CBT alone wasn't enough. Shame operates pre-consciously—in the first ~10 seconds before thought even forms.
-                  </p>
-                  <p>
-                    RF-CBT had the interruption techniques. Metacognitive Therapy had the relationship reframe. Polyvagal Theory had the body regulation. But <strong>none of them explicitly addressed shame as the driver.</strong> What was missing was the shame-specific lens—the recognition that you're not analyzing, you're punishing.
-                  </p>
-                  <p>
-                    So I translated those clinical protocols into something I could actually use when my brain was spinning. Four steps. Simple enough to remember when dysregulated. I called it F.I.R.E.
-                  </p>
-                  <p>
-                    <strong>But here's what I learned after 850+ women beta-tested F.I.R.E.:</strong> When you're dysregulated at 2am, your prefrontal cortex is offline. You can't remember 4 steps. You need something you WEAR—something on your body you can grab mid-panic without thinking.
-                  </p>
-                  <p>
-                    That's why I created The Shift. The same vagal nerve regulation from F.I.R.E.'s "Interrupt" step—built into a physical tool you can't forget.
-                  </p>
-
-                  <p className="text-base text-slate-700 leading-relaxed mt-6">
-                    <strong>About Anna:</strong> I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. But my real credential? <strong>I scored 9/10 on this quiz.</strong> F.I.R.E. was the Protocol. The Shift is the tool. Together, they've helped 50,000+ women interrupt their spirals.
-                  </p>
-                </div>
-              </div>
-
-              {/* ========== TRANSITION BEFORE RESULTS ========== */}
-              {resultData && quizScore !== null && (
-                <div className="mb-8 text-center max-w-2xl mx-auto">
-                  <p className="text-lg text-slate-700 leading-relaxed mb-4">
-                    Here's what the research reveals about your specific pattern:
-                  </p>
-                  <p className="text-base text-slate-600 italic">
-                    (This isn't a label. It's a map showing where you are and how to move forward.)
-                  </p>
-                </div>
-              )}
-
-              {/* ========== SECTION 1: RESULT VALIDATION (5%) ========== */}
+              {/* ========== SECTION 1: QUIZ RESULTS (MOVED UP) ========== */}
               {resultData && quizScore !== null && (
                 <div className="mb-20 bg-amber-50/30 pl-6 md:pl-8 py-6 rounded-lg">
                   <div className="max-w-3xl">
@@ -824,6 +738,55 @@ function ThankYouPageContent() {
                   </div>
                 </div>
               )}
+
+              {/* ========== FOUNDER STORY (MOVED AFTER OFFER) ========== */}
+              <div className="mb-16 max-w-3xl mx-auto">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                  How I Finally Figured This Out (After 8 Years of Therapy)
+                </h2>
+                <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
+                  <p>
+                    For 8 years, I was in therapy. Good therapy. And it helped — sort of. But every night, my brain would still hijack me. That email I sent—did I sound stupid? The thing I said at dinner—did they notice I was faking it? I'd lie there replaying until my alarm went off.
+                  </p>
+                  <p className="font-semibold text-slate-900">
+                    The breakthrough happened at 3 a.m.:
+                  </p>
+                  <p>
+                    After a brutal spiral about a text message, I gave up on sleep and started googling. That's when I found Dr. Edward Watkins' research from University of Exeter on "Rumination-Focused CBT." For the first time in 8 years, I saw my exact brain pattern described in clinical terms.
+                  </p>
+                  <p>
+                    <strong>Here's what blew my mind:</strong> Traditional CBT teaches you to challenge negative thoughts. But rumination isn't about <em>what</em> you're thinking — it's about <em>how</em> you're thinking. My therapist had been trying to fix my thoughts. Watkins was teaching me to interrupt the loop itself—to catch the spiral in the first ~10 seconds before it locked in.
+                  </p>
+                  <p>
+                    That night, I read everything. RF-CBT. Metacognitive Therapy from University of Manchester. Polyvagal Theory. Then I did something that changed everything: <strong>I looked at the quiz data.</strong>
+                  </p>
+                  <p>
+                    850+ beta testers had written three phrases: <em>"I should've known better." "Afraid of doing it wrong." "Can't stop replaying."</em>
+                  </p>
+                  <p className="font-semibold text-slate-900">
+                    That's when it hit me. This wasn't anxiety about the future. This was shame about being seen.
+                  </p>
+                  <p>
+                    Not "What if something goes wrong?" but "Did they see I'm inadequate?" I was replaying how I <strong>came across</strong>, what they <strong>thought of me</strong>, whether they <strong>noticed I was faking it</strong>.
+                  </p>
+                  <p>
+                    <strong>Shame as an operating system.</strong> A nervous system pattern that hijacks your body before your brain even knows it's happening. That's why CBT alone wasn't enough. Shame operates pre-consciously—in the first ~10 seconds before thought even forms.
+                  </p>
+                  <p>
+                    So I translated those clinical protocols into something I could actually use when my brain was spinning. Four steps. Simple enough to remember when dysregulated. I called it F.I.R.E.
+                  </p>
+                  <p>
+                    <strong>But here's what I learned after 850+ women beta-tested F.I.R.E.:</strong> When you're dysregulated at 2am, your prefrontal cortex is offline. You can't remember 4 steps. You need something you WEAR—something on your body you can grab mid-panic without thinking.
+                  </p>
+                  <p>
+                    That's why I created The Shift. The same vagal nerve regulation from F.I.R.E.'s "Interrupt" step—built into a physical tool you can't forget.
+                  </p>
+
+                  <p className="text-base text-slate-700 leading-relaxed mt-6 bg-slate-50 p-6 rounded-lg">
+                    <strong>About Anna:</strong> I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. But my real credential? <strong>I scored 9/10 on this quiz.</strong> F.I.R.E. was the Protocol. The Shift is the tool. Together, they've helped 50,000+ women interrupt their spirals.
+                  </p>
+                </div>
+              </div>
 
               {/* ========== WANT TO UNDERSTAND THE SCIENCE? ========== */}
               <div className="mb-12 max-w-3xl mx-auto text-center">

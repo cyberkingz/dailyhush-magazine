@@ -652,135 +652,148 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== TRUSTPILOT-STYLE REVIEWS ========== */}
+              {/* ========== CUSTOMER REVIEWS ========== */}
               {resultData && (
-                <div className="mb-12 max-w-4xl mx-auto">
-                  {/* Overall Rating Header */}
-                  <div className="text-center mb-8">
-                    <div className="inline-flex items-center gap-2 bg-[#00B67A] text-white px-6 py-3 rounded-lg mb-2">
-                      <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                      </svg>
-                      <span className="font-bold text-2xl">4.8</span>
-                      <span className="text-sm opacity-90">out of 5</span>
-                    </div>
-                    <p className="text-sm text-slate-600">Based on 379 verified reviews</p>
-                  </div>
-
-                  <div className="grid md:grid-cols-3 gap-6">
-                    {/* Review 1 */}
-                    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-                      {/* Star Rating */}
-                      <div className="flex items-center gap-1 mb-3">
+                <div className="mb-12 max-w-5xl mx-auto">
+                  {/* Header */}
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Customer Reviews</h3>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-3xl font-bold text-slate-900">4.80</span>
+                      <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                          </svg>
+                          <span key={i} className="text-amber-400 text-xl">★</span>
                         ))}
                       </div>
+                    </div>
+                    <p className="text-sm text-slate-600">Based on 379 reviews</p>
+                  </div>
 
-                      {/* Review Title */}
-                      <h4 className="font-bold text-slate-900 mb-2">Finally sleeping through the night</h4>
-
-                      {/* Review Text */}
-                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                        I scored 8/10 on the quiz. Used The Shift 4x daily for 2 weeks and finally slept through the night without replaying that dinner conversation. Not every time, but enough that I actually trust it now.
-                      </p>
-
-                      {/* Reviewer Info */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-                            <span className="text-emerald-700 font-semibold text-xs">SM</span>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-slate-900">Sarah M.</p>
-                            <p className="text-xs text-slate-500">3 months ago</p>
-                          </div>
+                  {/* Reviews List */}
+                  <div className="space-y-6">
+                    {/* Review 1 */}
+                    <div className="border-b border-slate-200 pb-6">
+                      <div className="flex items-start gap-4">
+                        {/* Avatar */}
+                        <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-emerald-700 font-bold">SM</span>
                         </div>
-                        <div className="flex items-center gap-1 text-[#00B67A]">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-xs font-medium">Verified</span>
+
+                        {/* Review Content */}
+                        <div className="flex-1">
+                          {/* Reviewer Info */}
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">Verified Customer</span>
+                          </div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <p className="font-semibold text-slate-900">Sarah M.</p>
+                            <span className="text-slate-400">•</span>
+                            <p className="text-sm text-slate-600">Portland, OR</p>
+                          </div>
+
+                          {/* Stars */}
+                          <div className="flex items-center gap-0.5 mb-3">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className="text-amber-400">★</span>
+                            ))}
+                          </div>
+
+                          {/* Product Variant */}
+                          <p className="text-xs text-slate-500 mb-3">Classic Shift Rose Gold / Luxe Box Chain</p>
+
+                          {/* Review Text */}
+                          <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                            I scored 8/10 on the overthinking quiz. Been worrying about my husband's health for months now - his blood pressure, his cholesterol, whether he's hiding symptoms from me. Wore this for about a week before I really understood how to use it properly. Now I use it in the evening when my mind starts racing about what the doctor said at his last appointment. Takes a minute or two and I can feel myself calming down. The rose gold is pretty, goes with everything I own.
+                          </p>
+
+                          {/* Review Actions */}
+                          <div className="flex items-center gap-4 text-xs">
+                            <p className="text-slate-500">12 people found this review helpful.</p>
+                            <button className="text-slate-600 hover:text-slate-900 font-medium">Yes</button>
+                            <button className="text-slate-600 hover:text-slate-900">Report</button>
+                            <button className="text-slate-600 hover:text-slate-900">Share</button>
+                            <span className="text-slate-400 ml-auto">2 weeks ago</span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Review 2 */}
-                    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-                      {/* Star Rating */}
-                      <div className="flex items-center gap-1 mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                          </svg>
-                        ))}
-                      </div>
-
-                      {/* Review Title */}
-                      <h4 className="font-bold text-slate-900 mb-2">My therapist noticed the difference</h4>
-
-                      {/* Review Text */}
-                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                        Quiz said I was a 'Gentle Analyzer' (6/10). The Shift helped me catch spirals BEFORE they took 3 hours. I wear it every day. My therapist noticed I'm actually using breathing techniques now instead of just forgetting when I panic.
-                      </p>
-
-                      {/* Reviewer Info */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
-                            <span className="text-amber-700 font-semibold text-xs">LK</span>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-slate-900">Linda K.</p>
-                            <p className="text-xs text-slate-500">5 months ago</p>
-                          </div>
+                    <div className="border-b border-slate-200 pb-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-blue-700 font-bold">LK</span>
                         </div>
-                        <div className="flex items-center gap-1 text-[#00B67A]">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-xs font-medium">Verified</span>
+
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">Verified Customer</span>
+                          </div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <p className="font-semibold text-slate-900">Linda K.</p>
+                            <span className="text-slate-400">•</span>
+                            <p className="text-sm text-slate-600">Austin, TX</p>
+                          </div>
+
+                          <div className="flex items-center gap-0.5 mb-3">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className="text-amber-400">★</span>
+                            ))}
+                          </div>
+
+                          <p className="text-xs text-slate-500 mb-3">Classic Shift Matte Slate / Luxe Box Chain</p>
+
+                          <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                            Quiz called me a "Gentle Analyzer" (6/10). This works but not instantly. Took me several days to get the breathing pattern right. I tend to imagine the worst about everything - my son's job situation, my husband's blood pressure, whether I upset my sister in that conversation last week. This does help interrupt those thoughts more than it used to. I wish the chain came a bit longer because I'm tall and it sits higher than I'd prefer. But overall it's helping.
+                          </p>
+
+                          <div className="flex items-center gap-4 text-xs">
+                            <p className="text-slate-500">8 people found this review helpful.</p>
+                            <button className="text-slate-600 hover:text-slate-900 font-medium">Yes</button>
+                            <button className="text-slate-600 hover:text-slate-900">Report</button>
+                            <button className="text-slate-600 hover:text-slate-900">Share</button>
+                            <span className="text-slate-400 ml-auto">5 days ago</span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Review 3 */}
-                    <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-                      {/* Star Rating */}
-                      <div className="flex items-center gap-1 mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                          </svg>
-                        ))}
-                      </div>
-
-                      {/* Review Title */}
-                      <h4 className="font-bold text-slate-900 mb-2">First thing that actually worked</h4>
-
-                      {/* Review Text */}
-                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
-                        I maxed out the quiz (10/10). I've tried therapy, meds, meditation apps—this is the first thing that worked in 90 seconds like they said. Grabbed it at 2am during a spiral about a text I sent. Actually interrupted the loop.
-                      </p>
-
-                      {/* Reviewer Info */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-                            <span className="text-purple-700 font-semibold text-xs">JR</span>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-slate-900">Jennifer R.</p>
-                            <p className="text-xs text-slate-500">2 months ago</p>
-                          </div>
+                    <div className="border-b border-slate-200 pb-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-purple-700 font-bold">JR</span>
                         </div>
-                        <div className="flex items-center gap-1 text-[#00B67A]">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-xs font-medium">Verified</span>
+
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">Verified Customer</span>
+                          </div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <p className="font-semibold text-slate-900">Jennifer R.</p>
+                            <span className="text-slate-400">•</span>
+                            <p className="text-sm text-slate-600">Seattle, WA</p>
+                          </div>
+
+                          <div className="flex items-center gap-0.5 mb-3">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className="text-amber-400">★</span>
+                            ))}
+                          </div>
+
+                          <p className="text-xs text-slate-500 mb-3">Classic Shift Gold / Luxe Box Chain</p>
+
+                          <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                            I maxed out the quiz (10/10). I'm 58 and worry about everything. Did I say the wrong thing to my daughter-in-law? Should I have kept my mouth shut about their parenting? What if my husband's cholesterol numbers mean something serious? This has been helpful when I start getting into my head about these things. It's not a miracle cure but it helps me reset. I used it before a difficult conversation with my son last week and it made a genuine difference in how I handled myself.
+                          </p>
+
+                          <div className="flex items-center gap-4 text-xs">
+                            <p className="text-slate-500">15 people found this review helpful.</p>
+                            <button className="text-slate-600 hover:text-slate-900 font-medium">Yes</button>
+                            <button className="text-slate-600 hover:text-slate-900">Report</button>
+                            <button className="text-slate-600 hover:text-slate-900">Share</button>
+                            <span className="text-slate-400 ml-auto">1 week ago</span>
+                          </div>
                         </div>
                       </div>
                     </div>

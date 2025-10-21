@@ -739,10 +739,30 @@ function ThankYouPageContent() {
                       That's why I created The Shift. The same vagal nerve regulation from F.I.R.E.'s "Interrupt" step—built into a physical tool you can't forget.
                     </p>
                     <p>
-                      Designed by a leading psychotherapist, this anxiety relief necklace slows your exhale, calming the nervous system and reducing stress within seconds. It helps build a mindful breathing habit for long-term relaxation.
+                      A simple breathing tool that activates your body's built-in calm-down signal—the same vagus nerve regulation from F.I.R.E.'s "Interrupt" step.
                     </p>
                     <p className="italic text-slate-600 mt-4">
                       (I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. Over 50,000 women have taken our quiz. 5,000+ now use The Shift + F.I.R.E. daily to interrupt their spirals—you'll see their 1,800+ verified reviews below.)
+                    </p>
+
+                    <p className="mt-6">
+                      <strong>Here's how it works:</strong>
+                    </p>
+
+                    <p>
+                      You breathe in through your nose, then exhale slowly through the small opening in the necklace. That tiny opening is precisely designed to extend your exhale to about 10 seconds—which is the exact breath length that activates your vagus nerve.
+                    </p>
+
+                    <p>
+                      Your vagus nerve is like a direct hotline to your nervous system. When you do that extended exhale, it sends a signal: "We're safe. Stand down." Your fight-or-flight response literally downregulates. The anxiety spiral stops.
+                    </p>
+
+                    <p>
+                      Three breaths—about 90 seconds—and your body shifts from "threat mode" to "I can handle this."
+                    </p>
+
+                    <p>
+                      It's the same technique Anna uses in F.I.R.E., except you don't have to remember the steps. The necklace does the hard part for you—it just makes your exhale the right length.
                     </p>
 
                     {/* Bridge to CEO framework */}

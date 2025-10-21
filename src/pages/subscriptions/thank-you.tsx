@@ -652,6 +652,118 @@ function ThankYouPageContent() {
                 </div>
               )}
 
+              {/* ========== QUIZ-SPECIFIC TESTIMONIALS ========== */}
+              {resultData && (
+                <div className="mb-12 max-w-4xl mx-auto">
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {/* Testimonial 1 - Chronic Overthinker */}
+                    <div className="bg-white border border-emerald-100 rounded-xl p-6 shadow-sm">
+                      <div className="flex items-start gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-emerald-700 font-bold text-sm">8/10</span>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Chronic Overthinker</p>
+                          <p className="text-sm text-slate-600 mt-0.5">Sarah M.</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-slate-700 leading-relaxed italic">
+                        "I scored 8/10 on the quiz. Used The Shift 4x daily for 2 weeks and finally slept through the night without replaying that dinner conversation. Not every time, but enough that I actually trust it now."
+                      </p>
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <p className="text-xs text-slate-500">Verified Purchase • 3 months ago</p>
+                      </div>
+                    </div>
+
+                    {/* Testimonial 2 - Gentle Analyzer */}
+                    <div className="bg-white border border-amber-100 rounded-xl p-6 shadow-sm">
+                      <div className="flex items-start gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-amber-700 font-bold text-sm">6/10</span>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide">Gentle Analyzer</p>
+                          <p className="text-sm text-slate-600 mt-0.5">Linda K.</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-slate-700 leading-relaxed italic">
+                        "Quiz said I was a 'Gentle Analyzer' (6/10). The Shift helped me catch spirals BEFORE they took 3 hours. I wear it every day. My therapist noticed I'm actually using breathing techniques now instead of just forgetting when I panic."
+                      </p>
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <p className="text-xs text-slate-500">Verified Purchase • 5 months ago</p>
+                      </div>
+                    </div>
+
+                    {/* Testimonial 3 - Overthinkaholic */}
+                    <div className="bg-white border border-red-100 rounded-xl p-6 shadow-sm">
+                      <div className="flex items-start gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-red-700 font-bold text-sm">10/10</span>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide">Overthinkaholic</p>
+                          <p className="text-sm text-slate-600 mt-0.5">Jennifer R.</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-slate-700 leading-relaxed italic">
+                        "I maxed out the quiz (10/10). I've tried therapy, meds, meditation apps—this is the first thing that worked in 90 seconds like they said. Grabbed it at 2am during a spiral about a text I sent. Actually interrupted the loop."
+                      </p>
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <p className="text-xs text-slate-500">Verified Purchase • 2 months ago</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ========== SCARCITY INDICATORS ========== */}
+              {resultData && (
+                <div className="mb-8 max-w-3xl mx-auto">
+                  <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      {/* Spot Counter */}
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">{spotsRemaining}</span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-amber-900 uppercase tracking-wide">Spots Remaining</p>
+                          <p className="text-xs text-amber-700">At quiz-taker rate • Updates every 10 min</p>
+                        </div>
+                      </div>
+
+                      {/* Countdown Timer */}
+                      <div className="flex items-center gap-3 md:border-l-2 md:border-amber-200 md:pl-6">
+                        <div className="flex flex-col items-center md:items-end">
+                          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">Quiz-Taker Rate Expires In:</p>
+                          <div className="flex items-center gap-2">
+                            <div className="bg-amber-900 text-white px-3 py-2 rounded font-mono text-lg font-bold">
+                              48
+                            </div>
+                            <span className="text-amber-900 font-bold">:</span>
+                            <div className="bg-amber-900 text-white px-3 py-2 rounded font-mono text-lg font-bold">
+                              00
+                            </div>
+                            <span className="text-amber-900 font-bold">:</span>
+                            <div className="bg-amber-900 text-white px-3 py-2 rounded font-mono text-lg font-bold">
+                              00
+                            </div>
+                          </div>
+                          <p className="text-xs text-amber-600 mt-1">Your results stay fresh for 48 hours</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Urgency Message */}
+                    <div className="mt-4 pt-4 border-t border-amber-200">
+                      <p className="text-sm text-amber-900 text-center">
+                        <strong>Lock in your $30 discount</strong> — This quiz-taker rate won't be available after your results expire
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* ========== PRODUCT HERO SECTION ========== */}
               {resultData && (
                 <div id="offer-details" className="mb-16 -mx-4 md:-mx-16">

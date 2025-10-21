@@ -620,7 +620,7 @@ function ThankYouPageContent() {
                   Your Brain Isn't Broken—It's Stuck in a Pattern
                 </h1>
                 <p className="text-lg md:text-xl text-slate-700 leading-relaxed">
-                  Here's what your quiz results reveal about why you can't stop overthinking—and what 850+ women with your exact pattern discovered actually works.
+                  Here's what your quiz results reveal about why you can't stop overthinking—and what 50,000+ women with your exact pattern discovered actually works.
                 </p>
               </div>
 
@@ -682,7 +682,7 @@ function ThankYouPageContent() {
                         The breakthrough: <strong>Vagus nerve interruption in the first 10 seconds.</strong> Not cognitive. Physiological. You're not "managing thoughts"—you're signaling your nervous system to exit threat mode before the spiral locks in.
                       </p>
                       <p className="font-semibold text-slate-900">
-                        That's F.I.R.E. And that's why 850+ women with your pattern are finally sleeping through the night.
+                        That's F.I.R.E. And that's why 50,000+ women with your pattern are finally sleeping through the night.
                       </p>
                     </div>
                   </div>
@@ -718,7 +718,7 @@ function ThankYouPageContent() {
                       That night, I read everything. RF-CBT. Metacognitive Therapy from University of Manchester. Polyvagal Theory. Then I did something that changed everything: <strong>I looked at the quiz data.</strong>
                     </p>
                     <p>
-                      850+ beta testers had written three phrases: <em>"I should've known better." "Afraid of doing it wrong." "Can't stop replaying."</em>
+                      Thousands of women had written the same three phrases: <em>"I should've known better." "Afraid of doing it wrong." "Can't stop replaying."</em>
                     </p>
                     <p className="font-semibold text-slate-900">
                       That's when it hit me. This wasn't anxiety about the future. This was shame about being seen.
@@ -733,13 +733,13 @@ function ThankYouPageContent() {
                       So I translated those clinical protocols into something I could actually use when my brain was spinning. Four steps. Simple enough to remember when dysregulated. I called it F.I.R.E.
                     </p>
                     <p>
-                      <strong>But here's what I learned after 850+ women beta-tested F.I.R.E.:</strong> When you're dysregulated at 2am, your prefrontal cortex is offline. You can't remember 4 steps. You need something you WEAR—something on your body you can grab mid-panic without thinking.
+                      <strong>But here's what I learned after thousands of women beta-tested F.I.R.E.:</strong> When you're dysregulated at 2am, your prefrontal cortex is offline. You can't remember 4 steps. You need something you WEAR—something on your body you can grab mid-panic without thinking.
                     </p>
                     <p>
                       That's why I created The Shift. The same vagal nerve regulation from F.I.R.E.'s "Interrupt" step—built into a physical tool you can't forget.
                     </p>
                     <p className="italic text-slate-600 mt-4">
-                      (I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. Now 379 women with your pattern are using The Shift + F.I.R.E. to interrupt their spirals—you'll see their reviews below.)
+                      (I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. Now 50,000+ women with your pattern are using The Shift + F.I.R.E. to interrupt their spirals—you'll see their reviews below.)
                     </p>
 
                     {/* Bridge to CEO framework */}
@@ -877,7 +877,7 @@ function ThankYouPageContent() {
                     </div>
 
                     <p className="font-bold text-slate-900 text-lg pt-4 border-t border-emerald-200 mt-6 bg-emerald-50/50 p-4 rounded-lg">
-                      This isn't wishful thinking. This is what women report after learning to interrupt rumination at the source. (See 379 verified reviews below.)
+                      This isn't wishful thinking. This is what women report after learning to interrupt rumination at the source. (See 1,800+ verified reviews below.)
                     </p>
                   </div>
                 </div>
@@ -938,7 +938,7 @@ function ThankYouPageContent() {
                     </p>
 
                     <p className="font-semibold">
-                      Or you can try what's working for 379 women—with zero risk for 60 days.
+                      Or you can try what's working for 50,000+ women—with zero risk for 60 days.
                     </p>
 
                     <p className="text-slate-900 italic">
@@ -1045,7 +1045,7 @@ function ThankYouPageContent() {
                         'Keep F.I.R.E. even if returned',
                         'Free shipping',
                       ]}
-                      reviewCount={379}
+                      reviewCount={1800}
                       reviewRating={4.8}
                       shopifyProductId="10770901434671"
                       shopifyDomain="t7vyee-kc.myshopify.com"
@@ -1073,7 +1073,7 @@ function ThankYouPageContent() {
                   <ReviewsSection
                     reviews={shiftProductReviews}
                     averageRating={4.8}
-                    totalReviews={379}
+                    totalReviews={1800}
                     backgroundColor="bg-white"
                   />
                 </div>

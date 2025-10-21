@@ -822,9 +822,6 @@ function ThankYouPageContent() {
                       shopifyStorefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
                     />
                   </div>
-
-                  {/* Sentinel for sticky bar - Shows sticky bar when user scrolls past the offer card */}
-                  <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
                 </div>
               )}
 
@@ -837,6 +834,9 @@ function ThankYouPageContent() {
                   Click any section below to dive deeper into the clinical research and why this works when everything else failed.
                 </p>
               </div>
+
+              {/* Sentinel for sticky bar - Shows sticky bar when user scrolls to this section on mobile */}
+              <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
 
               {/* ========== WHY YOUR SMARTEST THOUGHTS KEEP YOU PARALYZED (SHORTENED) ========== */}
               <div className="mb-12">

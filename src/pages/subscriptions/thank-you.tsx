@@ -161,13 +161,13 @@ const quizResultData: Record<OverthinkerType, {
           name: 'Rumination-Focused CBT (RF-CBT)',
           developer: 'Dr. Edward Watkins, University of Exeter',
           technique: 'Concrete Shifting: When you notice looping thoughts, shift to "What\'s one small action I can take?" Transform "Why did this happen?" to "What\'s something I can do about this right now?" You\'re retraining your brain from brooding (passive, abstract, past-focused) to reflection (active, concrete, solution-focused).',
-          evidence: '2025 study: 65% reduction in brooding'
+          evidence: 'Clinical studies show 60-65% reduction in brooding symptoms'
         },
         {
           name: 'Metacognitive Therapy (MCT)',
           developer: 'Dr. Adrian Wells, University of Manchester',
           technique: 'Detached Mindfulness: Notice rumination starting: "I\'m having the thought that..." Let thoughts pass like clouds without engaging. Practice "worry postponement"—schedule 15 minutes, then let it go.',
-          evidence: '2025 Finding: MCT via telehealth showed 70% reduction in rumination frequency within 8 sessions'
+          evidence: 'Research shows MCT can reduce rumination frequency by 65-70% within 8-12 sessions'
         },
         {
           name: 'Window of Tolerance Work',
@@ -225,7 +225,7 @@ const quizResultData: Record<OverthinkerType, {
           name: 'Rumination-Focused CBT (RF-CBT)',
           developer: 'Dr. Edward Watkins, University of Exeter',
           technique: 'Concrete Processing Mode: When rumination starts, shift to ultra-specific questions. NOT: "Why do I always fail?" YES: "What\'s one specific action I could take in the next hour?" Practice "experience focus" vs. "evaluative focus." Rumination Diary: Log rumination episodes—trigger, thought content, duration. Identify your specific brooding patterns.',
-          evidence: '2025 Study: 60-65% of chronic ruminators showed significant improvement with 12-16 sessions'
+          evidence: 'Clinical trials show 60-65% of chronic ruminators achieve significant improvement with 12-16 sessions'
         },
         {
           name: 'Metacognitive Therapy (MCT)',
@@ -293,7 +293,7 @@ const quizResultData: Record<OverthinkerType, {
           name: 'Rumination-Focused CBT (RF-CBT)',
           developer: 'Dr. Edward Watkins, University of Exeter',
           technique: 'Concrete Processing Mode (Your Lifeline): When rumination starts: "What\'s happening RIGHT NOW in this moment?" Shift from abstract ("Why am I worthless?") to concrete ("What\'s one thing I can do in the next 5 minutes?"). Rumination Interrupt Protocol: 1) Name it: "I\'m ruminating" 2) Ground: 5-4-3-2-1 (5 things you see, 4 hear, 3 touch, 2 smell, 1 taste) 3) Concrete action: One physical thing (stand up, drink water, step outside) 4) Time-limited reflection: 10 minutes max, then shift attention.',
-          evidence: '2025 Finding: Severe ruminators who practiced concrete shifting 3x daily showed 45% reduction in rumination frequency after 90 days'
+          evidence: 'Studies indicate severe ruminators practicing concrete shifting 3x daily show 40-45% reduction in rumination frequency after 90 days'
         },
         {
           name: 'Metacognitive Therapy (MCT)',
@@ -667,24 +667,22 @@ function ThankYouPageContent() {
               {/* ========== MECHANISM BRIDGE (ESTABLISHES F.I.R.E. AS UNIQUE DISCOVERY) ========== */}
               {resultData && (
                 <div className="mb-16 max-w-3xl mx-auto">
-                  <div className="bg-slate-50 p-8 rounded-lg border-l-4 border-slate-600">
-                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">
-                      The 10-Second Window: Why Everything You've Tried Failed
-                    </h3>
-                    <div className="space-y-4 text-base text-slate-700 leading-relaxed">
-                      <p>
-                        University of Exeter research identified the critical window: <strong>rumination locks in within 10-15 seconds of the trigger.</strong> By the time you "notice" you're spiraling, the neural loop is already running.
-                      </p>
-                      <p>
-                        Meditation apps require you to catch thoughts AFTER they've started. Therapy teaches you to understand thoughts AFTER they've formed. Both miss the <strong>pre-conscious window</strong> where shame activates your nervous system BEFORE thought even begins.
-                      </p>
-                      <p>
-                        The breakthrough: <strong>Vagus nerve interruption in the first 10 seconds.</strong> Not cognitive. Physiological. You're not "managing thoughts"—you're signaling your nervous system to exit threat mode before the spiral locks in.
-                      </p>
-                      <p className="font-semibold text-slate-900">
-                        That's F.I.R.E. And that's why 5,000+ women who use The Shift are finally sleeping through the night.
-                      </p>
-                    </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6">
+                    The Critical Window: Why Everything You've Tried Failed
+                  </h3>
+                  <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
+                    <p>
+                      University of Exeter research shows: <strong>rumination can lock in within seconds of a trigger.</strong> By the time you "notice" you're spiraling, the neural loop is often already running.
+                    </p>
+                    <p>
+                      Meditation apps require you to catch thoughts AFTER they've started. Therapy teaches you to understand thoughts AFTER they've formed. Both miss the <strong>pre-conscious window</strong> where your nervous system shifts into threat mode BEFORE thought even begins.
+                    </p>
+                    <p>
+                      The breakthrough: <strong>Early vagus nerve activation—before the spiral locks in.</strong> Not cognitive. Physiological. You're not "managing thoughts"—you're signaling your nervous system to exit threat mode before rumination takes hold.
+                    </p>
+                    <p className="font-semibold text-slate-900">
+                      That's F.I.R.E. And that's why 5,000+ women who use The Shift are finally sleeping through the night.
+                    </p>
                   </div>
                 </div>
               )}
@@ -742,7 +740,7 @@ function ThankYouPageContent() {
                       A simple breathing tool that activates your body's built-in calm-down signal—the same vagus nerve regulation from F.I.R.E.'s "Interrupt" step.
                     </p>
                     <p className="italic text-slate-600 mt-4">
-                      (I spent 3 years researching cognitive psychology and rumination interventions at Stanford before launching DailyHush. Over 50,000 women have taken our quiz. 5,000+ now use The Shift + F.I.R.E. daily to interrupt their spirals—you'll see their 1,800+ verified reviews below.)
+                      (I spent 3 years researching cognitive psychology and rumination interventions before launching DailyHush. Over 50,000 women have taken our quiz. 5,000+ now use The Shift + F.I.R.E. daily to interrupt their spirals—you'll see their 1,800+ verified reviews below.)
                     </p>
 
                     <p className="mt-6">
@@ -750,7 +748,7 @@ function ThankYouPageContent() {
                     </p>
 
                     <p>
-                      You breathe in through your nose, then exhale slowly through the small opening in the necklace. That tiny opening is precisely designed to extend your exhale to about 10 seconds—which is the exact breath length that activates your vagus nerve.
+                      You breathe in through your nose, then exhale slowly through the small opening in the necklace. That small opening naturally extends your exhale (often around 6-10 seconds)—an extended breath length that supports vagal activation and calm.
                     </p>
 
                     <p>
@@ -764,6 +762,24 @@ function ThankYouPageContent() {
                     <p>
                       It's the same technique Anna uses in F.I.R.E., except you don't have to remember the steps. The necklace does the hard part for you—it just makes your exhale the right length.
                     </p>
+
+                    <div className="mt-6 space-y-4">
+                      <p className="text-base md:text-lg text-slate-700 leading-relaxed">
+                        <strong>You're probably thinking:</strong> "I've heard about vagus nerve activation. I tried box breathing. I know 4-7-8 breath. I've done the humming thing. Why do I need to buy a necklace?"
+                      </p>
+
+                      <p className="text-base md:text-lg text-slate-700 leading-relaxed">
+                        Here's the uncomfortable truth: Box breathing works—<em>if you can remember the pattern while your amygdala is screaming.</em> Apps work—<em>if you can think clearly enough to unlock your phone and find the right session.</em> But the moment you need them most is precisely when you can't execute them.
+                      </p>
+
+                      <p className="text-base md:text-lg text-slate-700 leading-relaxed">
+                        The Shift solves the execution problem: <strong>The opening does the counting for you.</strong> You can't get it wrong. You can't forget the ratio. You just breathe in, breathe out through the necklace, and the 10-second exhale happens automatically. Your vagus nerve activates whether your brain is functioning or not.
+                      </p>
+
+                      <p className="text-base md:text-lg text-slate-700 leading-relaxed font-semibold">
+                        It's the difference between needing to remember a technique when you're calm versus wearing a tool that works when you're not.
+                      </p>
+                    </div>
 
                     {/* Bridge to CEO framework */}
                     <p className="text-base text-slate-700 mt-6 font-semibold">
@@ -793,7 +809,7 @@ function ThankYouPageContent() {
                       <strong>The breathing exercises feel good in the moment</strong>, but ten minutes later you're right back in the loop because you never interrupted the mechanism. You treated the symptom, not the system.
                     </p>
 
-                    <p className="font-semibold text-slate-900 pt-2 bg-amber-50/50 p-4 rounded-lg border-l-4 border-amber-500">
+                    <p className="font-semibold text-slate-900 mt-4">
                       None of this failed because you weren't trying hard enough. It failed because you were never given a tool that stops the spiral <strong>before it locks in</strong>.
                     </p>
 
@@ -812,28 +828,10 @@ function ThankYouPageContent() {
                   <div className="space-y-5 text-base text-slate-700 leading-relaxed">
                     <div className="pl-4 border-l-2 border-rose-300">
                       <p className="font-semibold text-slate-900 mb-1">
-                        "Just try to relax" from doctors who've never experienced chronic rumination
-                      </p>
-                      <p className="text-sm text-slate-600">
-                        Easy to say when your brain doesn't replay conversations from 1987 at 2 AM.
-                      </p>
-                    </div>
-
-                    <div className="pl-4 border-l-2 border-rose-300">
-                      <p className="font-semibold text-slate-900 mb-1">
                         $180/year meditation apps that blame YOU when they don't work
                       </p>
                       <p className="text-sm text-slate-600">
                         "You're not doing it right. Try harder. Be more mindful." Meanwhile, you've got real worries—aging parents, retirement savings, your husband's diabetes numbers.
-                      </p>
-                    </div>
-
-                    <div className="pl-4 border-l-2 border-rose-300">
-                      <p className="font-semibold text-slate-900 mb-1">
-                        Family who says "you worry too much" instead of understanding
-                      </p>
-                      <p className="text-sm text-slate-600">
-                        They don't see the mental load you carry or the loops you can't escape. They just see you as anxious.
                       </p>
                     </div>
 
@@ -899,7 +897,7 @@ function ThankYouPageContent() {
                       </p>
                     </div>
 
-                    <p className="font-bold text-slate-900 text-lg pt-4 border-t border-emerald-200 mt-6 bg-emerald-50/50 p-4 rounded-lg">
+                    <p className="italic text-slate-600 mt-6 pt-6 border-t border-slate-200">
                       This isn't wishful thinking. This is what women report after learning to interrupt rumination at the source. (See 1,800+ verified reviews below.)
                     </p>
                   </div>
@@ -941,15 +939,7 @@ function ThankYouPageContent() {
                     </p>
 
                     <p>
-                      Fair question. You've tried meditation apps, therapy, breathing exercises. Here's the difference: those treat the <em>thoughts</em>. The Shift + F.I.R.E. Protocol interrupt the <em>mechanism</em> that creates the loop. You're not trying to change what you think—you're stopping the spiral before it starts.
-                    </p>
-
-                    <p>
-                      Maybe you're worried it's complicated. It's not. The Shift is a necklace—you wear it, you breathe through it when needed, done. F.I.R.E. is 4 steps you can learn in 15 minutes. Women in their 70s and 80s use this daily.
-                    </p>
-
-                    <p>
-                      And if you're wondering whether people will notice—they won't. The Shift looks like jewelry. It's whisper-quiet. No one knows unless you tell them. Use it anywhere—meetings, church, family dinners, alone at night.
+                      Fair question. You've tried meditation apps, therapy, breathing exercises. Here's the difference: those treat the <em>thoughts</em>. The Shift + F.I.R.E. Protocol interrupt the <em>mechanism</em> that creates the loop. And it's not complicated—The Shift is a necklace you wear, F.I.R.E. is 4 steps you learn in 15 minutes. Women in their 70s and 80s use this daily. It looks like jewelry, it's whisper-quiet—use it anywhere without anyone noticing.
                     </p>
 
                     <p className="mt-6 font-semibold text-slate-900">
@@ -974,18 +964,21 @@ function ThankYouPageContent() {
               {/* ========== TRANSITION TO PRODUCT OFFER ========== */}
               {resultData && (
                 <div className="mb-12 max-w-3xl mx-auto">
-                  <div className="bg-emerald-50/50 p-8 rounded-lg border-l-4 border-emerald-600">
-                    <p className="text-xl font-bold text-emerald-900 mb-4">
+                  <div className="space-y-4 text-base md:text-lg text-slate-700 leading-relaxed">
+                    <p className="text-xl md:text-2xl font-bold text-slate-900">
                       So here's what I built for you:
                     </p>
-                    <p className="text-base text-slate-700 leading-relaxed">
+                    <p>
                       A tool you can wear on your body—so when your brain starts spinning at 2 AM, you don't have to remember 4 steps or open an app or "try to meditate." You just reach for your necklace and breathe.
                     </p>
-                    <p className="text-base text-slate-700 leading-relaxed mt-4">
-                      The same vagal nerve regulation that stopped MY spirals—built into something you can use in 90 seconds, anywhere, anytime.
+                    <p>
+                      Not another app that requires you to think clearly enough to open it. Not box breathing that requires you to count when your brain is spinning. Not a technique you have to remember—a physical tool that does the regulating <em>for</em> you.
                     </p>
-                    <p className="text-base text-slate-700 leading-relaxed mt-4 font-semibold">
-                      Here's exactly what you're getting when you claim your quiz rate today—and why this works when meditation apps don't:
+                    <p>
+                      The Shift's opening naturally extends your exhale (typically around 6-10 seconds). You can't mess it up. You can't forget the steps. <strong>The extended breath that supports vagal activation happens whether your prefrontal cortex is online or not.</strong>
+                    </p>
+                    <p className="font-semibold">
+                      Here's exactly what you're getting when you claim your quiz rate today—and why 5,000+ chronic overthinkers choose this over the free techniques they already know:
                     </p>
                   </div>
                 </div>
@@ -998,8 +991,8 @@ function ThankYouPageContent() {
                     <ProductHero
                       productName="The Shift™ Breathing Necklace for Chronic Overthinkers"
                       tagline="The breathing tool that interrupts 3AM spirals in 90 seconds—so you can finally sleep like you used to"
-                      badge={`QUIZ LIMITED OFFER: ${countdown}`}
-                      scarcityMessage="Your quiz results expire in 48 hours. This $37 rate is locked to YOUR session—after that, you'll pay full price ($67) like everyone else."
+                      badge={`QUIZ-TAKER RATE: ${countdown}`}
+                      scarcityMessage="Quiz rate expires in 48 hours • Save $30 today"
                       price={{
                         current: 37,
                         original: 67,
@@ -1078,30 +1071,6 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== TRANSITION TO REVIEWS ========== */}
-              {resultData && (
-                <div className="mb-12 max-w-3xl mx-auto">
-                  <p className="text-lg text-slate-700 leading-relaxed mb-4">
-                    The breakthrough happened for me at 3 AM. For Sarah, it was after replaying a conversation with her daughter for the 47th time. For Linda, it was when her husband asked if she was "stressed again."
-                  </p>
-                  <p className="text-xl font-bold text-slate-900">
-                    Here's what happened when women with your exact pattern started wearing The Shift:
-                  </p>
-                </div>
-              )}
-
-              {/* ========== CUSTOMER REVIEWS (USING PRODUCT PAGE COMPONENT) ========== */}
-              {resultData && (
-                <div className="mb-12">
-                  <ReviewsSection
-                    reviews={shiftProductReviews}
-                    averageRating={4.8}
-                    totalReviews={1800}
-                    backgroundColor="bg-white"
-                  />
-                </div>
-              )}
-
               {/* Sentinel for sticky bar - Shows sticky bar when user scrolls to this section on mobile */}
               <div ref={stickySentinelRef} aria-hidden className="pointer-events-none h-px w-full opacity-0" />
 
@@ -1134,8 +1103,7 @@ function ThankYouPageContent() {
                 </div>
               )}
 
-              {/* ========== STATS + TESTIMONIALS AFTER OFFER (POST-PURCHASE JUSTIFICATION) ========== */}
-
+              {/* ========== CUSTOMER REVIEWS (POST-PURCHASE JUSTIFICATION) ========== */}
               {resultData && (
                 <div className="mb-12 max-w-4xl mx-auto">
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
@@ -1145,117 +1113,12 @@ function ThankYouPageContent() {
                     Here's what happened when women with your exact pattern started wearing The Shift
                   </p>
 
-                  {/*
-                    TODO - ROBERT: Write 6 NEW unique testimonials for this "But does it actually work?" section.
-
-                    Requirements:
-                    - Must be DIFFERENT from all reviews in shiftProductReviews.ts (no duplicates)
-                    - No location info (just name, no city/state)
-                    - Keep "Verified Purchase" badge
-                    - Vary the lengths and tones (casual, emotional, professional mix)
-                    - Focus on real struggles and results
-                    - Use the colored boxes: bg-emerald-50/30, bg-blue-50/30, bg-amber-50/30, bg-purple-50/30, bg-rose-50/30, bg-indigo-50/30
-
-                    Format (copy this structure 6 times):
-                    <div className="bg-emerald-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "TESTIMONIAL TEXT HERE"
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">First Name L.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-                  */}
-                  <div className="space-y-6 mb-8">
-                    {/* Testimonial 1: Susan H. - LEAD WITH AUTHORITY (therapist validation) */}
-                    <div className="bg-indigo-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "My therapist has been telling me to do breathing exercises for anxiety for literally years but I never remember when I'm actually panicking. She suggested getting something physical to remind me so I got this. Had it about 5 months I think. I wear it to doctor appointments (health anxiety is very real), stressful phone calls with insurance people, basically whenever my chest starts feeling tight. She's noticed I'm actually using the breathing techniques more which makes our sessions more productive I guess? It's not fixing everything but it's helping more than the apps and stuff I tried before."
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Susan H.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Testimonial 2: Margaret W. - STACK AUTHORITY + MEASURABLE RESULT (doctor + blood pressure) */}
-                    <div className="bg-rose-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "Retirement gave me way too much time to worry about stupid stuff. Health, money, what neighbors think. This seemed simple enough so I tried it. Been using it for a few months now - morning coffee, afternoon around 2 or 3 when I start getting anxious about nothing, before bed usually. My doctor mentioned my blood pressure looked better at my last visit but I'm also walking more so who knows what's actually helping. Either way I'm using this thing multiple times a day so something's working."
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Margaret W.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Testimonial 3: Barbara K. - CONVERT THE SKEPTIC (tried everything else) */}
-                    <div className="bg-blue-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "Wasn't sure about buying this. I've got a drawer full of meditation apps I don't use and journals I tried for a week. But I like having something physical to hold when my head's spinning. I've had it maybe 6 weeks? I use it before family stuff mostly - my sister and I have this whole complicated history - and it does help me calm down enough to not say something I'll regret later. She actually asked what I was doing differently last Sunday which was... validating I guess? Anyway, no regrets on the purchase."
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Barbara K.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Testimonial 4: Diane R. - SPECIFIC BEHAVIORAL CHANGE (texting kids less) */}
-                    <div className="bg-purple-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "My kids are in their 30s and I still worry about them constantly. It's exhausting for everyone including me. Started using this maybe 2 months ago when I feel myself starting to catastrophize about their lives - job stuff, relationship stuff, money stuff. The breathing thing actually does interrupt that loop somehow. I've texted them way less with my random worries which honestly they're probably relieved about even if they're too nice to say it. Would've been helpful when they were teenagers and I was a complete mess about everything."
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Diane R.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Testimonial 5: Linda M. - RELATABLE HUMOR + COMMITMENT (3am overthinking) */}
-                    <div className="bg-emerald-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I'm 61 and my brain just won't shut off. My doctor mentioned breathing exercises at my last checkup but I kept forgetting. This has been sitting on my dresser for about 4 months now and I grab it mostly at 3am when I'm replaying conversations from 20 years ago (anyone else do this??). It gets me back to sleep most nights instead of just lying there spiraling. Not every time, but enough that I actually use it. Just got one for my sister for her birthday - she does the same middle-of-the-night worry thing."
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Linda M.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Testimonial 6: Carol S. - LONG-TERM TRANSFORMATION (30-year pattern interrupted) */}
-                    <div className="bg-amber-50/30 p-6 py-4 rounded-lg">
-                      <p className="text-base text-slate-700 mb-3 leading-relaxed">
-                        "I'm one of those people who replays conversations for YEARS. Got this maybe 3 months ago and wear it most days. My grandkids definitely wonder why I keep touching my necklace but it's my little reset button I guess. The overthinking hasn't gone away completely but I'm not spiraling as much over text messages - which at my age is ridiculous anyway, right? My husband said something last week about me seeming less stressed and sleeping better. I don't know if it's just this or what but I'll keep using it."
-                      </p>
-                      <p className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Carol S.</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                          Verified Purchase
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
+                  <ReviewsSection
+                    reviews={shiftProductReviews}
+                    averageRating={4.8}
+                    totalReviews={1800}
+                    backgroundColor="bg-white"
+                  />
                 </div>
               )}
 
@@ -1515,6 +1378,25 @@ function ThankYouPageContent() {
                       </p>
                     </div>
                   </div>
+
+                  {/* ========== CTA #5: After FAQ Section ========== */}
+                  {resultData && (
+                    <div className="my-12 max-w-md mx-auto">
+                      <ShopifyBuyButton
+                        productId="10770901434671"
+                        domain="t7vyee-kc.myshopify.com"
+                        storefrontAccessToken="a3bc32a7b8116c3f806d7d16e91eadad"
+                        buttonText="Get The Shift • $37"
+                        buttonColor="#16a34a"
+                        buttonHoverColor="#15803d"
+                        className="w-full"
+                        onClick={() => handleBuyClick('after-faq')}
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center">
+                        60-day money-back guarantee • Includes FREE F.I.R.E. Protocol
+                      </p>
+                    </div>
+                  )}
 
                   {/* ========== SOCIAL PROOF TRANSITION ========== */}
                   <div className="mb-8 max-w-3xl mx-auto text-center">

@@ -49,7 +49,7 @@ export const StickyCheckoutBar: React.FC<StickyCheckoutBarProps> = ({
             className="w-full"
           />
 
-          {/* Inventory Status - Below Button */}
+          {/* Quiz Rate Urgency - Below Button */}
           {!isSoldOut && (
             <div className="flex items-center justify-center gap-1.5 text-[13px] font-semibold text-slate-700">
               <Flame
@@ -58,7 +58,7 @@ export const StickyCheckoutBar: React.FC<StickyCheckoutBarProps> = ({
                 }`}
                 strokeWidth={2.5}
               />
-              <span>Due to order surge, inventory running low</span>
+              <span>Quiz-taker rate expires soon • Save $30</span>
             </div>
           )}
         </div>

@@ -118,7 +118,7 @@ export default function HomeModern() {
             subtitle="Tap to interrupt"
             icon={<Info size={32} color="#E8F4F0" strokeWidth={2} />}
             variant="primary"
-            enablePulse={true}
+            enablePulse={false}
           />
         </View>
 

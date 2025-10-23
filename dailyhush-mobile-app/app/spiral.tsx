@@ -196,7 +196,7 @@ export default function SpiralInterrupt() {
           </Text>
 
           <View className="flex-row flex-wrap justify-center gap-3 mb-12">
-            {feelingOptions.map((option) => (
+            {preCheckOptions.map((option) => (
               <Pressable
                 key={option.value}
                 onPress={() => {
@@ -336,7 +336,7 @@ export default function SpiralInterrupt() {
           </Text>
 
           <View className="flex-row flex-wrap justify-center gap-3 mb-12">
-            {feelingOptions.map((option) => (
+            {postCheckOptions.map((option) => (
               <Pressable
                 key={option.value}
                 onPress={() => {

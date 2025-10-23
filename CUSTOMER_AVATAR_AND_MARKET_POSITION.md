@@ -64,12 +64,12 @@ Women who overthink INTERACTIONS, not DECISIONS. They replay social moments for 
 Avatar 1 (Event-Anxious Overthinkers) who have decision paralysis, perfectionism about outcomes, or general future worry. They need different tools.
 
 #### Demographics
-- **Age:** 28-45 years old (sweet spot: 32-39)
+- **Age:** 45-75 years old (sweet spot: 55-70; latest Meta quiz campaigns show 100% female leads concentrated in 55-64 and 65+ cohorts)
 - **Gender:** 95% female (this is specifically a female nervous system pattern)
 - **Income:** $55k-150k (functional, successful despite internal torture)
 - **Education:** College educated, often high achievers
-- **Occupation:** Professional women in people-facing roles, creatives, service providers, healthcare
-- **Life Stage:** Established but struggling internally, high-functioning but exhausted
+- **Occupation:** Late-career professionals, recent retirees, community leaders, long-time caregivers
+- **Life Stage:** Empty-nesters juggling aging parents, spouses, grandkids, and their own emerging health realities
 
 #### The ACTUAL Psychology (Not What They Think It Is)
 
@@ -167,13 +167,13 @@ These aren't three separate problems. They're three points in a temporal loop:
 ### The Conversation in Their Head (The Actual Language)
 
 *Tuesday morning, 3am:*
-> "I'm replaying Tuesday's meeting again. The 14th time. That moment when I spoke up and everyone went quiet. The look on Sarah's face. I should've known better. I always do this. Why do I always do this? I'm 35 years old, why can't I just be normal? Other people don't do this. Other people say something and move on. But I'm lying here at 3am torturing myself over seven words I said three days ago."
+> "I'm replaying Sunday dinner with my daughter and the grandkids again. The 14th time. That moment when I mentioned her doctor's appointment and the whole table went quiet. The look on her face. I should've known better. I always do this. Why do I always do this? I'm 62 years old, why can't I just be normal? Other people don't do this. Other people say something and move on. But I'm lying here at 3am torturing myself over one sentence from three days ago."
 
 *Scrolling anxiety advice at 2pm:*
-> "Another article about meditation. Another breathing exercise. Another therapist saying 'challenge your thoughts.' I've TRIED that. I've tried everything. The thought is already there. By the time I notice I'm spiraling, it's been 20 minutes. How do you challenge a thought when your body has already decided you're unsafe? This isn't worry about the future. This is punishment about the past."
+> "Another article about meditation. Another breathing exercise. Another therapist saying 'challenge your thoughts.' Even my doctor handed me a mindfulness app last year. I've TRIED that. I've tried everything. The thought is already there. By the time I notice I'm spiraling, it's been 20 minutes. How do you challenge a thought when your body has already decided you're unsafe? This isn't worry about the future. This is punishment about the past."
 
 *After trying another tool that fails:*
-> "I'm so tired. I've tried the apps. I've done the therapy. I've read the books. I've journaled until my hand cramped. I've meditated. I've breathed. I've 'let it go.' Nothing works. Nothing stops the replay. Nothing stops the punishment. I wake up every morning already exhausted from the night I spent replaying yesterday. I'm afraid of meetings. I'm afraid of being seen. I'm afraid of doing it wrong. And I can't even explain what 'it' is."
+> "I'm so tired. I've tried the apps. I've done the therapy—since the kids were little. I've read the books. I've journaled until my hand cramped. I've meditated. I've breathed. I've 'let it go.' Nothing works. Nothing stops the replay. Nothing stops the punishment. I wake up every morning already exhausted from the night I spent replaying yesterday. I'm afraid of family gatherings. I'm afraid of being seen. I'm afraid of doing it wrong. And I can't even explain what 'it' is."
 
 ### Their Deepest Desires (Mass Desire Identification)
 
@@ -183,15 +183,15 @@ These aren't three separate problems. They're three points in a temporal loop:
 
 **Core Desire:** Stop punishing themselves for existing, stop the pre-conscious hijack
 
-**Identity Aspiration:** The woman who can speak up without replaying it for 72 hours. The woman who exists without constant self-surveillance.
+**Identity Aspiration:** The woman who can join family dinners or church conversations without replaying every word for 72 hours. The woman who exists without constant self-surveillance.
 
-**Ultimate Dream:** To say something in a meeting on Tuesday and by Wednesday have completely forgotten about it. To live in the present instead of re-prosecuting the past.
+**Ultimate Dream:** To share a story with her grandkids on Sunday and by Wednesday have completely forgotten about it. To live in the present instead of re-prosecuting the past.
 
 ### Their Burning Fears (The Real Ones)
 
 1. **That this is just who they are** - That this is their personality, not a pattern they can change
 
-2. **That they'll waste their life replaying it** - Looking back at 50 and realizing they spent decades punishing themselves
+2. **That they'll waste their life replaying it** - Looking back at 70 and realizing they spent decades punishing themselves
 
 3. **That they're broken differently** - That other anxiety tools work for other people, but they're uniquely damaged
 
@@ -201,7 +201,7 @@ These aren't three separate problems. They're three points in a temporal loop:
 
 6. **That they're doing it wrong** - Even this. Even seeking help. Even existing.
 
-7. **That they'll pass this to their kids** - That their children will learn to punish themselves the same way
+7. **That they'll pass this to their kids** - That their children (and now grandchildren) will learn to punish themselves the same way
 
 ### The Pre-Conscious Hijack (The Mechanism They Don't Know About)
 
@@ -255,7 +255,7 @@ The nervous system learns: "After visibility, comes punishment."
 - "I can't even enjoy good moments because I know I'll replay them later looking for what I did wrong"
 
 **The Shame About The Shame:**
-- "I'm 35 and still doing this - I should've outgrown it"
+- "I'm in my 60s and still doing this - I should've outgrown it"
 - "Other people don't do this. What's wrong with me?"
 - "I'm ashamed that I'm ashamed. It's turtles all the way down."
 - "I can't even talk about this without worrying I'm doing it wrong"
@@ -270,7 +270,7 @@ The nervous system learns: "After visibility, comes punishment."
 ✅ **Meditation Apps (Calm, Headspace, Insight Timer)**
 - *What they tried:* 10-minute daily meditation, body scans, mindfulness
 - *Why it failed:* Teaches present-moment awareness. But their nervous system pulls them into shame-replays pre-consciously.
-- *The actual result:* They meditate, feel calm, then 20 minutes later are replaying Tuesday's meeting again. The shame pattern operates independently of conscious calm.
+- *The actual result:* They meditate, feel calm, then 20 minutes later are replaying Tuesday's conversation again—whether it was with the cardiologist, their daughter, or a meeting. The shame pattern operates independently of conscious calm.
 
 ✅ **Breathing Exercises**
 - *What they tried:* Box breathing, 4-7-8 breathing, coherent breathing
@@ -334,7 +334,7 @@ The other is about **INTERACTIONS** (what you said, how you came across, whether
 
 If you're the first type, you have decision paralysis or perfectionism. There are good tools for that.
 
-**If you're the second type—if you're lying awake at 3am replaying Tuesday's meeting for the 14th time**—you don't have decision paralysis. You have shame-driven rumination triggered by a shame-anxiety loop. And nothing has worked because you've been treating components, not the loop."
+**If you're the second type—if you're lying awake at 3am replaying Tuesday's conversation (with your daughter, your doctor, or that meeting) for the 14th time**—you don't have decision paralysis. You have shame-driven rumination triggered by a shame-anxiety loop. And nothing has worked because you've been treating components, not the loop."
 
 **The Difference (This Is Everything):**
 
@@ -406,26 +406,27 @@ The meta-layer that makes it worse:
 
 ### Their Actual Daily Experience (Not What They Say, What They Live)
 
-**Morning (Before Work):**
+**Morning (Before the Day Really Starts):**
 - Wake up with chest already tight
-- First thought: yesterday's interaction
-- Shower spent replaying last week
-- Getting dressed: "Do I look like I'm trying too hard?"
-- Commute: pre-emptive shame about today
+- First thought: yesterday's conversation with a daughter, friend, or doctor
+- Brewing coffee while replaying last week's comment
+- Getting dressed: "Do I look like I'm trying too hard? Will they notice I'm anxious?"
+- Checking the calendar: medical appointments, grandkid pick-ups, caregiving tasks
 - **The punishment starts before the day does**
 
-**Work (The Exposure Environment):**
-- Every meeting is a threat
+**Daytime Exposure (Family, Community, Appointments):**
+- Every conversation feels like a test—doctor visits, church groups, volunteer meetings
 - Speaking up = inevitable replay later
-- Silence = shame about not contributing
+- Staying quiet = shame about disappearing or seeming confused
 - Being seen = body goes into shutdown
-- 3pm: still replaying 10am interaction
+- Afternoon: still replaying the morning's interaction
 - **Functioning while internally prosecuting themselves**
 
 **Evening (The Replay Hours):**
 - "Relax" = opportunity for shame-replay
 - Can't watch TV without thoughts intruding
-- Dinner: replaying something from Tuesday
+- Dinner: replaying something from Sunday with the family
+- Phone call from adult child = new loop to analyze
 - Before bed: comprehensive review of the day's failures
 - **Exhausted but can't rest because rest means replay**
 
@@ -439,7 +440,7 @@ The meta-layer that makes it worse:
 **The Toll:**
 - Chronic exhaustion (not just tired, depleted)
 - Avoiding situations that require visibility
-- Declining opportunities (presentations, leadership, dates)
+- Declining invitations (church groups, family trips, community leadership)
 - Relationships strained (can't be present)
 - Health declining (cortisol, inflammation, sleep disruption)
 
@@ -471,7 +472,7 @@ TO: "I had a shame pattern. I don't anymore."
 
 **What This Actually Looks Like:**
 
-- Saying something in a meeting and completely forgetting about it by the next day
+- Sharing an opinion at Sunday dinner (or in a volunteer meeting) and completely forgetting about it by the next day
 - Making a small mistake and moving on (not replaying for 72 hours)
 - Being visible without bracing for punishment
 - Sleeping through the night because there's no replay ritual
@@ -685,7 +686,7 @@ Physiologically, a nervous system activation cycle (from trigger to completion) 
 
 **The DailyHush Insight:**
 
-"That endless replay of Tuesday's meeting? That's not your brain 'problem-solving.' That's your nervous system re-enacting the moment you felt exposed."
+"That endless replay of Tuesday's conversation—whether it was with your doctor, your daughter, or that meeting? That's not your brain 'problem-solving.' That's your nervous system re-enacting the moment you felt exposed."
 
 **The Recognition Moment:**
 
@@ -865,11 +866,11 @@ F.I.R.E. is the first protocol that interrupts in that 7-second window - before 
 
 **The Guarantee (Critical for Deeply Cynical Market):**
 
-"90-Day Shame-Interruption Guarantee"
+"60-Day Quiet Mind Guarantee"
 
 Learn F.I.R.E. Practice the protocol. Track your replays.
 
-If after 90 days you're still spending 72 hours punishing yourself for Tuesday's conversation, the protocol didn't work. We refund everything. You keep all materials.
+If after 60 days you're still spending 72 hours punishing yourself for Tuesday's conversation, the protocol didn't work. We refund everything. You keep all materials.
 
 Why? Because shame-interruption at the nervous system level works when targeted correctly. If it doesn't work for you, either we failed to teach it properly or your specific pattern needs different approaches - either way, that's on us.
 
@@ -914,7 +915,7 @@ This speaks directly to their cynicism:
 > "By The Time You Notice You're Spiraling, Your Body Activated the Shame-Anxiety Loop 7 Seconds Ago. Here's How To Interrupt Earlier."
 
 #### The Filtering + Mechanism Pattern:
-> "If You're Still Replaying Tuesday's Meeting on Friday, Stop Reading Anxiety Advice. You Have a Shame-Anxiety Loop—And You've Been Treating The Wrong Thing."
+> "If You're Still Replaying Tuesday's Conversation (with your daughter, your doctor, or that meeting) on Friday, Stop Reading Anxiety Advice. You Have a Shame-Anxiety Loop—And You've Been Treating The Wrong Thing."
 
 ### Body Copy Structure (For Shame-Driven Rumination)
 
@@ -928,7 +929,7 @@ This speaks directly to their cynicism:
 
 *Example Opening:*
 
-> You're replaying Tuesday's meeting again. The 14th time. That moment when you spoke up and there was that pause. The way someone looked at you. And now it's Friday and you're still prosecuting yourself for seven words you said three days ago.
+> You're replaying Sunday dinner again. The 14th time. That moment when you mentioned the test results and there was that pause. The way your daughter looked at you. And now it's Wednesday and you're still prosecuting yourself for one sentence you said three days ago.
 >
 > Your therapist calls it "anxious rumination." Your meditation app says "notice the thought and let it go." Your friend says "just stop overthinking."
 >
@@ -1032,8 +1033,8 @@ This speaks directly to their cynicism:
 >
 > **But you don't need studies. You need proof it works.**
 >
-> Sarah, 34, wrote this before F.I.R.E.:
-> "I should've known better than to speak up in that meeting. Now I can't stop replaying it. I'm afraid of doing it wrong every single time."
+> Linda, 62, wrote this before F.I.R.E.:
+> "I should've known better than to bring up the scan results at dinner. Now I can't stop replaying it. I'm afraid of doing it wrong every single time."
 >
 > All three phrases. Shame-driven rumination. Misdiagnosed as anxiety for 6 years.
 >
@@ -1064,15 +1065,15 @@ This speaks directly to their cynicism:
 >
 > All while treating anxiety when you have shame. All while targeting thoughts when the problem is pre-conscious.
 >
-> F.I.R.E. Protocol is [PRICE] for the complete training.
+> F.I.R.E. Protocol + The Shift™ Breathing Necklace is $37 at the quiz-taker rate (regular $67).
 >
-> That's [$X per day] for 90 days to interrupt the pattern that's been stealing your peace for years.
+> That's $37 total—about $0.62 per day over the 60-day guarantee window—to interrupt the pattern that's been stealing your peace for years.
 >
-> **90-Day Shame-Interruption Guarantee:**
+> **60-Day Quiet Mind Guarantee:**
 >
 > [Full guarantee as outlined in Section 5]
 >
-> If you're still replaying Tuesday for 72 hours after learning and practicing this protocol, it didn't work. We refund everything.
+> If you're still replaying Tuesday's conversation for 72 hours after learning and practicing this protocol during those 60 days, it didn't work. We refund everything.
 >
 > We can make this guarantee because shame-interruption at the nervous system level works when targeted correctly. The science is clear. The timing is specific. The mechanism is real.
 >
@@ -1088,9 +1089,9 @@ This speaks directly to their cynicism:
 
 *Example Future Pace:*
 
-> Imagine it's 90 days from now.
+> Imagine it's 60 days from now.
 >
-> You're in a meeting. You say something. There's a pause.
+> You're at Sunday dinner. You share a thought. There's a pause.
 >
 > You notice your chest start to tighten. That familiar sensation.
 >
@@ -1100,7 +1101,7 @@ This speaks directly to their cynicism:
 >
 > And then... nothing. No replay. No 72-hour prosecution. No punishment ritual.
 >
-> Wednesday arrives and you realize you completely forgot about Tuesday's meeting.
+> A few days later you realize you completely forgot about Sunday dinner.
 >
 > **You said something and moved on. Like a normal person.**
 >
@@ -1114,7 +1115,7 @@ This speaks directly to their cynicism:
 >
 > **Or...**
 >
-> Imagine it's 90 days from now and you didn't start.
+> Imagine it's 60 days from now and you didn't start.
 >
 > You're still replaying. Still punishing. Still exhausted.
 >
@@ -1130,7 +1131,7 @@ This speaks directly to their cynicism:
 >
 > **You need to interrupt the pattern in the 7-second window before the replay begins.**
 >
-> [CTA: Start F.I.R.E. Protocol - 90-Day Guarantee]
+> [CTA: Start F.I.R.E. Protocol - 60-Day Quiet Mind Guarantee]
 
 ### The Bullets That Sell (Shame-Specific)
 
@@ -1205,7 +1206,7 @@ Subject: You've been treating anxiety. You have shame. Here's what that means.
 
 Body focuses on:
 - The cost of continuing with wrong diagnosis
-- What 90 days of interruption looks like
+- What 60 days of interruption looks like
 - The guarantee that eliminates risk
 - The choice: continue punishing or interrupt the pattern
 

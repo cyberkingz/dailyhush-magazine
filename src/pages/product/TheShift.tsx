@@ -195,7 +195,7 @@ function TheShiftPage() {
     {
       title: 'Why We Built This',
       content: [
-        "We're chronic overthinkers who tried everything. Meditation apps we forgot to open, therapy that explained WHY we ruminate but didn't stop it, breathing exercises we couldn't remember mid-spiral. Then our therapist taught us a technique with ONE difference: a physical tool you wear. Not something you remember to use. Something you reach for the moment spiraling starts. 50,000+ women later, this simple idea keeps working. If you scored 6+ on the quiz, you know the feeling. This is your circuit breaker.",
+        "We're chronic overthinkers who tried everything. Meditation apps we forgot to open, therapy that explained WHY we ruminate but didn't stop it, breathing exercises we couldn't remember mid-spiral. Then our therapist taught us a technique with ONE difference: a physical tool you wear. Not something you remember to use. Something you reach for the moment spiraling starts. 6,000+ women use The Shift + F.I.R.E. daily. 1,800+ verified reviews. This simple idea keeps working. If you scored 6+ on the quiz, you know the feeling. This is your circuit breaker.",
       ],
       imageSrc: 'https://cdn.shopify.com/s/files/1/0957/4914/4879/files/Gemini_Generated_Image_pefq89pefq89pefq.png?v=1760950438',
       imageAlt: 'DailyHush founders story',
@@ -550,7 +550,7 @@ function TheShiftPage() {
       <ReviewsSection
         reviews={productReviews}
         averageRating={4.8}
-        totalReviews={379}
+        totalReviews={1800}
       />
 
       {/* FAQ */}

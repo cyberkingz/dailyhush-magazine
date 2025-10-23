@@ -1,0 +1,539 @@
+/**
+ * DailyHush - Module 4: EXECUTE
+ * Build your 30-day spiral reduction plan
+ */
+
+import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useState, useEffect } from 'react';
+import { View, ScrollView, Pressable } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { ArrowLeft, ArrowRight, Target, Calendar } from 'lucide-react-native';
+
+import { Text } from '@/components/ui/text';
+import { ContentCard } from '@/components/training/ContentCard';
+import { KeyTakeaway } from '@/components/training/KeyTakeaway';
+import { ProgressIndicator } from '@/components/training/ProgressIndicator';
+import { ModuleComplete } from '@/components/training/ModuleComplete';
+import { FireModule } from '@/types';
+import { useUser } from '@/store/useStore';
+import { saveModuleProgress, loadModuleProgress } from '@/services/training';
+
+type Screen =
+  | 'welcome'
+  | 'habit-stacking'
+  | 'routine'
+  | 'environment'
+  | 'accountability'
+  | 'tracking'
+  | 'plan-summary'
+  | 'complete';
+
+export default function ExecuteModule() {
+  const router = useRouter();
+  const user = useUser();
+  const [currentScreen, setCurrentScreen] = useState<Screen>('welcome');
+  const [selectedRoutines, setSelectedRoutines] = useState<string[]>([]);
+  const [selectedEnvironment, setSelectedEnvironment] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const screens: Screen[] = [
+    'welcome',
+    'habit-stacking',
+    'routine',
+    'environment',
+    'accountability',
+    'tracking',
+    'plan-summary',
+    'complete',
+  ];
+
+  const currentIndex = screens.indexOf(currentScreen);
+  const progress = currentIndex + 1;
+
+  const dailyRoutines = [
+    'Morning check-in (2 min)',
+    'Midday trigger review',
+    'Evening reflection',
+    'Pre-bed wind-down',
+  ];
+
+  const environmentChanges = [
+    'Phone on Do Not Disturb after 9pm',
+    'Notification limits for triggering apps',
+    'Physical space for breathing exercises',
+    'Accountability partner check-ins',
+  ];
+
+  const handleNext = async () => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < screens.length) {
+      setCurrentScreen(screens[nextIndex]);
+    }
+  };
+
+  const handleBack = async () => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      setCurrentScreen(screens[prevIndex]);
+    } else {
+      router.back();
+    }
+  };
+
+  const handleComplete = () => {
+    router.back();
+  };
+
+  const toggleRoutine = (routine: string) => {
+    setSelectedRoutines(prev =>
+      prev.includes(routine)
+        ? prev.filter(r => r !== routine)
+        : [...prev, routine]
+    );
+  };
+
+  const toggleEnvironment = (change: string) => {
+    setSelectedEnvironment(prev =>
+      prev.includes(change)
+        ? prev.filter(c => c !== change)
+        : [...prev, change]
+    );
+  };
+
+  // Load saved progress on mount
+  useEffect(() => {
+    const loadProgress = async () => {
+      if (!user?.user_id) {
+        setIsLoading(false);
+        return;
+      }
+
+      const { data } = await loadModuleProgress(user.user_id, FireModule.EXECUTE);
+
+      if (data) {
+        if (data.currentScreen && data.currentScreen !== 'complete') {
+          setCurrentScreen(data.currentScreen as Screen);
+        }
+
+        if (data.executeData?.selectedRoutines) {
+          setSelectedRoutines(data.executeData.selectedRoutines);
+        }
+
+        if (data.executeData?.selectedEnvironment) {
+          setSelectedEnvironment(data.executeData.selectedEnvironment);
+        }
+      }
+
+      setIsLoading(false);
+    };
+
+    loadProgress();
+  }, [user?.user_id]);
+
+  // Auto-save progress when screen or selections change
+  useEffect(() => {
+    if (isLoading || !user?.user_id) return;
+
+    const saveProgress = async () => {
+      await saveModuleProgress(user.user_id!, FireModule.EXECUTE, {
+        currentScreen,
+        executeData: {
+          selectedRoutines,
+          selectedEnvironment,
+        },
+      });
+    };
+
+    saveProgress();
+  }, [currentScreen, selectedRoutines, selectedEnvironment, user?.user_id, isLoading]);
+
+  return (
+    <View className="flex-1 bg-[#0A1612]">
+      <StatusBar style="light" />
+
+      {/* Header */}
+      <View className="px-5 pt-5 pb-3">
+        <View className="flex-row items-center justify-between mb-4">
+          <Pressable onPress={handleBack} className="p-2 active:opacity-70">
+            <ArrowLeft size={24} color="#E8F4F0" strokeWidth={2} />
+          </Pressable>
+
+          <Text className="text-[#E8F4F0] text-base font-semibold">
+            Module 4: EXECUTE
+          </Text>
+
+          <View className="w-10" />
+        </View>
+
+        {currentScreen !== 'complete' && (
+          <ProgressIndicator current={progress} total={screens.length} />
+        )}
+      </View>
+
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{
+          paddingHorizontal: 20,
+          paddingBottom: 40,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Screen 1: Welcome */}
+        {currentScreen === 'welcome' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Your 30-Day Spiral Reduction Plan
+            </Text>
+
+            <ContentCard
+              icon={<Target size={24} color="#52B788" strokeWidth={2} />}
+              body="You know your pattern (FOCUS).
+
+You can interrupt it (INTERRUPT).
+
+You can reframe the shame (REFRAME).
+
+Now we build the system that makes this automatic."
+            />
+
+            <KeyTakeaway message="Research shows it takes 21-30 days to build a new habit.
+
+This module creates your 30-day plan to make rumination interruption your default response." />
+
+            <Text className="text-[#95B8A8] text-base text-center italic">
+              Most people reduce rumination by 60-80% in 30 days.
+            </Text>
+          </View>
+        )}
+
+        {/* Screen 2: Habit Stacking */}
+        {currentScreen === 'habit-stacking' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Habit Stacking
+            </Text>
+
+            <ContentCard
+              heading="The Formula"
+              body="After [EXISTING HABIT], I will [NEW HABIT].
+
+Example:
+After I brush my teeth (morning), I will do a 2-minute trigger check.
+
+After I close my laptop (evening), I will do 5 deep breaths."
+            />
+
+            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
+              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
+                Why This Works:
+              </Text>
+              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+                Your brain already has grooves for existing habits.
+                {'\n\n'}
+                By stacking new habits on top, you use those existing grooves.
+                {'\n\n'}
+                No willpower required. Just consistency.
+              </Text>
+            </View>
+
+            <KeyTakeaway message="Don't try to build new habits from scratch. Stack them on routines you already do." />
+          </View>
+        )}
+
+        {/* Screen 3: Routine */}
+        {currentScreen === 'routine' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Daily Interrupt Routine
+            </Text>
+
+            <Text className="text-[#95B8A8] text-base">
+              Choose the routines that fit YOUR schedule:
+            </Text>
+
+            <View className="gap-3">
+              {dailyRoutines.map((routine) => (
+                <Pressable
+                  key={routine}
+                  onPress={() => {
+                    toggleRoutine(routine);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  }}
+                  className={`rounded-2xl p-4 flex-row items-center ${
+                    selectedRoutines.includes(routine)
+                      ? 'bg-[#40916C]'
+                      : 'bg-[#1A4D3C]'
+                  }`}
+                >
+                  <View
+                    className={`w-5 h-5 rounded border-2 mr-3 ${
+                      selectedRoutines.includes(routine)
+                        ? 'border-white bg-white'
+                        : 'border-[#95B8A8]'
+                    }`}
+                  >
+                    {selectedRoutines.includes(routine) && (
+                      <View className="flex-1 items-center justify-center">
+                        <View className="w-3 h-3 bg-[#40916C]" />
+                      </View>
+                    )}
+                  </View>
+                  <Text
+                    className={`text-base flex-1 ${
+                      selectedRoutines.includes(routine)
+                        ? 'text-white font-semibold'
+                        : 'text-[#E8F4F0]'
+                    }`}
+                  >
+                    {routine}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <ContentCard
+              variant="highlight"
+              heading="Recommended Minimum"
+              body="Pick at least 2: one in the morning, one in the evening.
+
+Morning = preventive (catch triggers early)
+Evening = reflective (learn from the day)"
+            />
+          </View>
+        )}
+
+        {/* Screen 4: Environment */}
+        {currentScreen === 'environment' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Trigger Environment Modification
+            </Text>
+
+            <ContentCard body="You can't willpower your way through a bad environment.
+
+If your phone wakes you at 3am with notifications, you'll ruminate.
+
+If you doom-scroll before bed, you'll ruminate.
+
+Change the environment, change the outcome." />
+
+            <Text className="text-[#95B8A8] text-base">
+              Choose environment changes you'll commit to:
+            </Text>
+
+            <View className="gap-3">
+              {environmentChanges.map((change) => (
+                <Pressable
+                  key={change}
+                  onPress={() => {
+                    toggleEnvironment(change);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  }}
+                  className={`rounded-2xl p-4 flex-row items-center ${
+                    selectedEnvironment.includes(change)
+                      ? 'bg-[#40916C]'
+                      : 'bg-[#1A4D3C]'
+                  }`}
+                >
+                  <View
+                    className={`w-5 h-5 rounded border-2 mr-3 ${
+                      selectedEnvironment.includes(change)
+                        ? 'border-white bg-white'
+                        : 'border-[#95B8A8]'
+                    }`}
+                  >
+                    {selectedEnvironment.includes(change) && (
+                      <View className="flex-1 items-center justify-center">
+                        <View className="w-3 h-3 bg-[#40916C]" />
+                      </View>
+                    )}
+                  </View>
+                  <Text
+                    className={`text-base flex-1 ${
+                      selectedEnvironment.includes(change)
+                        ? 'text-white font-semibold'
+                        : 'text-[#E8F4F0]'
+                    }`}
+                  >
+                    {change}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Screen 5: Accountability */}
+        {currentScreen === 'accountability' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Accountability System
+            </Text>
+
+            <ContentCard
+              heading="Why Accountability Matters"
+              body="You're 65% more likely to complete a goal if you have accountability.
+
+Not because someone is judging you.
+
+Because having a witness makes the goal real."
+            />
+
+            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
+              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
+                Choose Your System:
+              </Text>
+              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+                Option 1: DailyHush streak tracking (built-in)
+                {'\n\n'}
+                Option 2: Weekly check-ins with a friend
+                {'\n\n'}
+                Option 3: Private journal (daily log)
+                {'\n\n'}
+                Option 4: Therapist/coach accountability
+              </Text>
+            </View>
+
+            <KeyTakeaway message="Pick ONE accountability method and commit to 30 days.
+
+That's all. Just 30 days." />
+          </View>
+        )}
+
+        {/* Screen 6: Tracking */}
+        {currentScreen === 'tracking' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Progress Tracking
+            </Text>
+
+            <ContentCard
+              icon={<Calendar size={24} color="#52B788" strokeWidth={2} />}
+              heading="Track These 3 Metrics"
+              body="1. Spiral Count: How many times did you spiral today?
+
+2. Interrupt Success: How many did you catch?
+
+3. Average Duration: How long did spirals last?"
+            />
+
+            <View className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#40916C]/20">
+              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
+                What Success Looks Like:
+              </Text>
+              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+                Week 1: You're noticing spirals (awareness)
+                {'\n\n'}
+                Week 2: You're catching 30-40% of them
+                {'\n\n'}
+                Week 3: Duration drops from hours to minutes
+                {'\n\n'}
+                Week 4: Interrupt becomes automatic
+              </Text>
+            </View>
+
+            <Text className="text-[#95B8A8] text-base text-center italic">
+              DailyHush tracks this automatically. Just use the app daily.
+            </Text>
+          </View>
+        )}
+
+        {/* Screen 7: Plan Summary */}
+        {currentScreen === 'plan-summary' && (
+          <View className="gap-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold">
+              Your 30-Day Plan
+            </Text>
+
+            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
+              <Text className="text-[#E8F4F0] text-lg font-semibold mb-4">
+                Plan Summary
+              </Text>
+
+              <View className="gap-4">
+                <View>
+                  <Text className="text-[#95B8A8] text-sm mb-1">
+                    Daily Routines:
+                  </Text>
+                  <Text className="text-[#E8F4F0] text-base">
+                    {selectedRoutines.length > 0
+                      ? selectedRoutines.join('\n')
+                      : 'None selected'}
+                  </Text>
+                </View>
+
+                <View className="h-px bg-[#40916C]/30" />
+
+                <View>
+                  <Text className="text-[#95B8A8] text-sm mb-1">
+                    Environment Changes:
+                  </Text>
+                  <Text className="text-[#E8F4F0] text-base">
+                    {selectedEnvironment.length > 0
+                      ? selectedEnvironment.join('\n')
+                      : 'None selected'}
+                  </Text>
+                </View>
+
+                <View className="h-px bg-[#40916C]/30" />
+
+                <View>
+                  <Text className="text-[#95B8A8] text-sm mb-1">
+                    Accountability:
+                  </Text>
+                  <Text className="text-[#E8F4F0] text-base">
+                    DailyHush streak tracking
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <KeyTakeaway message="This is YOUR plan. Start tomorrow.
+
+Small, consistent action beats big plans you never execute.
+
+30 days. That's all." />
+
+            <Text className="text-[#E8F4F0] text-base text-center font-semibold">
+              You've got this.
+            </Text>
+          </View>
+        )}
+
+        {/* Screen 8: Complete */}
+        {currentScreen === 'complete' && (
+          <ModuleComplete
+            moduleTitle="F.I.R.E. Training"
+            module={FireModule.EXECUTE}
+            keyLearnings={[
+              'FOCUS: Your rumination pattern and triggers',
+              'INTERRUPT: The 10-second window technique',
+              'REFRAME: Shame to growth mindset',
+              'EXECUTE: Your 30-day spiral reduction plan',
+            ]}
+            onContinue={handleComplete}
+            showCertification={true}
+          />
+        )}
+      </ScrollView>
+
+      {/* Footer - Continue Button */}
+      {currentScreen !== 'complete' && (
+        <View className="px-5 pb-5">
+          <Pressable
+            onPress={handleNext}
+            className="bg-[#40916C] h-14 rounded-2xl flex-row items-center justify-center active:opacity-90"
+          >
+            <Text className="text-white text-lg font-semibold mr-2">
+              Continue
+            </Text>
+            <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
+          </Pressable>
+        </View>
+      )}
+    </View>
+  );
+}

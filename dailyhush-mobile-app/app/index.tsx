@@ -7,20 +7,23 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Brain, Moon, Info, TrendingUp } from 'lucide-react-native';
+import { Brain, Moon, Info, TrendingUp, Settings } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { useUser } from '@/store/useStore';
 import { PulseButton } from '@/components/PulseButton';
 import { TipCard } from '@/components/TipCard';
-import { QuoteCard } from '@/components/QuoteCard';
+import { QuoteGem } from '@/components/QuoteGem';
 import { PremiumCard } from '@/components/PremiumCard';
 import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
 
 export default function HomeModern() {
   const router = useRouter();
   const user = useUser();
+  const insets = useSafeAreaInsets();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [spiralsToday] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
@@ -40,6 +43,14 @@ export default function HomeModern() {
   // Check if 3AM mode is active
   const is3AMMode = currentTime.getHours() >= 22 || currentTime.getHours() < 6;
 
+  // Get natural greeting based on time of day
+  const getGreeting = () => {
+    const hour = currentTime.getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -56,49 +67,127 @@ export default function HomeModern() {
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingTop: 20,
+          paddingTop: insets.top + spacing.safeArea.top,
           paddingBottom: 40,
         }}
         showsVerticalScrollIndicator={false}
       >
+        {/* Natural Header Section - iOS Native Layout Pattern */}
+        <View style={{
+          paddingLeft: insets.left + 20,
+          paddingRight: insets.right + 20,
+          marginBottom: 8
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            minHeight: 44, // iOS minimum touch target
+          }}>
+            {/* Text Container - Flexible with proper constraints */}
+            <View style={{
+              flex: 1,
+              flexShrink: 1,
+              flexGrow: 1,
+              minWidth: 0, // Critical: allows text to shrink below content size
+              paddingRight: 12, // Guaranteed spacing from button
+              justifyContent: 'center',
+            }}>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  color: colors.text.primary,
+                  marginBottom: 4,
+                }}
+                numberOfLines={1}
+                ellipsizeMode="tail" // iOS standard: truncate at end with ellipsis
+                adjustsFontSizeToFit={false} // Prevent auto-scaling on iOS
+              >
+                {getGreeting()}
+              </Text>
+              {user?.name && (
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.text.secondary,
+                    opacity: 0.8,
+                  }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {user.name}
+                </Text>
+              )}
+            </View>
+
+            {/* Settings Button - Fixed width, iOS standard hit target */}
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push('/settings' as any);
+              }}
+              style={{
+                width: 44, // iOS minimum touch target width
+                height: 44, // iOS minimum touch target height
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0, // Never shrink button
+              }}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} // Extended hit area
+            >
+              {({ pressed }) => (
+                <Settings
+                  size={22}
+                  color={colors.text.secondary}
+                  strokeWidth={2}
+                  opacity={pressed ? 0.5 : 0.6}
+                />
+              )}
+            </Pressable>
+          </View>
+        </View>
 
         {/* 3AM Mode Active Banner */}
         {is3AMMode && (
-          <PremiumCard
-            onPress={() => router.push('/night-mode' as any)}
-            variant="elevated"
-            style={{ marginBottom: 24 }}
-          >
-            <View style={{ padding: 20 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                <Moon size={20} color={colors.text.primary} strokeWidth={2} />
+          <View style={{ paddingHorizontal: 20 }}>
+            <PremiumCard
+              onPress={() => router.push('/night-mode' as any)}
+              variant="elevated"
+              style={{ marginBottom: 24 }}
+            >
+              <View style={{ padding: 20 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+                  <Moon size={20} color={colors.text.primary} strokeWidth={2} />
+                  <Text
+                    style={{
+                      color: colors.text.primary,
+                      fontSize: 16,
+                      fontWeight: '600',
+                      marginLeft: 8,
+                    }}
+                  >
+                    3AM Mode Active
+                  </Text>
+                </View>
                 <Text
                   style={{
-                    color: colors.text.primary,
-                    fontSize: 16,
-                    fontWeight: '600',
-                    marginLeft: 8,
+                    color: colors.emerald[200],
+                    fontSize: 14,
+                    lineHeight: 20,
                   }}
                 >
-                  3AM Mode Active
+                  Sleep-friendly protocols are ready. Red light mode protects your sleep.
                 </Text>
               </View>
-              <Text
-                style={{
-                  color: colors.emerald[200],
-                  fontSize: 14,
-                  lineHeight: 20,
-                }}
-              >
-                Sleep-friendly protocols are ready. Red light mode protects your sleep.
-              </Text>
-            </View>
-          </PremiumCard>
+            </PremiumCard>
+          </View>
         )}
 
+        {/* Daily Quote Gem - Hero Section */}
+        <QuoteGem />
+
         {/* Today Stats */}
-        <View style={{ marginBottom: 24 }}>
+        <View style={{ paddingHorizontal: 20, marginBottom: 24 }}>
           <Text
             style={{
               color: colors.text.primary,
@@ -164,7 +253,7 @@ export default function HomeModern() {
         </View>
 
         {/* Main CTA - I'm Spiraling Button */}
-        <View style={{ marginBottom: 16 }}>
+        <View style={{ paddingHorizontal: 20, marginBottom: 16 }}>
           <PulseButton
             onPress={() => router.push('/spiral')}
             title="I'M SPIRALING"
@@ -190,14 +279,15 @@ export default function HomeModern() {
         </Text>
 
         {/* F.I.R.E. Training Card */}
-        <PremiumCard
-          onPress={async () => {
-            await Haptics.selectionAsync();
-            router.push('/training');
-          }}
-          variant="elevated"
-          style={{ marginBottom: 16 }}
-        >
+        <View style={{ paddingHorizontal: 20 }}>
+          <PremiumCard
+            onPress={async () => {
+              await Haptics.selectionAsync();
+              router.push('/training');
+            }}
+            variant="elevated"
+            style={{ marginBottom: 16 }}
+          >
           <View
             style={{
               padding: 20,
@@ -242,16 +332,18 @@ export default function HomeModern() {
             <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>→</Text>
           </View>
         </PremiumCard>
+        </View>
 
         {/* Pattern Insights Card */}
-        <PremiumCard
-          onPress={async () => {
-            await Haptics.selectionAsync();
-            router.push('/insights');
-          }}
-          variant="elevated"
-          style={{ marginBottom: 24 }}
-        >
+        <View style={{ paddingHorizontal: 20 }}>
+          <PremiumCard
+            onPress={async () => {
+              await Haptics.selectionAsync();
+              router.push('/insights');
+            }}
+            variant="elevated"
+            style={{ marginBottom: 24 }}
+          >
           <View
             style={{
               padding: 20,
@@ -296,13 +388,11 @@ export default function HomeModern() {
             <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>→</Text>
           </View>
         </PremiumCard>
+        </View>
 
         {/* Daily Tip Card */}
-        <TipCard />
-
-        {/* Daily Quote Card */}
-        <View style={{ marginTop: 16 }}>
-          <QuoteCard />
+        <View style={{ paddingHorizontal: 20 }}>
+          <TipCard />
         </View>
       </ScrollView>
     </View>

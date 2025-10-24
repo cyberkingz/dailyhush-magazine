@@ -77,10 +77,7 @@ export default function Layout() {
         <Stack.Screen
           name="index"
           options={{
-            title: 'DailyHush',
-            headerSubtitle: 'Welcome back',
-            headerBackVisible: false,
-            headerRight: () => null, // This triggers showSettings
+            headerShown: false,
           }}
         />
         <Stack.Screen

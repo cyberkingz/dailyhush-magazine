@@ -147,27 +147,19 @@ export async function saveModuleProgress(
   module: FireModule,
   data: Partial<ModuleProgress>
 ): Promise<{ success: boolean; error?: string; errorType?: TrainingServiceError }> {
-  // Validation
-  if (!userId) {
-    return {
-      success: false,
-      error: 'User ID is required',
-      errorType: TrainingServiceError.VALIDATION_ERROR,
-    };
-  }
+  // Get the actual authenticated user from Supabase
+  // This is critical because anonymous users might not have a user_profiles record,
+  // but they do have an auth.uid() which is what RLS policies check against
+  const { data: { user: authUser } } = await supabase.auth.getUser();
 
-  // Skip if not authenticated (includes temporary users)
-  const authenticated = await isAuthenticated();
-  if (!authenticated) {
-    console.log('Skipping save for unauthenticated user:', userId);
+  if (!authUser) {
+    console.log('No authenticated user found, skipping save');
     return { success: true }; // Return success to avoid blocking UI
   }
 
-  // Additional validation for UUID format
-  if (!isValidUUID(userId)) {
-    console.log('Invalid UUID format:', userId);
-    return { success: true }; // Return success to avoid blocking UI
-  }
+  // Use the authenticated user ID (works for both anonymous and email users)
+  const actualUserId = authUser.id;
+  console.log('Saving progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
 
   if (!module) {
     return {
@@ -181,7 +173,7 @@ export async function saveModuleProgress(
     // Use retry with backoff for network resilience
     await retryWithBackoff(async () => {
       const updateData: any = {
-        user_id: userId,
+        user_id: actualUserId, // Use auth.uid() instead of passed userId
         module,
         last_accessed_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
@@ -252,27 +244,17 @@ export async function loadModuleProgress(
   userId: string,
   module: FireModule
 ): Promise<{ data: ModuleProgress | null; error?: string; errorType?: TrainingServiceError }> {
-  // Validation
-  if (!userId) {
-    return {
-      data: null,
-      error: 'User ID is required',
-      errorType: TrainingServiceError.VALIDATION_ERROR,
-    };
-  }
+  // Get the actual authenticated user from Supabase
+  const { data: { user: authUser } } = await supabase.auth.getUser();
 
-  // Skip if not authenticated (includes temporary users)
-  const authenticated = await isAuthenticated();
-  if (!authenticated) {
-    console.log('Skipping load for unauthenticated user:', userId);
+  if (!authUser) {
+    console.log('No authenticated user found, skipping load');
     return { data: null }; // Return null to start fresh
   }
 
-  // Additional validation for UUID format
-  if (!isValidUUID(userId)) {
-    console.log('Invalid UUID format:', userId);
-    return { data: null };
-  }
+  // Use the authenticated user ID (works for both anonymous and email users)
+  const actualUserId = authUser.id;
+  console.log('Loading progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
 
   if (!module) {
     return {
@@ -288,7 +270,7 @@ export async function loadModuleProgress(
       const { data, error } = await supabase
         .from('fire_training_progress')
         .select('*')
-        .eq('user_id', userId)
+        .eq('user_id', actualUserId) // Use auth.uid() instead of passed userId
         .eq('module', module)
         .single();
 
@@ -359,21 +341,22 @@ export async function loadModuleProgress(
 export async function loadAllModuleProgress(
   userId: string
 ): Promise<{ data: ModuleProgress[]; error?: string }> {
-  // Skip if not authenticated (includes temporary users)
-  if (!userId) {
+  // Get the actual authenticated user from Supabase
+  const { data: { user: authUser } } = await supabase.auth.getUser();
+
+  if (!authUser) {
+    console.log('No authenticated user found, skipping load all');
     return { data: [] };
   }
 
-  const authenticated = await isAuthenticated();
-  if (!authenticated || !isValidUUID(userId)) {
-    return { data: [] };
-  }
+  // Use the authenticated user ID (works for both anonymous and email users)
+  const actualUserId = authUser.id;
 
   try {
     const { data, error } = await supabase
       .from('fire_training_progress')
       .select('*')
-      .eq('user_id', userId)
+      .eq('user_id', actualUserId) // Use auth.uid() instead of passed userId
       .order('last_accessed_at', { ascending: false });
 
     if (error) {
@@ -436,27 +419,17 @@ export async function updateUserFireProgress(
   module: FireModule,
   completed: boolean
 ): Promise<{ success: boolean; error?: string; errorType?: TrainingServiceError }> {
-  // Validation
-  if (!userId) {
-    return {
-      success: false,
-      error: 'User ID is required',
-      errorType: TrainingServiceError.VALIDATION_ERROR,
-    };
-  }
+  // Get the actual authenticated user from Supabase
+  const { data: { user: authUser } } = await supabase.auth.getUser();
 
-  // Skip if not authenticated (includes temporary users)
-  const authenticated = await isAuthenticated();
-  if (!authenticated) {
-    console.log('Skipping update for unauthenticated user:', userId);
+  if (!authUser) {
+    console.log('No authenticated user found, skipping fire progress update');
     return { success: true }; // Return success to avoid blocking UI
   }
 
-  // Additional validation for UUID format
-  if (!isValidUUID(userId)) {
-    console.log('Invalid UUID format:', userId);
-    return { success: true }; // Return success to avoid blocking UI
-  }
+  // Use the authenticated user ID (works for both anonymous and email users)
+  const actualUserId = authUser.id;
+  console.log('Updating fire progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
 
   if (!module) {
     return {
@@ -473,7 +446,7 @@ export async function updateUserFireProgress(
       const { data: userData, error: fetchError } = await supabase
         .from('user_profiles')
         .select('fire_progress')
-        .eq('user_id', userId)
+        .eq('user_id', actualUserId) // Use auth.uid() instead of passed userId
         .single();
 
       if (fetchError) {
@@ -496,7 +469,7 @@ export async function updateUserFireProgress(
       const { error: updateError } = await supabase
         .from('user_profiles')
         .update({ fire_progress: fireProgress, updated_at: new Date().toISOString() })
-        .eq('user_id', userId);
+        .eq('user_id', actualUserId); // Use auth.uid() instead of passed userId
 
       if (updateError) {
         const categorized = categorizeError(updateError);
@@ -523,21 +496,22 @@ export async function updateUserFireProgress(
 export async function getFIRECertificationStatus(
   userId: string
 ): Promise<{ certified: boolean; completedModules: number; error?: string }> {
-  // Skip if not authenticated (includes temporary users)
-  if (!userId) {
+  // Get the actual authenticated user from Supabase
+  const { data: { user: authUser } } = await supabase.auth.getUser();
+
+  if (!authUser) {
+    console.log('No authenticated user found, skipping certification check');
     return { certified: false, completedModules: 0 };
   }
 
-  const authenticated = await isAuthenticated();
-  if (!authenticated || !isValidUUID(userId)) {
-    return { certified: false, completedModules: 0 };
-  }
+  // Use the authenticated user ID (works for both anonymous and email users)
+  const actualUserId = authUser.id;
 
   try {
     const { data, error } = await supabase
       .from('user_profiles')
       .select('fire_progress')
-      .eq('user_id', userId)
+      .eq('user_id', actualUserId) // Use auth.uid() instead of passed userId
       .single();
 
     if (error) {

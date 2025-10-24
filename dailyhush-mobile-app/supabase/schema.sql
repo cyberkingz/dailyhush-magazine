@@ -264,8 +264,17 @@ CREATE POLICY "Users can view own progress"
     ON public.fire_training_progress FOR SELECT
     USING (auth.uid() = user_id);
 
+CREATE POLICY "Users can insert own progress"
+    ON public.fire_training_progress FOR INSERT
+    WITH CHECK (auth.uid() = user_id);
+
 CREATE POLICY "Users can update own progress"
-    ON public.fire_training_progress FOR ALL
+    ON public.fire_training_progress FOR UPDATE
+    USING (auth.uid() = user_id)
+    WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete own progress"
+    ON public.fire_training_progress FOR DELETE
     USING (auth.uid() = user_id);
 
 -- ================================================

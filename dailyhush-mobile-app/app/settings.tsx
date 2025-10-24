@@ -100,6 +100,9 @@ export default function Settings() {
   const { setNightMode } = useStore();
   const insets = useSafeAreaInsets();
 
+  // Check if user is anonymous (guest)
+  const isGuest = !user?.email;
+
   return (
     <View className="flex-1 bg-[#0A1612]">
       <StatusBar style="light" />
@@ -118,6 +121,34 @@ export default function Settings() {
         fadeVisibility="always"
       >
 
+        {/* Guest Account Upgrade Banner */}
+        {isGuest && (
+          <View className="mb-6">
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push('/auth');
+              }}
+              className="bg-[#2D6A4F] rounded-2xl p-5 active:opacity-90"
+            >
+              <View className="flex-row items-center mb-2">
+                <Shield size={20} color="#B7E4C7" strokeWidth={2} />
+                <Text className="text-[#E8F4F0] text-base font-bold ml-2">
+                  Create Your Account
+                </Text>
+              </View>
+              <Text className="text-[#B7E4C7] text-sm leading-relaxed mb-3">
+                You're using DailyHush as a guest. Create an account to save your progress and patterns across devices.
+              </Text>
+              <View className="flex-row items-center">
+                <Text className="text-[#52B788] text-sm font-semibold">
+                  Create Account →
+                </Text>
+              </View>
+            </Pressable>
+          </View>
+        )}
+
         {/* Account Section */}
         <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3">
           Account
@@ -125,7 +156,7 @@ export default function Settings() {
 
         <SettingRow
           title="Profile"
-          subtitle={user?.email || 'Not logged in'}
+          subtitle={user?.email || 'Guest Account'}
           icon={<User size={20} color="#52B788" strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
         />

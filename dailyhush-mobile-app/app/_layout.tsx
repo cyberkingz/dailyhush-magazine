@@ -140,13 +140,40 @@ export default function Layout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="auth/index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="auth/signup"
+          options={{
+            title: 'Create Account',
+            headerBackVisible: true,
+          }}
+        />
+        <Stack.Screen
+          name="auth/login"
+          options={{
+            title: 'Sign In',
+            headerBackVisible: true,
+          }}
+        />
+        <Stack.Screen
+          name="auth/forgot-password"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <PortalHost />
       <BottomNav hideOnPaths={[
         '/spiral',
         '/onboarding',
         '/settings',
-        '/training'
+        '/training',
+        '/auth'
       ]} />
     </>
   );

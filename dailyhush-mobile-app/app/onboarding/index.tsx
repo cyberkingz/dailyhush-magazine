@@ -137,27 +137,34 @@ export default function Onboarding() {
    */
   const completeOnboarding = async () => {
     try {
-      // Create anonymous Supabase session if not already authenticated
-      let userId = user?.user_id;
-
-      if (!userId) {
+      // Ensure we have an authenticated session (anonymous or email)
+      if (!user?.user_id) {
         console.log('Creating anonymous session...');
         const authResult = await signInAnonymously();
 
         if (!authResult.success || !authResult.userId) {
           console.error('Failed to create anonymous session:', authResult.error);
-          // Fallback: continue with local-only storage
-          userId = 'local_' + Date.now();
-        } else {
-          userId = authResult.userId;
-          console.log('Anonymous session created:', userId);
+          return; // Don't proceed without authentication
         }
+        console.log('Anonymous session created:', authResult.userId);
       }
 
-      // Create user profile
+      // Get the actual authenticated user ID from Supabase
+      // This is critical to match what RLS policies check against
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+
+      if (!authUser) {
+        console.error('No authenticated user found after sign-in');
+        return;
+      }
+
+      const actualUserId = authUser.id;
+      console.log('Completing onboarding for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
+
+      // Create user profile for local store
       const newUserProfile: UserProfile = {
-        user_id: userId,
-        email: user?.email || '', // Anonymous users don't have email
+        user_id: actualUserId,
+        email: authUser.email || '', // Email users have email, anonymous don't
         name: assessmentData.name,
         age: assessmentData.age,
         quiz_score: assessmentData.quizScore,
@@ -178,28 +185,20 @@ export default function Onboarding() {
       // Update local store
       setUser(newUserProfile);
 
-      // Save to Supabase (works for both anonymous and authenticated users)
+      // Update profile in Supabase with onboarding data
+      // (signInAnonymously already created the profile, this updates it)
       const { error } = await supabase
         .from('user_profiles')
-        .upsert({
-          user_id: userId,
+        .update({
+          // Don't update user_id or email (already set by signInAnonymously)
           name: assessmentData.name,
           age: assessmentData.age,
           quiz_score: assessmentData.quizScore,
           has_shift_necklace: assessmentData.hasShiftNecklace || false,
           onboarding_completed: true,
-          fire_progress: {
-            focus: false,
-            interrupt: false,
-            reframe: false,
-            execute: false,
-          },
-          triggers: [],
-          created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id',
-        });
+        })
+        .eq('user_id', actualUserId);
 
       if (error) {
         console.error('Error saving to Supabase:', error);
@@ -207,8 +206,9 @@ export default function Onboarding() {
         console.log('User profile saved to database');
       }
 
-      // Navigate to main app
-      router.replace('/');
+      // Navigate to auth choice screen (UX Option D: soft ask after onboarding)
+      // User can choose to create account or continue as guest
+      router.replace('/auth');
     } catch (err) {
       console.error('Error completing onboarding:', err);
     }

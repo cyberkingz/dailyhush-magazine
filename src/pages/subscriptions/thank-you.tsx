@@ -792,9 +792,14 @@ function ThankYouPageContent() {
                       <div className="space-y-2 text-lg text-slate-700 mb-3">
                         <p>✓ <strong>The Shift™ Necklace</strong> – Interrupts spirals in 90 seconds (normally $67)</p>
                         <p>✓ <strong>F.I.R.E. Protocol</strong> – Complete 4-step framework (normally $67, <strong>FREE</strong> with necklace)</p>
+                        <p>✓ <strong>Guides + Resources</strong> – Everything you need to start (<strong>FREE</strong>)</p>
+                        <p className="flex items-start gap-2">
+                          <span>✓</span>
+                          <span><strong>Early Access to DailyHush App</strong> – Be first to get the mobile app launching November 15th (<strong>FREE</strong> for quiz-takers)</span>
+                        </p>
                       </div>
                       <p className="text-xl font-bold text-emerald-900">
-                        Total Value: $134. Your Quiz-Taker Rate: $37.
+                        Total Value: $134+. Your Quiz-Taker Rate: $37.
                       </p>
                       <p className="text-base text-slate-600 mt-3 italic">
                         But before I ask you to buy anything, you need to understand why everything else has been failing you. Because this isn't your fault.
@@ -1047,6 +1052,18 @@ function ThankYouPageContent() {
                                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                 </svg>
                                 <span className="text-gray-700">Guides + Resources</span>
+                              </div>
+                              <span className="font-semibold text-emerald-600">Free Bonus</span>
+                            </li>
+                            <li className="flex justify-between items-start gap-3">
+                              <div className="flex items-start gap-2 flex-1">
+                                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <div>
+                                  <div className="text-gray-700">Early Access to DailyHush App</div>
+                                  <div className="text-sm text-gray-500 italic">Launches November 15th</div>
+                                </div>
                               </div>
                               <span className="font-semibold text-emerald-600">Free Bonus</span>
                             </li>

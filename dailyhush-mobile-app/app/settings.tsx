@@ -10,7 +10,6 @@ import * as Haptics from 'expo-haptics';
 import {
   ArrowLeft,
   User,
-  CreditCard,
   Bluetooth,
   Moon,
   Bell,
@@ -122,17 +121,6 @@ export default function Settings() {
           subtitle={user?.email || 'Not logged in'}
           icon={<User size={20} color="#52B788" strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
-        />
-
-        <SettingRow
-          title="Subscription"
-          subtitle="Free Plan"
-          value="Upgrade"
-          icon={<CreditCard size={20} color="#52B788" strokeWidth={2} />}
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.push('/subscription' as any);
-          }}
         />
 
         {/* The Shift Section */}

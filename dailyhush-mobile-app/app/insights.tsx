@@ -133,19 +133,6 @@ export default function Insights() {
             </View>
           ))}
         </View>
-
-        {/* Premium Upsell */}
-        <View className="bg-[#2D6A4F] border border-[#40916C]/30 rounded-2xl p-5">
-          <Text className="text-[#E8F4F0] text-lg font-bold mb-2">
-            Unlock Advanced Insights
-          </Text>
-          <Text className="text-[#B7E4C7] text-sm leading-relaxed mb-3">
-            Get daily predictions, custom reframes, and export reports for your therapist.
-          </Text>
-          <Text className="text-[#95B8A8] text-xs">
-            Premium: $9.99/month
-          </Text>
-        </View>
       </ScrollView>
     </View>
   );

@@ -8,6 +8,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect, useRef } from 'react';
 import { View, Pressable, Animated } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Check, Play, Pause, SkipForward } from 'lucide-react-native';
 
@@ -17,6 +18,7 @@ import type { SpiralLog } from '@/types';
 import { SuccessRipple } from '@/components/SuccessRipple';
 import { CountdownRing } from '@/components/CountdownRing';
 import { sendEncouragementNotification } from '@/services/notifications';
+import { useAudio } from '@/hooks/useAudio';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
@@ -25,6 +27,9 @@ export default function SpiralInterrupt() {
   const params = useLocalSearchParams<{ from?: string }>();
   const shiftDevice = useShiftDevice();
   const { setSpiraling } = useStore();
+
+  // Audio for meditation sound
+  const audio = useAudio();
 
   // Stage management
   const [stage, setStage] = useState<Stage>('pre-check');
@@ -59,8 +64,30 @@ export default function SpiralInterrupt() {
 
   useEffect(() => {
     setSpiraling(true);
-    return () => setSpiraling(false);
+
+    // Load meditation sound
+    // TODO: Add actual meditation sound file to /assets/sounds/
+    // For now, this is a placeholder - the app will gracefully handle missing audio
+    // Recommended: Calming ambient sound, nature sounds, or gentle meditation music
+    loadMeditationSound();
+
+    return () => {
+      setSpiraling(false);
+      audio.stop(); // Stop audio when leaving screen
+    };
   }, []);
+
+  const loadMeditationSound = async () => {
+    try {
+      // Load local meditation sound
+      const audioSource = require('@/assets/sounds/meditation.mp3');
+
+      await audio.loadAudio(audioSource, { loop: true });
+      console.log('Meditation sound loaded successfully');
+    } catch (err) {
+      console.log('Audio loading failed - continuing without sound:', err);
+    }
+  };
 
   // Protocol timer
   useEffect(() => {
@@ -134,6 +161,9 @@ export default function SpiralInterrupt() {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setIsPlaying(false);
     setStage('post-check');
+
+    // Stop meditation sound
+    audio.stop();
   };
 
   const handleFinish = async () => {
@@ -229,10 +259,13 @@ export default function SpiralInterrupt() {
           </View>
 
           <Pressable
-            onPress={() => {
+            onPress={async () => {
               setStage('protocol');
               setIsPlaying(true);
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+              // Start meditation sound
+              audio.play();
             }}
             className="bg-[#40916C] h-16 rounded-2xl items-center justify-center active:opacity-90"
           >
@@ -245,9 +278,14 @@ export default function SpiralInterrupt() {
 
       {/* Protocol Running Stage */}
       {stage === 'protocol' && (
-        <View className="flex-1 justify-between items-center px-6 py-12">
-          {/* Top Section - Countdown with Progress Ring */}
-          <View className="items-center justify-center" style={{ height: 300 }}>
+        <LinearGradient
+          colors={['#1A4D3C', '#0F2B1E', '#0A1612']}
+          locations={[0, 0.3, 1]}
+          style={{ flex: 1 }}
+        >
+          <View className="flex-1 justify-between items-center px-6 py-12">
+            {/* Top Section - Countdown with Progress Ring */}
+            <View className="items-center justify-center" style={{ height: 300 }}>
             <View style={{ position: 'relative', width: 260, height: 260, justifyContent: 'center', alignItems: 'center' }}>
               {/* Animated progress ring */}
               <CountdownRing
@@ -283,7 +321,16 @@ export default function SpiralInterrupt() {
 
           {/* Middle Section - Current Step Text */}
           <View className="w-full px-2">
-            <View className="bg-[#1A4D3C]/50 rounded-2xl p-6 min-h-28 justify-center border border-[#40916C]/20">
+            <View
+              className="bg-[#1A4D3C]/60 rounded-2xl p-6 min-h-28 justify-center border border-[#40916C]/30"
+              style={{
+                shadowColor: '#40916C',
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.15,
+                shadowRadius: 12,
+                elevation: 8,
+              }}
+            >
               <Text className="text-[#E8F4F0] text-xl text-center leading-relaxed font-medium">
                 {protocolSteps[currentStepIndex]?.text}
               </Text>
@@ -294,8 +341,16 @@ export default function SpiralInterrupt() {
           <View className="flex-row gap-3 w-full">
             <Pressable
               onPress={() => {
-                setIsPlaying(!isPlaying);
+                const newPlayingState = !isPlaying;
+                setIsPlaying(newPlayingState);
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                // Pause/resume meditation sound
+                if (newPlayingState) {
+                  audio.play();
+                } else {
+                  audio.pause();
+                }
               }}
               className="flex-1 bg-[#1A4D3C] h-14 rounded-2xl flex-row items-center justify-center active:opacity-90"
             >
@@ -320,6 +375,9 @@ export default function SpiralInterrupt() {
               onPress={() => {
                 setStage('post-check');
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                // Stop meditation sound when skipping
+                audio.stop();
               }}
               className="flex-1 bg-[#1A4D3C] h-14 rounded-2xl flex-row items-center justify-center active:opacity-90"
             >
@@ -329,14 +387,20 @@ export default function SpiralInterrupt() {
               </Text>
             </Pressable>
           </View>
-        </View>
+          </View>
+        </LinearGradient>
       )}
 
       {/* Post-Check Stage */}
       {stage === 'post-check' && (
-        <View className="flex-1 justify-center px-6">
-          <View className="mb-8 self-center">
-            <SuccessRipple size={80} />
+        <LinearGradient
+          colors={['#0A1612', '#1A4D3C', '#0A1612']}
+          locations={[0, 0.5, 1]}
+          style={{ flex: 1 }}
+        >
+          <View className="flex-1 justify-center px-6">
+            <View className="mb-8 self-center">
+              <SuccessRipple size={80} />
           </View>
 
           <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-4">
@@ -386,12 +450,13 @@ export default function SpiralInterrupt() {
               Continue
             </Text>
           </Pressable>
-        </View>
+          </View>
+        </LinearGradient>
       )}
 
       {/* Log Trigger Stage */}
       {stage === 'log-trigger' && (
-        <View className="flex-1 justify-center px-6">
+        <View className="flex-1 justify-center px-6" style={{ backgroundColor: '#0A1612' }}>
           <Text className="text-[#E8F4F0] text-2xl font-bold mb-4">
             What started this spiral?
           </Text>

@@ -1,74 +1,46 @@
 /**
  * useAudio Hook
- * Audio playback for guided protocols
+ * Audio playback for guided protocols using expo-audio
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Audio } from 'expo-av';
+import { useState, useEffect, useCallback } from 'react';
+import { useAudioPlayer, AudioSource } from 'expo-audio';
 import * as Haptics from 'expo-haptics';
 
 export function useAudio() {
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const player = useAudioPlayer();
   const [isLoading, setIsLoading] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [position, setPosition] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [currentSource, setCurrentSource] = useState<AudioSource | null>(null);
 
-  const soundRef = useRef<Audio.Sound | null>(null);
-
-  // Configure audio session
+  // Cleanup on unmount
   useEffect(() => {
-    configureAudio();
     return () => {
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
+      try {
+        if (player && currentSource) {
+          player.remove();
+        }
+      } catch (err) {
+        // Ignore cleanup errors
       }
     };
-  }, []);
-
-  const configureAudio = async () => {
-    try {
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        staysActiveInBackground: true, // Important for protocols
-        playsInSilentModeIOS: true,
-        shouldDuckAndroid: true,
-        playThroughEarpieceAndroid: false,
-      });
-    } catch (err) {
-      console.error('Error configuring audio:', err);
-    }
-  };
+  }, [currentSource]);
 
   /**
    * Load an audio file
    */
-  const loadAudio = useCallback(async (audioFile: string | number) => {
+  const loadAudio = useCallback(async (audioSource: AudioSource, options?: { loop?: boolean }) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // Unload previous sound
-      if (soundRef.current) {
-        await soundRef.current.unloadAsync();
-      }
+      // Replace current source
+      player.replace(audioSource);
 
-      // Load new sound
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        typeof audioFile === 'string' ? { uri: audioFile } : audioFile,
-        { shouldPlay: false },
-        onPlaybackStatusUpdate
-      );
+      // Set looping
+      player.loop = options?.loop || false;
 
-      soundRef.current = newSound;
-      setSound(newSound);
-
-      const status = await newSound.getStatusAsync();
-      if (status.isLoaded) {
-        setDuration(status.durationMillis || 0);
-      }
-
+      setCurrentSource(audioSource);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load audio';
@@ -77,91 +49,70 @@ export function useAudio() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [player]);
 
   /**
    * Play the loaded audio
    */
-  const play = useCallback(async () => {
-    if (!soundRef.current) return;
+  const play = useCallback(() => {
+    if (!currentSource) return;
 
     try {
-      await soundRef.current.playAsync();
-      setIsPlaying(true);
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      player.play();
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } catch (err) {
       console.error('Error playing audio:', err);
     }
-  }, []);
+  }, [player, currentSource]);
 
   /**
    * Pause the audio
    */
-  const pause = useCallback(async () => {
-    if (!soundRef.current) return;
-
+  const pause = useCallback(() => {
     try {
-      await soundRef.current.pauseAsync();
-      setIsPlaying(false);
+      if (player && currentSource) {
+        player.pause();
+      }
     } catch (err) {
-      console.error('Error pausing audio:', err);
+      // Silently handle pause errors
     }
-  }, []);
+  }, [player, currentSource]);
 
   /**
    * Stop and reset the audio
    */
-  const stop = useCallback(async () => {
-    if (!soundRef.current) return;
-
+  const stop = useCallback(() => {
     try {
-      await soundRef.current.stopAsync();
-      await soundRef.current.setPositionAsync(0);
-      setIsPlaying(false);
-      setPosition(0);
-    } catch (err) {
-      console.error('Error stopping audio:', err);
-    }
-  }, []);
-
-  /**
-   * Seek to a specific position (milliseconds)
-   */
-  const seek = useCallback(async (positionMs: number) => {
-    if (!soundRef.current) return;
-
-    try {
-      await soundRef.current.setPositionAsync(positionMs);
-      setPosition(positionMs);
-    } catch (err) {
-      console.error('Error seeking audio:', err);
-    }
-  }, []);
-
-  /**
-   * Playback status update callback
-   */
-  const onPlaybackStatusUpdate = (status: any) => {
-    if (status.isLoaded) {
-      setPosition(status.positionMillis);
-      setIsPlaying(status.isPlaying);
-
-      // Auto-stop when finished
-      if (status.didJustFinish) {
-        setIsPlaying(false);
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      if (player && currentSource) {
+        player.pause();
+        player.currentTime = 0;
       }
+    } catch (err) {
+      // Silently handle stop errors - player may already be removed
     }
-  };
+  }, [player, currentSource]);
+
+  /**
+   * Seek to a specific position (seconds)
+   */
+  const seek = useCallback((positionSeconds: number) => {
+    try {
+      if (player && currentSource) {
+        player.currentTime = positionSeconds;
+      }
+    } catch (err) {
+      // Silently handle seek errors
+    }
+  }, [player, currentSource]);
 
   /**
    * Format time for display (mm:ss)
    */
-  const formatTime = (milliseconds: number) => {
-    const totalSeconds = Math.floor(milliseconds / 1000);
+  const formatTime = (seconds: number) => {
+    const totalSeconds = Math.floor(seconds);
     const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    const secs = totalSeconds % 60;
+    return `${minutes}:${secs.toString().padStart(2, '0')}`;
   };
 
   return {
@@ -170,11 +121,13 @@ export function useAudio() {
     pause,
     stop,
     seek,
-    isPlaying,
+    isPlaying: player.playing,
     isLoading,
-    duration,
-    position,
+    duration: player.duration,
+    position: player.currentTime,
     error,
     formatTime,
+    volume: player.volume,
+    setVolume: (volume: number) => { player.volume = volume; },
   };
 }

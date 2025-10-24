@@ -18,12 +18,15 @@ import {
   HelpCircle,
   Mail,
   Shield,
-  ChevronRight
+  ChevronRight,
+  LogOut
 } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { useStore, useUser, useNightMode } from '@/store/useStore';
+import { signOut } from '@/services/auth';
+import { useState } from 'react';
 
 interface SettingRowProps {
   title: string;
@@ -97,11 +100,42 @@ export default function Settings() {
   const router = useRouter();
   const user = useUser();
   const nightMode = useNightMode();
-  const { setNightMode } = useStore();
+  const { setNightMode, reset: resetStore } = useStore();
   const insets = useSafeAreaInsets();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Check if user is anonymous (guest)
   const isGuest = !user?.email;
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+
+      // Sign out from Supabase
+      const result = await signOut();
+
+      if (!result.success) {
+        console.error('Logout failed:', result.error);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        setIsLoggingOut(false);
+        return;
+      }
+
+      // Reset Zustand store
+      resetStore();
+
+      console.log('Logged out successfully, store reset');
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+      // Navigate to home (which will trigger anonymous signin)
+      router.replace('/');
+    } catch (error) {
+      console.error('Exception during logout:', error);
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <View className="flex-1 bg-[#0A1612]">
@@ -160,6 +194,17 @@ export default function Settings() {
           icon={<User size={20} color="#52B788" strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
         />
+
+        {/* Logout Button - Only show for authenticated users */}
+        {!isGuest && (
+          <SettingRow
+            title={isLoggingOut ? "Signing out..." : "Sign Out"}
+            subtitle="Sign out of your account"
+            icon={<LogOut size={20} color="#E63946" strokeWidth={2} />}
+            onPress={isLoggingOut ? undefined : handleLogout}
+            showChevron={false}
+          />
+        )}
 
         {/* The Shift Section */}
         <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">

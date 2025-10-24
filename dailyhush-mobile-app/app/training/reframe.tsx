@@ -5,10 +5,11 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft, ArrowRight, RefreshCcw } from 'lucide-react-native';
+import { debounce } from '@/utils/debounce';
 
 import { Text } from '@/components/ui/text';
 import { ContentCard } from '@/components/training/ContentCard';
@@ -16,6 +17,7 @@ import { InteractiveExercise } from '@/components/training/InteractiveExercise';
 import { KeyTakeaway } from '@/components/training/KeyTakeaway';
 import { ProgressIndicator } from '@/components/training/ProgressIndicator';
 import { ModuleComplete } from '@/components/training/ModuleComplete';
+import { ModuleLoading } from '@/components/training/ModuleLoading';
 import { FireModule } from '@/types';
 import { useUser } from '@/store/useStore';
 import { saveModuleProgress, loadModuleProgress } from '@/services/training';
@@ -53,20 +55,20 @@ export default function ReframeModule() {
 
   const commonShameSpirals = [
     {
-      spiral: '"I\'m so stupid for saying that"',
-      reframe: '"I\'m learning what works in conversations"',
+      spiral: `"I'm so stupid for saying that"`,
+      reframe: `"I'm learning what works in conversations"`,
     },
     {
-      spiral: '"Everyone must think I\'m incompetent"',
-      reframe: '"I made one mistake. That doesn\'t define me"',
+      spiral: `"Everyone must think I'm incompetent"`,
+      reframe: `"I made one mistake. That doesn't define me"`,
     },
     {
-      spiral: '"I always mess things up"',
-      reframe: '"I\'m noticing a pattern I can change"',
+      spiral: `"I always mess things up"`,
+      reframe: `"I'm noticing a pattern I can change"`,
     },
     {
-      spiral: '"I\'ll never be good enough"',
-      reframe: '"I\'m growing. Progress isn\'t perfection"',
+      spiral: `"I'll never be good enough"`,
+      reframe: `"I'm growing. Progress isn't perfection"`,
     },
   ];
 
@@ -118,21 +120,34 @@ export default function ReframeModule() {
     loadProgress();
   }, [user?.user_id]);
 
-  // Auto-save progress when screen or text changes
+  // Create debounced save function (1 second delay)
+  const debouncedSave = useMemo(
+    () =>
+      debounce(async () => {
+        if (!user?.user_id) return;
+
+        await saveModuleProgress(user.user_id, FireModule.REFRAME, {
+          currentScreen,
+          reframeData: {
+            reframeText,
+          },
+        });
+      }, 1000),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  // Auto-save progress when screen or text changes (debounced)
   useEffect(() => {
     if (isLoading || !user?.user_id) return;
 
-    const saveProgress = async () => {
-      await saveModuleProgress(user.user_id!, FireModule.REFRAME, {
-        currentScreen,
-        reframeData: {
-          reframeText,
-        },
-      });
-    };
+    debouncedSave();
+  }, [currentScreen, reframeText, user?.user_id, isLoading, debouncedSave]);
 
-    saveProgress();
-  }, [currentScreen, reframeText, user?.user_id, isLoading]);
+  // Show loading state while loading saved progress
+  if (isLoading) {
+    return <ModuleLoading moduleTitle="Module 3: REFRAME" />;
+  }
 
   return (
     <View className="flex-1 bg-[#0A1612]">
@@ -207,23 +222,23 @@ Just... truth." />
 
             <ContentCard
               heading="All-or-Nothing Thinking"
-              body='"I messed up once, so I\'m a failure"
+              body={`"I messed up once, so I'm a failure"
 
-Reality: One mistake doesn\'t define you.'
+Reality: One mistake doesn't define you.`}
             />
 
             <ContentCard
               heading="Mind Reading"
-              body='"They definitely think I\'m weird"
+              body={`"They definitely think I'm weird"
 
-Reality: You don\'t know what they think. You\'re ruminating on assumptions.'
+Reality: You don't know what they think. You're ruminating on assumptions.`}
             />
 
             <ContentCard
               heading="Catastrophizing"
-              body='"This will ruin everything"
+              body={`"This will ruin everything"
 
-Reality: Most outcomes aren\'t as bad as the spiral predicts.'
+Reality: Most outcomes aren't as bad as the spiral predicts.`}
             />
 
             <KeyTakeaway message="Your rumination isn't reality. It's a distortion.

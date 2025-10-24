@@ -4,7 +4,7 @@
  * Clean, calming design with pulsing aura and countdown
  */
 
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect, useRef } from 'react';
 import { View, Pressable, Animated } from 'react-native';
@@ -21,6 +21,7 @@ type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete
 
 export default function SpiralInterrupt() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ from?: string }>();
   const shiftDevice = useShiftDevice();
   const { setSpiraling } = useStore();
 
@@ -150,7 +151,13 @@ export default function SpiralInterrupt() {
     console.log('Spiral logged:', spiralLog);
 
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.back();
+
+    // If coming from onboarding, navigate to next onboarding step
+    if (params.from === 'onboarding') {
+      router.replace('/onboarding?completed=demo' as any);
+    } else {
+      router.back();
+    }
   };
 
   // Pre-check options - absolute emotional states

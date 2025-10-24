@@ -6,6 +6,99 @@
 import { supabase } from '@/utils/supabase';
 import { FireModule } from '@/types';
 
+// Error types for better error handling
+export enum TrainingServiceError {
+  NETWORK_ERROR = 'NETWORK_ERROR',
+  DATABASE_ERROR = 'DATABASE_ERROR',
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+  TIMEOUT_ERROR = 'TIMEOUT_ERROR',
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+}
+
+// Retry configuration
+const RETRY_CONFIG = {
+  maxRetries: 3,
+  initialDelay: 1000, // 1 second
+  maxDelay: 10000, // 10 seconds
+  backoffMultiplier: 2,
+};
+
+/**
+ * Retry a function with exponential backoff
+ */
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  retries = RETRY_CONFIG.maxRetries,
+  delay = RETRY_CONFIG.initialDelay
+): Promise<T> {
+  try {
+    return await fn();
+  } catch (error: any) {
+    // Don't retry validation errors or if we've exhausted retries
+    if (retries === 0 || error.code === 'VALIDATION_ERROR') {
+      throw error;
+    }
+
+    // Only retry network errors and timeouts
+    const shouldRetry =
+      error.code === 'NETWORK_ERROR' ||
+      error.code === 'TIMEOUT_ERROR' ||
+      error.message?.includes('network') ||
+      error.message?.includes('timeout') ||
+      error.message?.includes('fetch');
+
+    if (!shouldRetry) {
+      throw error;
+    }
+
+    // Wait with exponential backoff
+    const nextDelay = Math.min(delay * RETRY_CONFIG.backoffMultiplier, RETRY_CONFIG.maxDelay);
+    console.log(`Retrying in ${delay}ms... (${retries} retries left)`);
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    return retryWithBackoff(fn, retries - 1, nextDelay);
+  }
+}
+
+/**
+ * Categorize error for better handling
+ */
+function categorizeError(error: any): { type: TrainingServiceError; message: string } {
+  if (!error) {
+    return { type: TrainingServiceError.UNKNOWN_ERROR, message: 'Unknown error occurred' };
+  }
+
+  const errorMessage = error.message?.toLowerCase() || '';
+
+  // Network errors
+  if (
+    errorMessage.includes('network') ||
+    errorMessage.includes('fetch') ||
+    errorMessage.includes('connection') ||
+    error.code === 'ECONNREFUSED' ||
+    error.code === 'ENOTFOUND'
+  ) {
+    return { type: TrainingServiceError.NETWORK_ERROR, message: 'Network connection error. Please check your internet connection.' };
+  }
+
+  // Timeout errors
+  if (errorMessage.includes('timeout') || error.code === 'ETIMEDOUT') {
+    return { type: TrainingServiceError.TIMEOUT_ERROR, message: 'Request timed out. Please try again.' };
+  }
+
+  // Database errors
+  if (error.code?.startsWith('PGRST') || errorMessage.includes('database')) {
+    return { type: TrainingServiceError.DATABASE_ERROR, message: 'Database error. Please try again.' };
+  }
+
+  // Validation errors
+  if (errorMessage.includes('validation') || errorMessage.includes('invalid')) {
+    return { type: TrainingServiceError.VALIDATION_ERROR, message: error.message };
+  }
+
+  return { type: TrainingServiceError.UNKNOWN_ERROR, message: error.message || 'An unexpected error occurred' };
+}
+
 // Type definitions for module-specific data
 export interface FocusModuleData {
   selectedTriggers: string[];
@@ -38,136 +131,190 @@ export interface ModuleProgress {
 }
 
 /**
- * Save or update module progress
+ * Save or update module progress with retry logic
  */
 export async function saveModuleProgress(
   userId: string,
   module: FireModule,
   data: Partial<ModuleProgress>
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const updateData: any = {
-      user_id: userId,
-      module,
-      last_accessed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+): Promise<{ success: boolean; error?: string; errorType?: TrainingServiceError }> {
+  // Validation
+  if (!userId) {
+    return {
+      success: false,
+      error: 'User ID is required',
+      errorType: TrainingServiceError.VALIDATION_ERROR,
     };
+  }
 
-    // Add current screen if provided
-    if (data.currentScreen) {
-      updateData.current_screen = data.currentScreen;
-    }
+  if (!module) {
+    return {
+      success: false,
+      error: 'Module is required',
+      errorType: TrainingServiceError.VALIDATION_ERROR,
+    };
+  }
 
-    // Add module-specific data
-    if (data.focusData) {
-      updateData.selected_triggers = data.focusData.selectedTriggers;
-    }
+  try {
+    // Use retry with backoff for network resilience
+    await retryWithBackoff(async () => {
+      const updateData: any = {
+        user_id: userId,
+        module,
+        last_accessed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
-    if (data.interruptData) {
-      updateData.selected_physical_signs = data.interruptData.selectedPhysicalSigns;
-      updateData.selected_mental_cues = data.interruptData.selectedMentalCues;
-    }
-
-    if (data.reframeData) {
-      updateData.reframe_text = data.reframeData.reframeText;
-    }
-
-    if (data.executeData) {
-      updateData.selected_routines = data.executeData.selectedRoutines;
-      updateData.selected_environment = data.executeData.selectedEnvironment;
-    }
-
-    // Add completion status if provided
-    if (data.completed !== undefined) {
-      updateData.completed = data.completed;
-      if (data.completed) {
-        updateData.completed_at = new Date().toISOString();
+      // Add current screen if provided
+      if (data.currentScreen) {
+        updateData.current_screen = data.currentScreen;
       }
-    }
 
-    // Upsert (insert or update)
-    const { error } = await supabase
-      .from('fire_training_progress')
-      .upsert(updateData, {
-        onConflict: 'user_id,module',
-      });
+      // Add module-specific data
+      if (data.focusData) {
+        updateData.selected_triggers = data.focusData.selectedTriggers;
+      }
 
-    if (error) {
-      console.error('Error saving module progress:', error);
-      return { success: false, error: error.message };
-    }
+      if (data.interruptData) {
+        updateData.selected_physical_signs = data.interruptData.selectedPhysicalSigns;
+        updateData.selected_mental_cues = data.interruptData.selectedMentalCues;
+      }
+
+      if (data.reframeData) {
+        updateData.reframe_text = data.reframeData.reframeText;
+      }
+
+      if (data.executeData) {
+        updateData.selected_routines = data.executeData.selectedRoutines;
+        updateData.selected_environment = data.executeData.selectedEnvironment;
+      }
+
+      // Add completion status if provided
+      if (data.completed !== undefined) {
+        updateData.completed = data.completed;
+        if (data.completed) {
+          updateData.completed_at = new Date().toISOString();
+        }
+      }
+
+      // Upsert (insert or update)
+      const { error } = await supabase
+        .from('fire_training_progress')
+        .upsert(updateData, {
+          onConflict: 'user_id,module',
+        });
+
+      if (error) {
+        const categorized = categorizeError(error);
+        console.error('Error saving module progress:', error);
+        throw { ...error, ...categorized };
+      }
+    });
 
     return { success: true };
   } catch (error: any) {
-    console.error('Error in saveModuleProgress:', error);
-    return { success: false, error: error.message };
+    const categorized = categorizeError(error);
+    console.error('Error in saveModuleProgress:', categorized);
+    return {
+      success: false,
+      error: categorized.message,
+      errorType: categorized.type,
+    };
   }
 }
 
 /**
- * Load module progress for a specific module
+ * Load module progress for a specific module with retry logic
  */
 export async function loadModuleProgress(
   userId: string,
   module: FireModule
-): Promise<{ data: ModuleProgress | null; error?: string }> {
+): Promise<{ data: ModuleProgress | null; error?: string; errorType?: TrainingServiceError }> {
+  // Validation
+  if (!userId) {
+    return {
+      data: null,
+      error: 'User ID is required',
+      errorType: TrainingServiceError.VALIDATION_ERROR,
+    };
+  }
+
+  if (!module) {
+    return {
+      data: null,
+      error: 'Module is required',
+      errorType: TrainingServiceError.VALIDATION_ERROR,
+    };
+  }
+
   try {
-    const { data, error } = await supabase
-      .from('fire_training_progress')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('module', module)
-      .single();
+    // Use retry with backoff for network resilience
+    const result = await retryWithBackoff(async () => {
+      const { data, error } = await supabase
+        .from('fire_training_progress')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('module', module)
+        .single();
 
-    if (error && error.code !== 'PGRST116') {
-      // PGRST116 = no rows returned, which is fine
-      console.error('Error loading module progress:', error);
-      return { data: null, error: error.message };
-    }
+      if (error && error.code !== 'PGRST116') {
+        // PGRST116 = no rows returned, which is fine
+        const categorized = categorizeError(error);
+        console.error('Error loading module progress:', error);
+        throw { ...error, ...categorized };
+      }
 
-    if (!data) {
+      return data;
+    });
+
+    if (!result) {
       return { data: null };
     }
 
     // Transform database format to app format
     const moduleProgress: ModuleProgress = {
-      module: data.module as FireModule,
-      completed: data.completed || false,
-      currentScreen: data.current_screen,
-      lastAccessedAt: data.last_accessed_at,
+      module: result.module as FireModule,
+      completed: result.completed || false,
+      currentScreen: result.current_screen,
+      lastAccessedAt: result.last_accessed_at,
     };
 
     // Add module-specific data
-    if (module === FireModule.FOCUS && data.selected_triggers) {
+    if (module === FireModule.FOCUS && result.selected_triggers) {
       moduleProgress.focusData = {
-        selectedTriggers: data.selected_triggers,
+        selectedTriggers: result.selected_triggers,
       };
     }
 
     if (module === FireModule.INTERRUPT) {
       moduleProgress.interruptData = {
-        selectedPhysicalSigns: data.selected_physical_signs || [],
-        selectedMentalCues: data.selected_mental_cues || [],
+        selectedPhysicalSigns: result.selected_physical_signs || [],
+        selectedMentalCues: result.selected_mental_cues || [],
       };
     }
 
-    if (module === FireModule.REFRAME && data.reframe_text) {
+    if (module === FireModule.REFRAME && result.reframe_text) {
       moduleProgress.reframeData = {
-        reframeText: data.reframe_text,
+        reframeText: result.reframe_text,
       };
     }
 
     if (module === FireModule.EXECUTE) {
       moduleProgress.executeData = {
-        selectedRoutines: data.selected_routines || [],
-        selectedEnvironment: data.selected_environment || [],
+        selectedRoutines: result.selected_routines || [],
+        selectedEnvironment: result.selected_environment || [],
       };
     }
 
     return { data: moduleProgress };
   } catch (error: any) {
-    console.error('Error in loadModuleProgress:', error);
-    return { data: null, error: error.message };
+    const categorized = categorizeError(error);
+    console.error('Error in loadModuleProgress:', categorized);
+    return {
+      data: null,
+      error: categorized.message,
+      errorType: categorized.type,
+    };
   }
 }
 
@@ -236,52 +383,79 @@ export async function completeModule(
 }
 
 /**
- * Update user's fire_progress in user_profiles table
+ * Update user's fire_progress in user_profiles table with retry logic
  * This is for the training index to show completion status
  */
 export async function updateUserFireProgress(
   userId: string,
   module: FireModule,
   completed: boolean
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    // Get current fire_progress
-    const { data: userData, error: fetchError } = await supabase
-      .from('user_profiles')
-      .select('fire_progress')
-      .eq('user_id', userId)
-      .single();
-
-    if (fetchError) {
-      console.error('Error fetching user profile:', fetchError);
-      return { success: false, error: fetchError.message };
-    }
-
-    const fireProgress = userData?.fire_progress || {
-      focus: false,
-      interrupt: false,
-      reframe: false,
-      execute: false,
+): Promise<{ success: boolean; error?: string; errorType?: TrainingServiceError }> {
+  // Validation
+  if (!userId) {
+    return {
+      success: false,
+      error: 'User ID is required',
+      errorType: TrainingServiceError.VALIDATION_ERROR,
     };
+  }
 
-    // Update the specific module
-    fireProgress[module] = completed;
+  if (!module) {
+    return {
+      success: false,
+      error: 'Module is required',
+      errorType: TrainingServiceError.VALIDATION_ERROR,
+    };
+  }
 
-    // Update in database
-    const { error: updateError } = await supabase
-      .from('user_profiles')
-      .update({ fire_progress: fireProgress, updated_at: new Date().toISOString() })
-      .eq('user_id', userId);
+  try {
+    // Use retry with backoff for network resilience
+    await retryWithBackoff(async () => {
+      // Get current fire_progress
+      const { data: userData, error: fetchError } = await supabase
+        .from('user_profiles')
+        .select('fire_progress')
+        .eq('user_id', userId)
+        .single();
 
-    if (updateError) {
-      console.error('Error updating user fire progress:', updateError);
-      return { success: false, error: updateError.message };
-    }
+      if (fetchError) {
+        const categorized = categorizeError(fetchError);
+        console.error('Error fetching user profile:', fetchError);
+        throw { ...fetchError, ...categorized };
+      }
+
+      const fireProgress = userData?.fire_progress || {
+        focus: false,
+        interrupt: false,
+        reframe: false,
+        execute: false,
+      };
+
+      // Update the specific module
+      fireProgress[module] = completed;
+
+      // Update in database
+      const { error: updateError } = await supabase
+        .from('user_profiles')
+        .update({ fire_progress: fireProgress, updated_at: new Date().toISOString() })
+        .eq('user_id', userId);
+
+      if (updateError) {
+        const categorized = categorizeError(updateError);
+        console.error('Error updating user fire progress:', updateError);
+        throw { ...updateError, ...categorized };
+      }
+    });
 
     return { success: true };
   } catch (error: any) {
-    console.error('Error in updateUserFireProgress:', error);
-    return { success: false, error: error.message };
+    const categorized = categorizeError(error);
+    console.error('Error in updateUserFireProgress:', categorized);
+    return {
+      success: false,
+      error: categorized.message,
+      errorType: categorized.type,
+    };
   }
 }
 

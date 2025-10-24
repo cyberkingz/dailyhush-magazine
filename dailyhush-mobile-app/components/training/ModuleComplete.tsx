@@ -74,7 +74,7 @@ export function ModuleComplete({
       <Text className="text-[#95B8A8] text-base text-center mb-8">
         {showCertification
           ? "You've completed all F.I.R.E. modules!"
-          : 'Great work. Here's what you learned:'}
+          : "Great work. Here's what you learned:"}
       </Text>
 
       {/* Key Learnings */}

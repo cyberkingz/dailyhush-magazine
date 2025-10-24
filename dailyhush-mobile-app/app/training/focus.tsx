@@ -5,10 +5,11 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft, ArrowRight } from 'lucide-react-native';
+import { debounce } from '@/utils/debounce';
 
 import { Text } from '@/components/ui/text';
 import { ContentCard } from '@/components/training/ContentCard';
@@ -16,6 +17,7 @@ import { InteractiveExercise } from '@/components/training/InteractiveExercise';
 import { KeyTakeaway } from '@/components/training/KeyTakeaway';
 import { ProgressIndicator } from '@/components/training/ProgressIndicator';
 import { ModuleComplete } from '@/components/training/ModuleComplete';
+import { ModuleLoading } from '@/components/training/ModuleLoading';
 import { FireModule } from '@/types';
 import { useUser } from '@/store/useStore';
 import { saveModuleProgress, loadModuleProgress } from '@/services/training';
@@ -120,21 +122,34 @@ export default function FocusModule() {
     loadProgress();
   }, [user?.user_id]);
 
-  // Auto-save progress when screen or selections change
+  // Create debounced save function (1 second delay)
+  const debouncedSave = useMemo(
+    () =>
+      debounce(async () => {
+        if (!user?.user_id) return;
+
+        await saveModuleProgress(user.user_id, FireModule.FOCUS, {
+          currentScreen,
+          focusData: {
+            selectedTriggers,
+          },
+        });
+      }, 1000),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  // Auto-save progress when screen or selections change (debounced)
   useEffect(() => {
     if (isLoading || !user?.user_id) return;
 
-    const saveProgress = async () => {
-      await saveModuleProgress(user.user_id!, FireModule.FOCUS, {
-        currentScreen,
-        focusData: {
-          selectedTriggers,
-        },
-      });
-    };
+    debouncedSave();
+  }, [currentScreen, selectedTriggers, user?.user_id, isLoading, debouncedSave]);
 
-    saveProgress();
-  }, [currentScreen, selectedTriggers, user?.user_id, isLoading]);
+  // Show loading state while loading saved progress
+  if (isLoading) {
+    return <ModuleLoading moduleTitle="Module 1: FOCUS" />;
+  }
 
   return (
     <View className="flex-1 bg-[#0A1612]">

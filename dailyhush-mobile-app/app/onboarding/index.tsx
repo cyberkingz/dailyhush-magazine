@@ -10,8 +10,8 @@
  * 5. Complete Setup
  */
 
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useState, useEffect } from 'react';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Pressable, ScrollView, TextInput } from 'react-native';
 import * as Haptics from 'expo-haptics';
@@ -32,11 +32,22 @@ interface AssessmentData {
 
 export default function Onboarding() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ completed?: string }>();
   const { user, setUser } = useStore();
 
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('welcome');
   const [assessmentData, setAssessmentData] = useState<AssessmentData>({});
   const [selectedQuizAnswer, setSelectedQuizAnswer] = useState<number | null>(null);
+
+  /**
+   * Auto-advance when returning from demo
+   */
+  useEffect(() => {
+    if (params.completed === 'demo' && currentStep === 'welcome') {
+      // User completed the demo, advance to shift step
+      setCurrentStep('shift');
+    }
+  }, [params.completed]);
 
   /**
    * Progress through onboarding steps
@@ -361,7 +372,7 @@ export default function Onboarding() {
 
         {/* Try Demo Button */}
         <Pressable
-          onPress={() => router.push('/spiral' as any)}
+          onPress={() => router.push('/spiral?from=onboarding' as any)}
           className="bg-[#40916C] h-14 rounded-2xl items-center justify-center active:opacity-90 mb-4"
         >
           <Text className="text-white text-lg font-bold">

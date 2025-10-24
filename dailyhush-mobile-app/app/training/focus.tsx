@@ -5,8 +5,9 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft, ArrowRight } from 'lucide-react-native';
 import { debounce } from '@/utils/debounce';
@@ -21,6 +22,9 @@ import { ModuleLoading } from '@/components/training/ModuleLoading';
 import { FireModule } from '@/types';
 import { useUser } from '@/store/useStore';
 import { saveModuleProgress, loadModuleProgress } from '@/services/training';
+import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
+import { timing } from '@/constants/timing';
 
 type Screen =
   | 'welcome'
@@ -35,6 +39,8 @@ type Screen =
 export default function FocusModule() {
   const router = useRouter();
   const user = useUser();
+  const insets = useSafeAreaInsets();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [currentScreen, setCurrentScreen] = useState<Screen>('welcome');
   const [selectedTriggers, setSelectedTriggers] = useState<string[]>([]);
   const [reflectionText, setReflectionText] = useState('');
@@ -134,7 +140,7 @@ export default function FocusModule() {
             selectedTriggers,
           },
         });
-      }, 1000),
+      }, timing.debounce.save),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
@@ -146,26 +152,31 @@ export default function FocusModule() {
     debouncedSave();
   }, [currentScreen, selectedTriggers, user?.user_id, isLoading, debouncedSave]);
 
+  // Scroll to top when screen changes
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+  }, [currentScreen]);
+
   // Show loading state while loading saved progress
   if (isLoading) {
     return <ModuleLoading moduleTitle="Module 1: FOCUS" />;
   }
 
   return (
-    <View className="flex-1 bg-[#0A1612]">
+    <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       {/* Header */}
-      <View className="px-5 pt-5 pb-3">
+      <View className="px-5 pb-3" style={{ paddingTop: insets.top + spacing.safeArea.top }}>
         <View className="flex-row items-center justify-between mb-4">
           <Pressable
             onPress={handleBack}
             className="p-2 active:opacity-70"
           >
-            <ArrowLeft size={24} color="#E8F4F0" strokeWidth={2} />
+            <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} />
           </Pressable>
 
-          <Text className="text-[#E8F4F0] text-base font-semibold">
+          <Text className="text-base font-semibold" style={{ color: colors.text.primary }}>
             Module 1: FOCUS
           </Text>
 
@@ -179,12 +190,15 @@ export default function FocusModule() {
       </View>
 
       <ScrollView
+        ref={scrollViewRef}
         className="flex-1"
         contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingBottom: 40,
+          paddingHorizontal: spacing.lg,
+          paddingBottom: spacing["3xl"],
         }}
         showsVerticalScrollIndicator={false}
+        bounces={false}
+        overScrollMode="never"
       >
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
@@ -254,21 +268,21 @@ Usually 3-10 seconds."
 
             <View className="gap-3">
               <View className="flex-row items-start">
-                <Text className="text-[#52B788] text-xl mr-3">✓</Text>
+                <Text className="text-[#52B788] text-xl mr-3" style={{ lineHeight: 28, paddingTop: 2 }}>✓</Text>
                 <Text className="text-[#E8F4F0] text-base flex-1 leading-relaxed">
                   Know your #1 rumination trigger
                 </Text>
               </View>
 
               <View className="flex-row items-start">
-                <Text className="text-[#52B788] text-xl mr-3">✓</Text>
+                <Text className="text-[#52B788] text-xl mr-3" style={{ lineHeight: 28, paddingTop: 2 }}>✓</Text>
                 <Text className="text-[#E8F4F0] text-base flex-1 leading-relaxed">
                   Recognize it in real-time
                 </Text>
               </View>
 
               <View className="flex-row items-start">
-                <Text className="text-[#52B788] text-xl mr-3">✓</Text>
+                <Text className="text-[#52B788] text-xl mr-3" style={{ lineHeight: 28, paddingTop: 2 }}>✓</Text>
                 <Text className="text-[#E8F4F0] text-base flex-1 leading-relaxed">
                   Understand why YOUR brain loops (it's different for everyone)
                 </Text>
@@ -474,24 +488,34 @@ And that means: One solution fixes both."
 
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
-        <View className="px-5 pb-5">
+        <View className="px-5" style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
           <Pressable
             onPress={handleNext}
             disabled={currentScreen === 'triggers' && selectedTriggers.length === 0}
-            className={`h-14 rounded-2xl flex-row items-center justify-center ${
-              currentScreen === 'triggers' && selectedTriggers.length === 0
-                ? 'bg-[#1A2E26] opacity-50'
-                : 'bg-[#40916C] active:opacity-90'
-            }`}
+            className="rounded-2xl flex-row items-center justify-center"
+            style={{
+              height: spacing.button.height,
+              backgroundColor: currentScreen === 'triggers' && selectedTriggers.length === 0
+                ? colors.button.disabled
+                : colors.button.primary,
+              opacity: currentScreen === 'triggers' && selectedTriggers.length === 0 ? 0.5 : 1,
+            }}
           >
-            <Text className={`text-lg font-semibold mr-2 ${
-              currentScreen === 'triggers' && selectedTriggers.length === 0
-                ? 'text-[#95B8A8]'
-                : 'text-white'
-            }`}>
+            <Text
+              className="text-lg font-semibold mr-2"
+              style={{
+                color: currentScreen === 'triggers' && selectedTriggers.length === 0
+                  ? colors.text.secondary
+                  : colors.white,
+              }}
+            >
               Continue
             </Text>
-            <ArrowRight size={20} color={currentScreen === 'triggers' && selectedTriggers.length === 0 ? '#95B8A8' : '#FFFFFF'} strokeWidth={2} />
+            <ArrowRight
+              size={20}
+              color={currentScreen === 'triggers' && selectedTriggers.length === 0 ? colors.text.secondary : colors.white}
+              strokeWidth={2}
+            />
           </Pressable>
         </View>
       )}

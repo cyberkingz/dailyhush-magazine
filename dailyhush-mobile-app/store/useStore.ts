@@ -22,6 +22,7 @@ interface DailyHushStore extends AppState {
   setCurrentProtocol: (protocol: InterventionProtocol | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+  completeFireModule: (module: 'focus' | 'interrupt' | 'reframe' | 'execute') => void;
   reset: () => void;
 }
 
@@ -62,6 +63,17 @@ export const useStore = create<DailyHushStore>((set) => ({
 
   // Error handling
   setError: (error) => set({ error }),
+
+  // Complete F.I.R.E. module (update local state)
+  completeFireModule: (module) => set((state) => ({
+    user: state.user ? {
+      ...state.user,
+      fire_progress: {
+        ...state.user.fire_progress,
+        [module]: true,
+      },
+    } : null,
+  })),
 
   // Reset state (logout)
   reset: () => set(initialState),

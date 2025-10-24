@@ -5,8 +5,9 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft, ArrowRight, RefreshCcw } from 'lucide-react-native';
 import { debounce } from '@/utils/debounce';
@@ -21,6 +22,9 @@ import { ModuleLoading } from '@/components/training/ModuleLoading';
 import { FireModule } from '@/types';
 import { useUser } from '@/store/useStore';
 import { saveModuleProgress, loadModuleProgress } from '@/services/training';
+import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
+import { timing } from '@/constants/timing';
 
 type Screen =
   | 'welcome'
@@ -35,6 +39,8 @@ type Screen =
 export default function ReframeModule() {
   const router = useRouter();
   const user = useUser();
+  const insets = useSafeAreaInsets();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [currentScreen, setCurrentScreen] = useState<Screen>('welcome');
   const [reframeText, setReframeText] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -120,7 +126,7 @@ export default function ReframeModule() {
     loadProgress();
   }, [user?.user_id]);
 
-  // Create debounced save function (1 second delay)
+  // Create debounced save function
   const debouncedSave = useMemo(
     () =>
       debounce(async () => {
@@ -132,7 +138,7 @@ export default function ReframeModule() {
             reframeText,
           },
         });
-      }, 1000),
+      }, timing.debounce.save),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
@@ -144,23 +150,28 @@ export default function ReframeModule() {
     debouncedSave();
   }, [currentScreen, reframeText, user?.user_id, isLoading, debouncedSave]);
 
+  // Scroll to top when screen changes
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+  }, [currentScreen]);
+
   // Show loading state while loading saved progress
   if (isLoading) {
     return <ModuleLoading moduleTitle="Module 3: REFRAME" />;
   }
 
   return (
-    <View className="flex-1 bg-[#0A1612]">
+    <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       {/* Header */}
-      <View className="px-5 pt-5 pb-3">
+      <View className="px-5 pb-3" style={{ paddingTop: insets.top + spacing.safeArea.top }}>
         <View className="flex-row items-center justify-between mb-4">
           <Pressable onPress={handleBack} className="p-2 active:opacity-70">
-            <ArrowLeft size={24} color="#E8F4F0" strokeWidth={2} />
+            <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} />
           </Pressable>
 
-          <Text className="text-[#E8F4F0] text-base font-semibold">
+          <Text className="text-base font-semibold" style={{ color: colors.text.primary }}>
             Module 3: REFRAME
           </Text>
 
@@ -173,12 +184,15 @@ export default function ReframeModule() {
       </View>
 
       <ScrollView
+        ref={scrollViewRef}
         className="flex-1"
         contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingBottom: 40,
+          paddingHorizontal: spacing.lg,
+          paddingBottom: spacing['3xl'],
         }}
         showsVerticalScrollIndicator={false}
+        bounces={false}
+        overScrollMode="never"
       >
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
@@ -450,15 +464,19 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
 
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
-        <View className="px-5 pb-5">
+        <View className="px-5" style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
           <Pressable
             onPress={handleNext}
-            className="bg-[#40916C] h-14 rounded-2xl flex-row items-center justify-center active:opacity-90"
+            className="rounded-2xl flex-row items-center justify-center active:opacity-90"
+            style={{
+              backgroundColor: colors.button.primary,
+              height: spacing.button.height,
+            }}
           >
-            <Text className="text-white text-lg font-semibold mr-2">
+            <Text className="text-lg font-semibold mr-2" style={{ color: colors.white }}>
               Continue
             </Text>
-            <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
+            <ArrowRight size={20} color={colors.white} strokeWidth={2} />
           </Pressable>
         </View>
       )}

@@ -12,6 +12,8 @@ import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
 import { useUser } from '@/store/useStore';
 import { FireModule } from '@/types';
+import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
 
 interface ModuleCardProps {
   module: FireModule;
@@ -28,31 +30,32 @@ function ModuleCard({ module, title, description, duration, completed, locked, o
     <Pressable
       onPress={onPress}
       disabled={locked}
-      className={`bg-[#1A4D3C] rounded-2xl p-5 mb-4 ${locked ? 'opacity-50' : 'active:opacity-90'}`}
+      className={`rounded-2xl p-5 mb-4 ${locked ? 'opacity-50' : 'active:opacity-90'}`}
+      style={{ backgroundColor: colors.background.secondary }}
     >
       <View className="flex-row justify-between items-center mb-3">
-        <Text className="text-[#E8F4F0] text-lg font-bold flex-1">
+        <Text className="text-lg font-bold flex-1" style={{ color: colors.text.primary }}>
           {title}
         </Text>
         {completed && (
-          <View className="bg-[#2D6A4F] p-1.5 rounded-full">
-            <Check size={16} color="#B7E4C7" strokeWidth={3} />
+          <View className="p-1.5 rounded-full" style={{ backgroundColor: colors.background.tertiary }}>
+            <Check size={16} color={colors.emerald[100]} strokeWidth={3} />
           </View>
         )}
         {locked && (
-          <View className="bg-[#1A2E26] p-1.5 rounded-full">
-            <Lock size={16} color="#95B8A8" strokeWidth={2} />
+          <View className="p-1.5 rounded-full" style={{ backgroundColor: colors.background.border }}>
+            <Lock size={16} color={colors.text.secondary} strokeWidth={2} />
           </View>
         )}
       </View>
 
-      <Text className="text-[#95B8A8] text-sm leading-relaxed mb-3">
+      <Text className="text-sm leading-relaxed mb-3" style={{ color: colors.text.secondary }}>
         {description}
       </Text>
 
       <View className="flex-row items-center">
-        <Clock size={14} color="#95B8A8" strokeWidth={2} />
-        <Text className="text-[#95B8A8] text-xs ml-1.5">
+        <Clock size={14} color={colors.text.secondary} strokeWidth={2} />
+        <Text className="text-xs ml-1.5" style={{ color: colors.text.secondary }}>
           {duration}
         </Text>
       </View>
@@ -116,15 +119,15 @@ export default function Training() {
   const progress = (completedCount / 4) * 100;
 
   return (
-    <View className="flex-1 bg-[#0A1612]">
+    <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       <ScrollView
         className="flex-1"
         contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingTop: 20,
-          paddingBottom: 40,
+          paddingHorizontal: spacing.lg,
+          paddingTop: spacing.lg,
+          paddingBottom: spacing['3xl'],
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -132,18 +135,21 @@ export default function Training() {
         {/* Progress */}
         <View className="mb-6">
           <View className="flex-row justify-between items-center mb-2">
-            <Text className="text-[#95B8A8] text-sm">
+            <Text className="text-sm" style={{ color: colors.text.secondary }}>
               Your Progress
             </Text>
-            <Text className="text-[#95B8A8] text-sm">
+            <Text className="text-sm" style={{ color: colors.text.secondary }}>
               {completedCount}/4 Modules
             </Text>
           </View>
 
-          <View className="h-2 bg-[#1A2E26] rounded-full overflow-hidden">
+          <View className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: colors.background.border }}>
             <View
-              className="h-full bg-[#40916C]"
-              style={{ width: `${progress}%` }}
+              className="h-full"
+              style={{
+                width: `${progress}%`,
+                backgroundColor: colors.button.primary,
+              }}
             />
           </View>
         </View>
@@ -159,12 +165,18 @@ export default function Training() {
 
         {/* Certification */}
         {completedCount === 4 && (
-          <View className="bg-[#2D6A4F] rounded-2xl p-6 mt-4 items-center border border-[#40916C]/30">
+          <View
+            className="rounded-2xl p-6 mt-4 items-center border"
+            style={{
+              backgroundColor: colors.background.tertiary,
+              borderColor: colors.button.primary + '33', // 20% opacity
+            }}
+          >
             <Text className="text-5xl mb-3">🎓</Text>
-            <Text className="text-[#E8F4F0] text-xl font-bold text-center mb-2">
+            <Text className="text-xl font-bold text-center mb-2" style={{ color: colors.text.primary }}>
               F.I.R.E. Trained!
             </Text>
-            <Text className="text-[#B7E4C7] text-sm text-center leading-relaxed">
+            <Text className="text-sm text-center leading-relaxed" style={{ color: colors.emerald[100] }}>
               You've completed all modules. You now have advanced techniques unlocked.
             </Text>
           </View>

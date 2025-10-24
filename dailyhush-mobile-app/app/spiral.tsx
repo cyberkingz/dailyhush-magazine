@@ -214,7 +214,7 @@ export default function SpiralInterrupt() {
                   preFeelingRating === option.value ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                 }`}
               >
-                <Text className="text-5xl mb-2">{option.emoji}</Text>
+                <Text className="text-5xl mb-2" style={{ lineHeight: 60, paddingTop: 4 }}>{option.emoji}</Text>
                 <Text className={`text-base font-semibold ${
                   preFeelingRating === option.value ? 'text-white' : 'text-[#E8F4F0]'
                 }`}>
@@ -354,7 +354,7 @@ export default function SpiralInterrupt() {
                   postFeelingRating === option.value ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                 }`}
               >
-                <Text className="text-5xl mb-2">{option.emoji}</Text>
+                <Text className="text-5xl mb-2" style={{ lineHeight: 60, paddingTop: 4 }}>{option.emoji}</Text>
                 <Text className={`text-base font-semibold ${
                   postFeelingRating === option.value ? 'text-white' : 'text-[#E8F4F0]'
                 }`}>

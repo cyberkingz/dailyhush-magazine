@@ -10,6 +10,7 @@
 export interface UserProfile {
   user_id: string;
   email: string;
+  name?: string; // User's first name for personalization
   age?: number;
   quiz_score?: number; // 1-10 from Overthinking Quiz
   has_shift_necklace: boolean;

@@ -1,12 +1,14 @@
 /**
- * DailyHush - Pulse Button Component
- * Animated button with organic pulsing aura for important CTAs
+ * DailyHush - Premium Pulse Button Component
+ * Enhanced animated button with gradient, glow, and organic pulsing aura
  */
 
 import { useState, useEffect, useRef } from 'react';
 import { Pressable, Animated, View, ViewStyle } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
+import { colors } from '@/constants/colors';
 
 interface PulseButtonProps {
   onPress: () => void;
@@ -93,28 +95,44 @@ export function PulseButton({
     onPress();
   };
 
-  const colors = {
+  const colorSchemes = {
     primary: {
-      bg: '#40916C',
-      pulse: '#52B788',
-      text: '#FFFFFF',
+      gradient: colors.button.primaryGradient,
+      pulse: colors.emerald[500],
+      glow: colors.gradients.glow,
+      text: colors.white,
     },
     secondary: {
-      bg: '#1A4D3C',
-      pulse: '#2D6A4F',
-      text: '#E8F4F0',
+      gradient: [colors.emerald[800], colors.emerald[700]],
+      pulse: colors.emerald[600],
+      glow: colors.shadow.light,
+      text: colors.text.primary,
     },
     danger: {
-      bg: '#DC2626',
+      gradient: ['#EF4444', '#DC2626'],
       pulse: '#EF4444',
-      text: '#FFFFFF',
+      glow: 'rgba(239, 68, 68, 0.3)',
+      text: colors.white,
     },
   };
 
-  const colorScheme = colors[variant];
+  const colorScheme = colorSchemes[variant];
 
   return (
     <View style={[{ position: 'relative', alignItems: 'center' }, style]}>
+      {/* Outer glow (always visible for depth) */}
+      <View
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          borderRadius: 24,
+          backgroundColor: colorScheme.glow,
+          opacity: 0.4,
+          transform: [{ scale: 1.02 }],
+        }}
+      />
+
       {/* Pulse aura (only if enabled) */}
       {enablePulse && (
         <Animated.View
@@ -122,7 +140,7 @@ export function PulseButton({
             position: 'absolute',
             width: '100%',
             height: '100%',
-            borderRadius: 16,
+            borderRadius: 24,
             backgroundColor: colorScheme.pulse,
             opacity: pulseOpacity,
             transform: [{ scale: pulseScale }],
@@ -130,54 +148,63 @@ export function PulseButton({
         />
       )}
 
-      {/* Button */}
+      {/* Button with gradient */}
       <Animated.View style={{ transform: [{ scale: pressScale }], width: '100%' }}>
         <Pressable
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
           onPress={handlePress}
           style={{
-            backgroundColor: colorScheme.bg,
-            paddingVertical: subtitle ? 20 : 16,
-            paddingHorizontal: 24,
-            borderRadius: 16,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
+            overflow: 'hidden',
+            borderRadius: 24,
             shadowColor: colorScheme.pulse,
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.3,
-            shadowRadius: 8,
-            elevation: 5,
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.4,
+            shadowRadius: 16,
+            elevation: 8,
           }}
         >
-          {icon && <View style={{ marginRight: 12 }}>{icon}</View>}
+          <LinearGradient
+            colors={colorScheme.gradient}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{
+              paddingVertical: subtitle ? 24 : 20,
+              paddingHorizontal: 32,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {icon && <View style={{ marginRight: 12 }}>{icon}</View>}
 
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text
-              style={{
-                color: colorScheme.text,
-                fontSize: subtitle ? 20 : 18,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}
-            >
-              {title}
-            </Text>
-            {subtitle && (
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Text
                 style={{
                   color: colorScheme.text,
-                  fontSize: 14,
-                  opacity: 0.8,
-                  marginTop: 4,
+                  fontSize: subtitle ? 22 : 20,
+                  fontWeight: 'bold',
                   textAlign: 'center',
+                  letterSpacing: 0.5,
                 }}
               >
-                {subtitle}
+                {title}
               </Text>
-            )}
-          </View>
+              {subtitle && (
+                <Text
+                  style={{
+                    color: colorScheme.text,
+                    fontSize: 14,
+                    opacity: 0.9,
+                    marginTop: 6,
+                    textAlign: 'center',
+                  }}
+                >
+                  {subtitle}
+                </Text>
+              )}
+            </View>
+          </LinearGradient>
         </Pressable>
       </Animated.View>
     </View>

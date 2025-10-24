@@ -47,7 +47,7 @@ export function InteractiveExercise({
     <View className="bg-[#1A4D3C] rounded-2xl p-6 border border-[#40916C]/20">
       {/* Header */}
       <View className="flex-row items-center mb-4">
-        <Text className="text-4xl mr-3">{emoji}</Text>
+        <Text className="text-4xl mr-3" style={{ lineHeight: 48, paddingTop: 4 }}>{emoji}</Text>
         <Text className="text-[#E8F4F0] text-lg font-semibold flex-1">
           {title}
         </Text>
@@ -76,7 +76,7 @@ export function InteractiveExercise({
 
       {/* Character Count */}
       <View className="flex-row justify-between items-center mt-2">
-        <Text className={`text-xs ${isValid ? 'text-[#52B788]' : 'text-[#95B8A8]'}`}>
+        <Text className={`text-xs ${isValid ? 'text-[#52B788]' : 'text-[#95B8A8]'}`} style={{ lineHeight: 18 }}>
           {isValid ? '✓ Ready to continue' : `At least ${minLength} characters`}
         </Text>
         <Text className="text-[#95B8A8] text-xs">

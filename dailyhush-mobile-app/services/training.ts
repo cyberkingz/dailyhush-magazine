@@ -5,6 +5,7 @@
 
 import { supabase } from '@/utils/supabase';
 import { FireModule } from '@/types';
+import { isAuthenticated } from '@/services/auth';
 
 // Error types for better error handling
 export enum TrainingServiceError {
@@ -131,6 +132,14 @@ export interface ModuleProgress {
 }
 
 /**
+ * Check if a user ID is a valid UUID (not a temporary ID)
+ */
+function isValidUUID(userId: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(userId);
+}
+
+/**
  * Save or update module progress with retry logic
  */
 export async function saveModuleProgress(
@@ -145,6 +154,19 @@ export async function saveModuleProgress(
       error: 'User ID is required',
       errorType: TrainingServiceError.VALIDATION_ERROR,
     };
+  }
+
+  // Skip if not authenticated (includes temporary users)
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    console.log('Skipping save for unauthenticated user:', userId);
+    return { success: true }; // Return success to avoid blocking UI
+  }
+
+  // Additional validation for UUID format
+  if (!isValidUUID(userId)) {
+    console.log('Invalid UUID format:', userId);
+    return { success: true }; // Return success to avoid blocking UI
   }
 
   if (!module) {
@@ -239,6 +261,19 @@ export async function loadModuleProgress(
     };
   }
 
+  // Skip if not authenticated (includes temporary users)
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    console.log('Skipping load for unauthenticated user:', userId);
+    return { data: null }; // Return null to start fresh
+  }
+
+  // Additional validation for UUID format
+  if (!isValidUUID(userId)) {
+    console.log('Invalid UUID format:', userId);
+    return { data: null };
+  }
+
   if (!module) {
     return {
       data: null,
@@ -324,6 +359,16 @@ export async function loadModuleProgress(
 export async function loadAllModuleProgress(
   userId: string
 ): Promise<{ data: ModuleProgress[]; error?: string }> {
+  // Skip if not authenticated (includes temporary users)
+  if (!userId) {
+    return { data: [] };
+  }
+
+  const authenticated = await isAuthenticated();
+  if (!authenticated || !isValidUUID(userId)) {
+    return { data: [] };
+  }
+
   try {
     const { data, error } = await supabase
       .from('fire_training_progress')
@@ -400,6 +445,19 @@ export async function updateUserFireProgress(
     };
   }
 
+  // Skip if not authenticated (includes temporary users)
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    console.log('Skipping update for unauthenticated user:', userId);
+    return { success: true }; // Return success to avoid blocking UI
+  }
+
+  // Additional validation for UUID format
+  if (!isValidUUID(userId)) {
+    console.log('Invalid UUID format:', userId);
+    return { success: true }; // Return success to avoid blocking UI
+  }
+
   if (!module) {
     return {
       success: false,
@@ -465,6 +523,16 @@ export async function updateUserFireProgress(
 export async function getFIRECertificationStatus(
   userId: string
 ): Promise<{ certified: boolean; completedModules: number; error?: string }> {
+  // Skip if not authenticated (includes temporary users)
+  if (!userId) {
+    return { certified: false, completedModules: 0 };
+  }
+
+  const authenticated = await isAuthenticated();
+  if (!authenticated || !isValidUUID(userId)) {
+    return { certified: false, completedModules: 0 };
+  }
+
   try {
     const { data, error } = await supabase
       .from('user_profiles')

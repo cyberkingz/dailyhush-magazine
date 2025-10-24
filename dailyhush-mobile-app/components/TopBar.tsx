@@ -5,9 +5,12 @@
 
 import { View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Settings, Menu } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
+import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
 
 interface TopBarProps {
   title?: string;
@@ -16,6 +19,11 @@ interface TopBarProps {
   showSettings?: boolean;
   showMenu?: boolean;
   onMenuPress?: () => void;
+  onBackPress?: () => void; // Custom back handler
+  progressDots?: {
+    current: number;
+    total: number;
+  };
 }
 
 export function TopBar({
@@ -25,26 +33,44 @@ export function TopBar({
   showSettings = false,
   showMenu = false,
   onMenuPress,
+  onBackPress,
+  progressDots,
 }: TopBarProps) {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
-  // Center the logo if no back button and no settings
+  // Center the logo/progress if no back button and no settings
   const shouldCenter = !showBack && !showSettings && !showMenu;
 
   return (
-    <View className="bg-[#0A1612] px-5 pt-14 pb-4 border-b border-[#1A2E26]">
-      <View className="flex-row items-center justify-between">
+    <View
+      style={{
+        paddingHorizontal: 20,
+        paddingBottom: 16,
+        borderBottomWidth: 1,
+        paddingTop: insets.top + spacing.safeArea.top,
+        backgroundColor: colors.background.primary,
+        borderBottomColor: colors.background.border,
+      }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Left Side - Back Button or Spacer */}
-        <View className="flex-row items-center" style={{ width: showBack || shouldCenter ? 'auto' : 40 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', width: showBack || shouldCenter ? 'auto' : 40 }}>
           {showBack ? (
             <Pressable
               onPress={() => {
                 Haptics.selectionAsync();
-                router.back();
+                if (onBackPress) {
+                  onBackPress();
+                } else {
+                  router.back();
+                }
               }}
-              className="mr-4 p-2 -ml-2 active:opacity-70"
+              style={{ marginRight: 16, padding: 8, marginLeft: -8, opacity: 1 }}
             >
-              <ArrowLeft size={24} color="#E8F4F0" strokeWidth={2} />
+              {({ pressed }) => (
+                <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} opacity={pressed ? 0.7 : 1} />
+              )}
             </Pressable>
           ) : shouldCenter ? null : (
             <View style={{ width: 40 }} />
@@ -52,42 +78,73 @@ export function TopBar({
         </View>
 
         {/* Center - Logo/Title */}
-        <View className={shouldCenter ? "flex-1 items-center" : "flex-1"}>
-          <Text className="text-[#E8F4F0] text-xl font-bold" style={{ textAlign: shouldCenter ? 'center' : 'left' }}>
+        <View style={{ flex: 1, alignItems: shouldCenter ? 'center' : 'flex-start' }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              textAlign: shouldCenter ? 'center' : 'left',
+              color: colors.text.primary,
+            }}
+          >
             {title}
           </Text>
           {subtitle && (
-            <Text className="text-[#95B8A8] text-sm mt-0.5" style={{ textAlign: shouldCenter ? 'center' : 'left' }}>
+            <Text
+              style={{
+                fontSize: 14,
+                marginTop: 2,
+                textAlign: shouldCenter ? 'center' : 'left',
+                color: colors.text.secondary,
+              }}
+            >
               {subtitle}
             </Text>
           )}
         </View>
 
-        {/* Right Side - Settings or Menu or Spacer */}
-        <View style={{ width: 40 }}>
-          {showSettings && (
+        {/* Right Side - Progress Dots or Settings or Menu or Spacer */}
+        <View style={{ width: progressDots ? 'auto' : 40 }}>
+          {progressDots ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              {Array.from({ length: progressDots.total }).map((_, index) => (
+                <View
+                  key={index}
+                  style={{
+                    height: 8,
+                    borderRadius: 4,
+                    width: index === progressDots.current - 1 ? 24 : 8,
+                    backgroundColor:
+                      index < progressDots.current ? colors.emerald[500] : colors.background.border,
+                  }}
+                />
+              ))}
+            </View>
+          ) : showSettings ? (
             <Pressable
               onPress={() => {
                 Haptics.selectionAsync();
                 router.push('/settings' as any);
               }}
-              className="p-2 active:opacity-70"
+              style={{ padding: 8, opacity: 1 }}
             >
-              <Settings size={24} color="#95B8A8" strokeWidth={2} />
+              {({ pressed }) => (
+                <Settings size={24} color={colors.text.secondary} strokeWidth={2} opacity={pressed ? 0.7 : 1} />
+              )}
             </Pressable>
-          )}
-
-          {showMenu && (
+          ) : showMenu ? (
             <Pressable
               onPress={() => {
                 Haptics.selectionAsync();
                 onMenuPress?.();
               }}
-              className="p-2 active:opacity-70"
+              style={{ padding: 8, opacity: 1 }}
             >
-              <Menu size={24} color="#95B8A8" strokeWidth={2} />
+              {({ pressed }) => (
+                <Menu size={24} color={colors.text.secondary} strokeWidth={2} opacity={pressed ? 0.7 : 1} />
+              )}
             </Pressable>
-          )}
+          ) : null}
         </View>
       </View>
     </View>

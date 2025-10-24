@@ -8,17 +8,20 @@ import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { Brain, Moon, Info, Settings, TrendingUp } from 'lucide-react-native';
+import { Brain, Moon, Info, TrendingUp } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { useUser } from '@/store/useStore';
 import { PulseButton } from '@/components/PulseButton';
+import { TipCard } from '@/components/TipCard';
+import { PremiumCard } from '@/components/PremiumCard';
+import { colors } from '@/constants/colors';
 
 export default function HomeModern() {
   const router = useRouter();
   const user = useUser();
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [spiralsToday, setSpiralsToday] = useState(0);
+  const [spiralsToday] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
 
   // Mark component as mounted
@@ -46,11 +49,11 @@ export default function HomeModern() {
 
 
   return (
-    <View className="flex-1 bg-[#0A1612]">
+    <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       <ScrollView
-        className="flex-1"
+        style={{ flex: 1 }}
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingTop: 20,
@@ -61,133 +64,240 @@ export default function HomeModern() {
 
         {/* 3AM Mode Active Banner */}
         {is3AMMode && (
-          <Pressable
+          <PremiumCard
             onPress={() => router.push('/night-mode' as any)}
-            className="mb-6 active:opacity-80"
+            variant="elevated"
+            style={{ marginBottom: 24 }}
           >
-            <View className="bg-[#2D6A4F] rounded-2xl p-4">
-              <View className="flex-row items-center mb-2">
-                <Moon size={20} color="#E8F4F0" strokeWidth={2} />
-                <Text className="text-[#E8F4F0] text-base font-semibold ml-2">
+            <View style={{ padding: 20 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+                <Moon size={20} color={colors.text.primary} strokeWidth={2} />
+                <Text
+                  style={{
+                    color: colors.text.primary,
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginLeft: 8,
+                  }}
+                >
                   3AM Mode Active
                 </Text>
               </View>
-              <Text className="text-[#B7E4C7] text-sm leading-relaxed">
+              <Text
+                style={{
+                  color: colors.emerald[200],
+                  fontSize: 14,
+                  lineHeight: 20,
+                }}
+              >
                 Sleep-friendly protocols are ready. Red light mode protects your sleep.
               </Text>
             </View>
-          </Pressable>
+          </PremiumCard>
         )}
 
         {/* Today Stats */}
-        <View className="mb-6">
-          <Text className="text-[#E8F4F0] text-xl font-bold mb-3">
+        <View style={{ marginBottom: 24 }}>
+          <Text
+            style={{
+              color: colors.text.primary,
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginBottom: 12,
+            }}
+          >
             Today
           </Text>
-          <View className="bg-[#0F1F1A] rounded-2xl p-5 border border-[#40916C]/15">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-1">
-                <Text className="text-[#95B8A8] text-sm mb-2">
-                  Spirals interrupted
-                </Text>
-                <Text className="text-[#40916C] text-4xl font-bold">
-                  {spiralsToday}
-                </Text>
-              </View>
-              {spiralsToday > 0 && (
-                <View className="items-end">
-                  <Text className="text-[#95B8A8] text-xs mb-2 text-right">
-                    You're getting better{'\n'}at this
+          <PremiumCard variant="default">
+            <View style={{ padding: 20 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 14,
+                      marginBottom: 8,
+                    }}
+                  >
+                    Spirals interrupted
                   </Text>
-                  <Pressable onPress={() => router.push('/insights')}>
-                    <Text className="text-[#52B788] text-sm font-medium">
-                      View patterns →
-                    </Text>
-                  </Pressable>
+                  <Text
+                    style={{
+                      color: colors.emerald[500],
+                      fontSize: 36,
+                      fontWeight: 'bold',
+                      lineHeight: 44,
+                    }}
+                  >
+                    {spiralsToday}
+                  </Text>
                 </View>
-              )}
+                {spiralsToday > 0 && (
+                  <View style={{ alignItems: 'flex-end' }}>
+                    <Text
+                      style={{
+                        color: colors.text.secondary,
+                        fontSize: 12,
+                        marginBottom: 8,
+                        textAlign: 'right',
+                      }}
+                    >
+                      You&apos;re getting better{'\n'}at this
+                    </Text>
+                    <Pressable onPress={() => router.push('/insights')}>
+                      <Text
+                        style={{
+                          color: colors.emerald[500],
+                          fontSize: 14,
+                          fontWeight: '600',
+                        }}
+                      >
+                        View patterns →
+                      </Text>
+                    </Pressable>
+                  </View>
+                )}
+              </View>
             </View>
-          </View>
+          </PremiumCard>
         </View>
 
         {/* Main CTA - I'm Spiraling Button */}
-        <View className="mb-4">
+        <View style={{ marginBottom: 16 }}>
           <PulseButton
             onPress={() => router.push('/spiral')}
             title="I'M SPIRALING"
             subtitle="Tap to interrupt"
-            icon={<Info size={32} color="#E8F4F0" strokeWidth={2} />}
+            icon={<Info size={32} color={colors.white} strokeWidth={2} />}
             variant="primary"
             enablePulse={false}
           />
         </View>
 
         {/* Button Description */}
-        <Text className="text-[#95B8A8] text-center text-sm mb-8 px-8 leading-relaxed">
-          We'll guide you through a 90-second protocol to interrupt rumination.
+        <Text
+          style={{
+            color: colors.text.secondary,
+            textAlign: 'center',
+            fontSize: 14,
+            marginBottom: 32,
+            paddingHorizontal: 32,
+            lineHeight: 20,
+          }}
+        >
+          We&apos;ll guide you through a 90-second protocol to interrupt rumination.
         </Text>
 
         {/* F.I.R.E. Training Card */}
-        <Pressable
+        <PremiumCard
           onPress={async () => {
             await Haptics.selectionAsync();
             router.push('/training');
           }}
-          className="mb-4 active:opacity-90"
+          variant="elevated"
+          style={{ marginBottom: 16 }}
         >
-          <View className="bg-[#1A4D3C] rounded-2xl p-5 flex-row items-center justify-between">
-            <View className="flex-row items-center flex-1">
-              <View className="bg-[#40916C]/20 p-3 rounded-xl mr-4">
-                <Brain size={24} color="#52B788" strokeWidth={2} />
+          <View
+            style={{
+              padding: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              <View
+                style={{
+                  backgroundColor: colors.emerald[600] + '30',
+                  padding: 12,
+                  borderRadius: 16,
+                  marginRight: 16,
+                }}
+              >
+                <Brain size={24} color={colors.emerald[500]} strokeWidth={2} />
               </View>
-              <View className="flex-1">
-                <Text className="text-[#E8F4F0] text-lg font-semibold mb-1">
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    color: colors.text.primary,
+                    fontSize: 18,
+                    fontWeight: '600',
+                    marginBottom: 4,
+                  }}
+                >
                   F.I.R.E. Training
                 </Text>
-                <Text className="text-[#95B8A8] text-sm leading-relaxed">
+                <Text
+                  style={{
+                    color: colors.text.secondary,
+                    fontSize: 14,
+                    lineHeight: 20,
+                  }}
+                >
                   Start your training to understand rumination
                 </Text>
               </View>
             </View>
-            <Text className="text-[#52B788] text-xl ml-2">→</Text>
+            <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>→</Text>
           </View>
-        </Pressable>
+        </PremiumCard>
 
         {/* Pattern Insights Card */}
-        <Pressable
+        <PremiumCard
           onPress={async () => {
             await Haptics.selectionAsync();
             router.push('/insights');
           }}
-          className="mb-6 active:opacity-90"
+          variant="elevated"
+          style={{ marginBottom: 24 }}
         >
-          <View className="bg-[#1A4D3C] rounded-2xl p-5 flex-row items-center justify-between">
-            <View className="flex-row items-center flex-1">
-              <View className="bg-[#40916C]/20 p-3 rounded-xl mr-4">
-                <TrendingUp size={24} color="#52B788" strokeWidth={2} />
+          <View
+            style={{
+              padding: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              <View
+                style={{
+                  backgroundColor: colors.emerald[600] + '30',
+                  padding: 12,
+                  borderRadius: 16,
+                  marginRight: 16,
+                }}
+              >
+                <TrendingUp size={24} color={colors.emerald[500]} strokeWidth={2} />
               </View>
-              <View className="flex-1">
-                <Text className="text-[#E8F4F0] text-lg font-semibold mb-1">
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    color: colors.text.primary,
+                    fontSize: 18,
+                    fontWeight: '600',
+                    marginBottom: 4,
+                  }}
+                >
                   Pattern Insights
                 </Text>
-                <Text className="text-[#95B8A8] text-sm leading-relaxed">
+                <Text
+                  style={{
+                    color: colors.text.secondary,
+                    fontSize: 14,
+                    lineHeight: 20,
+                  }}
+                >
                   {spiralsToday > 0 ? 'See what triggers YOUR spirals' : 'Track your progress over time'}
                 </Text>
               </View>
             </View>
-            <Text className="text-[#52B788] text-xl ml-2">→</Text>
+            <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>→</Text>
           </View>
-        </Pressable>
+        </PremiumCard>
 
-        {/* Helpful Tip Card */}
-        <View className="bg-[#1A4D3C] border border-[#40916C]/30 rounded-2xl p-5">
-          <Text className="text-[#E8F4F0] text-base font-semibold mb-2">
-            Did you know?
-          </Text>
-          <Text className="text-[#95B8A8] text-sm leading-relaxed">
-            Most spirals happen in the first 10 seconds. The faster you interrupt, the easier it is to stop.
-          </Text>
-        </View>
+        {/* Daily Tip Card */}
+        <TipCard />
       </ScrollView>
     </View>
   );

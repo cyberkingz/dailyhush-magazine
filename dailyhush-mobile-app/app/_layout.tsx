@@ -1,10 +1,34 @@
 import '../global.css';
 
+import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { PortalHost } from '@rn-primitives/portal';
 import { TopBar } from '@/components/TopBar';
+import { restoreSession } from '@/services/auth';
+import { useStore } from '@/store/useStore';
 
 export default function Layout() {
+  const { setUser } = useStore();
+
+  /**
+   * Restore authentication session on app start
+   */
+  useEffect(() => {
+    const initAuth = async () => {
+      console.log('Initializing authentication...');
+      const result = await restoreSession();
+
+      if (result.success && result.userId) {
+        console.log('Session restored successfully:', result.userId);
+        // Note: User profile will be loaded by index.tsx
+      } else {
+        console.log('No existing session or failed to restore:', result.error);
+      }
+    };
+
+    initAuth();
+  }, []);
+
   return (
     <>
       <Stack
@@ -39,8 +63,7 @@ export default function Layout() {
         <Stack.Screen
           name="onboarding/index"
           options={{
-            title: 'DailyHush',
-            headerBackVisible: false,
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -70,6 +93,30 @@ export default function Layout() {
             title: 'F.I.R.E. Training',
             headerSubtitle: 'Clinical protocol to interrupt rumination',
             headerBackVisible: true,
+          }}
+        />
+        <Stack.Screen
+          name="training/focus"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="training/interrupt"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="training/reframe"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="training/execute"
+          options={{
+            headerShown: false,
           }}
         />
       </Stack>

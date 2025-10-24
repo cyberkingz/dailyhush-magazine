@@ -12,6 +12,7 @@ export interface AuthResult {
   success: boolean;
   userId?: string;
   error?: string;
+  needsEmailConfirmation?: boolean;
 }
 
 /**
@@ -263,6 +264,39 @@ export async function signUpWithEmail(
       };
     }
 
+    // IMPORTANT: Migrate all guest user data before signing out
+    let guestData: any = null;
+    const { userId: guestUserId, isAnonymous } = await getSession();
+
+    if (guestUserId && isAnonymous) {
+      console.log('Migrating guest user data:', guestUserId);
+
+      // Fetch complete guest profile
+      const { data: guestProfile } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', guestUserId)
+        .single();
+
+      if (guestProfile) {
+        guestData = {
+          onboarding_completed: guestProfile.onboarding_completed,
+          fire_progress: guestProfile.fire_progress,
+          triggers: guestProfile.triggers,
+          has_shift_necklace: guestProfile.has_shift_necklace,
+          shift_paired: guestProfile.shift_paired,
+        };
+        console.log('Guest data to migrate:', guestData);
+      }
+    }
+
+    // IMPORTANT: Sign out any existing session (e.g., guest user)
+    // This prevents auth context conflicts when creating the profile
+    const { error: signOutError } = await supabase.auth.signOut();
+    if (signOutError) {
+      console.warn('Error signing out before signup:', signOutError);
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -298,45 +332,65 @@ export async function signUpWithEmail(
     // Store session for persistence
     if (data.session) {
       await AsyncStorage.setItem(SESSION_KEY, JSON.stringify(data.session));
+
+      // IMPORTANT: Set the session on the Supabase client
+      // This ensures subsequent queries use the NEW user's auth context
+      await supabase.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+      });
     }
 
     console.log('Email signup successful:', data.user.id);
 
-    // Create user profile
-    // This is required because fire_training_progress has a foreign key to user_profiles
-    const { error: profileError } = await supabase
-      .from('user_profiles')
-      .upsert({
-        user_id: data.user.id,
-        email: email,
-        name: metadata?.name,
-        age: metadata?.age,
-        onboarding_completed: false, // They might complete onboarding later
-        has_shift_necklace: false,
-        shift_paired: false,
-        fire_progress: {
-          focus: false,
-          interrupt: false,
-          reframe: false,
-          execute: false,
-        },
-        triggers: [],
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }, {
-        onConflict: 'user_id',
-      });
+    // Check if email confirmation is required
+    const needsEmailConfirmation = !data.session;
 
-    if (profileError) {
-      console.error('Error creating user profile:', profileError);
-      // Don't fail the sign-up, but log the error
-    } else {
-      console.log('User profile created for email user');
+    // Only create profile if we have a session (email confirmed or confirmation disabled)
+    if (data.session) {
+      if (guestData && guestUserId) {
+        // Migrate guest data to new account
+        console.log('Migrating guest data to new account...');
+        const { error: migrationError } = await supabase.rpc('migrate_guest_to_email_account', {
+          p_new_user_id: data.user.id,
+          p_guest_user_id: guestUserId,
+          p_email: email,
+          p_name: metadata?.name || null,
+          p_age: metadata?.age || null,
+          p_onboarding_completed: guestData.onboarding_completed,
+          p_fire_progress: guestData.fire_progress,
+          p_triggers: guestData.triggers,
+          p_has_shift_necklace: guestData.has_shift_necklace,
+          p_shift_paired: guestData.shift_paired,
+        });
+
+        if (migrationError) {
+          console.error('Error migrating guest data:', migrationError);
+        } else {
+          console.log('Guest data migrated successfully to new account');
+        }
+      } else {
+        // No guest data, create fresh profile
+        const { error: profileError } = await supabase.rpc('create_user_profile', {
+          p_user_id: data.user.id,
+          p_email: email,
+          p_name: metadata?.name || null,
+          p_age: metadata?.age || null,
+          p_onboarding_completed: false,
+        });
+
+        if (profileError) {
+          console.error('Error creating user profile:', profileError);
+        } else {
+          console.log('User profile created for email user');
+        }
+      }
     }
 
     return {
       success: true,
       userId: data.user.id,
+      needsEmailConfirmation,
     };
   } catch (error: any) {
     console.error('Exception during email signup:', error);

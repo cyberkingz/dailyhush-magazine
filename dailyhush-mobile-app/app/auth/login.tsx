@@ -95,6 +95,16 @@ export default function Login() {
       setSuccess(true);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
+      // Load the user profile and update store
+      if (result.userId) {
+        const { loadUserProfile } = await import('@/services/auth');
+        const profileResult = await loadUserProfile(result.userId);
+        if (profileResult.success && profileResult.profile) {
+          setUser(profileResult.profile);
+          console.log('User profile loaded into store:', profileResult.profile.email);
+        }
+      }
+
       // Short delay to show success message
       setTimeout(() => {
         router.replace('/');

@@ -108,13 +108,34 @@ export default function SignUp() {
       }
 
       console.log('Account created successfully');
+
+      // Check if email confirmation is required
+      if (result.needsEmailConfirmation) {
+        // Show email confirmation message (no redirect, stay on page)
+        setSuccess(true);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        // User stays on signup page to see the "Check your email" message
+        return;
+      }
+
+      // Email confirmed or confirmation disabled - proceed normally
       setSuccess(true);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-      // Short delay to show success message
+      // Load the new user profile and update store
+      if (result.userId) {
+        const { loadUserProfile } = await import('@/services/auth');
+        const profileResult = await loadUserProfile(result.userId);
+        if (profileResult.success && profileResult.profile) {
+          setUser(profileResult.profile);
+          console.log('New user profile loaded into store:', profileResult.profile.email);
+        }
+      }
+
+      // Delay to show success message (2 seconds)
       setTimeout(() => {
         router.replace('/');
-      }, 1000);
+      }, 2000);
     } catch (err: any) {
       console.error('Signup error:', err);
       setError(err.message || 'Failed to create account');
@@ -153,11 +174,11 @@ export default function SignUp() {
           {/* Form wrapper */}
           <View style={screenLayout.formWrapper}>
             {/* Header */}
-            <View style={{ marginBottom: 32 }}>
+            <View style={{ marginBottom: 36 }}>
               <Text
                 style={{
                   ...authTypography.headline,
-                  marginBottom: 8,
+                  marginBottom: 10,
                 }}
               >
                 Create Your Account
@@ -221,7 +242,7 @@ export default function SignUp() {
               />
 
               {/* Submit button */}
-              <View style={{ marginTop: 32 }}>
+              <View style={{ marginTop: 36 }}>
                 <AuthButton
                   title="Create Account"
                   onPress={handleSignUp}

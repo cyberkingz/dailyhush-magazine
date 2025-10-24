@@ -69,7 +69,11 @@ export function AuthButton({
     }
 
     if (disabled || loading) {
-      baseStyle.push(styles.buttonDisabled);
+      if (variant === 'primary') {
+        baseStyle.push(styles.primaryButtonDisabled);
+      } else {
+        baseStyle.push(styles.buttonDisabled);
+      }
     }
 
     return baseStyle;
@@ -174,6 +178,11 @@ const styles = StyleSheet.create({
   // Shared styles
   buttonDisabled: {
     opacity: 0.5,
+  },
+
+  // Primary button disabled (separate for shadow removal)
+  primaryButtonDisabled: {
+    ...authButtons.primary.disabledStyle,
   },
 
   iconContainer: {

@@ -25,6 +25,14 @@
           "modes": ["peripheral", "central"],
           "bluetoothAlwaysPermission": "DailyHush needs Bluetooth to connect with your Shift necklace for guided breathing exercises."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#52B788",
+          "sounds": []
+        }
       ]
     ],
     "experiments": {
@@ -48,6 +56,7 @@
         "NSBluetoothAlwaysUsageDescription": "DailyHush needs Bluetooth to connect with your Shift necklace for guided breathing exercises.",
         "NSBluetoothPeripheralUsageDescription": "DailyHush needs Bluetooth to connect with your Shift necklace.",
         "NSMicrophoneUsageDescription": "DailyHush needs microphone access for voice journaling features.",
+        "NSUserNotificationsUsageDescription": "DailyHush sends daily mindful quotes to help you interrupt rumination patterns.",
         "UIBackgroundModes": ["audio", "bluetooth-central"]
       },
       "privacyManifests": {
@@ -72,7 +81,8 @@
         "BLUETOOTH_CONNECT",
         "BLUETOOTH_SCAN",
         "ACCESS_FINE_LOCATION",
-        "RECORD_AUDIO"
+        "RECORD_AUDIO",
+        "NOTIFICATIONS"
       ]
     },
     "extra": {

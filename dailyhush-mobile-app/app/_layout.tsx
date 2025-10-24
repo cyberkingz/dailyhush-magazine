@@ -6,6 +6,10 @@ import { PortalHost } from '@rn-primitives/portal';
 import { TopBar } from '@/components/TopBar';
 import { restoreSession } from '@/services/auth';
 import { useStore } from '@/store/useStore';
+import {
+  registerForPushNotifications,
+  scheduleDailyQuoteNotification,
+} from '@/services/notifications';
 
 export default function Layout() {
   const { setUser } = useStore();
@@ -27,6 +31,25 @@ export default function Layout() {
     };
 
     initAuth();
+  }, []);
+
+  /**
+   * Setup push notifications for daily quotes
+   */
+  useEffect(() => {
+    const setupNotifications = async () => {
+      console.log('Setting up notifications...');
+      const granted = await registerForPushNotifications();
+
+      if (granted) {
+        await scheduleDailyQuoteNotification();
+        console.log('Daily quote notifications enabled');
+      } else {
+        console.log('Notification permissions denied');
+      }
+    };
+
+    setupNotifications();
   }, []);
 
   return (

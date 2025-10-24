@@ -14,6 +14,7 @@ import { Text } from '@/components/ui/text';
 import { useUser } from '@/store/useStore';
 import { PulseButton } from '@/components/PulseButton';
 import { TipCard } from '@/components/TipCard';
+import { QuoteCard } from '@/components/QuoteCard';
 import { PremiumCard } from '@/components/PremiumCard';
 import { colors } from '@/constants/colors';
 
@@ -298,6 +299,11 @@ export default function HomeModern() {
 
         {/* Daily Tip Card */}
         <TipCard />
+
+        {/* Daily Quote Card */}
+        <View style={{ marginTop: 16 }}>
+          <QuoteCard />
+        </View>
       </ScrollView>
     </View>
   );

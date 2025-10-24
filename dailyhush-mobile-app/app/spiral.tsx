@@ -16,6 +16,7 @@ import { useStore, useShiftDevice } from '@/store/useStore';
 import type { SpiralLog } from '@/types';
 import { SuccessRipple } from '@/components/SuccessRipple';
 import { CountdownRing } from '@/components/CountdownRing';
+import { sendEncouragementNotification } from '@/services/notifications';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
@@ -149,6 +150,9 @@ export default function SpiralInterrupt() {
     };
 
     console.log('Spiral logged:', spiralLog);
+
+    // Send encouragement notification (1 minute delayed)
+    await sendEncouragementNotification();
 
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 

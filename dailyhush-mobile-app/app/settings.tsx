@@ -5,7 +5,7 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Pressable, ScrollView, Switch } from 'react-native';
+import { View, Pressable, Switch } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import {
@@ -22,6 +22,7 @@ import {
 } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
+import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { useStore, useUser, useNightMode } from '@/store/useStore';
 
 interface SettingRowProps {
@@ -103,14 +104,18 @@ export default function Settings() {
     <View className="flex-1 bg-[#0A1612]">
       <StatusBar style="light" />
 
-      <ScrollView
+      <ScrollFadeView
         className="flex-1"
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingTop: 20,
-          paddingBottom: 80 + insets.bottom, // Account for bottom nav
+          paddingBottom: 40 + insets.bottom,
         }}
         showsVerticalScrollIndicator={false}
+        fadeColor="#0A1612"
+        fadeHeight={48}
+        fadeIntensity={0.95}
+        fadeVisibility="always"
       >
 
         {/* Account Section */}
@@ -208,7 +213,7 @@ export default function Settings() {
             Made with ❤️ for women who deserve peace of mind
           </Text>
         </View>
-      </ScrollView>
+      </ScrollFadeView>
     </View>
   );
 }

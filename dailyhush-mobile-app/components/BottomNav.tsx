@@ -1,12 +1,13 @@
 /**
  * DailyHush - Bottom Navigation Bar
- * Clean bottom bar with centered emergency button
+ * Glassmorphism design with blur effect
  * Optimized for 55-70 demographic with large touch targets
  */
 
 import { View, Pressable, Platform } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BlurView } from 'expo-blur';
 import { Shield } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
@@ -34,62 +35,48 @@ export function BottomNav({ hideOnPaths = ['/spiral', '/onboarding'] }: BottomNa
         bottom: 0,
         left: 0,
         right: 0,
-        height: 64 + insets.bottom,
+        height: 48 + insets.bottom,
         zIndex: 1000,
       }}
     >
-      {/* Bottom Bar */}
-      <View
+      {/* Glassmorphism Bottom Bar */}
+      <BlurView
+        intensity={95}
+        tint="dark"
         style={{
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          height: 64 + insets.bottom,
-          backgroundColor: colors.background.primary,
-          ...Platform.select({
-            ios: {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: -2 },
-              shadowOpacity: 0.15,
-              shadowRadius: 8,
-            },
-            android: {
-              elevation: 8,
-            },
-          }),
+          height: 48 + insets.bottom,
+          overflow: 'hidden',
         }}
       >
-        {/* Top border with notch cutout */}
-        <View style={{ flexDirection: 'row', height: 1 }}>
-          {/* Left border */}
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: colors.background.border,
-            }}
-          />
-          {/* Notch gap */}
-          <View style={{ width: 80 }} />
-          {/* Right border */}
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: colors.background.border,
-            }}
-          />
-        </View>
-      </View>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(10, 22, 18, 0.6)',
+            borderTopWidth: 1,
+            borderTopColor: 'rgba(64, 145, 108, 0.25)',
+            ...Platform.select({
+              ios: {
+                shadowColor: colors.emerald[500],
+                shadowOffset: { width: 0, height: -1 },
+                shadowOpacity: 0.15,
+                shadowRadius: 8,
+              },
+            }),
+          }}
+        />
+      </BlurView>
 
       {/* Elevated Center Button */}
       <View
         style={{
           position: 'absolute',
-          top: -24,
+          top: -20,
           left: '50%',
-          marginLeft: -32,
+          marginLeft: -28,
           zIndex: 2,
         }}
       >
@@ -103,27 +90,27 @@ export function BottomNav({ hideOnPaths = ['/spiral', '/onboarding'] }: BottomNa
           accessibilityHint="Tap to start 90-second spiral interrupt protocol"
           accessibilityRole="button"
           style={{
-            width: 64,
-            height: 64,
-            borderRadius: 32,
+            width: 56,
+            height: 56,
+            borderRadius: 28,
             backgroundColor: colors.button.primary,
             alignItems: 'center',
             justifyContent: 'center',
             ...Platform.select({
               ios: {
                 shadowColor: colors.emerald[500],
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.4,
-                shadowRadius: 16,
+                shadowOffset: { width: 0, height: 8 },
+                shadowOpacity: 0.5,
+                shadowRadius: 20,
               },
               android: {
-                elevation: 8,
+                elevation: 10,
               },
             }),
           }}
           className="active:opacity-90"
         >
-          <Shield size={30} color={colors.white} strokeWidth={2.5} />
+          <Shield size={26} color={colors.white} strokeWidth={2.5} />
         </Pressable>
       </View>
     </View>

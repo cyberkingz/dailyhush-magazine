@@ -178,7 +178,7 @@ export function PulseButton({
           >
             {icon && <View style={{ marginRight: 12 }}>{icon}</View>}
 
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', flex: icon ? 1 : 0 }}>
               <Text
                 style={{
                   color: colorScheme.text,
@@ -194,10 +194,11 @@ export function PulseButton({
                 <Text
                   style={{
                     color: colorScheme.text,
-                    fontSize: 14,
+                    fontSize: 15,
                     opacity: 0.9,
                     marginTop: 6,
                     textAlign: 'center',
+                    lineHeight: 21,
                   }}
                 >
                   {subtitle}

@@ -142,7 +142,12 @@ export default function Layout() {
         />
       </Stack>
       <PortalHost />
-      <BottomNav hideOnPaths={['/spiral', '/onboarding']} />
+      <BottomNav hideOnPaths={[
+        '/spiral',
+        '/onboarding',
+        '/settings',
+        '/training'
+      ]} />
     </>
   );
 }

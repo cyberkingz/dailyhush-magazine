@@ -5,14 +5,17 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, ScrollView, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, TrendingUp, Clock, Lightbulb, Sparkles } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
+import { ScrollFadeView } from '@/components/ScrollFadeView';
 
 export default function Insights() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   // Mock data (will be replaced with real Supabase data)
   const weeklyData = {
@@ -33,14 +36,18 @@ export default function Insights() {
     <View className="flex-1 bg-[#0A1612]">
       <StatusBar style="light" />
 
-      <ScrollView
+      <ScrollFadeView
         className="flex-1"
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingTop: 20,
-          paddingBottom: 40,
+          paddingBottom: 72 + insets.bottom,
         }}
         showsVerticalScrollIndicator={false}
+        fadeColor="#0A1612"
+        fadeHeight={48}
+        fadeIntensity={0.95}
+        fadeVisibility="always"
       >
 
         {/* Progress Card */}
@@ -133,7 +140,7 @@ export default function Insights() {
             </View>
           ))}
         </View>
-      </ScrollView>
+      </ScrollFadeView>
     </View>
   );
 }

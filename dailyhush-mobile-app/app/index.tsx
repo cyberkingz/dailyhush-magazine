@@ -6,7 +6,7 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { View, ScrollView, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Brain, Moon, Info, TrendingUp, Settings } from 'lucide-react-native';
@@ -17,6 +17,7 @@ import { PulseButton } from '@/components/PulseButton';
 import { TipCard } from '@/components/TipCard';
 import { QuoteGem } from '@/components/QuoteGem';
 import { PremiumCard } from '@/components/PremiumCard';
+import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 
@@ -64,13 +65,17 @@ export default function HomeModern() {
     <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
-      <ScrollView
+      <ScrollFadeView
         style={{ flex: 1 }}
         contentContainerStyle={{
           paddingTop: insets.top + spacing.safeArea.top,
-          paddingBottom: 80 + insets.bottom, // Account for bottom nav (56px button + 12px top padding + 12px bottom padding)
+          paddingBottom: 72 + insets.bottom, // Account for bottom nav (48px bar height + 24px spacing)
         }}
         showsVerticalScrollIndicator={false}
+        fadeColor={colors.background.primary}
+        fadeHeight={48}
+        fadeIntensity={0.95}
+        fadeVisibility="always"
       >
         {/* Natural Header Section - iOS Native Layout Pattern */}
         <View style={{
@@ -258,7 +263,6 @@ export default function HomeModern() {
             onPress={() => router.push('/spiral')}
             title="I'M SPIRALING"
             subtitle="We're here. Let's break this together."
-            icon={<Info size={32} color={colors.white} strokeWidth={2} />}
             variant="primary"
             enablePulse={false}
           />
@@ -394,7 +398,7 @@ export default function HomeModern() {
         <View style={{ paddingHorizontal: 20 }}>
           <TipCard />
         </View>
-      </ScrollView>
+      </ScrollFadeView>
     </View>
   );
 }

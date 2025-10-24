@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 import { PortalHost } from '@rn-primitives/portal';
 import { TopBar } from '@/components/TopBar';
 import { BottomNav } from '@/components/BottomNav';
-import { restoreSession } from '@/services/auth';
+import { restoreSession, loadUserProfile } from '@/services/auth';
 import { useStore } from '@/store/useStore';
 import {
   registerForPushNotifications,
@@ -13,22 +13,35 @@ import {
 } from '@/services/notifications';
 
 export default function Layout() {
-  const { setUser } = useStore();
+  const { setUser, setLoading } = useStore();
 
   /**
    * Restore authentication session on app start
    */
   useEffect(() => {
     const initAuth = async () => {
+      setLoading(true); // Start loading
       console.log('Initializing authentication...');
+
       const result = await restoreSession();
 
       if (result.success && result.userId) {
         console.log('Session restored successfully:', result.userId);
-        // Note: User profile will be loaded by index.tsx
+
+        // Load user profile from database
+        const profileResult = await loadUserProfile(result.userId);
+
+        if (profileResult.success && profileResult.profile) {
+          setUser(profileResult.profile);
+          console.log('User profile loaded:', profileResult.profile.user_id, 'onboarding_completed:', profileResult.profile.onboarding_completed);
+        } else {
+          console.log('Failed to load user profile:', profileResult.error);
+        }
       } else {
         console.log('No existing session or failed to restore:', result.error);
       }
+
+      setLoading(false); // Done loading
     };
 
     initAuth();

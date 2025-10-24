@@ -19,7 +19,7 @@ import * as Haptics from 'expo-haptics';
 
 import { AuthButton } from '@/components/auth/AuthButton';
 import { ErrorAlert } from '@/components/auth/ErrorAlert';
-import { signInAnonymously } from '@/services/auth';
+import { signInAnonymously, getSession } from '@/services/auth';
 import { useStore } from '@/store/useStore';
 import {
   authTypography,
@@ -36,14 +36,27 @@ export default function AuthChoice() {
 
   /**
    * Handle Continue as Guest
-   * Creates anonymous session and proceeds to app
+   * If already has anonymous session (from onboarding), just navigate to home
+   * Otherwise, create new anonymous session
    */
   const handleContinueAsGuest = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      console.log('Creating anonymous session...');
+      // Check if user already has a session (from onboarding)
+      const session = await getSession();
+
+      if (session.userId) {
+        // Already have a session (anonymous or email), just navigate to home
+        console.log('Existing session found, navigating to home');
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        router.replace('/');
+        return;
+      }
+
+      // No session exists, create new anonymous session
+      console.log('No session found, creating anonymous session...');
       const result = await signInAnonymously();
 
       if (!result.success) {

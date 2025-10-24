@@ -137,9 +137,13 @@ export default function Onboarding() {
    */
   const completeOnboarding = async () => {
     try {
-      // Ensure we have an authenticated session (anonymous or email)
-      if (!user?.user_id) {
-        console.log('Creating anonymous session...');
+      // Get the actual authenticated user ID from Supabase
+      // This is critical to match what RLS policies check against
+      let { data: { user: authUser } } = await supabase.auth.getUser();
+
+      // If no auth session exists yet, create anonymous session
+      if (!authUser) {
+        console.log('No session found, creating anonymous session...');
         const authResult = await signInAnonymously();
 
         if (!authResult.success || !authResult.userId) {
@@ -147,11 +151,13 @@ export default function Onboarding() {
           return; // Don't proceed without authentication
         }
         console.log('Anonymous session created:', authResult.userId);
+
+        // Get the newly created auth user
+        const result = await supabase.auth.getUser();
+        authUser = result.data.user;
       }
 
-      // Get the actual authenticated user ID from Supabase
-      // This is critical to match what RLS policies check against
-      const { data: { user: authUser } } = await supabase.auth.getUser();
+      // At this point, authUser should exist (either existing or newly created)
 
       if (!authUser) {
         console.error('No authenticated user found after sign-in');

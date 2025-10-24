@@ -489,6 +489,18 @@ function TheShiftPage() {
                 </div>
                 <span className="font-semibold text-emerald-600">Free Bonus</span>
               </li>
+              <li className="flex justify-between items-start gap-3">
+                <div className="flex items-start gap-2 flex-1">
+                  <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <div className="text-gray-700">Early Access to DailyHush App</div>
+                    <div className="text-sm text-gray-500 italic">Launches November 15th</div>
+                  </div>
+                </div>
+                <span className="font-semibold text-emerald-600">Free Bonus</span>
+              </li>
             </ul>
             <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between items-baseline mb-2">
@@ -515,7 +527,7 @@ function TheShiftPage() {
           'Keep F.I.R.E. even if returned',
           'Free shipping',
         ]}
-        reviewCount={379}
+        reviewCount={1800}
         reviewRating={4.8}
         shopifyProductId="10770901434671"
         shopifyDomain="t7vyee-kc.myshopify.com"

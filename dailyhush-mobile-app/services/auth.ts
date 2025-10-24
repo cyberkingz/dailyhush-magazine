@@ -569,6 +569,41 @@ export function validateEmail(email: string): { valid: boolean; error?: string }
 }
 
 /**
+ * Load user profile from database
+ * Used to restore user data after session restoration
+ */
+export async function loadUserProfile(
+  userId: string
+): Promise<{ success: boolean; profile?: any; error?: string }> {
+  try {
+    if (!userId) {
+      return { success: false, error: 'User ID is required' };
+    }
+
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    if (error) {
+      console.error('Error loading user profile:', error);
+      return { success: false, error: error.message };
+    }
+
+    if (!data) {
+      return { success: false, error: 'User profile not found' };
+    }
+
+    console.log('User profile loaded successfully:', data.user_id);
+    return { success: true, profile: data };
+  } catch (error: any) {
+    console.error('Exception loading user profile:', error);
+    return { success: false, error: error.message || 'Failed to load profile' };
+  }
+}
+
+/**
  * Validate password strength
  * Simple validation: minimum 8 characters (no complexity for 55-70 demographic)
  */

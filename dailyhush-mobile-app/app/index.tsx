@@ -6,13 +6,13 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { View, Pressable } from 'react-native';
+import { View, Pressable, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Brain, Moon, Info, TrendingUp, Settings } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
-import { useUser } from '@/store/useStore';
+import { useUser, useLoading } from '@/store/useStore';
 import { PulseButton } from '@/components/PulseButton';
 import { TipCard } from '@/components/TipCard';
 import { QuoteGem } from '@/components/QuoteGem';
@@ -24,6 +24,7 @@ import { spacing } from '@/constants/spacing';
 export default function HomeModern() {
   const router = useRouter();
   const user = useUser();
+  const isLoading = useLoading();
   const insets = useSafeAreaInsets();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [spiralsToday] = useState(0);
@@ -34,12 +35,13 @@ export default function HomeModern() {
     setIsMounted(true);
   }, []);
 
-  // Check if user needs onboarding (null user OR onboarding not completed)
+  // Check if user needs onboarding (only after loading is complete)
   useEffect(() => {
-    if (isMounted && (!user || !user.onboarding_completed)) {
+    if (isMounted && !isLoading && (!user || !user.onboarding_completed)) {
+      console.log('Redirecting to onboarding - user:', user?.user_id, 'onboarding_completed:', user?.onboarding_completed);
       router.replace('/onboarding');
     }
-  }, [user, isMounted]);
+  }, [user, isMounted, isLoading]);
 
   // Check if 3AM mode is active
   const is3AMMode = currentTime.getHours() >= 22 || currentTime.getHours() < 6;
@@ -60,6 +62,17 @@ export default function HomeModern() {
     return () => clearInterval(timer);
   }, [currentTime]);
 
+
+  // Show loading screen while user profile is being loaded
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.background.primary, justifyContent: 'center', alignItems: 'center' }}>
+        <StatusBar style="light" />
+        <ActivityIndicator size="large" color="#40916C" />
+        <Text className="text-[#95B8A8] text-sm mt-4">Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background.primary }}>

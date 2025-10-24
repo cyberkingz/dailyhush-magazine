@@ -237,10 +237,10 @@ export default function Onboarding() {
           {/* Headline */}
           <View className="items-center mb-6">
             <Text className="text-2xl font-semibold text-center mb-3" style={{ color: colors.text.primary }}>
-              Stop the Spiral of Overthinking
+              You're Not Overthinking. You're Replaying.
             </Text>
             <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.secondary }}>
-              When your mind won't stop replaying conversations, worries, and what-ifs
+              If you're still prosecuting yourself for Tuesday's conversation on Friday... you're in the right place.
             </Text>
           </View>
 
@@ -259,11 +259,11 @@ export default function Onboarding() {
                   <Clock size={24} color={colors.emerald[100]} strokeWidth={2.5} />
                 </View>
                 <Text className="flex-1 text-base font-bold" style={{ color: colors.text.primary }}>
-                  Interrupt spirals in 90 seconds
+                  Interrupt the loop in 90 seconds
                 </Text>
               </View>
               <Text className="text-xs" style={{ color: colors.emerald[100] }}>
-                Proven protocol to break the rumination cycle fast
+                That conversation isn't happening right now. But your body thinks it is. We can interrupt that.
               </Text>
             </View>
 
@@ -322,10 +322,10 @@ export default function Onboarding() {
       <View className="flex-1 px-5 justify-between" style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
         <View>
           <Text className="text-3xl font-bold mb-2" style={{ color: colors.text.primary }}>
-            Experience It First
+            We Get It
           </Text>
           <Text className="text-sm mb-8 leading-relaxed" style={{ color: colors.text.secondary }}>
-            Try a 90-second spiral interrupt right now. See how it works before we ask anything from you.
+            Try the 90-second protocol right now. No signup. No commitment. Just relief.
           </Text>
 
           {/* Demo Card - Compact */}
@@ -335,11 +335,11 @@ export default function Onboarding() {
             </View>
 
             <Text className="text-xl font-bold text-center mb-3" style={{ color: colors.text.primary }}>
-              The Spiral Interrupt
+              Break The Loop
             </Text>
 
             <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.secondary }}>
-              A proven 4-step protocol to break rumination cycles. Used by thousands at 3AM.
+              Used by 50,000+ women at 3AM. Interrupts shame-driven rumination in 90 seconds.
             </Text>
           </View>
 
@@ -397,10 +397,10 @@ export default function Onboarding() {
       {/* Content */}
       <View className="flex-1 px-5" style={{ paddingTop: 20, paddingBottom: insets.bottom + 16 }}>
         <Text className="text-2xl font-bold mb-1" style={{ color: colors.text.primary }}>
-          Help Us Personalize
+          Know Your Patterns
         </Text>
         <Text className="text-sm mb-5" style={{ color: colors.text.secondary }}>
-          Optional - answer what you're comfortable sharing
+          Optional - but this helps us help you better
         </Text>
 
         {/* Question 1: Age - Compact */}
@@ -430,7 +430,7 @@ export default function Onboarding() {
         {/* Question 2: Rumination - Compact */}
         <View className="mb-4">
           <Text className="text-sm font-semibold mb-1" style={{ color: colors.text.primary }}>
-            How often do you ruminate? (1-10)
+            How often does your mind replay conversations? (1-10)
           </Text>
           <View className="flex-row flex-wrap gap-1.5">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (

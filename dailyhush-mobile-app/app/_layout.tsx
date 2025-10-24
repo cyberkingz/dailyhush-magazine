@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { PortalHost } from '@rn-primitives/portal';
 import { TopBar } from '@/components/TopBar';
+import { BottomNav } from '@/components/BottomNav';
 import { restoreSession } from '@/services/auth';
 import { useStore } from '@/store/useStore';
 import {
@@ -141,6 +142,7 @@ export default function Layout() {
         />
       </Stack>
       <PortalHost />
+      <BottomNav hideOnPaths={['/spiral', '/onboarding']} />
     </>
   );
 }

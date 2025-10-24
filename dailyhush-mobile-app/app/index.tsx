@@ -68,7 +68,7 @@ export default function HomeModern() {
         style={{ flex: 1 }}
         contentContainerStyle={{
           paddingTop: insets.top + spacing.safeArea.top,
-          paddingBottom: 40,
+          paddingBottom: 80 + insets.bottom, // Account for bottom nav (56px button + 12px top padding + 12px bottom padding)
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -257,7 +257,7 @@ export default function HomeModern() {
           <PulseButton
             onPress={() => router.push('/spiral')}
             title="I'M SPIRALING"
-            subtitle="Tap to interrupt"
+            subtitle="We're here. Let's break this together."
             icon={<Info size={32} color={colors.white} strokeWidth={2} />}
             variant="primary"
             enablePulse={false}
@@ -275,7 +275,7 @@ export default function HomeModern() {
             lineHeight: 20,
           }}
         >
-          We&apos;ll guide you through a 90-second protocol to interrupt rumination.
+          That conversation isn't happening right now. But your body thinks it is. We'll interrupt this loop together. 90 seconds.
         </Text>
 
         {/* F.I.R.E. Training Card */}

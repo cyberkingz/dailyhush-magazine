@@ -15,7 +15,7 @@ export const dailyQuotes: Quote[] = [
   // Self-Compassion
   {
     id: 1,
-    text: "The spiral doesn't define you. The moment you interrupt it does.",
+    text: "That spiral doesn't define you. But breaking it? That's who you're becoming.",
     category: 'compassion',
   },
   {
@@ -101,7 +101,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 17,
-    text: "Replaying isn't processing. It's punishment. There's a difference.",
+    text: "You're not processing. You're replaying. Replaying is punishment. We can interrupt that together.",
     category: 'interrupt',
   },
   {
@@ -174,6 +174,26 @@ export const dailyQuotes: Quote[] = [
   {
     id: 31,
     text: "Some days you'll catch every spiral. Some days you'll catch none. Keep showing up.",
+    category: 'compassion',
+  },
+  {
+    id: 32,
+    text: "You're not overthinking. You're replaying. There's a difference. And we get it.",
+    category: 'wisdom',
+  },
+  {
+    id: 33,
+    text: "That conversation isn't happening right now. But your body thinks it is. Let's interrupt this loop.",
+    category: 'interrupt',
+  },
+  {
+    id: 34,
+    text: "You're not alone in this. 50,000+ women have interrupted their loops at 3AM. You can too.",
+    category: 'compassion',
+  },
+  {
+    id: 35,
+    text: "We're here. Whether it's 3AM or 3PM. You're not going through this alone.",
     category: 'compassion',
   },
 ];

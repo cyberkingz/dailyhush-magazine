@@ -46,8 +46,8 @@ export default function SpiralInterrupt() {
   const breatheScale = useRef(new Animated.Value(1)).current;
 
   const protocolSteps = [
-    { duration: 5, text: "You're ruminating.\nLet's interrupt this spiral." },
-    { duration: 5, text: "Notice where you are\nright now." },
+    { duration: 5, text: "That conversation isn't happening right now.\nBut your body thinks it is.\nLet's interrupt this loop. Together." },
+    { duration: 5, text: "Notice where you are\nright now.\nNot in that argument. Here." },
     { duration: 8, text: "Name 5 things\nyou can see..." },
     { duration: 8, text: "4 things\nyou can hear..." },
     { duration: 8, text: "3 things\nyou can touch..." },
@@ -56,8 +56,8 @@ export default function SpiralInterrupt() {
     { duration: 15, text: "Breathe out slowly...\n1... 2... 3... 4... 5..." },
     { duration: 15, text: "Again...\nBreathe in... and hold..." },
     { duration: 10, text: "And out...\nslowly... all the way..." },
-    { duration: 5, text: "This rumination?\nIt's a loop, not reality." },
-    { duration: 6, text: "You just interrupted it.\nWell done." },
+    { duration: 5, text: "This rumination?\nIt's a loop, not reality.\nYou're breaking the pattern." },
+    { duration: 6, text: "You just interrupted it.\nThis is the skill.\nYou're building it." },
   ];
 
   const totalDuration = protocolSteps.reduce((sum, step) => sum + step.duration, 0);
@@ -230,10 +230,10 @@ export default function SpiralInterrupt() {
       {stage === 'pre-check' && (
         <View className="flex-1 justify-center px-6">
           <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-4">
-            Before we start
+            We're Here
           </Text>
           <Text className="text-[#95B8A8] text-base text-center mb-12">
-            How do you feel right now?
+            Before we break this together, how do you feel right now?
           </Text>
 
           <View className="flex-row flex-wrap justify-center gap-3 mb-12">
@@ -270,7 +270,7 @@ export default function SpiralInterrupt() {
             className="bg-[#40916C] h-16 rounded-2xl items-center justify-center active:opacity-90"
           >
             <Text className="text-white text-lg font-bold">
-              Start Protocol (90 seconds)
+              Let's Break This (90 seconds)
             </Text>
           </Pressable>
         </View>
@@ -398,118 +398,132 @@ export default function SpiralInterrupt() {
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}
         >
-          <View className="flex-1 justify-center px-6">
-            <View className="mb-8 self-center">
-              <SuccessRipple size={80} />
-          </View>
+          <View className="flex-1 justify-between px-6 py-8">
+            <View>
+              <View className="mb-4 self-center">
+                <SuccessRipple size={80} />
+              </View>
 
-          <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-4">
-            Spiral Interrupted!
-          </Text>
-          <Text className="text-[#95B8A8] text-base text-center mb-12">
-            How do you feel now?
-          </Text>
+              <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-3">
+                You Just Interrupted the Loop
+              </Text>
+              <Text className="text-[#95B8A8] text-base text-center mb-2 leading-relaxed">
+                That pattern wanted to run for 72 hours.
+              </Text>
+              <Text className="text-[#95B8A8] text-base text-center mb-2 leading-relaxed">
+                You stopped it in 90 seconds.
+              </Text>
+              <Text className="text-[#95B8A8] text-sm text-center mb-6 leading-relaxed">
+                How do you feel now?
+              </Text>
 
-          <View className="flex-row flex-wrap justify-center gap-3 mb-12">
-            {postCheckOptions.map((option) => (
-              <Pressable
-                key={option.value}
-                onPress={() => {
-                  setPostFeelingRating(option.value);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }}
-                className={`w-36 p-6 rounded-2xl items-center ${
-                  postFeelingRating === option.value ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
-                }`}
-              >
-                <Text className="text-5xl mb-2" style={{ lineHeight: 60, paddingTop: 4 }}>{option.emoji}</Text>
-                <Text className={`text-base font-semibold ${
-                  postFeelingRating === option.value ? 'text-white' : 'text-[#E8F4F0]'
-                }`}>
-                  {option.label}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
+              <View className="flex-row flex-wrap justify-center gap-3 mb-6">
+                {postCheckOptions.map((option) => (
+                  <Pressable
+                    key={option.value}
+                    onPress={() => {
+                      setPostFeelingRating(option.value);
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }}
+                    className={`w-36 p-6 rounded-2xl items-center ${
+                      postFeelingRating === option.value ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                    }`}
+                  >
+                    <Text className="text-5xl mb-2" style={{ lineHeight: 60, paddingTop: 4 }}>{option.emoji}</Text>
+                    <Text className={`text-base font-semibold ${
+                      postFeelingRating === option.value ? 'text-white' : 'text-[#E8F4F0]'
+                    }`}>
+                      {option.label}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
 
-          <Pressable
-            onPress={() => {
-              if (postFeelingRating) {
-                setStage('log-trigger');
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-              }
-            }}
-            disabled={!postFeelingRating}
-            className={`h-16 rounded-2xl items-center justify-center ${
-              postFeelingRating ? 'bg-[#40916C] active:opacity-90' : 'bg-[#1A2E26] opacity-50'
-            }`}
-          >
-            <Text className={`text-lg font-bold ${
-              postFeelingRating ? 'text-white' : 'text-[#95B8A8]'
-            }`}>
-              Continue
-            </Text>
-          </Pressable>
+            <Pressable
+              onPress={() => {
+                if (postFeelingRating) {
+                  setStage('log-trigger');
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                }
+              }}
+              disabled={!postFeelingRating}
+              className={`h-16 rounded-2xl items-center justify-center ${
+                postFeelingRating ? 'bg-[#40916C] active:opacity-90' : 'bg-[#1A2E26] opacity-50'
+              }`}
+            >
+              <Text className={`text-lg font-bold ${
+                postFeelingRating ? 'text-white' : 'text-[#95B8A8]'
+              }`}>
+                Continue
+              </Text>
+            </Pressable>
           </View>
         </LinearGradient>
       )}
 
       {/* Log Trigger Stage */}
       {stage === 'log-trigger' && (
-        <View className="flex-1 justify-center px-6" style={{ backgroundColor: '#0A1612' }}>
-          <Text className="text-[#E8F4F0] text-2xl font-bold mb-4">
-            What started this spiral?
-          </Text>
-          <Text className="text-[#95B8A8] text-sm mb-8">
-            Optional - helps us identify your patterns
-          </Text>
+        <LinearGradient
+          colors={['#0A1612', '#0F2B1E', '#0A1612']}
+          locations={[0, 0.5, 1]}
+          style={{ flex: 1 }}
+        >
+          <View className="flex-1 justify-center px-6">
+            <Text className="text-[#E8F4F0] text-2xl font-bold mb-4">
+              What triggered this loop?
+            </Text>
+            <Text className="text-[#95B8A8] text-sm mb-8">
+              Optional - but knowing your patterns helps us help you better
+            </Text>
 
-          <View className="gap-3 mb-8">
-            {commonTriggers.map((trigger) => (
+            <View className="gap-3 mb-8">
+              {commonTriggers.map((trigger) => (
+                <Pressable
+                  key={trigger}
+                  onPress={() => {
+                    setSelectedTrigger(trigger);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  }}
+                  className={`p-4 rounded-2xl ${
+                    selectedTrigger === trigger ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                  }`}
+                >
+                  <Text className={`text-base ${
+                    selectedTrigger === trigger ? 'text-white font-semibold' : 'text-[#E8F4F0]'
+                  }`}>
+                    {trigger}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <View className="gap-3">
               <Pressable
-                key={trigger}
                 onPress={() => {
-                  setSelectedTrigger(trigger);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  handleFinish();
                 }}
-                className={`p-4 rounded-2xl ${
-                  selectedTrigger === trigger ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
-                }`}
+                className="bg-[#40916C] h-16 rounded-2xl items-center justify-center active:opacity-90"
               >
-                <Text className={`text-base ${
-                  selectedTrigger === trigger ? 'text-white font-semibold' : 'text-[#E8F4F0]'
-                }`}>
-                  {trigger}
+                <Text className="text-white text-lg font-bold">
+                  Done
                 </Text>
               </Pressable>
-            ))}
-          </View>
 
-          <View className="gap-3">
-            <Pressable
-              onPress={() => {
-                handleFinish();
-              }}
-              className="bg-[#40916C] h-16 rounded-2xl items-center justify-center active:opacity-90"
-            >
-              <Text className="text-white text-lg font-bold">
-                Done
-              </Text>
-            </Pressable>
-
-            <Pressable
-              onPress={() => {
-                setSelectedTrigger('');
-                handleFinish();
-              }}
-              className="h-14 rounded-2xl items-center justify-center active:opacity-80"
-            >
-              <Text className="text-[#52B788] text-base font-semibold">
-                Skip
-              </Text>
-            </Pressable>
+              <Pressable
+                onPress={() => {
+                  setSelectedTrigger('');
+                  handleFinish();
+                }}
+                className="h-14 rounded-2xl items-center justify-center active:opacity-80"
+              >
+                <Text className="text-[#52B788] text-base font-semibold">
+                  Skip
+                </Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
       )}
     </View>
   );

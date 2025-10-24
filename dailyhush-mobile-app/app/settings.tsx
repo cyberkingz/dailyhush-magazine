@@ -6,6 +6,7 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Pressable, ScrollView, Switch } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import {
   ArrowLeft,
@@ -96,6 +97,7 @@ export default function Settings() {
   const user = useUser();
   const nightMode = useNightMode();
   const { setNightMode } = useStore();
+  const insets = useSafeAreaInsets();
 
   return (
     <View className="flex-1 bg-[#0A1612]">
@@ -106,7 +108,7 @@ export default function Settings() {
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingTop: 20,
-          paddingBottom: 40,
+          paddingBottom: 80 + insets.bottom, // Account for bottom nav
         }}
         showsVerticalScrollIndicator={false}
       >

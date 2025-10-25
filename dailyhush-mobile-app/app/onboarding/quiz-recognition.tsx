@@ -31,12 +31,6 @@ export default function QuizRecognition() {
     router.push('/onboarding/quiz' as any);
   };
 
-  const handleNotSure = async () => {
-    await Haptics.selectionAsync();
-    // Also take the native quiz
-    router.push('/onboarding/quiz' as any);
-  };
-
   const handleHaveAccount = async () => {
     await Haptics.selectionAsync();
     // Route to login for existing users
@@ -194,29 +188,8 @@ export default function QuizRecognition() {
           </Pressable>
         </View>
 
-        {/* Tertiary Links */}
+        {/* Tertiary Link */}
         <View style={{ marginBottom: 16 }}>
-          <Pressable
-            onPress={handleNotSure}
-            style={{
-              paddingVertical: 12,
-              alignItems: 'center',
-            }}
-          >
-            {({ pressed }) => (
-              <Text
-                style={{
-                  fontSize: 17,
-                  color: colors.text.secondary,
-                  opacity: pressed ? 0.5 : 0.8,
-                  textDecorationLine: 'underline',
-                }}
-              >
-                I'm not sure
-              </Text>
-            )}
-          </Pressable>
-
           <Pressable
             onPress={handleHaveAccount}
             style={{

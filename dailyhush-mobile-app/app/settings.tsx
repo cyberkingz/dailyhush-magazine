@@ -19,7 +19,8 @@ import {
   Mail,
   Shield,
   ChevronRight,
-  LogOut
+  LogOut,
+  FileText
 } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
@@ -201,13 +202,25 @@ export default function Settings() {
 
         {/* Logout Button - Only show for authenticated users */}
         {!isGuest && (
-          <SettingRow
-            title={isLoggingOut ? "Signing out..." : "Sign Out"}
-            subtitle="Sign out of your account"
-            icon={<LogOut size={20} color="#E63946" strokeWidth={2} />}
-            onPress={isLoggingOut ? undefined : handleLogout}
-            showChevron={false}
-          />
+          <>
+            <SettingRow
+              title={isLoggingOut ? "Signing out..." : "Sign Out"}
+              subtitle="Sign out of your account"
+              icon={<LogOut size={20} color="#E63946" strokeWidth={2} />}
+              onPress={isLoggingOut ? undefined : handleLogout}
+              showChevron={false}
+            />
+
+            <SettingRow
+              title="Delete Account"
+              subtitle="Permanently delete your account and data"
+              icon={<Shield size={20} color="#E63946" strokeWidth={2} />}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                router.push('/settings/delete-account' as any);
+              }}
+            />
+          </>
         )}
 
         {/* The Shift Section */}
@@ -273,15 +286,34 @@ export default function Settings() {
 
         <SettingRow
           title="Contact Support"
-          subtitle="support@dailyhush.com"
+          subtitle="hello@daily-hush.com"
           icon={<Mail size={20} color="#52B788" strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
         />
 
+        {/* Legal Section */}
+        <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">
+          Legal
+        </Text>
+
         <SettingRow
           title="Privacy Policy"
+          subtitle="How we protect your data"
           icon={<Shield size={20} color="#52B788" strokeWidth={2} />}
-          onPress={() => Haptics.selectionAsync()}
+          onPress={() => {
+            Haptics.selectionAsync();
+            router.push('/legal/privacy');
+          }}
+        />
+
+        <SettingRow
+          title="Terms of Service"
+          subtitle="App usage agreement"
+          icon={<FileText size={20} color="#52B788" strokeWidth={2} />}
+          onPress={() => {
+            Haptics.selectionAsync();
+            router.push('/legal/terms');
+          }}
         />
 
         {/* App Info */}

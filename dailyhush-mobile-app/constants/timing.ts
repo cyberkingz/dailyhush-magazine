@@ -35,6 +35,12 @@ export const timing = {
   haptic: {
     delay: 50,
   },
+
+  // Navigation delays (milliseconds)
+  navigation: {
+    redirectDelay: 1500, // Delay before auto-redirecting (e.g., login after account detection)
+    successMessageDelay: 1000, // How long to show success message before navigation
+  },
 } as const;
 
 export type Timing = typeof timing;

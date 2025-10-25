@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-interface ScrollFadeViewProps extends ScrollViewProps {
+export interface ScrollFadeViewProps extends ScrollViewProps {
   /**
    * Background color for the fade gradient
    * @default '#0A1612'
@@ -89,7 +89,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
   });
 
   const [containerHeight, setContainerHeight] = useState(0);
-  const scrollTimeout = useRef<NodeJS.Timeout>();
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   /**
    * Handle scroll events to determine fade visibility
@@ -182,7 +182,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${fadeIntensity * 0.8})`,
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${fadeIntensity * 0.5})`,
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0)`,
-      ];
+      ] as const;
     } else {
       // Bottom fade: transparent at top, solid at bottom
       return [
@@ -190,7 +190,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${fadeIntensity * 0.5})`,
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${fadeIntensity * 0.8})`,
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${fadeIntensity})`,
-      ];
+      ] as const;
     }
   };
 

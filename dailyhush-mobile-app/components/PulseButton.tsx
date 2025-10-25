@@ -92,13 +92,13 @@ export function PulseButton({
       text: colors.white,
     },
     secondary: {
-      gradient: [colors.emerald[800], colors.emerald[700]],
+      gradient: [colors.emerald[800], colors.emerald[700]] as const,
       pulse: colors.emerald[600],
       glow: colors.shadow.light,
       text: colors.text.primary,
     },
     danger: {
-      gradient: ['#EF4444', '#DC2626'],
+      gradient: ['#EF4444', '#DC2626'] as const,
       pulse: '#EF4444',
       glow: 'rgba(239, 68, 68, 0.3)',
       text: colors.white,

@@ -10,10 +10,12 @@ import { getQuoteOfTheDay, getQuotesByCategory } from '@/data/dailyQuotes';
 
 // Configure notification handler
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
+  handleNotification: async (): Promise<Notifications.NotificationBehavior> => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
   }),
 });
 
@@ -91,7 +93,7 @@ export async function scheduleDailyQuoteNotification(): Promise<void> {
         hour: 9,
         minute: 0,
         repeats: true,
-      },
+      } as Notifications.CalendarTriggerInput,
     });
 
     console.log('Daily quote notification scheduled for 9:00 AM');
@@ -148,7 +150,7 @@ export async function sendEncouragementNotification(): Promise<void> {
       },
       trigger: {
         seconds: 60, // 1 minute after spiral completion
-      },
+      } as Notifications.TimeIntervalTriggerInput,
     });
 
     console.log('Encouragement notification scheduled');
@@ -220,7 +222,7 @@ export async function scheduleInactivityReminder(
         },
         trigger: {
           seconds: 10, // Send shortly after detecting inactivity
-        },
+        } as Notifications.TimeIntervalTriggerInput,
       });
 
       console.log('Inactivity reminder scheduled');

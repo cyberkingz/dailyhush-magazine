@@ -4,9 +4,9 @@
  * Includes forgot password link
  */
 
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -32,6 +32,7 @@ import {
 
 export default function Login() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ prefillEmail?: string }>();
   const { setUser } = useStore();
 
   const [email, setEmail] = useState('');
@@ -42,6 +43,16 @@ export default function Login() {
 
   // Field-level errors
   const [emailError, setEmailError] = useState<string | null>(null);
+
+  /**
+   * Pre-fill email if passed via URL params
+   * (e.g., when redirected from email lookup)
+   */
+  useEffect(() => {
+    if (params.prefillEmail) {
+      setEmail(params.prefillEmail);
+    }
+  }, [params.prefillEmail]);
 
   /**
    * Validate email on blur

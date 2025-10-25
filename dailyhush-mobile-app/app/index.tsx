@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { View, Pressable, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Brain, Moon, Info, TrendingUp, Settings } from 'lucide-react-native';
+import { Brain, Moon, Info, TrendingUp, Settings, History } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { useUser, useLoading } from '@/store/useStore';
@@ -356,7 +356,7 @@ export default function HomeModern() {
               router.push('/insights');
             }}
             variant="elevated"
-            style={{ marginBottom: 24 }}
+            style={{ marginBottom: 16 }}
           >
           <View
             style={{
@@ -396,6 +396,62 @@ export default function HomeModern() {
                   }}
                 >
                   {spiralsToday > 0 ? 'See what triggers YOUR spirals' : 'Track your progress over time'}
+                </Text>
+              </View>
+            </View>
+            <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>→</Text>
+          </View>
+        </PremiumCard>
+        </View>
+
+        {/* Spiral History Card */}
+        <View style={{ paddingHorizontal: 20 }}>
+          <PremiumCard
+            onPress={async () => {
+              await Haptics.selectionAsync();
+              router.push('/history');
+            }}
+            variant="elevated"
+            style={{ marginBottom: 24 }}
+          >
+          <View
+            style={{
+              padding: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              <View
+                style={{
+                  backgroundColor: colors.emerald[600] + '30',
+                  padding: 12,
+                  borderRadius: 16,
+                  marginRight: 16,
+                }}
+              >
+                <History size={24} color={colors.emerald[500]} strokeWidth={2} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    color: colors.text.primary,
+                    fontSize: 20,
+                    fontWeight: '600',
+                    marginBottom: 4,
+                  }}
+                >
+                  Spiral History
+                </Text>
+                <Text
+                  style={{
+                    color: colors.text.secondary,
+                    fontSize: 16,
+                    lineHeight: 24,
+                  }}
+                >
+                  Review all your past spirals
                 </Text>
               </View>
             </View>

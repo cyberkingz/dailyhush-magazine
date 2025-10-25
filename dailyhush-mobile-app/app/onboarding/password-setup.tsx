@@ -102,14 +102,16 @@ export default function PasswordSetup() {
         return;
       }
 
-      console.log('Auth account created:', authData.user.id);
+      // Safe reference to user after null check
+      const newUser = authData.user;
+      console.log('Auth account created:', newUser.id);
 
       // Step 2: Create user profile with quiz connection
       const { error: profileError } = await withRetry(
         async () => await supabase
           .from('user_profiles')
           .insert({
-            user_id: authData.user.id,
+            user_id: newUser.id,
             email: params.email,
             quiz_email: params.email,
             quiz_connected: true,
@@ -140,7 +142,7 @@ export default function PasswordSetup() {
 
       // Step 3: Update local store
       setUser({
-        user_id: authData.user.id,
+        user_id: newUser.id,
         email: params.email,
         quiz_email: params.email,
         quiz_connected: true,

@@ -7,7 +7,7 @@
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect, useRef } from 'react';
-import { View, Pressable, Animated } from 'react-native';
+import { View, Pressable, Animated, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Check, Play, Pause, SkipForward } from 'lucide-react-native';
@@ -39,6 +39,7 @@ export default function SpiralInterrupt() {
   const [preFeelingRating, setPreFeelingRating] = useState<number>(5);
   const [postFeelingRating, setPostFeelingRating] = useState<number | null>(null);
   const [selectedTrigger, setSelectedTrigger] = useState<string>('');
+  const [customTriggerText, setCustomTriggerText] = useState<string>('');
 
   // Protocol state
   const [isPlaying, setIsPlaying] = useState(false);
@@ -172,6 +173,11 @@ export default function SpiralInterrupt() {
   const handleFinish = async () => {
     // Save spiral log to database
     if (user?.user_id) {
+      // Use custom trigger text if "Other" was selected and text was provided
+      const finalTrigger = selectedTrigger === 'Other' && customTriggerText.trim()
+        ? customTriggerText.trim()
+        : selectedTrigger || undefined;
+
       const spiralLog: Partial<SpiralLog> = {
         user_id: user.user_id,
         timestamp: new Date().toISOString(),
@@ -181,7 +187,7 @@ export default function SpiralInterrupt() {
         post_feeling: postFeelingRating || 5,
         used_shift: shiftDevice?.is_connected || false,
         technique_used: '5-4-3-2-1 + breathing',
-        trigger: selectedTrigger || undefined,
+        trigger: finalTrigger,
       };
 
       try {
@@ -246,7 +252,7 @@ export default function SpiralInterrupt() {
     'Work stress',
     'Relationships',
     'Money worries',
-    'Something else',
+    'Other',
   ];
 
   // Progress percentage
@@ -499,60 +505,102 @@ export default function SpiralInterrupt() {
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}
         >
-          <View className="flex-1 justify-center px-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold mb-4">
-              What triggered this loop?
-            </Text>
-            <Text className="text-[#95B8A8] text-sm mb-8">
-              Optional - but knowing your patterns helps us help you better
-            </Text>
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={0}
+          >
+            <View className="flex-1 justify-center px-6">
+              <Text className="text-[#E8F4F0] text-2xl font-bold mb-4">
+                What triggered this loop?
+              </Text>
+              <Text className="text-[#95B8A8] text-sm mb-8">
+                Optional - but knowing your patterns helps us help you better
+              </Text>
 
-            <View className="gap-3 mb-8">
-              {commonTriggers.map((trigger) => (
+              <View className="gap-3 mb-6">
+                {commonTriggers.map((trigger) => (
+                  <Pressable
+                    key={trigger}
+                    onPress={() => {
+                      setSelectedTrigger(trigger);
+                      if (trigger !== 'Other') {
+                        setCustomTriggerText(''); // Clear custom text if switching away from Other
+                      }
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }}
+                    className={`p-4 rounded-2xl ${
+                      selectedTrigger === trigger ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                    }`}
+                  >
+                    <Text className={`text-base ${
+                      selectedTrigger === trigger ? 'text-white font-semibold' : 'text-[#E8F4F0]'
+                    }`}>
+                      {trigger}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+
+              {/* Custom Trigger Text Input - Only show when "Other" is selected */}
+              {selectedTrigger === 'Other' && (
+                <View className="mb-6">
+                  <Text className="text-[#95B8A8] text-sm mb-3">
+                    What specifically triggered it?
+                  </Text>
+                  <TextInput
+                    value={customTriggerText}
+                    onChangeText={setCustomTriggerText}
+                    placeholder="Type here (optional)..."
+                    placeholderTextColor="#95B8A8"
+                    multiline
+                    numberOfLines={3}
+                    maxLength={200}
+                    style={{
+                      backgroundColor: '#1A4D3C',
+                      borderRadius: 16,
+                      padding: 16,
+                      fontSize: 16,
+                      color: '#E8F4F0',
+                      minHeight: 80,
+                      textAlignVertical: 'top',
+                    }}
+                    returnKeyType="done"
+                    blurOnSubmit
+                  />
+                  <Text className="text-[#95B8A8] text-xs mt-2 text-right">
+                    {customTriggerText.length}/200
+                  </Text>
+                </View>
+              )}
+
+              <View className="gap-3">
                 <Pressable
-                  key={trigger}
                   onPress={() => {
-                    setSelectedTrigger(trigger);
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    handleFinish();
                   }}
-                  className={`p-4 rounded-2xl ${
-                    selectedTrigger === trigger ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
-                  }`}
+                  className="bg-[#40916C] h-16 rounded-2xl items-center justify-center active:opacity-90"
                 >
-                  <Text className={`text-base ${
-                    selectedTrigger === trigger ? 'text-white font-semibold' : 'text-[#E8F4F0]'
-                  }`}>
-                    {trigger}
+                  <Text className="text-white text-lg font-bold">
+                    Done
                   </Text>
                 </Pressable>
-              ))}
-            </View>
 
-            <View className="gap-3">
-              <Pressable
-                onPress={() => {
-                  handleFinish();
-                }}
-                className="bg-[#40916C] h-16 rounded-2xl items-center justify-center active:opacity-90"
-              >
-                <Text className="text-white text-lg font-bold">
-                  Done
-                </Text>
-              </Pressable>
-
-              <Pressable
-                onPress={() => {
-                  setSelectedTrigger('');
-                  handleFinish();
-                }}
-                className="h-14 rounded-2xl items-center justify-center active:opacity-80"
-              >
-                <Text className="text-[#52B788] text-base font-semibold">
-                  Skip
-                </Text>
-              </Pressable>
+                <Pressable
+                  onPress={() => {
+                    setSelectedTrigger('');
+                    setCustomTriggerText('');
+                    handleFinish();
+                  }}
+                  className="h-14 rounded-2xl items-center justify-center active:opacity-80"
+                >
+                  <Text className="text-[#52B788] text-base font-semibold">
+                    Skip
+                  </Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </LinearGradient>
       )}
     </View>

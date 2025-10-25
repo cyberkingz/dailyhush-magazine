@@ -37,6 +37,12 @@ export default function QuizRecognition() {
     router.push('/onboarding/quiz' as any);
   };
 
+  const handleHaveAccount = async () => {
+    await Haptics.selectionAsync();
+    // Route to login for existing users
+    router.push('/auth/login' as any);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
@@ -188,27 +194,50 @@ export default function QuizRecognition() {
           </Pressable>
         </View>
 
-        {/* Tertiary Link - I'm not sure */}
-        <Pressable
-          onPress={handleNotSure}
-          style={{
-            paddingVertical: 16,
-            alignItems: 'center',
-          }}
-        >
-          {({ pressed }) => (
-            <Text
-              style={{
-                fontSize: 18,
-                color: colors.text.secondary,
-                opacity: pressed ? 0.5 : 0.8,
-                textDecorationLine: 'underline',
-              }}
-            >
-              I'm not sure
-            </Text>
-          )}
-        </Pressable>
+        {/* Tertiary Links */}
+        <View style={{ marginBottom: 16 }}>
+          <Pressable
+            onPress={handleNotSure}
+            style={{
+              paddingVertical: 12,
+              alignItems: 'center',
+            }}
+          >
+            {({ pressed }) => (
+              <Text
+                style={{
+                  fontSize: 17,
+                  color: colors.text.secondary,
+                  opacity: pressed ? 0.5 : 0.8,
+                  textDecorationLine: 'underline',
+                }}
+              >
+                I'm not sure
+              </Text>
+            )}
+          </Pressable>
+
+          <Pressable
+            onPress={handleHaveAccount}
+            style={{
+              paddingVertical: 12,
+              alignItems: 'center',
+            }}
+          >
+            {({ pressed }) => (
+              <Text
+                style={{
+                  fontSize: 17,
+                  color: colors.emerald[400],
+                  opacity: pressed ? 0.5 : 1,
+                  fontWeight: '600',
+                }}
+              >
+                I already have an account
+              </Text>
+            )}
+          </Pressable>
+        </View>
 
         {/* Helper Text */}
         <View

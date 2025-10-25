@@ -5,47 +5,43 @@ import { Stack } from 'expo-router';
 import { PortalHost } from '@rn-primitives/portal';
 import { TopBar } from '@/components/TopBar';
 import { BottomNav } from '@/components/BottomNav';
-import { restoreSession, loadUserProfile } from '@/services/auth';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { restoreSession } from '@/services/auth';
 import { useStore } from '@/store/useStore';
+import { useAuthSync } from '@/hooks/useAuthSync';
 import {
   registerForPushNotifications,
   scheduleDailyQuoteNotification,
 } from '@/services/notifications';
 
 export default function Layout() {
-  const { setUser, setLoading } = useStore();
+  const { setLoading } = useStore();
+
+  // Sync auth state changes with store (login/logout/token refresh)
+  const { syncUserProfile } = useAuthSync();
 
   /**
    * Restore authentication session on app start
    */
   useEffect(() => {
     const initAuth = async () => {
-      setLoading(true); // Start loading
+      setLoading(true);
       console.log('Initializing authentication...');
 
       const result = await restoreSession();
 
       if (result.success && result.userId) {
         console.log('Session restored successfully:', result.userId);
-
-        // Load user profile from database
-        const profileResult = await loadUserProfile(result.userId);
-
-        if (profileResult.success && profileResult.profile) {
-          setUser(profileResult.profile);
-          console.log('User profile loaded:', profileResult.profile.user_id, 'onboarding_completed:', profileResult.profile.onboarding_completed);
-        } else {
-          console.log('Failed to load user profile:', profileResult.error);
-        }
+        await syncUserProfile(result.userId);
       } else {
         console.log('No existing session or failed to restore:', result.error);
       }
 
-      setLoading(false); // Done loading
+      setLoading(false);
     };
 
     initAuth();
-  }, []);
+  }, [syncUserProfile, setLoading]);
 
   /**
    * Setup push notifications for daily quotes
@@ -67,7 +63,7 @@ export default function Layout() {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <Stack
         screenOptions={{
           headerShown: true,
@@ -187,6 +183,6 @@ export default function Layout() {
         '/training',
         '/auth'
       ]} />
-    </>
+    </ErrorBoundary>
   );
 }

@@ -299,18 +299,34 @@ export default function Onboarding() {
         </View>
 
         {/* CTA - Bottom */}
-        <Pressable
-          onPress={nextStep}
-          className="rounded-2xl items-center justify-center active:opacity-90"
-          style={{
-            backgroundColor: colors.button.primary,
-            height: spacing.button.height,
-          }}
-        >
-          <Text className="text-lg font-bold" style={{ color: colors.white }}>
-            Try It Now
-          </Text>
-        </Pressable>
+        <View>
+          <Pressable
+            onPress={nextStep}
+            className="rounded-2xl items-center justify-center active:opacity-90 mb-3"
+            style={{
+              backgroundColor: colors.button.primary,
+              height: spacing.button.height,
+            }}
+          >
+            <Text className="text-lg font-bold" style={{ color: colors.white }}>
+              Try It Now
+            </Text>
+          </Pressable>
+
+          {/* Sign In Link */}
+          <Pressable
+            onPress={() => router.push('/auth/login' as any)}
+            className="items-center justify-center active:opacity-70"
+            style={{ paddingVertical: 12 }}
+          >
+            <Text className="text-base" style={{ color: colors.text.secondary }}>
+              Already have an account?{' '}
+              <Text className="font-semibold" style={{ color: colors.emerald[400] }}>
+                Sign in
+              </Text>
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );

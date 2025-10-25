@@ -6,9 +6,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { TrendingUp, Clock, Lightbulb, Sparkles, BarChart3 } from 'lucide-react-native';
+import { TrendingUp, Clock, Lightbulb, Sparkles, BarChart3, History as HistoryIcon } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
@@ -241,6 +241,32 @@ export default function Insights() {
               ))}
             </View>
           )}
+
+          {/* View History Button */}
+          <Pressable
+            onPress={async () => {
+              await Haptics.selectionAsync();
+              router.push('/history' as any);
+            }}
+            className="bg-[#1A4D3C] rounded-2xl p-5 mb-6 active:opacity-90"
+          >
+            <View className="flex-row items-center justify-between">
+              <View className="flex-row items-center flex-1">
+                <View className="bg-[#40916C]/20 p-3 rounded-xl mr-4">
+                  <HistoryIcon size={20} color="#52B788" strokeWidth={2} />
+                </View>
+                <View className="flex-1">
+                  <Text className="text-[#E8F4F0] text-lg font-bold mb-1">
+                    View Full History
+                  </Text>
+                  <Text className="text-[#95B8A8] text-sm leading-relaxed">
+                    See all your spirals and progress over time
+                  </Text>
+                </View>
+              </View>
+              <Text className="text-[#52B788] text-xl ml-2">→</Text>
+            </View>
+          </Pressable>
         </ScrollFadeView>
       )}
     </View>

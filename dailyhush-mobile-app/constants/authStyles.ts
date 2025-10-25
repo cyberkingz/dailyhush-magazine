@@ -250,7 +250,7 @@ export const screenLayout = {
     flex: 1,
     justifyContent: 'center' as const,
     maxWidth: 420,
-    width: '100%',
+    width: '100%' as DimensionValue,
     alignSelf: 'center' as const,
   },
 

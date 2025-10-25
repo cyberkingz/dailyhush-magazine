@@ -12,8 +12,11 @@ ALTER DATABASE postgres SET "app.jwt_secret" TO 'your-jwt-secret';
 -- ================================================
 -- USERS TABLE (extends Supabase auth.users)
 -- ================================================
+-- IMPORTANT: user_id does NOT have a foreign key constraint to auth.users
+-- This allows user_profiles and all related data to persist after auth deletion
+-- for analytics purposes. The user_id will be "orphaned" but that's intentional.
 CREATE TABLE IF NOT EXISTS public.user_profiles (
-    user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    user_id UUID PRIMARY KEY,
     email TEXT NOT NULL,
     age INTEGER,
     quiz_score INTEGER CHECK (quiz_score >= 1 AND quiz_score <= 10),
@@ -26,6 +29,10 @@ CREATE TABLE IF NOT EXISTS public.user_profiles (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Add comment to document this design decision
+COMMENT ON COLUMN public.user_profiles.user_id IS
+'User ID from auth.users. Intentionally NOT a foreign key to allow data retention after account deletion. May be orphaned if auth account is deleted.';
 
 -- ================================================
 -- SPIRAL LOGS TABLE

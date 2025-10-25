@@ -641,7 +641,16 @@ export async function loadUserProfile(
       .single();
 
     if (error) {
-      console.error('Error loading user profile:', error);
+      // Don't log "profile not found" errors as they're expected for new accounts
+      const isProfileNotFound =
+        error.code === 'PGRST116' ||
+        error.message?.includes('0 rows') ||
+        error.message?.includes('Cannot coerce the result to a single JSON object');
+
+      if (!isProfileNotFound) {
+        console.error('Error loading user profile:', error);
+      }
+
       return { success: false, error: error.message };
     }
 
@@ -671,4 +680,92 @@ export function validatePassword(password: string): { valid: boolean; error?: st
   }
 
   return { valid: true };
+}
+
+/**
+ * Check if an email already has an existing account
+ * Used during onboarding to prevent duplicate accounts
+ *
+ * Checks both user_profiles AND Supabase Auth to catch all cases:
+ * - Accounts that completed onboarding (in user_profiles)
+ * - Accounts created but not yet onboarded (in auth.users only)
+ *
+ * @param email - Email address to check
+ * @returns Object indicating if account exists and details
+ */
+export async function checkExistingAccount(
+  email: string
+): Promise<{
+  exists: boolean;
+  accountCompleted: boolean;
+  userId?: string;
+  error?: string;
+}> {
+  try {
+    const normalizedEmail = email.trim().toLowerCase();
+    console.log('🔍 Checking for existing account with email:', normalizedEmail);
+
+    // STEP 1: Check user_profiles table (accounts that have profiles)
+    const { data: existingProfile, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('user_id, email, onboarding_completed')
+      .eq('email', normalizedEmail)
+      .maybeSingle();
+
+    if (profileError && profileError.code !== 'PGRST116') {
+      // PGRST116 = "no rows returned", which is fine
+      console.error('❌ Error checking user_profiles:', profileError);
+    }
+
+    if (existingProfile) {
+      console.log('✅ Existing account found in user_profiles:', {
+        userId: existingProfile.user_id,
+        email: existingProfile.email,
+        onboardingCompleted: existingProfile.onboarding_completed,
+      });
+
+      return {
+        exists: true,
+        accountCompleted: existingProfile.onboarding_completed || false,
+        userId: existingProfile.user_id,
+      };
+    }
+
+    // STEP 2: Check Supabase Auth (accounts that might not have profiles yet)
+    // This catches cases where user created an account but hasn't completed onboarding
+    const { data: authUsers, error: authError } = await supabase.rpc(
+      'get_user_by_email',
+      { email_param: normalizedEmail }
+    );
+
+    if (authError) {
+      console.warn('⚠️ Could not check auth.users (function may not exist):', authError.message);
+      // Continue - this is not a critical error
+    } else if (authUsers && authUsers.length > 0) {
+      console.log('✅ Existing account found in auth.users:', {
+        userId: authUsers[0].id,
+        email: normalizedEmail,
+        note: 'Account exists but no profile found',
+      });
+
+      return {
+        exists: true,
+        accountCompleted: false, // No profile means onboarding not completed
+        userId: authUsers[0].id,
+      };
+    }
+
+    console.log('✅ No existing account found for:', normalizedEmail);
+    return {
+      exists: false,
+      accountCompleted: false,
+    };
+  } catch (error: any) {
+    console.error('❌ Exception checking for existing account:', error);
+    return {
+      exists: false,
+      accountCompleted: false,
+      error: error.message || 'Failed to check account',
+    };
+  }
 }

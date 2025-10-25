@@ -140,7 +140,8 @@ export function useShiftBluetooth() {
             device_id: device.id,
             name: device.name || 'The Shift',
             is_connected: true,
-            battery_level: null,
+            battery_level: undefined,
+            last_sync: new Date().toISOString(),
           });
         }
 

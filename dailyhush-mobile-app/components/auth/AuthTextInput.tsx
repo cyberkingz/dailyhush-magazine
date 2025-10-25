@@ -48,20 +48,12 @@ export function AuthTextInput({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const getInputStyle = () => {
-    const baseStyle = [styles.input];
-
-    // Add right padding for password icon
-    if (secureTextEntry) {
-      baseStyle.push({ paddingRight: 52 });
-    }
-
-    if (error) {
-      baseStyle.push(styles.inputError);
-    } else if (isFocused) {
-      baseStyle.push(styles.inputFocused);
-    }
-
-    return baseStyle;
+    return [
+      styles.input,
+      secureTextEntry && styles.inputWithPassword,
+      error && styles.inputError,
+      !error && isFocused && styles.inputFocused,
+    ].filter(Boolean);
   };
 
   return (
@@ -131,6 +123,9 @@ const styles = StyleSheet.create({
   container: inputFieldStyles.container,
   label: inputFieldStyles.label,
   input: inputFieldStyles.input,
+  inputWithPassword: {
+    paddingRight: 52,
+  },
   inputFocused: inputFieldStyles.inputFocused,
   inputError: inputFieldStyles.inputError,
   passwordToggle: inputFieldStyles.passwordToggle,

@@ -5,6 +5,7 @@
  */
 
 import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {
@@ -16,8 +17,10 @@ import {
   Pressable,
   SafeAreaView,
   DimensionValue,
+  StyleSheet,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import { CheckSquare, Square } from 'lucide-react-native';
 
 import { AuthTextInput } from '@/components/auth/AuthTextInput';
 import { AuthButton } from '@/components/auth/AuthButton';
@@ -29,6 +32,7 @@ import {
   authSpacing,
   screenLayout,
 } from '@/constants/authStyles';
+import { colors } from '@/constants/colors';
 
 export default function SignUp() {
   const router = useRouter();
@@ -43,6 +47,10 @@ export default function SignUp() {
   // Field-level errors
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  // Legal agreement checkboxes (required for App Store)
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToPrivacy, setAgreedToPrivacy] = useState(false);
 
   /**
    * Validate email on blur
@@ -82,6 +90,14 @@ export default function SignUp() {
       // Clear field errors
       setEmailError(null);
       setPasswordError(null);
+
+      // Validate legal agreements (REQUIRED for App Store)
+      if (!agreedToTerms || !agreedToPrivacy) {
+        setError('Please agree to the Terms of Service and Privacy Policy to continue');
+        setLoading(false);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        return;
+      }
 
       // Validate fields
       const emailValidation = validateEmail(email);
@@ -242,8 +258,57 @@ export default function SignUp() {
                 testID="password-input"
               />
 
+              {/* Legal agreements (REQUIRED for App Store) */}
+              <View style={legalStyles.agreementsContainer}>
+                {/* Terms of Service */}
+                <Pressable
+                  onPress={() => {
+                    setAgreedToTerms(!agreedToTerms);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  }}
+                  disabled={loading}
+                  style={legalStyles.checkboxRow}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  {agreedToTerms ? (
+                    <CheckSquare size={24} color={colors.emerald[500]} strokeWidth={2} />
+                  ) : (
+                    <Square size={24} color={colors.text.muted} strokeWidth={2} />
+                  )}
+                  <Text style={legalStyles.checkboxText}>
+                    I agree to the{' '}
+                    <Link href="/legal/terms" asChild>
+                      <Text style={legalStyles.link}>Terms of Service</Text>
+                    </Link>
+                  </Text>
+                </Pressable>
+
+                {/* Privacy Policy */}
+                <Pressable
+                  onPress={() => {
+                    setAgreedToPrivacy(!agreedToPrivacy);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  }}
+                  disabled={loading}
+                  style={legalStyles.checkboxRow}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  {agreedToPrivacy ? (
+                    <CheckSquare size={24} color={colors.emerald[500]} strokeWidth={2} />
+                  ) : (
+                    <Square size={24} color={colors.text.muted} strokeWidth={2} />
+                  )}
+                  <Text style={legalStyles.checkboxText}>
+                    I agree to the{' '}
+                    <Link href="/legal/privacy" asChild>
+                      <Text style={legalStyles.link}>Privacy Policy</Text>
+                    </Link>
+                  </Text>
+                </Pressable>
+              </View>
+
               {/* Submit button */}
-              <View style={{ marginTop: 36 }}>
+              <View style={{ marginTop: 28 }}>
                 <AuthButton
                   title="Create Account"
                   onPress={handleSignUp}
@@ -283,3 +348,27 @@ export default function SignUp() {
     </SafeAreaView>
   );
 }
+
+// Legal checkbox styles
+const legalStyles = StyleSheet.create({
+  agreementsContainer: {
+    marginTop: 24,
+    gap: 16,
+  },
+  checkboxRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+  },
+  checkboxText: {
+    flex: 1,
+    fontSize: 15,
+    lineHeight: 22,
+    color: colors.text.secondary,
+  },
+  link: {
+    color: colors.emerald[500],
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+  },
+});

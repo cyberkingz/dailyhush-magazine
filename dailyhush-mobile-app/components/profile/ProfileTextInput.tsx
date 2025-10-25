@@ -44,15 +44,11 @@ export function ProfileTextInput({
   const [isFocused, setIsFocused] = useState(false);
 
   const getInputStyle = () => {
-    const baseStyle = [styles.input];
-
-    if (error) {
-      baseStyle.push(styles.inputError);
-    } else if (isFocused) {
-      baseStyle.push(styles.inputFocused);
-    }
-
-    return baseStyle;
+    return [
+      styles.input,
+      error && styles.inputError,
+      !error && isFocused && styles.inputFocused,
+    ].filter(Boolean);
   };
 
   return (

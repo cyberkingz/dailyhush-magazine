@@ -16,7 +16,11 @@ import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { timing } from '@/constants/timing';
+import { routes } from '@/constants/routes';
+import { messages } from '@/constants/messages';
 import { supabase } from '@/utils/supabase';
+import { checkExistingAccount } from '@/services/auth';
 
 export default function EmailLookup() {
   const router = useRouter();
@@ -37,13 +41,13 @@ export default function EmailLookup() {
 
       // Validate email format
       if (!email.trim()) {
-        setErrorMessage('Please enter your email address');
+        setErrorMessage(messages.validation.emailRequired);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
 
       if (!validateEmail(email.trim())) {
-        setErrorMessage('Please enter a valid email address');
+        setErrorMessage(messages.validation.emailInvalid);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
@@ -51,7 +55,29 @@ export default function EmailLookup() {
       setIsSearching(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-      // Look up email in quiz_submissions table
+      // FIRST: Check if this email already has a DailyHush account
+      const accountCheck = await checkExistingAccount(email);
+
+      if (accountCheck.error) {
+        console.warn('Error checking for existing account (continuing anyway):', accountCheck.error);
+      }
+
+      if (accountCheck.exists) {
+        // Account exists (regardless of onboarding status) - route to login!
+        console.log('Existing account found for:', email, 'Onboarding completed:', accountCheck.accountCompleted);
+        setErrorMessage(messages.account.alreadyExists);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+        setTimeout(() => {
+          router.replace({
+            pathname: routes.auth.login as any,
+            params: { prefillEmail: email.trim().toLowerCase() },
+          });
+        }, timing.navigation.redirectDelay);
+        return;
+      }
+
+      // If no existing account, look up email in quiz_submissions table
       const { data, error } = await supabase
         .from('quiz_submissions')
         .select('*')
@@ -62,7 +88,7 @@ export default function EmailLookup() {
       if (error) {
         // Database error
         console.error('Error looking up quiz submission:', error);
-        setErrorMessage('Something went wrong. Please try again.');
+        setErrorMessage(messages.error.database);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         setIsSearching(false);
         return;
@@ -70,9 +96,7 @@ export default function EmailLookup() {
 
       if (!data || data.length === 0) {
         // Email not found in quiz submissions
-        setErrorMessage(
-          "We couldn't find a quiz with this email. Double-check your email or continue as a new user."
-        );
+        setErrorMessage(messages.account.notFound);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
         setIsSearching(false);
         return;
@@ -87,7 +111,7 @@ export default function EmailLookup() {
 
       // Route to password setup with quiz data
       router.push({
-        pathname: '/onboarding/password-setup' as any,
+        pathname: routes.onboarding.passwordSetup as any,
         params: {
           email: email.trim().toLowerCase(),
           quizSubmissionId: submission.id,
@@ -97,7 +121,7 @@ export default function EmailLookup() {
       });
     } catch (error: any) {
       console.error('Exception during email lookup:', error);
-      setErrorMessage('An unexpected error occurred. Please try again.');
+      setErrorMessage(messages.error.generic);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     } finally {
       setIsSearching(false);
@@ -328,7 +352,7 @@ export default function EmailLookup() {
           <Pressable
             onPress={async () => {
               await Haptics.selectionAsync();
-              router.push('/onboarding/quiz' as any);
+              router.push(routes.onboarding.quiz as any);
             }}
             style={{
               marginTop: 24,

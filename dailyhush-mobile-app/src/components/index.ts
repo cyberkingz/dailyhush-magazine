@@ -4,5 +4,5 @@
  * Centralized export file for reusable components
  */
 
-export { ScrollFadeView } from './ScrollFadeView';
-export type { ScrollFadeViewProps } from './ScrollFadeView';
+export { ScrollFadeView } from '@/components/ScrollFadeView';
+export type { ScrollFadeViewProps } from '@/components/ScrollFadeView';

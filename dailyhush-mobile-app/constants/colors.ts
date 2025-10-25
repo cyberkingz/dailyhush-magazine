@@ -53,20 +53,27 @@ export const colors = {
     info: '#40916C',
   },
 
+  // Error UI elements
+  error: {
+    background: 'rgba(220, 38, 38, 0.1)',
+    border: '#DC2626',
+    text: '#FF8787',
+  },
+
   // UI elements - Enhanced with gradients support
   button: {
     primary: '#40916C',
-    primaryGradient: ['#52B788', '#40916C'], // Gradient for primary button
+    primaryGradient: ['#52B788', '#40916C'] as const, // Gradient for primary button
     secondary: '#2D6A4F',
     disabled: '#1A2E26',
   },
 
   // Gradient overlays for cards
   gradients: {
-    card: ['rgba(26, 77, 60, 0.6)', 'rgba(45, 106, 79, 0.4)'],
-    cardLight: ['rgba(82, 183, 136, 0.1)', 'rgba(64, 145, 108, 0.05)'],
-    primary: ['#52B788', '#40916C'],
-    accent: ['#74C69D', '#52B788'],
+    card: ['rgba(26, 77, 60, 0.6)', 'rgba(45, 106, 79, 0.4)'] as const,
+    cardLight: ['rgba(82, 183, 136, 0.1)', 'rgba(64, 145, 108, 0.05)'] as const,
+    primary: ['#52B788', '#40916C'] as const,
+    accent: ['#74C69D', '#52B788'] as const,
     glow: 'rgba(82, 183, 136, 0.3)', // For button glow effect
   },
 

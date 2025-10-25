@@ -16,8 +16,12 @@ import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { timing } from '@/constants/timing';
+import { routes } from '@/constants/routes';
+import { messages } from '@/constants/messages';
 import { supabase } from '@/utils/supabase';
 import { submitQuizToSupabase } from '@/utils/quizScoring';
+import { checkExistingAccount } from '@/services/auth';
 import type { QuizAnswer } from '@/utils/quizScoring';
 import type { OverthinkerType } from '@/data/quizQuestions';
 
@@ -99,7 +103,7 @@ export default function QuizResults() {
       }
 
       router.push({
-        pathname: '/onboarding/password-setup' as any,
+        pathname: routes.onboarding.passwordSetup as any,
         params: {
           email: email.trim().toLowerCase(),
           quizSubmissionId: submissionId,
@@ -109,7 +113,7 @@ export default function QuizResults() {
       });
     } catch (error: any) {
       console.error('Exception during quiz submission:', error);
-      setErrorMessage('An unexpected error occurred. Please try again.');
+      setErrorMessage(messages.error.generic);
       setShowRetryButton(true);
       setIsSubmitting(false);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -123,13 +127,13 @@ export default function QuizResults() {
 
       // Validate email
       if (!email.trim()) {
-        setErrorMessage('Please enter your email address');
+        setErrorMessage(messages.validation.emailRequired);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
 
       if (!validateEmail(email.trim())) {
-        setErrorMessage('Please enter a valid email address');
+        setErrorMessage(messages.validation.emailInvalid);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
@@ -137,11 +141,33 @@ export default function QuizResults() {
       setIsSubmitting(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-      // Submit with automatic retry
+      // FIRST: Check if this email already has a DailyHush account
+      const accountCheck = await checkExistingAccount(email);
+
+      if (accountCheck.error) {
+        console.warn('Error checking for existing account (continuing anyway):', accountCheck.error);
+      }
+
+      if (accountCheck.exists) {
+        // Account exists (regardless of onboarding status) - route to login!
+        console.log('Existing account found for:', email.trim().toLowerCase(), 'Onboarding completed:', accountCheck.accountCompleted);
+        setErrorMessage(messages.account.alreadyExists);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+        setTimeout(() => {
+          router.replace({
+            pathname: routes.auth.login as any,
+            params: { prefillEmail: email.trim().toLowerCase() },
+          });
+        }, timing.navigation.redirectDelay);
+        return;
+      }
+
+      // If no existing account, submit quiz with automatic retry
       await submitWithRetry(1);
     } catch (error: any) {
       console.error('Exception in handleContinue:', error);
-      setErrorMessage('An unexpected error occurred. Please try again.');
+      setErrorMessage(messages.error.generic);
       setShowRetryButton(true);
       setIsSubmitting(false);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);

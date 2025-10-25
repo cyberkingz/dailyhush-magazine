@@ -8,12 +8,10 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Colors, Spacing, Typography, BorderRadius } from '@/constants/theme';
-import { useNightMode } from '@/store/useStore';
 import { useShiftBluetooth } from '@/hooks/useShiftBluetooth';
 
 export default function ShiftPairing() {
   const router = useRouter();
-  const nightMode = useNightMode();
 
   const {
     isScanning,
@@ -28,8 +26,8 @@ export default function ShiftPairing() {
     startBreathingSession,
   } = useShiftBluetooth();
 
-  const backgroundColor = nightMode ? Colors.nightMode.background : Colors.background.primary;
-  const textColor = nightMode ? Colors.nightMode.text : Colors.neutral.neutral50;
+  const backgroundColor = Colors.background.primary;
+  const textColor = Colors.neutral.neutral50;
 
   const handleTestBreathing = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -78,7 +76,7 @@ export default function ShiftPairing() {
         <Text
           style={{
             fontSize: Typography.fontSize.body,
-            color: nightMode ? Colors.nightMode.textMuted : Colors.neutral.neutral300,
+            color: Colors.neutral.neutral300,
             marginBottom: Spacing.xl,
             lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
           }}
@@ -255,7 +253,7 @@ export default function ShiftPairing() {
                 onPress={() => connectToDevice(device)}
                 activeOpacity={0.7}
                 style={{
-                  backgroundColor: nightMode ? Colors.nightMode.surface : '#FFFFFF',
+                  backgroundColor: '#FFFFFF',
                   borderRadius: BorderRadius.md,
                   padding: Spacing.lg,
                   marginBottom: Spacing.sm,
@@ -280,7 +278,7 @@ export default function ShiftPairing() {
                     <Text
                       style={{
                         fontSize: Typography.fontSize.caption,
-                        color: nightMode ? Colors.nightMode.textMuted : Colors.text.slate500,
+                        color: Colors.text.slate500,
                       }}
                     >
                       Tap to connect
@@ -304,7 +302,7 @@ export default function ShiftPairing() {
         {!connectedDevice && !isScanning && discoveredDevices.length === 0 && (
           <View
             style={{
-              backgroundColor: nightMode ? Colors.nightMode.surface : '#FFFFFF',
+              backgroundColor: '#FFFFFF',
               borderRadius: BorderRadius.md,
               padding: Spacing.xl,
               alignItems: 'center',
@@ -314,7 +312,7 @@ export default function ShiftPairing() {
             <Text
               style={{
                 fontSize: Typography.fontSize.body,
-                color: nightMode ? Colors.nightMode.textMuted : Colors.neutral.neutral300,
+                color: Colors.neutral.neutral300,
                 textAlign: 'center',
                 lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
               }}
@@ -365,7 +363,7 @@ export default function ShiftPairing() {
                 style={{
                   flex: 1,
                   fontSize: Typography.fontSize.body,
-                  color: nightMode ? Colors.nightMode.textMuted : Colors.neutral.neutral300,
+                  color: Colors.neutral.neutral300,
                   lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
                 }}
               >
@@ -378,7 +376,7 @@ export default function ShiftPairing() {
             <Text
               style={{
                 fontSize: Typography.fontSize.caption,
-                color: nightMode ? Colors.nightMode.textMuted : Colors.text.slate500,
+                color: Colors.text.slate500,
                 textAlign: 'center',
               }}
             >

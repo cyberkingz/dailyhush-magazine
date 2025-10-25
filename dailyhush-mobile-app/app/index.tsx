@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { View, Pressable, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Brain, Moon, Info, TrendingUp, Settings, History } from 'lucide-react-native';
+import { Brain, Info, TrendingUp, Settings, History } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { useUser, useLoading } from '@/store/useStore';
@@ -42,9 +42,6 @@ export default function HomeModern() {
       router.replace('/onboarding');
     }
   }, [user, isMounted, isLoading]);
-
-  // Check if 3AM mode is active
-  const is3AMMode = currentTime.getHours() >= 22 || currentTime.getHours() < 6;
 
   // Get natural greeting based on time of day
   const getGreeting = () => {
@@ -161,42 +158,6 @@ export default function HomeModern() {
             </Pressable>
           </View>
         </View>
-
-        {/* 3AM Mode Active Banner */}
-        {is3AMMode && (
-          <View style={{ paddingHorizontal: 20 }}>
-            <PremiumCard
-              onPress={() => router.push('/night-mode' as any)}
-              variant="elevated"
-              style={{ marginBottom: 24 }}
-            >
-              <View style={{ padding: 20 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                  <Moon size={24} color={colors.text.primary} strokeWidth={2} />
-                  <Text
-                    style={{
-                      color: colors.text.primary,
-                      fontSize: 18,
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}
-                  >
-                    3AM Mode Active
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    color: colors.emerald[200],
-                    fontSize: 16,
-                    lineHeight: 24,
-                  }}
-                >
-                  Sleep-friendly protocols are ready. Red light mode protects your sleep.
-                </Text>
-              </View>
-            </PremiumCard>
-          </View>
-        )}
 
         {/* Daily Quote Gem - Hero Section */}
         <QuoteGem />

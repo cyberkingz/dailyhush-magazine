@@ -19,7 +19,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Pressable, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Clock, Brain, Moon, Sparkles, Check, ArrowRight, Lock } from 'lucide-react-native';
+import { Clock, Brain, Sparkles, Check, ArrowRight, Lock } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { ProgressIndicator } from '@/components/ProgressIndicator';
@@ -278,21 +278,12 @@ export default function Onboarding() {
             </View>
 
             {/* Secondary features */}
-            <View className="rounded-xl p-4 mb-2 flex-row items-center" style={{ backgroundColor: colors.background.secondary }}>
+            <View className="rounded-xl p-4 flex-row items-center" style={{ backgroundColor: colors.background.secondary }}>
               <View className="p-2 rounded-lg mr-3" style={{ backgroundColor: colors.button.primary + '20' }}>
                 <Brain size={20} color={colors.emerald[400]} strokeWidth={2} />
               </View>
               <Text className="flex-1 text-sm font-medium" style={{ color: colors.text.primary }}>
                 Track patterns with AI insights
-              </Text>
-            </View>
-
-            <View className="rounded-xl p-4 flex-row items-center" style={{ backgroundColor: colors.background.secondary }}>
-              <View className="p-2 rounded-lg mr-3" style={{ backgroundColor: colors.button.primary + '20' }}>
-                <Moon size={20} color={colors.emerald[400]} strokeWidth={2} />
-              </View>
-              <Text className="flex-1 text-sm font-medium" style={{ color: colors.text.primary }}>
-                Special 3AM mode for sleepless nights
               </Text>
             </View>
           </View>
@@ -365,7 +356,7 @@ export default function Onboarding() {
             </Text>
 
             <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.secondary }}>
-              Used by 50,000+ women at 3AM. Interrupts shame-driven rumination in 90 seconds.
+              Used by 50,000+ women. Interrupts shame-driven rumination in 90 seconds.
             </Text>
           </View>
 

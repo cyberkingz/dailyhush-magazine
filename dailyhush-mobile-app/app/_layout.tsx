@@ -181,7 +181,10 @@ export default function Layout() {
         '/settings',
         '/profile',
         '/training',
-        '/auth'
+        '/auth',
+        '/faq',
+        '/legal/privacy',
+        '/legal/terms'
       ]} />
     </ErrorBoundary>
   );

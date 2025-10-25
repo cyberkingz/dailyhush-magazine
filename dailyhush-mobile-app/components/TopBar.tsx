@@ -3,7 +3,7 @@
  * Branded app header with navigation
  */
 
-import { View, Pressable } from 'react-native';
+import { View, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Settings, Menu } from 'lucide-react-native';
@@ -79,16 +79,28 @@ export function TopBar({
 
         {/* Center - Logo/Title */}
         <View style={{ flex: 1, alignItems: shouldCenter ? 'center' : 'flex-start' }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              textAlign: shouldCenter ? 'center' : 'left',
-              color: colors.text.primary,
-            }}
-          >
-            {title}
-          </Text>
+          {title === 'DailyHush' ? (
+            <Image
+              source={require('@/assets/img/inline-logo.png')}
+              style={{
+                width: 140,
+                height: 32,
+                resizeMode: 'contain',
+                tintColor: colors.white,
+              }}
+            />
+          ) : (
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                textAlign: shouldCenter ? 'center' : 'left',
+                color: colors.text.primary,
+              }}
+            >
+              {title}
+            </Text>
+          )}
           {subtitle && (
             <Text
               style={{

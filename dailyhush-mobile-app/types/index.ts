@@ -213,7 +213,6 @@ export interface AppState {
   subscription: Subscription | null;
   shift_device: ShiftDevice | null;
   is_spiraling: boolean;
-  night_mode_active: boolean;
   current_protocol: InterventionProtocol | null;
   loading: boolean;
   error: string | null;

@@ -11,8 +11,6 @@ import * as Haptics from 'expo-haptics';
 import {
   ArrowLeft,
   User,
-  Bluetooth,
-  Moon,
   Bell,
   Type,
   HelpCircle,
@@ -25,7 +23,7 @@ import {
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
-import { useStore, useUser, useNightMode } from '@/store/useStore';
+import { useStore, useUser } from '@/store/useStore';
 import { signOut } from '@/services/auth';
 import { useState } from 'react';
 
@@ -100,8 +98,6 @@ function SettingRow({
 export default function Settings() {
   const router = useRouter();
   const user = useUser();
-  const nightMode = useNightMode();
-  const { setNightMode } = useStore();
   const insets = useSafeAreaInsets();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -223,37 +219,10 @@ export default function Settings() {
           </>
         )}
 
-        {/* The Shift Section */}
-        <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">
-          The Shift Necklace
-        </Text>
-
-        <SettingRow
-          title="Pair Necklace"
-          subtitle="Connect via Bluetooth"
-          icon={<Bluetooth size={20} color="#52B788" strokeWidth={2} />}
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.push('/shift-pairing' as any);
-          }}
-        />
-
         {/* Preferences Section */}
         <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">
           Preferences
         </Text>
-
-        <SettingRow
-          title="Night Mode"
-          subtitle="Automatically enable from 10PM-6AM"
-          icon={<Moon size={20} color="#52B788" strokeWidth={2} />}
-          toggle
-          toggleValue={nightMode}
-          onToggle={(value) => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            setNightMode(value);
-          }}
-        />
 
         <SettingRow
           title="Notifications"
@@ -281,7 +250,10 @@ export default function Settings() {
         <SettingRow
           title="Help & FAQs"
           icon={<HelpCircle size={20} color="#52B788" strokeWidth={2} />}
-          onPress={() => Haptics.selectionAsync()}
+          onPress={() => {
+            Haptics.selectionAsync();
+            router.push('/faq' as any);
+          }}
         />
 
         <SettingRow

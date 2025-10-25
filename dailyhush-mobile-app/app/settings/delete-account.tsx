@@ -120,18 +120,39 @@ export default function DeleteAccountScreen() {
       //
       // User can no longer access this data once auth is deleted.
 
-      // Delete authentication account (prevents user from logging in)
-      const { error: authError } = await supabase.auth.admin.deleteUser(user.user_id);
+      // Delete authentication account via Edge Function (requires server-side admin privileges)
+      const { data: session } = await supabase.auth.getSession();
 
-      if (authError) {
-        console.error('Failed to delete auth account:', authError);
+      if (!session.session?.access_token) {
+        console.error('No active session found');
+        setError('Authentication error. Please sign out and try again.');
+        setIsDeleting(false);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        return;
+      }
+
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_SUPABASE_URL}/functions/v1/delete-account`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${session.session.access_token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('Failed to delete account via Edge Function:', errorData);
         setError('Failed to delete account. Please contact support at hello@daily-hush.com');
         setIsDeleting(false);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
 
-      console.log('Auth account deleted successfully');
+      const result = await response.json();
+      console.log('Account deleted successfully:', result);
 
       // Success!
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);

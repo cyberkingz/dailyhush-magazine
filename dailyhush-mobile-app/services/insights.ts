@@ -235,6 +235,7 @@ export async function savePatternInsights(
 
 /**
  * Generate insights based on spiral patterns
+ * Uses healing-focused, shame-free language
  */
 function generateInsights(
   logs: any[],
@@ -248,47 +249,51 @@ function generateInsights(
 ): string[] {
   const insights: string[] = [];
 
-  // Insight 1: Interruption success rate
+  // Insight 1: Interruption success rate - HEALING-FOCUSED
   if (metrics.totalSpirals > 0) {
     const interruptionRate = Math.round(
       (metrics.spiralsPrevented / metrics.totalSpirals) * 100
     );
     if (interruptionRate >= 70) {
-      insights.push(`You're successfully interrupting ${interruptionRate}% of your spirals`);
+      insights.push(`You notice and respond ${interruptionRate}% of the time. Your awareness is growing.`);
     } else if (interruptionRate >= 40) {
-      insights.push(`You interrupted ${interruptionRate}% of spirals this week - keep practicing`);
+      insights.push(`You're catching spirals ${interruptionRate}% of the time. Each notice builds the skill.`);
+    } else if (metrics.spiralsPrevented > 0) {
+      insights.push(`You've practiced F.I.R.E. ${metrics.spiralsPrevented} time${metrics.spiralsPrevented > 1 ? 's' : ''}. Noticing is the first step.`);
     } else {
-      insights.push('Try using the F.I.R.E. technique when you notice a spiral starting');
+      insights.push('Each time you log a spiral, you build awareness. That itself is healing.');
     }
   }
 
-  // Insight 2: Peak time pattern
+  // Insight 2: Peak time pattern - NON-JUDGMENTAL
   if (metrics.peakTime) {
-    if (metrics.peakTime.includes('AM')) {
-      insights.push(`Early morning (${metrics.peakTime}) is your most challenging time`);
-    } else if (
-      metrics.peakTime.includes('10') ||
-      metrics.peakTime.includes('11') ||
-      metrics.peakTime === '12:00 PM'
-    ) {
-      insights.push(`Late morning spirals may be related to stress or fatigue`);
+    const hour = parseInt(metrics.peakTime.split(':')[0]);
+    const isPM = metrics.peakTime.includes('PM');
+    const actualHour = isPM && hour !== 12 ? hour + 12 : hour === 12 && !isPM ? 0 : hour;
+
+    if (actualHour >= 5 && actualHour < 9) {
+      insights.push(`Mornings around ${metrics.peakTime} show a pattern. Consider gentler morning routines.`);
+    } else if (actualHour >= 20 || actualHour < 5) {
+      insights.push(`Evening patterns around ${metrics.peakTime}. Your mind may need rest.`);
+    } else if (actualHour >= 9 && actualHour < 12) {
+      insights.push(`Late morning patterns around ${metrics.peakTime}. Notice what happens before.`);
     } else {
-      insights.push(`Most spirals happen around ${metrics.peakTime}`);
+      insights.push(`Patterns appear around ${metrics.peakTime}. Awareness helps you prepare.`);
     }
   }
 
-  // Insight 3: Trigger pattern
+  // Insight 3: Trigger pattern - EMPOWERING
   if (metrics.mostCommonTrigger) {
-    insights.push(`"${metrics.mostCommonTrigger}" is your most common trigger`);
+    insights.push(`"${metrics.mostCommonTrigger}" appears often. Naming it helps you prepare.`);
   }
 
-  // Insight 4: Shift necklace usage
+  // Insight 4: Shift necklace usage - LESS PROMOTIONAL
   const shiftUsageCount = logs.filter((log) => log.used_shift).length;
   if (shiftUsageCount > 0) {
-    insights.push(`The Shift necklace helped you ${shiftUsageCount} time${shiftUsageCount > 1 ? 's' : ''} this week`);
+    insights.push(`Physical grounding helped ${shiftUsageCount} time${shiftUsageCount > 1 ? 's' : ''} this week.`);
   }
 
-  // Insight 5: Feeling improvement
+  // Insight 5: Feeling improvement - WARM LANGUAGE
   const logsWithFeelings = logs.filter(
     (log) => log.pre_feeling && log.post_feeling
   );
@@ -299,24 +304,29 @@ function generateInsights(
         0
       ) / logsWithFeelings.length;
     if (avgImprovement > 2) {
-      insights.push('Your mood consistently improves after interventions');
+      insights.push('You feel better after interrupting spirals. The practice is working.');
     } else if (avgImprovement > 0) {
-      insights.push('Interventions are helping improve your mood');
+      insights.push('Small improvements add up. You\'re rewiring the pattern.');
     }
   }
 
-  // Insight 6: Location patterns
+  // Insight 6: Location patterns - PRIVACY-CONSCIOUS
+  // Skip private spaces like bedroom, bathroom, bed
   const locationCounts = new Map<string, number>();
   logs.forEach((log) => {
     if (log.location) {
-      locationCounts.set(log.location, (locationCounts.get(log.location) || 0) + 1);
+      const location = log.location.toLowerCase();
+      // Only include location if it's not private/invasive
+      if (!['bedroom', 'bathroom', 'bed', 'home'].includes(location)) {
+        locationCounts.set(log.location, (locationCounts.get(log.location) || 0) + 1);
+      }
     }
   });
   if (locationCounts.size > 0) {
     const topLocation = Array.from(locationCounts.entries()).sort(
       (a, b) => b[1] - a[1]
     )[0][0];
-    insights.push(`You spiral most often in ${topLocation}`);
+    insights.push(`${topLocation} appears in your patterns. Environment affects us.`);
   }
 
   // Return top 3-4 most relevant insights

@@ -44,6 +44,16 @@ export default function PasswordSetup() {
       return false;
     }
 
+    // Check password strength
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+      setErrorMessage('Password must include uppercase, lowercase, and number');
+      return false;
+    }
+
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
       return false;
@@ -96,7 +106,7 @@ export default function PasswordSetup() {
 
       // Step 2: Create user profile with quiz connection
       const { error: profileError } = await withRetry(
-        () => supabase
+        async () => await supabase
           .from('user_profiles')
           .insert({
             user_id: authData.user.id,
@@ -139,6 +149,15 @@ export default function PasswordSetup() {
         onboarding_completed: true,
         name: null,
         age: null,
+        has_shift_necklace: false,
+        shift_paired: false,
+        fire_progress: {
+          focus: false,
+          interrupt: false,
+          reframe: false,
+          execute: false,
+        },
+        triggers: [],
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       });
@@ -278,7 +297,7 @@ export default function PasswordSetup() {
                   setPassword(text);
                   if (errorMessage) setErrorMessage('');
                 }}
-                placeholder="Minimum 8 characters"
+                placeholder="8+ chars, upper, lower, number"
                 placeholderTextColor={colors.text.secondary + '60'}
                 secureTextEntry={!showPassword}
                 autoCapitalize="none"

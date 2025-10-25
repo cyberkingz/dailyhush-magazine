@@ -15,6 +15,7 @@ import {
   Platform,
   Pressable,
   SafeAreaView,
+  DimensionValue,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft } from 'lucide-react-native';
@@ -187,7 +188,7 @@ export default function ForgotPassword() {
                 )}
 
                 {/* Form field */}
-                <View style={{ width: '100%' }}>
+                <View style={{ width: '100%' as DimensionValue }}>
                   <AuthTextInput
                     label="Email"
                     value={email}

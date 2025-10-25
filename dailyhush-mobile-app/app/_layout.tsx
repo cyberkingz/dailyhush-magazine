@@ -80,7 +80,7 @@ export default function Layout() {
             return (
               <TopBar
                 title={options.title || 'DailyHush'}
-                subtitle={options.headerSubtitle as string}
+                subtitle={undefined}
                 showBack={options.headerBackVisible !== false}
                 showSettings={options.headerRight !== undefined}
               />
@@ -117,7 +117,6 @@ export default function Layout() {
           name="insights"
           options={{
             title: 'Pattern Insights',
-            headerSubtitle: 'Last 7 days',
             headerBackVisible: true,
           }}
         />
@@ -125,7 +124,6 @@ export default function Layout() {
           name="training/index"
           options={{
             title: 'F.I.R.E. Training',
-            headerSubtitle: 'Clinical protocol to interrupt rumination',
             headerBackVisible: true,
           }}
         />

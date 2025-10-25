@@ -3,6 +3,7 @@
  * Simple, clean design system
  */
 
+import { DimensionValue } from 'react-native';
 import { colors } from './colors';
 
 /**
@@ -134,7 +135,7 @@ export const inputColors = {
 export const authButtons = {
   primary: {
     container: {
-      width: '100%',
+      width: '100%' as DimensionValue,
       height: 56,
       marginBottom: 16,
     },
@@ -166,7 +167,7 @@ export const authButtons = {
 
   secondary: {
     container: {
-      width: '100%',
+      width: '100%' as DimensionValue,
       height: 56,
       marginBottom: 24,
     },
@@ -251,6 +252,15 @@ export const screenLayout = {
     maxWidth: 420,
     width: '100%',
     alignSelf: 'center' as const,
+  },
+
+  formWrapper: {
+    marginBottom: 32,
+  },
+
+  footerSection: {
+    marginTop: 24,
+    alignItems: 'center' as const,
   },
 };
 

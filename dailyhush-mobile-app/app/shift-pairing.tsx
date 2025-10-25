@@ -92,7 +92,7 @@ export default function ShiftPairing() {
         {connectedDevice && (
           <View
             style={{
-              backgroundColor: Colors.success.green100,
+              backgroundColor: Colors.success[100],
               borderRadius: BorderRadius.md,
               padding: Spacing.lg,
               marginBottom: Spacing.xl,

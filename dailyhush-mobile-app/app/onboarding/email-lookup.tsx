@@ -57,11 +57,10 @@ export default function EmailLookup() {
         .select('*')
         .eq('email', email.trim().toLowerCase())
         .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+        .limit(1);
 
-      if (error && error.code !== 'PGRST116') {
-        // PGRST116 = no rows returned (expected error)
+      if (error) {
+        // Database error
         console.error('Error looking up quiz submission:', error);
         setErrorMessage('Something went wrong. Please try again.');
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -69,7 +68,7 @@ export default function EmailLookup() {
         return;
       }
 
-      if (!data) {
+      if (!data || data.length === 0) {
         // Email not found in quiz submissions
         setErrorMessage(
           "We couldn't find a quiz with this email. Double-check your email or continue as a new user."
@@ -79,8 +78,11 @@ export default function EmailLookup() {
         return;
       }
 
+      // Get the most recent submission
+      const submission = data[0];
+
       // Success! Found quiz submission
-      console.log('Found quiz submission:', data.id);
+      console.log('Found quiz submission:', submission.id);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
       // Route to password setup with quiz data
@@ -88,9 +90,9 @@ export default function EmailLookup() {
         pathname: '/onboarding/password-setup' as any,
         params: {
           email: email.trim().toLowerCase(),
-          quizSubmissionId: data.id,
-          overthinkerType: data.overthinker_type || '',
-          score: data.score?.toString() || '0',
+          quizSubmissionId: submission.id,
+          overthinkerType: submission.overthinker_type || '',
+          score: submission.score?.toString() || '0',
         },
       });
     } catch (error: any) {
@@ -326,7 +328,7 @@ export default function EmailLookup() {
           <Pressable
             onPress={async () => {
               await Haptics.selectionAsync();
-              router.push('/onboarding/demo' as any);
+              router.push('/onboarding/quiz' as any);
             }}
             style={{
               marginTop: 24,
@@ -343,7 +345,7 @@ export default function EmailLookup() {
                   textDecorationLine: 'underline',
                 }}
               >
-                Continue without quiz results
+                Take the quiz instead
               </Text>
             )}
           </Pressable>

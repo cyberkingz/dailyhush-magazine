@@ -55,7 +55,7 @@ export default function Profile() {
       // Update user profile in database
       // Use retry logic for robust profile updates
       const { error } = await withRetry(
-        () => supabase
+        async () => await supabase
           .from('user_profiles')
           .update({
             name: name || null,

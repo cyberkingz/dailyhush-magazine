@@ -187,7 +187,7 @@ export default function SpiralInterrupt() {
       try {
         // Use retry logic for robust data persistence
         const { error } = await withRetry(
-          () => supabase.from('spiral_logs').insert(spiralLog),
+          async () => await supabase.from('spiral_logs').insert(spiralLog),
           {
             maxRetries: 3,
             onRetry: (attempt) => {

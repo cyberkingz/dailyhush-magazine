@@ -14,6 +14,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  DimensionValue,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
@@ -146,7 +147,7 @@ export default function AuthChoice() {
             )}
 
             {/* Button section */}
-            <View style={{ width: '100%' }}>
+            <View style={{ width: '100%' as DimensionValue }}>
               {/* Email Signup (Primary CTA) */}
               <AuthButton
                 title="Create Account"

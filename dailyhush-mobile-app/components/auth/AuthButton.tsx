@@ -12,6 +12,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   PressableProps,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { authButtons } from '@/constants/authStyles';
@@ -151,41 +153,41 @@ export function AuthButton({
 
 const styles = StyleSheet.create({
   // Primary button styles
-  primaryContainer: authButtons.primary.container,
+  primaryContainer: authButtons.primary.container as ViewStyle,
 
-  primaryButton: authButtons.primary.style,
+  primaryButton: authButtons.primary.style as ViewStyle,
 
-  primaryButtonPressed: authButtons.primary.pressedStyle,
+  primaryButtonPressed: authButtons.primary.pressedStyle as ViewStyle,
 
-  primaryText: authButtons.primary.text,
+  primaryText: authButtons.primary.text as TextStyle,
 
   // Secondary button styles
-  secondaryContainer: authButtons.secondary.container,
+  secondaryContainer: authButtons.secondary.container as ViewStyle,
 
-  secondaryButton: authButtons.secondary.style,
+  secondaryButton: authButtons.secondary.style as ViewStyle,
 
-  secondaryButtonPressed: authButtons.secondary.pressedStyle,
+  secondaryButtonPressed: authButtons.secondary.pressedStyle as ViewStyle,
 
-  secondaryText: authButtons.secondary.text,
+  secondaryText: authButtons.secondary.text as TextStyle,
 
   // Link button styles
-  linkContainer: authButtons.link.container,
+  linkContainer: authButtons.link.container as ViewStyle,
 
-  linkText: authButtons.link.text,
+  linkText: authButtons.link.text as TextStyle,
 
-  linkTextPressed: authButtons.link.pressedText,
+  linkTextPressed: authButtons.link.pressedText as TextStyle,
 
   // Shared styles
   buttonDisabled: {
     opacity: 0.5,
-  },
+  } as ViewStyle,
 
   // Primary button disabled (separate for shadow removal)
   primaryButtonDisabled: {
     ...authButtons.primary.disabledStyle,
-  },
+  } as ViewStyle,
 
   iconContainer: {
     marginRight: 12,
-  },
+  } as ViewStyle,
 });

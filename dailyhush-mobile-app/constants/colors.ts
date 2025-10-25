@@ -11,6 +11,7 @@ export const colors = {
     tertiary: '#1A4D3C',     // Elevated card background
     muted: '#1A2E26',        // Muted elements
     border: 'rgba(64, 145, 108, 0.15)', // Subtle border with transparency
+    card: '#0F1F1A',         // Card background (same as secondary)
   },
 
   // Tropical emerald scale - Rich and vibrant

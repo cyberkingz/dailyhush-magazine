@@ -27,14 +27,14 @@ export default function QuizRecognition() {
 
   const handleNewUser = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    // Continue with regular onboarding (demo screen)
-    router.push('/onboarding/demo' as any);
+    // Take the native quiz
+    router.push('/onboarding/quiz' as any);
   };
 
   const handleNotSure = async () => {
     await Haptics.selectionAsync();
-    // Also continue with regular onboarding
-    router.push('/onboarding/demo' as any);
+    // Also take the native quiz
+    router.push('/onboarding/quiz' as any);
   };
 
   return (

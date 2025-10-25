@@ -26,6 +26,13 @@ export interface UserProfile {
   peak_spiral_time?: string; // e.g., "03:00"
   created_at: string;
   updated_at: string;
+
+  // Quiz Connection Fields (from onboarding)
+  quiz_email?: string | null; // Email used to connect quiz results from website
+  quiz_connected?: boolean; // Whether user has connected their quiz results
+  quiz_submission_id?: string | null; // Links to quiz_submissions table
+  quiz_overthinker_type?: string | null; // Type from quiz: mindful-thinker, gentle-analyzer, chronic-overthinker, overthinkaholic
+  quiz_connected_at?: string | null; // When quiz was connected to app account
 }
 
 /**

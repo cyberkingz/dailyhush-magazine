@@ -92,41 +92,39 @@ export default function HomeModern() {
       >
         {/* Natural Header Section - iOS Native Layout Pattern */}
         <View style={{
-          paddingLeft: insets.left + 20,
-          paddingRight: insets.right + 20,
+          paddingLeft: Math.max(insets.left, 20), // Ensure minimum 20px padding
+          paddingRight: Math.max(insets.right, 20),
           marginBottom: 8
         }}>
           <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-            minHeight: 44, // iOS minimum touch target
+            minHeight: 64, // Match button height for vertical alignment
           }}>
             {/* Text Container - Flexible with proper constraints */}
             <View style={{
               flex: 1,
-              flexShrink: 1,
-              flexGrow: 1,
               minWidth: 0, // Critical: allows text to shrink below content size
-              paddingRight: 12, // Guaranteed spacing from button
+              marginRight: 8, // Spacing from button
               justifyContent: 'center',
             }}>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 26, // Optimized for accessibility without overflow
                   fontWeight: 'bold',
                   color: colors.text.primary,
                   marginBottom: 4,
                 }}
                 numberOfLines={1}
-                ellipsizeMode="tail" // iOS standard: truncate at end with ellipsis
-                adjustsFontSizeToFit={false} // Prevent auto-scaling on iOS
+                ellipsizeMode="tail"
+                adjustsFontSizeToFit={false}
               >
                 {getGreeting()}
               </Text>
               {user?.name && (
                 <Text
                   style={{
-                    fontSize: 16,
+                    fontSize: 17,
                     color: colors.text.secondary,
                     opacity: 0.8,
                   }}
@@ -138,24 +136,23 @@ export default function HomeModern() {
               )}
             </View>
 
-            {/* Settings Button - Fixed width, iOS standard hit target */}
+            {/* Settings Button - WCAG AAA touch target for 55-70 demographic */}
             <Pressable
               onPress={() => {
                 Haptics.selectionAsync();
                 router.push('/settings' as any);
               }}
               style={{
-                width: 44, // iOS minimum touch target width
-                height: 44, // iOS minimum touch target height
+                width: 56, // WCAG AAA minimum for touch targets
+                height: 56,
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexShrink: 0, // Never shrink button
+                flexShrink: 0,
               }}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} // Extended hit area
             >
               {({ pressed }) => (
                 <Settings
-                  size={22}
+                  size={26}
                   color={colors.text.secondary}
                   strokeWidth={2}
                   opacity={pressed ? 0.5 : 0.6}
@@ -175,11 +172,11 @@ export default function HomeModern() {
             >
               <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                  <Moon size={20} color={colors.text.primary} strokeWidth={2} />
+                  <Moon size={24} color={colors.text.primary} strokeWidth={2} />
                   <Text
                     style={{
                       color: colors.text.primary,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: '600',
                       marginLeft: 8,
                     }}
@@ -190,8 +187,8 @@ export default function HomeModern() {
                 <Text
                   style={{
                     color: colors.emerald[200],
-                    fontSize: 14,
-                    lineHeight: 20,
+                    fontSize: 16,
+                    lineHeight: 24,
                   }}
                 >
                   Sleep-friendly protocols are ready. Red light mode protects your sleep.
@@ -209,7 +206,7 @@ export default function HomeModern() {
           <Text
             style={{
               color: colors.text.primary,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: 'bold',
               marginBottom: 12,
             }}
@@ -223,7 +220,7 @@ export default function HomeModern() {
                   <Text
                     style={{
                       color: colors.text.secondary,
-                      fontSize: 14,
+                      fontSize: 16,
                       marginBottom: 8,
                     }}
                   >
@@ -232,9 +229,9 @@ export default function HomeModern() {
                   <Text
                     style={{
                       color: colors.emerald[500],
-                      fontSize: 36,
+                      fontSize: 40,
                       fontWeight: 'bold',
-                      lineHeight: 44,
+                      lineHeight: 48,
                     }}
                   >
                     {spiralsToday}
@@ -245,7 +242,7 @@ export default function HomeModern() {
                     <Text
                       style={{
                         color: colors.text.secondary,
-                        fontSize: 12,
+                        fontSize: 14,
                         marginBottom: 8,
                         textAlign: 'right',
                       }}
@@ -256,7 +253,7 @@ export default function HomeModern() {
                       <Text
                         style={{
                           color: colors.emerald[500],
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: '600',
                         }}
                       >
@@ -277,7 +274,7 @@ export default function HomeModern() {
             title="I'M SPIRALING"
             subtitle="We're here. Let's break this together."
             variant="primary"
-            enablePulse={false}
+            enablePulse={true}
           />
         </View>
 
@@ -286,10 +283,10 @@ export default function HomeModern() {
           style={{
             color: colors.text.secondary,
             textAlign: 'center',
-            fontSize: 14,
+            fontSize: 16,
             marginBottom: 32,
             paddingHorizontal: 32,
-            lineHeight: 20,
+            lineHeight: 24,
           }}
         >
           That conversation isn't happening right now. But your body thinks it is. We'll interrupt this loop together. 90 seconds.
@@ -328,7 +325,7 @@ export default function HomeModern() {
                 <Text
                   style={{
                     color: colors.text.primary,
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: '600',
                     marginBottom: 4,
                   }}
@@ -338,8 +335,8 @@ export default function HomeModern() {
                 <Text
                   style={{
                     color: colors.text.secondary,
-                    fontSize: 14,
-                    lineHeight: 20,
+                    fontSize: 16,
+                    lineHeight: 24,
                   }}
                 >
                   Start your training to understand rumination
@@ -384,7 +381,7 @@ export default function HomeModern() {
                 <Text
                   style={{
                     color: colors.text.primary,
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: '600',
                     marginBottom: 4,
                   }}
@@ -394,8 +391,8 @@ export default function HomeModern() {
                 <Text
                   style={{
                     color: colors.text.secondary,
-                    fontSize: 14,
-                    lineHeight: 20,
+                    fontSize: 16,
+                    lineHeight: 24,
                   }}
                 >
                   {spiralsToday > 0 ? 'See what triggers YOUR spirals' : 'Track your progress over time'}

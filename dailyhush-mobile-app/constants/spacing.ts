@@ -21,6 +21,9 @@ export const spacing = {
     bottom: 16,
   },
 
+  // Screen-level padding
+  screenPadding: 20, // Standard horizontal padding for all screens
+
   // Component-specific spacing
   card: {
     padding: 20,

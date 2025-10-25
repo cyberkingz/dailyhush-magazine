@@ -9,9 +9,9 @@
  */
 export interface UserProfile {
   user_id: string;
-  email: string;
-  name?: string; // User's first name for personalization
-  age?: number;
+  email: string | null; // Nullable for anonymous/guest users
+  name?: string | null; // User's first name for personalization
+  age?: number | null;
   quiz_score?: number; // 1-10 from Overthinking Quiz
   has_shift_necklace: boolean;
   shift_paired: boolean;

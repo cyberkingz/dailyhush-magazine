@@ -2,12 +2,15 @@
  * DailyHush - Improved Onboarding Flow
  * Based on comprehensive UX audit
  *
- * NEW Flow (UX-optimized):
+ * NEW Flow (UX-optimized with Quiz Connection):
  * 1. Welcome & Value Proposition (with privacy messaging)
- * 2. Demo Spiral Interrupt (Let them try it FIRST - experience before commitment)
- * 3. Optional Assessment (personalization, not gatekeeping)
- * 4. Conditional Shift Necklace (only if they have one)
- * 5. Complete Setup (with name collection)
+ * 2. Quiz Recognition (Did you take our quiz?)
+ *    - If YES → Email Lookup → Password Setup → Home (skip rest of onboarding)
+ *    - If NO/Not Sure → Continue to Demo
+ * 3. Demo Spiral Interrupt (Let them try it FIRST - experience before commitment)
+ * 4. Optional Assessment (personalization, not gatekeeping)
+ * 5. Conditional Shift Necklace (only if they have one)
+ * 6. Complete Setup (with name collection)
  */
 
 import { useState, useEffect } from 'react';
@@ -75,13 +78,14 @@ export default function Onboarding() {
   };
 
   /**
-   * Progress through onboarding steps (NEW ORDER)
+   * Progress through onboarding steps (NEW ORDER with Quiz Recognition)
    */
   const nextStep = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (currentStep === 'welcome') {
-      setCurrentStep('demo');
+      // Route to quiz recognition instead of directly to demo
+      router.push('/onboarding/quiz-recognition' as any);
     } else if (currentStep === 'demo') {
       setCurrentStep('assessment');
     } else if (currentStep === 'assessment') {

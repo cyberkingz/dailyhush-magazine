@@ -100,7 +100,7 @@ export default function Settings() {
   const router = useRouter();
   const user = useUser();
   const nightMode = useNightMode();
-  const { setNightMode, reset: resetStore } = useStore();
+  const { setNightMode } = useStore();
   const insets = useSafeAreaInsets();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -122,10 +122,11 @@ export default function Settings() {
         return;
       }
 
-      // Reset Zustand store
-      resetStore();
+      // NOTE: We do NOT call resetStore() here to preserve user data
+      // The user's FIRE progress, spiral history, and triggers remain in Supabase
+      // When they sign back in, their data will be restored from the database
 
-      console.log('Logged out successfully, store reset');
+      console.log('Logged out successfully - user data preserved');
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
       // Navigate to home (which will trigger anonymous signin)
@@ -192,7 +193,10 @@ export default function Settings() {
           title="Profile"
           subtitle={user?.email || 'Guest Account'}
           icon={<User size={20} color="#52B788" strokeWidth={2} />}
-          onPress={() => Haptics.selectionAsync()}
+          onPress={() => {
+            Haptics.selectionAsync();
+            router.push('/profile');
+          }}
         />
 
         {/* Logout Button - Only show for authenticated users */}

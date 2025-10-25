@@ -4,11 +4,13 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
-import { Pressable, Animated, View, ViewStyle } from 'react-native';
+import { Pressable, Animated, View, ViewStyle, Dimensions, Easing } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
 import { colors } from '@/constants/colors';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 interface PulseButtonProps {
   onPress: () => void;
@@ -31,42 +33,29 @@ export function PulseButton({
 }: PulseButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
 
-  // Pulse animations (only if enabled)
-  const pulseScale = useRef(new Animated.Value(1)).current;
-  const pulseOpacity = useRef(new Animated.Value(0)).current;
+  // Breathing glow animation
+  const glowOpacity = useRef(new Animated.Value(0)).current;
 
   // Press animation
   const pressScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     if (enablePulse) {
-      // Continuous gentle pulse
+      // Smooth breathing glow (like a calm heartbeat)
       Animated.loop(
         Animated.sequence([
-          Animated.parallel([
-            Animated.timing(pulseScale, {
-              toValue: 1.15,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-            Animated.timing(pulseOpacity, {
-              toValue: 0.4,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-          ]),
-          Animated.parallel([
-            Animated.timing(pulseScale, {
-              toValue: 1,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-            Animated.timing(pulseOpacity, {
-              toValue: 0,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-          ]),
+          Animated.timing(glowOpacity, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+            easing: Easing.bezier(0.4, 0.0, 0.6, 1.0), // Smooth ease in-out
+          }),
+          Animated.timing(glowOpacity, {
+            toValue: 0,
+            duration: 2000,
+            useNativeDriver: true,
+            easing: Easing.bezier(0.4, 0.0, 0.6, 1.0),
+          }),
         ])
       ).start();
     }
@@ -120,34 +109,6 @@ export function PulseButton({
 
   return (
     <View style={[{ position: 'relative', alignItems: 'center' }, style]}>
-      {/* Outer glow (always visible for depth) */}
-      <View
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          borderRadius: 24,
-          backgroundColor: colorScheme.glow,
-          opacity: 0.4,
-          transform: [{ scale: 1.02 }],
-        }}
-      />
-
-      {/* Pulse aura (only if enabled) */}
-      {enablePulse && (
-        <Animated.View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            borderRadius: 24,
-            backgroundColor: colorScheme.pulse,
-            opacity: pulseOpacity,
-            transform: [{ scale: pulseScale }],
-          }}
-        />
-      )}
-
       {/* Button with gradient */}
       <Animated.View style={{ transform: [{ scale: pressScale }], width: '100%' }}>
         <Pressable
@@ -176,13 +137,28 @@ export function PulseButton({
               justifyContent: 'center',
             }}
           >
+            {/* Breathing glow overlay (only if enabled) */}
+            {enablePulse && (
+              <Animated.View
+                pointerEvents="none"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  opacity: glowOpacity,
+                }}
+              />
+            )}
             {icon && <View style={{ marginRight: 12 }}>{icon}</View>}
 
             <View style={{ alignItems: 'center', flex: icon ? 1 : 0 }}>
               <Text
                 style={{
                   color: colorScheme.text,
-                  fontSize: subtitle ? 22 : 20,
+                  fontSize: subtitle ? 24 : 22,
                   fontWeight: 'bold',
                   textAlign: 'center',
                   letterSpacing: 0.5,
@@ -194,11 +170,11 @@ export function PulseButton({
                 <Text
                   style={{
                     color: colorScheme.text,
-                    fontSize: 15,
+                    fontSize: 17,
                     opacity: 0.9,
                     marginTop: 6,
                     textAlign: 'center',
-                    lineHeight: 21,
+                    lineHeight: 24,
                   }}
                 >
                   {subtitle}

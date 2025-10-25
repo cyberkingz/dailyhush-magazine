@@ -344,9 +344,9 @@ export default function NightMode() {
 
           {/* Sleep Protocol */}
           <TouchableOpacity
-            onPress={() => {
-              // TODO: Implement sleep protocol
-              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            onPress={async () => {
+              await Haptics.selectionAsync();
+              router.push('/sleep-protocol' as any);
             }}
             activeOpacity={0.8}
             style={{

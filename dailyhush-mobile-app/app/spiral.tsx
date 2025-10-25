@@ -13,18 +13,21 @@ import * as Haptics from 'expo-haptics';
 import { Check, Play, Pause, SkipForward } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
-import { useStore, useShiftDevice } from '@/store/useStore';
+import { useStore, useShiftDevice, useUser } from '@/store/useStore';
 import type { SpiralLog } from '@/types';
 import { SuccessRipple } from '@/components/SuccessRipple';
 import { CountdownRing } from '@/components/CountdownRing';
 import { sendEncouragementNotification } from '@/services/notifications';
 import { useAudio } from '@/hooks/useAudio';
+import { supabase } from '@/utils/supabase';
+import { withRetry } from '@/utils/retry';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
 export default function SpiralInterrupt() {
   const router = useRouter();
   const params = useLocalSearchParams<{ from?: string }>();
+  const user = useUser();
   const shiftDevice = useShiftDevice();
   const { setSpiraling } = useStore();
 
@@ -167,19 +170,46 @@ export default function SpiralInterrupt() {
   };
 
   const handleFinish = async () => {
-    // Log the spiral (will implement Supabase logging later)
-    const spiralLog: Partial<SpiralLog> = {
-      timestamp: new Date().toISOString(),
-      duration_seconds: totalDuration - timeRemaining,
-      interrupted: true,
-      pre_feeling: preFeelingRating,
-      post_feeling: postFeelingRating || 5,
-      used_shift: shiftDevice?.is_connected || false,
-      technique_used: '5-4-3-2-1 + breathing',
-      trigger: selectedTrigger || undefined,
-    };
+    // Save spiral log to database
+    if (user?.user_id) {
+      const spiralLog: Partial<SpiralLog> = {
+        user_id: user.user_id,
+        timestamp: new Date().toISOString(),
+        duration_seconds: totalDuration - timeRemaining,
+        interrupted: true,
+        pre_feeling: preFeelingRating,
+        post_feeling: postFeelingRating || 5,
+        used_shift: shiftDevice?.is_connected || false,
+        technique_used: '5-4-3-2-1 + breathing',
+        trigger: selectedTrigger || undefined,
+      };
 
-    console.log('Spiral logged:', spiralLog);
+      try {
+        // Use retry logic for robust data persistence
+        const { error } = await withRetry(
+          () => supabase.from('spiral_logs').insert(spiralLog),
+          {
+            maxRetries: 3,
+            onRetry: (attempt) => {
+              console.log(`Retrying spiral log save (attempt ${attempt}/3)...`);
+            }
+          }
+        );
+
+        if (error) {
+          console.error('Error saving spiral log after retries:', error);
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        } else {
+          console.log('Spiral logged successfully:', spiralLog);
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+      } catch (err) {
+        console.error('Fatal error saving spiral log:', err);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      }
+    } else {
+      console.warn('No user_id found - spiral log not saved');
+    }
 
     // Send encouragement notification (1 minute delayed)
     await sendEncouragementNotification();

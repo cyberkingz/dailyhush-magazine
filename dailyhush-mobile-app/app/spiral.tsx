@@ -7,7 +7,7 @@
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect, useRef } from 'react';
-import { View, Pressable, Animated, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Pressable, Animated, TextInput, KeyboardAvoidingView, Platform, ImageBackground, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Check, Play, Pause, SkipForward } from 'lucide-react-native';
@@ -314,11 +314,19 @@ export default function SpiralInterrupt() {
 
       {/* Protocol Running Stage */}
       {stage === 'protocol' && (
-        <LinearGradient
-          colors={['#1A4D3C', '#0F2B1E', '#0A1612']}
-          locations={[0, 0.3, 1]}
+        <ImageBackground
+          source={require('@/assets/img/forest.png')}
           style={{ flex: 1 }}
+          resizeMode="cover"
         >
+          {/* Dark overlay to ensure text readability */}
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              backgroundColor: '#0A1612',
+              opacity: 0.85, // 85% dark overlay = 15% forest visibility
+            }}
+          />
           <View className="flex-1 justify-between items-center px-6 py-12">
             {/* Top Section - Countdown with Progress Ring */}
             <View className="items-center justify-center" style={{ height: 300 }}>
@@ -424,13 +432,13 @@ export default function SpiralInterrupt() {
             </Pressable>
           </View>
           </View>
-        </LinearGradient>
+        </ImageBackground>
       )}
 
       {/* Post-Check Stage */}
       {stage === 'post-check' && (
         <LinearGradient
-          colors={['#0A1612', '#1A4D3C', '#0A1612']}
+          colors={['#0A1612', '#0A1612', '#0A1612']}
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}
         >
@@ -501,7 +509,7 @@ export default function SpiralInterrupt() {
       {/* Log Trigger Stage */}
       {stage === 'log-trigger' && (
         <LinearGradient
-          colors={['#0A1612', '#0F2B1E', '#0A1612']}
+          colors={['#0A1612', '#0A1612', '#0A1612']}
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}
         >

@@ -1,10 +1,11 @@
 /**
  * DailyHush - Countdown Ring Component
- * Elegant, minimal progress ring with gradient stroke
+ * Solid green progress ring with enhanced glow effect
+ * Optimized for anxiety relief - no visual complexity
  */
 
 import { View } from 'react-native';
-import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
+import Svg, { Circle } from 'react-native-svg';
 
 interface CountdownRingProps {
   size?: number;
@@ -25,24 +26,18 @@ export function CountdownRing({
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
+  // Intensify glow as progress increases (0.3 to 0.6)
+  const glowIntensity = 0.3 + (progress / 100) * 0.3;
+
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-      {/* Main ring with gradient */}
       <Svg width={size} height={size}>
-        <Defs>
-          <LinearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <Stop offset="0%" stopColor={color} stopOpacity="1" />
-            <Stop offset="50%" stopColor={glowColor} stopOpacity="0.9" />
-            <Stop offset="100%" stopColor={color} stopOpacity="1" />
-          </LinearGradient>
-        </Defs>
-
-        {/* Progress ring with gradient */}
+        {/* Solid green progress ring - no glow */}
         <Circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="url(#ringGradient)"
+          stroke={color}
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={circumference}
@@ -50,7 +45,7 @@ export function CountdownRing({
           strokeLinecap="round"
           rotation="-90"
           origin={`${size / 2}, ${size / 2}`}
-          opacity={0.95}
+          opacity={1}
         />
       </Svg>
     </View>

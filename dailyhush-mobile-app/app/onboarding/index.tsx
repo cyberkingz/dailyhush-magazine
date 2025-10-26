@@ -55,6 +55,21 @@ export default function Onboarding() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
 
   /**
+   * Stop and unload background music
+   */
+  const stopBackgroundMusic = async () => {
+    if (sound) {
+      try {
+        await sound.stopAsync();
+        await sound.unloadAsync();
+        setSound(null);
+      } catch (error) {
+        console.error('Error stopping background music:', error);
+      }
+    }
+  };
+
+  /**
    * Background Music - Play calming forest sounds throughout onboarding
    */
   useEffect(() => {
@@ -95,11 +110,12 @@ export default function Onboarding() {
 
     loadAndPlaySound();
 
-    // Cleanup
+    // Cleanup when component unmounts
     return () => {
       isMounted = false;
       if (loadedSound) {
-        loadedSound.unloadAsync();
+        loadedSound.stopAsync().catch(() => {});
+        loadedSound.unloadAsync().catch(() => {});
       }
     };
   }, []);
@@ -137,6 +153,8 @@ export default function Onboarding() {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (currentStep === 'welcome') {
+      // Stop music before navigating away
+      await stopBackgroundMusic();
       // Route to quiz recognition instead of directly to demo
       router.push('/onboarding/quiz-recognition' as any);
     } else if (currentStep === 'demo') {
@@ -268,6 +286,9 @@ export default function Onboarding() {
       } else {
         console.log('User profile saved to database');
       }
+
+      // Stop music before navigating away from onboarding
+      await stopBackgroundMusic();
 
       // Navigate to auth choice screen (UX Option D: soft ask after onboarding)
       // User can choose to create account or continue as guest
@@ -443,7 +464,11 @@ export default function Onboarding() {
 
           {/* Sign In Link - WCAG AAA touch target */}
           <Pressable
-            onPress={() => router.push('/auth/login' as any)}
+            onPress={async () => {
+              // Stop music before navigating to login
+              await stopBackgroundMusic();
+              router.push('/auth/login' as any);
+            }}
             className="items-center justify-center active:opacity-70"
             style={{
               minHeight: 56,
@@ -519,7 +544,11 @@ export default function Onboarding() {
         {/* Buttons - Bottom */}
         <View>
           <Pressable
-            onPress={() => router.push('/spiral?from=onboarding' as any)}
+            onPress={async () => {
+              // Stop music before navigating to spiral
+              await stopBackgroundMusic();
+              router.push('/spiral?from=onboarding' as any);
+            }}
             className="rounded-2xl items-center justify-center active:opacity-90 mb-3"
             style={{
               backgroundColor: colors.button.primary,

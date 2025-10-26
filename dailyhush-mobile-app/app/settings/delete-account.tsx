@@ -154,13 +154,30 @@ export default function DeleteAccountScreen() {
       const result = await response.json();
       console.log('Account deleted successfully:', result);
 
-      // Success!
+      // CRITICAL: Perform cleanup operations BEFORE showing success alert
+      // This prevents race conditions where the user might close the app before cleanup completes
+
+      // Step 1: Sign out to clear session from AsyncStorage
+      // This prevents session restoration on app restart
+      try {
+        await supabase.auth.signOut();
+        console.log('Local session cleared successfully');
+      } catch (signOutError) {
+        // Don't fail the whole flow if signOut errors
+        // The server-side account deletion succeeded, which is what matters
+        console.error('Failed to clear local session (non-critical):', signOutError);
+      }
+
+      // Step 2: Clear Zustand store
+      // This is a synchronous operation and should not fail
+      resetStore();
+      console.log('Local store cleared');
+
+      // Step 3: Success haptics AFTER cleanup
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-      // Clear local store
-      resetStore();
-
-      // Show success message
+      // Step 4: Show success message and navigate
+      // Cleanup is complete, so even if user closes app now, state is clean
       Alert.alert(
         'Account Deleted',
         'Your account has been deleted. You will no longer be able to sign in.',
@@ -168,8 +185,8 @@ export default function DeleteAccountScreen() {
           {
             text: 'OK',
             onPress: () => {
-              // Navigate to welcome screen
-              router.replace('/');
+              // Navigate to onboarding screen
+              router.replace('/onboarding');
             },
           },
         ],

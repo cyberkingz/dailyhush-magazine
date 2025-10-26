@@ -108,18 +108,29 @@ export default function Login() {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
       // Load the user profile and update store
+      let hasProfile = false;
       if (result.userId) {
         const { loadUserProfile } = await import('@/services/auth');
         const profileResult = await loadUserProfile(result.userId);
         if (profileResult.success && profileResult.profile) {
           setUser(profileResult.profile);
+          hasProfile = true;
           console.log('User profile loaded into store:', profileResult.profile.email);
+        } else {
+          console.log('No profile found - orphaned account detected');
         }
       }
 
-      // Short delay to show success message
+      // Short delay to show success message, then navigate
       setTimeout(() => {
-        router.replace('/');
+        if (!hasProfile) {
+          // Orphaned account - redirect to profile setup
+          console.log('Redirecting to profile setup for orphaned account');
+          router.replace('/onboarding/profile-setup');
+        } else {
+          // Profile exists - go to home
+          router.replace('/');
+        }
       }, 1000);
     } catch (err: any) {
       console.error('Login error:', err);
@@ -131,11 +142,12 @@ export default function Login() {
   };
 
   /**
-   * Navigate to signup screen
+   * Navigate to quiz flow
+   * All new users should discover their overthinker type
    */
   const handleNavigateToSignUp = async () => {
     await Haptics.selectionAsync();
-    router.push('/auth/signup');
+    router.push('/onboarding/quiz');
   };
 
   /**

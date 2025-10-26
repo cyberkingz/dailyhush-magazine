@@ -3,30 +3,29 @@
  * Shows overthinker type and collects email for account creation
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Pressable, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { View, Pressable, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Sparkles, Mail } from 'lucide-react-native';
+import { Sparkles, ChevronRight } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
-import { timing } from '@/constants/timing';
-import { routes } from '@/constants/routes';
-import { messages } from '@/constants/messages';
 import { supabase } from '@/utils/supabase';
 import { submitQuizToSupabase } from '@/utils/quizScoring';
-import { checkExistingAccount } from '@/services/auth';
 import type { QuizAnswer } from '@/utils/quizScoring';
 import type { OverthinkerType } from '@/data/quizQuestions';
+import { QUIZ_REVEAL_CONFIG } from '@/constants/quiz';
+import { useStore } from '@/store/useStore';
 
 export default function QuizResults() {
   const router = useRouter();
+  const { user, setUser } = useStore();
   const params = useLocalSearchParams<{
     type: OverthinkerType;
     score: string;
@@ -39,22 +38,39 @@ export default function QuizResults() {
   }>();
   const insets = useSafeAreaInsets();
 
-  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [showRetryButton, setShowRetryButton] = useState(false);
+  const [isRevealing, setIsRevealing] = useState(false);
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  // Check if this is a results reveal (after signup) or legacy flow
+  const isReveal = params.reveal === 'true';
 
-  const submitWithRetry = async (attempt = 1): Promise<void> => {
+  useEffect(() => {
+    if (isReveal) {
+      // Show reveal animation
+      setIsRevealing(true);
+      setTimeout(() => {
+        setIsRevealing(false);
+      }, QUIZ_REVEAL_CONFIG.ANIMATION_DURATION);
+    }
+  }, [isReveal]);
+
+  const handleContinue = async () => {
     try {
+      setIsSubmitting(true);
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+      // Get current authenticated user
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        console.error('No authenticated user found');
+        setIsSubmitting(false);
+        return;
+      }
+
       // Parse answers from params
       const answers: QuizAnswer[] = JSON.parse(params.answers);
 
-      // Submit quiz to Supabase
       const result = {
         type: params.type,
         score: parseInt(params.score),
@@ -65,110 +81,63 @@ export default function QuizResults() {
         ctaHook: params.ctaHook,
       };
 
+      // Submit quiz with the authenticated user's email
       const { success, submissionId, error } = await submitQuizToSupabase(
-        email.trim().toLowerCase(),
+        session.user.email || '',
         answers,
         result,
         supabase
       );
 
       if (!success || !submissionId) {
-        // Retry logic with exponential backoff
-        if (attempt < 3) {
-          console.log(`Retry attempt ${attempt}/3 after network error`);
-          // Exponential backoff: 1s, 2s
-          const delay = Math.pow(2, attempt) * 1000;
-          await new Promise(resolve => setTimeout(resolve, delay));
-          return submitWithRetry(attempt + 1);
-        }
-
-        // After 3 attempts, show manual retry button
-        setErrorMessage(error || 'Network error. Please check your connection and try again.');
-        setShowRetryButton(true);
+        console.error('Failed to save quiz:', error);
         setIsSubmitting(false);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
 
-      // Success! Route to password setup
-      console.log('✅ Quiz submitted successfully, routing to password setup');
+      // Update user profile with quiz data and mark onboarding complete
+      const { error: updateError } = await supabase
+        .from('user_profiles')
+        .update({
+          quiz_email: session.user.email,
+          quiz_connected: true,
+          quiz_submission_id: submissionId,
+          quiz_overthinker_type: params.type,
+          quiz_connected_at: new Date().toISOString(),
+          onboarding_completed: true, // Profile already collected, quiz now linked
+        })
+        .eq('user_id', session.user.id);
+
+      if (updateError) {
+        console.error('Failed to update user profile:', updateError);
+        setIsSubmitting(false);
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        return;
+      }
+
+      // BEST PRACTICE: Fetch fresh profile from database (single source of truth)
+      // This ensures local store always matches database state
+      const { data: updatedProfile, error: fetchError } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .single();
+
+      if (fetchError || !updatedProfile) {
+        console.error('Failed to fetch updated profile:', fetchError);
+        // Continue anyway - database is updated, store will sync on next app launch
+      } else {
+        console.log('✅ Profile updated and synced from database');
+        setUser(updatedProfile);
+      }
+
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-      // Clear quiz progress from AsyncStorage since quiz is now submitted
-      try {
-        await AsyncStorage.removeItem('quiz_progress');
-        console.log('✅ Quiz progress cleared from storage');
-      } catch (error) {
-        console.error('Failed to clear quiz progress:', error);
-      }
-
-      router.push({
-        pathname: routes.onboarding.passwordSetup as any,
-        params: {
-          email: email.trim().toLowerCase(),
-          quizSubmissionId: submissionId,
-          overthinkerType: params.type,
-          score: params.rawScore,
-        },
-      });
-    } catch (error: any) {
-      console.error('Exception during quiz submission:', error);
-      setErrorMessage(messages.error.generic);
-      setShowRetryButton(true);
-      setIsSubmitting(false);
-      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    }
-  };
-
-  const handleContinue = async () => {
-    try {
-      setErrorMessage('');
-      setShowRetryButton(false);
-
-      // Validate email
-      if (!email.trim()) {
-        setErrorMessage(messages.validation.emailRequired);
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        return;
-      }
-
-      if (!validateEmail(email.trim())) {
-        setErrorMessage(messages.validation.emailInvalid);
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        return;
-      }
-
-      setIsSubmitting(true);
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-      // FIRST: Check if this email already has a DailyHush account
-      const accountCheck = await checkExistingAccount(email);
-
-      if (accountCheck.error) {
-        console.warn('Error checking for existing account (continuing anyway):', accountCheck.error);
-      }
-
-      if (accountCheck.exists) {
-        // Account exists (regardless of onboarding status) - route to login!
-        console.log('Existing account found for:', email.trim().toLowerCase(), 'Onboarding completed:', accountCheck.accountCompleted);
-        setErrorMessage(messages.account.alreadyExists);
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
-        setTimeout(() => {
-          router.replace({
-            pathname: routes.auth.login as any,
-            params: { prefillEmail: email.trim().toLowerCase() },
-          });
-        }, timing.navigation.redirectDelay);
-        return;
-      }
-
-      // If no existing account, submit quiz with automatic retry
-      await submitWithRetry(1);
+      // Route to home - onboarding complete!
+      router.replace('/');
     } catch (error: any) {
       console.error('Exception in handleContinue:', error);
-      setErrorMessage(messages.error.generic);
-      setShowRetryButton(true);
       setIsSubmitting(false);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     }
@@ -279,114 +248,29 @@ export default function QuizResults() {
               </Text>
             </View>
 
-            {/* Email Input Section */}
-            <Text
+            {/* Success Message */}
+            <View
               style={{
-                fontSize: 20,
-                fontWeight: '600',
-                color: colors.text.primary,
-                textAlign: 'center',
-                marginBottom: 12,
+                backgroundColor: colors.emerald[800] + '30',
+                borderRadius: 16,
+                padding: spacing.lg,
+                marginBottom: spacing.xl,
+                borderWidth: 1,
+                borderColor: colors.emerald[700] + '40',
               }}
             >
-              Save Your Results
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: colors.text.secondary,
-                textAlign: 'center',
-                lineHeight: 24,
-                marginBottom: 24,
-              }}
-            >
-              Enter your email to create your account and unlock the F.I.R.E. Protocol
-            </Text>
-
-            {/* Email Input */}
-            <View style={{ marginBottom: 24 }}>
               <Text
                 style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: colors.text.primary,
-                  marginBottom: 12,
-                }}
-              >
-                Email Address
-              </Text>
-              <TextInput
-                value={email}
-                onChangeText={(text) => {
-                  setEmail(text);
-                  if (errorMessage) setErrorMessage('');
-                }}
-                placeholder="your.email@example.com"
-                placeholderTextColor={colors.text.secondary + '60'}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoComplete="email"
-                returnKeyType="done"
-                onSubmitEditing={handleContinue}
-                editable={!isSubmitting}
-                style={{
-                  backgroundColor: colors.background.card,
-                  borderRadius: 16,
-                  paddingVertical: 18,
-                  paddingHorizontal: 20,
                   fontSize: 17,
-                  minHeight: 56,
-                  color: colors.text.primary,
-                  borderWidth: 2,
-                  borderColor: errorMessage ? '#EF4444' : colors.emerald[700] + '60',
-                }}
-              />
-
-              {errorMessage ? (
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: '#EF4444',
-                    marginTop: 8,
-                    lineHeight: 24,
-                  }}
-                >
-                  {errorMessage}
-                </Text>
-              ) : null}
-            </View>
-
-            {/* Retry Button (shown after 3 failed attempts) */}
-            {showRetryButton && (
-              <Pressable
-                onPress={handleContinue}
-                style={{
-                  backgroundColor: colors.emerald[700],
-                  borderRadius: 16,
-                  paddingVertical: 16,
-                  paddingHorizontal: 24,
-                  marginBottom: 16,
-                  borderWidth: 2,
-                  borderColor: colors.emerald[600],
+                  color: colors.emerald[200],
+                  textAlign: 'center',
+                  lineHeight: 26,
+                  fontWeight: '600',
                 }}
               >
-                {({ pressed }) => (
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: '600',
-                      color: colors.white,
-                      textAlign: 'center',
-                      opacity: pressed ? 0.7 : 1,
-                    }}
-                  >
-                    Retry Submission
-                  </Text>
-                )}
-              </Pressable>
-            )}
+                ✨ You're all set! Let's start your journey to quieter thoughts.
+              </Text>
+            </View>
 
             {/* Continue Button */}
             <Pressable
@@ -430,7 +314,7 @@ export default function QuizResults() {
                     </>
                   ) : (
                     <>
-                      <Mail
+                      <ChevronRight
                         size={24}
                         color={colors.white}
                         strokeWidth={2}
@@ -443,7 +327,7 @@ export default function QuizResults() {
                           color: colors.white,
                         }}
                       >
-                        Continue
+                        Get Started
                       </Text>
                     </>
                   )}

@@ -12,7 +12,7 @@ import * as Haptics from 'expo-haptics';
 import { Brain, Info, TrendingUp, Settings, History } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
-import { useUser, useLoading } from '@/store/useStore';
+import { useUser, useLoading, useStore } from '@/store/useStore';
 import { PulseButton } from '@/components/PulseButton';
 import { TipCard } from '@/components/TipCard';
 import { QuoteGem } from '@/components/QuoteGem';
@@ -20,6 +20,7 @@ import { PremiumCard } from '@/components/PremiumCard';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { supabase } from '@/utils/supabase';
 
 export default function HomeModern() {
   const router = useRouter();
@@ -37,10 +38,86 @@ export default function HomeModern() {
 
   // Check if user needs onboarding (only after loading is complete)
   useEffect(() => {
-    if (isMounted && !isLoading && (!user || !user.onboarding_completed)) {
-      console.log('Redirecting to onboarding - user:', user?.user_id, 'onboarding_completed:', user?.onboarding_completed);
-      router.replace('/onboarding');
-    }
+    const checkOnboarding = async () => {
+      if (isMounted && !isLoading) {
+        // CASE 1: User has profile but onboarding not completed
+        if (user && !user.onboarding_completed) {
+          console.log('Redirecting to onboarding - user:', user?.user_id, 'onboarding_completed:', user?.onboarding_completed);
+
+          // Check if user has quiz data
+          const { data: quizData } = await supabase
+            .from('quiz_submissions')
+            .select('*')
+            .eq('user_id', user.user_id)
+            .limit(1);
+
+          if (quizData && quizData.length > 0) {
+            // User has quiz data, send them to profile setup instead of full onboarding
+            console.log('User has quiz data, redirecting to profile setup');
+            router.replace('/onboarding/profile-setup' as any);
+            return;
+          }
+
+          // No quiz data, do full onboarding
+          router.replace('/onboarding');
+          return;
+        }
+
+        // CASE 2: No profile but auth session exists
+        // This could be either:
+        // A) Orphaned account (profile creation failed during signup) - recoverable
+        // B) Deleted account (signOut didn't clear session) - should restart onboarding
+        if (!user) {
+          const { data: { session } } = await supabase.auth.getSession();
+
+          if (session?.user && !session.user.is_anonymous) {
+            console.log('⚠️ Auth account exists but no profile - checking account state');
+
+            // DEFENSIVE: Check if this is a deleted account by verifying auth account exists
+            // If the Edge Function successfully deleted the auth account, this session is stale
+            try {
+              const { data: authUser, error: authError } = await supabase.auth.getUser();
+
+              if (authError || !authUser.user) {
+                console.log('🗑️ Stale session detected (account deleted) - clearing and restarting');
+                await supabase.auth.signOut();
+                router.replace('/onboarding');
+                return;
+              }
+            } catch (error) {
+              console.error('Error checking auth user:', error);
+              // If we can't verify, err on the side of caution - restart onboarding
+              await supabase.auth.signOut();
+              router.replace('/onboarding');
+              return;
+            }
+
+            console.log('⚠️ Valid auth account but no profile - checking for quiz data to recover');
+
+            // Check if user has quiz data by email
+            const { data: quizData } = await supabase
+              .from('quiz_submissions')
+              .select('*')
+              .eq('email', session.user.email)
+              .order('created_at', { ascending: false })
+              .limit(1);
+
+            if (quizData && quizData.length > 0) {
+              console.log('✅ Found quiz data for orphaned account - redirecting to profile setup');
+              // User has quiz data, just needs to complete profile setup
+              router.replace('/onboarding/profile-setup' as any);
+              return;
+            }
+
+            // No quiz data for this email, do full onboarding
+            console.log('No quiz data found for orphaned account - starting onboarding');
+            router.replace('/onboarding');
+          }
+        }
+      }
+    };
+
+    checkOnboarding();
   }, [user, isMounted, isLoading]);
 
   // Get natural greeting based on time of day

@@ -4,9 +4,9 @@
  * Routes to password setup if found
  */
 
-import { useRouter, Stack } from 'expo-router';
+import { useRouter, Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Pressable, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -26,9 +26,24 @@ export default function EmailLookup() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
+  // Accept prefilled email and profile data from signup redirect
+  const params = useLocalSearchParams<{
+    prefillEmail?: string;
+    profileName?: string;
+    profileAge?: string;
+    profileRuminationFrequency?: string;
+  }>();
+
   const [email, setEmail] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Prefill email if provided
+  useEffect(() => {
+    if (params.prefillEmail) {
+      setEmail(params.prefillEmail);
+    }
+  }, [params.prefillEmail]);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -109,7 +124,7 @@ export default function EmailLookup() {
       console.log('Found quiz submission:', submission.id);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-      // Route to password setup with quiz data
+      // Route to password setup with quiz data + profile data (if from signup redirect)
       router.push({
         pathname: routes.onboarding.passwordSetup as any,
         params: {
@@ -117,6 +132,10 @@ export default function EmailLookup() {
           quizSubmissionId: submission.id,
           overthinkerType: submission.overthinker_type || '',
           score: submission.score?.toString() || '0',
+          // Profile data from signup redirect (if provided)
+          profileName: params.profileName || '',
+          profileAge: params.profileAge || '',
+          profileRuminationFrequency: params.profileRuminationFrequency || '',
         },
       });
     } catch (error: any) {

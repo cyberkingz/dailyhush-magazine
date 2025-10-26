@@ -1,0 +1,196 @@
+appId: host.exp.Exponent
+---
+# 🎬 DailyHush - COMPLETE Onboarding Flow Test
+# Watch the entire user journey happen automatically!
+# Duration: ~2-3 minutes
+
+# Clear app state and launch fresh
+- clearState
+- launchApp:
+    clearState: true
+
+# Wait for app to fully load (Expo takes time)
+- waitForAnimationToEnd:
+    timeout: 20000
+
+# ============================================
+# STEP 1: Welcome Screen → Start Onboarding
+# ============================================
+- tapOn: "Try It Now"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 2: Quiz Recognition Screen
+# ============================================
+# Screen asks: "Did you take our Overthinking Type Quiz on our website?"
+# User chooses: "No, I'm new here" to start the quiz
+- tapOn: "No, I'm new here"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 3: Quiz - Answer 16 Questions
+# ============================================
+# The quiz has 16 questions with three answer choices
+# Each option has unique descriptive text
+# We'll tap the third option (highest overthinking) by matching unique text
+# The third option always contains "can't stop" or similar strong language
+
+# For all 16 questions, tap the third option (highest overthinking value)
+# Using partial text matching that works across all questions
+
+# Question 1
+- tapOn: "Almost always — I can't stop replaying"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 2
+- tapOn: "Research until I'm mentally exhausted"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 3
+- tapOn: "Constantly"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 4
+- tapOn: '"They must think I''m stupid."'
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 5
+- tapOn: "Fear of judgment — don't want to disappoint"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 6
+- tapOn: '"If I fail, it proves I''m not good enough."'
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 7
+- tapOn: "Every time"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 8
+- tapOn: "Way too long — I second-guess everything"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 9
+- tapOn: "Very uncomfortable — I need certainty"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 10
+- tapOn: "Often — I need validation first"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 11
+- tapOn: '"Why can''t I be like that?"'
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 12
+- tapOn: '"I always mess things up."'
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 13
+- tapOn: "Daily"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 14
+- tapOn: "My brain starts racing; I replay the day or plan tomorrow"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 15
+- tapOn: "30+ minutes / I check the clock"
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# Question 16 (Last question - has "Continue" button)
+- tapOn: "Replay convos / imagine worst-cases / redo decisions"
+- tapOn: "Continue"
+- waitForAnimationToEnd
+
+# Wait for quiz to calculate results and navigate to profile screen
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ============================================
+# STEP 4: Profile Setup
+# ============================================
+# Verify we're on profile setup screen
+- assertVisible: "Complete Your Profile"
+
+# Enter name
+- tapOn: "Your name"
+- inputText: "Maestro Test User"
+
+# Enter age
+- tapOn: "Your age"
+- inputText: "42"
+
+# Dismiss keyboard
+- tapOn: "Done"
+- waitForAnimationToEnd
+
+# Scroll down to see rumination frequency options
+- scroll
+
+# Select rumination frequency (required field)
+- tapOn: "Often (Daily)"
+- waitForAnimationToEnd
+
+# Scroll down to see Complete Setup button
+- scroll
+
+# Continue to signup
+- tapOn: "Complete Setup"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 5: Signup - Email & Password
+# ============================================
+# Enter email (use ${random} for unique email each run)
+- tapOn: "your.email@example.com"
+- inputText: "test${random}@dailyhush.app"
+- hideKeyboard
+
+# Enter password
+- tapOn: "8+ characters"
+- inputText: "TestPassword123!"
+- hideKeyboard
+
+# Create account
+- tapOn: "Unlock My Results"
+- waitForAnimationToEnd
+
+# Wait for account creation (may take a moment)
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# ============================================
+# STEP 6: Results Screen
+# ============================================
+# Should see results now
+- assertVisible: "Your Results"
+
+# Continue to home
+- tapOn: "Get Started"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 7: Home Screen - SUCCESS! 🎉
+# ============================================
+# Verify we landed on home screen
+- assertVisible: "Good"
+- assertVisible: "Maestro Test User"
+- assertVisible: "I'M SPIRALING"
+
+# SUCCESS! Complete onboarding flow executed! 🎉

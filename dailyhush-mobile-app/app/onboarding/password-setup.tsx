@@ -19,6 +19,8 @@ import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
 import { useStore } from '@/store/useStore';
 import { withRetry } from '@/utils/retry';
+import { checkExistingAccount } from '@/services/auth';
+import { routes } from '@/constants/routes';
 
 export default function PasswordSetup() {
   const router = useRouter();
@@ -27,6 +29,10 @@ export default function PasswordSetup() {
     quizSubmissionId: string;
     overthinkerType: string;
     score: string;
+    // Profile data from signup redirect (optional)
+    profileName?: string;
+    profileAge?: string;
+    profileRuminationFrequency?: string;
   }>();
   const insets = useSafeAreaInsets();
   const { setUser } = useStore();
@@ -74,6 +80,30 @@ export default function PasswordSetup() {
       setIsCreating(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
+      // DEFENSIVE CHECK: Verify auth account doesn't already exist
+      // This catches cases where email-lookup's check failed or was bypassed
+      console.log('🔍 Checking if auth account already exists for:', params.email);
+      const accountCheck = await checkExistingAccount(params.email);
+
+      if (accountCheck.exists) {
+        // Auth account exists - should NOT be here!
+        // Redirect to login instead
+        console.log('⚠️ Auth account already exists! Redirecting to login...');
+        setErrorMessage('An account with this email already exists. Redirecting to login...');
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+
+        setTimeout(() => {
+          router.replace({
+            pathname: routes.auth.login as any,
+            params: { prefillEmail: params.email },
+          });
+        }, 2000);
+        setIsCreating(false);
+        return;
+      }
+
+      console.log('✅ No existing auth account - proceeding with account creation');
+
       // Step 1: Create Supabase auth account
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: params.email,
@@ -106,7 +136,10 @@ export default function PasswordSetup() {
       const newUser = authData.user;
       console.log('Auth account created:', newUser.id);
 
-      // Step 2: Create user profile with quiz connection
+      // Step 2: Create user profile with quiz connection + profile data (if provided)
+      // If profile data is provided (from signup redirect), onboarding is complete
+      const hasProfileData = !!(params.profileName || params.profileAge || params.profileRuminationFrequency);
+
       const { error: profileError } = await withRetry(
         async () => await supabase
           .from('user_profiles')
@@ -118,7 +151,12 @@ export default function PasswordSetup() {
             quiz_submission_id: params.quizSubmissionId,
             quiz_overthinker_type: params.overthinkerType,
             quiz_connected_at: new Date().toISOString(),
-            onboarding_completed: true, // Skip onboarding since they came from quiz
+            // Profile data from signup redirect (if provided)
+            name: params.profileName || null,
+            age: params.profileAge ? parseInt(params.profileAge) : null,
+            // Note: rumination_frequency not in schema - removed
+            // Complete onboarding if profile data was provided
+            onboarding_completed: hasProfileData,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
           }),
@@ -140,7 +178,7 @@ export default function PasswordSetup() {
 
       console.log('User profile created with quiz connection');
 
-      // Step 3: Update local store
+      // Step 3: Update local store with profile data
       setUser({
         user_id: newUser.id,
         email: params.email,
@@ -148,9 +186,11 @@ export default function PasswordSetup() {
         quiz_connected: true,
         quiz_submission_id: params.quizSubmissionId,
         quiz_overthinker_type: params.overthinkerType,
-        onboarding_completed: true,
-        name: null,
-        age: null,
+        onboarding_completed: hasProfileData,
+        // Profile data from signup redirect (if provided)
+        name: params.profileName || null,
+        age: params.profileAge ? parseInt(params.profileAge) : null,
+        // Note: rumination_frequency not in schema - removed
         has_shift_necklace: false,
         shift_paired: false,
         fire_progress: {
@@ -168,8 +208,16 @@ export default function PasswordSetup() {
       console.log('Account setup complete - quiz user connected');
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-      // Route to home (skip rest of onboarding)
-      router.replace('/');
+      // Route based on whether profile data was provided
+      if (hasProfileData) {
+        // Profile data already collected during in-app quiz - go to home
+        console.log('Profile data provided - onboarding complete');
+        router.replace('/');
+      } else {
+        // No profile data - route to profile setup to collect it
+        console.log('No profile data - routing to profile setup');
+        router.replace('/onboarding/profile-setup');
+      }
     } catch (error: any) {
       console.error('Exception during account creation:', error);
       setErrorMessage(error?.message || 'An unexpected error occurred. Please try again.');

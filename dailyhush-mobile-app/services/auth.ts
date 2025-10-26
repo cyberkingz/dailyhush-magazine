@@ -718,11 +718,83 @@ export async function checkExistingAccount(
     }
 
     if (existingProfile) {
-      console.log('✅ Existing account found in user_profiles:', {
+      console.log('🔍 Profile found in user_profiles - verifying auth account exists:', {
         userId: existingProfile.user_id,
         email: existingProfile.email,
         onboardingCompleted: existingProfile.onboarding_completed,
       });
+
+      // CRITICAL: Check if this is an anonymous user with an email
+      // Anonymous users have profiles but their auth account has no email
+      const { data: { session } } = await supabase.auth.getSession();
+
+      const isCurrentUser = session?.user?.id === existingProfile.user_id;
+      const isAnonymous = session?.user?.is_anonymous || false;
+
+      if (isCurrentUser && isAnonymous) {
+        console.warn('⚠️ Anonymous user with email in profile - NOT a real account:', {
+          userId: existingProfile.user_id,
+          profileEmail: existingProfile.email,
+          authEmail: session?.user?.email || 'none',
+          isAnonymous: true,
+        });
+
+        // Treat as "account doesn't exist" - allow signup to upgrade anonymous account
+        return {
+          exists: false,
+          accountCompleted: false,
+          userId: undefined,
+        };
+      }
+
+      // Not an anonymous user - verify BOTH user_id AND email in auth
+      const { data: authCheck, error: authCheckError } = await supabase.rpc(
+        'get_user_by_email',
+        { email_param: normalizedEmail }
+      );
+
+      if (authCheckError) {
+        console.warn('⚠️ Could not verify auth account exists:', authCheckError.message);
+        // Assume it exists if we can't check (fail safe)
+      } else if (!authCheck || authCheck.length === 0) {
+        console.warn('⚠️ Orphaned profile - profile exists but NO auth account with this email:', {
+          userId: existingProfile.user_id,
+          email: existingProfile.email,
+        });
+
+        // Treat as "account doesn't exist" - allow signup to proceed
+        return {
+          exists: false,
+          accountCompleted: false,
+          userId: undefined,
+        };
+      } else {
+        // CRITICAL: Verify the user_id in profile matches the user_id in auth
+        const authUser = authCheck[0];
+        if (authUser.id !== existingProfile.user_id) {
+          console.error('🚨 DATA INTEGRITY ISSUE - Profile user_id does NOT match auth user_id:', {
+            profileUserId: existingProfile.user_id,
+            authUserId: authUser.id,
+            email: existingProfile.email,
+          });
+
+          // This is a serious data corruption issue
+          // Treat as "doesn't exist" to allow account creation
+          // The new signup will create a fresh profile with correct user_id
+          return {
+            exists: false,
+            accountCompleted: false,
+            userId: undefined,
+          };
+        }
+
+        console.log('✅ Verified BOTH user_id AND email match in auth:', {
+          userId: existingProfile.user_id,
+          email: existingProfile.email,
+          authEmail: authUser.email,
+          onboardingCompleted: existingProfile.onboarding_completed,
+        });
+      }
 
       return {
         exists: true,

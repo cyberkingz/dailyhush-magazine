@@ -1,0 +1,147 @@
+appId: host.exp.Exponent
+---
+# DailyHush - Complete Onboarding Flow (Happy Path)
+# This test simulates a new user going through the entire onboarding process:
+# 1. Quiz (all 10 questions)
+# 2. Profile Setup
+# 3. Signup (email + password)
+# 4. Results screen
+# 5. Landing on home screen
+
+# NOTE: Using Expo Go bundle ID
+# Make sure your app is running in Expo Go on the simulator!
+
+# ============================================
+# STEP 1: QUIZ - Answer all 10 questions
+# ============================================
+- tapOn: "Take the Quiz"
+- waitForAnimationToEnd
+
+# Question 1
+- assertVisible: "I replay past conversations"
+- tapOn:
+    text: "Often"
+
+# Question 2
+- assertVisible: "When someone says"
+- tapOn:
+    text: "Often"
+
+# Question 3
+- assertVisible: "imagining worst-case scenarios"
+- tapOn:
+    text: "Often"
+
+# Question 4
+- assertVisible: "stuck thinking about the same problem"
+- tapOn:
+    text: "Often"
+
+# Question 5
+- assertVisible: "overanalyze small decisions"
+- tapOn:
+    text: "Often"
+
+# Question 6
+- assertVisible: "relive embarrassing moments"
+- tapOn:
+    text: "Often"
+
+# Question 7
+- assertVisible: "dwelling on things I can't control"
+- tapOn:
+    text: "Often"
+
+# Question 8
+- assertVisible: "racing thoughts at night"
+- tapOn:
+    text: "Often"
+
+# Question 9
+- assertVisible: "criticize myself"
+- tapOn:
+    text: "Often"
+
+# Question 10
+- assertVisible: "imagining future conversations"
+- tapOn:
+    text: "Often"
+
+# Wait for quiz to process
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 2: PROFILE SETUP
+# ============================================
+- assertVisible: "Complete Your Profile"
+
+# Enter name (optional field)
+- tapOn: "Your name"
+- inputText: "Jane Doe"
+
+# Enter age (optional field)
+- tapOn: "Your age"
+- inputText: "58"
+
+# Select rumination frequency (required)
+- assertVisible: "How often do you ruminate?"
+- tapOn: "Often (Daily)"
+
+# Continue to signup
+- tapOn: "Complete Setup"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 3: SIGNUP (Email + Password)
+# ============================================
+- assertVisible: "Unlock Your Results"
+- assertVisible: "Your overthinker analysis is ready"
+
+# Generate unique email for testing
+- runScript:
+    env:
+      TEST_EMAIL: test-${random}@dailyhush.test
+    file: ./scripts/generate-test-email.js
+
+# Enter email
+- tapOn: "your.email@example.com"
+- inputText: "${TEST_EMAIL}"
+
+# Enter password
+- tapOn: "8+ characters"
+- inputText: "TestPass123!"
+
+# Create account
+- tapOn: "Unlock My Results"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 4: RESULTS SCREEN
+# ============================================
+- assertVisible: "Your Results"
+- assertVisible: "✨ You're all set!"
+
+# Verify overthinker type is shown (check for key word)
+- assertVisible: "Overthinker"
+
+# Continue to home
+- tapOn: "Get Started"
+- waitForAnimationToEnd
+
+# ============================================
+# STEP 5: HOME SCREEN - Onboarding Complete!
+# ============================================
+# Verify greeting appears (will match morning, afternoon, or evening)
+- assertVisible: "Good"
+
+# Verify user name is shown
+- assertVisible: "Jane Doe"
+
+# Verify home screen elements
+- assertVisible: "Today"
+- assertVisible: "I'M SPIRALING"
+- assertVisible: "F.I.R.E. Training"
+
+# SUCCESS! 🎉
+- tapOn: "Settings"
+- assertVisible: "Settings"

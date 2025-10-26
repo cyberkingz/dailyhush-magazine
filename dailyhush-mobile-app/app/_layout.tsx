@@ -32,7 +32,8 @@ export default function Layout() {
 
       if (result.success && result.userId) {
         console.log('Session restored successfully:', result.userId);
-        await syncUserProfile(result.userId);
+        // Pass false for manageLoadingState since we're managing it here
+        await syncUserProfile(result.userId, 0, false);
       } else {
         console.log('No existing session or failed to restore:', result.error);
       }

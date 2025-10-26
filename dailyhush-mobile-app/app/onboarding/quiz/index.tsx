@@ -20,6 +20,8 @@ import { spacing } from '@/constants/spacing';
 import { quizQuestions } from '@/data/quizQuestions';
 import { calculateQuizResult } from '@/utils/quizScoring';
 import type { QuizAnswer } from '@/utils/quizScoring';
+import { routes } from '@/constants/routes';
+import { QUIZ_STORAGE_KEYS } from '@/constants/quiz';
 
 export default function QuizFlow() {
   const router = useRouter();
@@ -94,12 +96,28 @@ export default function QuizFlow() {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (isLastQuestion) {
-      // Calculate result and route to results screen
+      // Calculate result
       const answersArray = Array.from(answers.values());
       const result = calculateQuizResult(answersArray);
 
+      // Save quiz results temporarily
+      try {
+        await AsyncStorage.setItem(
+          QUIZ_STORAGE_KEYS.PENDING_RESULTS,
+          JSON.stringify({
+            result,
+            answers: answersArray,
+            timestamp: new Date().toISOString(),
+          })
+        );
+      } catch (error) {
+        console.error('Failed to save quiz results:', error);
+      }
+
+      // Route to profile setup for ALL users
+      // This creates maximum investment before asking for email/password
       router.push({
-        pathname: '/onboarding/quiz/results' as any,
+        pathname: routes.onboarding.profileSetup as any,
         params: {
           type: result.type,
           score: result.score.toString(),
@@ -108,7 +126,6 @@ export default function QuizFlow() {
           description: result.description,
           insight: result.insight,
           ctaHook: result.ctaHook,
-          // Pass answers as JSON string
           answers: JSON.stringify(answersArray),
         },
       });
@@ -311,7 +328,7 @@ export default function QuizFlow() {
                       opacity: pressed && canGoNext ? 0.9 : 1,
                     }}
                   >
-                    {isLastQuestion ? 'See Results' : 'Next'}
+                    {isLastQuestion ? 'Continue' : 'Next'}
                   </Text>
                   <ChevronRight
                     size={24}

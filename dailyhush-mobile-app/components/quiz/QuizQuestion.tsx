@@ -52,6 +52,10 @@ export function QuizQuestion({
             <Pressable
               key={option.id}
               onPress={() => handleSelect(option)}
+              accessibilityLabel={option.text}
+              accessibilityRole="radio"
+              accessibilityState={{ checked: isSelected }}
+              testID={`quiz-option-${option.id}`}
               style={{
                 backgroundColor: isSelected
                   ? colors.emerald[700] + '40'

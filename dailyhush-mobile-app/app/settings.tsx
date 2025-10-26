@@ -114,23 +114,30 @@ export default function Settings() {
 
       if (!result.success) {
         console.error('Logout failed:', result.error);
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        setIsLoggingOut(false);
-        return;
+        // Don't return early - user clicked logout, we should honor that intent
+        // The auth state listener will handle clearing the user from store
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      } else {
+        console.log('Logged out successfully - user data preserved');
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       }
 
       // NOTE: We do NOT call resetStore() here to preserve user data
       // The user's FIRE progress, spiral history, and triggers remain in Supabase
       // When they sign back in, their data will be restored from the database
+      // The auth state listener (useAuthSync) will clear the user from store
 
-      console.log('Logged out successfully - user data preserved');
-      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
-      // Navigate to home (which will trigger anonymous signin)
-      router.replace('/');
+      // Always navigate to onboarding, even if signOut had issues
+      // This ensures the user isn't stuck in an inconsistent UI state
+      router.replace('/onboarding');
     } catch (error) {
       console.error('Exception during logout:', error);
+
+      // Even if there's an exception, navigate to onboarding
+      // The user clicked logout - honor that intent
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      router.replace('/onboarding');
+    } finally {
       setIsLoggingOut(false);
     }
   };
@@ -159,7 +166,7 @@ export default function Settings() {
             <Pressable
               onPress={() => {
                 Haptics.selectionAsync();
-                router.push('/auth');
+                router.push('/onboarding');
               }}
               className="bg-[#2D6A4F] rounded-2xl p-5 active:opacity-90"
             >

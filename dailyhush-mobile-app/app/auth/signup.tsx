@@ -149,10 +149,11 @@ export default function SignUp() {
         }
       }
 
-      // Delay to show success message (2 seconds)
+      // Delay to show success message, then route to quiz
+      // All new users should discover their overthinker type
       setTimeout(() => {
-        router.replace('/');
-      }, 2000);
+        router.replace('/onboarding/quiz');
+      }, 1500);
     } catch (err: any) {
       console.error('Signup error:', err);
       setError(err.message || 'Failed to create account');
@@ -209,7 +210,7 @@ export default function SignUp() {
             {/* Success alert */}
             {success && (
               <ErrorAlert
-                message="Account created! Redirecting..."
+                message="Account created! Let's discover your overthinking type..."
                 type="success"
                 dismissible={false}
               />

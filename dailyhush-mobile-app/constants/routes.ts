@@ -16,8 +16,10 @@ export const routes = {
     quizRecognition: '/onboarding/quiz-recognition',
     emailLookup: '/onboarding/email-lookup',
     quiz: '/onboarding/quiz',
+    quizSignup: '/onboarding/quiz/signup',
     quizResults: '/onboarding/quiz/results',
     passwordSetup: '/onboarding/password-setup',
+    profileSetup: '/onboarding/profile-setup',
   },
 
   // Auth routes

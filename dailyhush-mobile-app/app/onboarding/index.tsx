@@ -75,7 +75,7 @@ export default function Onboarding() {
           require('@/assets/sounds/forest-sound.mp3'),
           {
             isLooping: true,
-            volume: 0.6, // Increased volume for better audibility
+            volume: 0.85, // Increased volume for better audibility
           }
         );
 
@@ -342,21 +342,21 @@ export default function Onboarding() {
             />
           </View>
 
-          {/* Simple headline */}
+          {/* Headline - Clear benefit, 2 lines max */}
           <Text
             className="text-center mb-4"
             style={{
               color: colors.text.primary,
-              fontSize: 30,
-              lineHeight: 40,
+              fontSize: 32,
+              lineHeight: 42,
               letterSpacing: 0.3,
               fontFamily: 'Poppins_600SemiBold',
             }}
           >
-            Find Calm When Your{'\n'}Mind Won't Quiet
+            Quiet Your Mind{'\n'}in 90 Seconds
           </Text>
 
-          {/* Short description */}
+          {/* Subheadline - What it does, no medical claims */}
           <Text
             className="text-center mb-2"
             style={{
@@ -366,57 +366,78 @@ export default function Onboarding() {
               fontFamily: 'Inter_400Regular',
             }}
           >
-            A gentle way to ease overthinking
+            A gentle technique to interrupt{'\n'}repetitive thoughts and find calm
           </Text>
         </View>
 
         {/* CTA at bottom */}
         <View style={{ width: '100%' }}>
-          {/* Privacy Badge - Above button for trust at decision point */}
+          {/* Trust Indicators - Privacy first */}
           <View
             style={{
-              flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: 16,
+              marginBottom: 20,
             }}
           >
-            <Lock size={14} color={colors.emerald[400]} strokeWidth={2} />
+            {/* Privacy badge */}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 4,
+              }}
+            >
+              <Lock size={16} color={colors.emerald[400]} strokeWidth={2} />
+              <Text
+                style={{
+                  color: colors.text.secondary,
+                  fontSize: 16,
+                  marginLeft: 8,
+                  fontFamily: 'Inter_500Medium',
+                }}
+              >
+                100% Private • No Signup
+              </Text>
+            </View>
+
+            {/* Soft social proof */}
             <Text
               style={{
                 color: colors.text.secondary,
-                fontSize: 15,
-                marginLeft: 6,
+                fontSize: 14,
+                opacity: 0.7,
                 fontFamily: 'Inter_400Regular',
               }}
             >
-              100% private. No signup required.
+              Join thousands finding their calm
             </Text>
           </View>
 
-          {/* Get Started Button - WCAG AAA touch target */}
+          {/* CTA Button - Pill-shaped, premium design */}
           <Pressable
             onPress={nextStep}
-            className="rounded-2xl items-center justify-center active:opacity-95"
+            className="items-center justify-center active:opacity-90"
             style={{
-              backgroundColor: colors.button.primary,
-              height: 64,
-              marginBottom: 8,
-              shadowColor: colors.emerald[600],
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 12,
-              elevation: 4,
+              backgroundColor: colors.emerald[600],
+              height: 62,
+              borderRadius: 100,
+              marginBottom: 12,
+              shadowColor: colors.emerald[500],
+              shadowOffset: { width: 0, height: 8 },
+              shadowOpacity: 0.4,
+              shadowRadius: 16,
+              elevation: 8,
             }}
           >
             <Text
               style={{
                 color: colors.white,
-                fontSize: 18,
+                fontSize: 19,
                 fontFamily: 'Poppins_600SemiBold',
+                letterSpacing: 0.3,
               }}
             >
-              Get Started
+              Start Your Free Session
             </Text>
           </Pressable>
 

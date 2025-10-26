@@ -114,7 +114,7 @@ export default function Layout() {
         screenOptions={{
           headerShown: true,
           contentStyle: { backgroundColor: '#0A1612' },
-          animation: 'fade',
+          animation: 'slide_from_right',
           header: ({ options }) => {
             // Don't show header if explicitly disabled
             if (options.headerShown === false) return null;

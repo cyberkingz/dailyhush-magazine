@@ -117,7 +117,7 @@ export function PulseButton({
           onPress={handlePress}
           style={{
             overflow: 'hidden',
-            borderRadius: 24,
+            borderRadius: 100, // Pill-shaped to match welcome page design
             shadowColor: colorScheme.pulse,
             shadowOffset: { width: 0, height: 8 },
             shadowOpacity: 0.4,

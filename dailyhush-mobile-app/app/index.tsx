@@ -230,8 +230,8 @@ export default function HomeModern() {
                 router.push('/settings' as any);
               }}
               style={{
-                width: 56, // WCAG AAA minimum for touch targets
-                height: 56,
+                width: 64, // Enhanced for anxious elderly users (55-70 demographic)
+                height: 64,
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
@@ -239,7 +239,7 @@ export default function HomeModern() {
             >
               {({ pressed }) => (
                 <Settings
-                  size={26}
+                  size={28}
                   color={colors.text.secondary}
                   strokeWidth={2}
                   opacity={pressed ? 0.5 : 0.6}

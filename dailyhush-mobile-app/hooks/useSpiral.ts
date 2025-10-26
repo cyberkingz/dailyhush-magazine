@@ -77,6 +77,48 @@ export function useSpiral() {
   }, [user]);
 
   /**
+   * Get today's spiral count
+   */
+  const getTodaySpirals = useCallback(async () => {
+    if (!user) return { today: 0, thisWeek: 0 };
+
+    try {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      weekAgo.setHours(0, 0, 0, 0);
+
+      // Get today's count
+      const { data: todayData, error: todayError } = await supabase
+        .from('spiral_logs')
+        .select('spiral_id')
+        .eq('user_id', user.user_id)
+        .gte('timestamp', today.toISOString());
+
+      if (todayError) throw todayError;
+
+      // Get this week's count
+      const { data: weekData, error: weekError } = await supabase
+        .from('spiral_logs')
+        .select('spiral_id')
+        .eq('user_id', user.user_id)
+        .gte('timestamp', weekAgo.toISOString());
+
+      if (weekError) throw weekError;
+
+      return {
+        today: todayData?.length || 0,
+        thisWeek: weekData?.length || 0,
+      };
+    } catch (err) {
+      console.error('Error getting today spirals:', err);
+      return { today: 0, thisWeek: 0 };
+    }
+  }, [user]);
+
+  /**
    * Get spiral statistics for insights
    */
   const getSpiralStats = useCallback(async (days = 7) => {
@@ -138,6 +180,7 @@ export function useSpiral() {
   return {
     logSpiral,
     getRecentSpirals,
+    getTodaySpirals,
     getSpiralStats,
     isLogging,
     error,

@@ -21,6 +21,7 @@ import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
+import { useSpiral } from '@/hooks/useSpiral';
 
 export default function HomeModern() {
   const router = useRouter();
@@ -28,13 +29,28 @@ export default function HomeModern() {
   const isLoading = useLoading();
   const insets = useSafeAreaInsets();
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [spiralsToday] = useState(0);
+  const [spiralsToday, setSpiralsToday] = useState(0);
+  const [spiralsThisWeek, setSpiralsThisWeek] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const { getTodaySpirals } = useSpiral();
 
   // Mark component as mounted
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Fetch spiral stats
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (user) {
+        const stats = await getTodaySpirals();
+        setSpiralsToday(stats.today);
+        setSpiralsThisWeek(stats.thisWeek);
+      }
+    };
+
+    fetchStats();
+  }, [user, getTodaySpirals]);
 
   // Check if user needs onboarding (only after loading is complete)
   useEffect(() => {
@@ -252,7 +268,7 @@ export default function HomeModern() {
         {/* Daily Quote Gem - Hero Section */}
         <QuoteGem />
 
-        {/* Today Stats */}
+        {/* Today Stats - Compact Multi-KPI Grid */}
         <View style={{ paddingHorizontal: 20, marginBottom: 24 }}>
           <Text
             style={{
@@ -262,60 +278,116 @@ export default function HomeModern() {
               marginBottom: 12,
             }}
           >
-            Today
+            Progress
           </Text>
-          <PremiumCard variant="default">
-            <View style={{ padding: 20 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1 }}>
+
+          {/* Compact 2-column grid */}
+          <View style={{ flexDirection: 'row', gap: 12 }}>
+            {/* Today KPI */}
+            <View style={{ flex: 1 }}>
+              <PremiumCard variant="default">
+                <View style={{ padding: 16 }}>
                   <Text
                     style={{
                       color: colors.text.secondary,
-                      fontSize: 16,
+                      fontSize: 14,
                       marginBottom: 8,
                     }}
                   >
-                    Spirals interrupted
+                    Today
                   </Text>
                   <Text
                     style={{
                       color: colors.emerald[500],
-                      fontSize: 40,
+                      fontSize: 32,
                       fontWeight: 'bold',
-                      lineHeight: 48,
+                      lineHeight: 36,
                     }}
                   >
                     {spiralsToday}
                   </Text>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 12,
+                      marginTop: 4,
+                      opacity: 0.8,
+                    }}
+                  >
+                    interrupted
+                  </Text>
                 </View>
-                {spiralsToday > 0 && (
-                  <View style={{ alignItems: 'flex-end' }}>
-                    <Text
-                      style={{
-                        color: colors.text.secondary,
-                        fontSize: 14,
-                        marginBottom: 8,
-                        textAlign: 'right',
-                      }}
-                    >
-                      You&apos;re getting better{'\n'}at this
-                    </Text>
-                    <Pressable onPress={() => router.push('/insights')}>
-                      <Text
-                        style={{
-                          color: colors.emerald[500],
-                          fontSize: 16,
-                          fontWeight: '600',
-                        }}
-                      >
-                        View patterns →
-                      </Text>
-                    </Pressable>
-                  </View>
-                )}
-              </View>
+              </PremiumCard>
             </View>
-          </PremiumCard>
+
+            {/* This Week KPI */}
+            <View style={{ flex: 1 }}>
+              <PremiumCard variant="default">
+                <View style={{ padding: 16 }}>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 14,
+                      marginBottom: 8,
+                    }}
+                  >
+                    This week
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.emerald[500],
+                      fontSize: 32,
+                      fontWeight: 'bold',
+                      lineHeight: 36,
+                    }}
+                  >
+                    {spiralsThisWeek}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 12,
+                      marginTop: 4,
+                      opacity: 0.8,
+                    }}
+                  >
+                    interrupted
+                  </Text>
+                </View>
+              </PremiumCard>
+            </View>
+          </View>
+
+          {/* Encouragement message when user has progress */}
+          {spiralsToday > 0 && (
+            <Pressable
+              onPress={() => router.push('/insights')}
+              style={{ marginTop: 12 }}
+            >
+              <PremiumCard variant="elevated">
+                <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 15,
+                      flex: 1,
+                    }}
+                  >
+                    You're getting better at this
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.emerald[500],
+                      fontSize: 15,
+                      fontWeight: '600',
+                    }}
+                  >
+                    View patterns →
+                  </Text>
+                </View>
+              </PremiumCard>
+            </Pressable>
+          )}
         </View>
 
         {/* Main CTA - I'm Spiraling Button */}

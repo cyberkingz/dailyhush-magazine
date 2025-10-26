@@ -16,8 +16,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Pressable, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Pressable, TextInput, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
 import { Clock, Brain, Sparkles, Check, ArrowRight, Lock } from 'lucide-react-native';
 
@@ -50,6 +52,57 @@ export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('welcome');
   const [assessmentData, setAssessmentData] = useState<AssessmentData>({});
   const [selectedQuizAnswer, setSelectedQuizAnswer] = useState<number | null>(null);
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+
+  /**
+   * Background Music - Play calming forest sounds throughout onboarding
+   */
+  useEffect(() => {
+    let isMounted = true;
+    let loadedSound: Audio.Sound | null = null;
+
+    async function loadAndPlaySound() {
+      try {
+        // Configure audio mode
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          staysActiveInBackground: false,
+          shouldDuckAndroid: true,
+        });
+
+        // Load sound
+        const { sound: newSound } = await Audio.Sound.createAsync(
+          require('@/assets/sounds/forest-sound.mp3'),
+          {
+            isLooping: true,
+            volume: 0.6, // Increased volume for better audibility
+          }
+        );
+
+        loadedSound = newSound;
+
+        if (isMounted) {
+          setSound(newSound);
+          await newSound.playAsync();
+        } else {
+          // Component unmounted before we could play
+          await newSound.unloadAsync();
+        }
+      } catch (error) {
+        console.error('Error loading background music:', error);
+      }
+    }
+
+    loadAndPlaySound();
+
+    // Cleanup
+    return () => {
+      isMounted = false;
+      if (loadedSound) {
+        loadedSound.unloadAsync();
+      }
+    };
+  }, []);
 
   /**
    * Auto-advance when returning from demo
@@ -225,94 +278,171 @@ export default function Onboarding() {
   };
 
   /**
-   * Welcome Screen - Fixed layout, no scrolling
+   * Welcome Screen - Simple, native mobile app feel
+   * Designed for women 55-70 managing overthinking
+   * Calming forest background
    */
   const renderWelcome = () => (
     <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
-      <TopBar />
+      {/* Forest Background - Top with fade-out */}
+      <View style={{ position: 'absolute', width: '100%', height: '65%', top: 0 }}>
+        <Image
+          source={require('@/assets/img/bd1d7d39d134c07f3d7d94b96090d9ed.jpg')}
+          style={{
+            width: '100%',
+            height: '100%',
+            opacity: 0.18,
+          }}
+          resizeMode="cover"
+        />
+        {/* Gradient overlay to smoothly blend with background */}
+        <LinearGradient
+          colors={[
+            'rgba(10, 22, 18, 0)',      // Transparent
+            'rgba(10, 22, 18, 0.3)',    // 30%
+            'rgba(10, 22, 18, 0.6)',    // 60%
+            'rgba(10, 22, 18, 0.9)',    // 90%
+            colors.background.primary    // Full solid
+          ]}
+          locations={[0, 0.3, 0.6, 0.85, 1]}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '70%',
+          }}
+        />
+      </View>
 
-      {/* Content - Fixed height, no scroll */}
-      <View className="flex-1 px-5 justify-between" style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
-        <View>
-          {/* Privacy Badge */}
-          <View className="flex-row items-center justify-center mb-4">
-            <Lock size={14} color={colors.emerald[400]} strokeWidth={2} />
-            <Text className="text-xs ml-1.5" style={{ color: colors.emerald[400] }}>
-              Anonymous • No signup required
-            </Text>
-          </View>
-
-          {/* Headline */}
-          <View className="items-center mb-6">
-            <Text className="text-2xl font-semibold text-center mb-3" style={{ color: colors.text.primary }}>
-              You're Not Overthinking. You're Replaying.
-            </Text>
-            <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.secondary }}>
-              If you're still prosecuting yourself for Tuesday's conversation on Friday... you're in the right place.
-            </Text>
-          </View>
-
-          {/* Value Props - Compact */}
-          <View className="mb-4">
-            {/* HERO: 90-second interrupt */}
-            <View
-              className="rounded-2xl p-4 mb-3 border-2"
+      {/* Content - Centered, minimal */}
+      <View
+        className="flex-1 justify-center items-center"
+        style={{
+          paddingHorizontal: 32,
+          paddingTop: insets.top + 32,
+          paddingBottom: insets.bottom + 48
+        }}
+      >
+        {/* Main content centered */}
+        <View className="items-center" style={{ flex: 1, justifyContent: 'center', maxWidth: 400 }}>
+          {/* DailyHush Logo */}
+          <View className="mb-12">
+            <Image
+              source={require('@/assets/img/rounded-logo.png')}
               style={{
-                backgroundColor: colors.background.tertiary,
-                borderColor: colors.button.primary,
+                width: 96,
+                height: 96,
               }}
-            >
-              <View className="flex-row items-center mb-2">
-                <View className="p-2.5 rounded-xl mr-3" style={{ backgroundColor: colors.button.primary + '33' }}>
-                  <Clock size={24} color={colors.emerald[100]} strokeWidth={2.5} />
-                </View>
-                <Text className="flex-1 text-base font-bold" style={{ color: colors.text.primary }}>
-                  Interrupt the loop in 90 seconds
-                </Text>
-              </View>
-              <Text className="text-xs" style={{ color: colors.emerald[100] }}>
-                That conversation isn't happening right now. But your body thinks it is. We can interrupt that.
-              </Text>
-            </View>
-
-            {/* Secondary features */}
-            <View className="rounded-xl p-4 flex-row items-center" style={{ backgroundColor: colors.background.secondary }}>
-              <View className="p-2 rounded-lg mr-3" style={{ backgroundColor: colors.button.primary + '20' }}>
-                <Brain size={20} color={colors.emerald[400]} strokeWidth={2} />
-              </View>
-              <Text className="flex-1 text-sm font-medium" style={{ color: colors.text.primary }}>
-                Track patterns with AI insights
-              </Text>
-            </View>
+              resizeMode="contain"
+            />
           </View>
-        </View>
 
-        {/* CTA - Bottom */}
-        <View>
-          <Pressable
-            onPress={nextStep}
-            className="rounded-2xl items-center justify-center active:opacity-90 mb-4"
+          {/* Simple headline */}
+          <Text
+            className="text-center mb-4"
             style={{
-              backgroundColor: colors.button.primary,
-              height: spacing.button.height,
+              color: colors.text.primary,
+              fontSize: 30,
+              lineHeight: 40,
+              letterSpacing: 0.3,
+              fontFamily: 'Poppins_600SemiBold',
             }}
           >
-            <Text className="text-lg font-bold" style={{ color: colors.white }}>
+            Find Calm When Your{'\n'}Mind Won't Quiet
+          </Text>
+
+          {/* Short description */}
+          <Text
+            className="text-center mb-2"
+            style={{
+              color: colors.text.secondary,
+              fontSize: 18,
+              lineHeight: 28,
+              fontFamily: 'Inter_400Regular',
+            }}
+          >
+            A gentle way to ease overthinking
+          </Text>
+        </View>
+
+        {/* CTA at bottom */}
+        <View style={{ width: '100%' }}>
+          {/* Privacy Badge - Above button for trust at decision point */}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 16,
+            }}
+          >
+            <Lock size={14} color={colors.emerald[400]} strokeWidth={2} />
+            <Text
+              style={{
+                color: colors.text.secondary,
+                fontSize: 15,
+                marginLeft: 6,
+                fontFamily: 'Inter_400Regular',
+              }}
+            >
+              100% private. No signup required.
+            </Text>
+          </View>
+
+          {/* Get Started Button - WCAG AAA touch target */}
+          <Pressable
+            onPress={nextStep}
+            className="rounded-2xl items-center justify-center active:opacity-95"
+            style={{
+              backgroundColor: colors.button.primary,
+              height: 64,
+              marginBottom: 8,
+              shadowColor: colors.emerald[600],
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.3,
+              shadowRadius: 12,
+              elevation: 4,
+            }}
+          >
+            <Text
+              style={{
+                color: colors.white,
+                fontSize: 18,
+                fontFamily: 'Poppins_600SemiBold',
+              }}
+            >
               Get Started
             </Text>
           </Pressable>
 
-          {/* Subtle Sign In Link - Bottom */}
+          {/* Sign In Link - WCAG AAA touch target */}
           <Pressable
             onPress={() => router.push('/auth/login' as any)}
             className="items-center justify-center active:opacity-70"
-            style={{ paddingVertical: 8 }}
+            style={{
+              minHeight: 56,
+              paddingVertical: 16,
+            }}
           >
-            <Text className="text-sm" style={{ color: colors.text.secondary }}>
+            <Text
+              style={{
+                color: colors.text.secondary,
+                fontSize: 16,
+                fontFamily: 'Inter_400Regular',
+              }}
+            >
               Already have an account?{' '}
-              <Text className="font-semibold" style={{ color: colors.emerald[500] }}>
+              <Text
+                style={{
+                  color: colors.emerald[500],
+                  fontFamily: 'Inter_600SemiBold',
+                }}
+              >
                 Sign in
               </Text>
             </Text>

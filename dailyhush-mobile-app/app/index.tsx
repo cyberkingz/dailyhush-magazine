@@ -137,8 +137,21 @@ export default function HomeModern() {
   }, [currentTime]);
 
 
-  // Show loading screen while user profile is being loaded
-  if (isLoading) {
+  // Show loading screen while:
+  // 1. User profile is being loaded (isLoading)
+  // 2. User needs onboarding (prevent flash of home page)
+  if (isLoading || (isMounted && !isLoading && user && !user.onboarding_completed)) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.background.primary, justifyContent: 'center', alignItems: 'center' }}>
+        <StatusBar style="light" />
+        <ActivityIndicator size="large" color="#40916C" />
+        <Text className="text-[#95B8A8] text-sm mt-4">Loading...</Text>
+      </View>
+    );
+  }
+
+  // Also show loading if no user but we're still checking
+  if (isMounted && !isLoading && !user) {
     return (
       <View style={{ flex: 1, backgroundColor: colors.background.primary, justifyContent: 'center', alignItems: 'center' }}>
         <StatusBar style="light" />

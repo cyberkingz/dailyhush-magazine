@@ -6,7 +6,7 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { View, Pressable, ActivityIndicator } from 'react-native';
+import { View, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Brain, TrendingUp, Settings, History, Lightbulb, Infinity } from 'lucide-react-native';
@@ -197,18 +197,26 @@ export default function HomeModern() {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-          <View style={{ width: 40 }} />
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: '600',
-              color: colors.text.primary,
-              letterSpacing: 0.3,
-            }}
-          >
-            DailyHush
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+            <Image
+              source={require('@/assets/img/rounded-logo.png')}
+              style={{
+                width: 40,
+                height: 40,
+                resizeMode: 'contain',
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: '700',
+                color: colors.text.primary,
+                letterSpacing: 0.6,
+              }}
+            >
+              DailyHush
+            </Text>
+          </View>
 
           <Pressable
             onPress={() => {

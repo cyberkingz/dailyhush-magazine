@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { View, Animated } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
 import { Smile } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
@@ -32,6 +32,7 @@ export function MoodCard({
 }: MoodCardProps) {
   const [isVisible, setIsVisible] = useState(!isLogged);
   const fadeAnim = useRef(new Animated.Value(isLogged ? 0 : 1)).current;
+  const fadeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handlePress = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -42,24 +43,43 @@ export function MoodCard({
     fadeAnim.stopAnimation();
 
     if (!isLogged) {
+      if (fadeTimeout.current) {
+        clearTimeout(fadeTimeout.current);
+        fadeTimeout.current = null;
+      }
       setIsVisible(true);
       fadeAnim.setValue(0);
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 250,
+        duration: 420,
+        easing: Easing.out(Easing.cubic),
         useNativeDriver: true,
       }).start();
     } else {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 250,
-        useNativeDriver: true,
-      }).start(({ finished }) => {
-        if (finished) {
-          setIsVisible(false);
-        }
-      });
+      if (fadeTimeout.current) {
+        clearTimeout(fadeTimeout.current);
+      }
+
+      fadeTimeout.current = setTimeout(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 360,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true,
+        }).start(({ finished }) => {
+          if (finished) {
+            setIsVisible(false);
+          }
+        });
+      }, 1800);
     }
+
+    return () => {
+      if (fadeTimeout.current) {
+        clearTimeout(fadeTimeout.current);
+        fadeTimeout.current = null;
+      }
+    };
   }, [isLogged, fadeAnim]);
 
   if (!isVisible && isLogged) {
@@ -68,7 +88,12 @@ export function MoodCard({
 
   const translateY = fadeAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [-12, 0],
+    outputRange: [8, 0],
+  });
+
+  const scale = fadeAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.95, 1],
   });
 
   return (
@@ -80,7 +105,7 @@ export function MoodCard({
         },
         {
           opacity: fadeAnim,
-          transform: [{ translateY }],
+          transform: [{ translateY }, { scale }],
         },
       ]}
     >

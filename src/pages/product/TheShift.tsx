@@ -18,6 +18,7 @@ import {
 } from '@/components/product/shift'
 import { shiftProductReviews } from '@/data/shiftProductReviews'
 import { useCountdown } from '@/hooks/useCountdown'
+import { trackProductPageView } from '@/lib/services/productPageEvents'
 
 function TheShiftPage() {
   const { spotsRemaining, totalSpots, isCritical, isSoldOut } = useScarcity()
@@ -62,6 +63,11 @@ function TheShiftPage() {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Track product page view for email campaign attribution
+  useEffect(() => {
+    trackProductPageView('the-shift')
   }, [])
 
   // Show sticky bar once the hero has scrolled out of view. Uses IntersectionObserver with scroll fallback.

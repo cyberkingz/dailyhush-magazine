@@ -1,180 +1,106 @@
-import { useState, useEffect } from 'react'
-import { Mail, TrendingUp, Users, Target } from 'lucide-react'
-import { CampaignPerformanceTable } from '../analytics/CampaignPerformanceTable'
-import { getCampaignMetrics, type CampaignMetrics } from '../../../lib/services/quiz'
+/**
+ * EmailCampaignsView Component
+ * Main email campaigns dashboard with sub-navigation
+ */
+
+import { useState } from 'react'
+import { BarChart3, ListOrdered } from 'lucide-react'
 import type { DateRange } from '../../../lib/services/trackingAnalytics'
-import { GlassCard } from '../../ui/glass-card'
-import { CardHeader, CardTitle, CardDescription, CardContent } from '../../ui/card'
+import { CampaignOverview, SequenceAnalysis } from '../email-campaigns'
+import { cn } from '../../../lib/utils'
 
 interface EmailCampaignsViewProps {
   dateRange?: DateRange
 }
 
+type SubView = 'overview' | 'sequences'
+
 export function EmailCampaignsView({ dateRange }: EmailCampaignsViewProps) {
-  const [campaignData, setCampaignData] = useState<CampaignMetrics[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    loadCampaignData()
-  }, [dateRange])
-
-  async function loadCampaignData() {
-    try {
-      setIsLoading(true)
-      const allCampaigns = await getCampaignMetrics(dateRange)
-
-      // Filter out Facebook/Instagram ad campaigns based on utm_source
-      // Only show actual email campaigns in this view
-      const emailOnlyCampaigns = allCampaigns.filter(c => {
-        const source = c.utmSource?.toLowerCase()
-        // Exclude Facebook and Instagram ads
-        const isSocialAd = source === 'facebook' || source === 'instagram' || source === 'fb' || source === 'ig'
-        return !isSocialAd
-      })
-
-      setCampaignData(emailOnlyCampaigns)
-    } catch (error) {
-      console.error('Error loading campaign data:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  // Calculate summary statistics
-  const coldEmailCampaigns = campaignData.filter(c => c.campaignType === 'cold_email')
-  const postQuizCampaigns = campaignData.filter(c => c.campaignType === 'post_quiz_retargeting')
-
-  const calculateTotals = (campaigns: CampaignMetrics[]) => {
-    return campaigns.reduce((acc, c) => ({
-      views: acc.views + c.views,
-      starts: acc.starts + c.starts,
-      completions: acc.completions + c.completions,
-    }), { views: 0, starts: 0, completions: 0 })
-  }
-
-  const overallTotals = calculateTotals(campaignData)
-
-  const calculateAvgRate = (numerator: number, denominator: number) => {
-    return denominator > 0 ? ((numerator / denominator) * 100).toFixed(1) : '0.0'
-  }
+  const [subView, setSubView] = useState<SubView>('overview')
 
   return (
     <div className="space-y-6">
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        <GlassCard intensity="heavy" className="p-5 ring-1 ring-emerald-500/20">
-          <CardHeader className="p-0 pb-3">
-            <CardDescription className="text-white/70 text-sm flex items-center gap-2">
-              <Mail className="h-4 w-4" />
-              Total Campaigns
-            </CardDescription>
-            <CardTitle className="text-3xl text-white font-bold">
-              {isLoading ? '...' : campaignData.length}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between text-xs mt-1">
-              <span className="text-white/60">Active tracking</span>
-              <span className="font-medium text-emerald-400">
-                {coldEmailCampaigns.length} cold + {postQuizCampaigns.length} retarget
-              </span>
-            </div>
-          </CardContent>
-        </GlassCard>
+      {/* Sub-tabs Navigation */}
+      <div
+        className="relative -mx-4 md:mx-0"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
+        <div
+          className="flex gap-2 overflow-x-auto px-4 md:px-0 pb-3 snap-x snap-mandatory scroll-smooth scrollbar-hide"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          <button
+            onClick={(e) => {
+              setSubView('overview')
+              e.currentTarget.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center',
+              })
+            }}
+            className={cn(
+              'px-4 md:px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 snap-center',
+              'flex items-center gap-2',
+              subView === 'overview'
+                ? 'bg-gradient-to-r from-emerald-500/60 to-emerald-600/50 backdrop-blur-[20px] text-white shadow-[0_4px_12px_rgba(16,185,129,0.25)] border border-emerald-400/30 scale-[1.02]'
+                : 'bg-white/8 backdrop-blur-[16px] text-white/70 hover:bg-white/15 hover:text-white border border-white/10 hover:border-white/20 active:scale-95'
+            )}
+          >
+            <BarChart3 className="h-4 w-4" />
+            <span className="font-semibold">Campaign Overview</span>
+          </button>
 
-        <GlassCard intensity="heavy" className="p-5 ring-1 ring-blue-500/20">
-          <CardHeader className="p-0 pb-3">
-            <CardDescription className="text-white/70 text-sm flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Total Views
-            </CardDescription>
-            <CardTitle className="text-3xl text-white font-bold">
-              {isLoading ? '...' : overallTotals.views.toLocaleString()}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between text-xs mt-1">
-              <span className="text-white/60">Quiz page visits</span>
-              <span className="font-medium text-blue-400">
-                From email clicks
-              </span>
-            </div>
-          </CardContent>
-        </GlassCard>
+          <button
+            onClick={(e) => {
+              setSubView('sequences')
+              e.currentTarget.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center',
+              })
+            }}
+            className={cn(
+              'px-4 md:px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 snap-center',
+              'flex items-center gap-2',
+              subView === 'sequences'
+                ? 'bg-gradient-to-r from-blue-500/60 to-blue-600/50 backdrop-blur-[20px] text-white shadow-[0_4px_12px_rgba(59,130,246,0.25)] border border-blue-400/30 scale-[1.02]'
+                : 'bg-white/8 backdrop-blur-[16px] text-white/70 hover:bg-white/15 hover:text-white border border-white/10 hover:border-white/20 active:scale-95'
+            )}
+          >
+            <ListOrdered className="h-4 w-4" />
+            <span className="font-semibold">Sequence Analysis</span>
+          </button>
+        </div>
 
-        <GlassCard intensity="heavy" className="p-5 ring-1 ring-amber-500/20">
-          <CardHeader className="p-0 pb-3">
-            <CardDescription className="text-white/70 text-sm flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" />
-              Total Completions
-            </CardDescription>
-            <CardTitle className="text-3xl text-white font-bold">
-              {isLoading ? '...' : overallTotals.completions.toLocaleString()}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between text-xs mt-1">
-              <span className="text-white/60">Quiz finished</span>
-              <span className="font-medium text-amber-400">
-                {calculateAvgRate(overallTotals.completions, overallTotals.views)}% conversion
-              </span>
-            </div>
-          </CardContent>
-        </GlassCard>
-
-        <GlassCard intensity="heavy" className="p-5 ring-1 ring-purple-500/20">
-          <CardHeader className="p-0 pb-3">
-            <CardDescription className="text-white/70 text-sm flex items-center gap-2">
-              <Target className="h-4 w-4" />
-              Avg Conversion
-            </CardDescription>
-            <CardTitle className="text-3xl text-white font-bold">
-              {isLoading ? '...' : calculateAvgRate(overallTotals.completions, overallTotals.views)}%
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between text-xs mt-1">
-              <span className="text-white/60">Overall performance</span>
-              <span className="font-medium text-purple-400">
-                {overallTotals.starts.toLocaleString()} starts
-              </span>
-            </div>
-          </CardContent>
-        </GlassCard>
+        {/* Blur fade edges for mobile and desktop */}
+        <div
+          className="absolute left-0 top-0 bottom-3 w-16 pointer-events-none z-10"
+          style={{
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)',
+            maskImage: 'linear-gradient(to right, rgba(0,0,0,0.8), transparent)',
+            WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0.8), transparent)',
+          }}
+        />
+        <div
+          className="absolute right-0 top-0 bottom-3 w-16 pointer-events-none z-10"
+          style={{
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)',
+            maskImage: 'linear-gradient(to left, rgba(0,0,0,0.8), transparent)',
+            WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.8), transparent)',
+          }}
+        />
       </div>
 
-      {/* Campaign Performance Table */}
-      <CampaignPerformanceTable campaigns={campaignData} isLoading={isLoading} />
-
-      {/* Info Card */}
-      {!isLoading && campaignData.length > 0 && (
-        <GlassCard intensity="heavy" className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 mt-1">
-              <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                <Mail className="h-5 w-5 text-emerald-400" />
-              </div>
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-white mb-2">Campaign Tracking Guide</h3>
-              <div className="text-sm text-white/70 space-y-2">
-                <p>
-                  <strong className="text-white/90">Cold Email Campaigns:</strong> Track quiz invitation emails sent to existing leads.
-                  These campaigns drive traffic to the quiz page to identify overthinking patterns.
-                </p>
-                <p>
-                  <strong className="text-white/90">Post-Quiz Retargeting:</strong> Track product promotion emails sent to quiz-takers.
-                  These campaigns drive traffic to the product page to convert leads into customers.
-                </p>
-                <p className="mt-3 text-xs text-white/60">
-                  💡 Tip: Compare conversion rates across campaigns to identify which messaging resonates best with your audience.
-                  High-performing campaigns can inform future email sequences.
-                </p>
-              </div>
-            </div>
-          </div>
-        </GlassCard>
-      )}
+      {/* View Content */}
+      <div className="animate-in fade-in duration-300">
+        {subView === 'overview' && <CampaignOverview dateRange={dateRange} />}
+        {subView === 'sequences' && <SequenceAnalysis dateRange={dateRange} />}
+      </div>
     </div>
   )
 }

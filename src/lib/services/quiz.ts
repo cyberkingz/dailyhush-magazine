@@ -649,6 +649,17 @@ export interface CampaignMetrics {
   overallConversionRate: number
 }
 
+export interface EmailSequenceMetrics {
+  emailSequenceDay: number
+  emailSubject: string
+  emailsSent: number
+  uniqueOpens: number
+  openRate: number
+  buyButtonClicks: number
+  clickThroughRate: number
+  utmContent: string
+}
+
 /**
  * Get campaign-level metrics grouped by utm_campaign
  * Distinguishes between cold email campaigns (quiz invites) and post-quiz retargeting

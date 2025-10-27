@@ -1,7 +1,6 @@
 /**
  * DailyHush - Error Boundary Component
- * Catches React errors and prevents app from freezing
- * Provides graceful error UI with recovery options
+ * Modern, friendly error UI with recovery options
  */
 
 import React from 'react';
@@ -32,12 +31,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 
   static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
-    // Update state so the next render will show the fallback UI
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error to console (in production, send to Sentry/Crashlytics)
     console.error('ErrorBoundary caught an error:', error, errorInfo);
 
     this.setState({
@@ -46,7 +43,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     });
 
     // TODO: Send to crash reporting service (Sentry)
-    // Sentry.captureException(error, { contexts: { react: { componentStack: errorInfo.componentStack } } });
   }
 
   handleReset = async () => {
@@ -76,34 +72,40 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             contentContainerStyle={{
               flexGrow: 1,
               justifyContent: 'center',
-              alignItems: 'center',
-              paddingHorizontal: 24,
-              paddingVertical: 40,
+              paddingHorizontal: 32,
+              paddingVertical: 60,
             }}
           >
-            {/* Error Icon */}
+            {/* Error Icon with subtle glow */}
             <View
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: 40,
-                backgroundColor: colors.error.background,
                 alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 24,
+                marginBottom: 32,
               }}
             >
-              <AlertCircle size={40} color={colors.error.border} strokeWidth={2} />
+              <View
+                style={{
+                  width: 96,
+                  height: 96,
+                  borderRadius: 48,
+                  backgroundColor: colors.status.error + '15',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <AlertCircle size={48} color={colors.status.error} strokeWidth={2} />
+              </View>
             </View>
 
             {/* Error Title */}
             <Text
               style={{
-                fontSize: 24,
-                fontWeight: 'bold',
+                fontSize: 28,
+                fontWeight: '700',
                 color: colors.text.primary,
                 textAlign: 'center',
-                marginBottom: 12,
+                marginBottom: 16,
+                letterSpacing: -0.5,
               }}
             >
               Something Went Wrong
@@ -116,10 +118,11 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 color: colors.text.secondary,
                 textAlign: 'center',
                 lineHeight: 24,
-                marginBottom: 32,
+                marginBottom: 40,
+                opacity: 0.8,
               }}
             >
-              We're sorry for the inconvenience. The app encountered an unexpected error.
+              Don't worry, this happens sometimes. Try refreshing or go back home.
             </Text>
 
             {/* Error Details (Development Only) */}
@@ -127,29 +130,30 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
               <View
                 style={{
                   backgroundColor: colors.background.card,
-                  borderRadius: 12,
-                  padding: 16,
+                  borderRadius: 16,
+                  padding: 20,
                   marginBottom: 32,
-                  width: '100%',
                   borderWidth: 1,
-                  borderColor: colors.error.border + '40',
+                  borderColor: colors.status.error + '20',
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    color: colors.error.text,
-                    marginBottom: 8,
+                    fontSize: 13,
+                    fontWeight: '600',
+                    color: colors.status.error,
+                    marginBottom: 12,
+                    letterSpacing: 0.5,
                   }}
                 >
                   Error Details (Dev Only):
                 </Text>
                 <Text
                   style={{
-                    fontSize: 12,
+                    fontSize: 13,
                     color: colors.text.secondary,
-                    fontFamily: 'monospace',
+                    lineHeight: 20,
+                    opacity: 0.9,
                   }}
                 >
                   {this.state.error.toString()}
@@ -158,28 +162,33 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             )}
 
             {/* Action Buttons */}
-            <View style={{ width: '100%', maxWidth: 400 }}>
+            <View style={{ width: '100%', gap: 16 }}>
               {/* Try Again Button */}
               <Pressable
                 onPress={this.handleReset}
                 style={({ pressed }) => ({
                   backgroundColor: pressed ? colors.emerald[700] : colors.emerald[600],
                   borderRadius: 16,
-                  paddingVertical: 16,
+                  paddingVertical: 18,
                   paddingHorizontal: 24,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: 16,
+                  shadowColor: colors.emerald[500],
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 8,
+                  elevation: 6,
                 })}
               >
-                <RefreshCcw size={20} color={colors.white} strokeWidth={2} />
+                <RefreshCcw size={22} color={colors.white} strokeWidth={2.5} />
                 <Text
                   style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
+                    fontSize: 17,
+                    fontWeight: '600',
                     color: colors.white,
                     marginLeft: 12,
+                    letterSpacing: 0.3,
                   }}
                 >
                   Try Again
@@ -190,30 +199,45 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
               <Pressable
                 onPress={this.handleGoHome}
                 style={({ pressed }) => ({
-                  backgroundColor: 'transparent',
+                  backgroundColor: pressed ? colors.background.card : 'transparent',
                   borderRadius: 16,
-                  paddingVertical: 16,
+                  paddingVertical: 18,
                   paddingHorizontal: 24,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderWidth: 2,
-                  borderColor: pressed ? colors.emerald[500] : colors.emerald[600],
+                  borderColor: colors.emerald[600],
                 })}
               >
-                <Home size={20} color={colors.emerald[500]} strokeWidth={2} />
+                <Home size={22} color={colors.emerald[500]} strokeWidth={2.5} />
                 <Text
                   style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
+                    fontSize: 17,
+                    fontWeight: '600',
                     color: colors.emerald[500],
                     marginLeft: 12,
+                    letterSpacing: 0.3,
                   }}
                 >
                   Go to Home
                 </Text>
               </Pressable>
             </View>
+
+            {/* Helpful hint */}
+            <Text
+              style={{
+                fontSize: 13,
+                color: colors.text.secondary,
+                textAlign: 'center',
+                marginTop: 32,
+                opacity: 0.6,
+                lineHeight: 20,
+              }}
+            >
+              If this keeps happening, try restarting the app
+            </Text>
           </ScrollView>
         </View>
       );

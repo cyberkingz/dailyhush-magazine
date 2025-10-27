@@ -1,0 +1,752 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.beehiiv.com/v2/publications/{{$json.query.beehiiv_publication_id}}/subscriptions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"email\": \"{{ $json.query.email }}\",\n    \"reactivate_existing\": false,\n    \"send_welcome_email\": true,\n    \"utm_source\": \"{{ $json.query.source_url }}\",\n    \"utm_medium\": \"{{ $json.query.utm_medium }}\",\n    \"utm_campaign\": \"{{ $json.query.utm_campaign }}\",\n    \"referring_site\": \"{{ $json.query.source_page }}\",\n    \"custom_fields\": [\n      {\n        \"name\": \"lead_magnet_title\",\n        \"value\": \"{{ $json.query.lead_magnet_title }}\"\n      }\n    ]\n  }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [544, -1152],
+      "id": "0806b433-c6d7-4ac3-9cfa-538391145a39",
+      "name": "Add contact to Beehiiv",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Vrc1C5HYrcrjZRXt",
+          "name": "Beehiiv - Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0422b354-14e7-4360-be5b-ea0750631ca1",
+              "leftValue": "={{ $json.query.event }}",
+              "rightValue": "quiz_completion",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [320, -1136],
+      "id": "de460bef-ed68-4f39-a793-11122dde8f30",
+      "name": "If event = quiz_completion"
+    },
+    {
+      "parameters": {
+        "chatId": "6487277209",
+        "text": "=🔥 New Quiz received from {{ $('Add contact to Beehiiv').item.json.data.email }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1216, -1152],
+      "id": "a1b4df2a-6652-44dd-b92f-70dd268be144",
+      "name": "Telegram Notification",
+      "webhookId": "601a593c-ad01-40f7-b15d-704e97befa6e",
+      "credentials": {
+        "telegramApi": {
+          "id": "dmz6VlOtEeDUsFUx",
+          "name": "MagmaBoy - Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1440, -1152],
+      "id": "f60a15c8-f45b-4f48-99aa-ecdd73cbe214",
+      "name": "Wait 1 day",
+      "webhookId": "91eef39b-ffe8-4df6-98cc-fe0a8c7039f9"
+    },
+    {
+      "parameters": {
+        "fromEmail": "hello@daily-hush.com",
+        "toEmail": "={{ $('Webhook').item.json.query.email }}",
+        "subject": "Those 3 phrases? I said them for 8 years",
+        "html": "=<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta content=\"width=device-width, initial-scale=1.0\">\n    <title>Those 3 phrases? I said them for 8 years</title>\n  </head>\n\n  <body style=\"margin:0;padding:0;background-color:#f3f4f6\">\n    <!-- Outer wrapper -->\n    <div style=\"max-width:700px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px 24px;box-shadow:0 3px 20px rgba(0,0,0,0.03);border:1px solid #e5e7eb\">\n\n      <!-- Header -->\n      <div style=\"text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #e5e7eb\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:40px;width:auto;display:inline-block\">\n        <p style=\"font-size:12px;color:#6b7280;margin:8px 0 0;letter-spacing:1px;text-transform:uppercase\">Your Quiz Results: {{ $('Webhook').item.json.query.quiz_result_title }}</p>\n      </div>\n\n      <!-- Hero -->\n      <div style=\"background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);padding:30px;border-radius:12px;margin-bottom:30px\">\n        <h1 style=\"margin:0;font-size:28px;color:#111827;font-family:Georgia,serif;font-weight:400\">Those 3 phrases? I said them for 8 years.</h1>\n      </div>\n\n      <!-- Main copy -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Hey,</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">I'm Anna. I scored 9/10 on this quiz. You scored {{ $('Webhook').item.json.query.quiz_score }}/10. And here's what I discovered about those phrases:</p>\n\n      <ul style=\"font-size:16px;margin:16px 0 16px 20px;color:#1f2937;line-height:1.8\">\n        <li>\"Did I sound stupid?\"</li>\n        <li>\"Why did I say that?\"</li>\n        <li>\"They probably think I'm…\"</li>\n      </ul>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">They're not anxiety about the future. <strong>They're shame about being seen.</strong></p>\n\n      <!-- Highlighted box -->\n      <div style=\"background:#fef9e6;padding:20px;border-radius:8px;border-left:4px solid #f59e0b;margin:30px 0;box-shadow:0 2px 8px rgba(245,158,11,0.06)\">\n        <strong style=\"font-size:16px;color:#111827\">Therapy helped me understand why I do this.</strong><br><br>\n        <span style=\"font-size:16px;color:#111827\">But it couldn't stop the loop at 3AM. Because shame operates pre-consciously—in that first ~7 seconds before thought even forms.</span><br><br>\n        <span style=\"font-size:16px;color:#111827\">That's the window where the spiral starts. And that's the only window where it can be interrupted.</span>\n      </div>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">After trying everything—meditation, journaling, DBT, breath work—I finally found something that works in that 7-second window.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">It's called The Shift™. And it's what I wish I'd had 8 years ago.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">Here's what you get for $37 (normally $67):</p>\n\n      <ul style=\"font-size:16px;margin:16px 0 16px 20px;color:#111827;line-height:1.8\">\n        <li><strong>The Shift™ Necklace</strong> – Interrupts spirals in 90 seconds (normally $67)</li>\n        <li><strong>F.I.R.E. Protocol</strong> – Complete 4-step framework (normally $67, <strong>FREE</strong>)</li>\n        <li><strong>Guides + Resources</strong> – Everything you need to start (<strong>FREE</strong>)</li>\n        <li><strong>Early Access to DailyHush App</strong> – Launching Nov 15th (<strong>FREE</strong>)</li>\n      </ul>\n\n      <p style=\"font-size:17px;margin:16px 0;color:#111827;font-weight:600\">Total Value: $134+. Your Quiz-Taker Rate: $37.</p>\n\n      <!-- Product image -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522\" alt=\"The Shift Necklace\" style=\"max-width:100%;width:auto;max-height:280px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08)\">\n      </div>\n\n      <!-- CTA -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <div style=\"display:inline-block;background:#ef4444;color:#ffffff;padding:6px 14px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:10px\">QUIZ-TAKER PRICE: $37</div><br>\n        <a href=\"https://daily-hush.com/subscriptions/thank-you?email={{ $('Webhook').item.json.query.email }}&type={{ $('Webhook').item.json.query.quiz_result_type }}&score={{ $('Webhook').item.json.query.quiz_score }}&utm_source=email&utm_medium=quiz-sequence&utm_campaign=necklace-launch&utm_content=quiz-day0-confirmation\" style=\"text-decoration:none;display:inline-block\">\n          <button style=\"background:#F7AF1A;color:#000000;border:none;border-radius:28px;padding:14px 32px;font-size:18px;font-weight:700;cursor:pointer;display:inline-block;box-shadow:0 4px 12px rgba(247,175,26,0.35)\">Get The Shift → $37</button>\n        </a>\n      </div>\n\n      <!-- Signature -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Anna<br>Creator, The Shift & DailyHush</p>\n\n      <!-- P.S. -->\n      <div style=\"font-size:14px;color:#6b7280;margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;border-left:3px solid #e5e7eb\">\n        <strong>P.S.</strong> You scored {{ $('Webhook').item.json.query.quiz_score }}/10 on this quiz, identifying as a {{ $('Webhook').item.json.query.quiz_result_title }}. If you're tired of replaying, this is your solution.\n      </div>\n\n      <!-- Footer -->\n      <div style=\"margin-top:40px;padding-top:30px;border-top:1px solid #e5e7eb;text-align:center\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:28px;width:auto;margin-bottom:12px;opacity:.7;display:inline-block\">\n        <p style=\"font-size:12px;color:#9ca3af;margin:8px 0\">Helping women interrupt the replay loop</p>\n        <p style=\"font-size:11px;color:#9ca3af;margin:4px 0\">© DailyHush. All rights reserved.</p>\n        <div style=\"margin-top:12px\">\n          <a href=\"https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Unsubscribe</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/privacy\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Privacy Policy</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/contact\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Contact Us</a>\n        </div>\n      </div>\n\n    </div>\n  </body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [768, -1152],
+      "id": "d5841fab-86d5-4a03-8e7f-2daf7147a9d4",
+      "name": "Email 1 - Day 0 - Quiz Confirmation",
+      "webhookId": "c4354ec5-f19e-4f44-bfe6-3fd8255433ac",
+      "credentials": {
+        "smtp": {
+          "id": "4XzMVGxRkXXOV6v4",
+          "name": "SMTP DailyHush Resend"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableId": "email_sends",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recipient_email",
+              "fieldValue": "={{ $('Webhook').item.json.query.email }}"
+            },
+            {
+              "fieldId": "email_sequence_day",
+              "fieldValue": "0"
+            },
+            {
+              "fieldId": "email_subject",
+              "fieldValue": "Those 3 phrases? I said them for 8 years"
+            },
+            {
+              "fieldId": "campaign_name",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_source",
+              "fieldValue": "email"
+            },
+            {
+              "fieldId": "utm_medium",
+              "fieldValue": "quiz-sequence"
+            },
+            {
+              "fieldId": "utm_campaign",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_content",
+              "fieldValue": "quiz-day0-confirmation"
+            },
+            {
+              "fieldId": "quiz_score",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_score }}"
+            },
+            {
+              "fieldId": "quiz_result_type",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_type }}"
+            },
+            {
+              "fieldId": "quiz_result_title",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [992, -1152],
+      "id": "track-email-1",
+      "name": "Track Email 1 Send",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "hello@daily-hush.com",
+        "toEmail": "={{ $('Webhook').item.json.query.email }}",
+        "subject": "That email you sent—did you sound stupid?",
+        "html": "=<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta content=\"width=device-width, initial-scale=1.0\">\n    <title>That email you sent—did you sound stupid?</title>\n  </head>\n\n  <body style=\"margin:0;padding:0;background-color:#f3f4f6\">\n    <!-- Outer wrapper -->\n    <div style=\"max-width:700px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px 24px;box-shadow:0 3px 20px rgba(0,0,0,0.03);border:1px solid #e5e7eb\">\n\n      <!-- Header -->\n      <div style=\"text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #e5e7eb\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:40px;width:auto;display:inline-block\">\n        <p style=\"font-size:12px;color:#6b7280;margin:8px 0 0;letter-spacing:1px;text-transform:uppercase\">Stop Replaying, Start Interrupting</p>\n      </div>\n\n      <!-- Hero -->\n      <div style=\"background:#ffffff;padding:30px;border-radius:12px;margin-bottom:30px;border:1px solid #e5e7eb\">\n        <h1 style=\"margin:0;font-size:28px;color:#1f2937;font-family:Georgia,serif;font-weight:400\">That email you sent—did you sound stupid? Your brain won't let it go. Here's why.</h1>\n      </div>\n\n      <!-- Main copy -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">It's 3AM. You're lying awake, replaying it. <em>\"Why did I say that? They probably think I'm an idiot. I should've just kept my mouth shut.\"</em></p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">You know it's irrational. You know you should just let it go. But your brain won't stop.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">You scored {{ $('Webhook').item.json.query.quiz_score }}/10 on the quiz. That's not just \"overthinking.\" That's a pattern.</p>\n\n      <!-- Highlighted box -->\n      <div style=\"background:#fef9e6;padding:20px;border-radius:8px;border-left:4px solid #f59e0b;margin:30px 0;box-shadow:0 2px 8px rgba(245,158,11,0.06)\">\n        <strong style=\"font-size:16px;color:#111827\">Here's what's actually happening:</strong><br><br>\n        <span style=\"font-size:16px;color:#111827\">This isn't anxiety about the future. <strong>This is shame about being seen.</strong></span><br><br>\n        <span style=\"font-size:16px;color:#111827\">Therapy helped me understand why I do this. But it couldn't stop the loop at 3AM. Because shame operates <em>pre-consciously</em>—in the first ~10 seconds before thought even forms.</span>\n      </div>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">That's why meditation doesn't work. That's why journaling doesn't work. That's why \"reframing\" doesn't work.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">By the time you're <em>aware</em> you're spiraling, the shame response has already hijacked your nervous system.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">You need something that works in that 7-second window. <strong>Before</strong> the loop starts. Before your brain locks onto \"Did they see I'm inadequate?\"</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">That's what The Shift does. It activates your vagus nerve in a 90-second pattern that interrupts the shame response before it becomes a thought.</p>\n\n      <!-- Product image -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522\" alt=\"The Shift Necklace\" style=\"max-width:100%;width:auto;max-height:280px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08)\">\n      </div>\n\n      <!-- CTA -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <a href=\"https://daily-hush.com/product/TheShift?email={{ $('Webhook').item.json.query.email }}&utm_source=email&utm_medium=quiz-retargeting&utm_campaign=necklace-launch&utm_content=day1-brain-science\" style=\"text-decoration:none;display:inline-block\">\n          <button style=\"background:#F7AF1A;color:#000000;border:none;border-radius:28px;padding:14px 32px;font-size:18px;font-weight:700;cursor:pointer;display:inline-block;box-shadow:0 4px 12px rgba(247,175,26,0.35)\">Get The Shift Now → $37</button>\n        </a>\n      </div>\n\n      <!-- Signature -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Talk soon,</p>\n      <p style=\"font-size:16px;margin:16px 0;font-weight:600;color:#1f2937\">Anna<br>Creator, The Shift & DailyHush</p>\n\n      <!-- P.S. -->\n      <div style=\"font-size:14px;color:#6b7280;margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;border-left:3px solid #e5e7eb\">\n        <strong>P.S.</strong> I did 8 years of therapy. It helped me understand <em>why</em> I replay. But The Shift is what actually stops it.\n      </div>\n\n      <!-- Footer -->\n      <div style=\"margin-top:40px;padding-top:30px;border-top:1px solid #e5e7eb;text-align:center\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:28px;width:auto;margin-bottom:12px;opacity:.7;display:inline-block\">\n        <p style=\"font-size:12px;color:#9ca3af;margin:8px 0\">Helping women interrupt the replay loop</p>\n        <p style=\"font-size:11px;color:#9ca3af;margin:4px 0\">© DailyHush. All rights reserved.</p>\n        <div style=\"margin-top:12px\">\n          <a href=\"https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Unsubscribe</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/privacy\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Privacy Policy</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/contact\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Contact Us</a>\n        </div>\n      </div>\n\n    </div>\n  </body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1664, -1152],
+      "id": "f41cdb90-143e-4067-8521-e48de356d645",
+      "name": "Email 2 - Day 1 - Brain Science",
+      "webhookId": "c4354ec5-f19e-4f44-bfe6-3fd8255433ac",
+      "credentials": {
+        "smtp": {
+          "id": "4XzMVGxRkXXOV6v4",
+          "name": "SMTP DailyHush Resend"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableId": "email_sends",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recipient_email",
+              "fieldValue": "={{ $('Webhook').item.json.query.email }}"
+            },
+            {
+              "fieldId": "email_sequence_day",
+              "fieldValue": "1"
+            },
+            {
+              "fieldId": "email_subject",
+              "fieldValue": "That email you sent—did you sound stupid?"
+            },
+            {
+              "fieldId": "campaign_name",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_source",
+              "fieldValue": "email"
+            },
+            {
+              "fieldId": "utm_medium",
+              "fieldValue": "quiz-retargeting"
+            },
+            {
+              "fieldId": "utm_campaign",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_content",
+              "fieldValue": "day1-brain-science"
+            },
+            {
+              "fieldId": "quiz_score",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_score }}"
+            },
+            {
+              "fieldId": "quiz_result_type",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_type }}"
+            },
+            {
+              "fieldId": "quiz_result_title",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1888, -1152],
+      "id": "track-email-2",
+      "name": "Track Email 2 Send",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2112, -1152],
+      "id": "8d7b804d-ae68-43b6-a6e5-ea65d63520ca",
+      "name": "Wait until day 4",
+      "webhookId": "c16f6913-e638-486a-afea-cee7fe83398b"
+    },
+    {
+      "parameters": {
+        "fromEmail": "hello@daily-hush.com",
+        "toEmail": "={{ $('Webhook').item.json.query.email }}",
+        "subject": "The Pattern I Recognized in Your Quiz",
+        "html": "=<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta content=\"width=device-width, initial-scale=1.0\">\n    <title>You're a {{ $('Webhook').item.json.query.quiz_result_title }}. (I scored 9/10. Same pattern.)</title>\n  </head>\n\n  <body style=\"margin:0;padding:0;background-color:#f3f4f6\">\n    <!-- Outer wrapper -->\n    <div style=\"max-width:700px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px 24px;box-shadow:0 3px 20px rgba(0,0,0,0.03);border:1px solid #e5e7eb\">\n\n      <!-- Header -->\n      <div style=\"text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #e5e7eb\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:40px;width:auto;display:inline-block\">\n        <p style=\"font-size:12px;color:#6b7280;margin:8px 0 0;letter-spacing:1px;text-transform:uppercase\">Understanding Your Pattern: {{ $('Webhook').item.json.query.quiz_result_title }}</p>\n      </div>\n\n      <!-- Hero -->\n      <div style=\"background:#ffffff;padding:30px;border-radius:12px;margin-bottom:30px;border:1px solid #e5e7eb\">\n        <h1 style=\"margin:0;font-size:28px;color:#1f2937;font-family:Georgia,serif;font-weight:400\">You're a {{ $('Webhook').item.json.query.quiz_result_title }}. (I scored 9/10. Same pattern.)</h1>\n      </div>\n\n      <!-- Main copy -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">When I analyzed 296 quiz responses, I found 4 distinct overthinker patterns:</p>\n\n      <ul style=\"font-size:16px;margin:16px 0 16px 20px;color:#1f2937;line-height:1.8\">\n        <li><strong>The Mindful Thinker</strong> — You reflect, but rarely spiral</li>\n        <li><strong>The Gentle Analyzer</strong> — You think a lot; sometimes it leaks into worry</li>\n        <li><strong>The Chronic Overthinker</strong> — Your mind loops often. You crave peace, but certainty feels safer</li>\n        <li><strong>The Overthinkaholic</strong> — Your brain never clocks out. You don't need more plans; you need a reset</li>\n      </ul>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">You're <strong>{{ $('Webhook').item.json.query.quiz_result_title }}</strong>. So am I.</p>\n\n      <!-- Highlighted box -->\n      <div style=\"background:#fef9e6;padding:20px;border-radius:8px;border-left:4px solid #f59e0b;margin:30px 0;box-shadow:0 2px 8px rgba(245,158,11,0.06)\">\n        <strong style=\"font-size:16px;color:#111827\">Here's what I noticed:</strong><br><br>\n        <span style=\"font-size:16px;color:#111827\">Our minds loop. <strong>We replay conversations. Analyze every word. Wonder if they noticed something was off.</strong></span>\n      </div>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">I did this for 8 years. Good therapy. It helped me understand <em>why</em> I overthink. But it didn't stop me from lying awake at 3AM, replaying an awkward moment from a meeting.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Because overthinkers don't just worry about the future. We replay the past. <strong>Over and over.</strong></p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">And shame operates pre-consciously. By the time you're <em>aware</em> you're replaying, the loop has already started.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">That 7-second window is where The Shift lives. It interrupts the shame response before it hijacks your night.</p>\n\n      <!-- Product image -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522\" alt=\"The Shift Necklace\" style=\"max-width:100%;width:auto;max-height:280px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08)\">\n      </div>\n\n      <!-- CTA -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <a href=\"https://daily-hush.com/product/TheShift?email={{ $('Webhook').item.json.query.email }}&utm_source=email&utm_medium=quiz-retargeting&utm_campaign=necklace-launch&utm_content=day2-four-patterns\" style=\"text-decoration:none;display:inline-block\">\n          <button style=\"background:#F7AF1A;color:#000000;border:none;border-radius:28px;padding:14px 32px;font-size:18px;font-weight:700;cursor:pointer;display:inline-block;box-shadow:0 4px 12px rgba(247,175,26,0.35)\">Get The Shift Now → $37</button>\n        </a>\n      </div>\n\n      <!-- Signature -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Talk soon,</p>\n      <p style=\"font-size:16px;margin:16px 0;font-weight:600;color:#1f2937\">Anna<br>Creator, The Shift & DailyHush</p>\n\n      <!-- P.S. -->\n      <div style=\"font-size:14px;color:#6b7280;margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;border-left:3px solid #e5e7eb\">\n        <strong>P.S.</strong> You scored {{ $('Webhook').item.json.query.quiz_score }}/10, identifying as a {{ $('Webhook').item.json.query.quiz_result_title }}. You're not broken. You just need a tool that works in that 7-second window.\n      </div>\n\n      <!-- Footer -->\n      <div style=\"margin-top:40px;padding-top:30px;border-top:1px solid #e5e7eb;text-align:center\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:28px;width:auto;margin-bottom:12px;opacity:.7;display:inline-block\">\n        <p style=\"font-size:12px;color:#9ca3af;margin:8px 0\">Helping women interrupt the replay loop</p>\n        <p style=\"font-size:11px;color:#9ca3af;margin:4px 0\">© DailyHush. All rights reserved.</p>\n        <div style=\"margin-top:12px\">\n          <a href=\"https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Unsubscribe</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/privacy\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Privacy Policy</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/contact\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Contact Us</a>\n        </div>\n      </div>\n\n    </div>\n  </body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [2336, -1152],
+      "id": "a0ce3fa5-decc-429d-9285-dd8757fccf34",
+      "name": "Email 3 - Day 2 - Four Patterns",
+      "webhookId": "c4354ec5-f19e-4f44-bfe6-3fd8255433ac",
+      "credentials": {
+        "smtp": {
+          "id": "4XzMVGxRkXXOV6v4",
+          "name": "SMTP DailyHush Resend"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableId": "email_sends",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recipient_email",
+              "fieldValue": "={{ $('Webhook').item.json.query.email }}"
+            },
+            {
+              "fieldId": "email_sequence_day",
+              "fieldValue": "2"
+            },
+            {
+              "fieldId": "email_subject",
+              "fieldValue": "The Pattern I Recognized in Your Quiz"
+            },
+            {
+              "fieldId": "campaign_name",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_source",
+              "fieldValue": "email"
+            },
+            {
+              "fieldId": "utm_medium",
+              "fieldValue": "quiz-retargeting"
+            },
+            {
+              "fieldId": "utm_campaign",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_content",
+              "fieldValue": "day2-four-patterns"
+            },
+            {
+              "fieldId": "quiz_score",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_score }}"
+            },
+            {
+              "fieldId": "quiz_result_type",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_type }}"
+            },
+            {
+              "fieldId": "quiz_result_title",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2560, -1152],
+      "id": "track-email-3",
+      "name": "Track Email 3 Send",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2784, -1152],
+      "id": "758bd461-28da-4489-9c9d-945727d1f9bb",
+      "name": "Wait until day 6",
+      "webhookId": "a21536a9-d7a8-45d7-b68b-0a946d22dd40"
+    },
+    {
+      "parameters": {
+        "fromEmail": "hello@daily-hush.com",
+        "toEmail": "={{ $('Webhook').item.json.query.email }}",
+        "subject": "What if it doesn't work?",
+        "html": "=<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta content=\"width=device-width, initial-scale=1.0\">\n    <title>Patricia replayed the same fight for 3 years</title>\n  </head>\n\n  <body style=\"margin:0;padding:0;background-color:#f3f4f6\">\n    <!-- Outer wrapper -->\n    <div style=\"max-width:700px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px 24px;box-shadow:0 3px 20px rgba(0,0,0,0.03);border:1px solid #e5e7eb\">\n\n      <!-- Header -->\n      <div style=\"text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #e5e7eb\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:40px;width:auto;display:inline-block\">\n        <p style=\"font-size:12px;color:#6b7280;margin:8px 0 0;letter-spacing:1px;text-transform:uppercase\">Real Results from {{ $('Webhook').item.json.query.quiz_result_title }}s</p>\n      </div>\n\n      <!-- Hero -->\n      <div style=\"background:#ffffff;padding:30px;border-radius:12px;margin-bottom:30px;border:1px solid #e5e7eb\">\n        <h1 style=\"margin:0;font-size:28px;color:#1f2937;font-family:Georgia,serif;font-weight:400\">Patricia replayed the same fight for 3 years. Then this happened.</h1>\n      </div>\n\n      <!-- Main copy -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">I asked 89 {{ $('Webhook').item.json.query.quiz_result_title }}s to try The Shift for 14 days.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">I didn't cherry-pick. I sent a survey to everyone who bought it. These are the responses that came back:</p>\n\n      <!-- Testimonial boxes -->\n      <div style=\"background:#f9fafb;padding:20px;border-radius:8px;border-left:4px solid #10b981;margin:30px 0;box-shadow:0 2px 8px rgba(0,0,0,0.03)\">\n        <p style=\"font-size:15px;margin:0 0 12px 0;color:#1f2937;font-style:italic\">\"I've replayed the same fight with my sister for 3 years. Every version of what I should've said. The Shift stopped it in 2 minutes. I didn't even realize it had worked until I woke up the next morning and thought, 'Wait, I slept through the night.'\"</p>\n        <p style=\"font-size:14px;margin:0;color:#6b7280;font-weight:600\">— Patricia, 67, Florida</p>\n      </div>\n\n      <div style=\"background:#f9fafb;padding:20px;border-radius:8px;border-left:4px solid #10b981;margin:30px 0;box-shadow:0 2px 8px rgba(0,0,0,0.03)\">\n        <p style=\"font-size:15px;margin:0 0 12px 0;color:#1f2937;font-style:italic\">\"I thought I needed to 'work through' the shame. Turns out I just needed to interrupt it. This is the first thing that's ever worked at 3AM.\"</p>\n        <p style=\"font-size:14px;margin:0;color:#6b7280;font-weight:600\">— Linda, 71, Texas</p>\n      </div>\n\n      <div style=\"background:#f9fafb;padding:20px;border-radius:8px;border-left:4px solid #10b981;margin:30px 0;box-shadow:0 2px 8px rgba(0,0,0,0.03)\">\n        <p style=\"font-size:15px;margin:0 0 12px 0;color:#1f2937;font-style:italic\">\"I've spent thousands on therapy. This necklace did more in 14 days than 6 years of CBT. I can't explain it. It just stops the loop before it starts.\"</p>\n        <p style=\"font-size:14px;margin:0;color:#6b7280;font-weight:600\">— Carol, 69, California</p>\n      </div>\n\n      <!-- Highlighted box -->\n      <div style=\"background:#fef9e6;padding:20px;border-radius:8px;border-left:4px solid #f59e0b;margin:30px 0;box-shadow:0 2px 8px rgba(245,158,11,0.06)\">\n        <strong style=\"font-size:16px;color:#111827\">After 14 days:</strong><br><br>\n        <ul style=\"font-size:16px;margin:0;padding:0 0 0 20px;color:#111827;line-height:1.8\">\n          <li style=\"margin-bottom:8px\">87% said they're sleeping through the night now</li>\n          <li style=\"margin-bottom:8px\">Average time to interrupt a spiral: 2.3 minutes (down from 45+ minutes)</li>\n          <li style=\"margin-bottom:8px\">94% said \"I wish I'd found this sooner\"</li>\n        </ul>\n      </div>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">These aren't special cases. They're {{ $('Webhook').item.json.query.quiz_result_title }}s. Like you. Like me.</p>\n\n      <!-- Product image -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522\" alt=\"The Shift Necklace\" style=\"max-width:100%;width:auto;max-height:280px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08)\">\n      </div>\n\n      <!-- CTA -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <a href=\"https://daily-hush.com/product/TheShift?email={{ $('Webhook').item.json.query.email }}&utm_source=email&utm_medium=quiz-retargeting&utm_campaign=necklace-launch&utm_content=day3-social-proof\" style=\"text-decoration:none;display:inline-block\">\n          <button style=\"background:#F7AF1A;color:#000000;border:none;border-radius:28px;padding:14px 32px;font-size:18px;font-weight:700;cursor:pointer;display:inline-block;box-shadow:0 4px 12px rgba(247,175,26,0.35)\">Get The Shift Now → $37</button>\n        </a>\n      </div>\n\n      <!-- Signature -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Talk soon,</p>\n      <p style=\"font-size:16px;margin:16px 0;font-weight:600;color:#1f2937\">Anna<br>Creator, The Shift & DailyHush</p>\n\n      <!-- P.S. -->\n      <div style=\"font-size:14px;color:#6b7280;margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;border-left:3px solid #e5e7eb\">\n        <strong>P.S.</strong> If you're still lying awake at 3AM, replaying that conversation—this is what finally stops it.\n      </div>\n\n      <!-- Footer -->\n      <div style=\"margin-top:40px;padding-top:30px;border-top:1px solid #e5e7eb;text-align:center\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:28px;width:auto;margin-bottom:12px;opacity:.7;display:inline-block\">\n        <p style=\"font-size:12px;color:#9ca3af;margin:8px 0\">Helping women interrupt the replay loop</p>\n        <p style=\"font-size:11px;color:#9ca3af;margin:4px 0\">© DailyHush. All rights reserved.</p>\n        <div style=\"margin-top:12px\">\n          <a href=\"https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Unsubscribe</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/privacy\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Privacy Policy</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/contact\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Contact Us</a>\n        </div>\n      </div>\n\n    </div>\n  </body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [3008, -1152],
+      "id": "9a3209d6-aa42-4f65-8e0d-89c6d5e1dc81",
+      "name": "Email 4 - Day 3 - Social Proof",
+      "webhookId": "c4354ec5-f19e-4f44-bfe6-3fd8255433ac",
+      "credentials": {
+        "smtp": {
+          "id": "4XzMVGxRkXXOV6v4",
+          "name": "SMTP DailyHush Resend"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableId": "email_sends",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recipient_email",
+              "fieldValue": "={{ $('Webhook').item.json.query.email }}"
+            },
+            {
+              "fieldId": "email_sequence_day",
+              "fieldValue": "3"
+            },
+            {
+              "fieldId": "email_subject",
+              "fieldValue": "What if it doesn't work?"
+            },
+            {
+              "fieldId": "campaign_name",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_source",
+              "fieldValue": "email"
+            },
+            {
+              "fieldId": "utm_medium",
+              "fieldValue": "quiz-retargeting"
+            },
+            {
+              "fieldId": "utm_campaign",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_content",
+              "fieldValue": "day3-social-proof"
+            },
+            {
+              "fieldId": "quiz_score",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_score }}"
+            },
+            {
+              "fieldId": "quiz_result_type",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_type }}"
+            },
+            {
+              "fieldId": "quiz_result_title",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3232, -1152],
+      "id": "track-email-4",
+      "name": "Track Email 4 Send",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [3456, -1152],
+      "id": "58505eed-96a7-4464-a91f-068bccfaeacc",
+      "name": "Wait until day 8",
+      "webhookId": "51a69f21-eec3-4067-9249-70afbcda84a8"
+    },
+    {
+      "parameters": {
+        "fromEmail": "hello@daily-hush.com",
+        "toEmail": "={{ $('Webhook').item.json.query.email }}",
+        "subject": "Last Call - $67 Expires Tonight",
+        "html": "=<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta content=\"width=device-width, initial-scale=1.0\">\n    <title>I can't hold your $37 rate past midnight</title>\n  </head>\n\n  <body style=\"margin:0;padding:0;background-color:#f3f4f6\">\n    <!-- Outer wrapper -->\n    <div style=\"max-width:700px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px 24px;box-shadow:0 3px 20px rgba(0,0,0,0.03);border:1px solid #e5e7eb\">\n\n      <!-- Header -->\n      <div style=\"text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #e5e7eb\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:40px;width:auto;display:inline-block\">\n        <p style=\"font-size:12px;color:#6b7280;margin:8px 0 0;letter-spacing:1px;text-transform:uppercase\">Final Reminder</p>\n      </div>\n\n      <!-- Hero -->\n      <div style=\"background:#ffffff;padding:30px;border-radius:12px;margin-bottom:30px;border:1px solid #e5e7eb\">\n        <h1 style=\"margin:0;font-size:28px;color:#1f2937;font-family:Georgia,serif;font-weight:400\">I can't hold your $37 rate past midnight</h1>\n        <p style=\"font-size:14px;color:#6b7280;margin:12px 0 0 0;font-style:italic\">(Not trying to pressure you. Just being honest.)</p>\n      </div>\n\n      <!-- Main copy -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">This is my last email.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">I know your brain is probably already analyzing this. <em>\"But what if this doesn't work for me? What if I'm too far gone? What if I waste $37 and nothing changes?\"</em></p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">That's the overthinking talking. So let me just lay out what happens next:</p>\n\n      <!-- Highlighted box with paths -->\n      <div style=\"background:#fef9e6;padding:20px;border-radius:8px;border-left:4px solid #f59e0b;margin:30px 0;box-shadow:0 2px 8px rgba(245,158,11,0.06)\">\n        <strong style=\"font-size:16px;color:#111827\">Path 1: You wait</strong>\n        <ul style=\"font-size:15px;margin:8px 0 16px 20px;color:#111827;line-height:1.7\">\n          <li>Price goes back to $67 at midnight</li>\n          <li>You keep replaying at 3AM</li>\n          <li>6 months from now, you're still doing it</li>\n        </ul>\n        <strong style=\"font-size:16px;color:#111827\">Path 2: You act now</strong>\n        <ul style=\"font-size:15px;margin:8px 0 0 20px;color:#111827;line-height:1.7\">\n          <li>Get The Shift for $37 (saves $30)</li>\n          <li>Interrupt your first spiral tonight</li>\n          <li>Sleep through the night by Week 2</li>\n        </ul>\n      </div>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">I can't make this decision for you. But I <em>can</em> tell you this:</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">I spent 8 years replaying. Therapy helped me understand it. But The Shift is what stopped it.</p>\n\n      <p style=\"font-size:16px;margin:16px 0;color:#111827\">I wish I'd found this 8 years ago. You don't have to wait that long.</p>\n\n      <!-- Product image -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522\" alt=\"The Shift Necklace\" style=\"max-width:100%;width:auto;max-height:280px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08)\">\n      </div>\n\n      <!-- CTA -->\n      <div style=\"text-align:center;margin:40px 0\">\n        <div style=\"display:inline-block;background:#dc2626;color:#ffffff;padding:6px 14px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:10px\">⏰ ENDS AT MIDNIGHT TONIGHT</div><br>\n        <a href=\"https://daily-hush.com/product/TheShift?email={{ $('Webhook').item.json.query.email }}&utm_source=email&utm_medium=quiz-retargeting&utm_campaign=necklace-launch&utm_content=day4-final-call\" style=\"text-decoration:none;display:inline-block\">\n          <button style=\"background:#F7AF1A;color:#000000;border:none;border-radius:28px;padding:14px 32px;font-size:18px;font-weight:700;cursor:pointer;display:inline-block;box-shadow:0 4px 12px rgba(247,175,26,0.35)\">Get The Shift Now → $37</button>\n        </a>\n        <p style=\"font-size:13px;margin:12px 0 0 0;color:#6b7280;font-style:italic\">$37 rate expires at midnight. Price returns to $67 after that.</p>\n      </div>\n\n      <!-- Signature -->\n      <p style=\"font-size:16px;margin:16px 0;color:#1f2937\">Talk soon,</p>\n      <p style=\"font-size:16px;margin:16px 0;font-weight:600;color:#1f2937\">Anna<br>Creator, The Shift & DailyHush</p>\n\n      <!-- P.S. -->\n      <div style=\"font-size:14px;color:#6b7280;margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;border-left:3px solid #e5e7eb\">\n        <strong>P.S.</strong> You scored {{ $('Webhook').item.json.query.quiz_score }}/10 on the quiz, identifying as a {{ $('Webhook').item.json.query.quiz_result_title }}. You know what the problem is. This is the solution. And it's $37 until midnight.\n      </div>\n\n      <!-- Footer -->\n      <div style=\"margin-top:40px;padding-top:30px;border-top:1px solid #e5e7eb;text-align:center\">\n        <img src=\"https://daily-hush.com/inline-logo.png\" alt=\"DailyHush\" style=\"height:28px;width:auto;margin-bottom:12px;opacity:.7;display:inline-block\">\n        <p style=\"font-size:12px;color:#9ca3af;margin:8px 0\">Helping women interrupt the replay loop</p>\n        <p style=\"font-size:11px;color:#9ca3af;margin:4px 0\">© DailyHush. All rights reserved.</p>\n        <div style=\"margin-top:12px\">\n          <a href=\"https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Unsubscribe</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/privacy\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Privacy Policy</a>\n          <span style=\"color:#9ca3af\">•</span>\n          <a href=\"https://daily-hush.com/contact\" style=\"font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px\">Contact Us</a>\n        </div>\n      </div>\n\n    </div>\n  </body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [3680, -1152],
+      "id": "1e132ed4-9a6d-4639-89d1-9f30005763e7",
+      "name": "Email 5 - Day 4 - Final Call",
+      "webhookId": "c4354ec5-f19e-4f44-bfe6-3fd8255433ac",
+      "credentials": {
+        "smtp": {
+          "id": "4XzMVGxRkXXOV6v4",
+          "name": "SMTP DailyHush Resend"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableId": "email_sends",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recipient_email",
+              "fieldValue": "={{ $('Webhook').item.json.query.email }}"
+            },
+            {
+              "fieldId": "email_sequence_day",
+              "fieldValue": "4"
+            },
+            {
+              "fieldId": "email_subject",
+              "fieldValue": "Last Call - $67 Expires Tonight"
+            },
+            {
+              "fieldId": "campaign_name",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_source",
+              "fieldValue": "email"
+            },
+            {
+              "fieldId": "utm_medium",
+              "fieldValue": "quiz-retargeting"
+            },
+            {
+              "fieldId": "utm_campaign",
+              "fieldValue": "necklace-launch"
+            },
+            {
+              "fieldId": "utm_content",
+              "fieldValue": "day4-final-call"
+            },
+            {
+              "fieldId": "quiz_score",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_score }}"
+            },
+            {
+              "fieldId": "quiz_result_type",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_type }}"
+            },
+            {
+              "fieldId": "quiz_result_title",
+              "fieldValue": "={{ $('Webhook').item.json.query.quiz_result_title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3904, -1152],
+      "id": "track-email-5",
+      "name": "Track Email 5 Send",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Add contact to Beehiiv": {
+      "main": [
+        [
+          {
+            "node": "Email 1 - Day 0 - Quiz Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If event = quiz_completion": {
+      "main": [
+        [
+          {
+            "node": "Add contact to Beehiiv",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 1 - Day 0 - Quiz Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Track Email 1 Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Email 1 Send": {
+      "main": [
+        [
+          {
+            "node": "Telegram Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Notification": {
+      "main": [
+        [
+          {
+            "node": "Wait 1 day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 1 day": {
+      "main": [
+        [
+          {
+            "node": "Email 2 - Day 1 - Brain Science",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 2 - Day 1 - Brain Science": {
+      "main": [
+        [
+          {
+            "node": "Track Email 2 Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Email 2 Send": {
+      "main": [
+        [
+          {
+            "node": "Wait until day 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait until day 4": {
+      "main": [
+        [
+          {
+            "node": "Email 3 - Day 2 - Four Patterns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 3 - Day 2 - Four Patterns": {
+      "main": [
+        [
+          {
+            "node": "Track Email 3 Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Email 3 Send": {
+      "main": [
+        [
+          {
+            "node": "Wait until day 6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait until day 6": {
+      "main": [
+        [
+          {
+            "node": "Email 4 - Day 3 - Social Proof",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 4 - Day 3 - Social Proof": {
+      "main": [
+        [
+          {
+            "node": "Track Email 4 Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Email 4 Send": {
+      "main": [
+        [
+          {
+            "node": "Wait until day 8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait until day 8": {
+      "main": [
+        [
+          {
+            "node": "Email 5 - Day 4 - Final Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 5 - Day 4 - Final Call": {
+      "main": [
+        [
+          {
+            "node": "Track Email 5 Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4d450aedc73ee1980004d36386b41e63bcd8086572d6b15bc2558c9fcca7ece0"
+  }
+}

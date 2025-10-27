@@ -1,0 +1,95 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0">
+    <title>Those 3 phrases? I said them for 8 years</title>
+  </head>
+
+  <body style="margin:0;padding:0;background-color:#f3f4f6">
+    <!-- Outer wrapper -->
+    <div style="max-width:700px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px 24px;box-shadow:0 3px 20px rgba(0,0,0,0.03);border:1px solid #e5e7eb">
+
+      <!-- Header -->
+      <div style="text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #e5e7eb">
+        <img src="https://daily-hush.com/inline-logo.png" alt="DailyHush" style="height:40px;width:auto;display:inline-block">
+        <p style="font-size:12px;color:#6b7280;margin:8px 0 0;letter-spacing:1px;text-transform:uppercase">Your Quiz Results: {{ $('Webhook').item.json.query.quiz_result_title }}</p>
+      </div>
+
+      <!-- Hero -->
+      <div style="background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);padding:30px;border-radius:12px;margin-bottom:30px">
+        <h1 style="margin:0;font-size:28px;color:#111827;font-family:Georgia,serif;font-weight:400">Those 3 phrases? I said them for 8 years.</h1>
+      </div>
+
+      <!-- Main copy -->
+      <p style="font-size:16px;margin:16px 0;color:#1f2937">Hey,</p>
+
+      <p style="font-size:16px;margin:16px 0;color:#1f2937">I'm Anna. I scored 9/10 on this quiz. You scored {{ $('Webhook').item.json.query.quiz_score }}/10. And here's what I discovered about those phrases:</p>
+
+      <ul style="font-size:16px;margin:16px 0 16px 20px;color:#1f2937;line-height:1.8">
+        <li>"Did I sound stupid?"</li>
+        <li>"Why did I say that?"</li>
+        <li>"They probably think I'm…"</li>
+      </ul>
+
+      <p style="font-size:16px;margin:16px 0;color:#1f2937">They're not anxiety about the future. <strong>They're shame about being seen.</strong></p>
+
+      <!-- Highlighted box -->
+      <div style="background:#fef9e6;padding:20px;border-radius:8px;border-left:4px solid #f59e0b;margin:30px 0;box-shadow:0 2px 8px rgba(245,158,11,0.06)">
+        <strong style="font-size:16px;color:#111827">Therapy helped me understand why I do this.</strong><br><br>
+        <span style="font-size:16px;color:#111827">But it couldn't stop the loop at 3AM. Because shame operates pre-consciously—in that first ~7 seconds before thought even forms.</span><br><br>
+        <span style="font-size:16px;color:#111827">That's the window where the spiral starts. And that's the only window where it can be interrupted.</span>
+      </div>
+
+      <p style="font-size:16px;margin:16px 0;color:#111827">After trying everything—meditation, journaling, DBT, breath work—I finally found something that works in that 7-second window.</p>
+
+      <p style="font-size:16px;margin:16px 0;color:#111827">It's called The Shift™. And it's what I wish I'd had 8 years ago.</p>
+
+      <p style="font-size:16px;margin:16px 0;color:#111827">Here's what you get for $37 (normally $67):</p>
+
+      <ul style="font-size:16px;margin:16px 0 16px 20px;color:#111827;line-height:1.8">
+        <li><strong>The Shift™ Necklace</strong> – Interrupts spirals in 90 seconds (normally $67)</li>
+        <li><strong>F.I.R.E. Protocol</strong> – Complete 4-step framework (normally $67, <strong>FREE</strong>)</li>
+        <li><strong>Guides + Resources</strong> – Everything you need to start (<strong>FREE</strong>)</li>
+        <li><strong>Early Access to DailyHush App</strong> – Launching Nov 15th (<strong>FREE</strong>)</li>
+      </ul>
+
+      <p style="font-size:17px;margin:16px 0;color:#111827;font-weight:600">Total Value: $134+. Your Quiz-Taker Rate: $37.</p>
+
+      <!-- Product image -->
+      <div style="text-align:center;margin:40px 0">
+        <img src="https://cdn.shopify.com/s/files/1/0957/4914/4879/files/rose_lifestyle1.webp?v=1760941522" alt="The Shift Necklace" style="max-width:100%;width:auto;max-height:280px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08)">
+      </div>
+
+      <!-- CTA -->
+      <div style="text-align:center;margin:40px 0">
+        <div style="display:inline-block;background:#ef4444;color:#ffffff;padding:6px 14px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:10px">QUIZ-TAKER PRICE: $37</div><br>
+        <a href="https://daily-hush.com/subscriptions/thank-you?email={{ $('Webhook').item.json.query.email }}&type={{ $('Webhook').item.json.query.quiz_result_type }}&score={{ $('Webhook').item.json.query.quiz_score }}&utm_source=email&utm_medium=quiz-sequence&utm_campaign=necklace-launch&utm_content=quiz-day0-confirmation" style="text-decoration:none;display:inline-block">
+          <button style="background:#F7AF1A;color:#000000;border:none;border-radius:28px;padding:14px 32px;font-size:18px;font-weight:700;cursor:pointer;display:inline-block;box-shadow:0 4px 12px rgba(247,175,26,0.35)">Get The Shift → $37</button>
+        </a>
+      </div>
+
+      <!-- Signature -->
+      <p style="font-size:16px;margin:16px 0;color:#1f2937">Anna<br>Creator, The Shift & DailyHush</p>
+
+      <!-- P.S. -->
+      <div style="font-size:14px;color:#6b7280;margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;border-left:3px solid #e5e7eb">
+        <strong>P.S.</strong> You scored {{ $('Webhook').item.json.query.quiz_score }}/10 on this quiz, identifying as a {{ $('Webhook').item.json.query.quiz_result_title }}. If you're tired of replaying, this is your solution.
+      </div>
+
+      <!-- Footer -->
+      <div style="margin-top:40px;padding-top:30px;border-top:1px solid #e5e7eb;text-align:center">
+        <img src="https://daily-hush.com/inline-logo.png" alt="DailyHush" style="height:28px;width:auto;margin-bottom:12px;opacity:.7;display:inline-block">
+        <p style="font-size:12px;color:#9ca3af;margin:8px 0">Helping women interrupt the replay loop</p>
+        <p style="font-size:11px;color:#9ca3af;margin:4px 0">© DailyHush. All rights reserved.</p>
+        <div style="margin-top:12px">
+          <a href="https://daily-hush.com/unsubscribe?email={{ $('Webhook').item.json.query.email }}" style="font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px">Unsubscribe</a>
+          <span style="color:#9ca3af">•</span>
+          <a href="https://daily-hush.com/privacy" style="font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px">Privacy Policy</a>
+          <span style="color:#9ca3af">•</span>
+          <a href="https://daily-hush.com/contact" style="font-size:11px;color:#9ca3af;text-decoration:none;margin:0 8px">Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

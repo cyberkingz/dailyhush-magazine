@@ -20,6 +20,15 @@ import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
 import { useSpiral } from '@/hooks/useSpiral';
 
+function getGreeting(): string {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) return 'Good morning';
+  if (hour >= 12 && hour < 17) return 'Good afternoon';
+  if (hour >= 17 && hour < 22) return 'Good evening';
+  return 'Good night';
+}
+
 export default function HomeModern() {
   const router = useRouter();
   const user = useUser();
@@ -31,6 +40,10 @@ export default function HomeModern() {
   const [moodLoggedToday, setMoodLoggedToday] = useState(false);
   const [currentMood, setCurrentMood] = useState<'calm' | 'good' | 'okay' | 'low' | 'anxious' | null>(null);
   const { getTodaySpirals } = useSpiral();
+  const greeting = getGreeting();
+  const displayName = user?.name?.split(' ')[0] ?? 'Friend';
+  const greetingLine = `${greeting}`;
+  const welcomeLine = displayName === 'Friend' ? 'Welcome back' : `Welcome back, ${displayName}`;
 
   // Feature grid configuration
   const features: FeatureItem[] = [
@@ -189,59 +202,79 @@ export default function HomeModern() {
         fadeIntensity={0.95}
         fadeVisibility="always"
       >
-        {/* Header */}
-        <View style={{
-          paddingHorizontal: 20,
-          marginBottom: 24,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-            <Image
-              source={require('@/assets/img/rounded-logo.png')}
+        {/* Header & Greeting */}
+        <View
+          style={{
+            paddingHorizontal: 20,
+            marginBottom: 28,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 18,
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+              <Image
+                source={require('@/assets/img/rounded-logo.png')}
+                style={{
+                  width: 48,
+                  height: 48,
+                  resizeMode: 'contain',
+                }}
+              />
+              <View>
+                <Text
+                  style={{
+                    fontSize: 24,
+                    fontWeight: '700',
+                    color: colors.text.primary,
+                    letterSpacing: 0.15,
+                  }}
+                >
+                  {greetingLine}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: colors.text.secondary,
+                    marginTop: 6,
+                    opacity: 0.85,
+                  }}
+                >
+                  {welcomeLine}
+                </Text>
+              </View>
+            </View>
+
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push('/settings' as any);
+              }}
               style={{
                 width: 40,
                 height: 40,
-                resizeMode: 'contain',
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: '700',
-                color: colors.text.primary,
-                letterSpacing: 0.6,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              DailyHush
-            </Text>
+              {({ pressed }) => (
+                <Settings
+                  size={24}
+                  color={colors.text.secondary}
+                  opacity={pressed ? 0.5 : 0.7}
+                />
+              )}
+            </Pressable>
           </View>
-
-          <Pressable
-            onPress={() => {
-              Haptics.selectionAsync();
-              router.push('/settings' as any);
-            }}
-            style={{
-              width: 40,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {({ pressed }) => (
-              <Settings
-                size={24}
-                color={colors.text.secondary}
-                opacity={pressed ? 0.5 : 0.7}
-              />
-            )}
-          </Pressable>
         </View>
 
         {/* Daily Quote */}
-        <QuoteBanner style={{ marginHorizontal: 20, marginBottom: 24 }} />
+        <QuoteBanner style={{ marginHorizontal: 20, marginBottom: 28, alignSelf: 'flex-end' }} />
 
         {/* Mood Logging Card */}
         <MoodCard

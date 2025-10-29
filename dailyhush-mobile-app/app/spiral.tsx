@@ -50,7 +50,7 @@ export default function SpiralInterrupt() {
   const breatheScale = useRef(new Animated.Value(1)).current;
 
   const protocolSteps = [
-    { duration: 5, text: "That conversation isn't happening right now.\nBut your body thinks it is.\nLet's interrupt this loop. Together." },
+    { duration: 5, text: "That conversation isn&apos;t happening right now.\nBut your body thinks it is.\nLet&apos;s interrupt this loop. Together." },
     { duration: 5, text: "Notice where you are\nright now.\nNot in that argument. Here." },
     { duration: 8, text: "Name 5 things\nyou can see..." },
     { duration: 8, text: "4 things\nyou can hear..." },
@@ -60,8 +60,8 @@ export default function SpiralInterrupt() {
     { duration: 15, text: "Breathe out slowly...\n1... 2... 3... 4... 5..." },
     { duration: 15, text: "Again...\nBreathe in... and hold..." },
     { duration: 10, text: "And out...\nslowly... all the way..." },
-    { duration: 5, text: "This rumination?\nIt's a loop, not reality.\nYou're breaking the pattern." },
-    { duration: 6, text: "You just interrupted it.\nThis is the skill.\nYou're building it." },
+    { duration: 5, text: "This rumination?\nIt&apos;s a loop, not reality.\nYou&apos;re breaking the pattern." },
+    { duration: 6, text: "You just interrupted it.\nThis is the skill.\nYou&apos;re building it." },
   ];
 
   const totalDuration = protocolSteps.reduce((sum, step) => sum + step.duration, 0);
@@ -266,7 +266,7 @@ export default function SpiralInterrupt() {
       {stage === 'pre-check' && (
         <View className="flex-1 justify-center px-6">
           <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-4">
-            We're Here
+            We&apos;re Here
           </Text>
           <Text className="text-[#95B8A8] text-base text-center mb-12">
             Before we break this together, how do you feel right now?
@@ -345,7 +345,7 @@ export default function SpiralInterrupt() {
                 letterSpacing: 0.3,
               }}
             >
-              Let's Break This (90 seconds)
+              Let&apos;s Break This (90 seconds)
             </Text>
           </Pressable>
         </View>

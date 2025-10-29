@@ -170,7 +170,7 @@ export default function Profile() {
               Why share this with us?
             </Text>
             <Text className="text-[#B7E4C7] text-base leading-relaxed">
-              We'll greet you warmly each morning and tailor your DailyHush experience to feel like it was made just for you.
+              We&apos;ll greet you warmly each morning and tailor your DailyHush experience to feel like it was made just for you.
             </Text>
           </View>
 
@@ -208,7 +208,7 @@ export default function Profile() {
                 editable={!isSaving}
               />
               <Text className="text-[#A8CFC0] text-base mt-2">
-                We'll greet you warmly each morning
+                We&apos;ll greet you warmly each morning
               </Text>
             </View>
 

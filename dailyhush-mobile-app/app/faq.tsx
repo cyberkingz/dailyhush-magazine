@@ -25,11 +25,11 @@ interface FAQ {
 const faqs: FAQ[] = [
   {
     question: 'What is a "spiral"?',
-    answer: 'A spiral is an overthinking pattern where your thoughts loop repeatedly, often triggered by shame or anxiety. It\'s that feeling when you can\'t stop replaying a conversation, worrying about what someone thinks of you, or catastrophizing about the future. DailyHush helps you recognize and interrupt these patterns.'
+    answer: 'A spiral is an overthinking pattern where your thoughts loop repeatedly, often triggered by shame or anxiety. It&apos;s that feeling when you can&apos;t stop replaying a conversation, worrying about what someone thinks of you, or catastrophizing about the future. DailyHush helps you recognize and interrupt these patterns.'
   },
   {
     question: 'How does the 90-second interrupt work?',
-    answer: 'Our F.I.R.E. protocol (Focus, Interrupt, Reframe, Execute) uses cognitive behavioral techniques to break the spiral. It takes just 90 seconds and has been shown to interrupt shame-driven rumination. You\'ll be guided through grounding exercises that shift your nervous system out of fight-or-flight mode.'
+    answer: 'Our F.I.R.E. protocol (Focus, Interrupt, Reframe, Execute) uses cognitive behavioral techniques to break the spiral. It takes just 90 seconds and has been shown to interrupt shame-driven rumination. You&apos;ll be guided through grounding exercises that shift your nervous system out of fight-or-flight mode.'
   },
   {
     question: 'Is my data private and secure?',
@@ -45,15 +45,15 @@ const faqs: FAQ[] = [
   },
   {
     question: 'How do I delete my account?',
-    answer: 'Go to Settings → Delete Account. You\'ll be asked to confirm your password, then all your data will be permanently deleted. This action cannot be undone.'
+    answer: 'Go to Settings → Delete Account. You&apos;ll be asked to confirm your password, then all your data will be permanently deleted. This action cannot be undone.'
   },
   {
-    question: 'What if I\'m having a mental health crisis?',
-    answer: 'DailyHush is a wellness tool, not a replacement for professional mental health support. If you\'re in crisis, please contact:\n\n• National Suicide Prevention Lifeline: 988\n• Crisis Text Line: Text HOME to 741741\n• Emergency Services: 911\n\nFor ongoing support, please consider working with a licensed therapist.'
+    question: 'What if I&apos;m having a mental health crisis?',
+    answer: 'DailyHush is a wellness tool, not a replacement for professional mental health support. If you&apos;re in crisis, please contact:\n\n• National Suicide Prevention Lifeline: 988\n• Crisis Text Line: Text HOME to 741741\n• Emergency Services: 911\n\nFor ongoing support, please consider working with a licensed therapist.'
   },
   {
     question: 'Can I use DailyHush without creating an account?',
-    answer: 'Yes! When you first open the app, you can try the spiral interrupt protocol without signing up. However, to save your spiral logs, track patterns, and sync across devices, you\'ll need to create a free account.'
+    answer: 'Yes! When you first open the app, you can try the spiral interrupt protocol without signing up. However, to save your spiral logs, track patterns, and sync across devices, you&apos;ll need to create a free account.'
   },
   {
     question: 'How much does DailyHush cost?',
@@ -65,11 +65,11 @@ const faqs: FAQ[] = [
   },
   {
     question: 'What are the daily quotes for?',
-    answer: 'Daily quotes are gentle reminders that healing is possible. They\'re designed to be shame-free, compassionate, and grounding. You can turn off quote notifications in Settings if you prefer.'
+    answer: 'Daily quotes are gentle reminders that healing is possible. They&apos;re designed to be shame-free, compassionate, and grounding. You can turn off quote notifications in Settings if you prefer.'
   },
   {
     question: 'Can I export my data?',
-    answer: 'Currently, you can view all your spiral logs in the History tab. We\'re working on an export feature that will let you download your data as a PDF or CSV file. Stay tuned!'
+    answer: 'Currently, you can view all your spiral logs in the History tab. We&apos;re working on an export feature that will let you download your data as a PDF or CSV file. Stay tuned!'
   },
   {
     question: 'How do I contact support?',
@@ -80,8 +80,8 @@ const faqs: FAQ[] = [
     answer: 'Yes! You can use the spiral interrupt protocol and log spirals offline. Your data will sync automatically when you reconnect to the internet.'
   },
   {
-    question: 'What if the app isn\'t working?',
-    answer: 'First, try:\n\n1. Force-closing the app and reopening\n2. Checking for app updates in the App Store\n3. Restarting your phone\n\nIf issues persist, email hello@daily-hush.com with details about what\'s happening and screenshots if possible.'
+    question: 'What if the app isn&apos;t working?',
+    answer: 'First, try:\n\n1. Force-closing the app and reopening\n2. Checking for app updates in the App Store\n3. Restarting your phone\n\nIf issues persist, email hello@daily-hush.com with details about what&apos;s happening and screenshots if possible.'
   }
 ];
 
@@ -167,7 +167,7 @@ export default function FAQ() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}
           >
-            Common questions about using DailyHush. Can't find what you're looking for? Email us at{' '}
+            Common questions about using DailyHush. Can&apos;t find what you&apos;re looking for? Email us at{' '}
             <Text style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>
               hello@daily-hush.com
             </Text>
@@ -268,11 +268,11 @@ export default function FAQ() {
               lineHeight: typography.size.sm * typography.lineHeight.relaxed,
             }}
           >
-            We're here for you. Email{' '}
+            We&apos;re here for you. Email{' '}
             <Text style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>
               hello@daily-hush.com
             </Text>
-            {' '}and we'll get back to you within 24-48 hours.
+            {' '}and we&apos;ll get back to you within 24-48 hours.
           </Text>
         </View>
       </ScrollFadeView>

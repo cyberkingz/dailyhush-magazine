@@ -160,7 +160,7 @@ export default function Onboarding() {
     } else if (currentStep === 'demo') {
       setCurrentStep('assessment');
     } else if (currentStep === 'assessment') {
-      // Conditional: Skip Shift if user doesn't have one
+      // Conditional: Skip Shift if user doesn\'t have one
       if (assessmentData.hasShiftNecklace === true) {
         setCurrentStep('shift');
       } else {
@@ -223,7 +223,7 @@ export default function Onboarding() {
 
         if (!authResult.success || !authResult.userId) {
           console.error('Failed to create anonymous session:', authResult.error);
-          return; // Don't proceed without authentication
+          return; // Don\'t proceed without authentication
         }
         console.log('Anonymous session created:', authResult.userId);
 
@@ -245,7 +245,7 @@ export default function Onboarding() {
       // Create user profile for local store
       const newUserProfile: UserProfile = {
         user_id: actualUserId,
-        email: authUser.email || '', // Email users have email, anonymous don't
+        email: authUser.email || '', // Email users have email, anonymous don\'t
         name: assessmentData.name,
         age: assessmentData.age,
         quiz_score: assessmentData.quizScore,
@@ -271,7 +271,7 @@ export default function Onboarding() {
       const { error } = await supabase
         .from('user_profiles')
         .update({
-          // Don't update user_id or email (already set by signInAnonymously)
+          // Don\'t update user_id or email (already set by signInAnonymously)
           name: assessmentData.name,
           age: assessmentData.age,
           quiz_score: assessmentData.quizScore,
@@ -566,7 +566,7 @@ export default function Onboarding() {
             style={{ height: spacing.button.heightSmall }}
           >
             <Text className="text-base font-semibold" style={{ color: colors.text.secondary }}>
-              I'll try this later
+              I&apos;ll try this later
             </Text>
           </Pressable>
         </View>
@@ -603,7 +603,7 @@ export default function Onboarding() {
         {/* Question 1: Age - Compact */}
         <View className="mb-4">
           <Text className="text-sm font-semibold mb-1" style={{ color: colors.text.primary }}>
-            What's your age?
+            What&apos;s your age?
           </Text>
           <TextInput
             placeholder="Optional"
@@ -810,7 +810,7 @@ export default function Onboarding() {
           }}
         >
           <Text className="text-lg font-bold" style={{ color: colors.text.primary }}>
-            I'll Pair Later
+            I&apos;ll Pair Later
           </Text>
         </Pressable>
       </View>
@@ -841,7 +841,7 @@ export default function Onboarding() {
             </View>
 
             <Text className="text-3xl font-bold text-center mb-3" style={{ color: colors.text.primary }}>
-              You're All Set!
+              You&apos;re All Set!
             </Text>
 
             <Text className="text-sm text-center leading-relaxed mb-6" style={{ color: colors.text.secondary }}>
@@ -875,7 +875,7 @@ export default function Onboarding() {
           {/* Reminder Card */}
           <View className="rounded-xl p-5 mb-4" style={{ backgroundColor: colors.background.secondary }}>
             <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.primary }}>
-              Tap the big "I'M SPIRALING" button anytime you need help. We'll be there in 90 seconds.
+              Tap the big &quot;I&apos;M SPIRALING&quot; button anytime you need help. We&apos;ll be there in 90 seconds.
             </Text>
           </View>
 

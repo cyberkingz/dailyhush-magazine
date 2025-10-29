@@ -284,7 +284,7 @@ export default function Login() {
                 style={{ paddingVertical: 16, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}
               >
                 <Text style={authTypography.footerText}>
-                  Don't have an account?{' '}
+                  Don&apos;t have an account?{' '}
                 </Text>
                 <Text
                   style={{

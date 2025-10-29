@@ -317,7 +317,7 @@ export default function ShiftPairing() {
                 lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
               }}
             >
-              No devices found. Make sure your Shift necklace is powered on and nearby, then tap "Scan for Devices".
+              No devices found. Make sure your Shift necklace is powered on and nearby, then tap &quot;Scan for Devices&quot;.
             </Text>
           </View>
         )}

@@ -51,7 +51,7 @@ export default function DeleteAccountScreen() {
           <AlertTriangle size={48} color={colors.status.error} />
           <Text style={styles.errorTitle}>No Account Found</Text>
           <Text style={styles.errorText}>
-            You're using DailyHush as a guest. Only authenticated accounts can be deleted.
+            You&apos;re using DailyHush as a guest. Only authenticated accounts can be deleted.
           </Text>
           <Pressable
             onPress={() => router.back()}
@@ -165,7 +165,7 @@ export default function DeleteAccountScreen() {
       } catch (signOutError) {
         // Don't fail the whole flow if signOut errors
         // The server-side account deletion succeeded, which is what matters
-        console.error('Failed to clear local session (non-critical):', signOutError);
+        console.error('Failed to clear local session (non-critical): ', signOutError);
       }
 
       // Step 2: Clear Zustand store
@@ -627,3 +627,4 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
 });
+

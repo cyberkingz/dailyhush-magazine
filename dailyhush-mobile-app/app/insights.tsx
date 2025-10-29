@@ -150,7 +150,7 @@ export default function Insights() {
                 lineHeight: typography.size.xs * typography.lineHeight.normal,
               }}
             >
-              This week's healing insights
+              This week&apos;s healing insights
             </Text>
           </View>
 
@@ -216,7 +216,7 @@ export default function Insights() {
                 lineHeight: typography.size.base * typography.lineHeight.relaxed,
               }}
             >
-              We can't load your patterns right now. Your data is safe—try pulling down to refresh in a moment.
+              We can&apos;t load your patterns right now. Your data is safe—try pulling down to refresh in a moment.
             </Text>
             <Pressable
               onPress={async () => {
@@ -282,7 +282,7 @@ export default function Insights() {
                 lineHeight: typography.size.base * typography.lineHeight.relaxed,
               }}
             >
-              When you interrupt your first few spirals, you'll start seeing patterns here. There's no rush—you're already doing the work by being here.
+              When you interrupt your first few spirals, you&apos;ll start seeing patterns here. There&apos;s no rush—you&apos;re already doing the work by being here.
             </Text>
             <Pressable
               onPress={async () => {
@@ -371,7 +371,7 @@ export default function Insights() {
                     lineHeight: typography.size.base * typography.lineHeight.relaxed,
                   }}
                 >
-                  Seeing many spirals doesn't mean you're failing. It means you're paying attention. That awareness is the first step toward healing.
+                  Seeing many spirals doesn&apos;t mean you&apos;re failing. It means you&apos;re paying attention. That awareness is the first step toward healing.
                 </Text>
               </View>
             )}
@@ -397,7 +397,7 @@ export default function Insights() {
                       lineHeight: typography.size.lg * typography.lineHeight.tight,
                     }}
                   >
-                    You're Noticing Patterns
+                    You&apos;re Noticing Patterns
                   </Text>
                 </View>
                 <Text
@@ -430,7 +430,7 @@ export default function Insights() {
                       lineHeight: typography.size.lg * typography.lineHeight.tight,
                     }}
                   >
-                    You're Building Awareness
+                    You&apos;re Building Awareness
                   </Text>
                 </View>
                 <Text
@@ -440,7 +440,7 @@ export default function Insights() {
                     lineHeight: typography.size.base * typography.lineHeight.relaxed,
                   }}
                 >
-                  Healing isn't linear. Some weeks are harder, and that's part of the process. You're still rewiring the pattern.
+                  Healing isn&apos;t linear. Some weeks are harder, and that&apos;s part of the process. You&apos;re still rewiring the pattern.
                 </Text>
               </View>
             ) : null}
@@ -604,7 +604,7 @@ export default function Insights() {
                   }}
                 >
                   {weeklyData.avgDuration < 600
-                    ? "You're catching them quickly"
+                    ? "You&apos;re catching them quickly"
                     : "Each interrupt teaches your brain"}
                 </Text>
               </View>

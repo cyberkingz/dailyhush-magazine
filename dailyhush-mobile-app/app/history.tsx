@@ -297,8 +297,8 @@ export default function History() {
               {filter === 'all'
                 ? 'Loading your complete progress...'
                 : filter === 'week'
-                ? 'Loading this week\'s spirals...'
-                : 'Loading this month\'s spirals...'
+                ? 'Loading this week&apos;s spirals...'
+                : 'Loading this month&apos;s spirals...'
               }
             </Text>
           </View>
@@ -366,7 +366,7 @@ export default function History() {
             }}>
               {filter === 'all'
                 ? "Your healing journey starts here"
-                : `A quiet ${filter === 'week' ? 'week' : 'month'} - that's progress`
+                : `A quiet ${filter === 'week' ? 'week' : 'month'} - that&apos;s progress`
               }
             </Text>
             <Text style={{
@@ -377,8 +377,8 @@ export default function History() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
               {filter === 'all'
-                ? "When you interrupt your first spiral, you'll see it here. You're already taking the first step by being here."
-                : `No spirals means fewer moments of rumination. You're rewiring the pattern.`
+                ? "When you interrupt your first spiral, you&apos;ll see it here. You&apos;re already taking the first step by being here."
+                : `No spirals means fewer moments of rumination. You&apos;re rewiring the pattern.`
               }
             </Text>
 
@@ -542,7 +542,7 @@ export default function History() {
                     textAlign: 'center',
                     lineHeight: typography.size.base * typography.lineHeight.relaxed,
                   }}>
-                    🌟 You're feeling better after {Math.round(successRate / 10)} out of 10 interrupts. The pattern is rewiring.
+                    🌟 You&apos;re feeling better after {Math.round(successRate / 10)} out of 10 interrupts. The pattern is rewiring.
                   </Text>
                 </View>
               )}

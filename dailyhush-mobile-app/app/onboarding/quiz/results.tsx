@@ -35,6 +35,7 @@ export default function QuizResults() {
     insight: string;
     ctaHook: string;
     answers: string; // JSON stringified QuizAnswer[]
+    reveal?: string;
   }>();
   const insets = useSafeAreaInsets();
 
@@ -81,7 +82,7 @@ export default function QuizResults() {
         ctaHook: params.ctaHook,
       };
 
-      // Submit quiz with the authenticated user's email
+      // Submit quiz with the authenticated user\'s email
       const { success, submissionId, error } = await submitQuizToSupabase(
         session.user.email || '',
         answers,
@@ -268,7 +269,7 @@ export default function QuizResults() {
                   fontWeight: '600',
                 }}
               >
-                ✨ You're all set! Let's start your journey to quieter thoughts.
+                ✨ You&apos;re all set! Let&apos;s start your journey to quieter thoughts.
               </Text>
             </View>
 

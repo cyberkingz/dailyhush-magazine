@@ -77,8 +77,7 @@ export default function ProfileSetup() {
         // Create or update profile with quiz data (upsert to handle existing profiles)
         const { data: profile, error: profileError } = await supabase
           .from('user_profiles')
-          .upsert({
-            user_id: session.user.id,
+          .upsert({            user_id: session.user.id,
             email: session.user.email,
             name: name.trim() || null,
             age: age ? parseInt(age) : null,
@@ -193,7 +192,7 @@ export default function ProfileSetup() {
                     marginLeft: 8,
                   }}
                 >
-                  What's your name? (Optional)
+                  What&apos;s your name? (Optional)
                 </Text>
               </View>
               <TextInput
@@ -231,7 +230,7 @@ export default function ProfileSetup() {
                     marginLeft: 8,
                   }}
                 >
-                  What's your age? (Optional)
+                  What&apos;s your age? (Optional)
                 </Text>
               </View>
               <TextInput
@@ -391,3 +390,4 @@ export default function ProfileSetup() {
     </>
   );
 }
+

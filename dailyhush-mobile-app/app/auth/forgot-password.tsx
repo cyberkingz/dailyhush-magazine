@@ -144,7 +144,7 @@ export default function ForgotPassword() {
               </Text>
 
               <Text style={authTypography.subheadline}>
-                We'll send you an email with instructions to reset your password
+                We&apos;ll send you an email with instructions to reset your password
               </Text>
             </View>
 
@@ -152,7 +152,7 @@ export default function ForgotPassword() {
             {success ? (
               <View>
                 <ErrorAlert
-                  message={`We've sent password reset instructions to ${email}. Please check your email.`}
+                  message={`We&apos;ve sent password reset instructions to ${email}. Please check your email.`}
                   type="success"
                   dismissible={false}
                 />
@@ -173,7 +173,7 @@ export default function ForgotPassword() {
                     paddingHorizontal: 16,
                   }}
                 >
-                  Didn't receive the email? Check your spam folder or try again in a few minutes.
+                  Didn&apos;t receive the email? Check your spam folder or try again in a few minutes.
                 </Text>
               </View>
             ) : (

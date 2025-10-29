@@ -177,7 +177,7 @@ export default function Training() {
               F.I.R.E. Trained!
             </Text>
             <Text className="text-sm text-center leading-relaxed" style={{ color: colors.emerald[100] }}>
-              You've completed all modules. You now have advanced techniques unlocked.
+              You&apos;ve completed all modules. You now have advanced techniques unlocked.
             </Text>
           </View>
         )}

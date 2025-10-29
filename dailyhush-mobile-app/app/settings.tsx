@@ -177,7 +177,7 @@ export default function Settings() {
                 </Text>
               </View>
               <Text className="text-[#B7E4C7] text-sm leading-relaxed mb-3">
-                You're using DailyHush as a guest. Create an account to save your progress and patterns across devices.
+                You&apos;re using DailyHush as a guest. Create an account to save your progress and patterns across devices.
               </Text>
               <View className="flex-row items-center">
                 <Text className="text-[#52B788] text-sm font-semibold">

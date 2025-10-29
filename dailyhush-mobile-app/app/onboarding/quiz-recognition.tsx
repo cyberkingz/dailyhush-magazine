@@ -181,7 +181,7 @@ export default function QuizRecognition() {
                     color: colors.text.primary,
                   }}
                 >
-                  No, I'm new here
+                  No, I&apos;m new here
                 </Text>
               </View>
             )}

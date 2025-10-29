@@ -177,10 +177,10 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
 
-        {/* What We Don't Do */}
+        {/* What We Don&apos;t Do */}
         <View style={{ marginBottom: spacing.xl, backgroundColor: colors.emerald[900] + '40', borderRadius: 16, padding: spacing.lg, borderWidth: 1, borderColor: colors.emerald[700] + '40' }}>
           <Text style={{ fontSize: typography.size.lg, fontWeight: typography.fontWeight.bold, color: colors.text.primary, marginBottom: spacing.md }}>
-            What We Don't Do
+            What We Don&apos;t Do
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed }}>
             ✓ We never sell your data
@@ -250,10 +250,10 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
 
-        {/* Children's Privacy */}
+        {/* Children&apos;s Privacy */}
         <View style={{ marginBottom: spacing.xl }}>
           <Text style={{ fontSize: typography.size.lg, fontWeight: typography.fontWeight.bold, color: colors.text.primary, marginBottom: spacing.md }}>
-            Children's Privacy
+            Children&apos;s Privacy
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed }}>
             DailyHush is intended for users 18 years and older. We do not knowingly collect information from children under 18. If you believe we have collected information from a child under 18, please contact us at hello@daily-hush.com.
@@ -266,7 +266,7 @@ export default function PrivacyPolicy() {
             Changes to This Policy
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed }}>
-            We may update this privacy policy from time to time. We'll notify you of significant changes via email or in-app notification. Continued use of DailyHush after changes means you accept the updated policy.
+            We may update this privacy policy from time to time. We&apos;ll notify you of significant changes via email or in-app notification. Continued use of DailyHush after changes means you accept the updated policy.
           </Text>
         </View>
 
@@ -276,7 +276,7 @@ export default function PrivacyPolicy() {
             Contact Us
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed }}>
-            If you have questions about this privacy policy or how we handle your data, please contact us at:{'\n\n'}
+            If you have questions about this privacy policy or how we handle your data, please contact us at:{ '\n\n'}
             <Text style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>hello@daily-hush.com</Text>
           </Text>
         </View>
@@ -284,3 +284,4 @@ export default function PrivacyPolicy() {
     </View>
   );
 }
+

@@ -1,0 +1,5 @@
+{
+  "compilerOptions": {
+    "types": ["https://deno.land/x/deno/cli/types/dts/index.d.ts"]
+  }
+}

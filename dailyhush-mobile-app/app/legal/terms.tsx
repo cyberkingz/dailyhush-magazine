@@ -93,7 +93,7 @@ export default function TermsOfService() {
             Agreement to Terms
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed }}>
-            By accessing or using DailyHush (the "App"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not use our App.
+            By accessing or using DailyHush (the &quot;App&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you disagree with any part of these terms, you may not use our App.
           </Text>
         </View>
 
@@ -107,10 +107,10 @@ export default function TermsOfService() {
           </Text>
         </View>
 
-        {/* What DailyHush Is (And Isn't) */}
+        {/* What DailyHush Is (And Isn&apos;t) */}
         <View style={{ marginBottom: spacing.xl, backgroundColor: colors.emerald[900] + '40', borderRadius: 16, padding: spacing.lg, borderWidth: 1, borderColor: colors.emerald[700] + '40' }}>
           <Text style={{ fontSize: typography.size.lg, fontWeight: typography.fontWeight.bold, color: colors.text.primary, marginBottom: spacing.md }}>
-            What DailyHush Is (And Isn't)
+            What DailyHush Is (And Isn&apos;t)
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed, marginBottom: spacing.md }}>
             DailyHush is a wellness tool designed to help you interrupt overthinking spirals. It is NOT:
@@ -205,7 +205,7 @@ export default function TermsOfService() {
             License to Use Your Data
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed }}>
-            You grant us a limited license to use your data solely to provide the App's features (like generating AI insights). We never use your data for advertising, never sell it, and never share it with third parties.
+            You grant us a limited license to use your data solely to provide the App&apos;s features (like generating AI insights). We never use your data for advertising, never sell it, and never share it with third parties.
           </Text>
         </View>
 
@@ -250,7 +250,7 @@ export default function TermsOfService() {
             Disclaimers
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed, marginBottom: spacing.md }}>
-            THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+            THE APP IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.
           </Text>
           <Text style={{ fontSize: typography.size.base, color: colors.text.secondary, lineHeight: typography.size.base * typography.lineHeight.relaxed, marginBottom: spacing.sm }}>
             We do not warrant that:

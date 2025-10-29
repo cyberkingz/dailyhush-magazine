@@ -44,7 +44,7 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#0A1612"
     },
     "assetBundlePatterns": ["**/*"],
@@ -52,6 +52,11 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.dailyhush.mobile",
       "buildNumber": "1.0.0",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#0A1612"
+      },
       "infoPlist": {
         "NSBluetoothAlwaysUsageDescription": "DailyHush needs Bluetooth to connect with your Shift necklace for guided breathing exercises.",
         "NSBluetoothPeripheralUsageDescription": "DailyHush needs Bluetooth to connect with your Shift necklace.",
@@ -71,6 +76,11 @@
     "android": {
       "package": "com.dailyhush.mobile",
       "versionCode": 1,
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#0A1612"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#064e3b"

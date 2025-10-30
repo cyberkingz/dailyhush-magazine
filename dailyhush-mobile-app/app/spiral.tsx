@@ -7,10 +7,20 @@
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect, useRef } from 'react';
-import { View, Pressable, Animated, TextInput, KeyboardAvoidingView, Platform, ImageBackground, StyleSheet } from 'react-native';
+import {
+  View,
+  Pressable,
+  Animated,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Check, Play, Pause, SkipForward } from 'lucide-react-native';
+import { Check, Play, Pause, SkipForward, ArrowLeft } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { useStore, useShiftDevice, useUser } from '@/store/useStore';
@@ -50,18 +60,27 @@ export default function SpiralInterrupt() {
   const breatheScale = useRef(new Animated.Value(1)).current;
 
   const protocolSteps = [
-    { duration: 5, text: "That conversation isn&apos;t happening right now.\nBut your body thinks it is.\nLet&apos;s interrupt this loop. Together." },
-    { duration: 5, text: "Notice where you are\nright now.\nNot in that argument. Here." },
-    { duration: 8, text: "Name 5 things\nyou can see..." },
-    { duration: 8, text: "4 things\nyou can hear..." },
-    { duration: 8, text: "3 things\nyou can touch..." },
-    { duration: 5, text: shiftDevice?.is_connected ? "Grab your\nShift necklace" : "Take a\ndeep breath" },
-    { duration: 10, text: "Breathe in slowly...\n1... 2... 3... 4..." },
-    { duration: 15, text: "Breathe out slowly...\n1... 2... 3... 4... 5..." },
-    { duration: 15, text: "Again...\nBreathe in... and hold..." },
-    { duration: 10, text: "And out...\nslowly... all the way..." },
-    { duration: 5, text: "This rumination?\nIt&apos;s a loop, not reality.\nYou&apos;re breaking the pattern." },
-    { duration: 6, text: "You just interrupted it.\nThis is the skill.\nYou&apos;re building it." },
+    {
+      duration: 5,
+      text: 'That conversation isn&apos;t happening right now.\nBut your body thinks it is.\nLet&apos;s interrupt this loop. Together.',
+    },
+    { duration: 5, text: 'Notice where you are\nright now.\nNot in that argument. Here.' },
+    { duration: 8, text: 'Name 5 things\nyou can see...' },
+    { duration: 8, text: '4 things\nyou can hear...' },
+    { duration: 8, text: '3 things\nyou can touch...' },
+    {
+      duration: 5,
+      text: shiftDevice?.is_connected ? 'Grab your\nShift necklace' : 'Take a\ndeep breath',
+    },
+    { duration: 10, text: 'Breathe in slowly...\n1... 2... 3... 4...' },
+    { duration: 15, text: 'Breathe out slowly...\n1... 2... 3... 4... 5...' },
+    { duration: 15, text: 'Again...\nBreathe in... and hold...' },
+    { duration: 10, text: 'And out...\nslowly... all the way...' },
+    {
+      duration: 5,
+      text: 'This rumination?\nIt&apos;s a loop, not reality.\nYou&apos;re breaking the pattern.',
+    },
+    { duration: 6, text: 'You just interrupted it.\nThis is the skill.\nYou&apos;re building it.' },
   ];
 
   const totalDuration = protocolSteps.reduce((sum, step) => sum + step.duration, 0);
@@ -174,9 +193,10 @@ export default function SpiralInterrupt() {
     // Save spiral log to database
     if (user?.user_id) {
       // Use custom trigger text if "Other" was selected and text was provided
-      const finalTrigger = selectedTrigger === 'Other' && customTriggerText.trim()
-        ? customTriggerText.trim()
-        : selectedTrigger || undefined;
+      const finalTrigger =
+        selectedTrigger === 'Other' && customTriggerText.trim()
+          ? customTriggerText.trim()
+          : selectedTrigger || undefined;
 
       const spiralLog: Partial<SpiralLog> = {
         user_id: user.user_id,
@@ -198,7 +218,7 @@ export default function SpiralInterrupt() {
             maxRetries: 3,
             onRetry: (attempt) => {
               console.log(`Retrying spiral log save (attempt ${attempt}/3)...`);
-            }
+            },
           }
         );
 
@@ -233,9 +253,9 @@ export default function SpiralInterrupt() {
   // Pre-check options - absolute emotional states
   const preCheckOptions = [
     { value: 1, emoji: '😟', label: 'Struggling' },
-    { value: 3, emoji: '😐', label: 'Anxious' },
-    { value: 5, emoji: '🙂', label: 'Okay' },
-    { value: 7, emoji: '😊', label: 'Calm' },
+    { value: 3, emoji: '😰', label: 'Anxious' },
+    { value: 5, emoji: '😐', label: 'Okay' },
+    { value: 7, emoji: '😌', label: 'Calm' },
   ];
 
   // Post-check options - relative comparison
@@ -264,91 +284,213 @@ export default function SpiralInterrupt() {
 
       {/* Pre-Check Stage */}
       {stage === 'pre-check' && (
-        <View className="flex-1 justify-center px-6">
-          <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-4">
-            We&apos;re Here
-          </Text>
-          <Text className="text-[#95B8A8] text-base text-center mb-12">
-            Before we break this together, how do you feel right now?
-          </Text>
-
-          <View className="flex-row flex-wrap justify-center gap-3 mb-12">
-            {preCheckOptions.map((option) => (
-              <Pressable
-                key={option.value}
-                onPress={() => {
-                  setPreFeelingRating(option.value);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }}
-                className="w-36 p-6 rounded-2xl items-center"
-                style={{
-                  backgroundColor: preFeelingRating === option.value ? '#40916C' : '#1A4D3C',
-                  borderWidth: 1,
-                  borderColor: preFeelingRating === option.value
-                    ? 'rgba(82, 183, 136, 0.5)'
-                    : 'rgba(64, 145, 108, 0.2)',
-                  ...(preFeelingRating === option.value ? {
-                    shadowColor: '#52B788',
-                    shadowOffset: { width: 0, height: 6 },
-                    shadowOpacity: 0.3,
-                    shadowRadius: 12,
-                    elevation: 6,
-                  } : {
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.1,
-                    shadowRadius: 4,
-                    elevation: 2,
-                  }),
-                }}
-              >
-                <Text className="text-5xl mb-2" style={{ lineHeight: 60, paddingTop: 4 }}>{option.emoji}</Text>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontFamily: 'Poppins_600SemiBold',
-                    color: preFeelingRating === option.value ? '#FFFFFF' : '#E8F4F0',
-                  }}
-                >
-                  {option.label}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-
+        <LinearGradient
+          colors={['#0A1612', '#0F1F1A', '#0A1612']}
+          locations={[0, 0.5, 1]}
+          style={{ flex: 1 }}>
+          {/* Top-left Navigation Arrow */}
           <Pressable
-            onPress={async () => {
-              setStage('protocol');
-              setIsPlaying(true);
-              await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-
-              // Start meditation sound
-              audio.play();
-            }}
-            className="items-center justify-center active:opacity-90"
+            onPress={() => router.back()}
+            accessibilityLabel="Go back"
+            hitSlop={12}
             style={{
-              backgroundColor: '#40916C',
-              height: 62,
-              borderRadius: 100,
-              shadowColor: '#52B788',
-              shadowOffset: { width: 0, height: 8 },
-              shadowOpacity: 0.4,
-              shadowRadius: 16,
-              elevation: 8,
-            }}
-          >
-            <Text
-              className="text-white"
-              style={{
-                fontSize: 18,
-                fontFamily: 'Poppins_600SemiBold',
-                letterSpacing: 0.3,
-              }}
-            >
-              Let&apos;s Break This (90 seconds)
-            </Text>
+              position: 'absolute',
+              top: 12 + (Platform.OS === 'ios' ? 36 : 12),
+              left: 12,
+              zIndex: 100,
+            }}>
+            <ArrowLeft size={28} color="#E8F4F0" strokeWidth={2.5} />
           </Pressable>
-        </View>
+          {/* Wrap the entire section in a single View */}
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: 24 }}
+            showsVerticalScrollIndicator={false}>
+            {/* Enhanced "We're Here" Section */}
+            <View className="mb-8 items-center">
+              {/* Calming icon */}
+              <View className="mb-6">
+                <View
+                  className="h-20 w-20 items-center justify-center rounded-full"
+                  style={{
+                    backgroundColor: 'rgba(64, 145, 108, 0.15)',
+                    borderWidth: 2,
+                    borderColor: 'rgba(82, 183, 136, 0.3)',
+                  }}>
+                  <Text className="text-4xl">🌿</Text>
+                </View>
+              </View>
+              {/* Enhanced title with better typography */}
+              <Text
+                className="mb-3 text-center text-[#E8F4F0]"
+                style={{
+                  fontSize: 32,
+                  fontFamily: 'Poppins_700Bold',
+                  letterSpacing: 0.5,
+                  lineHeight: 40,
+                }}>
+                We&apos;re Here
+              </Text>
+              {/* Enhanced subtitle with better spacing */}
+              <Text
+                className="px-4 text-center text-[#95B8A8]"
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Poppins_400Regular',
+                  lineHeight: 26,
+                  opacity: 0.9,
+                }}>
+                Before we break this together, how do you feel right now?
+              </Text>
+            </View>
+            {/* Enhanced emotion selection grid */}
+            <View className="w-full max-w-sm" style={{ alignSelf: 'center' }}>
+              <View style={{ width: '100%', alignSelf: 'center' }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    gap: 16,
+                    marginBottom: 16,
+                  }}>
+                  {preCheckOptions.slice(0, 2).map((option) => (
+                    <Pressable
+                      key={option.value}
+                      onPress={() => {
+                        setPreFeelingRating(option.value);
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      }}
+                      style={{
+                        width: 140,
+                        paddingVertical: 24,
+                        borderRadius: 18,
+                        alignItems: 'center',
+                        backgroundColor: preFeelingRating === option.value ? '#40916C' : '#1A4D3C',
+                        borderWidth: 1,
+                        borderColor:
+                          preFeelingRating === option.value
+                            ? 'rgba(82, 183, 136, 0.5)'
+                            : 'rgba(64, 145, 108, 0.2)',
+                        ...(preFeelingRating === option.value
+                          ? {
+                              shadowColor: '#52B788',
+                              shadowOffset: { width: 0, height: 6 },
+                              shadowOpacity: 0.3,
+                              shadowRadius: 12,
+                              elevation: 6,
+                            }
+                          : {
+                              shadowColor: '#000',
+                              shadowOffset: { width: 0, height: 2 },
+                              shadowOpacity: 0.1,
+                              shadowRadius: 4,
+                              elevation: 2,
+                            }),
+                      }}>
+                      <Text className="mb-2 text-4xl" style={{ lineHeight: 48 }}>
+                        {option.emoji}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontFamily: 'Poppins_600SemiBold',
+                          color: preFeelingRating === option.value ? '#FFFFFF' : '#E8F4F0',
+                          textAlign: 'center',
+                        }}>
+                        {option.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    gap: 16,
+                    marginBottom: 16,
+                  }}>
+                  {preCheckOptions.slice(2, 4).map((option) => (
+                    <Pressable
+                      key={option.value}
+                      onPress={() => {
+                        setPreFeelingRating(option.value);
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      }}
+                      style={{
+                        width: 140,
+                        paddingVertical: 24,
+                        borderRadius: 18,
+                        alignItems: 'center',
+                        backgroundColor: preFeelingRating === option.value ? '#40916C' : '#1A4D3C',
+                        borderWidth: 1,
+                        borderColor:
+                          preFeelingRating === option.value
+                            ? 'rgba(82, 183, 136, 0.5)'
+                            : 'rgba(64, 145, 108, 0.2)',
+                        ...(preFeelingRating === option.value
+                          ? {
+                              shadowColor: '#52B788',
+                              shadowOffset: { width: 0, height: 6 },
+                              shadowOpacity: 0.3,
+                              shadowRadius: 12,
+                              elevation: 6,
+                            }
+                          : {
+                              shadowColor: '#000',
+                              shadowOffset: { width: 0, height: 2 },
+                              shadowOpacity: 0.1,
+                              shadowRadius: 4,
+                              elevation: 2,
+                            }),
+                      }}>
+                      <Text className="mb-2 text-4xl" style={{ lineHeight: 48 }}>
+                        {option.emoji}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontFamily: 'Poppins_600SemiBold',
+                          color: preFeelingRating === option.value ? '#FFFFFF' : '#E8F4F0',
+                          textAlign: 'center',
+                        }}>
+                        {option.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </View>
+            </View>
+            {/* Spacer between grid and CTA button: */}
+            <View style={{ height: 32 }} />
+            <Pressable
+              onPress={async () => {
+                setStage('protocol');
+                setIsPlaying(true);
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                audio.play();
+              }}
+              className="items-center justify-center active:opacity-90"
+              style={{
+                backgroundColor: '#40916C',
+                height: 62,
+                borderRadius: 100,
+                shadowColor: '#52B788',
+                shadowOffset: { width: 0, height: 8 },
+                shadowOpacity: 0.4,
+                shadowRadius: 16,
+                elevation: 8,
+              }}>
+              <Text
+                className="text-white"
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Poppins_600SemiBold',
+                  letterSpacing: 0.3,
+                }}>
+                Let&apos;s Break This (90 seconds)
+              </Text>
+            </Pressable>
+          </ScrollView>
+        </LinearGradient>
       )}
 
       {/* Protocol Running Stage */}
@@ -356,8 +498,7 @@ export default function SpiralInterrupt() {
         <ImageBackground
           source={require('@/assets/img/forest.png')}
           style={{ flex: 1 }}
-          resizeMode="cover"
-        >
+          resizeMode="cover">
           {/* Dark overlay to ensure text readability */}
           <View
             style={{
@@ -366,151 +507,149 @@ export default function SpiralInterrupt() {
               opacity: 0.85, // 85% dark overlay = 15% forest visibility
             }}
           />
-          <View className="flex-1 justify-between items-center px-6 py-12">
+          <View className="flex-1 items-center justify-between px-6 py-12">
             {/* Top Section - Countdown with Progress Ring */}
             <View className="items-center justify-center" style={{ height: 300 }}>
-            <View style={{ position: 'relative', width: 260, height: 260, justifyContent: 'center', alignItems: 'center' }}>
-              {/* Animated progress ring */}
-              <CountdownRing
-                size={260}
-                strokeWidth={8}
-                color="#40916C"
-                glowColor="#52B788"
-                progress={progress}
-              />
-
-              {/* Countdown text overlay */}
-              <Animated.View
+              <View
                 style={{
-                  position: 'absolute',
+                  position: 'relative',
+                  width: 260,
+                  height: 260,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  transform: [{ scale: breatheScale }],
-                }}
-              >
-                <Text className="text-[#E8F4F0] text-6xl font-bold tracking-wider">
-                  {timeRemaining}
-                </Text>
-                <Text className="text-[#95B8A8] text-sm font-normal mt-1">
-                  seconds
-                </Text>
-                {/* Step counter integrated below countdown */}
-                <Text className="text-[#95B8A8] text-xs font-medium mt-2">
-                  Step {currentStepIndex + 1} of {protocolSteps.length}
-                </Text>
-              </Animated.View>
-            </View>
-          </View>
+                }}>
+                {/* Animated progress ring */}
+                <CountdownRing
+                  size={260}
+                  strokeWidth={8}
+                  color="#40916C"
+                  glowColor="#52B788"
+                  progress={progress}
+                />
 
-          {/* Middle Section - Current Step Text */}
-          <View className="w-full px-2">
-            <View
-              className="bg-[#1A4D3C]/60 rounded-2xl p-6 min-h-28 justify-center border border-[#40916C]/30"
-              style={{
-                shadowColor: '#40916C',
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.15,
-                shadowRadius: 12,
-                elevation: 8,
-              }}
-            >
-              <Text className="text-[#E8F4F0] text-xl text-center leading-relaxed font-medium">
-                {protocolSteps[currentStepIndex]?.text}
-              </Text>
-            </View>
-          </View>
-
-          {/* Bottom Section - Controls */}
-          <View className="flex-row gap-3 w-full">
-            <Pressable
-              onPress={() => {
-                const newPlayingState = !isPlaying;
-                setIsPlaying(newPlayingState);
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-                // Pause/resume meditation sound
-                if (newPlayingState) {
-                  audio.play();
-                } else {
-                  audio.pause();
-                }
-              }}
-              className="flex-1 flex-row items-center justify-center active:opacity-90"
-              style={{
-                backgroundColor: '#1A4D3C',
-                height: 62,
-                borderRadius: 100,
-                borderWidth: 1,
-                borderColor: 'rgba(64, 145, 108, 0.3)',
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.15,
-                shadowRadius: 8,
-                elevation: 4,
-              }}
-            >
-              {isPlaying ? (
-                <>
-                  <Pause size={20} color="#E8F4F0" strokeWidth={2} />
-                  <Text
-                    className="text-[#E8F4F0] ml-2"
-                    style={{
-                      fontSize: 16,
-                      fontFamily: 'Poppins_600SemiBold',
-                      letterSpacing: 0.2,
-                    }}
-                  >
-                    Pause
+                {/* Countdown text overlay */}
+                <Animated.View
+                  style={{
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    transform: [{ scale: breatheScale }],
+                  }}>
+                  <Text className="text-6xl font-bold tracking-wider text-[#E8F4F0]">
+                    {timeRemaining}
                   </Text>
-                </>
-              ) : (
-                <>
-                  <Play size={20} color="#E8F4F0" strokeWidth={2} />
-                  <Text
-                    className="text-[#E8F4F0] ml-2"
-                    style={{
-                      fontSize: 16,
-                      fontFamily: 'Poppins_600SemiBold',
-                      letterSpacing: 0.2,
-                    }}
-                  >
-                    Resume
+                  <Text className="mt-1 text-sm font-normal text-[#95B8A8]">seconds</Text>
+                  {/* Step counter integrated below countdown */}
+                  <Text className="mt-2 text-xs font-medium text-[#95B8A8]">
+                    Step {currentStepIndex + 1} of {protocolSteps.length}
                   </Text>
-                </>
-              )}
-            </Pressable>
+                </Animated.View>
+              </View>
+            </View>
 
-            <Pressable
-              onPress={() => {
-                setStage('post-check');
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-                // Stop meditation sound when skipping
-                audio.stop();
-              }}
-              className="flex-1 flex-row items-center justify-center active:opacity-90"
-              style={{
-                backgroundColor: 'transparent',
-                height: 62,
-                borderRadius: 100,
-                borderWidth: 2,
-                borderColor: '#1A4D3C',
-              }}
-            >
-              <SkipForward size={20} color="#95B8A8" strokeWidth={2} />
-              <Text
-                className="ml-2"
+            {/* Middle Section - Current Step Text */}
+            <View className="w-full px-2">
+              <View
+                className="min-h-28 justify-center rounded-2xl border border-[#40916C]/30 bg-[#1A4D3C]/60 p-6"
                 style={{
-                  fontSize: 16,
-                  fontFamily: 'Poppins_600SemiBold',
-                  letterSpacing: 0.2,
-                  color: '#95B8A8',
+                  shadowColor: '#40916C',
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowOpacity: 0.15,
+                  shadowRadius: 12,
+                  elevation: 8,
+                }}>
+                <Text className="text-center text-xl font-medium leading-relaxed text-[#E8F4F0]">
+                  {protocolSteps[currentStepIndex]?.text}
+                </Text>
+              </View>
+            </View>
+
+            {/* Bottom Section - Controls */}
+            <View className="w-full flex-row gap-3">
+              <Pressable
+                onPress={() => {
+                  const newPlayingState = !isPlaying;
+                  setIsPlaying(newPlayingState);
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                  // Pause/resume meditation sound
+                  if (newPlayingState) {
+                    audio.play();
+                  } else {
+                    audio.pause();
+                  }
                 }}
-              >
-                Skip
-              </Text>
-            </Pressable>
-          </View>
+                className="flex-1 flex-row items-center justify-center active:opacity-90"
+                style={{
+                  backgroundColor: '#1A4D3C',
+                  height: 62,
+                  borderRadius: 100,
+                  borderWidth: 1,
+                  borderColor: 'rgba(64, 145, 108, 0.3)',
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.15,
+                  shadowRadius: 8,
+                  elevation: 4,
+                }}>
+                {isPlaying ? (
+                  <>
+                    <Pause size={20} color="#E8F4F0" strokeWidth={2} />
+                    <Text
+                      className="ml-2 text-[#E8F4F0]"
+                      style={{
+                        fontSize: 16,
+                        fontFamily: 'Poppins_600SemiBold',
+                        letterSpacing: 0.2,
+                      }}>
+                      Pause
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Play size={20} color="#E8F4F0" strokeWidth={2} />
+                    <Text
+                      className="ml-2 text-[#E8F4F0]"
+                      style={{
+                        fontSize: 16,
+                        fontFamily: 'Poppins_600SemiBold',
+                        letterSpacing: 0.2,
+                      }}>
+                      Resume
+                    </Text>
+                  </>
+                )}
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  setStage('post-check');
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                  // Stop meditation sound when skipping
+                  audio.stop();
+                }}
+                className="flex-1 flex-row items-center justify-center active:opacity-90"
+                style={{
+                  backgroundColor: 'transparent',
+                  height: 62,
+                  borderRadius: 100,
+                  borderWidth: 2,
+                  borderColor: '#1A4D3C',
+                }}>
+                <SkipForward size={20} color="#95B8A8" strokeWidth={2} />
+                <Text
+                  className="ml-2"
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Poppins_600SemiBold',
+                    letterSpacing: 0.2,
+                    color: '#95B8A8',
+                  }}>
+                  Skip
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </ImageBackground>
       )}
@@ -520,28 +659,27 @@ export default function SpiralInterrupt() {
         <LinearGradient
           colors={['#0A1612', '#0A1612', '#0A1612']}
           locations={[0, 0.5, 1]}
-          style={{ flex: 1 }}
-        >
+          style={{ flex: 1 }}>
           <View className="flex-1 px-6 pt-16">
             <View>
               <View className="mb-1 self-center">
                 <SuccessRipple size={56} />
               </View>
 
-              <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-2">
+              <Text className="mb-2 text-center text-2xl font-bold text-[#E8F4F0]">
                 You Just Interrupted the Loop
               </Text>
-              <Text className="text-[#95B8A8] text-base text-center mb-1 leading-relaxed">
+              <Text className="mb-1 text-center text-base leading-relaxed text-[#95B8A8]">
                 That pattern wanted to run for 72 hours.
               </Text>
-              <Text className="text-[#95B8A8] text-base text-center mb-1 leading-relaxed">
+              <Text className="mb-1 text-center text-base leading-relaxed text-[#95B8A8]">
                 You stopped it in 90 seconds.
               </Text>
-              <Text className="text-[#95B8A8] text-sm text-center mb-5 leading-relaxed">
+              <Text className="mb-5 text-center text-sm leading-relaxed text-[#95B8A8]">
                 How do you feel now?
               </Text>
 
-              <View className="flex-row flex-wrap justify-center gap-3 mb-6">
+              <View className="mb-6 flex-row flex-wrap justify-center gap-3">
                 {postCheckOptions.map((option) => (
                   <Pressable
                     key={option.value}
@@ -549,36 +687,39 @@ export default function SpiralInterrupt() {
                       setPostFeelingRating(option.value);
                       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
-                    className="w-36 p-6 rounded-2xl items-center"
+                    className="w-36 items-center rounded-2xl p-6"
                     style={{
                       backgroundColor: postFeelingRating === option.value ? '#40916C' : '#1A4D3C',
                       borderWidth: 1,
-                      borderColor: postFeelingRating === option.value
-                        ? 'rgba(82, 183, 136, 0.5)'
-                        : 'rgba(64, 145, 108, 0.2)',
-                      ...(postFeelingRating === option.value ? {
-                        shadowColor: '#52B788',
-                        shadowOffset: { width: 0, height: 6 },
-                        shadowOpacity: 0.3,
-                        shadowRadius: 12,
-                        elevation: 6,
-                      } : {
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 4,
-                        elevation: 2,
-                      }),
-                    }}
-                  >
-                    <Text className="text-5xl mb-2" style={{ lineHeight: 60, paddingTop: 4 }}>{option.emoji}</Text>
+                      borderColor:
+                        postFeelingRating === option.value
+                          ? 'rgba(82, 183, 136, 0.5)'
+                          : 'rgba(64, 145, 108, 0.2)',
+                      ...(postFeelingRating === option.value
+                        ? {
+                            shadowColor: '#52B788',
+                            shadowOffset: { width: 0, height: 6 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 12,
+                            elevation: 6,
+                          }
+                        : {
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 4,
+                            elevation: 2,
+                          }),
+                    }}>
+                    <Text className="mb-2 text-5xl" style={{ lineHeight: 60, paddingTop: 4 }}>
+                      {option.emoji}
+                    </Text>
                     <Text
                       style={{
                         fontSize: 16,
                         fontFamily: 'Poppins_600SemiBold',
                         color: postFeelingRating === option.value ? '#FFFFFF' : '#E8F4F0',
-                      }}
-                    >
+                      }}>
                       {option.label}
                     </Text>
                   </Pressable>
@@ -597,30 +738,28 @@ export default function SpiralInterrupt() {
                 disabled={!postFeelingRating}
                 className="items-center justify-center"
                 style={{
-                backgroundColor: postFeelingRating ? '#40916C' : '#1A2E26',
-                height: 62,
-                borderRadius: 100,
-                opacity: postFeelingRating ? 1 : 0.5,
-                ...(postFeelingRating && {
-                  shadowColor: '#52B788',
-                  shadowOffset: { width: 0, height: 8 },
-                  shadowOpacity: 0.4,
-                  shadowRadius: 16,
-                  elevation: 8,
-                }),
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: 'Poppins_600SemiBold',
-                  letterSpacing: 0.3,
-                  color: postFeelingRating ? '#FFFFFF' : '#95B8A8',
-                }}
-              >
-                Continue
-              </Text>
-            </Pressable>
+                  backgroundColor: postFeelingRating ? '#40916C' : '#1A2E26',
+                  height: 62,
+                  borderRadius: 100,
+                  opacity: postFeelingRating ? 1 : 0.5,
+                  ...(postFeelingRating && {
+                    shadowColor: '#52B788',
+                    shadowOffset: { width: 0, height: 8 },
+                    shadowOpacity: 0.4,
+                    shadowRadius: 16,
+                    elevation: 8,
+                  }),
+                }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontFamily: 'Poppins_600SemiBold',
+                    letterSpacing: 0.3,
+                    color: postFeelingRating ? '#FFFFFF' : '#95B8A8',
+                  }}>
+                  Continue
+                </Text>
+              </Pressable>
             </View>
           </View>
         </LinearGradient>
@@ -631,22 +770,20 @@ export default function SpiralInterrupt() {
         <LinearGradient
           colors={['#0A1612', '#0A1612', '#0A1612']}
           locations={[0, 0.5, 1]}
-          style={{ flex: 1 }}
-        >
+          style={{ flex: 1 }}>
           <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={0}
-          >
+            keyboardVerticalOffset={0}>
             <View className="flex-1 justify-center px-6">
-              <Text className="text-[#E8F4F0] text-2xl font-bold mb-4">
+              <Text className="mb-4 text-2xl font-bold text-[#E8F4F0]">
                 What triggered this loop?
               </Text>
-              <Text className="text-[#95B8A8] text-sm mb-8">
+              <Text className="mb-8 text-sm text-[#95B8A8]">
                 Optional - but knowing your patterns helps us help you better
               </Text>
 
-              <View className="gap-3 mb-6">
+              <View className="mb-6 gap-3">
                 {commonTriggers.map((trigger) => (
                   <Pressable
                     key={trigger}
@@ -657,36 +794,38 @@ export default function SpiralInterrupt() {
                       }
                       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
-                    className="p-4 rounded-2xl"
+                    className="rounded-2xl p-4"
                     style={{
                       backgroundColor: selectedTrigger === trigger ? '#40916C' : '#1A4D3C',
                       borderWidth: 1,
-                      borderColor: selectedTrigger === trigger
-                        ? 'rgba(82, 183, 136, 0.5)'
-                        : 'rgba(64, 145, 108, 0.2)',
-                      ...(selectedTrigger === trigger ? {
-                        shadowColor: '#52B788',
-                        shadowOffset: { width: 0, height: 4 },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 10,
-                        elevation: 5,
-                      } : {
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 4,
-                        elevation: 2,
-                      }),
-                    }}
-                  >
+                      borderColor:
+                        selectedTrigger === trigger
+                          ? 'rgba(82, 183, 136, 0.5)'
+                          : 'rgba(64, 145, 108, 0.2)',
+                      ...(selectedTrigger === trigger
+                        ? {
+                            shadowColor: '#52B788',
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 10,
+                            elevation: 5,
+                          }
+                        : {
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 4,
+                            elevation: 2,
+                          }),
+                    }}>
                     <Text
                       style={{
                         fontSize: 16,
-                        fontFamily: selectedTrigger === trigger ? 'Poppins_600SemiBold' : 'Inter_400Regular',
+                        fontFamily:
+                          selectedTrigger === trigger ? 'Poppins_600SemiBold' : 'Inter_400Regular',
                         color: selectedTrigger === trigger ? '#FFFFFF' : '#E8F4F0',
                         letterSpacing: 0.2,
-                      }}
-                    >
+                      }}>
                       {trigger}
                     </Text>
                   </Pressable>
@@ -696,7 +835,7 @@ export default function SpiralInterrupt() {
               {/* Custom Trigger Text Input - Only show when "Other" is selected */}
               {selectedTrigger === 'Other' && (
                 <View className="mb-6">
-                  <Text className="text-[#95B8A8] text-sm mb-3">
+                  <Text className="mb-3 text-sm text-[#95B8A8]">
                     What specifically triggered it?
                   </Text>
                   <TextInput
@@ -719,7 +858,7 @@ export default function SpiralInterrupt() {
                     returnKeyType="done"
                     blurOnSubmit
                   />
-                  <Text className="text-[#95B8A8] text-xs mt-2 text-right">
+                  <Text className="mt-2 text-right text-xs text-[#95B8A8]">
                     {customTriggerText.length}/200
                   </Text>
                 </View>
@@ -739,16 +878,14 @@ export default function SpiralInterrupt() {
                   shadowOpacity: 0.4,
                   shadowRadius: 16,
                   elevation: 8,
-                }}
-              >
+                }}>
                 <Text
                   style={{
                     color: '#FFFFFF',
                     fontSize: 18,
                     fontFamily: 'Poppins_600SemiBold',
                     letterSpacing: 0.3,
-                  }}
-                >
+                  }}>
                   Done
                 </Text>
               </Pressable>

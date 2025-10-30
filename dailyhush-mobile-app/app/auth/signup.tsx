@@ -4,8 +4,7 @@
  * Simplified validation for 55-70 demographic
  */
 
-import { useRouter } from 'expo-router';
-import { Link } from 'expo-router';
+import { useRouter , Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {

@@ -8,16 +8,16 @@ import FinalCTASection from '../components/home/FinalCTASection'
 import { HomeBlogSection } from '@/components/home/HomeBlogSection'
 import { homeBlogPosts } from '@/data/homeBlogPosts'
 import { ReviewsSection } from '@/components/product/common/ReviewsSection'
-import { shiftProductReviews } from '@/data/shiftProductReviews'
+import { quizReviews } from '@/data/quizReviews'
 
 export default function Home() {
   useEffect(() => { document.title = 'DailyHush — Stop Overthinking & Quiet Your Mind' }, [])
 
   // Home page does not feature a specific edition anymore
 
-  const homepageReviews = shiftProductReviews.slice(0, 6)
-  const homepageAverageRating = 4.8
-  const homepageTotalReviews = 1800
+  const homepageReviews = quizReviews.slice(0, 6)
+  const homepageAverageRating = 4.9
+  const homepageTotalReviews = 12700
 
   return (
     <>

@@ -32,7 +32,6 @@ const articleContent: Record<string, BlogArticle> = {
     date: 'Jan 18, 2025',
     readTime: '9 min read',
     imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&h=900&q=80',
-    intentLabel: 'Top of Funnel',
     keywords: ['stop overthinking', 'loop method', 'dailyhush'],
     seoDescription: 'Learn the DailyHush method for stopping overthinking by targeting the shame-driven loops that fire before conscious thought.',
     content: `
@@ -71,12 +70,12 @@ const articleContent: Record<string, BlogArticle> = {
       </div>
 
       <h2>What Happens After the Quiz</h2>
-      <p>The DailyHush funnel is intentional: discovery, diagnosis, protocol, practice.</p>
+      <p>The DailyHush method guides you from discovery to practice:</p>
       <ul>
-        <li><strong>Quiz:</strong> Names your loop so you stop fighting the wrong problem.</li>
-        <li><strong>Email SOS:</strong> Gives you a narrative (Anna's voice) and a body-first reset script.</li>
-        <li><strong>App:</strong> Walks you through guided F.I.R.E. reps and tracks nervous system patterns.</li>
-        <li><strong>Product:</strong> Provides The Shift + F.I.R.E. tools when you are ready for deeper immersion.</li>
+        <li><strong>Quiz Results:</strong> Names your loop so you stop fighting the wrong problem.</li>
+        <li><strong>Personalized Guidance:</strong> Receive a body-first reset script tailored to your loop type.</li>
+        <li><strong>DailyHush App:</strong> Practice guided F.I.R.E. protocols and track your progress.</li>
+        <li><strong>Tools & Support:</strong> Access The Shift and other resources when you're ready for deeper practice.</li>
       </ul>
 
       <blockquote>
@@ -95,7 +94,6 @@ const articleContent: Record<string, BlogArticle> = {
     date: 'Jan 11, 2025',
     readTime: '7 min read',
     imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&h=900&q=80',
-    intentLabel: 'Activation',
     keywords: ['stop ruminating', 'night rumination', 'fire protocol'],
     seoDescription: 'Break night rumination with the DailyHush 90-second F.I.R.E. reset designed for shame-driven loops.',
     content: `
@@ -153,7 +151,6 @@ const articleContent: Record<string, BlogArticle> = {
     date: 'Jan 9, 2025',
     readTime: '10 min read',
     imageUrl: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&h=900&q=80',
-    intentLabel: 'Middle of Funnel',
     keywords: ['fire protocol', 'nervous system reset', 'dailyhush research'],
     seoDescription: 'Explore the neuroscience that powers the DailyHush 90-second F.I.R.E. reset and why timing beats mindset.',
     content: `
@@ -209,7 +206,6 @@ const articleContent: Record<string, BlogArticle> = {
     date: 'Dec 18, 2024',
     readTime: '8 min read',
     imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&h=900&q=80',
-    intentLabel: 'Top of Funnel',
     keywords: ['perfectionism', 'loop types', 'shame spiral'],
     seoDescription: 'Perfectionism is a shame loop disguised as control. See the markers and break it with the DailyHush method.',
     content: `
@@ -257,7 +253,6 @@ const articleContent: Record<string, BlogArticle> = {
     date: 'Dec 11, 2024',
     readTime: '11 min read',
     imageUrl: 'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=1600&h=900&q=80',
-    intentLabel: 'Middle of Funnel',
     keywords: ['sleep loop', 'decision fatigue', 'social overthinking'],
     seoDescription: 'Map the four DailyHush loop types—sleep, decision, social, perfectionism—and match them to the right F.I.R.E. reset.',
     content: `
@@ -310,7 +305,6 @@ const articleContent: Record<string, BlogArticle> = {
     date: 'Nov 28, 2024',
     readTime: '9 min read',
     imageUrl: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1600&h=900&q=80',
-    intentLabel: 'Conversion',
     keywords: ['body reset', 'mindfulness', 'calm app alternative'],
     seoDescription: 'Mindfulness is awareness. The DailyHush Body Reset is interruption. Learn why anxious loopers need both—and which one to choose first.',
     content: `

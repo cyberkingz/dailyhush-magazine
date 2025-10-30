@@ -16,21 +16,21 @@ export type PostCardProps = {
   ctaHref?: string
 }
 
-export function PostCard({
-  title,
-  excerpt,
-  category,
-  author,
-  date,
-  readTime,
-  imageUrl,
-  slug,
-  href,
-  intentLabel,
-  keywords,
-  ctaLabel,
-  ctaHref,
-}: PostCardProps) {
+export function PostCard(props: PostCardProps) {
+  const {
+    title,
+    excerpt,
+    category,
+    author,
+    date,
+    readTime,
+    imageUrl,
+    slug,
+    href,
+    keywords,
+    ctaLabel,
+    ctaHref,
+  } = props
   const postSlug = slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
   const articleHref = href || `/blog/${postSlug}`
   const buttonHref = ctaHref || articleHref

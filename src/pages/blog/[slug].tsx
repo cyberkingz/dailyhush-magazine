@@ -143,7 +143,6 @@ export default function BlogDetail() {
                   readTime={related.readTime}
                   imageUrl={related.imageUrl}
                   slug={related.slug}
-                  intentLabel={related.intentLabel}
                   keywords={related.keywords}
                 />
               ))}

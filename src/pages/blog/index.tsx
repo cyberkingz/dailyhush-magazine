@@ -15,21 +15,14 @@ export default function BlogList() {
     return ['All', ...unique]
   }, [])
 
-  const intents = useMemo<FilterOption[]>(() => {
-    const unique = Array.from(new Set(blogArticlesList.map((article) => article.intentLabel).filter(Boolean)))
-    return unique.length ? (['All', ...unique] as FilterOption[]) : ['All']
-  }, [])
-
   const [activeCategory, setActiveCategory] = useState<FilterOption>('All')
-  const [activeIntent, setActiveIntent] = useState<FilterOption>('All')
 
   const filteredArticles = useMemo(() => {
     return blogArticlesList.filter((article) => {
       const matchesCategory = activeCategory === 'All' || article.category === activeCategory
-      const matchesIntent = activeIntent === 'All' || article.intentLabel === activeIntent
-      return matchesCategory && matchesIntent
+      return matchesCategory
     })
-  }, [activeCategory, activeIntent])
+  }, [activeCategory])
 
   return (
     <main className="relative overflow-hidden bg-gradient-to-b from-white via-emerald-50/50 to-amber-50/40 py-20">
@@ -68,39 +61,20 @@ export default function BlogList() {
                 Find articles by category or keyword to explore the topics that matter most to you.
               </p>
             </div>
-            <div className="flex flex-col gap-4 md:flex-row md:items-center">
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition ${
-                      activeCategory === category
-                        ? 'border-emerald-500 bg-emerald-500 text-white shadow'
-                        : 'border-emerald-200 bg-white/70 text-emerald-700 hover:border-emerald-300'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-              {intents.length > 1 && (
-                <div className="flex flex-wrap gap-2">
-                  {intents.map((intent) => (
-                    <button
-                      key={intent}
-                      onClick={() => setActiveIntent(intent)}
-                      className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition ${
-                        activeIntent === intent
-                          ? 'border-amber-500 bg-amber-500 text-white shadow'
-                          : 'border-amber-200 bg-white/70 text-amber-700 hover:border-amber-300'
-                      }`}
-                    >
-                      {intent}
-                    </button>
-                  ))}
-                </div>
-              )}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                    activeCategory === category
+                      ? 'border-emerald-500 bg-emerald-500 text-white shadow'
+                      : 'border-emerald-200 bg-white/70 text-emerald-700 hover:border-emerald-300'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
           </div>
         </section>
@@ -118,7 +92,6 @@ export default function BlogList() {
                 readTime={article.readTime}
                 imageUrl={article.imageUrl}
                 slug={article.slug}
-                intentLabel={article.intentLabel}
                 keywords={article.keywords}
               />
             ))}

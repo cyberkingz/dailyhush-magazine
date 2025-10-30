@@ -7,7 +7,6 @@ export type BlogArticle = {
   readTime: string
   imageUrl: string
   content: string
-  intentLabel?: string
   keywords?: string[]
   seoDescription?: string
 }
@@ -178,7 +177,7 @@ const articleContent: Record<string, BlogArticle> = {
       <ul>
         <li>82% reported rumination drops within 7 days of practicing F.I.R.E. twice daily.</li>
         <li>71% slept through the night within two weeks when pairing F.I.R.E. with the Loop Quiz guidance.</li>
-        <li>68% reduced Sunday dread by pairing the protocol with the Email SOS ritual.</li>
+        <li>68% reduced Sunday dread by pairing the protocol with their daily practice routine.</li>
       </ul>
 
       <div class="not-prose mt-10">
@@ -285,13 +284,13 @@ const articleContent: Record<string, BlogArticle> = {
         <p class="mt-2 text-sm text-emerald-700/80">Take the DailyHush Quiz to get your dominant loop, secondary loop, and the resets that neutralize both.</p>
       </div>
 
-      <h2>Loop Stacking & Funnel Strategy</h2>
-      <p>Each loop aligns with an intentional funnel moment:</p>
+      <h2>Matching Loops to Your Practice</h2>
+      <p>Each loop type pairs with specific DailyHush tools:</p>
       <ul>
-        <li><strong>Sleep Loop →</strong> Quiz entry point, then Email SOS sequence with bedtime scripts.</li>
+        <li><strong>Sleep Loop →</strong> Take the quiz to identify your pattern, then use bedtime-specific F.I.R.E. protocols.</li>
         <li><strong>Decision Loop →</strong> App-based resets that pair with daily planning.</li>
-        <li><strong>Social Loop →</strong> Community prompts plus in-app debrief audios.</li>
-        <li><strong>Perfectionism Loop →</strong> Product pathway (The Shift + F.I.R.E.) for deeper rewiring.</li>
+        <li><strong>Social Loop →</strong> Community support plus in-app debrief audios.</li>
+        <li><strong>Perfectionism Loop →</strong> Deeper rewiring with The Shift + F.I.R.E. tools.</li>
       </ul>
 
       <p>When you treat loops like categories, you can forecast triggers and eliminate the shame hangover before it starts.</p>

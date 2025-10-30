@@ -10,7 +10,6 @@ export type PostCardProps = {
   imageUrl?: string
   slug?: string
   href?: string
-  intentLabel?: string
   keywords?: string[]
   ctaLabel?: string
   ctaHref?: string

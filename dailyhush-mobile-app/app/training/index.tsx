@@ -6,6 +6,7 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Pressable, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Check, Lock, Clock } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
@@ -66,6 +67,7 @@ function ModuleCard({ module, title, description, duration, completed, locked, o
 export default function Training() {
   const router = useRouter();
   const user = useUser();
+  const insets = useSafeAreaInsets();
 
   const fireProgress = user?.fire_progress || {
     focus: false,
@@ -127,7 +129,7 @@ export default function Training() {
         contentContainerStyle={{
           paddingHorizontal: spacing.lg,
           paddingTop: spacing.lg,
-          paddingBottom: spacing['3xl'],
+          paddingBottom: 72 + insets.bottom,
         }}
         showsVerticalScrollIndicator={false}
       >

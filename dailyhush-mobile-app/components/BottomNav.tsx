@@ -26,6 +26,25 @@ const NAV_ITEMS = [
 const HIGHLIGHT_COLOR = '#7dd3c0';
 const NAV_EASING = Easing.bezier(0.4, 0.0, 0.2, 1);
 
+// Design tokens
+const SPACING = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+};
+
+const TOUCH_TARGETS = {
+  tab: {
+    minWidth: 60,
+    maxWidth: 80,
+  },
+  centerButton: 40,
+  centerWrapper: 64,
+};
+
 function CenterButton({
   onPress,
   reduceMotion = false,
@@ -36,8 +55,7 @@ function CenterButton({
   const [isPressed, setIsPressed] = useState(false);
 
   return (
-    <View style={styles.centerContainer}>
-      <Pressable
+    <Pressable
         onPress={async () => {
           setIsPressed(true);
           await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -49,7 +67,7 @@ function CenterButton({
         accessibilityRole="button"
         style={({ pressed }) => [
           styles.centerPressable,
-          pressed && { transform: [{ scale: 0.96 }] },
+          pressed && { transform: [{ scale: 0.95 }] },
         ]}>
         {/* Outer pulsing ring */}
         <MotiView
@@ -142,11 +160,10 @@ function CenterButton({
               easing: Easing.out(Easing.cubic),
             }}
             style={styles.centerIcon}>
-            <Shield size={24} color={colors.background.primary} strokeWidth={2.5} />
+            <Shield size={20} color={colors.background.primary} strokeWidth={2.5} />
           </MotiView>
         </MotiView>
       </Pressable>
-    </View>
   );
 }
 
@@ -216,7 +233,7 @@ function TabButton({ item, isActive, isClicked, clickCycle, onPress, reduceMotio
               shadowOpacity: { duration: reduceMotion ? 0 : 600, easing: NAV_EASING },
             }}>
             <Icon
-              size={24}
+              size={23}
               color={isActive ? HIGHLIGHT_COLOR : '#6B7280'}
               strokeWidth={isActive ? 2.5 : 2}
             />
@@ -289,11 +306,14 @@ export function BottomNav({ hideOnPaths = ['/spiral', '/onboarding'] }: BottomNa
           style={styles.gradientOverlay}
         />
       </View>
-      <CenterButton onPress={() => router.push('/spiral')} reduceMotion={reduceMotion} />
       <View style={styles.navInner}>
         {NAV_ITEMS.map((item) => {
           if (item.id === 'center' || !item.icon) {
-            return <View key={item.id} style={styles.centerSpacer} />;
+            return (
+              <View key={item.id} style={styles.centerButtonWrapper}>
+                <CenterButton onPress={() => router.push('/spiral')} reduceMotion={reduceMotion} />
+              </View>
+            );
           }
           const isActive = displayActive === item.id;
           const isClicked = clickedTab === item.id;
@@ -356,34 +376,31 @@ const styles = StyleSheet.create({
   },
   navInner: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingTop: 14,
-    paddingBottom: 12,
-    position: 'relative',
+    justifyContent: 'space-between',
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.lg,
+    paddingBottom: SPACING.md,
+    gap: SPACING.sm,
   },
-  centerSpacer: {
-    width: 70,
-  },
-  centerContainer: {
-    position: 'absolute',
-    top: 10,
-    left: '50%',
-    marginLeft: -22,
-    zIndex: 60,
+  centerButtonWrapper: {
+    width: TOUCH_TARGETS.centerWrapper,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -SPACING.sm, // -8px (accounting for gradient ring)
+    marginHorizontal: SPACING.xs,
   },
   centerPressable: {
-    width: 44,
-    height: 44,
+    width: TOUCH_TARGETS.centerButton,
+    height: TOUCH_TARGETS.centerButton,
     alignItems: 'center',
     justifyContent: 'center',
   },
   centerOuterRing: {
     position: 'absolute',
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: TOUCH_TARGETS.centerButton + 8,
+    height: TOUCH_TARGETS.centerButton + 8,
+    borderRadius: (TOUCH_TARGETS.centerButton + 8) / 2,
     borderWidth: 2,
     borderColor: HIGHLIGHT_COLOR,
     opacity: 0.4,
@@ -393,13 +410,13 @@ const styles = StyleSheet.create({
     shadowColor: HIGHLIGHT_COLOR,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
-    shadowRadius: 8,
+    shadowRadius: 10,
   },
   centerGlowPrimary: {
     position: 'absolute',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: TOUCH_TARGETS.centerButton,
+    height: TOUCH_TARGETS.centerButton,
+    borderRadius: TOUCH_TARGETS.centerButton / 2,
     backgroundColor: HIGHLIGHT_COLOR,
     opacity: 0.3,
     pointerEvents: 'none',
@@ -408,9 +425,9 @@ const styles = StyleSheet.create({
   },
   centerGlowSecondary: {
     position: 'absolute',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: TOUCH_TARGETS.centerButton,
+    height: TOUCH_TARGETS.centerButton,
+    borderRadius: TOUCH_TARGETS.centerButton / 2,
     backgroundColor: HIGHLIGHT_COLOR,
     opacity: 0.2,
     pointerEvents: 'none',
@@ -419,9 +436,9 @@ const styles = StyleSheet.create({
   },
   centerButton: {
     position: 'relative',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: TOUCH_TARGETS.centerButton,
+    height: TOUCH_TARGETS.centerButton,
+    borderRadius: TOUCH_TARGETS.centerButton / 2,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
@@ -429,12 +446,12 @@ const styles = StyleSheet.create({
   },
   centerButtonShadowIOS: {
     shadowColor: HIGHLIGHT_COLOR,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.6,
-    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.7,
+    shadowRadius: 14,
   },
   centerButtonShadowAndroid: {
-    elevation: 8,
+    elevation: 10,
   },
   centerGlowOverlay: {
     position: 'absolute',
@@ -442,7 +459,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    borderRadius: 22,
+    borderRadius: TOUCH_TARGETS.centerButton / 2,
     backgroundColor: 'rgba(255,255,255,0.2)',
     pointerEvents: 'none',
   },
@@ -452,12 +469,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabPressable: {
+    flex: 1,
+    minWidth: TOUCH_TARGETS.tab.minWidth,
+    maxWidth: TOUCH_TARGETS.tab.maxWidth,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 60,
-    paddingVertical: 4,
-    paddingHorizontal: 4,
-    position: 'relative',
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.sm,
   },
   tabWrapper: {
     alignItems: 'center',
@@ -502,7 +520,9 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   tabLabel: {
-    fontSize: 10,
-    marginTop: 3,
+    fontSize: 11,
+    marginTop: SPACING.xs,
+    letterSpacing: 0.2,
+    lineHeight: 14,
   },
 });

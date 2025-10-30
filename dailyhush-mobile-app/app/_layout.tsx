@@ -225,7 +225,6 @@ export default function Layout() {
         '/spiral',
         '/onboarding',
         '/settings',
-        '/training',
         '/auth',
         '/faq',
         '/legal/privacy',

@@ -18,9 +18,11 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Check, Play, Pause, SkipForward, ArrowLeft } from 'lucide-react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Text } from '@/components/ui/text';
 import { useStore, useShiftDevice, useUser } from '@/store/useStore';
@@ -40,6 +42,7 @@ export default function SpiralInterrupt() {
   const user = useUser();
   const shiftDevice = useShiftDevice();
   const { setSpiraling } = useStore();
+  const insets = useSafeAreaInsets();
 
   // Audio for meditation sound
   const audio = useAudio();
@@ -250,20 +253,20 @@ export default function SpiralInterrupt() {
     }
   };
 
-  // Pre-check options - absolute emotional states
+  // Pre-check options - absolute emotional states (animated WebP)
   const preCheckOptions = [
-    { value: 1, emoji: '😟', label: 'Struggling' },
-    { value: 3, emoji: '😰', label: 'Anxious' },
-    { value: 5, emoji: '😐', label: 'Okay' },
-    { value: 7, emoji: '😌', label: 'Calm' },
+    { value: 1, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Frowning%20Face.webp', label: 'Struggling' },
+    { value: 3, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Anxious%20Face%20With%20Sweat.webp', label: 'Anxious' },
+    { value: 5, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp', label: 'Okay' },
+    { value: 7, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Face%20Exhaling.webp', label: 'Calm' },
   ];
 
-  // Post-check options - relative comparison
+  // Post-check options - relative comparison (animated WebP)
   const postCheckOptions = [
-    { value: 1, emoji: '😟', label: 'Worse' },
-    { value: 3, emoji: '😐', label: 'Same' },
-    { value: 5, emoji: '🙂', label: 'Better' },
-    { value: 7, emoji: '😊', label: 'Much Better' },
+    { value: 1, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Worried%20Face.webp', label: 'Worse' },
+    { value: 3, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp', label: 'Same' },
+    { value: 5, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Slightly%20Smiling%20Face.webp', label: 'Better' },
+    { value: 7, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20With%20Smiling%20Eyes.webp', label: 'Much Better' },
   ];
 
   const commonTriggers = [
@@ -288,22 +291,41 @@ export default function SpiralInterrupt() {
           colors={['#0A1612', '#0F1F1A', '#0A1612']}
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}>
-          {/* Top-left Navigation Arrow */}
-          <Pressable
-            onPress={() => router.back()}
-            accessibilityLabel="Go back"
-            hitSlop={12}
+          {/* Header */}
+          <View
             style={{
-              position: 'absolute',
-              top: 12 + (Platform.OS === 'ios' ? 36 : 12),
-              left: 12,
-              zIndex: 100,
+              paddingTop: insets.top + 8,
+              paddingBottom: 12,
+              paddingHorizontal: 20,
             }}>
-            <ArrowLeft size={28} color="#E8F4F0" strokeWidth={2.5} />
-          </Pressable>
-          {/* Wrap the entire section in a single View */}
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                router.back();
+              }}
+              accessibilityLabel="Go back"
+              accessibilityHint="Returns to the previous screen"
+              style={({ pressed }) => ({
+                width: 44,
+                height: 44,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 22,
+                backgroundColor: pressed
+                  ? 'rgba(64, 145, 108, 0.25)'
+                  : 'rgba(64, 145, 108, 0.15)',
+                borderWidth: 1,
+                borderColor: 'rgba(82, 183, 136, 0.3)',
+              })}>
+              <ArrowLeft size={20} color="#E8F4F0" strokeWidth={2.5} />
+            </Pressable>
+          </View>
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: 24 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingHorizontal: 24,
+              paddingBottom: insets.bottom + 24,
+            }}
             showsVerticalScrollIndicator={false}>
             {/* Enhanced "We're Here" Section */}
             <View className="mb-8 items-center">
@@ -386,9 +408,11 @@ export default function SpiralInterrupt() {
                               elevation: 2,
                             }),
                       }}>
-                      <Text className="mb-2 text-4xl" style={{ lineHeight: 48 }}>
-                        {option.emoji}
-                      </Text>
+                      <Image
+                        source={{ uri: option.emoji }}
+                        style={{ width: 48, height: 48, marginBottom: 8 }}
+                        contentFit="contain"
+                      />
                       <Text
                         style={{
                           fontSize: 14,
@@ -442,9 +466,11 @@ export default function SpiralInterrupt() {
                               elevation: 2,
                             }),
                       }}>
-                      <Text className="mb-2 text-4xl" style={{ lineHeight: 48 }}>
-                        {option.emoji}
-                      </Text>
+                      <Image
+                        source={{ uri: option.emoji }}
+                        style={{ width: 48, height: 48, marginBottom: 8 }}
+                        contentFit="contain"
+                      />
                       <Text
                         style={{
                           fontSize: 14,
@@ -711,9 +737,11 @@ export default function SpiralInterrupt() {
                             elevation: 2,
                           }),
                     }}>
-                    <Text className="mb-2 text-5xl" style={{ lineHeight: 60, paddingTop: 4 }}>
-                      {option.emoji}
-                    </Text>
+                    <Image
+                      source={{ uri: option.emoji }}
+                      style={{ width: 56, height: 56, marginBottom: 8 }}
+                      contentFit="contain"
+                    />
                     <Text
                       style={{
                         fontSize: 16,

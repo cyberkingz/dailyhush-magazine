@@ -96,18 +96,14 @@ export default function ExecuteModule() {
   };
 
   const toggleRoutine = (routine: string) => {
-    setSelectedRoutines(prev =>
-      prev.includes(routine)
-        ? prev.filter(r => r !== routine)
-        : [...prev, routine]
+    setSelectedRoutines((prev) =>
+      prev.includes(routine) ? prev.filter((r) => r !== routine) : [...prev, routine]
     );
   };
 
   const toggleEnvironment = (change: string) => {
-    setSelectedEnvironment(prev =>
-      prev.includes(change)
-        ? prev.filter(c => c !== change)
-        : [...prev, change]
+    setSelectedEnvironment((prev) =>
+      prev.includes(change) ? prev.filter((c) => c !== change) : [...prev, change]
     );
   };
 
@@ -155,7 +151,6 @@ export default function ExecuteModule() {
           },
         });
       }, timing.debounce.save),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -164,7 +159,14 @@ export default function ExecuteModule() {
     if (isLoading || !user?.user_id) return;
 
     debouncedSave();
-  }, [currentScreen, selectedRoutines, selectedEnvironment, user?.user_id, isLoading, debouncedSave]);
+  }, [
+    currentScreen,
+    selectedRoutines,
+    selectedEnvironment,
+    user?.user_id,
+    isLoading,
+    debouncedSave,
+  ]);
 
   // Scroll to top when screen changes
   useEffect(() => {
@@ -182,7 +184,7 @@ export default function ExecuteModule() {
 
       {/* Header */}
       <View className="px-5 pb-3" style={{ paddingTop: insets.top + spacing.safeArea.top }}>
-        <View className="flex-row items-center justify-between mb-4">
+        <View className="mb-4 flex-row items-center justify-between">
           <Pressable onPress={handleBack} className="p-2 active:opacity-70">
             <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} />
           </Pressable>
@@ -204,16 +206,15 @@ export default function ExecuteModule() {
         className="flex-1"
         contentContainerStyle={{
           paddingHorizontal: spacing.lg,
-          paddingBottom: spacing["3xl"],
+          paddingBottom: spacing['3xl'],
         }}
         showsVerticalScrollIndicator={false}
         bounces={false}
-        overScrollMode="never"
-      >
+        overScrollMode="never">
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Your 30-Day Spiral Reduction Plan
             </Text>
 
@@ -228,11 +229,13 @@ You can reframe the shame (REFRAME).
 Now we build the system that makes this automatic."
             />
 
-            <KeyTakeaway message="Research shows it takes 21-30 days to build a new habit.
+            <KeyTakeaway
+              message="Research shows it takes 21-30 days to build a new habit.
 
-This module creates your 30-day plan to make rumination interruption your default response." />
+This module creates your 30-day plan to make rumination interruption your default response."
+            />
 
-            <Text className="text-[#95B8A8] text-base text-center italic">
+            <Text className="text-center text-base italic text-[#95B8A8]">
               Most people reduce rumination by 60-80% in 30 days.
             </Text>
           </View>
@@ -241,9 +244,7 @@ This module creates your 30-day plan to make rumination interruption your defaul
         {/* Screen 2: Habit Stacking */}
         {currentScreen === 'habit-stacking' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Habit Stacking
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Habit Stacking</Text>
 
             <ContentCard
               heading="The Formula"
@@ -255,11 +256,9 @@ After I brush my teeth (morning), I will do a 2-minute trigger check.
 After I close my laptop (evening), I will do 5 deep breaths."
             />
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
-                Why This Works:
-              </Text>
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">Why This Works:</Text>
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 Your brain already has grooves for existing habits.
                 {'\n\n'}
                 By stacking new habits on top, you use those existing grooves.
@@ -275,11 +274,9 @@ After I close my laptop (evening), I will do 5 deep breaths."
         {/* Screen 3: Routine */}
         {currentScreen === 'routine' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Daily Interrupt Routine
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Daily Interrupt Routine</Text>
 
-            <Text className="text-[#95B8A8] text-base">
+            <Text className="text-base text-[#95B8A8]">
               Choose the routines that fit YOUR schedule:
             </Text>
 
@@ -291,32 +288,27 @@ After I close my laptop (evening), I will do 5 deep breaths."
                     toggleRoutine(routine);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`rounded-2xl p-4 flex-row items-center ${
-                    selectedRoutines.includes(routine)
-                      ? 'bg-[#40916C]'
-                      : 'bg-[#1A4D3C]'
-                  }`}
-                >
+                  className={`flex-row items-center rounded-2xl p-4 ${
+                    selectedRoutines.includes(routine) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                  }`}>
                   <View
-                    className={`w-5 h-5 rounded border-2 mr-3 ${
+                    className={`mr-3 h-5 w-5 rounded border-2 ${
                       selectedRoutines.includes(routine)
                         ? 'border-white bg-white'
                         : 'border-[#95B8A8]'
-                    }`}
-                  >
+                    }`}>
                     {selectedRoutines.includes(routine) && (
                       <View className="flex-1 items-center justify-center">
-                        <View className="w-3 h-3 bg-[#40916C]" />
+                        <View className="h-3 w-3 bg-[#40916C]" />
                       </View>
                     )}
                   </View>
                   <Text
-                    className={`text-base flex-1 ${
+                    className={`flex-1 text-base ${
                       selectedRoutines.includes(routine)
-                        ? 'text-white font-semibold'
+                        ? 'font-semibold text-white'
                         : 'text-[#E8F4F0]'
-                    }`}
-                  >
+                    }`}>
                     {routine}
                   </Text>
                 </Pressable>
@@ -337,19 +329,21 @@ Evening = reflective (learn from the day)"
         {/* Screen 4: Environment */}
         {currentScreen === 'environment' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Trigger Environment Modification
             </Text>
 
-            <ContentCard body="You can't willpower your way through a bad environment.
+            <ContentCard
+              body="You can't willpower your way through a bad environment.
 
 If your phone wakes you at 3am with notifications, you'll ruminate.
 
 If you doom-scroll before bed, you'll ruminate.
 
-Change the environment, change the outcome." />
+Change the environment, change the outcome."
+            />
 
-            <Text className="text-[#95B8A8] text-base">
+            <Text className="text-base text-[#95B8A8]">
               Choose environment changes you'll commit to:
             </Text>
 
@@ -361,32 +355,27 @@ Change the environment, change the outcome." />
                     toggleEnvironment(change);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`rounded-2xl p-4 flex-row items-center ${
-                    selectedEnvironment.includes(change)
-                      ? 'bg-[#40916C]'
-                      : 'bg-[#1A4D3C]'
-                  }`}
-                >
+                  className={`flex-row items-center rounded-2xl p-4 ${
+                    selectedEnvironment.includes(change) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                  }`}>
                   <View
-                    className={`w-5 h-5 rounded border-2 mr-3 ${
+                    className={`mr-3 h-5 w-5 rounded border-2 ${
                       selectedEnvironment.includes(change)
                         ? 'border-white bg-white'
                         : 'border-[#95B8A8]'
-                    }`}
-                  >
+                    }`}>
                     {selectedEnvironment.includes(change) && (
                       <View className="flex-1 items-center justify-center">
-                        <View className="w-3 h-3 bg-[#40916C]" />
+                        <View className="h-3 w-3 bg-[#40916C]" />
                       </View>
                     )}
                   </View>
                   <Text
-                    className={`text-base flex-1 ${
+                    className={`flex-1 text-base ${
                       selectedEnvironment.includes(change)
-                        ? 'text-white font-semibold'
+                        ? 'font-semibold text-white'
                         : 'text-[#E8F4F0]'
-                    }`}
-                  >
+                    }`}>
                     {change}
                   </Text>
                 </Pressable>
@@ -398,9 +387,7 @@ Change the environment, change the outcome." />
         {/* Screen 5: Accountability */}
         {currentScreen === 'accountability' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Accountability System
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Accountability System</Text>
 
             <ContentCard
               heading="Why Accountability Matters"
@@ -411,11 +398,11 @@ Not because someone is judging you.
 Because having a witness makes the goal real."
             />
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">
                 Choose Your System:
               </Text>
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 Option 1: DailyHush streak tracking (built-in)
                 {'\n\n'}
                 Option 2: Weekly check-ins with a friend
@@ -426,18 +413,18 @@ Because having a witness makes the goal real."
               </Text>
             </View>
 
-            <KeyTakeaway message="Pick ONE accountability method and commit to 30 days.
+            <KeyTakeaway
+              message="Pick ONE accountability method and commit to 30 days.
 
-That's all. Just 30 days." />
+That's all. Just 30 days."
+            />
           </View>
         )}
 
         {/* Screen 6: Tracking */}
         {currentScreen === 'tracking' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Progress Tracking
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Progress Tracking</Text>
 
             <ContentCard
               icon={<Calendar size={24} color="#52B788" strokeWidth={2} />}
@@ -449,11 +436,11 @@ That's all. Just 30 days." />
 3. Average Duration: How long did spirals last?"
             />
 
-            <View className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#40916C]/20">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
+            <View className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">
                 What Success Looks Like:
               </Text>
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 Week 1: You're noticing spirals (awareness)
                 {'\n\n'}
                 Week 2: You're catching 30-40% of them
@@ -464,7 +451,7 @@ That's all. Just 30 days." />
               </Text>
             </View>
 
-            <Text className="text-[#95B8A8] text-base text-center italic">
+            <Text className="text-center text-base italic text-[#95B8A8]">
               DailyHush tracks this automatically. Just use the app daily.
             </Text>
           </View>
@@ -473,34 +460,24 @@ That's all. Just 30 days." />
         {/* Screen 7: Plan Summary */}
         {currentScreen === 'plan-summary' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Your 30-Day Plan
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Your 30-Day Plan</Text>
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-lg font-semibold mb-4">
-                Plan Summary
-              </Text>
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-4 text-lg font-semibold text-[#E8F4F0]">Plan Summary</Text>
 
               <View className="gap-4">
                 <View>
-                  <Text className="text-[#95B8A8] text-sm mb-1">
-                    Daily Routines:
-                  </Text>
-                  <Text className="text-[#E8F4F0] text-base">
-                    {selectedRoutines.length > 0
-                      ? selectedRoutines.join('\n')
-                      : 'None selected'}
+                  <Text className="mb-1 text-sm text-[#95B8A8]">Daily Routines:</Text>
+                  <Text className="text-base text-[#E8F4F0]">
+                    {selectedRoutines.length > 0 ? selectedRoutines.join('\n') : 'None selected'}
                   </Text>
                 </View>
 
                 <View className="h-px bg-[#40916C]/30" />
 
                 <View>
-                  <Text className="text-[#95B8A8] text-sm mb-1">
-                    Environment Changes:
-                  </Text>
-                  <Text className="text-[#E8F4F0] text-base">
+                  <Text className="mb-1 text-sm text-[#95B8A8]">Environment Changes:</Text>
+                  <Text className="text-base text-[#E8F4F0]">
                     {selectedEnvironment.length > 0
                       ? selectedEnvironment.join('\n')
                       : 'None selected'}
@@ -510,23 +487,21 @@ That's all. Just 30 days." />
                 <View className="h-px bg-[#40916C]/30" />
 
                 <View>
-                  <Text className="text-[#95B8A8] text-sm mb-1">
-                    Accountability:
-                  </Text>
-                  <Text className="text-[#E8F4F0] text-base">
-                    DailyHush streak tracking
-                  </Text>
+                  <Text className="mb-1 text-sm text-[#95B8A8]">Accountability:</Text>
+                  <Text className="text-base text-[#E8F4F0]">DailyHush streak tracking</Text>
                 </View>
               </View>
             </View>
 
-            <KeyTakeaway message="This is YOUR plan. Start tomorrow.
+            <KeyTakeaway
+              message="This is YOUR plan. Start tomorrow.
 
 Small, consistent action beats big plans you never execute.
 
-30 days. That's all." />
+30 days. That's all."
+            />
 
-            <Text className="text-[#E8F4F0] text-base text-center font-semibold">
+            <Text className="text-center text-base font-semibold text-[#E8F4F0]">
               You've got this.
             </Text>
           </View>
@@ -551,16 +526,17 @@ Small, consistent action beats big plans you never execute.
 
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
-        <View className="px-5" style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
+        <View
+          className="px-5"
+          style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
           <Pressable
             onPress={handleNext}
-            className="rounded-2xl flex-row items-center justify-center active:opacity-90"
+            className="flex-row items-center justify-center rounded-2xl active:opacity-90"
             style={{
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
-            }}
-          >
-            <Text className="text-lg font-semibold mr-2" style={{ color: colors.white }}>
+            }}>
+            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.white }}>
               Continue
             </Text>
             <ArrowRight size={20} color={colors.white} strokeWidth={2} />

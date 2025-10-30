@@ -47,9 +47,8 @@ export async function signInAnonymously(): Promise<AuthResult> {
 
     // Create user profile for anonymous user
     // This is required because fire_training_progress has a foreign key to user_profiles
-    const { error: profileError } = await supabase
-      .from('user_profiles')
-      .upsert({
+    const { error: profileError } = await supabase.from('user_profiles').upsert(
+      {
         user_id: data.user.id,
         email: '', // Anonymous users don't have email
         onboarding_completed: false, // They might complete onboarding later
@@ -64,9 +63,11 @@ export async function signInAnonymously(): Promise<AuthResult> {
         triggers: [],
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      }, {
+      },
+      {
         onConflict: 'user_id',
-      });
+      }
+    );
 
     if (profileError) {
       console.error('Error creating user profile for anonymous user:', profileError);
@@ -93,7 +94,9 @@ export async function signInAnonymously(): Promise<AuthResult> {
  */
 export async function getSession(): Promise<{ userId: string | null; isAnonymous: boolean }> {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       return { userId: null, isAnonymous: false };
@@ -115,7 +118,9 @@ export async function getSession(): Promise<{ userId: string | null; isAnonymous
  */
 export async function restoreSession(): Promise<AuthResult> {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (session?.user) {
       console.log('Session restored:', session.user.id);
@@ -141,10 +146,7 @@ export async function restoreSession(): Promise<AuthResult> {
  * Upgrade anonymous account to full account
  * Used when user wants to purchase subscription or pair Shift device
  */
-export async function upgradeToFullAccount(
-  email: string,
-  password: string
-): Promise<AuthResult> {
+export async function upgradeToFullAccount(email: string, password: string): Promise<AuthResult> {
   try {
     // Check if currently anonymous
     const { userId, isAnonymous } = await getSession();
@@ -227,7 +229,9 @@ export async function signOut(): Promise<{ success: boolean; error?: string }> {
  */
 export async function isAuthenticated(): Promise<boolean> {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     return !!session;
   } catch {
     return false;
@@ -404,10 +408,7 @@ export async function signUpWithEmail(
 /**
  * Sign in with email and password
  */
-export async function signInWithEmail(
-  email: string,
-  password: string
-): Promise<AuthResult> {
+export async function signInWithEmail(email: string, password: string): Promise<AuthResult> {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -693,9 +694,7 @@ export function validatePassword(password: string): { valid: boolean; error?: st
  * @param email - Email address to check
  * @returns Object indicating if account exists and details
  */
-export async function checkExistingAccount(
-  email: string
-): Promise<{
+export async function checkExistingAccount(email: string): Promise<{
   exists: boolean;
   accountCompleted: boolean;
   userId?: string;
@@ -726,7 +725,9 @@ export async function checkExistingAccount(
 
       // CRITICAL: Check if this is an anonymous user with an email
       // Anonymous users have profiles but their auth account has no email
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       const isCurrentUser = session?.user?.id === existingProfile.user_id;
       const isAnonymous = session?.user?.is_anonymous || false;
@@ -748,10 +749,9 @@ export async function checkExistingAccount(
       }
 
       // Not an anonymous user - verify BOTH user_id AND email in auth
-      const { data: authCheck, error: authCheckError } = await supabase.rpc(
-        'get_user_by_email',
-        { email_param: normalizedEmail }
-      );
+      const { data: authCheck, error: authCheckError } = await supabase.rpc('get_user_by_email', {
+        email_param: normalizedEmail,
+      });
 
       if (authCheckError) {
         console.warn('⚠️ Could not verify auth account exists:', authCheckError.message);
@@ -805,10 +805,9 @@ export async function checkExistingAccount(
 
     // STEP 2: Check Supabase Auth (accounts that might not have profiles yet)
     // This catches cases where user created an account but hasn't completed onboarding
-    const { data: authUsers, error: authError } = await supabase.rpc(
-      'get_user_by_email',
-      { email_param: normalizedEmail }
-    );
+    const { data: authUsers, error: authError } = await supabase.rpc('get_user_by_email', {
+      email_param: normalizedEmail,
+    });
 
     if (authError) {
       console.warn('⚠️ Could not check auth.users (function may not exist):', authError.message);

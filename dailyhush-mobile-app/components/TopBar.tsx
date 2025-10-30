@@ -51,11 +51,15 @@ export function TopBar({
         paddingTop: insets.top + spacing.safeArea.top,
         backgroundColor: colors.background.primary,
         borderBottomColor: colors.background.border,
-      }}
-    >
+      }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Left Side - Back Button or Spacer */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: showBack || shouldCenter ? 'auto' : 40 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: showBack || shouldCenter ? 'auto' : 40,
+          }}>
           {showBack ? (
             <Pressable
               onPress={() => {
@@ -66,10 +70,14 @@ export function TopBar({
                   router.back();
                 }
               }}
-              style={{ marginRight: 16, padding: 8, marginLeft: -8, opacity: 1 }}
-            >
+              style={{ marginRight: 16, padding: 8, marginLeft: -8, opacity: 1 }}>
               {({ pressed }) => (
-                <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} opacity={pressed ? 0.7 : 1} />
+                <ArrowLeft
+                  size={24}
+                  color={colors.text.primary}
+                  strokeWidth={2}
+                  opacity={pressed ? 0.7 : 1}
+                />
               )}
             </Pressable>
           ) : shouldCenter ? null : (
@@ -96,8 +104,7 @@ export function TopBar({
                 fontWeight: 'bold',
                 textAlign: shouldCenter ? 'center' : 'left',
                 color: colors.text.primary,
-              }}
-            >
+              }}>
               {title}
             </Text>
           )}
@@ -108,8 +115,7 @@ export function TopBar({
                 marginTop: 2,
                 textAlign: shouldCenter ? 'center' : 'left',
                 color: colors.text.secondary,
-              }}
-            >
+              }}>
               {subtitle}
             </Text>
           )}
@@ -138,10 +144,14 @@ export function TopBar({
                 Haptics.selectionAsync();
                 router.push('/settings' as any);
               }}
-              style={{ padding: 8, opacity: 1 }}
-            >
+              style={{ padding: 8, opacity: 1 }}>
               {({ pressed }) => (
-                <Settings size={24} color={colors.text.secondary} strokeWidth={2} opacity={pressed ? 0.7 : 1} />
+                <Settings
+                  size={24}
+                  color={colors.text.secondary}
+                  strokeWidth={2}
+                  opacity={pressed ? 0.7 : 1}
+                />
               )}
             </Pressable>
           ) : showMenu ? (
@@ -150,10 +160,14 @@ export function TopBar({
                 Haptics.selectionAsync();
                 onMenuPress?.();
               }}
-              style={{ padding: 8, opacity: 1 }}
-            >
+              style={{ padding: 8, opacity: 1 }}>
               {({ pressed }) => (
-                <Menu size={24} color={colors.text.secondary} strokeWidth={2} opacity={pressed ? 0.7 : 1} />
+                <Menu
+                  size={24}
+                  color={colors.text.secondary}
+                  strokeWidth={2}
+                  opacity={pressed ? 0.7 : 1}
+                />
               )}
             </Pressable>
           ) : null}

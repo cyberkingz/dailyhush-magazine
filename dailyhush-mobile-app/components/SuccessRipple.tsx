@@ -98,8 +98,7 @@ export function SuccessRipple({ size = 80, onAnimationComplete }: SuccessRippleP
         height: size * 3,
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       {/* Ripple layers */}
       <Animated.View
         style={{
@@ -150,8 +149,7 @@ export function SuccessRipple({ size = 80, onAnimationComplete }: SuccessRippleP
           shadowOpacity: 0.5,
           shadowRadius: 15,
           elevation: 8,
-        }}
-      >
+        }}>
         <Check size={size * 0.5} color="#B7E4C7" strokeWidth={3} />
       </Animated.View>
     </View>

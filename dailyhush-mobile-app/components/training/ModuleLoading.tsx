@@ -12,14 +12,10 @@ interface ModuleLoadingProps {
 
 export function ModuleLoading({ moduleTitle }: ModuleLoadingProps) {
   return (
-    <View className="flex-1 bg-[#0A1612] items-center justify-center px-6">
+    <View className="flex-1 items-center justify-center bg-[#0A1612] px-6">
       <ActivityIndicator size="large" color="#40916C" />
-      <Text className="text-[#95B8A8] text-base mt-4 text-center">
-        Loading {moduleTitle}...
-      </Text>
-      <Text className="text-[#95B8A8]/60 text-sm mt-2 text-center">
-        Restoring your progress
-      </Text>
+      <Text className="mt-4 text-center text-base text-[#95B8A8]">Loading {moduleTitle}...</Text>
+      <Text className="mt-2 text-center text-sm text-[#95B8A8]/60">Restoring your progress</Text>
     </View>
   );
 }

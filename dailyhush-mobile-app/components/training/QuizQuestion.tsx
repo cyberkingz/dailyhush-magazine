@@ -26,7 +26,7 @@ export function QuizQuestion({
   question,
   options,
   onAnswer,
-  showFeedback = true
+  showFeedback = true,
 }: QuizQuestionProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -80,9 +80,7 @@ export function QuizQuestion({
   return (
     <View className="w-full">
       {/* Question */}
-      <Text className="text-[#E8F4F0] text-lg font-semibold mb-6">
-        {question}
-      </Text>
+      <Text className="mb-6 text-lg font-semibold text-[#E8F4F0]">{question}</Text>
 
       {/* Options */}
       <View className="gap-3">
@@ -91,30 +89,24 @@ export function QuizQuestion({
             key={option.id}
             onPress={() => handleSelect(option)}
             disabled={hasAnswered}
-            className={`rounded-2xl p-4 flex-row items-center justify-between ${getOptionStyle(option)} ${
+            className={`flex-row items-center justify-between rounded-2xl p-4 ${getOptionStyle(option)} ${
               !hasAnswered && 'active:opacity-90'
-            }`}
-          >
+            }`}>
             <View className="flex-1 flex-row items-center">
               {/* Radio button */}
               <View
-                className={`w-5 h-5 rounded-full border-2 mr-3 ${
-                  selectedId === option.id
-                    ? 'border-white bg-white'
-                    : 'border-[#95B8A8]'
-                }`}
-              >
+                className={`mr-3 h-5 w-5 rounded-full border-2 ${
+                  selectedId === option.id ? 'border-white bg-white' : 'border-[#95B8A8]'
+                }`}>
                 {selectedId === option.id && (
                   <View className="flex-1 items-center justify-center">
-                    <View className="w-2.5 h-2.5 rounded-full bg-[#40916C]" />
+                    <View className="h-2.5 w-2.5 rounded-full bg-[#40916C]" />
                   </View>
                 )}
               </View>
 
               {/* Option text */}
-              <Text className={`text-base flex-1 ${getTextColor(option)}`}>
-                {option.text}
-              </Text>
+              <Text className={`flex-1 text-base ${getTextColor(option)}`}>{option.text}</Text>
             </View>
 
             {/* Checkmark for correct answer */}

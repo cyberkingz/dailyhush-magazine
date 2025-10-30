@@ -4,19 +4,9 @@
  */
 
 import React, { useState } from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  Pressable,
-  StyleSheet,
-  TextInputProps,
-} from 'react-native';
+import { View, TextInput, Text, Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react-native';
-import {
-  inputFieldStyles,
-  inputColors,
-} from '@/constants/authStyles';
+import { inputFieldStyles, inputColors } from '@/constants/authStyles';
 
 interface AuthTextInputProps extends Omit<TextInputProps, 'style'> {
   label: string;
@@ -87,20 +77,11 @@ export function AuthTextInput({
           <Pressable
             style={styles.passwordToggle}
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-          >
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
             {isPasswordVisible ? (
-              <EyeOff
-                size={20}
-                color={inputColors.text.placeholder}
-                strokeWidth={2}
-              />
+              <EyeOff size={20} color={inputColors.text.placeholder} strokeWidth={2} />
             ) : (
-              <Eye
-                size={20}
-                color={inputColors.text.placeholder}
-                strokeWidth={2}
-              />
+              <Eye size={20} color={inputColors.text.placeholder} strokeWidth={2} />
             )}
           </Pressable>
         )}

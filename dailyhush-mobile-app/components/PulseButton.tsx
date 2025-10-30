@@ -3,14 +3,14 @@
  * Enhanced animated button with gradient, glow, and organic pulsing aura
  */
 
-import { useState, useEffect, useRef } from 'react';
-import { Pressable, Animated, View, ViewStyle, Dimensions, Easing } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Pressable, Animated, View, ViewStyle, Easing } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
 import { colors } from '@/constants/colors';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+// const SCREEN_WIDTH = Dimensions.get('window').width;
 
 interface PulseButtonProps {
   onPress: () => void;
@@ -31,8 +31,6 @@ export function PulseButton({
   enablePulse = true,
   style,
 }: PulseButtonProps) {
-  const [isPressed, setIsPressed] = useState(false);
-
   // Breathing glow animation
   const glowOpacity = useRef(new Animated.Value(0)).current;
 
@@ -62,7 +60,6 @@ export function PulseButton({
   }, [enablePulse]);
 
   const handlePressIn = () => {
-    setIsPressed(true);
     Animated.spring(pressScale, {
       toValue: 0.95,
       friction: 5,
@@ -71,7 +68,6 @@ export function PulseButton({
   };
 
   const handlePressOut = () => {
-    setIsPressed(false);
     Animated.spring(pressScale, {
       toValue: 1,
       friction: 5,
@@ -123,8 +119,7 @@ export function PulseButton({
             shadowOpacity: 0.4,
             shadowRadius: 16,
             elevation: 8,
-          }}
-        >
+          }}>
           <LinearGradient
             colors={colorScheme.gradient}
             start={{ x: 0, y: 0 }}
@@ -135,8 +130,7 @@ export function PulseButton({
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
-            }}
-          >
+            }}>
             {/* Breathing glow overlay (only if enabled) */}
             {enablePulse && (
               <Animated.View
@@ -162,8 +156,7 @@ export function PulseButton({
                   fontWeight: 'bold',
                   textAlign: 'center',
                   letterSpacing: 0.5,
-                }}
-              >
+                }}>
                 {title}
               </Text>
               {subtitle && (
@@ -175,8 +168,7 @@ export function PulseButton({
                     marginTop: 6,
                     textAlign: 'center',
                     lineHeight: 24,
-                  }}
-                >
+                  }}>
                   {subtitle}
                 </Text>
               )}

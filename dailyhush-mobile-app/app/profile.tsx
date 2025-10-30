@@ -16,7 +16,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft, Save } from 'lucide-react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { Text } from '@/components/ui/text';
 import { useStore, useUser } from '@/store/useStore';

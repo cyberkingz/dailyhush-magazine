@@ -10,12 +10,12 @@ import { Platform } from 'react-native';
 // SPACING (8px grid system - base unit)
 // ============================================================================
 export const SPACING = {
-  xs: 4,    // Smallest gaps, icon spacing
-  sm: 8,    // Compact spacing between elements
-  md: 12,   // Default padding, standard spacing
-  lg: 16,   // Component spacing, section margins
-  xl: 20,   // Large sections, major spacing
-  xxl: 24,  // Extra large spacing
+  xs: 4, // Smallest gaps, icon spacing
+  sm: 8, // Compact spacing between elements
+  md: 12, // Default padding, standard spacing
+  lg: 16, // Component spacing, section margins
+  xl: 20, // Large sections, major spacing
+  xxl: 24, // Extra large spacing
 } as const;
 
 // ============================================================================
@@ -24,19 +24,19 @@ export const SPACING = {
 export const TOUCH_TARGETS = {
   // Primary actions: back buttons, main CTAs, critical interactions
   primary: {
-    minWidth: 56,   // WCAG AAA + older adult accommodation
+    minWidth: 56, // WCAG AAA + older adult accommodation
     minHeight: 56,
-    padding: 12,    // Inner padding for content
+    padding: 12, // Inner padding for content
   },
   // Secondary actions: navigation tabs, secondary buttons
   secondary: {
-    minWidth: 48,   // WCAG AAA minimum
+    minWidth: 48, // WCAG AAA minimum
     minHeight: 48,
     padding: 8,
   },
   // Small utility buttons: close, expand, minor actions
   utility: {
-    minWidth: 40,   // Minimum viable touch target
+    minWidth: 40, // Minimum viable touch target
     minHeight: 40,
     padding: 4,
   },
@@ -48,9 +48,9 @@ export const TOUCH_TARGETS = {
 export const ICONS = {
   // Navigation and header icons (back, menu, etc.)
   navigation: {
-    size: 24,           // Icon visual size in pixels
-    strokeWidth: 2.5,   // Line weight for lucide icons
-    containerSize: 40,  // Visual container diameter for circular icons
+    size: 24, // Icon visual size in pixels
+    strokeWidth: 2.5, // Line weight for lucide icons
+    containerSize: 40, // Visual container diameter for circular icons
     containerBorderWidth: 2,
   },
   // Utility icons (close, settings, etc.)
@@ -81,41 +81,41 @@ export const ICONS = {
 export const COLORS = {
   // Primary color palette (emerald green theme)
   primary: {
-    darkest: '#0A1612',    // Primary background (very dark)
-    dark: '#1A4D3C',       // Secondary background
-    medium: '#40916C',     // Primary action color (button, selected state)
-    light: '#52B788',      // Highlight, hover state
-    lightest: '#7dd3c0',   // Bright accent, focus indicator
+    darkest: '#0A1612', // Primary background (very dark)
+    dark: '#1A4D3C', // Secondary background
+    medium: '#40916C', // Primary action color (button, selected state)
+    light: '#52B788', // Highlight, hover state
+    lightest: '#7dd3c0', // Bright accent, focus indicator
   },
 
   // Text colors
   text: {
-    primary: '#E8F4F0',    // Main text color (light on dark)
-    secondary: '#95B8A8',  // Secondary text, hints, labels
-    muted: '#6B7280',      // Disabled, low-importance text
-    inverted: '#0A1612',   // Text on light backgrounds
+    primary: '#E8F4F0', // Main text color (light on dark)
+    secondary: '#95B8A8', // Secondary text, hints, labels
+    muted: '#6B7280', // Disabled, low-importance text
+    inverted: '#0A1612', // Text on light backgrounds
   },
 
   // Semantic colors
   states: {
-    success: '#10B981',    // Success messages, positive actions
-    error: '#EF4444',      // Errors, destructive actions
-    warning: '#F59E0B',    // Warnings, attention needed
-    info: '#3B82F6',       // Information, neutral state
+    success: '#10B981', // Success messages, positive actions
+    error: '#EF4444', // Errors, destructive actions
+    warning: '#F59E0B', // Warnings, attention needed
+    info: '#3B82F6', // Information, neutral state
   },
 
   // Interactive feedback colors
   feedback: {
-    pressed: 'rgba(82, 183, 136, 0.2)',    // Press/active state
-    hover: 'rgba(82, 183, 136, 0.1)',      // Hover state
-    focused: 'rgba(125, 211, 192, 0.3)',   // Focus ring/outline
-    disabled: 'rgba(107, 114, 128, 0.5)',  // Disabled state opacity
+    pressed: 'rgba(82, 183, 136, 0.2)', // Press/active state
+    hover: 'rgba(82, 183, 136, 0.1)', // Hover state
+    focused: 'rgba(125, 211, 192, 0.3)', // Focus ring/outline
+    disabled: 'rgba(107, 114, 128, 0.5)', // Disabled state opacity
   },
 
   // Overlay and transparency
   overlay: {
-    dark: 'rgba(10, 22, 18, 0.85)',        // Dark overlay for images
-    light: 'rgba(232, 244, 240, 0.1)',     // Light overlay for buttons
+    dark: 'rgba(10, 22, 18, 0.85)', // Dark overlay for images
+    light: 'rgba(232, 244, 240, 0.1)', // Light overlay for buttons
   },
 } as const;
 
@@ -124,10 +124,10 @@ export const COLORS = {
 // ============================================================================
 export const BORDER_RADIUS = {
   none: 0,
-  sm: 8,      // Small elements, small cards
-  md: 12,     // Medium elements, input fields
-  lg: 16,     // Large buttons, dialog boxes
-  xl: 20,     // Navigation bars, large sections
+  sm: 8, // Small elements, small cards
+  md: 12, // Medium elements, input fields
+  lg: 16, // Large buttons, dialog boxes
+  xl: 20, // Navigation bars, large sections
   full: 9999, // Circular (buttons, avatars)
 } as const;
 
@@ -308,7 +308,7 @@ export const HEADER_NAV = {
   // Color scheme
   colors: {
     icon: COLORS.text.primary,
-    background: 'rgba(26, 77, 60, 0.4)',  // Subtle emerald background
+    background: 'rgba(26, 77, 60, 0.4)', // Subtle emerald background
     border: COLORS.primary.medium,
     active: COLORS.primary.light,
     focus: COLORS.primary.lightest,
@@ -340,7 +340,7 @@ export const HEADER_NAV = {
 export const FORM = {
   // Input field styling
   input: {
-    height: 56,                       // Touch-friendly height
+    height: 56, // Touch-friendly height
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
@@ -455,7 +455,7 @@ export const CARD = {
 // BOTTOM NAVIGATION
 // ============================================================================
 export const BOTTOM_NAV = {
-  height: 80,  // Tab height + safe area bottom
+  height: 80, // Tab height + safe area bottom
   paddingBottom: SPACING.md,
   paddingHorizontal: SPACING.lg,
   paddingTop: SPACING.lg,

@@ -3,7 +3,13 @@
  * Small rounded button with primary/secondary styling
  */
 
-import { TouchableOpacity, StyleSheet, type StyleProp, type ViewStyle, type TouchableOpacityProps } from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  type StyleProp,
+  type ViewStyle,
+  type TouchableOpacityProps,
+} from 'react-native';
 import { colors } from '@/constants/colors';
 import { Text } from '@/components/ui/text';
 
@@ -33,13 +39,8 @@ export function PillButton({
         variant === 'primary' ? styles.primary : styles.secondary,
         disabled && styles.disabled,
         style,
-      ]}
-    >
-      <Text
-        style={variant === 'primary' ? styles.primaryText : styles.secondaryText}
-      >
-        {label}
-      </Text>
+      ]}>
+      <Text style={variant === 'primary' ? styles.primaryText : styles.secondaryText}>{label}</Text>
     </TouchableOpacity>
   );
 }

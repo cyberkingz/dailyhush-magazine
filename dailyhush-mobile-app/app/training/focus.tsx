@@ -5,7 +5,7 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -14,7 +14,6 @@ import { debounce } from '@/utils/debounce';
 
 import { Text } from '@/components/ui/text';
 import { ContentCard } from '@/components/training/ContentCard';
-import { InteractiveExercise } from '@/components/training/InteractiveExercise';
 import { KeyTakeaway } from '@/components/training/KeyTakeaway';
 import { ProgressIndicator } from '@/components/training/ProgressIndicator';
 import { ModuleComplete } from '@/components/training/ModuleComplete';
@@ -43,7 +42,6 @@ export default function FocusModule() {
   const scrollViewRef = useRef<ScrollView>(null);
   const [currentScreen, setCurrentScreen] = useState<Screen>('welcome');
   const [selectedTriggers, setSelectedTriggers] = useState<string[]>([]);
-  const [reflectionText, setReflectionText] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   const screens: Screen[] = [
@@ -61,7 +59,7 @@ export default function FocusModule() {
   const progress = currentIndex + 1;
 
   const triggers = [
-    'Someone didn\'t respond to my message',
+    "Someone didn't respond to my message",
     'I said something I regret',
     'Someone criticized me (or I think they did)',
     'I made a mistake at work',
@@ -93,10 +91,8 @@ export default function FocusModule() {
   };
 
   const toggleTrigger = (trigger: string) => {
-    setSelectedTriggers(prev =>
-      prev.includes(trigger)
-        ? prev.filter(t => t !== trigger)
-        : [...prev, trigger]
+    setSelectedTriggers((prev) =>
+      prev.includes(trigger) ? prev.filter((t) => t !== trigger) : [...prev, trigger]
     );
   };
 
@@ -141,7 +137,6 @@ export default function FocusModule() {
           },
         });
       }, timing.debounce.save),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -168,11 +163,8 @@ export default function FocusModule() {
 
       {/* Header */}
       <View className="px-5 pb-3" style={{ paddingTop: insets.top + spacing.safeArea.top }}>
-        <View className="flex-row items-center justify-between mb-4">
-          <Pressable
-            onPress={handleBack}
-            className="p-2 active:opacity-70"
-          >
+        <View className="mb-4 flex-row items-center justify-between">
+          <Pressable onPress={handleBack} className="p-2 active:opacity-70">
             <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} />
           </Pressable>
 
@@ -194,20 +186,17 @@ export default function FocusModule() {
         className="flex-1"
         contentContainerStyle={{
           paddingHorizontal: spacing.lg,
-          paddingBottom: spacing["3xl"],
+          paddingBottom: spacing['3xl'],
         }}
         showsVerticalScrollIndicator={false}
         bounces={false}
-        overScrollMode="never"
-      >
+        overScrollMode="never">
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Your Rumination Has a Pattern
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Your Rumination Has a Pattern</Text>
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               And we're going to decode it together.
             </Text>
 
@@ -219,18 +208,14 @@ What started it?
 (Most people can't answer this. They just know they're suddenly in the loop.)"
             />
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
-              That's about to change.
-            </Text>
+            <Text className="text-lg font-semibold text-[#E8F4F0]">That's about to change.</Text>
           </View>
         )}
 
         {/* Screen 2: Mechanism */}
         {currentScreen === 'mechanism' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              The Trigger-Spiral Gap
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">The Trigger-Spiral Gap</Text>
 
             <ContentCard
               body="Between the moment something bothers you and the moment you start looping...
@@ -240,20 +225,19 @@ There's a gap.
 Usually 3-10 seconds."
             />
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               Right now, you skip over it. Your brain goes straight from:
             </Text>
 
-            <View className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#40916C]/20">
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-5">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 "He didn't text back" →{'\n'}
                 "He hates me" →{'\n'}
-                "I'm unlovable" →{'\n'}
-                2 hours of hell.
+                "I'm unlovable" →{'\n'}2 hours of hell.
               </Text>
             </View>
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
+            <Text className="text-lg font-semibold text-[#E8F4F0]">
               But what if you could catch yourself IN that gap?
             </Text>
           </View>
@@ -262,28 +246,40 @@ Usually 3-10 seconds."
         {/* Screen 3: Promise */}
         {currentScreen === 'promise' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               By the end of this module, you will:
             </Text>
 
             <View className="gap-3">
               <View className="flex-row items-start">
-                <Text className="text-[#52B788] text-xl mr-3" style={{ lineHeight: 28, paddingTop: 2 }}>✓</Text>
-                <Text className="text-[#E8F4F0] text-base flex-1 leading-relaxed">
+                <Text
+                  className="mr-3 text-xl text-[#52B788]"
+                  style={{ lineHeight: 28, paddingTop: 2 }}>
+                  ✓
+                </Text>
+                <Text className="flex-1 text-base leading-relaxed text-[#E8F4F0]">
                   Know your #1 rumination trigger
                 </Text>
               </View>
 
               <View className="flex-row items-start">
-                <Text className="text-[#52B788] text-xl mr-3" style={{ lineHeight: 28, paddingTop: 2 }}>✓</Text>
-                <Text className="text-[#E8F4F0] text-base flex-1 leading-relaxed">
+                <Text
+                  className="mr-3 text-xl text-[#52B788]"
+                  style={{ lineHeight: 28, paddingTop: 2 }}>
+                  ✓
+                </Text>
+                <Text className="flex-1 text-base leading-relaxed text-[#E8F4F0]">
                   Recognize it in real-time
                 </Text>
               </View>
 
               <View className="flex-row items-start">
-                <Text className="text-[#52B788] text-xl mr-3" style={{ lineHeight: 28, paddingTop: 2 }}>✓</Text>
-                <Text className="text-[#E8F4F0] text-base flex-1 leading-relaxed">
+                <Text
+                  className="mr-3 text-xl text-[#52B788]"
+                  style={{ lineHeight: 28, paddingTop: 2 }}>
+                  ✓
+                </Text>
+                <Text className="flex-1 text-base leading-relaxed text-[#E8F4F0]">
                   Understand why YOUR brain loops (it's different for everyone)
                 </Text>
               </View>
@@ -296,9 +292,7 @@ Usually 3-10 seconds."
         {/* Screen 4: Education */}
         {currentScreen === 'education' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Why Your Brain Spirals
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Why Your Brain Spirals</Text>
 
             <ContentCard
               heading="Your Default Mode Network"
@@ -308,7 +302,7 @@ Usually 3-10 seconds."
 Today: Awkward silence in a meeting."
             />
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               Your brain can't tell the difference.
             </Text>
 
@@ -326,13 +320,9 @@ Until you interrupt it."
         {/* Screen 5: Triggers */}
         {currentScreen === 'triggers' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Your Rumination Triggers
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Your Rumination Triggers</Text>
 
-            <Text className="text-[#95B8A8] text-base">
-              Check ALL that apply:
-            </Text>
+            <Text className="text-base text-[#95B8A8]">Check ALL that apply:</Text>
 
             <View className="gap-3">
               {triggers.map((trigger) => (
@@ -342,39 +332,34 @@ Until you interrupt it."
                     toggleTrigger(trigger);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`rounded-2xl p-4 flex-row items-center ${
-                    selectedTriggers.includes(trigger)
-                      ? 'bg-[#40916C]'
-                      : 'bg-[#1A4D3C]'
-                  }`}
-                >
+                  className={`flex-row items-center rounded-2xl p-4 ${
+                    selectedTriggers.includes(trigger) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                  }`}>
                   <View
-                    className={`w-5 h-5 rounded border-2 mr-3 ${
+                    className={`mr-3 h-5 w-5 rounded border-2 ${
                       selectedTriggers.includes(trigger)
                         ? 'border-white bg-white'
                         : 'border-[#95B8A8]'
-                    }`}
-                  >
+                    }`}>
                     {selectedTriggers.includes(trigger) && (
                       <View className="flex-1 items-center justify-center">
-                        <View className="w-3 h-3 bg-[#40916C]" />
+                        <View className="h-3 w-3 bg-[#40916C]" />
                       </View>
                     )}
                   </View>
                   <Text
-                    className={`text-base flex-1 ${
+                    className={`flex-1 text-base ${
                       selectedTriggers.includes(trigger)
-                        ? 'text-white font-semibold'
+                        ? 'font-semibold text-white'
                         : 'text-[#E8F4F0]'
-                    }`}
-                  >
+                    }`}>
                     {trigger}
                   </Text>
                 </Pressable>
               ))}
             </View>
 
-            <Text className="text-[#95B8A8] text-sm text-center italic">
+            <Text className="text-center text-sm italic text-[#95B8A8]">
               (Most people check 3-4. That's normal.)
             </Text>
           </View>
@@ -383,11 +368,11 @@ Until you interrupt it."
         {/* Screen 6: Categories */}
         {currentScreen === 'categories' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Here's What You Just Discovered:
             </Text>
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               Your triggers aren't random.
             </Text>
 
@@ -413,25 +398,19 @@ And that means: One solution fixes both."
         {/* Screen 7: Trigger Map */}
         {currentScreen === 'trigger-map' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Your Trigger Map
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Your Trigger Map</Text>
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               We've created your personalized trigger map.
             </Text>
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-4">
-                Your Patterns:
-              </Text>
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-4 text-base font-semibold text-[#E8F4F0]">Your Patterns:</Text>
 
               <View className="gap-3">
                 <View>
-                  <Text className="text-[#95B8A8] text-sm mb-1">
-                    Common triggers:
-                  </Text>
-                  <Text className="text-[#E8F4F0] text-base">
+                  <Text className="mb-1 text-sm text-[#95B8A8]">Common triggers:</Text>
+                  <Text className="text-base text-[#E8F4F0]">
                     {selectedTriggers.length > 0
                       ? selectedTriggers.slice(0, 3).join(', ')
                       : 'No triggers selected'}
@@ -439,32 +418,24 @@ And that means: One solution fixes both."
                 </View>
 
                 <View>
-                  <Text className="text-[#95B8A8] text-sm mb-1">
-                    Category:
-                  </Text>
-                  <Text className="text-[#E8F4F0] text-base">
-                    {selectedTriggers.length > 0
-                      ? 'Fear of judgment & social connection'
-                      : '—'}
+                  <Text className="mb-1 text-sm text-[#95B8A8]">Category:</Text>
+                  <Text className="text-base text-[#E8F4F0]">
+                    {selectedTriggers.length > 0 ? 'Fear of judgment & social connection' : '—'}
                   </Text>
                 </View>
 
                 <View>
-                  <Text className="text-[#95B8A8] text-sm mb-1">
-                    The 10-second window:
-                  </Text>
-                  <Text className="text-[#E8F4F0] text-base">
-                    Between trigger and spiral
-                  </Text>
+                  <Text className="mb-1 text-sm text-[#95B8A8]">The 10-second window:</Text>
+                  <Text className="text-base text-[#E8F4F0]">Between trigger and spiral</Text>
                 </View>
               </View>
             </View>
 
-            <Text className="text-[#95B8A8] text-sm text-center">
+            <Text className="text-center text-sm text-[#95B8A8]">
               Screenshot this. Keep it. Reference it.
             </Text>
 
-            <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#E8F4F0]">
               When you know your pattern, you can interrupt it before it starts.
             </Text>
           </View>
@@ -488,32 +459,38 @@ And that means: One solution fixes both."
 
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
-        <View className="px-5" style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
+        <View
+          className="px-5"
+          style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
           <Pressable
             onPress={handleNext}
             disabled={currentScreen === 'triggers' && selectedTriggers.length === 0}
-            className="rounded-2xl flex-row items-center justify-center"
+            className="flex-row items-center justify-center rounded-2xl"
             style={{
               height: spacing.button.height,
-              backgroundColor: currentScreen === 'triggers' && selectedTriggers.length === 0
-                ? colors.button.disabled
-                : colors.button.primary,
+              backgroundColor:
+                currentScreen === 'triggers' && selectedTriggers.length === 0
+                  ? colors.button.disabled
+                  : colors.button.primary,
               opacity: currentScreen === 'triggers' && selectedTriggers.length === 0 ? 0.5 : 1,
-            }}
-          >
+            }}>
             <Text
-              className="text-lg font-semibold mr-2"
+              className="mr-2 text-lg font-semibold"
               style={{
-                color: currentScreen === 'triggers' && selectedTriggers.length === 0
-                  ? colors.text.secondary
-                  : colors.white,
-              }}
-            >
+                color:
+                  currentScreen === 'triggers' && selectedTriggers.length === 0
+                    ? colors.text.secondary
+                    : colors.white,
+              }}>
               Continue
             </Text>
             <ArrowRight
               size={20}
-              color={currentScreen === 'triggers' && selectedTriggers.length === 0 ? colors.text.secondary : colors.white}
+              color={
+                currentScreen === 'triggers' && selectedTriggers.length === 0
+                  ? colors.text.secondary
+                  : colors.white
+              }
               strokeWidth={2}
             />
           </Pressable>

@@ -67,9 +67,7 @@ export async function scheduleDailyQuoteNotification(): Promise<void> {
     const scheduled = await Notifications.getAllScheduledNotificationsAsync();
     for (const notification of scheduled) {
       if (notification.content.data?.type === 'daily-quote') {
-        await Notifications.cancelScheduledNotificationAsync(
-          notification.identifier
-        );
+        await Notifications.cancelScheduledNotificationAsync(notification.identifier);
       }
     }
 
@@ -134,15 +132,12 @@ export async function sendInstantQuoteNotification(): Promise<void> {
 export async function sendEncouragementNotification(): Promise<void> {
   try {
     const growthQuotes = getQuotesByCategory('growth');
-    const quote =
-      growthQuotes[Math.floor(Math.random() * growthQuotes.length)];
+    const quote = growthQuotes[Math.floor(Math.random() * growthQuotes.length)];
 
     await Notifications.scheduleNotificationAsync({
       content: {
         title: '✨ Well Done',
-        body:
-          quote?.text ||
-          "You just interrupted a spiral. That's growth happening in real-time.",
+        body: quote?.text || "You just interrupted a spiral. That's growth happening in real-time.",
         data: {
           type: 'encouragement',
           postSpiral: true,
@@ -174,9 +169,7 @@ export async function cancelAllNotifications(): Promise<void> {
 /**
  * Get all currently scheduled notifications (for debugging)
  */
-export async function getScheduledNotifications(): Promise<
-  Notifications.NotificationRequest[]
-> {
+export async function getScheduledNotifications(): Promise<Notifications.NotificationRequest[]> {
   try {
     return await Notifications.getAllScheduledNotificationsAsync();
   } catch (error) {
@@ -197,9 +190,7 @@ export function addNotificationResponseListener(
 /**
  * Send a gentle reminder if user hasn't used app in 3 days
  */
-export async function scheduleInactivityReminder(
-  lastActiveDate: Date
-): Promise<void> {
+export async function scheduleInactivityReminder(lastActiveDate: Date): Promise<void> {
   try {
     const daysSinceActive = Math.floor(
       (Date.now() - lastActiveDate.getTime()) / (1000 * 60 * 60 * 24)
@@ -207,8 +198,7 @@ export async function scheduleInactivityReminder(
 
     if (daysSinceActive >= 3) {
       const compassionQuotes = getQuotesByCategory('compassion');
-      const quote =
-        compassionQuotes[Math.floor(Math.random() * compassionQuotes.length)];
+      const quote = compassionQuotes[Math.floor(Math.random() * compassionQuotes.length)];
 
       await Notifications.scheduleNotificationAsync({
         content: {

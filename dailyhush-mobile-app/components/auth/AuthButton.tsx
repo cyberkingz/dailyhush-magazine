@@ -109,11 +109,8 @@ export function AuthButton({
           accessible={true}
           accessibilityLabel={title}
           accessibilityRole="button"
-          accessibilityState={{ disabled: disabled || loading }}
-        >
-          <Text style={getTextStyle()}>
-            {loading ? 'Loading...' : title}
-          </Text>
+          accessibilityState={{ disabled: disabled || loading }}>
+          <Text style={getTextStyle()}>{loading ? 'Loading...' : title}</Text>
         </Pressable>
       </View>
     );
@@ -133,13 +130,9 @@ export function AuthButton({
         accessible={true}
         accessibilityLabel={title}
         accessibilityRole="button"
-        accessibilityState={{ disabled: disabled || loading }}
-      >
+        accessibilityState={{ disabled: disabled || loading }}>
         {loading ? (
-          <ActivityIndicator
-            color="#FFFFFF"
-            size="small"
-          />
+          <ActivityIndicator color="#FFFFFF" size="small" />
         ) : (
           <>
             {icon && <View style={styles.iconContainer}>{icon}</View>}

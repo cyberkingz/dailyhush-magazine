@@ -6,7 +6,14 @@
 import { View, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
 
 export default function TestRNR() {
@@ -19,17 +26,12 @@ export default function TestRNR() {
           flexGrow: 1,
           padding: 24,
           paddingTop: 64,
-        }}
-      >
-        <Text className="text-3xl font-bold text-neutral-50 mb-6">
-          React Native Reusables Test
-        </Text>
+        }}>
+        <Text className="mb-6 text-3xl font-bold text-neutral-50">React Native Reusables Test</Text>
 
         {/* Button Examples */}
         <View className="mb-8">
-          <Text className="text-xl font-semibold text-neutral-50 mb-4">
-            Buttons
-          </Text>
+          <Text className="mb-4 text-xl font-semibold text-neutral-50">Buttons</Text>
 
           <View className="gap-3">
             <Button>
@@ -60,9 +62,7 @@ export default function TestRNR() {
 
         {/* Card Examples */}
         <View className="mb-8">
-          <Text className="text-xl font-semibold text-neutral-50 mb-4">
-            Cards
-          </Text>
+          <Text className="mb-4 text-xl font-semibold text-neutral-50">Cards</Text>
 
           <Card className="mb-4">
             <CardHeader>
@@ -87,11 +87,12 @@ export default function TestRNR() {
               <CardTitle>Another Card</CardTitle>
             </CardHeader>
             <CardContent>
-              <Text>React Native Reusables components work perfectly with your dark emerald theme!</Text>
+              <Text>
+                React Native Reusables components work perfectly with your dark emerald theme!
+              </Text>
             </CardContent>
           </Card>
         </View>
-
       </ScrollView>
     </View>
   );

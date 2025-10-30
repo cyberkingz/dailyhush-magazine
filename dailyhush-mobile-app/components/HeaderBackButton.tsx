@@ -15,7 +15,7 @@
  * ```
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Pressable, Animated, StyleSheet, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'lucide-react-native';
@@ -97,7 +97,6 @@ export const HeaderBackButton = React.memo(
     disableHaptics = false,
   }: HeaderBackButtonProps) => {
     const insets = useSafeAreaInsets();
-    const [isPressed, setIsPressed] = useState(false);
 
     // Animation refs
     const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -107,8 +106,6 @@ export const HeaderBackButton = React.memo(
      * Handle press start - scale down and change color
      */
     const handlePressIn = () => {
-      setIsPressed(true);
-
       // Animate scale
       Animated.timing(scaleAnim, {
         toValue: HEADER_NAV.animation.scalePressedValue,
@@ -135,8 +132,6 @@ export const HeaderBackButton = React.memo(
      * Handle press end - scale back up and reset color
      */
     const handlePressOut = () => {
-      setIsPressed(false);
-
       // Animate scale back
       Animated.timing(scaleAnim, {
         toValue: 1,

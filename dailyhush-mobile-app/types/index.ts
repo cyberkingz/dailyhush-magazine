@@ -223,11 +223,11 @@ export interface AppState {
  */
 export type RootStackParamList = {
   '(tabs)': undefined;
-  'onboarding': undefined;
-  'spiral': undefined;
+  onboarding: undefined;
+  spiral: undefined;
   'training/[module]': { module: FireModule };
-  'insights': undefined;
-  'settings': undefined;
+  insights: undefined;
+  settings: undefined;
   'shift-pairing': undefined;
 };
 

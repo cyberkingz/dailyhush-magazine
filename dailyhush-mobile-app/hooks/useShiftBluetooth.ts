@@ -11,7 +11,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { BleManager, Device, Characteristic } from 'react-native-ble-plx';
+import { BleManager, Device } from 'react-native-ble-plx';
 import * as Haptics from 'expo-haptics';
 import { supabase } from '@/utils/supabase';
 import { useStore } from '@/store/useStore';
@@ -231,33 +231,30 @@ export function useShiftBluetooth() {
    * Send breathing pattern to necklace
    * @param pattern - Breathing pattern (e.g., '4-7-8' for 4s inhale, 7s hold, 8s exhale)
    */
-  const sendBreathingPattern = useCallback(
-    async (pattern: string) => {
-      if (!deviceRef.current) {
-        console.warn('No device connected');
-        return;
-      }
+  const sendBreathingPattern = useCallback(async (pattern: string) => {
+    if (!deviceRef.current) {
+      console.warn('No device connected');
+      return;
+    }
 
-      try {
-        // Encode pattern as bytes
-        const buffer = Buffer.from(pattern, 'utf-8');
-        const base64Value = buffer.toString('base64');
+    try {
+      // Encode pattern as bytes
+      const buffer = Buffer.from(pattern, 'utf-8');
+      const base64Value = buffer.toString('base64');
 
-        // Write to control characteristic
-        await deviceRef.current.writeCharacteristicWithResponseForService(
-          SHIFT_SERVICE_UUID,
-          SHIFT_CONTROL_CHAR_UUID,
-          base64Value
-        );
+      // Write to control characteristic
+      await deviceRef.current.writeCharacteristicWithResponseForService(
+        SHIFT_SERVICE_UUID,
+        SHIFT_CONTROL_CHAR_UUID,
+        base64Value
+      );
 
-        console.log('Sent breathing pattern:', pattern);
-        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      } catch (err) {
-        console.error('Failed to send breathing pattern:', err);
-      }
-    },
-    []
-  );
+      console.log('Sent breathing pattern:', pattern);
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (err) {
+      console.error('Failed to send breathing pattern:', err);
+    }
+  }, []);
 
   /**
    * Start breathing session on necklace

@@ -48,49 +48,40 @@ function getResultForType(type: OverthinkerType, rawScore: number): QuizResult {
     'mindful-thinker': 8,
     'gentle-analyzer': 8,
     'chronic-overthinker': 9,
-    'overthinkaholic': 9,
+    overthinkaholic: 9,
   };
 
   const results: Record<OverthinkerType, Omit<QuizResult, 'score' | 'rawScore'>> = {
     'mindful-thinker': {
       type: 'mindful-thinker',
       title: 'The Mindful Thinker',
-      description:
-        'You reflect, but rarely spiral. Your thoughts work for you, not against you.',
-      insight:
-        'You have healthy awareness. Keep using it to make intentional choices.',
-      ctaHook:
-        'Take your mental clarity to the next level with the F.I.R.E. Protocol.',
+      description: 'You reflect, but rarely spiral. Your thoughts work for you, not against you.',
+      insight: 'You have healthy awareness. Keep using it to make intentional choices.',
+      ctaHook: 'Take your mental clarity to the next level with the F.I.R.E. Protocol.',
     },
     'gentle-analyzer': {
       type: 'gentle-analyzer',
       title: 'The Gentle Analyzer',
       description:
         'You think a lot; sometimes it leaks into worry. Awareness is there — you just need light guardrails.',
-      insight:
-        'Your overthinking is manageable — with the right system in place.',
-      ctaHook:
-        'Get the F.I.R.E. Protocol to turn your analysis into action.',
+      insight: 'Your overthinking is manageable — with the right system in place.',
+      ctaHook: 'Get the F.I.R.E. Protocol to turn your analysis into action.',
     },
     'chronic-overthinker': {
       type: 'chronic-overthinker',
       title: 'The Chronic Overthinker',
-      description:
-        'Your mind loops often. You crave peace, but certainty feels safer than calm.',
-      insight:
-        'You don\'t need more certainty. You need a system that works without it.',
-      ctaHook:
-        'Break the loop with the F.I.R.E. Protocol built for chronic overthinkers.',
+      description: 'Your mind loops often. You crave peace, but certainty feels safer than calm.',
+      insight: "You don't need more certainty. You need a system that works without it.",
+      ctaHook: 'Break the loop with the F.I.R.E. Protocol built for chronic overthinkers.',
     },
-    'overthinkaholic': {
+    overthinkaholic: {
       type: 'overthinkaholic',
       title: 'The Overthinkaholic',
       description:
-        'Your brain never clocks out — decisions, looks, texts, sleep. You don\'t need more plans; you need a reset ritual.',
-      insight:
-        'This isn\'t about willpower. It\'s about interrupting the pattern.',
+        "Your brain never clocks out — decisions, looks, texts, sleep. You don't need more plans; you need a reset ritual.",
+      insight: "This isn't about willpower. It's about interrupting the pattern.",
       ctaHook:
-        'Get the F.I.R.E. Protocol — the 48-hour protocol for people whose brains won\'t shut up.',
+        "Get the F.I.R.E. Protocol — the 48-hour protocol for people whose brains won't shut up.",
     },
   };
 
@@ -163,9 +154,7 @@ export async function submitQuizToSupabase(
     }));
 
     // Insert all individual answers for analytics
-    const { error: answersError } = await supabase
-      .from('quiz_answers')
-      .insert(answersData);
+    const { error: answersError } = await supabase.from('quiz_answers').insert(answersData);
 
     if (answersError) {
       console.error('Error saving quiz answers:', answersError);

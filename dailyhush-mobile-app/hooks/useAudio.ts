@@ -20,7 +20,7 @@ export function useAudio() {
         if (player && currentSource) {
           player.remove();
         }
-      } catch (err) {
+      } catch {
         // Ignore cleanup errors
       }
     };
@@ -29,27 +29,30 @@ export function useAudio() {
   /**
    * Load an audio file
    */
-  const loadAudio = useCallback(async (audioSource: AudioSource, options?: { loop?: boolean }) => {
-    setIsLoading(true);
-    setError(null);
+  const loadAudio = useCallback(
+    async (audioSource: AudioSource, options?: { loop?: boolean }) => {
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      // Replace current source
-      player.replace(audioSource);
+      try {
+        // Replace current source
+        player.replace(audioSource);
 
-      // Set looping
-      player.loop = options?.loop || false;
+        // Set looping
+        player.loop = options?.loop || false;
 
-      setCurrentSource(audioSource);
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load audio';
-      setError(errorMessage);
-      console.error('Error loading audio:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [player]);
+        setCurrentSource(audioSource);
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load audio';
+        setError(errorMessage);
+        console.error('Error loading audio:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [player]
+  );
 
   /**
    * Play the loaded audio
@@ -73,7 +76,7 @@ export function useAudio() {
       if (player && currentSource) {
         player.pause();
       }
-    } catch (err) {
+    } catch {
       // Silently handle pause errors
     }
   }, [player, currentSource]);
@@ -87,7 +90,7 @@ export function useAudio() {
         player.pause();
         player.currentTime = 0;
       }
-    } catch (err) {
+    } catch {
       // Silently handle stop errors - player may already be removed
     }
   }, [player, currentSource]);
@@ -95,15 +98,18 @@ export function useAudio() {
   /**
    * Seek to a specific position (seconds)
    */
-  const seek = useCallback((positionSeconds: number) => {
-    try {
-      if (player && currentSource) {
-        player.currentTime = positionSeconds;
+  const seek = useCallback(
+    (positionSeconds: number) => {
+      try {
+        if (player && currentSource) {
+          player.currentTime = positionSeconds;
+        }
+      } catch {
+        // Silently handle seek errors
       }
-    } catch (err) {
-      // Silently handle seek errors
-    }
-  }, [player, currentSource]);
+    },
+    [player, currentSource]
+  );
 
   /**
    * Format time for display (mm:ss)
@@ -128,6 +134,8 @@ export function useAudio() {
     error,
     formatTime,
     volume: player.volume,
-    setVolume: (volume: number) => { player.volume = volume; },
+    setVolume: (volume: number) => {
+      player.volume = volume;
+    },
   };
 }

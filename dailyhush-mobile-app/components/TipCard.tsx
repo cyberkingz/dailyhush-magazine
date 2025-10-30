@@ -9,14 +9,14 @@ import { Text } from '@/components/ui/text';
 import { colors } from '@/constants/colors';
 
 const DAILY_TIPS = [
-  "Most spirals happen in the first 10 seconds. The faster you interrupt, the easier it is to stop.",
+  'Most spirals happen in the first 10 seconds. The faster you interrupt, the easier it is to stop.',
   "Your brain can't tell the difference between a real threat and an imagined one. That's why rumination feels so urgent.",
   "Rumination isn't problem-solving. Problem-solving has a beginning, middle, and end. Rumination just loops.",
-  "The 3-3-3 rule: Name 3 things you see, 3 sounds you hear, 3 body parts you can move. Instant grounding.",
+  'The 3-3-3 rule: Name 3 things you see, 3 sounds you hear, 3 body parts you can move. Instant grounding.',
   "Spiraling at 3AM? Your brain's emotional regulation is 40% weaker when sleep-deprived.",
-  "Writing down your spiral thoughts reduces their power by 30%. Putting them on paper gets them out of your head.",
-  "Research shows 90% of what we worry about never happens. Your anxiety is not a prediction.",
-  "The average spiral lasts 30 minutes if uninterrupted. With intervention? Under 2 minutes.",
+  'Writing down your spiral thoughts reduces their power by 30%. Putting them on paper gets them out of your head.',
+  'Research shows 90% of what we worry about never happens. Your anxiety is not a prediction.',
+  'The average spiral lasts 30 minutes if uninterrupted. With intervention? Under 2 minutes.',
 ];
 
 interface TipCardProps {
@@ -50,8 +50,7 @@ export function TipCard({ style }: TipCardProps) {
           elevation: 3,
         },
         style,
-      ]}
-    >
+      ]}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
         <Sparkles size={18} color={colors.emerald[400]} strokeWidth={2} />
         <Text
@@ -60,8 +59,7 @@ export function TipCard({ style }: TipCardProps) {
             fontSize: 16,
             fontWeight: '600',
             marginLeft: 8,
-          }}
-        >
+          }}>
           Did you know?
         </Text>
       </View>
@@ -70,8 +68,7 @@ export function TipCard({ style }: TipCardProps) {
           color: colors.text.secondary,
           fontSize: 14,
           lineHeight: 20,
-        }}
-      >
+        }}>
         {getDailyTip()}
       </Text>
     </View>

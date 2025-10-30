@@ -137,9 +137,7 @@ export async function trackFIRECertified(
 /**
  * Get analytics summary for a user
  */
-export async function getAnalyticsSummary(
-  userId: string
-): Promise<{
+export async function getAnalyticsSummary(userId: string): Promise<{
   modulesStarted: number;
   modulesCompleted: number;
   totalScreensViewed: number;
@@ -165,18 +163,21 @@ export async function getAnalyticsSummary(
       };
     }
 
-    const modulesStarted = data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_STARTED).length || 0;
+    const modulesStarted =
+      data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_STARTED).length || 0;
     const modulesCompleted =
       data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_COMPLETED).length || 0;
     const totalScreensViewed =
       data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_SCREEN_VIEWED).length || 0;
 
-    const completedEvents = data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_COMPLETED) || [];
+    const completedEvents =
+      data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_COMPLETED) || [];
     const totalDuration = completedEvents.reduce(
       (sum, e) => sum + (e.event_properties?.duration_seconds || 0),
       0
     );
-    const averageSessionDuration = completedEvents.length > 0 ? totalDuration / completedEvents.length : 0;
+    const averageSessionDuration =
+      completedEvents.length > 0 ? totalDuration / completedEvents.length : 0;
 
     const isCertified = data?.some((e) => e.event_type === AnalyticsEvent.FIRE_CERTIFIED) || false;
 
@@ -233,7 +234,8 @@ export async function getModuleMetrics(
 
     const started = data?.some((e) => e.event_type === AnalyticsEvent.MODULE_STARTED) || false;
     const completed = data?.some((e) => e.event_type === AnalyticsEvent.MODULE_COMPLETED) || false;
-    const screensViewed = data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_SCREEN_VIEWED).length || 0;
+    const screensViewed =
+      data?.filter((e) => e.event_type === AnalyticsEvent.MODULE_SCREEN_VIEWED).length || 0;
     const lastAccessedAt = data?.[0]?.timestamp;
 
     return {

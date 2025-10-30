@@ -4,7 +4,7 @@
  * Simplified validation for 55-70 demographic
  */
 
-import { useRouter , Link } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {
@@ -26,11 +26,7 @@ import { AuthButton } from '@/components/auth/AuthButton';
 import { ErrorAlert } from '@/components/auth/ErrorAlert';
 import { signUpWithEmail, validateEmail, validatePassword } from '@/services/auth';
 import { useStore } from '@/store/useStore';
-import {
-  authTypography,
-  authSpacing,
-  screenLayout,
-} from '@/constants/authStyles';
+import { authTypography, authSpacing, screenLayout } from '@/constants/authStyles';
 import { colors } from '@/constants/colors';
 
 export default function SignUp() {
@@ -176,8 +172,7 @@ export default function SignUp() {
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
@@ -186,8 +181,7 @@ export default function SignUp() {
             paddingBottom: authSpacing.screenPadding.bottom,
           }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           {/* Form wrapper */}
           <View style={screenLayout.formWrapper}>
             {/* Header */}
@@ -196,8 +190,7 @@ export default function SignUp() {
                 style={{
                   ...authTypography.headline,
                   marginBottom: 10,
-                }}
-              >
+                }}>
                 Create Your Account
               </Text>
 
@@ -216,13 +209,7 @@ export default function SignUp() {
             )}
 
             {/* Error alert */}
-            {error && (
-              <ErrorAlert
-                message={error}
-                type="error"
-                onDismiss={() => setError(null)}
-              />
-            )}
+            {error && <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />}
 
             {/* Form fields */}
             <View style={{ width: '100%' as DimensionValue }}>
@@ -268,8 +255,7 @@ export default function SignUp() {
                   }}
                   disabled={loading}
                   style={legalStyles.checkboxRow}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                   {agreedToTerms ? (
                     <CheckSquare size={24} color={colors.emerald[500]} strokeWidth={2} />
                   ) : (
@@ -291,8 +277,7 @@ export default function SignUp() {
                   }}
                   disabled={loading}
                   style={legalStyles.checkboxRow}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                   {agreedToPrivacy ? (
                     <CheckSquare size={24} color={colors.emerald[500]} strokeWidth={2} />
                   ) : (
@@ -326,18 +311,19 @@ export default function SignUp() {
                 onPress={handleNavigateToLogin}
                 disabled={loading}
                 hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-                style={{ paddingVertical: 16, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}
-              >
-                <Text style={authTypography.footerText}>
-                  Already have an account?{' '}
-                </Text>
+                style={{
+                  paddingVertical: 16,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                }}>
+                <Text style={authTypography.footerText}>Already have an account? </Text>
                 <Text
                   style={{
                     ...authTypography.footerText,
                     color: '#52B788',
                     fontWeight: '600',
-                  }}
-                >
+                  }}>
                   Sign in
                 </Text>
               </Pressable>

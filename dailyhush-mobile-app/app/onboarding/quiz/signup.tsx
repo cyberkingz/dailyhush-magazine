@@ -7,7 +7,14 @@
 import { useState } from 'react';
 import { useRouter, Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Pressable, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Pressable,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Mail, Lock, Eye, EyeOff, Sparkles } from 'lucide-react-native';
@@ -123,7 +130,9 @@ export default function QuizSignup() {
 
       if (quizData && quizData.length > 0) {
         // Quiz exists but no auth account - redirect to email lookup to link it
-        setErrorMessage('Good news! You already took the quiz on our website. Let\'s link your account.');
+        setErrorMessage(
+          "Good news! You already took the quiz on our website. Let's link your account."
+        );
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
 
         setTimeout(() => {
@@ -165,20 +174,18 @@ export default function QuizSignup() {
       console.log('✅ Auth account created:', authData.user.id);
 
       // Create user profile with profile data + quiz data
-      const { error: profileError } = await supabase
-        .from('user_profiles')
-        .insert({
-          user_id: authData.user.id,
-          email: email.trim().toLowerCase(),
-          // Profile data from profile setup screen
-          name: params.profileName || null,
-          age: params.profileAge ? parseInt(params.profileAge) : null,
-          // Note: rumination_frequency not in schema - removed
-          // Quiz will be linked after results reveal
-          onboarding_completed: true, // Set to true so home screen doesn't redirect back to onboarding
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
+      const { error: profileError } = await supabase.from('user_profiles').insert({
+        user_id: authData.user.id,
+        email: email.trim().toLowerCase(),
+        // Profile data from profile setup screen
+        name: params.profileName || null,
+        age: params.profileAge ? parseInt(params.profileAge) : null,
+        // Note: rumination_frequency not in schema - removed
+        // Quiz will be linked after results reveal
+        onboarding_completed: true, // Set to true so home screen doesn't redirect back to onboarding
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
 
       if (profileError) {
         console.error('Error creating user profile:', profileError);
@@ -267,8 +274,7 @@ export default function QuizSignup() {
 
         <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <ScrollFadeView
             style={{ flex: 1 }}
             contentContainerStyle={{
@@ -282,8 +288,7 @@ export default function QuizSignup() {
             fadeHeight={48}
             fadeIntensity={0.95}
             fadeVisibility="always"
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             {/* Sparkle Icon */}
             <View style={{ alignItems: 'center', marginBottom: spacing.lg }}>
               <View
@@ -296,8 +301,7 @@ export default function QuizSignup() {
                   justifyContent: 'center',
                   borderWidth: 2,
                   borderColor: colors.emerald[600] + '40',
-                }}
-              >
+                }}>
                 <Sparkles size={40} color={colors.emerald[500]} strokeWidth={2} />
               </View>
             </View>
@@ -311,8 +315,7 @@ export default function QuizSignup() {
                 textAlign: 'center',
                 marginBottom: spacing.sm,
                 lineHeight: 36,
-              }}
-            >
+              }}>
               {QUIZ_REVEAL_CONFIG.TEASER_TITLE}
             </Text>
 
@@ -324,8 +327,7 @@ export default function QuizSignup() {
                 textAlign: 'center',
                 lineHeight: 26,
                 marginBottom: spacing.xl,
-              }}
-            >
+              }}>
               {QUIZ_REVEAL_CONFIG.TEASER_DESCRIPTION}
             </Text>
 
@@ -337,8 +339,7 @@ export default function QuizSignup() {
                   fontWeight: '600',
                   color: colors.text.primary,
                   marginBottom: spacing.sm,
-                }}
-              >
+                }}>
                 Email Address
               </Text>
               <View style={{ position: 'relative' }}>
@@ -391,8 +392,7 @@ export default function QuizSignup() {
                     fontWeight: '600',
                     color: '#EF4444',
                     marginTop: spacing.xs,
-                  }}
-                >
+                  }}>
                   {emailError}
                 </Text>
               )}
@@ -406,8 +406,7 @@ export default function QuizSignup() {
                   fontWeight: '600',
                   color: colors.text.primary,
                   marginBottom: spacing.sm,
-                }}
-              >
+                }}>
                 Create Password
               </Text>
               <View style={{ position: 'relative' }}>
@@ -466,8 +465,7 @@ export default function QuizSignup() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: 48,
-                  }}
-                >
+                  }}>
                   {showPassword ? (
                     <EyeOff size={24} color={colors.text.secondary} strokeWidth={2} />
                   ) : (
@@ -482,8 +480,7 @@ export default function QuizSignup() {
                     fontWeight: '600',
                     color: '#EF4444',
                     marginTop: spacing.xs,
-                  }}
-                >
+                  }}>
                   {passwordError}
                 </Text>
               )}
@@ -499,16 +496,14 @@ export default function QuizSignup() {
                   marginBottom: spacing.lg,
                   borderWidth: 1,
                   borderColor: '#EF4444' + '40',
-                }}
-              >
+                }}>
                 <Text
                   style={{
                     fontSize: 15,
                     fontWeight: '600',
                     color: '#EF4444',
                     textAlign: 'center',
-                  }}
-                >
+                  }}>
                   {errorMessage}
                 </Text>
               </View>
@@ -529,8 +524,7 @@ export default function QuizSignup() {
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
                 elevation: 6,
-              }}
-            >
+              }}>
               {({ pressed }) => (
                 <View
                   style={{
@@ -538,8 +532,7 @@ export default function QuizSignup() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     opacity: pressed && !isCreating ? 0.9 : 1,
-                  }}
-                >
+                  }}>
                   {isCreating ? (
                     <>
                       <ActivityIndicator size="small" color={colors.white} />
@@ -549,8 +542,7 @@ export default function QuizSignup() {
                           fontWeight: 'bold',
                           color: colors.white,
                           marginLeft: 12,
-                        }}
-                      >
+                        }}>
                         Creating Account...
                       </Text>
                     </>
@@ -567,8 +559,7 @@ export default function QuizSignup() {
                           fontSize: 20,
                           fontWeight: 'bold',
                           color: colors.white,
-                        }}
-                      >
+                        }}>
                         Unlock My Results
                       </Text>
                     </>
@@ -585,16 +576,14 @@ export default function QuizSignup() {
                 padding: spacing.md,
                 borderWidth: 1,
                 borderColor: colors.emerald[700] + '40',
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: 14,
                   color: colors.emerald[200],
                   textAlign: 'center',
                   lineHeight: 20,
-                }}
-              >
+                }}>
                 🔒 Your data is private and secure. We never share your information.
               </Text>
             </View>

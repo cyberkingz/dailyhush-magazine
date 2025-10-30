@@ -17,12 +17,7 @@ interface QuizQuestionProps {
   onSelect: (optionId: string, value: number) => void;
 }
 
-export function QuizQuestion({
-  question,
-  options,
-  selectedOptionId,
-  onSelect,
-}: QuizQuestionProps) {
+export function QuizQuestion({ question, options, selectedOptionId, onSelect }: QuizQuestionProps) {
   const handleSelect = (option: QuizOption) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onSelect(option.id, option.value);
@@ -38,8 +33,7 @@ export function QuizQuestion({
           color: colors.text.primary,
           marginBottom: 24,
           lineHeight: 30,
-        }}
-      >
+        }}>
         {question}
       </Text>
 
@@ -57,9 +51,7 @@ export function QuizQuestion({
               accessibilityState={{ checked: isSelected }}
               testID={`quiz-option-${option.id}`}
               style={{
-                backgroundColor: isSelected
-                  ? colors.emerald[700] + '40'
-                  : colors.background.card,
+                backgroundColor: isSelected ? colors.emerald[700] + '40' : colors.background.card,
                 borderRadius: 16,
                 paddingVertical: 18,
                 paddingHorizontal: 20,
@@ -67,11 +59,8 @@ export function QuizQuestion({
                 flexDirection: 'row',
                 alignItems: 'center',
                 borderWidth: 2,
-                borderColor: isSelected
-                  ? colors.emerald[600]
-                  : colors.emerald[800] + '30',
-              }}
-            >
+                borderColor: isSelected ? colors.emerald[600] : colors.emerald[800] + '30',
+              }}>
               {({ pressed }) => (
                 <>
                   {/* Radio Button */}
@@ -81,18 +70,13 @@ export function QuizQuestion({
                       height: 24,
                       borderRadius: 12,
                       borderWidth: 2,
-                      borderColor: isSelected
-                        ? colors.emerald[500]
-                        : colors.text.secondary + '60',
-                      backgroundColor: isSelected
-                        ? colors.emerald[600]
-                        : 'transparent',
+                      borderColor: isSelected ? colors.emerald[500] : colors.text.secondary + '60',
+                      backgroundColor: isSelected ? colors.emerald[600] : 'transparent',
                       marginRight: 16,
                       alignItems: 'center',
                       justifyContent: 'center',
                       opacity: pressed ? 0.8 : 1,
-                    }}
-                  >
+                    }}>
                     {isSelected && (
                       <View
                         style={{
@@ -110,13 +94,10 @@ export function QuizQuestion({
                     style={{
                       flex: 1,
                       fontSize: 17,
-                      color: isSelected
-                        ? colors.text.primary
-                        : colors.text.secondary,
+                      color: isSelected ? colors.text.primary : colors.text.secondary,
                       lineHeight: 24,
                       opacity: pressed ? 0.8 : 1,
-                    }}
-                  >
+                    }}>
                     {option.text}
                   </Text>
                 </>

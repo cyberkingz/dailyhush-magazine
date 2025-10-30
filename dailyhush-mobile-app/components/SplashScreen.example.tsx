@@ -17,12 +17,7 @@ export function BasicSplashExample() {
   const [isReady, setIsReady] = useState(false);
 
   if (!isReady) {
-    return (
-      <SplashScreen
-        onAnimationComplete={() => setIsReady(true)}
-        showLoading={true}
-      />
-    );
+    return <SplashScreen onAnimationComplete={() => setIsReady(true)} showLoading={true} />;
   }
 
   return <View>{/* Your main app content */}</View>;
@@ -39,14 +34,10 @@ export function AsyncInitializationExample() {
     const initializeApp = async () => {
       try {
         // Simulate async operations
-        await Promise.all([
-          loadUserData(),
-          loadSettings(),
-          loadSubscriptionStatus(),
-        ]);
+        await Promise.all([loadUserData(), loadSettings(), loadSubscriptionStatus()]);
 
         // Wait a bit to ensure smooth transition
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         setAppState('ready');
       } catch (error) {
@@ -186,12 +177,7 @@ export function AnalyticsTrackingExample() {
   };
 
   if (!isReady) {
-    return (
-      <SplashScreen
-        onAnimationComplete={handleSplashComplete}
-        showLoading={true}
-      />
-    );
+    return <SplashScreen onAnimationComplete={handleSplashComplete} showLoading={true} />;
   }
 
   return <View>{/* Your main app content */}</View>;
@@ -214,12 +200,7 @@ export function FeatureFlagExample() {
 
   if (!isReady) {
     if (useNewSplash) {
-      return (
-        <SplashScreen
-          onAnimationComplete={() => setIsReady(true)}
-          showLoading={true}
-        />
-      );
+      return <SplashScreen onAnimationComplete={() => setIsReady(true)} showLoading={true} />;
     } else {
       // Fall back to old splash or simple screen
       return <View>{/* Legacy splash screen */}</View>;
@@ -268,11 +249,7 @@ export function ExpoRouterLayoutExample() {
   }
 
   // Return your normal Stack/Tabs layout
-  return (
-    <>
-      {/* Your Expo Router Stack/Tabs */}
-    </>
-  );
+  return <>{/* Your Expo Router Stack/Tabs */}</>;
 }
 
 // ============================================================================
@@ -280,39 +257,39 @@ export function ExpoRouterLayoutExample() {
 // ============================================================================
 
 async function loadUserData() {
-  return new Promise(resolve => setTimeout(resolve, 800));
+  return new Promise((resolve) => setTimeout(resolve, 800));
 }
 
 async function loadSettings() {
-  return new Promise(resolve => setTimeout(resolve, 500));
+  return new Promise((resolve) => setTimeout(resolve, 500));
 }
 
 async function loadSubscriptionStatus() {
-  return new Promise(resolve => setTimeout(resolve, 600));
+  return new Promise((resolve) => setTimeout(resolve, 600));
 }
 
 async function loadAppData() {
-  return new Promise(resolve => setTimeout(resolve, 1500));
+  return new Promise((resolve) => setTimeout(resolve, 1500));
 }
 
 async function loadCriticalData() {
-  return new Promise(resolve => setTimeout(resolve, 1000));
+  return new Promise((resolve) => setTimeout(resolve, 1000));
 }
 
 async function restoreSession() {
-  return new Promise(resolve => setTimeout(resolve, 700));
+  return new Promise((resolve) => setTimeout(resolve, 700));
 }
 
 async function loadUserPreferences() {
-  return new Promise(resolve => setTimeout(resolve, 400));
+  return new Promise((resolve) => setTimeout(resolve, 400));
 }
 
 async function checkSubscription() {
-  return new Promise(resolve => setTimeout(resolve, 600));
+  return new Promise((resolve) => setTimeout(resolve, 600));
 }
 
 async function checkFeatureFlag(flag: string): Promise<boolean> {
-  return new Promise(resolve => setTimeout(() => resolve(true), 100));
+  return new Promise((resolve) => setTimeout(() => resolve(true), 100));
 }
 
 function trackEvent(eventName: string, properties?: Record<string, any>) {

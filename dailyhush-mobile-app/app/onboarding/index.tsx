@@ -21,10 +21,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
-import { Clock, Brain, Sparkles, Check, ArrowRight, Lock } from 'lucide-react-native';
+import { Clock, Sparkles, Check, ArrowRight, Lock } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
-import { ProgressIndicator } from '@/components/ProgressIndicator';
 import { TopBar } from '@/components/TopBar';
 import { useStore } from '@/store/useStore';
 import { supabase } from '@/utils/supabase';
@@ -47,7 +46,7 @@ export default function Onboarding() {
   const router = useRouter();
   const params = useLocalSearchParams<{ completed?: string }>();
   const insets = useSafeAreaInsets();
-  const { user, setUser } = useStore();
+  const { setUser } = useStore();
 
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('welcome');
   const [assessmentData, setAssessmentData] = useState<AssessmentData>({});
@@ -131,14 +130,6 @@ export default function Onboarding() {
   }, [params.completed]);
 
   /**
-   * Get current step number for progress indicator
-   */
-  const getStepNumber = () => {
-    const steps: OnboardingStep[] = ['welcome', 'demo', 'assessment', 'shift', 'complete'];
-    return steps.indexOf(currentStep) + 1;
-  };
-
-  /**
    * Get total steps (conditional based on Shift ownership)
    */
   const getTotalSteps = () => {
@@ -214,7 +205,9 @@ export default function Onboarding() {
     try {
       // Get the actual authenticated user ID from Supabase
       // This is critical to match what RLS policies check against
-      let { data: { user: authUser } } = await supabase.auth.getUser();
+      let {
+        data: { user: authUser },
+      } = await supabase.auth.getUser();
 
       // If no auth session exists yet, create anonymous session
       if (!authUser) {
@@ -240,7 +233,12 @@ export default function Onboarding() {
       }
 
       const actualUserId = authUser.id;
-      console.log('Completing onboarding for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
+      console.log(
+        'Completing onboarding for user:',
+        actualUserId,
+        'isAnonymous:',
+        authUser.is_anonymous
+      );
 
       // Create user profile for local store
       const newUserProfile: UserProfile = {
@@ -321,11 +319,11 @@ export default function Onboarding() {
         {/* Gradient overlay to smoothly blend with background */}
         <LinearGradient
           colors={[
-            'rgba(10, 22, 18, 0)',      // Transparent
-            'rgba(10, 22, 18, 0.3)',    // 30%
-            'rgba(10, 22, 18, 0.6)',    // 60%
-            'rgba(10, 22, 18, 0.9)',    // 90%
-            colors.background.primary    // Full solid
+            'rgba(10, 22, 18, 0)', // Transparent
+            'rgba(10, 22, 18, 0.3)', // 30%
+            'rgba(10, 22, 18, 0.6)', // 60%
+            'rgba(10, 22, 18, 0.9)', // 90%
+            colors.background.primary, // Full solid
           ]}
           locations={[0, 0.3, 0.6, 0.85, 1]}
           start={{ x: 0.5, y: 0 }}
@@ -342,13 +340,12 @@ export default function Onboarding() {
 
       {/* Content - Centered, minimal */}
       <View
-        className="flex-1 justify-center items-center"
+        className="flex-1 items-center justify-center"
         style={{
           paddingHorizontal: 32,
           paddingTop: insets.top + 32,
-          paddingBottom: insets.bottom + 48
-        }}
-      >
+          paddingBottom: insets.bottom + 48,
+        }}>
         {/* Main content centered */}
         <View className="items-center" style={{ flex: 1, justifyContent: 'center', maxWidth: 400 }}>
           {/* DailyHush Logo */}
@@ -365,28 +362,26 @@ export default function Onboarding() {
 
           {/* Headline - Clear benefit, 2 lines max */}
           <Text
-            className="text-center mb-4"
+            className="mb-4 text-center"
             style={{
               color: colors.text.primary,
               fontSize: 32,
               lineHeight: 42,
               letterSpacing: 0.3,
               fontFamily: 'Poppins_600SemiBold',
-            }}
-          >
+            }}>
             Quiet Your Mind{'\n'}in 90 Seconds
           </Text>
 
           {/* Subheadline - What it does, no medical claims */}
           <Text
-            className="text-center mb-2"
+            className="mb-2 text-center"
             style={{
               color: colors.text.secondary,
               fontSize: 18,
               lineHeight: 28,
               fontFamily: 'Inter_400Regular',
-            }}
-          >
+            }}>
             A gentle technique to interrupt{'\n'}repetitive thoughts and find calm
           </Text>
         </View>
@@ -398,16 +393,14 @@ export default function Onboarding() {
             style={{
               alignItems: 'center',
               marginBottom: 20,
-            }}
-          >
+            }}>
             {/* Privacy badge */}
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginBottom: 4,
-              }}
-            >
+              }}>
               <Lock size={16} color={colors.emerald[400]} strokeWidth={2} />
               <Text
                 style={{
@@ -415,8 +408,7 @@ export default function Onboarding() {
                   fontSize: 16,
                   marginLeft: 8,
                   fontFamily: 'Inter_500Medium',
-                }}
-              >
+                }}>
                 100% Private • No Signup
               </Text>
             </View>
@@ -428,8 +420,7 @@ export default function Onboarding() {
                 fontSize: 14,
                 opacity: 0.7,
                 fontFamily: 'Inter_400Regular',
-              }}
-            >
+              }}>
               Join thousands finding their calm
             </Text>
           </View>
@@ -448,16 +439,14 @@ export default function Onboarding() {
               shadowOpacity: 0.4,
               shadowRadius: 16,
               elevation: 8,
-            }}
-          >
+            }}>
             <Text
               style={{
                 color: colors.white,
                 fontSize: 19,
                 fontFamily: 'Poppins_600SemiBold',
                 letterSpacing: 0.3,
-              }}
-            >
+              }}>
               Start Your Free Session
             </Text>
           </Pressable>
@@ -473,22 +462,19 @@ export default function Onboarding() {
             style={{
               minHeight: 56,
               paddingVertical: 16,
-            }}
-          >
+            }}>
             <Text
               style={{
                 color: colors.text.secondary,
                 fontSize: 16,
                 fontFamily: 'Inter_400Regular',
-              }}
-            >
+              }}>
               Already have an account?{' '}
               <Text
                 style={{
                   color: colors.emerald[500],
                   fontFamily: 'Inter_600SemiBold',
-                }}
-              >
+                }}>
                 Sign in
               </Text>
             </Text>
@@ -512,31 +498,41 @@ export default function Onboarding() {
       />
 
       {/* Content - Fixed height, no scroll */}
-      <View className="flex-1 px-5 justify-between" style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
+      <View
+        className="flex-1 justify-between px-5"
+        style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
         <View>
-          <Text className="text-3xl font-bold mb-2" style={{ color: colors.text.primary }}>
+          <Text className="mb-2 text-3xl font-bold" style={{ color: colors.text.primary }}>
             We Get It
           </Text>
-          <Text className="text-sm mb-8 leading-relaxed" style={{ color: colors.text.secondary }}>
+          <Text className="mb-8 text-sm leading-relaxed" style={{ color: colors.text.secondary }}>
             Try the 90-second protocol right now. No signup. No commitment. Just relief.
           </Text>
 
           {/* Demo Card - Compact */}
-          <View className="rounded-2xl p-6 mb-6 items-center" style={{ backgroundColor: colors.background.secondary }}>
-            <View className="p-5 rounded-full mb-4" style={{ backgroundColor: colors.button.primary + '20' }}>
+          <View
+            className="mb-6 items-center rounded-2xl p-6"
+            style={{ backgroundColor: colors.background.secondary }}>
+            <View
+              className="mb-4 rounded-full p-5"
+              style={{ backgroundColor: colors.button.primary + '20' }}>
               <Clock size={52} color={colors.emerald[400]} strokeWidth={2} />
             </View>
 
-            <Text className="text-xl font-bold text-center mb-3" style={{ color: colors.text.primary }}>
+            <Text
+              className="mb-3 text-center text-xl font-bold"
+              style={{ color: colors.text.primary }}>
               Break The Loop
             </Text>
 
-            <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.secondary }}>
+            <Text
+              className="text-center text-sm leading-relaxed"
+              style={{ color: colors.text.secondary }}>
               Used by 50,000+ women. Interrupts shame-driven rumination in 90 seconds.
             </Text>
           </View>
 
-          <Text className="text-xs text-center mb-3" style={{ color: colors.emerald[400] }}>
+          <Text className="mb-3 text-center text-xs" style={{ color: colors.emerald[400] }}>
             Recommended - see what makes DailyHush different
           </Text>
         </View>
@@ -549,12 +545,11 @@ export default function Onboarding() {
               await stopBackgroundMusic();
               router.push('/spiral?from=onboarding' as any);
             }}
-            className="rounded-2xl items-center justify-center active:opacity-90 mb-3"
+            className="mb-3 items-center justify-center rounded-2xl active:opacity-90"
             style={{
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
-            }}
-          >
+            }}>
             <Text className="text-lg font-bold" style={{ color: colors.white }}>
               Try It Now (90 seconds)
             </Text>
@@ -562,9 +557,8 @@ export default function Onboarding() {
 
           <Pressable
             onPress={nextStep}
-            className="rounded-2xl items-center justify-center active:opacity-80"
-            style={{ height: spacing.button.heightSmall }}
-          >
+            className="items-center justify-center rounded-2xl active:opacity-80"
+            style={{ height: spacing.button.heightSmall }}>
             <Text className="text-base font-semibold" style={{ color: colors.text.secondary }}>
               I&apos;ll try this later
             </Text>
@@ -581,8 +575,7 @@ export default function Onboarding() {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ backgroundColor: colors.background.primary }}
-    >
+      style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       <TopBar
@@ -593,16 +586,16 @@ export default function Onboarding() {
 
       {/* Content */}
       <View className="flex-1 px-5" style={{ paddingTop: 20, paddingBottom: insets.bottom + 16 }}>
-        <Text className="text-2xl font-bold mb-1" style={{ color: colors.text.primary }}>
+        <Text className="mb-1 text-2xl font-bold" style={{ color: colors.text.primary }}>
           Know Your Patterns
         </Text>
-        <Text className="text-sm mb-5" style={{ color: colors.text.secondary }}>
+        <Text className="mb-5 text-sm" style={{ color: colors.text.secondary }}>
           Optional - but this helps us help you better
         </Text>
 
         {/* Question 1: Age - Compact */}
         <View className="mb-4">
-          <Text className="text-sm font-semibold mb-1" style={{ color: colors.text.primary }}>
+          <Text className="mb-1 text-sm font-semibold" style={{ color: colors.text.primary }}>
             What&apos;s your age?
           </Text>
           <TextInput
@@ -626,7 +619,7 @@ export default function Onboarding() {
 
         {/* Question 2: Rumination - Compact */}
         <View className="mb-4">
-          <Text className="text-sm font-semibold mb-1" style={{ color: colors.text.primary }}>
+          <Text className="mb-1 text-sm font-semibold" style={{ color: colors.text.primary }}>
             How often does your mind replay conversations? (1-10)
           </Text>
           <View className="flex-row flex-wrap gap-1.5">
@@ -638,34 +631,38 @@ export default function Onboarding() {
                   setAssessmentData({ ...assessmentData, quizScore: num });
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 }}
-                className="rounded-xl items-center justify-center"
+                className="items-center justify-center rounded-xl"
                 style={{
                   width: 56,
                   height: 56,
                   backgroundColor:
-                    selectedQuizAnswer === num ? colors.button.primary : colors.background.secondary,
-                }}
-              >
+                    selectedQuizAnswer === num
+                      ? colors.button.primary
+                      : colors.background.secondary,
+                }}>
                 <Text
                   className="text-lg font-bold"
                   style={{
                     color: selectedQuizAnswer === num ? colors.white : colors.text.primary,
-                  }}
-                >
+                  }}>
                   {num}
                 </Text>
               </Pressable>
             ))}
           </View>
-          <View className="flex-row justify-between mt-1">
-            <Text className="text-xs" style={{ color: colors.text.secondary }}>Rarely</Text>
-            <Text className="text-xs" style={{ color: colors.text.secondary }}>Daily</Text>
+          <View className="mt-1 flex-row justify-between">
+            <Text className="text-xs" style={{ color: colors.text.secondary }}>
+              Rarely
+            </Text>
+            <Text className="text-xs" style={{ color: colors.text.secondary }}>
+              Daily
+            </Text>
           </View>
         </View>
 
         {/* Question 3: Shift Necklace */}
         <View className="mb-5">
-          <Text className="text-sm font-semibold mb-2" style={{ color: colors.text.primary }}>
+          <Text className="mb-2 text-sm font-semibold" style={{ color: colors.text.primary }}>
             Do you have The Shift necklace?
           </Text>
           <View className="flex-row gap-2">
@@ -674,21 +671,19 @@ export default function Onboarding() {
                 setAssessmentData({ ...assessmentData, hasShiftNecklace: true });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
-              className="flex-1 rounded-xl p-3 items-center"
+              className="flex-1 items-center rounded-xl p-3"
               style={{
                 backgroundColor:
                   assessmentData.hasShiftNecklace === true
                     ? colors.button.primary
                     : colors.background.secondary,
-              }}
-            >
+              }}>
               <Text
                 className="text-sm font-semibold"
                 style={{
                   color:
                     assessmentData.hasShiftNecklace === true ? colors.white : colors.text.primary,
-                }}
-              >
+                }}>
                 Yes
               </Text>
             </Pressable>
@@ -698,21 +693,19 @@ export default function Onboarding() {
                 setAssessmentData({ ...assessmentData, hasShiftNecklace: false });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
-              className="flex-1 rounded-xl p-3 items-center"
+              className="flex-1 items-center rounded-xl p-3"
               style={{
                 backgroundColor:
                   assessmentData.hasShiftNecklace === false
                     ? colors.button.primary
                     : colors.background.secondary,
-              }}
-            >
+              }}>
               <Text
                 className="text-sm font-semibold"
                 style={{
                   color:
                     assessmentData.hasShiftNecklace === false ? colors.white : colors.text.primary,
-                }}
-              >
+                }}>
                 No
               </Text>
             </Pressable>
@@ -726,12 +719,11 @@ export default function Onboarding() {
         <View>
           <Pressable
             onPress={nextStep}
-            className="rounded-2xl items-center justify-center active:opacity-90 mb-2"
+            className="mb-2 items-center justify-center rounded-2xl active:opacity-90"
             style={{
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
-            }}
-          >
+            }}>
             <Text className="text-lg font-bold" style={{ color: colors.white }}>
               Continue
             </Text>
@@ -739,9 +731,8 @@ export default function Onboarding() {
 
           <Pressable
             onPress={skipAssessment}
-            className="rounded-2xl items-center justify-center active:opacity-80"
-            style={{ height: spacing.button.heightSmall }}
-          >
+            className="items-center justify-center rounded-2xl active:opacity-80"
+            style={{ height: spacing.button.heightSmall }}>
             <Text className="text-sm font-semibold" style={{ color: colors.text.secondary }}>
               Skip for now
             </Text>
@@ -758,41 +749,46 @@ export default function Onboarding() {
     <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
-      <TopBar
-        showBack
-        onBackPress={previousStep}
-        progressDots={{ current: 4, total: 5 }}
-      />
+      <TopBar showBack onBackPress={previousStep} progressDots={{ current: 4, total: 5 }} />
 
       {/* Content - Fixed height, no scroll */}
-      <View className="flex-1 px-5 justify-between" style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
+      <View
+        className="flex-1 justify-between px-5"
+        style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
         <View>
-          <Text className="text-3xl font-bold mb-2" style={{ color: colors.text.primary }}>
+          <Text className="mb-2 text-3xl font-bold" style={{ color: colors.text.primary }}>
             Pair Your Shift
           </Text>
-          <Text className="text-sm mb-8" style={{ color: colors.text.secondary }}>
+          <Text className="mb-8 text-sm" style={{ color: colors.text.secondary }}>
             Connect your Shift necklace for instant calm anywhere
           </Text>
 
           {/* Shift Card - Compact */}
-          <View className="rounded-2xl p-6 mb-6 items-center" style={{ backgroundColor: colors.background.secondary }}>
-            <View className="p-5 rounded-full mb-4" style={{ backgroundColor: colors.button.primary + '20' }}>
+          <View
+            className="mb-6 items-center rounded-2xl p-6"
+            style={{ backgroundColor: colors.background.secondary }}>
+            <View
+              className="mb-4 rounded-full p-5"
+              style={{ backgroundColor: colors.button.primary + '20' }}>
               <Sparkles size={52} color={colors.emerald[400]} strokeWidth={2} />
             </View>
 
-            <Text className="text-xl font-bold text-center mb-3" style={{ color: colors.text.primary }}>
+            <Text
+              className="mb-3 text-center text-xl font-bold"
+              style={{ color: colors.text.primary }}>
               The Shift Necklace
             </Text>
 
-            <Text className="text-sm text-center leading-relaxed mb-5" style={{ color: colors.text.secondary }}>
+            <Text
+              className="mb-5 text-center text-sm leading-relaxed"
+              style={{ color: colors.text.secondary }}>
               Gentle vibrations guide your breathing. Works silently, even in public.
             </Text>
 
             <Pressable
               onPress={() => router.push('/shift-pairing' as any)}
-              className="w-full rounded-2xl p-4 items-center active:opacity-90"
-              style={{ backgroundColor: colors.button.primary }}
-            >
+              className="w-full items-center rounded-2xl p-4 active:opacity-90"
+              style={{ backgroundColor: colors.button.primary }}>
               <Text className="text-base font-bold" style={{ color: colors.white }}>
                 Pair Now via Bluetooth
               </Text>
@@ -803,12 +799,11 @@ export default function Onboarding() {
         {/* Continue Button - Bottom */}
         <Pressable
           onPress={nextStep}
-          className="rounded-2xl items-center justify-center active:opacity-90"
+          className="items-center justify-center rounded-2xl active:opacity-90"
           style={{
             backgroundColor: colors.background.secondary,
             height: spacing.button.height,
-          }}
-        >
+          }}>
           <Text className="text-lg font-bold" style={{ color: colors.text.primary }}>
             I&apos;ll Pair Later
           </Text>
@@ -824,38 +819,40 @@ export default function Onboarding() {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ backgroundColor: colors.background.primary, paddingTop: insets.top + 16 }}
-    >
+      style={{ backgroundColor: colors.background.primary, paddingTop: insets.top + 16 }}>
       <StatusBar style="light" />
 
       {/* Content */}
-      <View className="flex-1 px-5 justify-between" style={{ paddingBottom: insets.bottom + 20 }}>
+      <View className="flex-1 justify-between px-5" style={{ paddingBottom: insets.bottom + 20 }}>
         <View>
           {/* Success Icon - Compact */}
-          <View className="items-center mb-8">
+          <View className="mb-8 items-center">
             <View
-              className="w-24 h-24 rounded-full items-center justify-center mb-6"
-              style={{ backgroundColor: colors.background.tertiary }}
-            >
+              className="mb-6 h-24 w-24 items-center justify-center rounded-full"
+              style={{ backgroundColor: colors.background.tertiary }}>
               <Check size={52} color={colors.emerald[100]} strokeWidth={3} />
             </View>
 
-            <Text className="text-3xl font-bold text-center mb-3" style={{ color: colors.text.primary }}>
+            <Text
+              className="mb-3 text-center text-3xl font-bold"
+              style={{ color: colors.text.primary }}>
               You&apos;re All Set!
             </Text>
 
-            <Text className="text-sm text-center leading-relaxed mb-6" style={{ color: colors.text.secondary }}>
+            <Text
+              className="mb-6 text-center text-sm leading-relaxed"
+              style={{ color: colors.text.secondary }}>
               DailyHush is ready to help you find peace of mind
             </Text>
           </View>
 
           {/* Name Input */}
           <View className="mb-6">
-            <Text className="text-sm text-center mb-2" style={{ color: colors.text.secondary }}>
+            <Text className="mb-2 text-center text-sm" style={{ color: colors.text.secondary }}>
               What should we call you? (optional)
             </Text>
             <TextInput
-              className="rounded-xl px-4 text-base text-center"
+              className="rounded-xl px-4 text-center text-base"
               style={{
                 backgroundColor: colors.background.secondary,
                 color: colors.text.primary,
@@ -873,16 +870,21 @@ export default function Onboarding() {
           </View>
 
           {/* Reminder Card */}
-          <View className="rounded-xl p-5 mb-4" style={{ backgroundColor: colors.background.secondary }}>
-            <Text className="text-sm text-center leading-relaxed" style={{ color: colors.text.primary }}>
-              Tap the big &quot;I&apos;M SPIRALING&quot; button anytime you need help. We&apos;ll be there in 90 seconds.
+          <View
+            className="mb-4 rounded-xl p-5"
+            style={{ backgroundColor: colors.background.secondary }}>
+            <Text
+              className="text-center text-sm leading-relaxed"
+              style={{ color: colors.text.primary }}>
+              Tap the big &quot;I&apos;M SPIRALING&quot; button anytime you need help. We&apos;ll be
+              there in 90 seconds.
             </Text>
           </View>
 
           {/* Privacy Note */}
           <View className="flex-row items-center justify-center">
             <Lock size={12} color={colors.emerald[400]} strokeWidth={2} />
-            <Text className="text-xs ml-1.5 text-center" style={{ color: colors.text.secondary }}>
+            <Text className="ml-1.5 text-center text-xs" style={{ color: colors.text.secondary }}>
               Your anonymous profile is saved.
             </Text>
           </View>
@@ -891,14 +893,13 @@ export default function Onboarding() {
         {/* Start Button - Bottom */}
         <Pressable
           onPress={completeOnboarding}
-          className="rounded-2xl items-center justify-center active:opacity-90"
+          className="items-center justify-center rounded-2xl active:opacity-90"
           style={{
             backgroundColor: colors.button.primary,
             height: spacing.button.height,
-          }}
-        >
+          }}>
           <View className="flex-row items-center">
-            <Text className="text-lg font-bold mr-2" style={{ color: colors.white }}>
+            <Text className="mr-2 text-lg font-bold" style={{ color: colors.white }}>
               Start Using DailyHush
             </Text>
             <ArrowRight size={20} color={colors.white} strokeWidth={3} />

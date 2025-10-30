@@ -19,16 +19,16 @@ export function CrisisSupport() {
       style={{
         borderTopColor: colors.status.warning + '33',
         backgroundColor: colors.background.primary,
-      }}
-    >
-      <Pressable
-        onPress={handleCrisisCall}
-        className="flex-row items-center active:opacity-70"
-      >
+      }}>
+      <Pressable onPress={handleCrisisCall} className="flex-row items-center active:opacity-70">
         <AlertCircle size={16} color={colors.status.warning} strokeWidth={2} />
-        <View className="flex-1 ml-2">
+        <View className="ml-2 flex-1">
           <Text className="text-xs leading-relaxed" style={{ color: colors.text.secondary }}>
-            In crisis? Call <Text className="font-bold" style={{ color: colors.status.warning }}>988</Text> for immediate help
+            In crisis? Call{' '}
+            <Text className="font-bold" style={{ color: colors.status.warning }}>
+              988
+            </Text>{' '}
+            for immediate help
           </Text>
         </View>
       </Pressable>

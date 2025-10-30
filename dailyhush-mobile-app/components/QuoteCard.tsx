@@ -49,8 +49,7 @@ export function QuoteCard() {
             shadowOpacity: 0.3,
             shadowRadius: 8,
             elevation: 4,
-          }}
-        >
+          }}>
           <Quote size={22} color={categoryColors[quote.category]} strokeWidth={2.5} />
         </View>
 
@@ -65,8 +64,7 @@ export function QuoteCard() {
               paddingVertical: 4,
               borderRadius: 8,
               marginBottom: 12,
-            }}
-          >
+            }}>
             <Text
               style={{
                 fontSize: 11,
@@ -74,8 +72,7 @@ export function QuoteCard() {
                 color: categoryColors[quote.category],
                 textTransform: 'uppercase',
                 letterSpacing: 0.5,
-              }}
-            >
+              }}>
               {categoryLabels[quote.category]}
             </Text>
           </View>
@@ -89,8 +86,7 @@ export function QuoteCard() {
               fontStyle: 'italic',
               fontWeight: '500',
               marginBottom: quote.author ? 12 : 0,
-            }}
-          >
+            }}>
             "{quote.text}"
           </Text>
 
@@ -101,8 +97,7 @@ export function QuoteCard() {
                 fontSize: 13,
                 color: colors.text.secondary,
                 fontWeight: '500',
-              }}
-            >
+              }}>
               — {quote.author}
             </Text>
           )}
@@ -114,8 +109,7 @@ export function QuoteCard() {
               color: colors.text.secondary,
               marginTop: 12,
               opacity: 0.7,
-            }}
-          >
+            }}>
             Daily wisdom • Refreshes tomorrow
           </Text>
         </View>

@@ -21,17 +21,10 @@ import * as Haptics from 'expo-haptics';
 import { AuthButton } from '@/components/auth/AuthButton';
 import { ErrorAlert } from '@/components/auth/ErrorAlert';
 import { signInAnonymously, getSession } from '@/services/auth';
-import { useStore } from '@/store/useStore';
-import {
-  authTypography,
-  authSpacing,
-  screenLayout,
-} from '@/constants/authStyles';
-import { colors } from '@/constants/colors';
+import { authTypography, authSpacing, screenLayout } from '@/constants/authStyles';
 
 export default function AuthChoice() {
   const router = useRouter();
-  const { setUser } = useStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -100,8 +93,7 @@ export default function AuthChoice() {
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
@@ -110,8 +102,7 @@ export default function AuthChoice() {
             paddingBottom: authSpacing.screenPadding.bottom,
           }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           {/* Centered content wrapper */}
           <View style={screenLayout.centerWrapper}>
             {/* Header section */}
@@ -121,8 +112,7 @@ export default function AuthChoice() {
                   ...authTypography.headline,
                   textAlign: 'center',
                   marginBottom: authSpacing.headlineToSubhead,
-                }}
-              >
+                }}>
                 Want to Save Your Progress?
               </Text>
 
@@ -131,20 +121,13 @@ export default function AuthChoice() {
                   ...authTypography.subheadline,
                   textAlign: 'center',
                   maxWidth: 320,
-                }}
-              >
+                }}>
                 Your patterns and insights will be safely stored
               </Text>
             </View>
 
             {/* Error alert */}
-            {error && (
-              <ErrorAlert
-                message={error}
-                type="error"
-                onDismiss={() => setError(null)}
-              />
-            )}
+            {error && <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />}
 
             {/* Button section */}
             <View style={{ width: '100%' as DimensionValue }}>
@@ -162,8 +145,7 @@ export default function AuthChoice() {
                   flexDirection: 'row',
                   alignItems: 'center',
                   marginVertical: 20,
-                }}
-              >
+                }}>
                 <View
                   style={{
                     flex: 1,
@@ -177,8 +159,7 @@ export default function AuthChoice() {
                     fontSize: 15,
                     color: '#95B8A8',
                     fontWeight: '500',
-                  }}
-                >
+                  }}>
                   or
                 </Text>
                 <View
@@ -213,8 +194,7 @@ export default function AuthChoice() {
                   textAlign: 'center',
                   marginTop: 16,
                   paddingHorizontal: 32,
-                }}
-              >
+                }}>
                 Guest mode lets you try the app. You can create an account anytime.
               </Text>
             </View>

@@ -7,7 +7,8 @@ export const messages = {
   // Account detection messages
   account: {
     alreadyExists: 'This email already has an account. Redirecting to sign in...',
-    notFound: "We couldn't find a quiz with this email. Double-check your email or continue as a new user.",
+    notFound:
+      "We couldn't find a quiz with this email. Double-check your email or continue as a new user.",
     checkingAccount: 'Checking for existing account...',
   },
 

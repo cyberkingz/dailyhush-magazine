@@ -24,10 +24,10 @@ interface MoodCardProps {
 export function MoodCard({
   isLogged,
   onLogMood,
-  heading = "How are you feeling today?",
-  description = "Feeling calm and centered. Tap to log your mood.",
-  buttonText = "Log Mood",
-  loggedMessage = "✨ Mood logged!",
+  heading = 'How are you feeling today?',
+  description = 'Feeling calm and centered. Tap to log your mood.',
+  buttonText = 'Log Mood',
+  loggedMessage = '✨ Mood logged!',
   loggedSubtext = "You're tracking your emotional patterns",
 }: MoodCardProps) {
   const [isVisible, setIsVisible] = useState(!isLogged);
@@ -107,18 +107,18 @@ export function MoodCard({
           opacity: fadeAnim,
           transform: [{ translateY }, { scale }],
         },
-      ]}
-    >
+      ]}>
       <View style={{ position: 'relative', width: '100%' }}>
-        <View style={{
-          backgroundColor: colors.background.card,
-          borderRadius: 24,
-          paddingTop: 28,
-          paddingHorizontal: 28,
-          paddingBottom: !isLogged ? 64 : 28,
-          borderWidth: 1,
-          borderColor: colors.emerald[600] + '20',
-        }}>
+        <View
+          style={{
+            backgroundColor: colors.background.card,
+            borderRadius: 24,
+            paddingTop: 28,
+            paddingHorizontal: 28,
+            paddingBottom: !isLogged ? 64 : 28,
+            borderWidth: 1,
+            borderColor: colors.emerald[600] + '20',
+          }}>
           <Text
             style={{
               fontSize: 22,
@@ -126,25 +126,26 @@ export function MoodCard({
               color: colors.text.primary,
               marginBottom: 28,
               textAlign: 'center',
-            }}
-          >
+            }}>
             {heading}
           </Text>
 
           {!isLogged ? (
             <>
-              <View style={{
-                alignItems: 'center',
-                marginBottom: 24,
-              }}>
-                <View style={{
-                  width: 120,
-                  height: 120,
-                  borderRadius: 60,
-                  backgroundColor: colors.emerald[500] + '30',
+              <View
+                style={{
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  marginBottom: 24,
                 }}>
+                <View
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 60,
+                    backgroundColor: colors.emerald[500] + '30',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
                   <Smile size={56} color={colors.emerald[500]} strokeWidth={2} />
                 </View>
               </View>
@@ -157,8 +158,7 @@ export function MoodCard({
                   marginBottom: 24,
                   opacity: 0.8,
                   lineHeight: 22,
-                }}
-              >
+                }}>
                 {description}
               </Text>
             </>
@@ -170,8 +170,7 @@ export function MoodCard({
                   color: colors.emerald[400],
                   textAlign: 'center',
                   marginBottom: 12,
-                }}
-              >
+                }}>
                 {loggedMessage}
               </Text>
               <Text
@@ -180,8 +179,7 @@ export function MoodCard({
                   color: colors.text.secondary,
                   textAlign: 'center',
                   opacity: 0.7,
-                }}
-              >
+                }}>
                 {loggedSubtext}
               </Text>
             </View>

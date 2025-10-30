@@ -18,8 +18,7 @@ export function QuoteGem() {
         alignItems: 'center',
         paddingVertical: 40,
         paddingHorizontal: 32,
-      }}
-    >
+      }}>
       {/* Quote Text */}
       <Text
         style={{
@@ -30,8 +29,7 @@ export function QuoteGem() {
           fontStyle: 'italic',
           fontWeight: '400',
           letterSpacing: 0.3,
-        }}
-      >
+        }}>
         "{quote.text}"
       </Text>
 
@@ -45,8 +43,7 @@ export function QuoteGem() {
             marginTop: 16,
             fontWeight: '500',
             opacity: 0.8,
-          }}
-        >
+          }}>
           — {quote.author}
         </Text>
       )}

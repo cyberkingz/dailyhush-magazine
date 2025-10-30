@@ -81,13 +81,9 @@ export async function getWeeklyInsights(
     }
 
     // Split logs into current week and previous week
-    const currentWeekLogs = spiralLogs.filter(
-      (log) => new Date(log.timestamp) >= sevenDaysAgo
-    );
+    const currentWeekLogs = spiralLogs.filter((log) => new Date(log.timestamp) >= sevenDaysAgo);
     const previousWeekLogs = spiralLogs.filter(
-      (log) =>
-        new Date(log.timestamp) < sevenDaysAgo &&
-        new Date(log.timestamp) >= fourteenDaysAgo
+      (log) => new Date(log.timestamp) < sevenDaysAgo && new Date(log.timestamp) >= fourteenDaysAgo
     );
 
     // Calculate metrics for current week
@@ -95,10 +91,7 @@ export async function getWeeklyInsights(
     const spiralsPrevented = currentWeekLogs.filter((log) => log.interrupted).length;
 
     // Calculate average duration
-    const totalDuration = currentWeekLogs.reduce(
-      (sum, log) => sum + log.duration_seconds,
-      0
-    );
+    const totalDuration = currentWeekLogs.reduce((sum, log) => sum + log.duration_seconds, 0);
     const avgDuration = totalSpirals > 0 ? Math.round(totalDuration / totalSpirals) : 0;
 
     // Find most common trigger
@@ -108,9 +101,10 @@ export async function getWeeklyInsights(
         triggerCounts.set(log.trigger, (triggerCounts.get(log.trigger) || 0) + 1);
       }
     });
-    const mostCommonTrigger = triggerCounts.size > 0
-      ? Array.from(triggerCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
-      : null;
+    const mostCommonTrigger =
+      triggerCounts.size > 0
+        ? Array.from(triggerCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+        : null;
 
     // Find peak time (hour with most spirals)
     const hourCounts = new Map<number, number>();
@@ -118,9 +112,10 @@ export async function getWeeklyInsights(
       const hour = new Date(log.timestamp).getHours();
       hourCounts.set(hour, (hourCounts.get(hour) || 0) + 1);
     });
-    const peakHour = hourCounts.size > 0
-      ? Array.from(hourCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
-      : null;
+    const peakHour =
+      hourCounts.size > 0
+        ? Array.from(hourCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+        : null;
     const peakTime = peakHour !== null ? formatHour(peakHour) : null;
 
     // Calculate improvement vs last week
@@ -251,15 +246,19 @@ function generateInsights(
 
   // Insight 1: Interruption success rate - HEALING-FOCUSED
   if (metrics.totalSpirals > 0) {
-    const interruptionRate = Math.round(
-      (metrics.spiralsPrevented / metrics.totalSpirals) * 100
-    );
+    const interruptionRate = Math.round((metrics.spiralsPrevented / metrics.totalSpirals) * 100);
     if (interruptionRate >= 70) {
-      insights.push(`You notice and respond ${interruptionRate}% of the time. Your awareness is growing.`);
+      insights.push(
+        `You notice and respond ${interruptionRate}% of the time. Your awareness is growing.`
+      );
     } else if (interruptionRate >= 40) {
-      insights.push(`You're catching spirals ${interruptionRate}% of the time. Each notice builds the skill.`);
+      insights.push(
+        `You're catching spirals ${interruptionRate}% of the time. Each notice builds the skill.`
+      );
     } else if (metrics.spiralsPrevented > 0) {
-      insights.push(`You've practiced F.I.R.E. ${metrics.spiralsPrevented} time${metrics.spiralsPrevented > 1 ? 's' : ''}. Noticing is the first step.`);
+      insights.push(
+        `You've practiced F.I.R.E. ${metrics.spiralsPrevented} time${metrics.spiralsPrevented > 1 ? 's' : ''}. Noticing is the first step.`
+      );
     } else {
       insights.push('Each time you log a spiral, you build awareness. That itself is healing.');
     }
@@ -272,11 +271,15 @@ function generateInsights(
     const actualHour = isPM && hour !== 12 ? hour + 12 : hour === 12 && !isPM ? 0 : hour;
 
     if (actualHour >= 5 && actualHour < 9) {
-      insights.push(`Mornings around ${metrics.peakTime} show a pattern. Consider gentler morning routines.`);
+      insights.push(
+        `Mornings around ${metrics.peakTime} show a pattern. Consider gentler morning routines.`
+      );
     } else if (actualHour >= 20 || actualHour < 5) {
       insights.push(`Evening patterns around ${metrics.peakTime}. Your mind may need rest.`);
     } else if (actualHour >= 9 && actualHour < 12) {
-      insights.push(`Late morning patterns around ${metrics.peakTime}. Notice what happens before.`);
+      insights.push(
+        `Late morning patterns around ${metrics.peakTime}. Notice what happens before.`
+      );
     } else {
       insights.push(`Patterns appear around ${metrics.peakTime}. Awareness helps you prepare.`);
     }
@@ -290,23 +293,21 @@ function generateInsights(
   // Insight 4: Shift necklace usage - LESS PROMOTIONAL
   const shiftUsageCount = logs.filter((log) => log.used_shift).length;
   if (shiftUsageCount > 0) {
-    insights.push(`Physical grounding helped ${shiftUsageCount} time${shiftUsageCount > 1 ? 's' : ''} this week.`);
+    insights.push(
+      `Physical grounding helped ${shiftUsageCount} time${shiftUsageCount > 1 ? 's' : ''} this week.`
+    );
   }
 
   // Insight 5: Feeling improvement - WARM LANGUAGE
-  const logsWithFeelings = logs.filter(
-    (log) => log.pre_feeling && log.post_feeling
-  );
+  const logsWithFeelings = logs.filter((log) => log.pre_feeling && log.post_feeling);
   if (logsWithFeelings.length > 0) {
     const avgImprovement =
-      logsWithFeelings.reduce(
-        (sum, log) => sum + (log.post_feeling - log.pre_feeling),
-        0
-      ) / logsWithFeelings.length;
+      logsWithFeelings.reduce((sum, log) => sum + (log.post_feeling - log.pre_feeling), 0) /
+      logsWithFeelings.length;
     if (avgImprovement > 2) {
       insights.push('You feel better after interrupting spirals. The practice is working.');
     } else if (avgImprovement > 0) {
-      insights.push('Small improvements add up. You\'re rewiring the pattern.');
+      insights.push("Small improvements add up. You're rewiring the pattern.");
     }
   }
 
@@ -323,9 +324,7 @@ function generateInsights(
     }
   });
   if (locationCounts.size > 0) {
-    const topLocation = Array.from(locationCounts.entries()).sort(
-      (a, b) => b[1] - a[1]
-    )[0][0];
+    const topLocation = Array.from(locationCounts.entries()).sort((a, b) => b[1] - a[1])[0][0];
     insights.push(`${topLocation} appears in your patterns. Environment affects us.`);
   }
 

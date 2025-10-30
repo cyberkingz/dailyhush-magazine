@@ -5,7 +5,7 @@
 
 import { supabase } from '@/utils/supabase';
 import { FireModule } from '@/types';
-import { isAuthenticated } from '@/services/auth';
+// import { isAuthenticated } from '@/services/auth';
 
 // Error types for better error handling
 export enum TrainingServiceError {
@@ -79,17 +79,26 @@ function categorizeError(error: any): { type: TrainingServiceError; message: str
     error.code === 'ECONNREFUSED' ||
     error.code === 'ENOTFOUND'
   ) {
-    return { type: TrainingServiceError.NETWORK_ERROR, message: 'Network connection error. Please check your internet connection.' };
+    return {
+      type: TrainingServiceError.NETWORK_ERROR,
+      message: 'Network connection error. Please check your internet connection.',
+    };
   }
 
   // Timeout errors
   if (errorMessage.includes('timeout') || error.code === 'ETIMEDOUT') {
-    return { type: TrainingServiceError.TIMEOUT_ERROR, message: 'Request timed out. Please try again.' };
+    return {
+      type: TrainingServiceError.TIMEOUT_ERROR,
+      message: 'Request timed out. Please try again.',
+    };
   }
 
   // Database errors
   if (error.code?.startsWith('PGRST') || errorMessage.includes('database')) {
-    return { type: TrainingServiceError.DATABASE_ERROR, message: 'Database error. Please try again.' };
+    return {
+      type: TrainingServiceError.DATABASE_ERROR,
+      message: 'Database error. Please try again.',
+    };
   }
 
   // Validation errors
@@ -97,7 +106,10 @@ function categorizeError(error: any): { type: TrainingServiceError; message: str
     return { type: TrainingServiceError.VALIDATION_ERROR, message: error.message };
   }
 
-  return { type: TrainingServiceError.UNKNOWN_ERROR, message: error.message || 'An unexpected error occurred' };
+  return {
+    type: TrainingServiceError.UNKNOWN_ERROR,
+    message: error.message || 'An unexpected error occurred',
+  };
 }
 
 // Type definitions for module-specific data
@@ -134,10 +146,10 @@ export interface ModuleProgress {
 /**
  * Check if a user ID is a valid UUID (not a temporary ID)
  */
-function isValidUUID(userId: string): boolean {
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  return uuidRegex.test(userId);
-}
+// function isValidUUID(userId: string): boolean {
+//   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+//   return uuidRegex.test(userId);
+// }
 
 /**
  * Save or update module progress with retry logic
@@ -150,7 +162,9 @@ export async function saveModuleProgress(
   // Get the actual authenticated user from Supabase
   // This is critical because anonymous users might not have a user_profiles record,
   // but they do have an auth.uid() which is what RLS policies check against
-  const { data: { user: authUser } } = await supabase.auth.getUser();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
   if (!authUser) {
     console.log('No authenticated user found, skipping save');
@@ -212,11 +226,9 @@ export async function saveModuleProgress(
       }
 
       // Upsert (insert or update)
-      const { error } = await supabase
-        .from('fire_training_progress')
-        .upsert(updateData, {
-          onConflict: 'user_id,module',
-        });
+      const { error } = await supabase.from('fire_training_progress').upsert(updateData, {
+        onConflict: 'user_id,module',
+      });
 
       if (error) {
         const categorized = categorizeError(error);
@@ -245,7 +257,9 @@ export async function loadModuleProgress(
   module: FireModule
 ): Promise<{ data: ModuleProgress | null; error?: string; errorType?: TrainingServiceError }> {
   // Get the actual authenticated user from Supabase
-  const { data: { user: authUser } } = await supabase.auth.getUser();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
   if (!authUser) {
     console.log('No authenticated user found, skipping load');
@@ -342,7 +356,9 @@ export async function loadAllModuleProgress(
   userId: string
 ): Promise<{ data: ModuleProgress[]; error?: string }> {
   // Get the actual authenticated user from Supabase
-  const { data: { user: authUser } } = await supabase.auth.getUser();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
   if (!authUser) {
     console.log('No authenticated user found, skipping load all');
@@ -420,7 +436,9 @@ export async function updateUserFireProgress(
   completed: boolean
 ): Promise<{ success: boolean; error?: string; errorType?: TrainingServiceError }> {
   // Get the actual authenticated user from Supabase
-  const { data: { user: authUser } } = await supabase.auth.getUser();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
   if (!authUser) {
     console.log('No authenticated user found, skipping fire progress update');
@@ -429,7 +447,12 @@ export async function updateUserFireProgress(
 
   // Use the authenticated user ID (works for both anonymous and email users)
   const actualUserId = authUser.id;
-  console.log('Updating fire progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
+  console.log(
+    'Updating fire progress for user:',
+    actualUserId,
+    'isAnonymous:',
+    authUser.is_anonymous
+  );
 
   if (!module) {
     return {
@@ -497,7 +520,9 @@ export async function getFIRECertificationStatus(
   userId: string
 ): Promise<{ certified: boolean; completedModules: number; error?: string }> {
   // Get the actual authenticated user from Supabase
-  const { data: { user: authUser } } = await supabase.auth.getUser();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
   if (!authUser) {
     console.log('No authenticated user found, skipping certification check');

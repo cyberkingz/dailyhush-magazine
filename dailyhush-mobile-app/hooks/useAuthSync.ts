@@ -29,50 +29,57 @@ export function useAuthSync() {
    * Reusable function for both initial load and auth state changes
    * Includes retry logic for new account race conditions
    */
-  const syncUserProfile = useCallback(async (userId: string | null, retryCount = 0, manageLoadingState = true): Promise<void> => {
-    // Only set loading on the initial call, not on retries
-    if (manageLoadingState && retryCount === 0) {
-      setLoading(true);
-    }
+  const syncUserProfile = useCallback(
+    async (userId: string | null, retryCount = 0, manageLoadingState = true): Promise<void> => {
+      // Only set loading on the initial call, not on retries
+      if (manageLoadingState && retryCount === 0) {
+        setLoading(true);
+      }
 
-    if (!userId) {
-      setUser(null);
-      if (manageLoadingState) setLoading(false);
-      return;
-    }
-
-    try {
-      console.log('Syncing user profile:', userId, retryCount > 0 ? `(retry ${retryCount}/3)` : '');
-      const result = await loadUserProfile(userId);
-
-      if (result.success && result.profile) {
-        setUser(result.profile);
-        console.log('User profile synced successfully');
+      if (!userId) {
+        setUser(null);
         if (manageLoadingState) setLoading(false);
-      } else if (isProfileNotFoundError(result.error) && retryCount < 3) {
-        // Profile doesn't exist yet (new account race condition)
-        // Retry after a short delay to allow profile creation to complete
-        console.log('Profile not found yet, retrying in 500ms...');
-        // Use promise-based delay to make it awaitable
-        await new Promise(resolve => setTimeout(resolve, 500));
-        // Recursively retry (this will properly await)
-        await syncUserProfile(userId, retryCount + 1, manageLoadingState);
-      } else if (isProfileNotFoundError(result.error)) {
-        // After 3 retries, profile still doesn't exist
-        // This is expected for very new accounts - will be created by onboarding flow
-        console.log('Profile not found after retries - will be set by onboarding flow');
-        if (manageLoadingState) setLoading(false);
-      } else {
-        console.error('Failed to sync user profile:', result.error);
-        // Don't clear existing user state on failure
+        return;
+      }
+
+      try {
+        console.log(
+          'Syncing user profile:',
+          userId,
+          retryCount > 0 ? `(retry ${retryCount}/3)` : ''
+        );
+        const result = await loadUserProfile(userId);
+
+        if (result.success && result.profile) {
+          setUser(result.profile);
+          console.log('User profile synced successfully');
+          if (manageLoadingState) setLoading(false);
+        } else if (isProfileNotFoundError(result.error) && retryCount < 3) {
+          // Profile doesn't exist yet (new account race condition)
+          // Retry after a short delay to allow profile creation to complete
+          console.log('Profile not found yet, retrying in 500ms...');
+          // Use promise-based delay to make it awaitable
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          // Recursively retry (this will properly await)
+          await syncUserProfile(userId, retryCount + 1, manageLoadingState);
+        } else if (isProfileNotFoundError(result.error)) {
+          // After 3 retries, profile still doesn't exist
+          // This is expected for very new accounts - will be created by onboarding flow
+          console.log('Profile not found after retries - will be set by onboarding flow');
+          if (manageLoadingState) setLoading(false);
+        } else {
+          console.error('Failed to sync user profile:', result.error);
+          // Don't clear existing user state on failure
+          if (manageLoadingState) setLoading(false);
+        }
+      } catch (error) {
+        console.error('Exception syncing user profile:', error);
+        // Don't clear existing user state on exception
         if (manageLoadingState) setLoading(false);
       }
-    } catch (error) {
-      console.error('Exception syncing user profile:', error);
-      // Don't clear existing user state on exception
-      if (manageLoadingState) setLoading(false);
-    }
-  }, [setUser, setLoading]);
+    },
+    [setUser, setLoading]
+  );
 
   /**
    * Listen for Supabase auth state changes

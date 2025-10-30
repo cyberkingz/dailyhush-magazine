@@ -152,11 +152,7 @@ export function MagmaLoader({ text = 'Loading', size = 80 }: MagmaLoaderProps) {
               borderRadius: size * 0.7,
               backgroundColor: '#40916C',
               opacity: 0.4,
-              transform: [
-                { scale: blob1Scale },
-                { rotate: blob1Spin },
-                { scaleX: 1.2 },
-              ],
+              transform: [{ scale: blob1Scale }, { rotate: blob1Spin }, { scaleX: 1.2 }],
             }}
           />
 
@@ -169,11 +165,7 @@ export function MagmaLoader({ text = 'Loading', size = 80 }: MagmaLoaderProps) {
               borderRadius: size * 0.65,
               backgroundColor: '#52B788',
               opacity: 0.5,
-              transform: [
-                { scale: blob2Scale },
-                { rotate: blob2Spin },
-                { scaleY: 1.3 },
-              ],
+              transform: [{ scale: blob2Scale }, { rotate: blob2Spin }, { scaleY: 1.3 }],
             }}
           />
 
@@ -186,11 +178,7 @@ export function MagmaLoader({ text = 'Loading', size = 80 }: MagmaLoaderProps) {
               borderRadius: size * 0.6,
               backgroundColor: '#2D6A4F',
               opacity: 0.6,
-              transform: [
-                { scale: blob3Scale },
-                { rotate: blob3Spin },
-                { scaleX: 0.9 },
-              ],
+              transform: [{ scale: blob3Scale }, { rotate: blob3Spin }, { scaleX: 0.9 }],
             }}
           />
 
@@ -225,11 +213,8 @@ export function MagmaLoader({ text = 'Loading', size = 80 }: MagmaLoaderProps) {
               style={{
                 transform: [{ scale: letterScale }],
                 opacity: letterOpacity,
-              }}
-            >
-              <Text className="text-[#E8F4F0] text-lg font-semibold">
-                {letter}
-              </Text>
+              }}>
+              <Text className="text-lg font-semibold text-[#E8F4F0]">{letter}</Text>
             </Animated.View>
           );
         })}

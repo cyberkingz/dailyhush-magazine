@@ -60,15 +60,18 @@ export const useStore = create<DailyHushStore>((set) => ({
   setError: (error) => set({ error }),
 
   // Complete F.I.R.E. module (update local state)
-  completeFireModule: (module) => set((state) => ({
-    user: state.user ? {
-      ...state.user,
-      fire_progress: {
-        ...state.user.fire_progress,
-        [module]: true,
-      },
-    } : null,
-  })),
+  completeFireModule: (module) =>
+    set((state) => ({
+      user: state.user
+        ? {
+            ...state.user,
+            fire_progress: {
+              ...state.user.fire_progress,
+              [module]: true,
+            },
+          }
+        : null,
+    })),
 
   // Reset state (logout)
   reset: () => set(initialState),

@@ -37,7 +37,8 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 'q1',
     section: 'thought-loops',
-    question: 'How often do you replay small mistakes in your head (something you said or did "wrong")?',
+    question:
+      'How often do you replay small mistakes in your head (something you said or did "wrong")?',
     options: [
       { id: 'q1_a', text: 'Rarely — I move on fast', value: 1 },
       { id: 'q1_b', text: 'Sometimes — depends on the moment', value: 3 },

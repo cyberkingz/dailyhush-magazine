@@ -40,9 +40,9 @@ export const Colors = {
   // Background Colors - Dark Emerald Theme (matches admin dashboard dark mode)
   background: {
     // Default: Dark emerald aesthetic
-    primary: '#064e3b',    // emerald-900 (main dark emerald background - matches admin)
-    secondary: '#047857',  // emerald-700 (elevated surfaces)
-    tertiary: '#059669',   // emerald-600 (cards, borders)
+    primary: '#064e3b', // emerald-900 (main dark emerald background - matches admin)
+    secondary: '#047857', // emerald-700 (elevated surfaces)
+    tertiary: '#059669', // emerald-600 (cards, borders)
     // Light mode alternatives (kept for compatibility)
     cream50: '#fefdf9',
     cream100: '#fdfbf3',
@@ -68,10 +68,10 @@ export const Colors = {
 
   // Text Colors (using neutral scale from admin)
   text: {
-    primary: '#0f172a',    // neutral-900
-    secondary: '#475569',  // neutral-600
-    tertiary: '#64748b',   // neutral-500
-    muted: '#94a3b8',      // neutral-400
+    primary: '#0f172a', // neutral-900
+    secondary: '#475569', // neutral-600
+    tertiary: '#64748b', // neutral-500
+    muted: '#94a3b8', // neutral-400
     // Backward compatibility aliases
     slate900: '#0f172a',
     slate700: '#334155',
@@ -108,10 +108,10 @@ export const Colors = {
   // 3AM Mode (Dark Mode)
   nightMode: {
     background: '#064e3b', // emerald-900 (dark emerald background - matches admin)
-    surface: '#047857',    // emerald-700 (elevated surfaces)
-    text: '#F1F5F9',       // neutral-50 (white text)
-    textMuted: '#94A3B8',  // neutral-400 (muted text)
-    red: '#7F1D1D',        // Low-intensity red for dark mode
+    surface: '#047857', // emerald-700 (elevated surfaces)
+    text: '#F1F5F9', // neutral-50 (white text)
+    textMuted: '#94A3B8', // neutral-400 (muted text)
+    red: '#7F1D1D', // Low-intensity red for dark mode
   },
 };
 
@@ -121,9 +121,9 @@ export const Typography = {
     heading1: 32,
     heading2: 28,
     heading3: 24,
-    body: 18,      // Minimum per PRD
+    body: 18, // Minimum per PRD
     button: 20,
-    caption: 16,   // Never smaller per PRD
+    caption: 16, // Never smaller per PRD
   },
 
   // Font Weights

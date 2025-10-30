@@ -54,7 +54,9 @@ export default function ProfileSetup() {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
       // Check if user is already authenticated (orphaned account recovery)
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       if (session?.user && !session.user.is_anonymous) {
         console.log('User already authenticated - creating profile directly');
@@ -77,20 +79,24 @@ export default function ProfileSetup() {
         // Create or update profile with quiz data (upsert to handle existing profiles)
         const { data: profile, error: profileError } = await supabase
           .from('user_profiles')
-          .upsert({            user_id: session.user.id,
-            email: session.user.email,
-            name: name.trim() || null,
-            age: age ? parseInt(age) : null,
-            quiz_overthinker_type: quizData.overthinker_type,
-            quiz_submission_id: quizData.id,
-            quiz_email: session.user.email,
-            quiz_connected: true,
-            quiz_connected_at: new Date().toISOString(),
-            onboarding_completed: true,
-            updated_at: new Date().toISOString(),
-          }, {
-            onConflict: 'user_id'
-          })
+          .upsert(
+            {
+              user_id: session.user.id,
+              email: session.user.email,
+              name: name.trim() || null,
+              age: age ? parseInt(age) : null,
+              quiz_overthinker_type: quizData.overthinker_type,
+              quiz_submission_id: quizData.id,
+              quiz_email: session.user.email,
+              quiz_connected: true,
+              quiz_connected_at: new Date().toISOString(),
+              onboarding_completed: true,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              onConflict: 'user_id',
+            }
+          )
           .select()
           .single();
 
@@ -150,8 +156,7 @@ export default function ProfileSetup() {
 
         <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <ScrollFadeView
             style={{ flex: 1 }}
             contentContainerStyle={{
@@ -165,8 +170,7 @@ export default function ProfileSetup() {
             fadeHeight={48}
             fadeIntensity={0.95}
             fadeVisibility="always"
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             {/* Description */}
             <Text
               style={{
@@ -175,8 +179,7 @@ export default function ProfileSetup() {
                 textAlign: 'center',
                 lineHeight: 26,
                 marginBottom: 32,
-              }}
-            >
+              }}>
               Help us personalize your DailyHush experience
             </Text>
 
@@ -190,8 +193,7 @@ export default function ProfileSetup() {
                     fontWeight: '600',
                     color: colors.text.primary,
                     marginLeft: 8,
-                  }}
-                >
+                  }}>
                   What&apos;s your name? (Optional)
                 </Text>
               </View>
@@ -228,8 +230,7 @@ export default function ProfileSetup() {
                     fontWeight: '600',
                     color: colors.text.primary,
                     marginLeft: 8,
-                  }}
-                >
+                  }}>
                   What&apos;s your age? (Optional)
                 </Text>
               </View>
@@ -270,8 +271,7 @@ export default function ProfileSetup() {
                     fontWeight: '600',
                     color: colors.text.primary,
                     marginLeft: 8,
-                  }}
-                >
+                  }}>
                   How often do you ruminate? *
                 </Text>
               </View>
@@ -288,38 +288,35 @@ export default function ProfileSetup() {
                   accessibilityState={{ checked: ruminationFrequency === option.value }}
                   testID={`frequency-option-${option.value}`}
                   style={{
-                    backgroundColor: ruminationFrequency === option.value
-                      ? colors.emerald[600] + '30'
-                      : colors.background.card,
+                    backgroundColor:
+                      ruminationFrequency === option.value
+                        ? colors.emerald[600] + '30'
+                        : colors.background.card,
                     borderRadius: 16,
                     paddingVertical: 18,
                     paddingHorizontal: 20,
                     marginBottom: 12,
                     borderWidth: 2,
-                    borderColor: ruminationFrequency === option.value
-                      ? colors.emerald[600]
-                      : colors.emerald[700] + '40',
-                  }}
-                >
+                    borderColor:
+                      ruminationFrequency === option.value
+                        ? colors.emerald[600]
+                        : colors.emerald[700] + '40',
+                  }}>
                   {({ pressed }) => (
                     <View
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         opacity: pressed ? 0.7 : 1,
-                      }}
-                    >
-                      <Text style={{ fontSize: 24, marginRight: 12 }}>
-                        {option.icon}
-                      </Text>
+                      }}>
+                      <Text style={{ fontSize: 24, marginRight: 12 }}>{option.icon}</Text>
                       <Text
                         style={{
                           fontSize: 17,
                           fontWeight: ruminationFrequency === option.value ? '600' : '500',
                           color: colors.text.primary,
                           flex: 1,
-                        }}
-                      >
+                        }}>
                         {option.label}
                       </Text>
                       {ruminationFrequency === option.value && (
@@ -331,8 +328,7 @@ export default function ProfileSetup() {
                             backgroundColor: colors.emerald[600],
                             alignItems: 'center',
                             justifyContent: 'center',
-                          }}
-                        >
+                          }}>
                           <Text style={{ color: colors.white, fontSize: 16, fontWeight: 'bold' }}>
                             ✓
                           </Text>
@@ -349,9 +345,8 @@ export default function ProfileSetup() {
               onPress={handleContinue}
               disabled={!canContinue || isSaving}
               style={{
-                backgroundColor: canContinue && !isSaving
-                  ? colors.emerald[600]
-                  : colors.emerald[700] + '60',
+                backgroundColor:
+                  canContinue && !isSaving ? colors.emerald[600] : colors.emerald[700] + '60',
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
@@ -361,8 +356,7 @@ export default function ProfileSetup() {
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
                 elevation: canContinue ? 6 : 0,
-              }}
-            >
+              }}>
               {({ pressed }) => (
                 <View
                   style={{
@@ -370,15 +364,13 @@ export default function ProfileSetup() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     opacity: pressed && canContinue && !isSaving ? 0.9 : 1,
-                  }}
-                >
+                  }}>
                   <Text
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
                       color: colors.white,
-                    }}
-                  >
+                    }}>
                     {isSaving ? 'Saving...' : 'Complete Setup'}
                   </Text>
                 </View>
@@ -390,4 +382,3 @@ export default function ProfileSetup() {
     </>
   );
 }
-

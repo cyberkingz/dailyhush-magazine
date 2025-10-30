@@ -27,25 +27,19 @@ Deno.serve(async (req: Request) => {
     // Get the authorization header
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'Missing authorization header' }),
-        {
-          status: 401,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Extract JWT token from "Bearer <token>" format
     const token = authHeader.replace('Bearer ', '');
     if (!token) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid authorization header format' }),
-        {
-          status: 401,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: 'Invalid authorization header format' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Create Supabase client for verification
@@ -62,13 +56,10 @@ Deno.serve(async (req: Request) => {
 
     if (userError || !user) {
       console.error('Auth verification failed:', userError);
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized', details: userError?.message }),
-        {
-          status: 401,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized', details: userError?.message }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const userId = user.id;
@@ -102,11 +93,11 @@ Deno.serve(async (req: Request) => {
       return new Response(
         JSON.stringify({
           error: 'Failed to delete user profile',
-          details: profileError.message
+          details: profileError.message,
         }),
         {
           status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         }
       );
     }
@@ -128,24 +119,23 @@ Deno.serve(async (req: Request) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Account deleted successfully'
+        message: 'Account deleted successfully',
       }),
       {
         status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error: any) {
     console.error('Unexpected error:', error);
     return new Response(
       JSON.stringify({
         error: 'Internal server error',
-        details: error.message
+        details: error.message,
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

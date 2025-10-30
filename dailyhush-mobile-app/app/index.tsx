@@ -18,7 +18,7 @@ import { MoodCard, CTAButton, FeatureGrid, FeatureItem, QuoteBanner } from '@/co
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
-import { useSpiral } from '@/hooks/useSpiral';
+// import { useSpiral } from '@/hooks/useSpiral';
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -34,12 +34,14 @@ export default function HomeModern() {
   const user = useUser();
   const isLoading = useLoading();
   const insets = useSafeAreaInsets();
-  const [spiralsToday, setSpiralsToday] = useState(0);
-  const [spiralsThisWeek, setSpiralsThisWeek] = useState(0);
+  // const [spiralsToday, setSpiralsToday] = useState(0);
+  // const [spiralsThisWeek, setSpiralsThisWeek] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [moodLoggedToday, setMoodLoggedToday] = useState(false);
-  const [currentMood, setCurrentMood] = useState<'calm' | 'good' | 'okay' | 'low' | 'anxious' | null>(null);
-  const { getTodaySpirals } = useSpiral();
+  // const [currentMood, setCurrentMood] = useState<
+  //   'calm' | 'good' | 'okay' | 'low' | 'anxious' | null
+  // >(null);
+  // const { getTodaySpirals } = useSpiral();
   const greeting = getGreeting();
   const displayName = user?.name?.split(' ')[0] ?? 'Friend';
   const greetingLine = `${greeting}`;
@@ -94,17 +96,17 @@ export default function HomeModern() {
   }, []);
 
   // Fetch spiral stats
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (user) {
-        const stats = await getTodaySpirals();
-        setSpiralsToday(stats.today);
-        setSpiralsThisWeek(stats.thisWeek);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchStats = async () => {
+  //     if (user) {
+  //       const stats = await getTodaySpirals();
+  //       setSpiralsToday(stats.today);
+  //       setSpiralsThisWeek(stats.thisWeek);
+  //     }
+  //   };
 
-    fetchStats();
-  }, [user, getTodaySpirals]);
+  //   fetchStats();
+  // }, [user, getTodaySpirals]);
 
   // Check if user needs onboarding
   useEffect(() => {
@@ -127,7 +129,9 @@ export default function HomeModern() {
         }
 
         if (!user) {
-          const { data: { session } } = await supabase.auth.getSession();
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
 
           if (session?.user && !session.user.is_anonymous) {
             try {
@@ -164,7 +168,7 @@ export default function HomeModern() {
                 router.replace('/onboarding');
                 return;
               }
-            } catch (error) {
+            } catch {
               await supabase.auth.signOut();
               router.replace('/onboarding');
               return;
@@ -180,7 +184,13 @@ export default function HomeModern() {
   // Show loading state
   if (isLoading || !isMounted) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background.primary }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: colors.background.primary,
+        }}>
         <ActivityIndicator size="large" color={colors.emerald[500]} />
       </View>
     );
@@ -200,23 +210,20 @@ export default function HomeModern() {
         fadeColor={colors.background.primary}
         fadeHeight={48}
         fadeIntensity={0.95}
-        fadeVisibility="always"
-      >
+        fadeVisibility="always">
         {/* Header & Greeting */}
         <View
           style={{
             paddingHorizontal: 20,
             marginBottom: 28,
-          }}
-        >
+          }}>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
               marginBottom: 18,
-            }}
-          >
+            }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
               <Image
                 source={require('@/assets/img/rounded-logo.png')}
@@ -233,8 +240,7 @@ export default function HomeModern() {
                     fontWeight: '700',
                     color: colors.text.primary,
                     letterSpacing: 0.15,
-                  }}
-                >
+                  }}>
                   {greetingLine}
                 </Text>
                 <Text
@@ -243,8 +249,7 @@ export default function HomeModern() {
                     color: colors.text.secondary,
                     marginTop: 6,
                     opacity: 0.85,
-                  }}
-                >
+                  }}>
                   {welcomeLine}
                 </Text>
               </View>
@@ -260,14 +265,9 @@ export default function HomeModern() {
                 height: 40,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}
-            >
+              }}>
               {({ pressed }) => (
-                <Settings
-                  size={24}
-                  color={colors.text.secondary}
-                  opacity={pressed ? 0.5 : 0.7}
-                />
+                <Settings size={24} color={colors.text.secondary} opacity={pressed ? 0.5 : 0.7} />
               )}
             </Pressable>
           </View>

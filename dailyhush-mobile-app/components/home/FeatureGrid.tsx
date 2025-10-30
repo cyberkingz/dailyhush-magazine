@@ -36,10 +36,11 @@ export function FeatureGrid({ features }: FeatureGridProps) {
   return (
     <View style={{ paddingHorizontal: 20 }}>
       {/* First Row */}
-      <View style={{
-        ...rowStyle,
-        marginBottom: 12,
-      }}>
+      <View
+        style={{
+          ...rowStyle,
+          marginBottom: 12,
+        }}>
         {firstRow.map((feature) => (
           <FeatureCard
             key={feature.id}

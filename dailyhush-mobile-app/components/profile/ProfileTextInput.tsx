@@ -5,18 +5,9 @@
  */
 
 import React, { useState } from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  TextInputProps,
-} from 'react-native';
+import { View, TextInput, Text, StyleSheet, TextInputProps } from 'react-native';
 import { AlertCircle } from 'lucide-react-native';
-import {
-  inputFieldStyles,
-  inputColors,
-} from '@/constants/authStyles';
+import { inputFieldStyles, inputColors } from '@/constants/authStyles';
 
 interface ProfileTextInputProps extends Omit<TextInputProps, 'style'> {
   label: string;

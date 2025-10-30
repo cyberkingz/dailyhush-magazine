@@ -12,27 +12,20 @@ interface KeyTakeawayProps {
   message: string;
 }
 
-export function KeyTakeaway({
-  title = 'Key Takeaway',
-  message
-}: KeyTakeawayProps) {
+export function KeyTakeaway({ title = 'Key Takeaway', message }: KeyTakeawayProps) {
   return (
-    <View className="bg-[#2D6A4F] border border-[#52B788] rounded-2xl p-5">
+    <View className="rounded-2xl border border-[#52B788] bg-[#2D6A4F] p-5">
       {/* Header with Icon */}
-      <View className="flex-row items-center mb-3">
+      <View className="mb-3 flex-row items-center">
         <Lightbulb size={20} color="#52B788" strokeWidth={2} />
-        <Text className="text-[#E8F4F0] text-base font-semibold ml-2">
-          {title}
-        </Text>
+        <Text className="ml-2 text-base font-semibold text-[#E8F4F0]">{title}</Text>
       </View>
 
       {/* Divider */}
-      <View className="h-px bg-[#52B788]/30 mb-3" />
+      <View className="mb-3 h-px bg-[#52B788]/30" />
 
       {/* Message */}
-      <Text className="text-[#E8F4F0] text-base leading-relaxed">
-        {message}
-      </Text>
+      <Text className="text-base leading-relaxed text-[#E8F4F0]">{message}</Text>
     </View>
   );
 }

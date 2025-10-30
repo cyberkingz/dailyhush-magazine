@@ -100,18 +100,14 @@ export default function InterruptModule() {
   };
 
   const togglePhysical = (sign: string) => {
-    setSelectedPhysical(prev =>
-      prev.includes(sign)
-        ? prev.filter(s => s !== sign)
-        : [...prev, sign]
+    setSelectedPhysical((prev) =>
+      prev.includes(sign) ? prev.filter((s) => s !== sign) : [...prev, sign]
     );
   };
 
   const toggleMental = (cue: string) => {
-    setSelectedMental(prev =>
-      prev.includes(cue)
-        ? prev.filter(c => c !== cue)
-        : [...prev, cue]
+    setSelectedMental((prev) =>
+      prev.includes(cue) ? prev.filter((c) => c !== cue) : [...prev, cue]
     );
   };
 
@@ -159,7 +155,6 @@ export default function InterruptModule() {
           },
         });
       }, timing.debounce.save),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -186,7 +181,7 @@ export default function InterruptModule() {
 
       {/* Header */}
       <View className="px-5 pb-3" style={{ paddingTop: insets.top + spacing.safeArea.top }}>
-        <View className="flex-row items-center justify-between mb-4">
+        <View className="mb-4 flex-row items-center justify-between">
           <Pressable onPress={handleBack} className="p-2 active:opacity-70">
             <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} />
           </Pressable>
@@ -208,39 +203,39 @@ export default function InterruptModule() {
         className="flex-1"
         contentContainerStyle={{
           paddingHorizontal: spacing.lg,
-          paddingBottom: spacing["3xl"],
+          paddingBottom: spacing['3xl'],
         }}
         showsVerticalScrollIndicator={false}
         bounces={false}
-        overScrollMode="never"
-      >
+        overScrollMode="never">
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              The 10-Second Window
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">The 10-Second Window</Text>
 
-            <ContentCard body="You know the pattern now. You know your triggers.
+            <ContentCard
+              body="You know the pattern now. You know your triggers.
 
 But knowing isn't enough.
 
-You need to catch the spiral BEFORE it starts." />
+You need to catch the spiral BEFORE it starts."
+            />
 
-            <KeyTakeaway message="Between trigger and spiral, there's a 3-10 second window.
+            <KeyTakeaway
+              message="Between trigger and spiral, there's a 3-10 second window.
 
-This module teaches you to recognize it and use it." />
+This module teaches you to recognize it and use it."
+            />
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
-              Most people who ruminate spend years trying to stop spirals once
-              they've started.
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
+              Most people who ruminate spend years trying to stop spirals once they've started.
             </Text>
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
+            <Text className="text-lg font-semibold text-[#E8F4F0]">
               That's like trying to stop a train after it leaves the station.
             </Text>
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               Instead, we're going to catch it at the platform.
             </Text>
           </View>
@@ -249,9 +244,7 @@ This module teaches you to recognize it and use it." />
         {/* Screen 2: Early Warning */}
         {currentScreen === 'early-warning' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Early Warning Signs
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Early Warning Signs</Text>
 
             <ContentCard
               heading="Your body knows BEFORE your mind does"
@@ -282,11 +275,9 @@ Wait too long, and you're already looping."
         {/* Screen 3: Physical Sensations */}
         {currentScreen === 'physical' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Physical Warning Signs
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Physical Warning Signs</Text>
 
-            <Text className="text-[#95B8A8] text-base">
+            <Text className="text-base text-[#95B8A8]">
               Which physical sensations do YOU experience? Check all that apply:
             </Text>
 
@@ -298,32 +289,25 @@ Wait too long, and you're already looping."
                     togglePhysical(sign);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`rounded-2xl p-4 flex-row items-center ${
-                    selectedPhysical.includes(sign)
-                      ? 'bg-[#40916C]'
-                      : 'bg-[#1A4D3C]'
-                  }`}
-                >
+                  className={`flex-row items-center rounded-2xl p-4 ${
+                    selectedPhysical.includes(sign) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
+                  }`}>
                   <View
-                    className={`w-5 h-5 rounded border-2 mr-3 ${
-                      selectedPhysical.includes(sign)
-                        ? 'border-white bg-white'
-                        : 'border-[#95B8A8]'
-                    }`}
-                  >
+                    className={`mr-3 h-5 w-5 rounded border-2 ${
+                      selectedPhysical.includes(sign) ? 'border-white bg-white' : 'border-[#95B8A8]'
+                    }`}>
                     {selectedPhysical.includes(sign) && (
                       <View className="flex-1 items-center justify-center">
-                        <View className="w-3 h-3 bg-[#40916C]" />
+                        <View className="h-3 w-3 bg-[#40916C]" />
                       </View>
                     )}
                   </View>
                   <Text
-                    className={`text-base flex-1 ${
+                    className={`flex-1 text-base ${
                       selectedPhysical.includes(sign)
-                        ? 'text-white font-semibold'
+                        ? 'font-semibold text-white'
                         : 'text-[#E8F4F0]'
-                    }`}
-                  >
+                    }`}>
                     {sign}
                   </Text>
                 </Pressable>
@@ -337,13 +321,10 @@ Wait too long, and you're already looping."
         {/* Screen 4: Mental Cues */}
         {currentScreen === 'mental' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Mental Warning Cues
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Mental Warning Cues</Text>
 
-            <Text className="text-[#95B8A8] text-base">
-              What mental patterns signal the start of a spiral? Check all that
-              apply:
+            <Text className="text-base text-[#95B8A8]">
+              What mental patterns signal the start of a spiral? Check all that apply:
             </Text>
 
             <View className="gap-3">
@@ -354,30 +335,23 @@ Wait too long, and you're already looping."
                     toggleMental(cue);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`rounded-2xl p-4 flex-row items-center ${
+                  className={`flex-row items-center rounded-2xl p-4 ${
                     selectedMental.includes(cue) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
-                  }`}
-                >
+                  }`}>
                   <View
-                    className={`w-5 h-5 rounded border-2 mr-3 ${
-                      selectedMental.includes(cue)
-                        ? 'border-white bg-white'
-                        : 'border-[#95B8A8]'
-                    }`}
-                  >
+                    className={`mr-3 h-5 w-5 rounded border-2 ${
+                      selectedMental.includes(cue) ? 'border-white bg-white' : 'border-[#95B8A8]'
+                    }`}>
                     {selectedMental.includes(cue) && (
                       <View className="flex-1 items-center justify-center">
-                        <View className="w-3 h-3 bg-[#40916C]" />
+                        <View className="h-3 w-3 bg-[#40916C]" />
                       </View>
                     )}
                   </View>
                   <Text
-                    className={`text-base flex-1 ${
-                      selectedMental.includes(cue)
-                        ? 'text-white font-semibold'
-                        : 'text-[#E8F4F0]'
-                    }`}
-                  >
+                    className={`flex-1 text-base ${
+                      selectedMental.includes(cue) ? 'font-semibold text-white' : 'text-[#E8F4F0]'
+                    }`}>
                     {cue}
                   </Text>
                 </Pressable>
@@ -389,9 +363,7 @@ Wait too long, and you're already looping."
         {/* Screen 5: Scenario 1 */}
         {currentScreen === 'scenario1' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Practice Scenario 1
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Practice Scenario 1</Text>
 
             <ContentCard
               variant="highlight"
@@ -403,12 +375,12 @@ They don't respond.
 2 hours pass."
             />
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
+            <Text className="text-lg font-semibold text-[#E8F4F0]">
               The OLD Way (Missing the window):
             </Text>
 
-            <View className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#DC2626]/40">
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#DC2626]/40 bg-[#1A4D3C] p-5">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 ❌ "Did I say something wrong?"
                 {'\n\n'}❌ Start replaying the text
                 {'\n\n'}❌ Check phone obsessively
@@ -416,12 +388,12 @@ They don't respond.
               </Text>
             </View>
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
+            <Text className="text-lg font-semibold text-[#E8F4F0]">
               The NEW Way (Using the window):
             </Text>
 
-            <View className="bg-[#2D6A4F] rounded-2xl p-5 border border-[#40916C]">
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 ✓ Notice: Stomach drops (physical cue)
                 {'\n\n'}✓ Recognize: "This is my pattern"
                 {'\n\n'}✓ Interrupt: 5 deep breaths
@@ -436,9 +408,7 @@ They don't respond.
         {/* Screen 6: Scenario 2 */}
         {currentScreen === 'scenario2' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Practice Scenario 2
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Practice Scenario 2</Text>
 
             <ContentCard
               variant="highlight"
@@ -450,24 +420,20 @@ Someone points it out.
 Everyone hears."
             />
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
-              The OLD Way:
-            </Text>
+            <Text className="text-lg font-semibold text-[#E8F4F0]">The OLD Way:</Text>
 
-            <View className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#DC2626]/40">
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#DC2626]/40 bg-[#1A4D3C] p-5">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 ❌ Face gets hot
                 {'\n\n'}❌ "Everyone thinks I'm incompetent"
                 {'\n\n'}❌ Replay for days
               </Text>
             </View>
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
-              The NEW Way:
-            </Text>
+            <Text className="text-lg font-semibold text-[#E8F4F0]">The NEW Way:</Text>
 
-            <View className="bg-[#2D6A4F] rounded-2xl p-5 border border-[#40916C]">
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 ✓ Notice: Face hot (physical cue)
                 {'\n\n'}✓ Catch the thought: "Everyone thinks..."
                 {'\n\n'}✓ Interrupt: "That's the pattern"
@@ -475,7 +441,7 @@ Everyone hears."
               </Text>
             </View>
 
-            <Text className="text-[#95B8A8] text-base text-center italic">
+            <Text className="text-center text-base italic text-[#95B8A8]">
               You caught it. That's a win.
             </Text>
           </View>
@@ -484,7 +450,7 @@ Everyone hears."
         {/* Screen 7: Warning System */}
         {currentScreen === 'warning-system' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Your Personal Early Warning System
             </Text>
 
@@ -496,11 +462,7 @@ Everyone hears."
                   : 'Body sensations'
               }
 
-Mental: ${
-                selectedMental.length > 0
-                  ? selectedMental.slice(0, 2).join(', ')
-                  : 'Thought patterns'
-              }`}
+Mental: ${selectedMental.length > 0 ? selectedMental.slice(0, 2).join(', ') : 'Thought patterns'}`}
             />
 
             <KeyTakeaway
@@ -513,11 +475,11 @@ Mental: ${
 That's it. Keep it simple."
             />
 
-            <Text className="text-[#95B8A8] text-base text-center">
+            <Text className="text-center text-base text-[#95B8A8]">
               The more you practice, the faster you'll catch it.
             </Text>
 
-            <Text className="text-[#E8F4F0] text-base text-center font-semibold">
+            <Text className="text-center text-base font-semibold text-[#E8F4F0]">
               Most people go from 2 hours of rumination to 2 minutes in 30 days.
             </Text>
           </View>
@@ -542,16 +504,17 @@ That's it. Keep it simple."
 
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
-        <View className="px-5" style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
+        <View
+          className="px-5"
+          style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
           <Pressable
             onPress={handleNext}
-            className="rounded-2xl flex-row items-center justify-center active:opacity-90"
+            className="flex-row items-center justify-center rounded-2xl active:opacity-90"
             style={{
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
-            }}
-          >
-            <Text className="text-lg font-semibold mr-2" style={{ color: colors.white }}>
+            }}>
+            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.white }}>
               Continue
             </Text>
             <ArrowRight size={20} color={colors.white} strokeWidth={2} />

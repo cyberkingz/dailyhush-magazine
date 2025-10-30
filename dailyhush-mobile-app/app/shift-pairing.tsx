@@ -48,16 +48,14 @@ export default function ShiftPairing() {
           padding: Spacing.lg,
           paddingTop: Spacing.xxxl,
         }}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {/* Header */}
         <TouchableOpacity onPress={() => router.back()} style={{ marginBottom: Spacing.md }}>
           <Text
             style={{
               fontSize: Typography.fontSize.body,
               color: Colors.primary.emerald600,
-            }}
-          >
+            }}>
             ‹ Back
           </Text>
         </TouchableOpacity>
@@ -68,8 +66,7 @@ export default function ShiftPairing() {
             fontWeight: Typography.fontWeight.bold as any,
             color: textColor,
             marginBottom: Spacing.sm,
-          }}
-        >
+          }}>
           Pair Your Shift
         </Text>
 
@@ -79,8 +76,7 @@ export default function ShiftPairing() {
             color: Colors.neutral.neutral300,
             marginBottom: Spacing.xl,
             lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
-          }}
-        >
+          }}>
           {connectedDevice
             ? 'Your Shift necklace is connected'
             : 'Make sure your Shift necklace is turned on and nearby'}
@@ -94,8 +90,7 @@ export default function ShiftPairing() {
               borderRadius: BorderRadius.md,
               padding: Spacing.lg,
               marginBottom: Spacing.xl,
-            }}
-          >
+            }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: Spacing.md }}>
               <Text style={{ fontSize: 48, marginRight: Spacing.md }}>💎</Text>
               <View style={{ flex: 1 }}>
@@ -105,8 +100,7 @@ export default function ShiftPairing() {
                     fontWeight: Typography.fontWeight.bold as any,
                     color: Colors.neutral.neutral50,
                     marginBottom: Spacing.xs,
-                  }}
-                >
+                  }}>
                   {connectedDevice.name || 'The Shift'}
                 </Text>
                 {batteryLevel !== null && (
@@ -114,8 +108,7 @@ export default function ShiftPairing() {
                     style={{
                       fontSize: Typography.fontSize.caption,
                       color: Colors.neutral.neutral300,
-                    }}
-                  >
+                    }}>
                     Battery: {batteryLevel}%
                   </Text>
                 )}
@@ -131,15 +124,13 @@ export default function ShiftPairing() {
                 padding: Spacing.md,
                 alignItems: 'center',
                 marginBottom: Spacing.sm,
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: Typography.fontSize.body,
                   fontWeight: Typography.fontWeight.bold as any,
                   color: '#FFFFFF',
-                }}
-              >
+                }}>
                 Test Breathing Pattern
               </Text>
             </TouchableOpacity>
@@ -152,15 +143,13 @@ export default function ShiftPairing() {
                 borderRadius: BorderRadius.md,
                 padding: Spacing.md,
                 alignItems: 'center',
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: Typography.fontSize.body,
                   fontWeight: Typography.fontWeight.semibold as any,
                   color: Colors.text.slate600,
-                }}
-              >
+                }}>
                 Disconnect
               </Text>
             </TouchableOpacity>
@@ -174,26 +163,26 @@ export default function ShiftPairing() {
               onPress={isScanning ? stopScan : startScan}
               disabled={isScanning}
               style={{
-                backgroundColor: isScanning
-                  ? Colors.text.slate300
-                  : Colors.primary.emerald600,
+                backgroundColor: isScanning ? Colors.text.slate300 : Colors.primary.emerald600,
                 borderRadius: BorderRadius.lg,
                 padding: Spacing.lg,
                 alignItems: 'center',
                 minHeight: 64,
                 justifyContent: 'center',
-              }}
-            >
+              }}>
               {isScanning ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <ActivityIndicator color="#FFFFFF" size="small" style={{ marginRight: Spacing.sm }} />
+                  <ActivityIndicator
+                    color="#FFFFFF"
+                    size="small"
+                    style={{ marginRight: Spacing.sm }}
+                  />
                   <Text
                     style={{
                       fontSize: Typography.fontSize.button,
                       fontWeight: Typography.fontWeight.bold as any,
                       color: '#FFFFFF',
-                    }}
-                  >
+                    }}>
                     Scanning...
                   </Text>
                 </View>
@@ -203,8 +192,7 @@ export default function ShiftPairing() {
                     fontSize: Typography.fontSize.button,
                     fontWeight: Typography.fontWeight.bold as any,
                     color: '#FFFFFF',
-                  }}
-                >
+                  }}>
                   Scan for Devices
                 </Text>
               )}
@@ -217,15 +205,13 @@ export default function ShiftPairing() {
                   borderRadius: BorderRadius.sm,
                   padding: Spacing.md,
                   marginTop: Spacing.md,
-                }}
-              >
+                }}>
                 <Text
                   style={{
                     fontSize: Typography.fontSize.caption,
                     color: '#991B1B',
                     textAlign: 'center',
-                  }}
-                >
+                  }}>
                   {error}
                 </Text>
               </View>
@@ -242,8 +228,7 @@ export default function ShiftPairing() {
                 fontWeight: Typography.fontWeight.semibold as any,
                 color: textColor,
                 marginBottom: Spacing.md,
-              }}
-            >
+              }}>
               Available Devices
             </Text>
 
@@ -260,8 +245,7 @@ export default function ShiftPairing() {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                }}
-              >
+                }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
                   <Text style={{ fontSize: 32, marginRight: Spacing.md }}>💎</Text>
                   <View style={{ flex: 1 }}>
@@ -271,16 +255,14 @@ export default function ShiftPairing() {
                         fontWeight: Typography.fontWeight.semibold as any,
                         color: textColor,
                         marginBottom: Spacing.xs,
-                      }}
-                    >
+                      }}>
                       {device.name || 'Unknown Device'}
                     </Text>
                     <Text
                       style={{
                         fontSize: Typography.fontSize.caption,
                         color: Colors.text.slate500,
-                      }}
-                    >
+                      }}>
                       Tap to connect
                     </Text>
                   </View>
@@ -289,8 +271,7 @@ export default function ShiftPairing() {
                   style={{
                     fontSize: Typography.fontSize.body,
                     color: Colors.primary.emerald600,
-                  }}
-                >
+                  }}>
                   ›
                 </Text>
               </TouchableOpacity>
@@ -306,8 +287,7 @@ export default function ShiftPairing() {
               borderRadius: BorderRadius.md,
               padding: Spacing.xl,
               alignItems: 'center',
-            }}
-          >
+            }}>
             <Text style={{ fontSize: 64, marginBottom: Spacing.md }}>🔍</Text>
             <Text
               style={{
@@ -315,9 +295,9 @@ export default function ShiftPairing() {
                 color: Colors.neutral.neutral300,
                 textAlign: 'center',
                 lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
-              }}
-            >
-              No devices found. Make sure your Shift necklace is powered on and nearby, then tap &quot;Scan for Devices&quot;.
+              }}>
+              No devices found. Make sure your Shift necklace is powered on and nearby, then tap
+              &quot;Scan for Devices&quot;.
             </Text>
           </View>
         )}
@@ -330,8 +310,7 @@ export default function ShiftPairing() {
               fontWeight: Typography.fontWeight.semibold as any,
               color: textColor,
               marginBottom: Spacing.md,
-            }}
-          >
+            }}>
             Troubleshooting
           </Text>
 
@@ -348,15 +327,13 @@ export default function ShiftPairing() {
                 flexDirection: 'row',
                 alignItems: 'flex-start',
                 marginBottom: Spacing.sm,
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: Typography.fontSize.body,
                   color: Colors.primary.emerald600,
                   marginRight: Spacing.sm,
-                }}
-              >
+                }}>
                 •
               </Text>
               <Text
@@ -365,8 +342,7 @@ export default function ShiftPairing() {
                   fontSize: Typography.fontSize.body,
                   color: Colors.neutral.neutral300,
                   lineHeight: Typography.lineHeight.body * Typography.fontSize.body,
-                }}
-              >
+                }}>
                 {tip}
               </Text>
             </View>
@@ -378,8 +354,7 @@ export default function ShiftPairing() {
                 fontSize: Typography.fontSize.caption,
                 color: Colors.text.slate500,
                 textAlign: 'center',
-              }}
-            >
+              }}>
               Need help? Email support@dailyhush.com
             </Text>
           </View>

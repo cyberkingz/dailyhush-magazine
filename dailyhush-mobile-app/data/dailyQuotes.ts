@@ -57,7 +57,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 9,
-    text: "Your brain learned to ruminate. It can learn not to. Neural pathways change with practice.",
+    text: 'Your brain learned to ruminate. It can learn not to. Neural pathways change with practice.',
     category: 'growth',
   },
   {
@@ -74,7 +74,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 12,
-    text: "Name 5 things you can see. Your nervous system will thank you.",
+    text: 'Name 5 things you can see. Your nervous system will thank you.',
     category: 'presence',
   },
   {
@@ -84,7 +84,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 14,
-    text: "Breath is the bridge between rumination and presence. Use it.",
+    text: 'Breath is the bridge between rumination and presence. Use it.',
     category: 'presence',
   },
   {
@@ -96,7 +96,7 @@ export const dailyQuotes: Quote[] = [
   // Interrupt Wisdom
   {
     id: 16,
-    text: "The 10-second window is real. Catch it there, and the spiral never starts.",
+    text: 'The 10-second window is real. Catch it there, and the spiral never starts.',
     category: 'interrupt',
   },
   {
@@ -116,7 +116,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 20,
-    text: "Most spirals peak at 90 seconds. If you can interrupt then, you win.",
+    text: 'Most spirals peak at 90 seconds. If you can interrupt then, you win.',
     category: 'interrupt',
   },
 
@@ -128,7 +128,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 22,
-    text: "Shame thrives in secret. Rumination thrives in loops. Break the pattern, break the power.",
+    text: 'Shame thrives in secret. Rumination thrives in loops. Break the pattern, break the power.',
     category: 'wisdom',
   },
   {
@@ -138,7 +138,7 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 24,
-    text: "The conversations you replay never happened the way you remember them. Your spiral is fiction.",
+    text: 'The conversations you replay never happened the way you remember them. Your spiral is fiction.',
     category: 'wisdom',
   },
   {
@@ -153,12 +153,12 @@ export const dailyQuotes: Quote[] = [
   },
   {
     id: 27,
-    text: "The mind that creates the spiral is the same mind that can interrupt it.",
+    text: 'The mind that creates the spiral is the same mind that can interrupt it.',
     category: 'wisdom',
   },
   {
     id: 28,
-    text: "Rumination is a habit, not a personality trait. Habits can change.",
+    text: 'Rumination is a habit, not a personality trait. Habits can change.',
     category: 'wisdom',
   },
   {
@@ -223,5 +223,5 @@ export function getRandomQuote(): Quote {
  * Get quotes by category
  */
 export function getQuotesByCategory(category: Quote['category']): Quote[] {
-  return dailyQuotes.filter(quote => quote.category === category);
+  return dailyQuotes.filter((quote) => quote.category === category);
 }

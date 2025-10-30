@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Pressable, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ArrowLeft, Check, Lock, Clock } from 'lucide-react-native';
+import { Check, Lock, Clock } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
@@ -26,37 +26,48 @@ interface ModuleCardProps {
   onPress: () => void;
 }
 
-function ModuleCard({ module, title, description, duration, completed, locked, onPress }: ModuleCardProps) {
+function ModuleCard({
+  module,
+  title,
+  description,
+  duration,
+  completed,
+  locked,
+  onPress,
+}: ModuleCardProps) {
   return (
     <Pressable
       onPress={onPress}
       disabled={locked}
-      className={`rounded-2xl p-5 mb-4 ${locked ? 'opacity-50' : 'active:opacity-90'}`}
-      style={{ backgroundColor: colors.background.secondary }}
-    >
-      <View className="flex-row justify-between items-center mb-3">
-        <Text className="text-lg font-bold flex-1" style={{ color: colors.text.primary }}>
+      className={`mb-4 rounded-2xl p-5 ${locked ? 'opacity-50' : 'active:opacity-90'}`}
+      style={{ backgroundColor: colors.background.secondary }}>
+      <View className="mb-3 flex-row items-center justify-between">
+        <Text className="flex-1 text-lg font-bold" style={{ color: colors.text.primary }}>
           {title}
         </Text>
         {completed && (
-          <View className="p-1.5 rounded-full" style={{ backgroundColor: colors.background.tertiary }}>
+          <View
+            className="rounded-full p-1.5"
+            style={{ backgroundColor: colors.background.tertiary }}>
             <Check size={16} color={colors.emerald[100]} strokeWidth={3} />
           </View>
         )}
         {locked && (
-          <View className="p-1.5 rounded-full" style={{ backgroundColor: colors.background.border }}>
+          <View
+            className="rounded-full p-1.5"
+            style={{ backgroundColor: colors.background.border }}>
             <Lock size={16} color={colors.text.secondary} strokeWidth={2} />
           </View>
         )}
       </View>
 
-      <Text className="text-sm leading-relaxed mb-3" style={{ color: colors.text.secondary }}>
+      <Text className="mb-3 text-sm leading-relaxed" style={{ color: colors.text.secondary }}>
         {description}
       </Text>
 
       <View className="flex-row items-center">
         <Clock size={14} color={colors.text.secondary} strokeWidth={2} />
-        <Text className="text-xs ml-1.5" style={{ color: colors.text.secondary }}>
+        <Text className="ml-1.5 text-xs" style={{ color: colors.text.secondary }}>
           {duration}
         </Text>
       </View>
@@ -80,7 +91,8 @@ export default function Training() {
     {
       module: FireModule.FOCUS,
       title: 'Module 1: FOCUS',
-      description: 'Understanding your rumination pattern. Learn why you spiral and what triggers it.',
+      description:
+        'Understanding your rumination pattern. Learn why you spiral and what triggers it.',
       duration: '15 minutes',
       completed: fireProgress.focus,
       locked: false,
@@ -131,12 +143,10 @@ export default function Training() {
           paddingTop: spacing.lg,
           paddingBottom: 72 + insets.bottom,
         }}
-        showsVerticalScrollIndicator={false}
-      >
-
+        showsVerticalScrollIndicator={false}>
         {/* Progress */}
         <View className="mb-6">
-          <View className="flex-row justify-between items-center mb-2">
+          <View className="mb-2 flex-row items-center justify-between">
             <Text className="text-sm" style={{ color: colors.text.secondary }}>
               Your Progress
             </Text>
@@ -145,7 +155,9 @@ export default function Training() {
             </Text>
           </View>
 
-          <View className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: colors.background.border }}>
+          <View
+            className="h-2 overflow-hidden rounded-full"
+            style={{ backgroundColor: colors.background.border }}>
             <View
               className="h-full"
               style={{
@@ -168,17 +180,20 @@ export default function Training() {
         {/* Certification */}
         {completedCount === 4 && (
           <View
-            className="rounded-2xl p-6 mt-4 items-center border"
+            className="mt-4 items-center rounded-2xl border p-6"
             style={{
               backgroundColor: colors.background.tertiary,
               borderColor: colors.button.primary + '33', // 20% opacity
-            }}
-          >
-            <Text className="text-5xl mb-3">🎓</Text>
-            <Text className="text-xl font-bold text-center mb-2" style={{ color: colors.text.primary }}>
+            }}>
+            <Text className="mb-3 text-5xl">🎓</Text>
+            <Text
+              className="mb-2 text-center text-xl font-bold"
+              style={{ color: colors.text.primary }}>
               F.I.R.E. Trained!
             </Text>
-            <Text className="text-sm text-center leading-relaxed" style={{ color: colors.emerald[100] }}>
+            <Text
+              className="text-center text-sm leading-relaxed"
+              style={{ color: colors.emerald[100] }}>
               You&apos;ve completed all modules. You now have advanced techniques unlocked.
             </Text>
           </View>

@@ -20,12 +20,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import {
-  ChevronLeft,
-  AlertTriangle,
-  Trash2,
-  Check
-} from 'lucide-react-native';
+import { ChevronLeft, AlertTriangle, Trash2, Check } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { AuthTextInput } from '@/components/auth/AuthTextInput';
@@ -53,10 +48,7 @@ export default function DeleteAccountScreen() {
           <Text style={styles.errorText}>
             You&apos;re using DailyHush as a guest. Only authenticated accounts can be deleted.
           </Text>
-          <Pressable
-            onPress={() => router.back()}
-            style={styles.backButton}
-          >
+          <Pressable onPress={() => router.back()} style={styles.backButton}>
             <Text style={styles.backButtonText}>Go Back</Text>
           </Pressable>
         </View>
@@ -136,7 +128,7 @@ export default function DeleteAccountScreen() {
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${session.session.access_token}`,
+            Authorization: `Bearer ${session.session.access_token}`,
             'Content-Type': 'application/json',
           },
         }
@@ -232,180 +224,172 @@ export default function DeleteAccountScreen() {
         <StatusBar style="light" />
 
         {/* Header */}
-      <View style={styles.header}>
-        <Pressable
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.back();
-          }}
-          style={styles.headerButton}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <ChevronLeft size={24} color={colors.text.primary} strokeWidth={2} />
-        </Pressable>
-        <Text style={styles.headerTitle}>Delete Account</Text>
-        <View style={{ width: 40 }} />
-      </View>
-
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* Warning banner */}
-          <View style={styles.warningBanner}>
-            <AlertTriangle size={32} color={colors.status.error} strokeWidth={2} />
-            <View style={styles.warningContent}>
-              <Text style={styles.warningTitle}>Account Deletion</Text>
-              <Text style={styles.warningText}>
-                This will delete your account and prevent you from signing in. Your usage data will be retained for analytics and product improvement.
-              </Text>
-            </View>
-          </View>
-
-          {/* What will be deleted */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>What Will Be Deleted</Text>
-
-            <View style={styles.deleteItem}>
-              <View style={styles.deleteItemIcon}>
-                <Check size={16} color={colors.status.error} strokeWidth={2} />
-              </View>
-              <Text style={styles.deleteItemText}>Your login credentials (email: {user.email})</Text>
-            </View>
-
-            <View style={styles.deleteItem}>
-              <View style={styles.deleteItemIcon}>
-                <Check size={16} color={colors.status.error} strokeWidth={2} />
-              </View>
-              <Text style={styles.deleteItemText}>Ability to sign in to your account</Text>
-            </View>
-
-            <View style={styles.deleteItem}>
-              <View style={styles.deleteItemIcon}>
-                <Check size={16} color={colors.status.error} strokeWidth={2} />
-              </View>
-              <Text style={styles.deleteItemText}>Access to your DailyHush data</Text>
-            </View>
-          </View>
-
-          {/* What will be retained */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>What Will Be Retained</Text>
-
-            <View style={styles.retainItem}>
-              <View style={styles.retainItemIcon}>
-                <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
-              </View>
-              <Text style={styles.retainItemText}>Spiral logs and pattern insights (for analytics)</Text>
-            </View>
-
-            <View style={styles.retainItem}>
-              <View style={styles.retainItemIcon}>
-                <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
-              </View>
-              <Text style={styles.retainItemText}>F.I.R.E. framework progress data</Text>
-            </View>
-
-            <View style={styles.retainItem}>
-              <View style={styles.retainItemIcon}>
-                <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
-              </View>
-              <Text style={styles.retainItemText}>The Shift necklace usage data</Text>
-            </View>
-
-            <View style={styles.retainItem}>
-              <View style={styles.retainItemIcon}>
-                <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
-              </View>
-              <Text style={styles.retainItemText}>Quiz submissions and preferences</Text>
-            </View>
-
-            <Text style={styles.retainNote}>
-              This data helps us improve DailyHush for everyone. It cannot be accessed after account deletion.
-            </Text>
-          </View>
-
-          {/* Note about local data */}
-          <View style={styles.noteBox}>
-            <Text style={styles.noteTitle}>Note About Local Data</Text>
-            <Text style={styles.noteText}>
-              Voice journals are stored only on your device. To fully delete them, uninstall the DailyHush app after deleting your account.
-            </Text>
-          </View>
-
-          {/* Password confirmation */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Confirm Your Identity</Text>
-            <AuthTextInput
-              label="Password"
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Enter your password"
-              secureTextEntry
-              autoCapitalize="none"
-              autoComplete="password"
-              returnKeyType="done"
-              editable={!isDeleting}
-              error={error || undefined}
-            />
-          </View>
-
-          {/* Confirmation checkbox */}
+        <View style={styles.header}>
           <Pressable
             onPress={() => {
-              setConfirmChecked(!confirmChecked);
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              Haptics.selectionAsync();
+              router.back();
             }}
-            disabled={isDeleting}
-            style={styles.confirmCheckbox}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-          >
-            <View style={[
-              styles.checkbox,
-              confirmChecked && styles.checkboxChecked
-            ]}>
-              {confirmChecked && (
-                <Check size={18} color={colors.white} strokeWidth={3} />
-              )}
+            style={styles.headerButton}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+            <ChevronLeft size={24} color={colors.text.primary} strokeWidth={2} />
+          </Pressable>
+          <Text style={styles.headerTitle}>Delete Account</Text>
+          <View style={{ width: 40 }} />
+        </View>
+
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled">
+            {/* Warning banner */}
+            <View style={styles.warningBanner}>
+              <AlertTriangle size={32} color={colors.status.error} strokeWidth={2} />
+              <View style={styles.warningContent}>
+                <Text style={styles.warningTitle}>Account Deletion</Text>
+                <Text style={styles.warningText}>
+                  This will delete your account and prevent you from signing in. Your usage data
+                  will be retained for analytics and product improvement.
+                </Text>
+              </View>
             </View>
-            <Text style={styles.confirmText}>
-              I understand this action is permanent and cannot be undone
-            </Text>
-          </Pressable>
 
-          {/* Delete button */}
-          <Pressable
-            onPress={confirmDeletion}
-            disabled={isDeleting}
-            style={[
-              styles.deleteButton,
-              isDeleting && styles.deleteButtonDisabled
-            ]}
-          >
-            {isDeleting ? (
-              <Text style={styles.deleteButtonText}>Deleting Account...</Text>
-            ) : (
-              <>
-                <Trash2 size={20} color={colors.white} strokeWidth={2} />
-                <Text style={styles.deleteButtonText}>Delete Account Forever</Text>
-              </>
-            )}
-          </Pressable>
+            {/* What will be deleted */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>What Will Be Deleted</Text>
 
-          {/* Support contact */}
-          <View style={styles.supportSection}>
-            <Text style={styles.supportText}>
-              Need help or have questions?
-            </Text>
-            <Text style={styles.supportEmail}>hello@daily-hush.com</Text>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+              <View style={styles.deleteItem}>
+                <View style={styles.deleteItemIcon}>
+                  <Check size={16} color={colors.status.error} strokeWidth={2} />
+                </View>
+                <Text style={styles.deleteItemText}>
+                  Your login credentials (email: {user.email})
+                </Text>
+              </View>
+
+              <View style={styles.deleteItem}>
+                <View style={styles.deleteItemIcon}>
+                  <Check size={16} color={colors.status.error} strokeWidth={2} />
+                </View>
+                <Text style={styles.deleteItemText}>Ability to sign in to your account</Text>
+              </View>
+
+              <View style={styles.deleteItem}>
+                <View style={styles.deleteItemIcon}>
+                  <Check size={16} color={colors.status.error} strokeWidth={2} />
+                </View>
+                <Text style={styles.deleteItemText}>Access to your DailyHush data</Text>
+              </View>
+            </View>
+
+            {/* What will be retained */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>What Will Be Retained</Text>
+
+              <View style={styles.retainItem}>
+                <View style={styles.retainItemIcon}>
+                  <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
+                </View>
+                <Text style={styles.retainItemText}>
+                  Spiral logs and pattern insights (for analytics)
+                </Text>
+              </View>
+
+              <View style={styles.retainItem}>
+                <View style={styles.retainItemIcon}>
+                  <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
+                </View>
+                <Text style={styles.retainItemText}>F.I.R.E. framework progress data</Text>
+              </View>
+
+              <View style={styles.retainItem}>
+                <View style={styles.retainItemIcon}>
+                  <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
+                </View>
+                <Text style={styles.retainItemText}>The Shift necklace usage data</Text>
+              </View>
+
+              <View style={styles.retainItem}>
+                <View style={styles.retainItemIcon}>
+                  <Check size={16} color={colors.emerald[500]} strokeWidth={2} />
+                </View>
+                <Text style={styles.retainItemText}>Quiz submissions and preferences</Text>
+              </View>
+
+              <Text style={styles.retainNote}>
+                This data helps us improve DailyHush for everyone. It cannot be accessed after
+                account deletion.
+              </Text>
+            </View>
+
+            {/* Note about local data */}
+            <View style={styles.noteBox}>
+              <Text style={styles.noteTitle}>Note About Local Data</Text>
+              <Text style={styles.noteText}>
+                Voice journals are stored only on your device. To fully delete them, uninstall the
+                DailyHush app after deleting your account.
+              </Text>
+            </View>
+
+            {/* Password confirmation */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Confirm Your Identity</Text>
+              <AuthTextInput
+                label="Password"
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Enter your password"
+                secureTextEntry
+                autoCapitalize="none"
+                autoComplete="password"
+                returnKeyType="done"
+                editable={!isDeleting}
+                error={error || undefined}
+              />
+            </View>
+
+            {/* Confirmation checkbox */}
+            <Pressable
+              onPress={() => {
+                setConfirmChecked(!confirmChecked);
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              }}
+              disabled={isDeleting}
+              style={styles.confirmCheckbox}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+              <View style={[styles.checkbox, confirmChecked && styles.checkboxChecked]}>
+                {confirmChecked && <Check size={18} color={colors.white} strokeWidth={3} />}
+              </View>
+              <Text style={styles.confirmText}>
+                I understand this action is permanent and cannot be undone
+              </Text>
+            </Pressable>
+
+            {/* Delete button */}
+            <Pressable
+              onPress={confirmDeletion}
+              disabled={isDeleting}
+              style={[styles.deleteButton, isDeleting && styles.deleteButtonDisabled]}>
+              {isDeleting ? (
+                <Text style={styles.deleteButtonText}>Deleting Account...</Text>
+              ) : (
+                <>
+                  <Trash2 size={20} color={colors.white} strokeWidth={2} />
+                  <Text style={styles.deleteButtonText}>Delete Account Forever</Text>
+                </>
+              )}
+            </Pressable>
+
+            {/* Support contact */}
+            <View style={styles.supportSection}>
+              <Text style={styles.supportText}>Need help or have questions?</Text>
+              <Text style={styles.supportEmail}>hello@daily-hush.com</Text>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </>
   );
@@ -627,4 +611,3 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
 });
-

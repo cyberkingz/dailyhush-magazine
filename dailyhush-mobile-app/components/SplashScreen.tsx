@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions, Platform } from 'react-native';
+import { View, Text, StyleSheet, Animated, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Circle, Path, G } from 'react-native-svg';
 
-const { width, height } = Dimensions.get('window');
+// const { width, height } = Dimensions.get('window');
 
 interface SplashScreenProps {
   onAnimationComplete?: () => void;
@@ -120,8 +120,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
               opacity: logoAnim,
               transform: [{ translateY: logoTranslateY }],
             },
-          ]}
-        >
+          ]}>
           {/* Moon Icon (simple crescent) */}
           <View style={styles.iconContainer}>
             <Svg width="40" height="40" viewBox="0 0 40 40">
@@ -147,8 +146,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
               opacity: taglineAnim,
               transform: [{ translateY: taglineTranslateY }],
             },
-          ]}
-        >
+          ]}>
           <Text style={styles.tagline}>Stop the Spiral of Overthinking</Text>
         </Animated.View>
 
@@ -160,8 +158,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
               opacity: spiralAnim,
               transform: [{ rotate: spiralRotation }],
             },
-          ]}
-        >
+          ]}>
           <BreakingSpiralGraphic />
         </Animated.View>
 
@@ -224,13 +221,7 @@ const BreakingSpiralGraphic: React.FC = () => {
         />
 
         {/* Center dot - the "break" point */}
-        <Circle
-          cx="0"
-          cy="0"
-          r="5"
-          fill="#34D399"
-          opacity="0.8"
-        />
+        <Circle cx="0" cy="0" r="5" fill="#34D399" opacity="0.8" />
 
         {/* Small accent dots showing "interruption" points */}
         <Circle cx="70" cy="0" r="3" fill="#34D399" opacity="0.6" />

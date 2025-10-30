@@ -56,114 +56,114 @@ function CenterButton({
 
   return (
     <Pressable
-        onPress={async () => {
-          setIsPressed(true);
-          await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          onPress(); // Execute immediately - no delay
-          setTimeout(() => setIsPressed(false), 1000);
+      onPress={async () => {
+        setIsPressed(true);
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+        onPress(); // Execute immediately - no delay
+        setTimeout(() => setIsPressed(false), 1000);
+      }}
+      accessibilityLabel="Emergency spiral interrupt"
+      accessibilityHint="Tap to start 90-second spiral interrupt protocol"
+      accessibilityRole="button"
+      style={({ pressed }) => [
+        styles.centerPressable,
+        pressed && { transform: [{ scale: 0.95 }] },
+      ]}>
+      {/* Outer pulsing ring */}
+      <MotiView
+        style={styles.centerOuterRing}
+        animate={
+          reduceMotion
+            ? { scale: 1, opacity: 0.3 }
+            : isPressed
+              ? { scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0] }
+              : { scale: 1, opacity: 0.3 }
+        }
+        transition={{
+          duration: reduceMotion ? 0 : 1000,
+          type: 'timing',
+          easing: Easing.out(Easing.cubic),
         }}
-        accessibilityLabel="Emergency spiral interrupt"
-        accessibilityHint="Tap to start 90-second spiral interrupt protocol"
-        accessibilityRole="button"
-        style={({ pressed }) => [
-          styles.centerPressable,
-          pressed && { transform: [{ scale: 0.95 }] },
+      />
+      {/* Animated glow rings on press - skip if reduced motion */}
+      {!reduceMotion && (
+        <AnimatePresence>
+          {isPressed && (
+            <>
+              <MotiView
+                key="center-glow-primary"
+                from={{ scale: 1, opacity: 0.4 }}
+                animate={{ scale: 2, opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 800, type: 'timing', easing: Easing.out(Easing.cubic) }}
+                style={styles.centerGlowPrimary}
+              />
+              <MotiView
+                key="center-glow-secondary"
+                from={{ scale: 1, opacity: 0.3 }}
+                animate={{ scale: 2.5, opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 1000,
+                  type: 'timing',
+                  delay: 100,
+                  easing: Easing.out(Easing.cubic),
+                }}
+                style={styles.centerGlowSecondary}
+              />
+            </>
+          )}
+        </AnimatePresence>
+      )}
+      {/* Main button with animated gradient + shadow */}
+      <MotiView
+        animate={
+          reduceMotion
+            ? { scale: 1, rotate: '0deg' }
+            : isPressed
+              ? { scale: [1, 0.9, 1.05, 1], rotate: ['0deg', '-5deg', '5deg', '0deg'] }
+              : { scale: 1, rotate: '0deg' }
+        }
+        transition={{
+          duration: reduceMotion ? 0 : 600,
+          type: 'timing',
+          easing: Easing.bezier(0.34, 1.56, 0.64, 1),
+        }}
+        style={[
+          styles.centerButton,
+          Platform.OS === 'ios' ? styles.centerButtonShadowIOS : styles.centerButtonShadowAndroid,
         ]}>
-        {/* Outer pulsing ring */}
-        <MotiView
-          style={styles.centerOuterRing}
-          animate={
-            reduceMotion
-              ? { scale: 1, opacity: 0.3 }
-              : isPressed
-                ? { scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0] }
-                : { scale: 1, opacity: 0.3 }
-          }
-          transition={{
-            duration: reduceMotion ? 0 : 1000,
-            type: 'timing',
-            easing: Easing.out(Easing.cubic),
-          }}
+        <LinearGradient
+          colors={['#7dd3c0', '#5cb5a3']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={StyleSheet.absoluteFillObject}
         />
-        {/* Animated glow rings on press - skip if reduced motion */}
-        {!reduceMotion && (
-          <AnimatePresence>
-            {isPressed && (
-              <>
-                <MotiView
-                  key="center-glow-primary"
-                  from={{ scale: 1, opacity: 0.4 }}
-                  animate={{ scale: 2, opacity: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 800, type: 'timing', easing: Easing.out(Easing.cubic) }}
-                  style={styles.centerGlowPrimary}
-                />
-                <MotiView
-                  key="center-glow-secondary"
-                  from={{ scale: 1, opacity: 0.3 }}
-                  animate={{ scale: 2.5, opacity: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    duration: 1000,
-                    type: 'timing',
-                    delay: 100,
-                    easing: Easing.out(Easing.cubic),
-                  }}
-                  style={styles.centerGlowSecondary}
-                />
-              </>
-            )}
-          </AnimatePresence>
-        )}
-        {/* Main button with animated gradient + shadow */}
+        {/* Inner glow */}
+        <MotiView
+          style={styles.centerGlowOverlay}
+          animate={{ opacity: reduceMotion ? 0.2 : isPressed ? [0.2, 0.4, 0.2] : 0.2 }}
+          transition={{ duration: reduceMotion ? 0 : 600 }}
+        />
+        {/* Shield icon */}
         <MotiView
           animate={
             reduceMotion
               ? { scale: 1, rotate: '0deg' }
               : isPressed
-                ? { scale: [1, 0.9, 1.05, 1], rotate: ['0deg', '-5deg', '5deg', '0deg'] }
+                ? { scale: [1, 1.2, 1], rotate: ['0deg', '10deg', '-10deg', '0deg'] }
                 : { scale: 1, rotate: '0deg' }
           }
           transition={{
             duration: reduceMotion ? 0 : 600,
             type: 'timing',
-            easing: Easing.bezier(0.34, 1.56, 0.64, 1),
+            easing: Easing.out(Easing.cubic),
           }}
-          style={[
-            styles.centerButton,
-            Platform.OS === 'ios' ? styles.centerButtonShadowIOS : styles.centerButtonShadowAndroid,
-          ]}>
-          <LinearGradient
-            colors={['#7dd3c0', '#5cb5a3']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={StyleSheet.absoluteFillObject}
-          />
-          {/* Inner glow */}
-          <MotiView
-            style={styles.centerGlowOverlay}
-            animate={{ opacity: reduceMotion ? 0.2 : isPressed ? [0.2, 0.4, 0.2] : 0.2 }}
-            transition={{ duration: reduceMotion ? 0 : 600 }}
-          />
-          {/* Shield icon */}
-          <MotiView
-            animate={
-              reduceMotion
-                ? { scale: 1, rotate: '0deg' }
-                : isPressed
-                  ? { scale: [1, 1.2, 1], rotate: ['0deg', '10deg', '-10deg', '0deg'] }
-                  : { scale: 1, rotate: '0deg' }
-            }
-            transition={{
-              duration: reduceMotion ? 0 : 600,
-              type: 'timing',
-              easing: Easing.out(Easing.cubic),
-            }}
-            style={styles.centerIcon}>
-            <Shield size={20} color={colors.background.primary} strokeWidth={2.5} />
-          </MotiView>
+          style={styles.centerIcon}>
+          <Shield size={20} color={colors.background.primary} strokeWidth={2.5} />
         </MotiView>
-      </Pressable>
+      </MotiView>
+    </Pressable>
   );
 }
 

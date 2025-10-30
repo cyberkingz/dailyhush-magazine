@@ -27,7 +27,7 @@ export function CountdownRing({
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   // Intensify glow as progress increases (0.3 to 0.6)
-  const glowIntensity = 0.3 + (progress / 100) * 0.3;
+  // const glowIntensity = 0.3 + (progress / 100) * 0.3;
 
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>

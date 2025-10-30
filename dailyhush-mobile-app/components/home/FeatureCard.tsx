@@ -48,15 +48,16 @@ export function FeatureCard({
 
   const content = (
     <>
-      <View style={{
-        width: 56,
-        height: 56,
-        borderRadius: 28,
-        backgroundColor: iconBackgroundColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 16,
-      }}>
+      <View
+        style={{
+          width: 56,
+          height: 56,
+          borderRadius: 28,
+          backgroundColor: iconBackgroundColor,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 16,
+        }}>
         <Icon size={28} color={iconColor} />
       </View>
       <Text
@@ -66,8 +67,7 @@ export function FeatureCard({
           fontWeight: '600',
           color: colors.text.primary,
           marginBottom: 6,
-        }}
-      >
+        }}>
         {title}
       </Text>
       <Text
@@ -77,8 +77,7 @@ export function FeatureCard({
           color: colors.text.secondary,
           opacity: 0.7,
           lineHeight: 18,
-        }}
-      >
+        }}>
         {description}
       </Text>
     </>

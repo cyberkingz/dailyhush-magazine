@@ -10,7 +10,6 @@ import { View, Pressable, KeyboardAvoidingView, Platform, ActivityIndicator } fr
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Sparkles, ChevronRight } from 'lucide-react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
@@ -25,7 +24,7 @@ import { useStore } from '@/store/useStore';
 
 export default function QuizResults() {
   const router = useRouter();
-  const { user, setUser } = useStore();
+  const { setUser } = useStore();
   const params = useLocalSearchParams<{
     type: OverthinkerType;
     score: string;
@@ -40,7 +39,7 @@ export default function QuizResults() {
   const insets = useSafeAreaInsets();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isRevealing, setIsRevealing] = useState(false);
+  // const [isRevealing, setIsRevealing] = useState(false);
 
   // Check if this is a results reveal (after signup) or legacy flow
   const isReveal = params.reveal === 'true';
@@ -61,7 +60,9 @@ export default function QuizResults() {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
       // Get current authenticated user
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       if (!session?.user) {
         console.error('No authenticated user found');
@@ -163,8 +164,7 @@ export default function QuizResults() {
 
         <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <ScrollFadeView
             style={{ flex: 1 }}
             contentContainerStyle={{
@@ -178,8 +178,7 @@ export default function QuizResults() {
             fadeHeight={48}
             fadeIntensity={0.95}
             fadeVisibility="always"
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             {/* Sparkle Icon */}
             <View style={{ alignItems: 'center', marginBottom: 24 }}>
               <View
@@ -192,8 +191,7 @@ export default function QuizResults() {
                   justifyContent: 'center',
                   borderWidth: 2,
                   borderColor: colors.emerald[600] + '40',
-                }}
-              >
+                }}>
                 <Sparkles size={40} color={colors.emerald[500]} strokeWidth={2} />
               </View>
             </View>
@@ -207,8 +205,7 @@ export default function QuizResults() {
                 textAlign: 'center',
                 marginBottom: 12,
                 lineHeight: 40,
-              }}
-            >
+              }}>
               {params.title}
             </Text>
 
@@ -220,8 +217,7 @@ export default function QuizResults() {
                 textAlign: 'center',
                 lineHeight: 28,
                 marginBottom: 24,
-              }}
-            >
+              }}>
               {params.description}
             </Text>
 
@@ -234,8 +230,7 @@ export default function QuizResults() {
                 marginBottom: 40,
                 borderWidth: 1,
                 borderColor: colors.emerald[700] + '40',
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: 16,
@@ -243,8 +238,7 @@ export default function QuizResults() {
                   textAlign: 'center',
                   lineHeight: 24,
                   fontWeight: '600',
-                }}
-              >
+                }}>
                 {params.insight}
               </Text>
             </View>
@@ -258,8 +252,7 @@ export default function QuizResults() {
                 marginBottom: spacing.xl,
                 borderWidth: 1,
                 borderColor: colors.emerald[700] + '40',
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: 17,
@@ -267,8 +260,7 @@ export default function QuizResults() {
                   textAlign: 'center',
                   lineHeight: 26,
                   fontWeight: '600',
-                }}
-              >
+                }}>
                 ✨ You&apos;re all set! Let&apos;s start your journey to quieter thoughts.
               </Text>
             </View>
@@ -288,8 +280,7 @@ export default function QuizResults() {
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
                 elevation: 6,
-              }}
-            >
+              }}>
               {({ pressed }) => (
                 <View
                   style={{
@@ -297,8 +288,7 @@ export default function QuizResults() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     opacity: pressed && !isSubmitting ? 0.9 : 1,
-                  }}
-                >
+                  }}>
                   {isSubmitting ? (
                     <>
                       <ActivityIndicator size="small" color={colors.white} />
@@ -308,8 +298,7 @@ export default function QuizResults() {
                           fontWeight: 'bold',
                           color: colors.white,
                           marginLeft: 12,
-                        }}
-                      >
+                        }}>
                         Saving...
                       </Text>
                     </>
@@ -326,8 +315,7 @@ export default function QuizResults() {
                           fontSize: 20,
                           fontWeight: 'bold',
                           color: colors.white,
-                        }}
-                      >
+                        }}>
                         Get Started
                       </Text>
                     </>
@@ -344,16 +332,14 @@ export default function QuizResults() {
                 padding: 20,
                 borderWidth: 1,
                 borderColor: colors.emerald[700] + '40',
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: 15,
                   color: colors.text.secondary,
                   textAlign: 'center',
                   lineHeight: 22,
-                }}
-              >
+                }}>
                 {params.ctaHook}
               </Text>
             </View>

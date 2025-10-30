@@ -128,8 +128,7 @@ export default function Layout() {
               />
             );
           },
-        }}
-      >
+        }}>
         <Stack.Screen
           name="index"
           options={{
@@ -221,15 +220,17 @@ export default function Layout() {
         />
       </Stack>
       <PortalHost />
-      <BottomNav hideOnPaths={[
-        '/spiral',
-        '/onboarding',
-        '/settings',
-        '/auth',
-        '/faq',
-        '/legal/privacy',
-        '/legal/terms'
-      ]} />
+      <BottomNav
+        hideOnPaths={[
+          '/spiral',
+          '/onboarding',
+          '/settings',
+          '/auth',
+          '/faq',
+          '/legal/privacy',
+          '/legal/terms',
+        ]}
+      />
     </ErrorBoundary>
   );
 }

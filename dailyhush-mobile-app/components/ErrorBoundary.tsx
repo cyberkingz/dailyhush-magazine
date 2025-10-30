@@ -74,15 +74,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
               justifyContent: 'center',
               paddingHorizontal: 32,
               paddingVertical: 60,
-            }}
-          >
+            }}>
             {/* Error Icon with subtle glow */}
             <View
               style={{
                 alignItems: 'center',
                 marginBottom: 32,
-              }}
-            >
+              }}>
               <View
                 style={{
                   width: 96,
@@ -91,8 +89,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                   backgroundColor: colors.status.error + '15',
                   alignItems: 'center',
                   justifyContent: 'center',
-                }}
-              >
+                }}>
                 <AlertCircle size={48} color={colors.status.error} strokeWidth={2} />
               </View>
             </View>
@@ -106,8 +103,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 textAlign: 'center',
                 marginBottom: 16,
                 letterSpacing: -0.5,
-              }}
-            >
+              }}>
               Something Went Wrong
             </Text>
 
@@ -120,8 +116,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 lineHeight: 24,
                 marginBottom: 40,
                 opacity: 0.8,
-              }}
-            >
+              }}>
               Don't worry, this happens sometimes. Try refreshing or go back home.
             </Text>
 
@@ -135,8 +130,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                   marginBottom: 32,
                   borderWidth: 1,
                   borderColor: colors.status.error + '20',
-                }}
-              >
+                }}>
                 <Text
                   style={{
                     fontSize: 13,
@@ -144,8 +138,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                     color: colors.status.error,
                     marginBottom: 12,
                     letterSpacing: 0.5,
-                  }}
-                >
+                  }}>
                   Error Details (Dev Only):
                 </Text>
                 <Text
@@ -154,8 +147,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                     color: colors.text.secondary,
                     lineHeight: 20,
                     opacity: 0.9,
-                  }}
-                >
+                  }}>
                   {this.state.error.toString()}
                 </Text>
               </View>
@@ -179,8 +171,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                   shadowOpacity: 0.3,
                   shadowRadius: 8,
                   elevation: 6,
-                })}
-              >
+                })}>
                 <RefreshCcw size={22} color={colors.white} strokeWidth={2.5} />
                 <Text
                   style={{
@@ -189,8 +180,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                     color: colors.white,
                     marginLeft: 12,
                     letterSpacing: 0.3,
-                  }}
-                >
+                  }}>
                   Try Again
                 </Text>
               </Pressable>
@@ -208,8 +198,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                   justifyContent: 'center',
                   borderWidth: 2,
                   borderColor: colors.emerald[600],
-                })}
-              >
+                })}>
                 <Home size={22} color={colors.emerald[500]} strokeWidth={2.5} />
                 <Text
                   style={{
@@ -218,8 +207,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                     color: colors.emerald[500],
                     marginLeft: 12,
                     letterSpacing: 0.3,
-                  }}
-                >
+                  }}>
                   Go to Home
                 </Text>
               </Pressable>
@@ -234,8 +222,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 marginTop: 32,
                 opacity: 0.6,
                 lineHeight: 20,
-              }}
-            >
+              }}>
               If this keeps happening, try restarting the app
             </Text>
           </ScrollView>

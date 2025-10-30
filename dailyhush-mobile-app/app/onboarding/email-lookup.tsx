@@ -7,7 +7,14 @@
 import { useRouter, Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { View, Pressable, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Pressable,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Mail, Search } from 'lucide-react-native';
@@ -74,12 +81,20 @@ export default function EmailLookup() {
       const accountCheck = await checkExistingAccount(email);
 
       if (accountCheck.error) {
-        console.warn('Error checking for existing account (continuing anyway):', accountCheck.error);
+        console.warn(
+          'Error checking for existing account (continuing anyway):',
+          accountCheck.error
+        );
       }
 
       if (accountCheck.exists) {
         // Account exists (regardless of onboarding status) - route to login!
-        console.log('Existing account found for:', email, 'Onboarding completed:', accountCheck.accountCompleted);
+        console.log(
+          'Existing account found for:',
+          email,
+          'Onboarding completed:',
+          accountCheck.accountCompleted
+        );
         setErrorMessage(messages.account.alreadyExists);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
@@ -163,237 +178,223 @@ export default function EmailLookup() {
       <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
         <StatusBar style="light" />
 
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <ScrollFadeView
+        <KeyboardAvoidingView
           style={{ flex: 1 }}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingTop: 24,
-            paddingBottom: spacing.safeArea.bottom + insets.bottom,
-            paddingHorizontal: spacing.screenPadding,
-          }}
-          showsVerticalScrollIndicator={false}
-          fadeColor={colors.background.primary}
-          fadeHeight={48}
-          fadeIntensity={0.95}
-          fadeVisibility="always"
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* Icon */}
-          <View style={{ alignItems: 'center', marginBottom: 32 }}>
-            <View
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: 40,
-                backgroundColor: colors.emerald[600] + '20',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderWidth: 2,
-                borderColor: colors.emerald[600] + '40',
-              }}
-            >
-              <Mail size={40} color={colors.emerald[500]} strokeWidth={2} />
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ScrollFadeView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingTop: 24,
+              paddingBottom: spacing.safeArea.bottom + insets.bottom,
+              paddingHorizontal: spacing.screenPadding,
+            }}
+            showsVerticalScrollIndicator={false}
+            fadeColor={colors.background.primary}
+            fadeHeight={48}
+            fadeIntensity={0.95}
+            fadeVisibility="always"
+            keyboardShouldPersistTaps="handled">
+            {/* Icon */}
+            <View style={{ alignItems: 'center', marginBottom: 32 }}>
+              <View
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 40,
+                  backgroundColor: colors.emerald[600] + '20',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderWidth: 2,
+                  borderColor: colors.emerald[600] + '40',
+                }}>
+                <Mail size={40} color={colors.emerald[500]} strokeWidth={2} />
+              </View>
             </View>
-          </View>
 
-          {/* Headline */}
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: 'bold',
-              color: colors.text.primary,
-              textAlign: 'center',
-              marginBottom: 12,
-              lineHeight: 36,
-            }}
-          >
-            Find Your Quiz Results
-          </Text>
-
-          {/* Description */}
-          <Text
-            style={{
-              fontSize: 17,
-              color: colors.text.secondary,
-              textAlign: 'center',
-              lineHeight: 26,
-              marginBottom: 40,
-            }}
-          >
-            Enter the email you used for the quiz and we'll connect your results
-          </Text>
-
-          {/* Email Input */}
-          <View style={{ marginBottom: 24 }}>
+            {/* Headline */}
             <Text
               style={{
-                fontSize: 16,
-                fontWeight: '600',
+                fontSize: 28,
+                fontWeight: 'bold',
                 color: colors.text.primary,
+                textAlign: 'center',
                 marginBottom: 12,
-              }}
-            >
-              Email Address
+                lineHeight: 36,
+              }}>
+              Find Your Quiz Results
             </Text>
-            <TextInput
-              value={email}
-              onChangeText={(text) => {
-                setEmail(text);
-                if (errorMessage) setErrorMessage('');
-              }}
-              placeholder="your.email@example.com"
-              placeholderTextColor={colors.text.secondary + '60'}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="email"
-              returnKeyType="search"
-              onSubmitEditing={handleLookup}
-              editable={!isSearching}
-              style={{
-                backgroundColor: colors.background.card,
-                borderRadius: 16,
-                paddingVertical: 18,
-                paddingHorizontal: 20,
-                fontSize: 17,
-                minHeight: 56, // WCAG AAA compliance for 55-70 demographic
-                color: colors.text.primary,
-                borderWidth: 2,
-                borderColor: errorMessage ? '#EF4444' : colors.emerald[700] + '60',
-              }}
-            />
 
-            {errorMessage ? (
+            {/* Description */}
+            <Text
+              style={{
+                fontSize: 17,
+                color: colors.text.secondary,
+                textAlign: 'center',
+                lineHeight: 26,
+                marginBottom: 40,
+              }}>
+              Enter the email you used for the quiz and we'll connect your results
+            </Text>
+
+            {/* Email Input */}
+            <View style={{ marginBottom: 24 }}>
               <Text
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
-                  color: '#EF4444',
-                  marginTop: 8,
-                  lineHeight: 24,
-                }}
-              >
-                {errorMessage}
+                  color: colors.text.primary,
+                  marginBottom: 12,
+                }}>
+                Email Address
               </Text>
-            ) : null}
-          </View>
-
-          {/* Search Button */}
-          <Pressable
-            onPress={handleLookup}
-            disabled={isSearching}
-            style={{
-              backgroundColor: isSearching ? colors.emerald[700] : colors.emerald[600],
-              borderRadius: 20,
-              paddingVertical: 20,
-              paddingHorizontal: 32,
-              marginBottom: 24,
-              shadowColor: colors.emerald[500],
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 12,
-              elevation: 6,
-            }}
-          >
-            {({ pressed }) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  opacity: pressed && !isSearching ? 0.9 : 1,
+              <TextInput
+                value={email}
+                onChangeText={(text) => {
+                  setEmail(text);
+                  if (errorMessage) setErrorMessage('');
                 }}
-              >
-                {isSearching ? (
-                  <>
-                    <ActivityIndicator size="small" color={colors.white} />
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        color: colors.white,
-                        marginLeft: 12,
-                      }}
-                    >
-                      Searching...
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <Search
-                      size={24}
-                      color={colors.white}
-                      strokeWidth={2}
-                      style={{ marginRight: 12 }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        color: colors.white,
-                      }}
-                    >
-                      Find My Quiz
-                    </Text>
-                  </>
-                )}
-              </View>
-            )}
-          </Pressable>
+                placeholder="your.email@example.com"
+                placeholderTextColor={colors.text.secondary + '60'}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="email"
+                returnKeyType="search"
+                onSubmitEditing={handleLookup}
+                editable={!isSearching}
+                style={{
+                  backgroundColor: colors.background.card,
+                  borderRadius: 16,
+                  paddingVertical: 18,
+                  paddingHorizontal: 20,
+                  fontSize: 17,
+                  minHeight: 56, // WCAG AAA compliance for 55-70 demographic
+                  color: colors.text.primary,
+                  borderWidth: 2,
+                  borderColor: errorMessage ? '#EF4444' : colors.emerald[700] + '60',
+                }}
+              />
 
-          {/* Helper Text */}
-          <View
-            style={{
-              backgroundColor: colors.emerald[800] + '30',
-              borderRadius: 16,
-              padding: 20,
-              borderWidth: 1,
-              borderColor: colors.emerald[700] + '40',
-            }}
-          >
-            <Text
+              {errorMessage ? (
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    color: '#EF4444',
+                    marginTop: 8,
+                    lineHeight: 24,
+                  }}>
+                  {errorMessage}
+                </Text>
+              ) : null}
+            </View>
+
+            {/* Search Button */}
+            <Pressable
+              onPress={handleLookup}
+              disabled={isSearching}
               style={{
-                fontSize: 15,
-                color: colors.emerald[200],
-                textAlign: 'center',
-                lineHeight: 22,
-              }}
-            >
-              Can't find your quiz? No worries! You can still use DailyHush and take the quiz later.
-            </Text>
-          </View>
+                backgroundColor: isSearching ? colors.emerald[700] : colors.emerald[600],
+                borderRadius: 20,
+                paddingVertical: 20,
+                paddingHorizontal: 32,
+                marginBottom: 24,
+                shadowColor: colors.emerald[500],
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.3,
+                shadowRadius: 12,
+                elevation: 6,
+              }}>
+              {({ pressed }) => (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: pressed && !isSearching ? 0.9 : 1,
+                  }}>
+                  {isSearching ? (
+                    <>
+                      <ActivityIndicator size="small" color={colors.white} />
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          color: colors.white,
+                          marginLeft: 12,
+                        }}>
+                        Searching...
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Search
+                        size={24}
+                        color={colors.white}
+                        strokeWidth={2}
+                        style={{ marginRight: 12 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          color: colors.white,
+                        }}>
+                        Find My Quiz
+                      </Text>
+                    </>
+                  )}
+                </View>
+              )}
+            </Pressable>
 
-          {/* Continue Without Quiz Link */}
-          <Pressable
-            onPress={async () => {
-              await Haptics.selectionAsync();
-              router.push(routes.onboarding.quiz as any);
-            }}
-            style={{
-              marginTop: 24,
-              paddingVertical: 16,
-              alignItems: 'center',
-            }}
-          >
-            {({ pressed }) => (
+            {/* Helper Text */}
+            <View
+              style={{
+                backgroundColor: colors.emerald[800] + '30',
+                borderRadius: 16,
+                padding: 20,
+                borderWidth: 1,
+                borderColor: colors.emerald[700] + '40',
+              }}>
               <Text
                 style={{
-                  fontSize: 17,
-                  color: colors.text.secondary,
-                  opacity: pressed ? 0.5 : 0.8,
-                  textDecorationLine: 'underline',
-                }}
-              >
-                Take the quiz instead
+                  fontSize: 15,
+                  color: colors.emerald[200],
+                  textAlign: 'center',
+                  lineHeight: 22,
+                }}>
+                Can't find your quiz? No worries! You can still use DailyHush and take the quiz
+                later.
               </Text>
-            )}
-          </Pressable>
-        </ScrollFadeView>
-      </KeyboardAvoidingView>
+            </View>
+
+            {/* Continue Without Quiz Link */}
+            <Pressable
+              onPress={async () => {
+                await Haptics.selectionAsync();
+                router.push(routes.onboarding.quiz as any);
+              }}
+              style={{
+                marginTop: 24,
+                paddingVertical: 16,
+                alignItems: 'center',
+              }}>
+              {({ pressed }) => (
+                <Text
+                  style={{
+                    fontSize: 17,
+                    color: colors.text.secondary,
+                    opacity: pressed ? 0.5 : 0.8,
+                    textDecorationLine: 'underline',
+                  }}>
+                  Take the quiz instead
+                </Text>
+              )}
+            </Pressable>
+          </ScrollFadeView>
+        </KeyboardAvoidingView>
       </View>
     </>
   );

@@ -163,23 +163,20 @@ export default function QuizFlow() {
             paddingHorizontal: spacing.screenPadding,
             paddingTop: 16,
             paddingBottom: 24,
-          }}
-        >
+          }}>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
               marginBottom: 12,
-            }}
-          >
+            }}>
             <Text
               style={{
                 fontSize: 15,
                 color: colors.text.secondary,
                 fontWeight: '600',
-              }}
-            >
+              }}>
               Question {currentQuestionIndex + 1} of {quizQuestions.length}
             </Text>
             <Text
@@ -187,8 +184,7 @@ export default function QuizFlow() {
                 fontSize: 15,
                 color: colors.emerald[400],
                 fontWeight: '600',
-              }}
-            >
+              }}>
               {Math.round(progress)}%
             </Text>
           </View>
@@ -198,8 +194,7 @@ export default function QuizFlow() {
               backgroundColor: colors.emerald[900] + '40',
               borderRadius: 4,
               overflow: 'hidden',
-            }}
-          >
+            }}>
             <View
               style={{
                 height: '100%',
@@ -222,8 +217,7 @@ export default function QuizFlow() {
           fadeColor={colors.background.primary}
           fadeHeight={48}
           fadeIntensity={0.95}
-          fadeVisibility="always"
-        >
+          fadeVisibility="always">
           <QuizQuestion
             question={currentQuestion.question}
             options={currentQuestion.options}
@@ -245,14 +239,12 @@ export default function QuizFlow() {
             paddingBottom: spacing.safeArea.bottom + insets.bottom,
             borderTopWidth: 1,
             borderTopColor: colors.emerald[800] + '30',
-          }}
-        >
+          }}>
           <View
             style={{
               flexDirection: 'row',
               gap: 12,
-            }}
-          >
+            }}>
             {/* Previous Button */}
             {!isFirstQuestion && (
               <Pressable
@@ -269,8 +261,7 @@ export default function QuizFlow() {
                   borderWidth: 2,
                   borderColor: colors.emerald[700],
                   minHeight: 56,
-                }}
-              >
+                }}>
                 {({ pressed }) => (
                   <>
                     <ChevronLeft
@@ -285,8 +276,7 @@ export default function QuizFlow() {
                         fontWeight: '600',
                         color: colors.text.primary,
                         opacity: pressed ? 0.7 : 1,
-                      }}
-                    >
+                      }}>
                       Back
                     </Text>
                   </>
@@ -300,9 +290,7 @@ export default function QuizFlow() {
               disabled={!canGoNext}
               style={{
                 flex: isFirstQuestion ? 1 : 2,
-                backgroundColor: canGoNext
-                  ? colors.emerald[600]
-                  : colors.emerald[800] + '40',
+                backgroundColor: canGoNext ? colors.emerald[600] : colors.emerald[800] + '40',
                 borderRadius: 16,
                 paddingVertical: 18,
                 paddingHorizontal: 24,
@@ -315,8 +303,7 @@ export default function QuizFlow() {
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
                 elevation: canGoNext ? 6 : 0,
-              }}
-            >
+              }}>
               {({ pressed }) => (
                 <>
                   <Text
@@ -326,8 +313,7 @@ export default function QuizFlow() {
                       color: canGoNext ? colors.white : colors.text.secondary,
                       marginRight: 8,
                       opacity: pressed && canGoNext ? 0.9 : 1,
-                    }}
-                  >
+                    }}>
                     {isLastQuestion ? 'Continue' : 'Next'}
                   </Text>
                   <ChevronRight

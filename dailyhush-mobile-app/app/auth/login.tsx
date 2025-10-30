@@ -24,11 +24,7 @@ import { AuthButton } from '@/components/auth/AuthButton';
 import { ErrorAlert } from '@/components/auth/ErrorAlert';
 import { signInWithEmail, validateEmail } from '@/services/auth';
 import { useStore } from '@/store/useStore';
-import {
-  authTypography,
-  authSpacing,
-  screenLayout,
-} from '@/constants/authStyles';
+import { authTypography, authSpacing, screenLayout } from '@/constants/authStyles';
 
 export default function Login() {
   const router = useRouter();
@@ -164,8 +160,7 @@ export default function Login() {
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
@@ -174,8 +169,7 @@ export default function Login() {
             paddingBottom: authSpacing.screenPadding.bottom,
           }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           {/* Form wrapper */}
           <View style={screenLayout.formWrapper}>
             {/* Header */}
@@ -184,33 +178,20 @@ export default function Login() {
                 style={{
                   ...authTypography.headline,
                   marginBottom: 8,
-                }}
-              >
+                }}>
                 Welcome Back
               </Text>
 
-              <Text style={authTypography.subheadline}>
-                Sign in to continue your progress
-              </Text>
+              <Text style={authTypography.subheadline}>Sign in to continue your progress</Text>
             </View>
 
             {/* Success alert */}
             {success && (
-              <ErrorAlert
-                message="Signed in! Redirecting..."
-                type="success"
-                dismissible={false}
-              />
+              <ErrorAlert message="Signed in! Redirecting..." type="success" dismissible={false} />
             )}
 
             {/* Error alert */}
-            {error && (
-              <ErrorAlert
-                message={error}
-                type="error"
-                onDismiss={() => setError(null)}
-              />
-            )}
+            {error && <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />}
 
             {/* Form fields */}
             <View style={{ width: '100%' as DimensionValue }}>
@@ -249,16 +230,14 @@ export default function Login() {
                   onPress={handleForgotPassword}
                   disabled={loading}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                  style={{ paddingVertical: 8, paddingHorizontal: 4 }}
-                >
+                  style={{ paddingVertical: 8, paddingHorizontal: 4 }}>
                   <Text
                     style={{
                       ...authTypography.linkText,
                       fontSize: 15,
                       textDecorationLine: 'underline',
                       textDecorationColor: '#52B788',
-                    }}
-                  >
+                    }}>
                     Forgot password?
                   </Text>
                 </Pressable>
@@ -281,18 +260,19 @@ export default function Login() {
                 onPress={handleNavigateToSignUp}
                 disabled={loading}
                 hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-                style={{ paddingVertical: 16, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}
-              >
-                <Text style={authTypography.footerText}>
-                  Don&apos;t have an account?{' '}
-                </Text>
+                style={{
+                  paddingVertical: 16,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                }}>
+                <Text style={authTypography.footerText}>Don&apos;t have an account? </Text>
                 <Text
                   style={{
                     ...authTypography.footerText,
                     color: '#52B788',
                     fontWeight: '600',
-                  }}
-                >
+                  }}>
                   Sign up
                 </Text>
               </Pressable>

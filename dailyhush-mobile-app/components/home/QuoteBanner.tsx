@@ -19,9 +19,7 @@ export function QuoteBanner({ style }: QuoteBannerProps) {
     <View style={[styles.container, style]}>
       <Text style={styles.label}>Daily Quote</Text>
       <Text style={styles.quoteText}>“{quote.text}”</Text>
-      {quote.author && (
-        <Text style={styles.author}>— {quote.author}</Text>
-      )}
+      {quote.author && <Text style={styles.author}>— {quote.author}</Text>}
     </View>
   );
 }

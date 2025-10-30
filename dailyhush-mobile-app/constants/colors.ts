@@ -6,26 +6,26 @@
 export const colors = {
   // Background colors - Deep tropical dark tones
   background: {
-    primary: '#0A1612',      // Deep forest background
-    secondary: '#0F1F1A',    // Card background
-    tertiary: '#1A4D3C',     // Elevated card background
-    muted: '#1A2E26',        // Muted elements
+    primary: '#0A1612', // Deep forest background
+    secondary: '#0F1F1A', // Card background
+    tertiary: '#1A4D3C', // Elevated card background
+    muted: '#1A2E26', // Muted elements
     border: 'rgba(64, 145, 108, 0.15)', // Subtle border with transparency
-    card: '#0F1F1A',         // Card background (same as secondary)
+    card: '#0F1F1A', // Card background (same as secondary)
   },
 
   // Tropical emerald scale - Rich and vibrant
   emerald: {
-    50: '#E8F4F0',   // Lightest foreground text
-    100: '#D8F3DC',  // Very light accents
-    200: '#B7E4C7',  // Light accents
-    300: '#95D5B2',  // Medium-light
-    400: '#74C69D',  // Medium
-    500: '#52B788',  // Primary accent
-    600: '#40916C',  // Primary button
-    700: '#2D6A4F',  // Secondary button
-    800: '#1A4D3C',  // Dark accent
-    900: '#1A2E26',  // Darkest
+    50: '#E8F4F0', // Lightest foreground text
+    100: '#D8F3DC', // Very light accents
+    200: '#B7E4C7', // Light accents
+    300: '#95D5B2', // Medium-light
+    400: '#74C69D', // Medium
+    500: '#52B788', // Primary accent
+    600: '#40916C', // Primary button
+    700: '#2D6A4F', // Secondary button
+    800: '#1A4D3C', // Dark accent
+    900: '#1A2E26', // Darkest
   },
 
   // Chart colors for data visualization
@@ -39,11 +39,11 @@ export const colors = {
 
   // Semantic colors - WCAG AAA compliant (7:1 minimum contrast)
   text: {
-    primary: '#FFFFFF',      // Maximum contrast (21:1) for primary text
-    secondary: '#C8E6DB',    // WCAG AAA compliant (~9:1) - increased from #A8CFC0
-    tertiary: '#52B788',     // Accent text
-    muted: '#B7D4C7',        // WCAG AA+ compliant (~6:1) - increased from #95B8A8
-    accent: '#74C69D',       // For important secondary information
+    primary: '#FFFFFF', // Maximum contrast (21:1) for primary text
+    secondary: '#C8E6DB', // WCAG AAA compliant (~9:1) - increased from #A8CFC0
+    tertiary: '#52B788', // Accent text
+    muted: '#B7D4C7', // WCAG AA+ compliant (~6:1) - increased from #95B8A8
+    accent: '#74C69D', // For important secondary information
   },
 
   // Status colors

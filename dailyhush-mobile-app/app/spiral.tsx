@@ -21,7 +21,7 @@ import {
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Check, Play, Pause, SkipForward, ArrowLeft } from 'lucide-react-native';
+import { Play, Pause, SkipForward, ArrowLeft } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Text } from '@/components/ui/text';
@@ -255,18 +255,58 @@ export default function SpiralInterrupt() {
 
   // Pre-check options - absolute emotional states (animated WebP)
   const preCheckOptions = [
-    { value: 1, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Frowning%20Face.webp', label: 'Struggling' },
-    { value: 3, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Anxious%20Face%20With%20Sweat.webp', label: 'Anxious' },
-    { value: 5, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp', label: 'Okay' },
-    { value: 7, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Face%20Exhaling.webp', label: 'Calm' },
+    {
+      value: 1,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Frowning%20Face.webp',
+      label: 'Struggling',
+    },
+    {
+      value: 3,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Anxious%20Face%20With%20Sweat.webp',
+      label: 'Anxious',
+    },
+    {
+      value: 5,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp',
+      label: 'Okay',
+    },
+    {
+      value: 7,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Face%20Exhaling.webp',
+      label: 'Calm',
+    },
   ];
 
   // Post-check options - relative comparison (animated WebP)
   const postCheckOptions = [
-    { value: 1, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Worried%20Face.webp', label: 'Worse' },
-    { value: 3, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp', label: 'Same' },
-    { value: 5, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Slightly%20Smiling%20Face.webp', label: 'Better' },
-    { value: 7, emoji: 'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20With%20Smiling%20Eyes.webp', label: 'Much Better' },
+    {
+      value: 1,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Worried%20Face.webp',
+      label: 'Worse',
+    },
+    {
+      value: 3,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp',
+      label: 'Same',
+    },
+    {
+      value: 5,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Slightly%20Smiling%20Face.webp',
+      label: 'Better',
+    },
+    {
+      value: 7,
+      emoji:
+        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20With%20Smiling%20Eyes.webp',
+      label: 'Much Better',
+    },
   ];
 
   const commonTriggers = [
@@ -311,9 +351,7 @@ export default function SpiralInterrupt() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: 22,
-                backgroundColor: pressed
-                  ? 'rgba(64, 145, 108, 0.25)'
-                  : 'rgba(64, 145, 108, 0.15)',
+                backgroundColor: pressed ? 'rgba(64, 145, 108, 0.25)' : 'rgba(64, 145, 108, 0.15)',
                 borderWidth: 1,
                 borderColor: 'rgba(82, 183, 136, 0.3)',
               })}>

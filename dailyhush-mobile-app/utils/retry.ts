@@ -83,7 +83,7 @@ export async function retryOperation<T>(
     console.log(`Retry attempt ${attempt + 1}/${config.maxRetries} after ${delay}ms delay`);
 
     // Wait before retry
-    await new Promise(resolve => setTimeout(resolve, delay));
+    await new Promise((resolve) => setTimeout(resolve, delay));
   }
 
   // All retries exhausted
@@ -100,9 +100,11 @@ function isRetryableError(error: any): boolean {
   if (!error) return false;
 
   // Network errors
-  if (error.message?.includes('network') ||
-      error.message?.includes('timeout') ||
-      error.message?.includes('ECONNREFUSED')) {
+  if (
+    error.message?.includes('network') ||
+    error.message?.includes('timeout') ||
+    error.message?.includes('ECONNREFUSED')
+  ) {
     return true;
   }
 
@@ -121,9 +123,12 @@ function isRetryableError(error: any): boolean {
   }
 
   // Supabase-specific transient errors
-  if (error.code === 'PGRST301' || // Connection error
-      error.code === '08000' || // Connection exception
-      error.code === '08003') { // Connection does not exist
+  if (
+    error.code === 'PGRST301' || // Connection error
+    error.code === '08000' || // Connection exception
+    error.code === '08003'
+  ) {
+    // Connection does not exist
     return true;
   }
 

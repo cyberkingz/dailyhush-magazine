@@ -15,9 +15,9 @@ interface ProgressIndicatorProps {
 
 export function ProgressIndicator({ currentStep, totalSteps, stepLabel }: ProgressIndicatorProps) {
   return (
-    <View className="items-center mb-6">
+    <View className="mb-6 items-center">
       {/* Progress Dots */}
-      <View className="flex-row items-center gap-2 mb-2">
+      <View className="mb-2 flex-row items-center gap-2">
         {Array.from({ length: totalSteps }).map((_, index) => (
           <View
             key={index}

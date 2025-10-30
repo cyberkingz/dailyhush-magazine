@@ -75,8 +75,7 @@ export function ErrorAlert({
           opacity: fadeAnim,
           transform: [{ translateY: slideAnim }],
         },
-      ]}
-    >
+      ]}>
       <View style={styles.header}>
         <Icon size={24} color={iconColor} strokeWidth={2} />
         <Text style={[styles.title, { color: titleColor }]}>
@@ -93,8 +92,7 @@ export function ErrorAlert({
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           accessible={true}
           accessibilityLabel="Dismiss message"
-          accessibilityRole="button"
-        >
+          accessibilityRole="button">
           <X size={16} color="#95B8A8" strokeWidth={2} />
         </Pressable>
       )}

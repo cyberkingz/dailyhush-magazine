@@ -92,20 +92,21 @@ export default function History() {
       dateStr = 'Today';
     } else if (diffInHours < 48) {
       dateStr = 'Yesterday';
-    } else if (diffInHours < 168) { // 7 days
+    } else if (diffInHours < 168) {
+      // 7 days
       dateStr = `${Math.floor(diffInHours / 24)} days ago`;
     } else {
       dateStr = date.toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
-        year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+        year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
       });
     }
 
     const timeStr = date.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
-      hour12: true
+      hour12: true,
     });
 
     return { date: dateStr, time: timeStr };
@@ -120,7 +121,10 @@ export default function History() {
   };
 
   // Calculate improvement with healing-focused messaging
-  const calculateImprovement = (pre: number, post: number): {
+  const calculateImprovement = (
+    pre: number,
+    post: number
+  ): {
     value: number;
     direction: 'up' | 'same';
     label: string;
@@ -153,13 +157,19 @@ export default function History() {
   };
 
   // Calculate success metrics
-  const successRate = spirals.length > 0
-    ? Math.round((spirals.filter(s => s.post_feeling > s.pre_feeling).length / spirals.length) * 100)
-    : 0;
+  const successRate =
+    spirals.length > 0
+      ? Math.round(
+          (spirals.filter((s) => s.post_feeling > s.pre_feeling).length / spirals.length) * 100
+        )
+      : 0;
 
-  const avgImprovement = spirals.length > 0
-    ? (spirals.reduce((sum, s) => sum + (s.post_feeling - s.pre_feeling), 0) / spirals.length).toFixed(1)
-    : '0.0';
+  const avgImprovement =
+    spirals.length > 0
+      ? (
+          spirals.reduce((sum, s) => sum + (s.post_feeling - s.pre_feeling), 0) / spirals.length
+        ).toFixed(1)
+      : '0.0';
 
   return (
     <>
@@ -175,49 +185,50 @@ export default function History() {
             paddingBottom: spacing.md,
             borderBottomWidth: 1,
             borderBottomColor: colors.background.border,
-          }}
-        >
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: spacing.md
           }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: spacing.md,
+            }}>
             <Pressable
               onPress={() => {
                 Haptics.selectionAsync();
                 router.back();
               }}
               style={{
-                width: 56,              // Increased from 40 for better touch target
+                width: 56, // Increased from 40 for better touch target
                 height: 56,
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginLeft: -12,        // Negative margin for visual alignment
+                marginLeft: -12, // Negative margin for visual alignment
               }}
               accessible={true}
               accessibilityRole="button"
               accessibilityLabel="Go back"
-              accessibilityHint="Returns to the previous screen"
-            >
+              accessibilityHint="Returns to the previous screen">
               <ArrowLeft size={28} color={colors.text.secondary} strokeWidth={2} />
             </Pressable>
 
             <View style={{ flex: 1, alignItems: 'center' }}>
-              <Text style={{
-                fontSize: typography.size.xl,
-                fontWeight: typography.fontWeight.bold,
-                color: colors.text.primary,
-                lineHeight: typography.size.xl * typography.lineHeight.tight,
-              }}>
+              <Text
+                style={{
+                  fontSize: typography.size.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                  lineHeight: typography.size.xl * typography.lineHeight.tight,
+                }}>
                 Your Progress
               </Text>
-              <Text style={{
-                fontSize: typography.size.xs,
-                color: colors.text.secondary,
-                marginTop: 4,
-                lineHeight: typography.size.xs * typography.lineHeight.normal,
-              }}>
+              <Text
+                style={{
+                  fontSize: typography.size.xs,
+                  color: colors.text.secondary,
+                  marginTop: 4,
+                  lineHeight: typography.size.xs * typography.lineHeight.normal,
+                }}>
                 Every interrupt rewires the pattern
               </Text>
             </View>
@@ -236,8 +247,8 @@ export default function History() {
                 }}
                 style={{
                   flex: 1,
-                  paddingVertical: spacing.base,  // Increased from sm (16px instead of 8px)
-                  minHeight: 48,                   // Ensure WCAG AAA touch target
+                  paddingVertical: spacing.base, // Increased from sm (16px instead of 8px)
+                  minHeight: 48, // Ensure WCAG AAA touch target
                   borderRadius: 12,
                   backgroundColor: filter === f ? colors.emerald[700] : colors.background.secondary,
                   alignItems: 'center',
@@ -246,17 +257,18 @@ export default function History() {
                 accessible={true}
                 accessibilityRole="tab"
                 accessibilityState={{ selected: filter === f }}
-                accessibilityLabel={f === 'all' ? 'All Time' : f === 'week' ? 'This Week' : 'This Month'}
-              >
+                accessibilityLabel={
+                  f === 'all' ? 'All Time' : f === 'week' ? 'This Week' : 'This Month'
+                }>
                 <Text
                   style={{
                     textAlign: 'center',
-                    fontSize: typography.size.base,  // Increased from 14
-                    fontWeight: filter === f ? typography.fontWeight.semibold : typography.fontWeight.normal,
+                    fontSize: typography.size.base, // Increased from 14
+                    fontWeight:
+                      filter === f ? typography.fontWeight.semibold : typography.fontWeight.normal,
                     color: filter === f ? colors.white : colors.text.secondary,
                     lineHeight: typography.size.base * typography.lineHeight.tight,
-                  }}
-                >
+                  }}>
                   {f === 'all' ? 'All Time' : f === 'week' ? 'This Week' : 'This Month'}
                 </Text>
               </Pressable>
@@ -276,13 +288,8 @@ export default function History() {
             accessible={true}
             accessibilityRole="progressbar"
             accessibilityLabel="Loading your progress"
-            accessibilityLiveRegion="polite"
-          >
-            <ActivityIndicator
-              size="large"
-              color={colors.emerald[500]}
-              accessible={false}
-            />
+            accessibilityLiveRegion="polite">
+            <ActivityIndicator size="large" color={colors.emerald[500]} accessible={false} />
             <Text
               style={{
                 color: colors.text.secondary,
@@ -292,50 +299,53 @@ export default function History() {
                 lineHeight: typography.size.base * typography.lineHeight.normal,
               }}
               accessible={true}
-              accessibilityRole="text"
-            >
+              accessibilityRole="text">
               {filter === 'all'
                 ? 'Loading your complete progress...'
                 : filter === 'week'
-                ? 'Loading this week&apos;s spirals...'
-                : 'Loading this month&apos;s spirals...'
-              }
+                  ? 'Loading this week&apos;s spirals...'
+                  : 'Loading this month&apos;s spirals...'}
             </Text>
           </View>
         )}
 
         {/* Error State */}
         {!loading && error && (
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.xl }}>
-            <View style={{
-              marginBottom: spacing.lg,
-              padding: spacing.lg,
-              backgroundColor: colors.background.secondary,
-              borderRadius: 100,
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingHorizontal: spacing.xl,
             }}>
-              <Calendar
-                size={64}
-                color={colors.emerald[600]}
-                strokeWidth={1.5}
-              />
+            <View
+              style={{
+                marginBottom: spacing.lg,
+                padding: spacing.lg,
+                backgroundColor: colors.background.secondary,
+                borderRadius: 100,
+              }}>
+              <Calendar size={64} color={colors.emerald[600]} strokeWidth={1.5} />
             </View>
-            <Text style={{
-              color: colors.text.primary,
-              fontSize: typography.size.lg,
-              fontWeight: typography.fontWeight.bold,
-              marginTop: spacing.md,
-              textAlign: 'center',
-              lineHeight: typography.size.lg * typography.lineHeight.tight,
-            }}>
+            <Text
+              style={{
+                color: colors.text.primary,
+                fontSize: typography.size.lg,
+                fontWeight: typography.fontWeight.bold,
+                marginTop: spacing.md,
+                textAlign: 'center',
+                lineHeight: typography.size.lg * typography.lineHeight.tight,
+              }}>
               Unable to Load Progress
             </Text>
-            <Text style={{
-              color: colors.text.secondary,
-              fontSize: typography.size.base,
-              marginTop: spacing.sm,
-              textAlign: 'center',
-              lineHeight: typography.size.base * typography.lineHeight.relaxed,
-            }}>
+            <Text
+              style={{
+                color: colors.text.secondary,
+                fontSize: typography.size.base,
+                marginTop: spacing.sm,
+                textAlign: 'center',
+                lineHeight: typography.size.base * typography.lineHeight.relaxed,
+              }}>
               {error}
             </Text>
           </View>
@@ -343,43 +353,46 @@ export default function History() {
 
         {/* Empty State */}
         {!loading && !error && spirals.length === 0 && (
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.xl }}>
-            <View style={{
-              marginBottom: spacing.lg,
-              padding: spacing.lg,
-              backgroundColor: colors.background.secondary,
-              borderRadius: 100,
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingHorizontal: spacing.xl,
             }}>
-              <Sparkles
-                size={64}
-                color={colors.emerald[500]}
-                strokeWidth={1.5}
-              />
+            <View
+              style={{
+                marginBottom: spacing.lg,
+                padding: spacing.lg,
+                backgroundColor: colors.background.secondary,
+                borderRadius: 100,
+              }}>
+              <Sparkles size={64} color={colors.emerald[500]} strokeWidth={1.5} />
             </View>
-            <Text style={{
-              color: colors.text.primary,
-              fontSize: typography.size.lg,
-              fontWeight: typography.fontWeight.bold,
-              marginTop: spacing.md,
-              textAlign: 'center',
-              lineHeight: typography.size.lg * typography.lineHeight.tight,
-            }}>
+            <Text
+              style={{
+                color: colors.text.primary,
+                fontSize: typography.size.lg,
+                fontWeight: typography.fontWeight.bold,
+                marginTop: spacing.md,
+                textAlign: 'center',
+                lineHeight: typography.size.lg * typography.lineHeight.tight,
+              }}>
               {filter === 'all'
-                ? "Your healing journey starts here"
-                : `A quiet ${filter === 'week' ? 'week' : 'month'} - that&apos;s progress`
-              }
+                ? 'Your healing journey starts here'
+                : `A quiet ${filter === 'week' ? 'week' : 'month'} - that&apos;s progress`}
             </Text>
-            <Text style={{
-              color: colors.text.secondary,
-              fontSize: typography.size.base,
-              marginTop: spacing.sm,
-              textAlign: 'center',
-              lineHeight: typography.size.base * typography.lineHeight.relaxed,
-            }}>
+            <Text
+              style={{
+                color: colors.text.secondary,
+                fontSize: typography.size.base,
+                marginTop: spacing.sm,
+                textAlign: 'center',
+                lineHeight: typography.size.base * typography.lineHeight.relaxed,
+              }}>
               {filter === 'all'
-                ? "When you interrupt your first spiral, you&apos;ll see it here. You&apos;re already taking the first step by being here."
-                : `No spirals means fewer moments of rumination. You&apos;re rewiring the pattern.`
-              }
+                ? 'When you interrupt your first spiral, you&apos;ll see it here. You&apos;re already taking the first step by being here.'
+                : `No spirals means fewer moments of rumination. You&apos;re rewiring the pattern.`}
             </Text>
 
             {filter === 'all' && (
@@ -400,15 +413,15 @@ export default function History() {
                 }}
                 accessible={true}
                 accessibilityRole="button"
-                accessibilityLabel="Start F.I.R.E. Training"
-              >
+                accessibilityLabel="Start F.I.R.E. Training">
                 {({ pressed }) => (
-                  <Text style={{
-                    color: colors.white,
-                    fontSize: typography.size.base,
-                    fontWeight: typography.fontWeight.semibold,
-                    opacity: pressed ? 0.7 : 1,
-                  }}>
+                  <Text
+                    style={{
+                      color: colors.white,
+                      fontSize: typography.size.base,
+                      fontWeight: typography.fontWeight.semibold,
+                      opacity: pressed ? 0.7 : 1,
+                    }}>
                     Start F.I.R.E. Training
                   </Text>
                 )}
@@ -426,18 +439,18 @@ export default function History() {
               paddingTop: spacing.md,
               paddingBottom: spacing['3xl'] + insets.bottom,
             }}
-            showsVerticalScrollIndicator={true}
-          >
+            showsVerticalScrollIndicator={true}>
             {/* Stats Summary */}
             <View style={{ marginBottom: spacing.lg, gap: spacing.md }}>
               {/* Total Spirals Card */}
-              <View style={{
-                backgroundColor: colors.emerald[800] + '30',
-                borderRadius: 16,
-                padding: spacing.xl,
-                borderWidth: 1,
-                borderColor: colors.emerald[700] + '40',
-              }}>
+              <View
+                style={{
+                  backgroundColor: colors.emerald[800] + '30',
+                  borderRadius: 16,
+                  padding: spacing.xl,
+                  borderWidth: 1,
+                  borderColor: colors.emerald[700] + '40',
+                }}>
                 <Text
                   style={{
                     fontSize: typography.size['4xl'],
@@ -452,76 +465,82 @@ export default function History() {
                   }}
                   accessible={true}
                   accessibilityRole="text"
-                  accessibilityLabel={`${spirals.length} spirals interrupted`}
-                >
+                  accessibilityLabel={`${spirals.length} spirals interrupted`}>
                   {spirals.length}
                 </Text>
-                <Text style={{
-                  fontSize: typography.size.sm,
-                  color: colors.text.secondary,
-                  textAlign: 'center',
-                  lineHeight: typography.size.sm * typography.lineHeight.normal,
-                }}>
+                <Text
+                  style={{
+                    fontSize: typography.size.sm,
+                    color: colors.text.secondary,
+                    textAlign: 'center',
+                    lineHeight: typography.size.sm * typography.lineHeight.normal,
+                  }}>
                   Spirals Interrupted
                 </Text>
               </View>
 
               {/* Success Metrics */}
               <View style={{ flexDirection: 'row', gap: spacing.md }}>
-                <View style={{
-                  flex: 1,
-                  backgroundColor: colors.background.secondary,
-                  padding: spacing.lg,
-                  borderRadius: 16,
-                  borderWidth: 1,
-                  borderColor: colors.background.border,
-                }}>
-                  <Text style={{
-                    fontSize: typography.size['3xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.emerald[500],
-                    lineHeight: typography.size['3xl'] * typography.lineHeight.tight,
-                    includeFontPadding: false,
-                    textAlign: 'center',
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: colors.background.secondary,
+                    padding: spacing.lg,
+                    borderRadius: 16,
+                    borderWidth: 1,
+                    borderColor: colors.background.border,
                   }}>
+                  <Text
+                    style={{
+                      fontSize: typography.size['3xl'],
+                      fontWeight: typography.fontWeight.bold,
+                      color: colors.emerald[500],
+                      lineHeight: typography.size['3xl'] * typography.lineHeight.tight,
+                      includeFontPadding: false,
+                      textAlign: 'center',
+                    }}>
                     {successRate}%
                   </Text>
-                  <Text style={{
-                    fontSize: typography.size.xs,
-                    color: colors.text.secondary,
-                    marginTop: spacing.xs,
-                    textAlign: 'center',
-                    lineHeight: typography.size.xs * typography.lineHeight.normal,
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: typography.size.xs,
+                      color: colors.text.secondary,
+                      marginTop: spacing.xs,
+                      textAlign: 'center',
+                      lineHeight: typography.size.xs * typography.lineHeight.normal,
+                    }}>
                     Felt better after
                   </Text>
                 </View>
 
-                <View style={{
-                  flex: 1,
-                  backgroundColor: colors.background.secondary,
-                  padding: spacing.lg,
-                  borderRadius: 16,
-                  borderWidth: 1,
-                  borderColor: colors.background.border,
-                }}>
-                  <Text style={{
-                    fontSize: typography.size['3xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.emerald[500],
-                    lineHeight: typography.size['3xl'] * typography.lineHeight.tight,
-                    includeFontPadding: false,
-                    textAlign: 'center',
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: colors.background.secondary,
+                    padding: spacing.lg,
+                    borderRadius: 16,
+                    borderWidth: 1,
+                    borderColor: colors.background.border,
                   }}>
+                  <Text
+                    style={{
+                      fontSize: typography.size['3xl'],
+                      fontWeight: typography.fontWeight.bold,
+                      color: colors.emerald[500],
+                      lineHeight: typography.size['3xl'] * typography.lineHeight.tight,
+                      includeFontPadding: false,
+                      textAlign: 'center',
+                    }}>
                     +{avgImprovement}
                   </Text>
-                  <Text style={{
-                    fontSize: typography.size.xs,
-                    color: colors.text.secondary,
-                    marginTop: spacing.xs,
-                    textAlign: 'center',
-                    lineHeight: typography.size.xs * typography.lineHeight.normal,
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: typography.size.xs,
+                      color: colors.text.secondary,
+                      marginTop: spacing.xs,
+                      textAlign: 'center',
+                      lineHeight: typography.size.xs * typography.lineHeight.normal,
+                    }}>
                     Avg improvement
                   </Text>
                 </View>
@@ -529,20 +548,23 @@ export default function History() {
 
               {/* Encouragement Message */}
               {successRate >= 70 && (
-                <View style={{
-                  backgroundColor: colors.emerald[800] + '20',
-                  padding: spacing.lg,
-                  borderRadius: 16,
-                  borderWidth: 1,
-                  borderColor: colors.emerald[700] + '30',
-                }}>
-                  <Text style={{
-                    fontSize: typography.size.base,
-                    color: colors.emerald[400],
-                    textAlign: 'center',
-                    lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                <View
+                  style={{
+                    backgroundColor: colors.emerald[800] + '20',
+                    padding: spacing.lg,
+                    borderRadius: 16,
+                    borderWidth: 1,
+                    borderColor: colors.emerald[700] + '30',
                   }}>
-                    🌟 You&apos;re feeling better after {Math.round(successRate / 10)} out of 10 interrupts. The pattern is rewiring.
+                  <Text
+                    style={{
+                      fontSize: typography.size.base,
+                      color: colors.emerald[400],
+                      textAlign: 'center',
+                      lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                    }}>
+                    🌟 You&apos;re feeling better after {Math.round(successRate / 10)} out of 10
+                    interrupts. The pattern is rewiring.
                   </Text>
                 </View>
               )}
@@ -574,40 +596,48 @@ export default function History() {
                   accessible={true}
                   accessibilityRole="button"
                   accessibilityLabel={`Spiral from ${date} at ${time}. ${improvement.label}`}
-                  accessibilityHint="Tap to expand details"
-                >
+                  accessibilityHint="Tap to expand details">
                   {/* Date/Time Header */}
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.md }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: spacing.md,
+                    }}>
                     <View>
-                      <Text style={{
-                        fontSize: typography.size.base,
-                        fontWeight: typography.fontWeight.semibold,
-                        color: colors.text.primary,
-                        lineHeight: typography.size.base * typography.lineHeight.tight,
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: typography.size.base,
+                          fontWeight: typography.fontWeight.semibold,
+                          color: colors.text.primary,
+                          lineHeight: typography.size.base * typography.lineHeight.tight,
+                        }}>
                         {date}
                       </Text>
-                      <Text style={{
-                        fontSize: typography.size.sm,
-                        color: colors.text.secondary,
-                        marginTop: 2,
-                        lineHeight: typography.size.sm * typography.lineHeight.normal,
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: typography.size.sm,
+                          color: colors.text.secondary,
+                          marginTop: 2,
+                          lineHeight: typography.size.sm * typography.lineHeight.normal,
+                        }}>
                         {time}
                       </Text>
                     </View>
 
                     {/* Duration Badge */}
-                    <View style={{
-                      backgroundColor: colors.emerald[800],
-                      paddingHorizontal: spacing.md,
-                      paddingVertical: spacing.sm,
-                      borderRadius: 10,
-                      borderWidth: 1,
-                      borderColor: colors.emerald[600] + '40',
-                      minWidth: 70,
-                      alignItems: 'center',
-                    }}>
+                    <View
+                      style={{
+                        backgroundColor: colors.emerald[800],
+                        paddingHorizontal: spacing.md,
+                        paddingVertical: spacing.sm,
+                        borderRadius: 10,
+                        borderWidth: 1,
+                        borderColor: colors.emerald[600] + '40',
+                        minWidth: 70,
+                        alignItems: 'center',
+                      }}>
                       <Text
                         style={{
                           fontSize: typography.size.sm,
@@ -616,8 +646,7 @@ export default function History() {
                           lineHeight: typography.size.sm * typography.lineHeight.tight,
                         }}
                         accessible={true}
-                        accessibilityLabel={`Duration: ${formatDuration(spiral.duration_seconds)}`}
-                      >
+                        accessibilityLabel={`Duration: ${formatDuration(spiral.duration_seconds)}`}>
                         {formatDuration(spiral.duration_seconds)}
                       </Text>
                     </View>
@@ -625,28 +654,31 @@ export default function History() {
 
                   {/* Progress Indicator - Prominent */}
                   {improvement.direction === 'up' && (
-                    <View style={{
-                      alignItems: 'center',
-                      backgroundColor: colors.emerald[800] + '20',
-                      padding: spacing.md,
-                      borderRadius: 12,
-                      marginBottom: spacing.md,
-                    }}>
-                      <TrendingUp size={32} color={colors.emerald[500]} strokeWidth={2.5} />
-                      <Text style={{
-                        fontSize: typography.size['3xl'],
-                        fontWeight: typography.fontWeight.bold,
-                        color: colors.emerald[500],
-                        lineHeight: typography.size['3xl'] * typography.lineHeight.tight,
-                        marginTop: spacing.xs,
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        backgroundColor: colors.emerald[800] + '20',
+                        padding: spacing.md,
+                        borderRadius: 12,
+                        marginBottom: spacing.md,
                       }}>
+                      <TrendingUp size={32} color={colors.emerald[500]} strokeWidth={2.5} />
+                      <Text
+                        style={{
+                          fontSize: typography.size['3xl'],
+                          fontWeight: typography.fontWeight.bold,
+                          color: colors.emerald[500],
+                          lineHeight: typography.size['3xl'] * typography.lineHeight.tight,
+                          marginTop: spacing.xs,
+                        }}>
                         +{improvement.value} points
                       </Text>
-                      <Text style={{
-                        fontSize: typography.size.sm,
-                        color: colors.emerald[400],
-                        lineHeight: typography.size.sm * typography.lineHeight.normal,
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: typography.size.sm,
+                          color: colors.emerald[400],
+                          lineHeight: typography.size.sm * typography.lineHeight.normal,
+                        }}>
                         {improvement.label}
                       </Text>
                     </View>
@@ -654,44 +686,54 @@ export default function History() {
 
                   {/* Still learning indicator */}
                   {improvement.direction === 'same' && (
-                    <View style={{
-                      alignItems: 'center',
-                      backgroundColor: colors.background.tertiary + '40',
-                      padding: spacing.md,
-                      borderRadius: 12,
-                      marginBottom: spacing.md,
-                    }}>
-                      <Minus size={24} color={colors.text.secondary} strokeWidth={2.5} />
-                      <Text style={{
-                        fontSize: typography.size.base,
-                        color: colors.text.secondary,
-                        marginTop: spacing.xs,
-                        textAlign: 'center',
-                        lineHeight: typography.size.base * typography.lineHeight.normal,
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        backgroundColor: colors.background.tertiary + '40',
+                        padding: spacing.md,
+                        borderRadius: 12,
+                        marginBottom: spacing.md,
                       }}>
+                      <Minus size={24} color={colors.text.secondary} strokeWidth={2.5} />
+                      <Text
+                        style={{
+                          fontSize: typography.size.base,
+                          color: colors.text.secondary,
+                          marginTop: spacing.xs,
+                          textAlign: 'center',
+                          lineHeight: typography.size.base * typography.lineHeight.normal,
+                        }}>
                         {improvement.label}
                       </Text>
-                      <Text style={{
-                        fontSize: typography.size.xs,
-                        color: colors.text.muted,
-                        marginTop: 4,
-                        textAlign: 'center',
-                        lineHeight: typography.size.xs * typography.lineHeight.normal,
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: typography.size.xs,
+                          color: colors.text.muted,
+                          marginTop: 4,
+                          textAlign: 'center',
+                          lineHeight: typography.size.xs * typography.lineHeight.normal,
+                        }}>
                         Each attempt builds the skill
                       </Text>
                     </View>
                   )}
 
                   {/* Feeling Before/After - Compact */}
-                  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm, gap: spacing.lg }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginBottom: spacing.sm,
+                      gap: spacing.lg,
+                    }}>
                     <View style={{ flex: 1 }}>
-                      <Text style={{
-                        fontSize: typography.size.xs,
-                        color: colors.text.muted,
-                        marginBottom: 4,
-                        lineHeight: typography.size.xs * typography.lineHeight.normal,
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: typography.size.xs,
+                          color: colors.text.muted,
+                          marginBottom: 4,
+                          lineHeight: typography.size.xs * typography.lineHeight.normal,
+                        }}>
                         Before
                       </Text>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -703,28 +745,29 @@ export default function History() {
                             minHeight: 36,
                             paddingVertical: 4,
                             marginRight: 8,
-                          }}
-                        >
+                          }}>
                           {preEmoji}
                         </Text>
-                        <Text style={{
-                          fontSize: typography.size.base,
-                          fontWeight: typography.fontWeight.semibold,
-                          color: colors.text.primary,
-                          lineHeight: typography.size.base * typography.lineHeight.tight,
-                        }}>
+                        <Text
+                          style={{
+                            fontSize: typography.size.base,
+                            fontWeight: typography.fontWeight.semibold,
+                            color: colors.text.primary,
+                            lineHeight: typography.size.base * typography.lineHeight.tight,
+                          }}>
                           {spiral.pre_feeling}/10
                         </Text>
                       </View>
                     </View>
 
                     <View style={{ flex: 1 }}>
-                      <Text style={{
-                        fontSize: typography.size.xs,
-                        color: colors.text.muted,
-                        marginBottom: 4,
-                        lineHeight: typography.size.xs * typography.lineHeight.normal,
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: typography.size.xs,
+                          color: colors.text.muted,
+                          marginBottom: 4,
+                          lineHeight: typography.size.xs * typography.lineHeight.normal,
+                        }}>
                         After
                       </Text>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -736,16 +779,16 @@ export default function History() {
                             minHeight: 36,
                             paddingVertical: 4,
                             marginRight: 8,
-                          }}
-                        >
+                          }}>
                           {postEmoji}
                         </Text>
-                        <Text style={{
-                          fontSize: typography.size.base,
-                          fontWeight: typography.fontWeight.semibold,
-                          color: colors.text.primary,
-                          lineHeight: typography.size.base * typography.lineHeight.tight,
-                        }}>
+                        <Text
+                          style={{
+                            fontSize: typography.size.base,
+                            fontWeight: typography.fontWeight.semibold,
+                            color: colors.text.primary,
+                            lineHeight: typography.size.base * typography.lineHeight.tight,
+                          }}>
                           {spiral.post_feeling}/10
                         </Text>
                       </View>
@@ -754,13 +797,14 @@ export default function History() {
 
                   {/* Trigger - Always visible but compact */}
                   {spiral.trigger && (
-                    <View style={{
-                      backgroundColor: colors.background.tertiary + '20',
-                      paddingHorizontal: spacing.lg,
-                      paddingVertical: spacing.md,
-                      borderRadius: 12,
-                      marginTop: spacing.sm,
-                    }}>
+                    <View
+                      style={{
+                        backgroundColor: colors.background.tertiary + '20',
+                        paddingHorizontal: spacing.lg,
+                        paddingVertical: spacing.md,
+                        borderRadius: 12,
+                        marginTop: spacing.sm,
+                      }}>
                       <Text
                         style={{
                           fontSize: typography.size.xs,
@@ -768,8 +812,7 @@ export default function History() {
                           marginBottom: 6,
                           fontWeight: typography.fontWeight.semibold,
                           lineHeight: typography.size.xs * typography.lineHeight.normal,
-                        }}
-                      >
+                        }}>
                         Trigger
                       </Text>
                       <Text
@@ -779,8 +822,7 @@ export default function History() {
                           lineHeight: typography.size.base * typography.lineHeight.relaxed,
                         }}
                         accessible={true}
-                        accessibilityLabel={`Trigger: ${spiral.trigger}`}
-                      >
+                        accessibilityLabel={`Trigger: ${spiral.trigger}`}>
                         {spiral.trigger}
                       </Text>
                     </View>
@@ -788,24 +830,24 @@ export default function History() {
 
                   {/* Shift Used Badge */}
                   {spiral.used_shift && (
-                    <View style={{
-                      backgroundColor: colors.emerald[700] + '20',
-                      paddingHorizontal: spacing.md,
-                      paddingVertical: spacing.sm,
-                      borderRadius: 10,
-                      alignSelf: 'flex-start',
-                      marginTop: spacing.sm,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 6,
-                    }}>
+                    <View
+                      style={{
+                        backgroundColor: colors.emerald[700] + '20',
+                        paddingHorizontal: spacing.md,
+                        paddingVertical: spacing.sm,
+                        borderRadius: 10,
+                        alignSelf: 'flex-start',
+                        marginTop: spacing.sm,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 6,
+                      }}>
                       <Text
                         style={{
                           fontSize: typography.size.base,
                           lineHeight: typography.size.base * typography.lineHeight.tight,
                           includeFontPadding: false,
-                        }}
-                      >
+                        }}>
                         ⚡
                       </Text>
                       <Text
@@ -814,8 +856,7 @@ export default function History() {
                           color: colors.emerald[400],
                           fontWeight: typography.fontWeight.semibold,
                           lineHeight: typography.size.sm * typography.lineHeight.tight,
-                        }}
-                      >
+                        }}>
                         Used Shift Necklace
                       </Text>
                     </View>

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  LayoutChangeEvent,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -88,7 +87,6 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
     isScrolling: false,
   });
 
-  const [containerHeight, setContainerHeight] = useState(0);
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   /**
@@ -119,7 +117,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
       }
 
       scrollTimeout.current = setTimeout(() => {
-        setScrollState(prev => ({ ...prev, isScrolling: false }));
+        setScrollState((prev) => ({ ...prev, isScrolling: false }));
       }, 1500); // Hide after 1.5s of no scrolling
     }
 
@@ -130,9 +128,9 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
   /**
    * Track container height for proper fade positioning
    */
-  const handleLayout = (event: LayoutChangeEvent) => {
-    setContainerHeight(event.nativeEvent.layout.height);
-  };
+  // const handleLayout = (event: LayoutChangeEvent) => {
+  //   setContainerHeight(event.nativeEvent.layout.height);
+  // };
 
   /**
    * Determine if fade should be visible based on mode and scroll position
@@ -198,7 +196,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
   const showBottom = shouldShowBottomFade();
 
   return (
-    <View style={[styles.container, style]} onLayout={handleLayout}>
+    <View style={[styles.container, style]}>
       <ScrollView
         {...scrollViewProps}
         style={styles.scrollView}
@@ -214,11 +212,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
         <LinearGradient
           colors={getGradientColors(true)}
           locations={[0, 0.4, 0.7, 1]}
-          style={[
-            styles.fadeGradient,
-            styles.topFade,
-            { height: fadeHeight },
-          ]}
+          style={[styles.fadeGradient, styles.topFade, { height: fadeHeight }]}
           pointerEvents="none" // Allow touches to pass through
         />
       )}
@@ -228,11 +222,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
         <LinearGradient
           colors={getGradientColors(false)}
           locations={[0, 0.3, 0.6, 1]}
-          style={[
-            styles.fadeGradient,
-            styles.bottomFade,
-            { height: fadeHeight },
-          ]}
+          style={[styles.fadeGradient, styles.bottomFade, { height: fadeHeight }]}
           pointerEvents="none" // Allow touches to pass through
         />
       )}

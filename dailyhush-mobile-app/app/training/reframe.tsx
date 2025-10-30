@@ -139,7 +139,6 @@ export default function ReframeModule() {
           },
         });
       }, timing.debounce.save),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -166,7 +165,7 @@ export default function ReframeModule() {
 
       {/* Header */}
       <View className="px-5 pb-3" style={{ paddingTop: insets.top + spacing.safeArea.top }}>
-        <View className="flex-row items-center justify-between mb-4">
+        <View className="mb-4 flex-row items-center justify-between">
           <Pressable onPress={handleBack} className="p-2 active:opacity-70">
             <ArrowLeft size={24} color={colors.text.primary} strokeWidth={2} />
           </Pressable>
@@ -192,16 +191,14 @@ export default function ReframeModule() {
         }}
         showsVerticalScrollIndicator={false}
         bounces={false}
-        overScrollMode="never"
-      >
+        overScrollMode="never">
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Shame vs Growth
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Shame vs Growth</Text>
 
-            <ContentCard body="You can FOCUS on your pattern.
+            <ContentCard
+              body="You can FOCUS on your pattern.
 
 You can INTERRUPT the spiral.
 
@@ -209,30 +206,31 @@ But there's still a voice:
 
 'I shouldn't have to do this.'
 'Why am I like this?'
-'Everyone else has it together.'" />
+'Everyone else has it together.'"
+            />
 
-            <Text className="text-[#95B8A8] text-base leading-relaxed">
+            <Text className="text-base leading-relaxed text-[#95B8A8]">
               That's the shame spiral.
             </Text>
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold">
+            <Text className="text-lg font-semibold text-[#E8F4F0]">
               And it's killing your progress.
             </Text>
 
-            <KeyTakeaway message="This module teaches you to catch shame thoughts and replace them with growth thoughts.
+            <KeyTakeaway
+              message="This module teaches you to catch shame thoughts and replace them with growth thoughts.
 
 Not toxic positivity. Not lies.
 
-Just... truth." />
+Just... truth."
+            />
           </View>
         )}
 
         {/* Screen 2: Distortions */}
         {currentScreen === 'distortions' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Cognitive Distortions
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Cognitive Distortions</Text>
 
             <ContentCard
               heading="All-or-Nothing Thinking"
@@ -255,16 +253,18 @@ Reality: You don't know what they think. You're ruminating on assumptions.`}
 Reality: Most outcomes aren't as bad as the spiral predicts.`}
             />
 
-            <KeyTakeaway message="Your rumination isn't reality. It's a distortion.
+            <KeyTakeaway
+              message="Your rumination isn't reality. It's a distortion.
 
-When you recognize the distortion, you take away its power." />
+When you recognize the distortion, you take away its power."
+            />
           </View>
         )}
 
         {/* Screen 3: Perspective Shift */}
         {currentScreen === 'perspective' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Reframing Technique #1: Perspective Shift
             </Text>
 
@@ -279,20 +279,17 @@ Evidence: I've had successful conversations
 Reframe: 'I'm learning what works'"
             />
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
-                Ask yourself:
-              </Text>
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
-                • Is this thought 100% true?{'\n\n'}• What evidence contradicts
-                it?{'\n\n'}• What would I tell a friend?{'\n\n'}• What's a more
-                balanced view?
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">Ask yourself:</Text>
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+                • Is this thought 100% true?{'\n\n'}• What evidence contradicts it?{'\n\n'}• What
+                would I tell a friend?{'\n\n'}• What's a more balanced view?
               </Text>
             </View>
 
-            <Text className="text-[#95B8A8] text-base text-center italic">
-              You're not lying to yourself. You're telling the FULL truth, not
-              just the shame version.
+            <Text className="text-center text-base italic text-[#95B8A8]">
+              You're not lying to yourself. You're telling the FULL truth, not just the shame
+              version.
             </Text>
           </View>
         )}
@@ -300,30 +297,30 @@ Reframe: 'I'm learning what works'"
         {/* Screen 4: Compassion */}
         {currentScreen === 'compassion' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Reframing Technique #2: Self-Compassion
             </Text>
 
-            <ContentCard body="When you ruminate, you're already suffering.
+            <ContentCard
+              body="When you ruminate, you're already suffering.
 
-Adding shame on top doesn't help. It makes it worse." />
+Adding shame on top doesn't help. It makes it worse."
+            />
 
-            <View className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#40916C]/20">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
-                The Shame Layer:
-              </Text>
-              <Text className="text-[#DC2626] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">The Shame Layer:</Text>
+              <Text className="text-base leading-relaxed text-[#DC2626]">
                 ❌ "I shouldn't be ruminating"
                 {'\n\n'}❌ "Why can't I just stop?"
                 {'\n\n'}❌ "Everyone else is fine"
               </Text>
             </View>
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">
                 The Compassion Reframe:
               </Text>
-              <Text className="text-[#52B788] text-base leading-relaxed">
+              <Text className="text-base leading-relaxed text-[#52B788]">
                 ✓ "This is hard. It's okay that it's hard"
                 {'\n\n'}✓ "I'm doing my best"
                 {'\n\n'}✓ "Millions of people struggle with this"
@@ -337,13 +334,10 @@ Adding shame on top doesn't help. It makes it worse." />
         {/* Screen 5: Practice */}
         {currentScreen === 'practice' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Practice: Reframe Your Spiral
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Practice: Reframe Your Spiral</Text>
 
-            <Text className="text-[#95B8A8] text-base">
-              Think of a recent rumination. Write the shame thought, then
-              reframe it:
+            <Text className="text-base text-[#95B8A8]">
+              Think of a recent rumination. Write the shame thought, then reframe it:
             </Text>
 
             <InteractiveExercise
@@ -359,47 +353,42 @@ Now you try:"
               maxLength={300}
             />
 
-            <KeyTakeaway message="The more you practice reframing, the faster it becomes automatic.
+            <KeyTakeaway
+              message="The more you practice reframing, the faster it becomes automatic.
 
-You're literally rewiring your brain." />
+You're literally rewiring your brain."
+            />
           </View>
         )}
 
         {/* Screen 6: Common Spirals */}
         {currentScreen === 'common-spirals' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
+            <Text className="text-2xl font-bold text-[#E8F4F0]">
               Common Shame Spirals & Reframes
             </Text>
 
-            <Text className="text-[#95B8A8] text-base">
+            <Text className="text-base text-[#95B8A8]">
               Here are reframes for the most common rumination patterns:
             </Text>
 
             {commonShameSpirals.map((item, index) => (
-              <View
-                key={index}
-                className="bg-[#1A4D3C] rounded-2xl p-5 border border-[#40916C]/20"
-              >
+              <View key={index} className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-5">
                 <View className="mb-3">
-                  <Text className="text-[#95B8A8] text-xs mb-1">Shame:</Text>
-                  <Text className="text-[#DC2626] text-base">
-                    {item.spiral}
-                  </Text>
+                  <Text className="mb-1 text-xs text-[#95B8A8]">Shame:</Text>
+                  <Text className="text-base text-[#DC2626]">{item.spiral}</Text>
                 </View>
 
-                <View className="h-px bg-[#40916C]/30 my-3" />
+                <View className="my-3 h-px bg-[#40916C]/30" />
 
                 <View>
-                  <Text className="text-[#95B8A8] text-xs mb-1">Reframe:</Text>
-                  <Text className="text-[#52B788] text-base font-semibold">
-                    {item.reframe}
-                  </Text>
+                  <Text className="mb-1 text-xs text-[#95B8A8]">Reframe:</Text>
+                  <Text className="text-base font-semibold text-[#52B788]">{item.reframe}</Text>
                 </View>
               </View>
             ))}
 
-            <Text className="text-[#95B8A8] text-sm text-center italic">
+            <Text className="text-center text-sm italic text-[#95B8A8]">
               Screenshot these. Use them when you need them.
             </Text>
           </View>
@@ -408,9 +397,7 @@ You're literally rewiring your brain." />
         {/* Screen 7: Library */}
         {currentScreen === 'library' && (
           <View className="gap-6">
-            <Text className="text-[#E8F4F0] text-2xl font-bold">
-              Your Personal Reframe Library
-            </Text>
+            <Text className="text-2xl font-bold text-[#E8F4F0]">Your Personal Reframe Library</Text>
 
             <ContentCard
               heading="Build Your Collection"
@@ -419,11 +406,9 @@ You're literally rewiring your brain." />
 Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
             />
 
-            <View className="bg-[#2D6A4F] border border-[#40916C] rounded-2xl p-5">
-              <Text className="text-[#E8F4F0] text-base font-semibold mb-3">
-                How to use this:
-              </Text>
-              <Text className="text-[#E8F4F0] text-base leading-relaxed">
+            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
+              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">How to use this:</Text>
+              <Text className="text-base leading-relaxed text-[#E8F4F0]">
                 1. Catch the shame thought
                 {'\n\n'}2. Pull up your library
                 {'\n\n'}3. Find a similar reframe
@@ -431,15 +416,15 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
               </Text>
             </View>
 
-            <Text className="text-[#95B8A8] text-base text-center">
+            <Text className="text-center text-base text-[#95B8A8]">
               The pattern you repeat becomes your default.
             </Text>
 
-            <Text className="text-[#E8F4F0] text-lg font-semibold text-center">
+            <Text className="text-center text-lg font-semibold text-[#E8F4F0]">
               Right now, shame is your default.
             </Text>
 
-            <Text className="text-[#95B8A8] text-base text-center">
+            <Text className="text-center text-base text-[#95B8A8]">
               After 30 days of reframing, growth becomes your default.
             </Text>
           </View>
@@ -464,16 +449,17 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
 
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
-        <View className="px-5" style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
+        <View
+          className="px-5"
+          style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
           <Pressable
             onPress={handleNext}
-            className="rounded-2xl flex-row items-center justify-center active:opacity-90"
+            className="flex-row items-center justify-center rounded-2xl active:opacity-90"
             style={{
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
-            }}
-          >
-            <Text className="text-lg font-semibold mr-2" style={{ color: colors.white }}>
+            }}>
+            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.white }}>
               Continue
             </Text>
             <ArrowRight size={20} color={colors.white} strokeWidth={2} />

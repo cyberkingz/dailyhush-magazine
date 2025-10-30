@@ -54,8 +54,7 @@ export default function QuizRecognition() {
         fadeColor={colors.background.primary}
         fadeHeight={48}
         fadeIntensity={0.95}
-        fadeVisibility="always"
-      >
+        fadeVisibility="always">
         {/* Icon */}
         <View style={{ alignItems: 'center', marginBottom: 32 }}>
           <View
@@ -68,8 +67,7 @@ export default function QuizRecognition() {
               justifyContent: 'center',
               borderWidth: 2,
               borderColor: colors.emerald[600] + '40',
-            }}
-          >
+            }}>
             <Sparkles size={48} color={colors.emerald[500]} strokeWidth={2} />
           </View>
         </View>
@@ -83,8 +81,7 @@ export default function QuizRecognition() {
             textAlign: 'center',
             marginBottom: 16,
             lineHeight: 40,
-          }}
-        >
+          }}>
           Quick Question
         </Text>
 
@@ -96,8 +93,7 @@ export default function QuizRecognition() {
             textAlign: 'center',
             lineHeight: 28,
             marginBottom: 48,
-          }}
-        >
+          }}>
           Did you take our Overthinking Type Quiz on our website?
         </Text>
 
@@ -117,8 +113,7 @@ export default function QuizRecognition() {
               shadowOpacity: 0.3,
               shadowRadius: 12,
               elevation: 6,
-            }}
-          >
+            }}>
             {({ pressed }) => (
               <View
                 style={{
@@ -126,8 +121,7 @@ export default function QuizRecognition() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   opacity: pressed ? 0.9 : 1,
-                }}
-              >
+                }}>
                 <CheckCircle2
                   size={24}
                   color={colors.white}
@@ -139,8 +133,7 @@ export default function QuizRecognition() {
                     fontSize: 20,
                     fontWeight: 'bold',
                     color: colors.white,
-                  }}
-                >
+                  }}>
                   Yes, I took the quiz
                 </Text>
               </View>
@@ -157,8 +150,7 @@ export default function QuizRecognition() {
               paddingHorizontal: 32,
               borderWidth: 2,
               borderColor: colors.emerald[700],
-            }}
-          >
+            }}>
             {({ pressed }) => (
               <View
                 style={{
@@ -166,8 +158,7 @@ export default function QuizRecognition() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   opacity: pressed ? 0.7 : 1,
-                }}
-              >
+                }}>
                 <Sparkles
                   size={24}
                   color={colors.emerald[500]}
@@ -179,8 +170,7 @@ export default function QuizRecognition() {
                     fontSize: 20,
                     fontWeight: 'bold',
                     color: colors.text.primary,
-                  }}
-                >
+                  }}>
                   No, I&apos;m new here
                 </Text>
               </View>
@@ -195,8 +185,7 @@ export default function QuizRecognition() {
             style={{
               paddingVertical: 12,
               alignItems: 'center',
-            }}
-          >
+            }}>
             {({ pressed }) => (
               <Text
                 style={{
@@ -204,8 +193,7 @@ export default function QuizRecognition() {
                   color: colors.emerald[400],
                   opacity: pressed ? 0.5 : 1,
                   fontWeight: '600',
-                }}
-              >
+                }}>
                 I already have an account
               </Text>
             )}
@@ -221,17 +209,16 @@ export default function QuizRecognition() {
             padding: 20,
             borderWidth: 1,
             borderColor: colors.emerald[700] + '40',
-          }}
-        >
+          }}>
           <Text
             style={{
               fontSize: 15,
               color: colors.emerald[200],
               textAlign: 'center',
               lineHeight: 22,
-            }}
-          >
-            If you took our quiz, we can personalize your DailyHush experience using your quiz results.
+            }}>
+            If you took our quiz, we can personalize your DailyHush experience using your quiz
+            results.
           </Text>
         </View>
       </ScrollFadeView>

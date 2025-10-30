@@ -75,10 +75,11 @@ export function PremiumCard({
 
   if (onPress) {
     return (
-      <Pressable onPress={onPress} style={{ opacity: 1 }} android_ripple={{ color: colors.emerald[600] + '20' }}>
-        {({ pressed }) => (
-          <View style={{ opacity: pressed ? activeOpacity : 1 }}>{content}</View>
-        )}
+      <Pressable
+        onPress={onPress}
+        style={{ opacity: 1 }}
+        android_ripple={{ color: colors.emerald[600] + '20' }}>
+        {({ pressed }) => <View style={{ opacity: pressed ? activeOpacity : 1 }}>{content}</View>}
       </Pressable>
     );
   }

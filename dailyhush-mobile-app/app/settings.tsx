@@ -9,7 +9,6 @@ import { View, Pressable, Switch } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import {
-  ArrowLeft,
   User,
   Bell,
   Type,
@@ -18,12 +17,12 @@ import {
   Shield,
   ChevronRight,
   LogOut,
-  FileText
+  FileText,
 } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
-import { useStore, useUser } from '@/store/useStore';
+import { useUser } from '@/store/useStore';
 import { signOut } from '@/services/auth';
 import { useState } from 'react';
 
@@ -48,29 +47,18 @@ function SettingRow({
   showChevron = true,
   toggle,
   toggleValue,
-  onToggle
+  onToggle,
 }: SettingRowProps) {
   return (
     <Pressable
       onPress={onPress}
       disabled={!onPress && !toggle}
-      className="bg-[#1A4D3C] rounded-2xl p-4 mb-3 flex-row items-center active:opacity-90"
-    >
-      {icon && (
-        <View className="bg-[#40916C]/20 p-2 rounded-xl mr-3">
-          {icon}
-        </View>
-      )}
+      className="mb-3 flex-row items-center rounded-2xl bg-[#1A4D3C] p-4 active:opacity-90">
+      {icon && <View className="mr-3 rounded-xl bg-[#40916C]/20 p-2">{icon}</View>}
 
       <View className="flex-1">
-        <Text className="text-[#E8F4F0] text-base font-semibold">
-          {title}
-        </Text>
-        {subtitle && (
-          <Text className="text-[#95B8A8] text-sm mt-0.5">
-            {subtitle}
-          </Text>
-        )}
+        <Text className="text-base font-semibold text-[#E8F4F0]">{title}</Text>
+        {subtitle && <Text className="mt-0.5 text-sm text-[#95B8A8]">{subtitle}</Text>}
       </View>
 
       {toggle && (
@@ -82,15 +70,9 @@ function SettingRow({
         />
       )}
 
-      {value && (
-        <Text className="text-[#95B8A8] text-sm mr-2">
-          {value}
-        </Text>
-      )}
+      {value && <Text className="mr-2 text-sm text-[#95B8A8]">{value}</Text>}
 
-      {showChevron && !toggle && (
-        <ChevronRight size={20} color="#95B8A8" strokeWidth={2} />
-      )}
+      {showChevron && !toggle && <ChevronRight size={20} color="#95B8A8" strokeWidth={2} />}
     </Pressable>
   );
 }
@@ -157,9 +139,7 @@ export default function Settings() {
         fadeColor="#0A1612"
         fadeHeight={48}
         fadeIntensity={0.95}
-        fadeVisibility="always"
-      >
-
+        fadeVisibility="always">
         {/* Guest Account Upgrade Banner */}
         {isGuest && (
           <View className="mb-6">
@@ -168,30 +148,24 @@ export default function Settings() {
                 Haptics.selectionAsync();
                 router.push('/onboarding');
               }}
-              className="bg-[#2D6A4F] rounded-2xl p-5 active:opacity-90"
-            >
-              <View className="flex-row items-center mb-2">
+              className="rounded-2xl bg-[#2D6A4F] p-5 active:opacity-90">
+              <View className="mb-2 flex-row items-center">
                 <Shield size={20} color="#B7E4C7" strokeWidth={2} />
-                <Text className="text-[#E8F4F0] text-base font-bold ml-2">
-                  Create Your Account
-                </Text>
+                <Text className="ml-2 text-base font-bold text-[#E8F4F0]">Create Your Account</Text>
               </View>
-              <Text className="text-[#B7E4C7] text-sm leading-relaxed mb-3">
-                You&apos;re using DailyHush as a guest. Create an account to save your progress and patterns across devices.
+              <Text className="mb-3 text-sm leading-relaxed text-[#B7E4C7]">
+                You&apos;re using DailyHush as a guest. Create an account to save your progress and
+                patterns across devices.
               </Text>
               <View className="flex-row items-center">
-                <Text className="text-[#52B788] text-sm font-semibold">
-                  Create Account →
-                </Text>
+                <Text className="text-sm font-semibold text-[#52B788]">Create Account →</Text>
               </View>
             </Pressable>
           </View>
         )}
 
         {/* Account Section */}
-        <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3">
-          Account
-        </Text>
+        <Text className="mb-3 text-xs font-semibold uppercase text-[#95B8A8]">Account</Text>
 
         <SettingRow
           title="Profile"
@@ -207,7 +181,7 @@ export default function Settings() {
         {!isGuest && (
           <>
             <SettingRow
-              title={isLoggingOut ? "Signing out..." : "Sign Out"}
+              title={isLoggingOut ? 'Signing out...' : 'Sign Out'}
               subtitle="Sign out of your account"
               icon={<LogOut size={20} color="#E63946" strokeWidth={2} />}
               onPress={isLoggingOut ? undefined : handleLogout}
@@ -227,7 +201,7 @@ export default function Settings() {
         )}
 
         {/* Preferences Section */}
-        <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">
+        <Text className="mb-3 mt-6 text-xs font-semibold uppercase text-[#95B8A8]">
           Preferences
         </Text>
 
@@ -250,9 +224,7 @@ export default function Settings() {
         />
 
         {/* Support Section */}
-        <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">
-          Support
-        </Text>
+        <Text className="mb-3 mt-6 text-xs font-semibold uppercase text-[#95B8A8]">Support</Text>
 
         <SettingRow
           title="Help & FAQs"
@@ -271,9 +243,7 @@ export default function Settings() {
         />
 
         {/* Legal Section */}
-        <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3 mt-6">
-          Legal
-        </Text>
+        <Text className="mb-3 mt-6 text-xs font-semibold uppercase text-[#95B8A8]">Legal</Text>
 
         <SettingRow
           title="Privacy Policy"
@@ -297,10 +267,8 @@ export default function Settings() {
 
         {/* App Info */}
         <View className="mt-8 items-center">
-          <Text className="text-[#95B8A8] text-xs mb-1">
-            DailyHush v1.0.0
-          </Text>
-          <Text className="text-[#95B8A8] text-xs text-center">
+          <Text className="mb-1 text-xs text-[#95B8A8]">DailyHush v1.0.0</Text>
+          <Text className="text-center text-xs text-[#95B8A8]">
             Made with ❤️ for women who deserve peace of mind
           </Text>
         </View>

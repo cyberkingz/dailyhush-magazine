@@ -26,7 +26,7 @@ export function InteractiveExercise({
   onComplete,
   minLength = 10,
   maxLength = 500,
-  multiline = true
+  multiline = true,
 }: InteractiveExerciseProps) {
   const [text, setText] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -44,19 +44,17 @@ export function InteractiveExercise({
   const isValid = characterCount >= minLength;
 
   return (
-    <View className="bg-[#1A4D3C] rounded-2xl p-6 border border-[#40916C]/20">
+    <View className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-6">
       {/* Header */}
-      <View className="flex-row items-center mb-4">
-        <Text className="text-4xl mr-3" style={{ lineHeight: 48, paddingTop: 4 }}>{emoji}</Text>
-        <Text className="text-[#E8F4F0] text-lg font-semibold flex-1">
-          {title}
+      <View className="mb-4 flex-row items-center">
+        <Text className="mr-3 text-4xl" style={{ lineHeight: 48, paddingTop: 4 }}>
+          {emoji}
         </Text>
+        <Text className="flex-1 text-lg font-semibold text-[#E8F4F0]">{title}</Text>
       </View>
 
       {/* Prompt */}
-      <Text className="text-[#95B8A8] text-base mb-4 leading-relaxed">
-        {prompt}
-      </Text>
+      <Text className="mb-4 text-base leading-relaxed text-[#95B8A8]">{prompt}</Text>
 
       {/* Text Input */}
       <TextInput
@@ -68,18 +66,20 @@ export function InteractiveExercise({
         placeholderTextColor="#95B8A8"
         multiline={multiline}
         numberOfLines={multiline ? 4 : 1}
-        className={`bg-[#0A1612] rounded-xl p-4 text-[#E8F4F0] text-base border-2 ${
+        className={`rounded-xl border-2 bg-[#0A1612] p-4 text-base text-[#E8F4F0] ${
           isFocused ? 'border-[#40916C]' : 'border-[#1A2E26]'
         } ${multiline ? 'min-h-[100px]' : 'h-12'}`}
         style={{ textAlignVertical: multiline ? 'top' : 'center' }}
       />
 
       {/* Character Count */}
-      <View className="flex-row justify-between items-center mt-2">
-        <Text className={`text-xs ${isValid ? 'text-[#52B788]' : 'text-[#95B8A8]'}`} style={{ lineHeight: 18 }}>
+      <View className="mt-2 flex-row items-center justify-between">
+        <Text
+          className={`text-xs ${isValid ? 'text-[#52B788]' : 'text-[#95B8A8]'}`}
+          style={{ lineHeight: 18 }}>
           {isValid ? '✓ Ready to continue' : `At least ${minLength} characters`}
         </Text>
-        <Text className="text-[#95B8A8] text-xs">
+        <Text className="text-xs text-[#95B8A8]">
           {characterCount}/{maxLength}
         </Text>
       </View>

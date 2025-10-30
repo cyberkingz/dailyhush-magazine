@@ -12,11 +12,7 @@ interface ProgressIndicatorProps {
   showText?: boolean;
 }
 
-export function ProgressIndicator({
-  current,
-  total,
-  showText = true
-}: ProgressIndicatorProps) {
+export function ProgressIndicator({ current, total, showText = true }: ProgressIndicatorProps) {
   return (
     <View className="flex-row items-center justify-center gap-2">
       {/* Dots */}
@@ -24,16 +20,14 @@ export function ProgressIndicator({
         {Array.from({ length: total }).map((_, index) => (
           <View
             key={index}
-            className={`w-2 h-2 rounded-full ${
-              index < current ? 'bg-[#40916C]' : 'bg-[#1A2E26]'
-            }`}
+            className={`h-2 w-2 rounded-full ${index < current ? 'bg-[#40916C]' : 'bg-[#1A2E26]'}`}
           />
         ))}
       </View>
 
       {/* Text */}
       {showText && (
-        <Text className="text-[#95B8A8] text-xs ml-2">
+        <Text className="ml-2 text-xs text-[#95B8A8]">
           {current}/{total}
         </Text>
       )}

@@ -24,11 +24,7 @@ import { AuthTextInput } from '@/components/auth/AuthTextInput';
 import { AuthButton } from '@/components/auth/AuthButton';
 import { ErrorAlert } from '@/components/auth/ErrorAlert';
 import { sendPasswordResetEmail, validateEmail } from '@/services/auth';
-import {
-  authTypography,
-  authSpacing,
-  screenLayout,
-} from '@/constants/authStyles';
+import { authTypography, authSpacing, screenLayout } from '@/constants/authStyles';
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -109,8 +105,7 @@ export default function ForgotPassword() {
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
@@ -119,16 +114,14 @@ export default function ForgotPassword() {
             paddingBottom: authSpacing.screenPadding.bottom,
           }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           {/* Form wrapper */}
           <View style={screenLayout.formWrapper}>
             {/* Back button */}
             <Pressable
               onPress={handleBackToLogin}
               hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-              style={{ marginBottom: 24, alignSelf: 'flex-start' }}
-            >
+              style={{ marginBottom: 24, alignSelf: 'flex-start' }}>
               <ArrowLeft size={24} color="#52B788" strokeWidth={2} />
             </Pressable>
 
@@ -138,8 +131,7 @@ export default function ForgotPassword() {
                 style={{
                   ...authTypography.headline,
                   marginBottom: 8,
-                }}
-              >
+                }}>
                 Reset Your Password
               </Text>
 
@@ -171,20 +163,16 @@ export default function ForgotPassword() {
                     textAlign: 'center',
                     marginTop: 24,
                     paddingHorizontal: 16,
-                  }}
-                >
-                  Didn&apos;t receive the email? Check your spam folder or try again in a few minutes.
+                  }}>
+                  Didn&apos;t receive the email? Check your spam folder or try again in a few
+                  minutes.
                 </Text>
               </View>
             ) : (
               <View>
                 {/* Error alert */}
                 {error && (
-                  <ErrorAlert
-                    message={error}
-                    type="error"
-                    onDismiss={() => setError(null)}
-                  />
+                  <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />
                 )}
 
                 {/* Form field */}
@@ -224,15 +212,13 @@ export default function ForgotPassword() {
                     onPress={handleBackToLogin}
                     disabled={loading}
                     hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-                    style={{ paddingVertical: 16 }}
-                  >
+                    style={{ paddingVertical: 16 }}>
                     <Text
                       style={{
                         ...authTypography.linkText,
                         textDecorationLine: 'underline',
                         textDecorationColor: '#52B788',
-                      }}
-                    >
+                      }}>
                       Back to Sign In
                     </Text>
                   </Pressable>

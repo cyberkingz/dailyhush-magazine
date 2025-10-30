@@ -4,7 +4,6 @@
  */
 
 import { DimensionValue } from 'react-native';
-import { colors } from './colors';
 
 /**
  * Typography

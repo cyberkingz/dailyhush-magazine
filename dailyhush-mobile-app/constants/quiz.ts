@@ -39,7 +39,8 @@ export const QUIZ_REVEAL_CONFIG = {
   ANIMATION_DURATION: 600,
   /** Teaser text shown before signup */
   TEASER_TITLE: 'Your Results Are Ready! 🎉',
-  TEASER_DESCRIPTION: 'Create your account to discover your unique overthinking type and unlock personalized strategies.',
+  TEASER_DESCRIPTION:
+    'Create your account to discover your unique overthinking type and unlock personalized strategies.',
 } as const;
 
 /**

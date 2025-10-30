@@ -397,7 +397,7 @@ export default function Insights() {
                       lineHeight: typography.size.lg * typography.lineHeight.tight,
                     }}
                   >
-                    You&apos;re Noticing Patterns
+                    You're Noticing Patterns
                   </Text>
                 </View>
                 <Text
@@ -430,7 +430,7 @@ export default function Insights() {
                       lineHeight: typography.size.lg * typography.lineHeight.tight,
                     }}
                   >
-                    You&apos;re Building Awareness
+                    You're Building Awareness
                   </Text>
                 </View>
                 <Text
@@ -440,7 +440,7 @@ export default function Insights() {
                     lineHeight: typography.size.base * typography.lineHeight.relaxed,
                   }}
                 >
-                  Healing isn&apos;t linear. Some weeks are harder, and that&apos;s part of the process. You&apos;re still rewiring the pattern.
+                  Healing isn't linear. Some weeks are harder, and that's part of the process. You're still rewiring the pattern.
                 </Text>
               </View>
             ) : null}
@@ -604,7 +604,7 @@ export default function Insights() {
                   }}
                 >
                   {weeklyData.avgDuration < 600
-                    ? "You&apos;re catching them quickly"
+                    ? "You're catching them quickly"
                     : "Each interrupt teaches your brain"}
                 </Text>
               </View>

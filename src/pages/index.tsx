@@ -5,11 +5,19 @@ import { Users } from 'lucide-react'
 import ProblemRecognitionSection from '../components/home/ProblemRecognitionSection'
 import FireProtocolSection from '../components/home/FireProtocolSection'
 import FinalCTASection from '../components/home/FinalCTASection'
+import { HomeBlogSection } from '@/components/home/HomeBlogSection'
+import { homeBlogPosts } from '@/data/homeBlogPosts'
+import { ReviewsSection } from '@/components/product/common/ReviewsSection'
+import { shiftProductReviews } from '@/data/shiftProductReviews'
 
 export default function Home() {
   useEffect(() => { document.title = 'DailyHush — Stop Overthinking & Quiet Your Mind' }, [])
 
   // Home page does not feature a specific edition anymore
+
+  const homepageReviews = shiftProductReviews.slice(0, 6)
+  const homepageAverageRating = 4.8
+  const homepageTotalReviews = 1800
 
   return (
     <>
@@ -72,6 +80,14 @@ export default function Home() {
       {/* New Home Page Sections */}
       <ProblemRecognitionSection />
       <FireProtocolSection />
+      <HomeBlogSection posts={homeBlogPosts} />
+      <ReviewsSection
+        reviews={homepageReviews}
+        averageRating={homepageAverageRating}
+        totalReviews={homepageTotalReviews}
+        title="What DailyHush Women Say After Practicing F.I.R.E."
+        backgroundColor="bg-gradient-to-b from-white via-emerald-50/40 to-white"
+      />
       <FinalCTASection />
 
       {/* <section className="mx-auto max-w-7xl px-6 py-12">

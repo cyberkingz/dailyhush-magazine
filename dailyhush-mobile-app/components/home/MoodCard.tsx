@@ -5,7 +5,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { View, Animated, Easing } from 'react-native';
-import { Smile } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
 import { colors } from '@/constants/colors';
@@ -146,7 +145,14 @@ export function MoodCard({
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  <Smile size={56} color={colors.emerald[500]} strokeWidth={2} />
+                  <Text
+                    style={{
+                      fontSize: 64,
+                      lineHeight: 64,
+                      textAlign: 'center',
+                    }}>
+                    🌤️
+                  </Text>
                 </View>
               </View>
 

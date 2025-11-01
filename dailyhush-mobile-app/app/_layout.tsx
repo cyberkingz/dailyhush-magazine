@@ -250,6 +250,12 @@ export default function Layout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="mood-capture"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <PortalHost />
       <BottomNav
@@ -262,6 +268,7 @@ export default function Layout() {
           '/faq',
           '/legal/privacy',
           '/legal/terms',
+          '/mood-capture',
         ]}
       />
     </ErrorBoundary>

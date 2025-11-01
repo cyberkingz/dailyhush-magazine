@@ -44,6 +44,7 @@ export default function QuizSignup() {
     description: string;
     insight: string;
     ctaHook: string;
+    loopType: string; // Loop type from quiz results
     answers: string;
     // Profile data from profile setup
     profileName?: string;
@@ -180,8 +181,9 @@ export default function QuizSignup() {
         // Profile data from profile setup screen
         name: params.profileName || null,
         age: params.profileAge ? parseInt(params.profileAge) : null,
-        // Note: rumination_frequency not in schema - removed
-        // Quiz will be linked after results reveal
+        // Quiz results - SAVE LOOP TYPE!
+        loop_type: params.loopType || null,
+        quiz_overthinker_type: params.type || null,
         onboarding_completed: true, // Set to true so home screen doesn't redirect back to onboarding
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),

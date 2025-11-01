@@ -155,7 +155,7 @@ export function ContinueButton({
       accessibilityState={{ disabled: disabled || loading }}
     >
       {loading ? (
-        <ActivityIndicator size="small" color={colors.text.primary} />
+        <ActivityIndicator size="small" color={colors.background.primary} />
       ) : (
         <Text style={[styles.continueButtonText, BUTTONS.primary.text]}>{label}</Text>
       )}

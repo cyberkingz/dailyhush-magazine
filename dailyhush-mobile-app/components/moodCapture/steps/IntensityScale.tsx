@@ -6,7 +6,7 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, PanResponder, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Animated, PanResponder, Dimensions, TouchableOpacity } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import {
   getMoodEmoji,
@@ -20,7 +20,7 @@ import type { Enums } from '@/types/supabase';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DIAL_SIZE = Math.min(SCREEN_WIDTH - 80, 320);
 const DIAL_RADIUS = DIAL_SIZE / 2;
-const HANDLE_SIZE = 56;
+const HANDLE_SIZE = 64; // Increased from 56 for better accessibility
 const TRACK_RADIUS = DIAL_RADIUS - 40; // Handle moves on this circle
 const INTENSITY_VALUES: IntensityValue[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const INTENSITY_STEP_DEGREES = 360 / INTENSITY_VALUES.length;
@@ -156,9 +156,9 @@ export function IntensityScale({
 
         // Scale up handle
         Animated.spring(handleScale, {
-          toValue: 1.15,
-          tension: 100,
-          friction: 7,
+          toValue: 1.12, // Slightly reduced from 1.15 for subtlety
+          tension: 90, // Reduced from 100 for softer animation
+          friction: 9, // Increased from 7 for smoother motion
           useNativeDriver: false,
         }).start();
 
@@ -221,20 +221,20 @@ export function IntensityScale({
         Animated.parallel([
           Animated.spring(handleX, {
             toValue: position.x - HANDLE_SIZE / 2,
-            tension: 80,
-            friction: 8,
+            tension: 50, // Reduced from 80 for gentler snap
+            friction: 12, // Increased from 8 for smoother motion
             useNativeDriver: false,
           }),
           Animated.spring(handleY, {
             toValue: position.y - HANDLE_SIZE / 2,
-            tension: 80,
-            friction: 8,
+            tension: 50, // Reduced from 80 for gentler snap
+            friction: 12, // Increased from 8 for smoother motion
             useNativeDriver: false,
           }),
           Animated.spring(handleScale, {
             toValue: 1,
-            tension: 100,
-            friction: 7,
+            tension: 80, // Reduced from 100 for softer scale
+            friction: 10, // Increased from 7 for smoother scale
             useNativeDriver: false,
           }),
         ]).start();
@@ -271,33 +271,53 @@ export function IntensityScale({
             </Text>
           </View>
 
-          {/* Position Markers */}
+          {/* Arc/Track - Render BEFORE markers so markers appear on top */}
+          <View style={styles.track} />
+
+          {/* Position Markers - Now render AFTER track for proper layering */}
           {INTENSITY_VALUES.map((intensity) => {
             const position = getPositionForIntensity(intensity);
             const isActive = intensity === currentIntensity;
 
             return (
-              <View
+              <TouchableOpacity
                 key={intensity}
                 style={[
-                  styles.marker,
+                  styles.markerTouchable,
                   {
-                    left: position.x - (isActive ? 6 : 4),
-                    top: position.y - (isActive ? 6 : 4),
-                    backgroundColor: isActive
-                      ? colors.emerald[500]
-                      : 'rgba(16, 185, 129, 0.3)',
-                    width: isActive ? 12 : 8,
-                    height: isActive ? 12 : 8,
-                    borderRadius: isActive ? 6 : 4,
+                    left: position.x - 24, // Center 48px tap area
+                    top: position.y - 24,
                   },
                 ]}
-              />
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  setCurrentIntensity(intensity);
+                  updateHandlePosition(intensity);
+                  onIntensitySelect(intensity);
+                }}
+                accessibilityLabel={`Intensity ${intensity}: ${INTENSITY_LABELS[intensity]}`}
+                accessibilityRole="button"
+              >
+                <View
+                  style={[
+                    styles.marker,
+                    {
+                      backgroundColor: isActive
+                        ? colors.emerald[500] // Solid emerald when active
+                        : 'rgba(15, 50, 41, 0.95)', // Solid dark background when inactive
+                      borderWidth: isActive ? 0 : 3, // Ring only when inactive
+                      borderColor: isActive
+                        ? 'transparent'
+                        : 'rgba(16, 185, 129, 0.75)', // Emerald ring for inactive markers
+                      width: isActive ? 18 : 14, // Slightly larger for better visibility
+                      height: isActive ? 18 : 14,
+                      borderRadius: isActive ? 9 : 7,
+                    },
+                  ]}
+                />
+              </TouchableOpacity>
             );
           })}
-
-          {/* Arc/Track */}
-          <View style={styles.track} />
 
           {/* Draggable Handle */}
           <Animated.View
@@ -318,10 +338,7 @@ export function IntensityScale({
 
       {/* Helper copy */}
       <View style={styles.helperTextContainer}>
-        <Text style={styles.helperText}>Low intensity starts at the top.</Text>
-        <Text style={[styles.helperText, styles.helperTextSecondary]}>
-          Rotate clockwise to increase it.
-        </Text>
+        <Text style={styles.helperText}>Drag or tap to adjust intensity</Text>
       </View>
     </View>
   );
@@ -352,12 +369,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: 16, // Increased from 15 for readability
     fontWeight: '400',
-    lineHeight: 20,
+    lineHeight: 22,
     color: colors.text.secondary,
     textAlign: 'center',
-    opacity: 0.7,
+    opacity: 0.85, // Increased from 0.7 for contrast
   },
   dialContainer: {
     alignItems: 'center',
@@ -368,9 +385,9 @@ const styles = StyleSheet.create({
     width: DIAL_SIZE,
     height: DIAL_SIZE,
     borderRadius: DIAL_SIZE / 2,
-    backgroundColor: 'rgba(15, 50, 41, 0.4)',
+    backgroundColor: 'rgba(15, 50, 41, 0.65)', // Increased from 0.4 for better contrast
     borderWidth: 2,
-    borderColor: 'rgba(16, 185, 129, 0.15)',
+    borderColor: 'rgba(16, 185, 129, 0.30)', // Increased from 0.15 for visibility
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
@@ -381,8 +398,9 @@ const styles = StyleSheet.create({
     height: TRACK_RADIUS * 2,
     borderRadius: TRACK_RADIUS,
     borderWidth: 2,
-    borderColor: 'rgba(16, 185, 129, 0.25)',
+    borderColor: 'rgba(16, 185, 129, 0.25)', // More subtle to let markers stand out
     borderStyle: 'dashed',
+    zIndex: 1, // Below markers but above background
   },
   centerLabel: {
     alignItems: 'center',
@@ -390,41 +408,50 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   intensityNumber: {
-    fontSize: 56,
+    fontSize: 48, // Reduced from 56 for better hierarchy
     fontWeight: '700',
-    color: colors.emerald[500],
-    lineHeight: 64,
+    color: colors.emerald[400], // Softer than 500 for less intensity
+    lineHeight: 56,
     marginBottom: 4,
   },
   intensityLabel: {
-    fontSize: 18,
+    fontSize: 20, // Increased from 18 for prominence
     fontWeight: '600',
     color: colors.text.primary,
     textAlign: 'center',
+    letterSpacing: 0.5, // Better readability
+  },
+  markerTouchable: {
+    position: 'absolute',
+    width: 48, // Large tap target for accessibility
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10, // Ensure markers render above track
   },
   marker: {
-    position: 'absolute',
     shadowColor: colors.emerald[500],
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOpacity: 0.6, // Enhanced shadow for depth
+    shadowRadius: 6, // Larger glow
+    elevation: 3, // Higher elevation for Android
   },
   handle: {
     position: 'absolute',
     width: HANDLE_SIZE,
     height: HANDLE_SIZE,
     borderRadius: HANDLE_SIZE / 2,
-    backgroundColor: colors.emerald[600],
+    backgroundColor: colors.emerald[500], // Lighter for better visibility
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: colors.emerald[600],
+    shadowColor: colors.emerald[400], // Lighter shadow for visibility
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
-    elevation: 8,
-    borderWidth: 4,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    shadowOpacity: 0.7, // Increased from 0.5 for stronger glow
+    shadowRadius: 12, // Increased from 8 for more prominent shadow
+    elevation: 10, // Increased from 8
+    borderWidth: 5, // Increased from 4 for better affordance
+    borderColor: 'rgba(255, 255, 255, 0.6)', // Increased from 0.3 for visibility
+    zIndex: 20, // Highest layer - handle should always be on top
   },
   handleInner: {
     width: 24,
@@ -443,13 +470,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   helperText: {
-    fontSize: 14,
+    fontSize: 15, // Increased from 14 for readability
     fontWeight: '500',
     textAlign: 'center',
     color: colors.text.secondary,
-    opacity: 0.75,
-  },
-  helperTextSecondary: {
-    marginTop: 2,
+    opacity: 0.80, // Increased from 0.75 for contrast
   },
 });

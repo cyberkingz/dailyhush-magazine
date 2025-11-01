@@ -101,6 +101,7 @@ export function IntensityScale({
   const dialCenter = useRef({ x: 0, y: 0 }).current;
   const hasMeasuredDial = useRef(false);
   const currentIntensityRef = useRef<IntensityValue>(selectedIntensity || 3);
+  const isDragging = useRef(false);
 
   // Animation values - all using JS driver
   const handleX = useRef(new Animated.Value(0)).current;
@@ -126,6 +127,7 @@ export function IntensityScale({
 
   // Initialize handle position
   React.useEffect(() => {
+    if (isDragging.current) return;
     updateHandlePosition(currentIntensity);
   }, [currentIntensity, updateHandlePosition]);
 
@@ -152,6 +154,7 @@ export function IntensityScale({
       onMoveShouldSetPanResponder: () => true,
 
       onPanResponderGrant: () => {
+        isDragging.current = true;
         measureDial();
 
         // Scale up handle
@@ -242,6 +245,10 @@ export function IntensityScale({
         // Call callback
         onIntensitySelect(activeIntensity);
         lastHapticIntensity.current = activeIntensity;
+        isDragging.current = false;
+      },
+      onPanResponderTerminate: () => {
+        isDragging.current = false;
       },
     })
   ).current;

@@ -143,6 +143,36 @@ export function IntensityScale({
     }
   }, [selectedIntensity]);
 
+  const finishDrag = React.useCallback(() => {
+    const activeIntensity = currentIntensityRef.current;
+    const position = getPositionForIntensity(activeIntensity);
+
+    Animated.parallel([
+      Animated.spring(handleX, {
+        toValue: position.x - HANDLE_SIZE / 2,
+        tension: 50,
+        friction: 12,
+        useNativeDriver: false,
+      }),
+      Animated.spring(handleY, {
+        toValue: position.y - HANDLE_SIZE / 2,
+        tension: 50,
+        friction: 12,
+        useNativeDriver: false,
+      }),
+      Animated.spring(handleScale, {
+        toValue: 1,
+        tension: 80,
+        friction: 10,
+        useNativeDriver: false,
+      }),
+    ]).start();
+
+    onIntensitySelect(activeIntensity);
+    lastHapticIntensity.current = activeIntensity;
+    isDragging.current = false;
+  }, [handleX, handleY, handleScale, onIntensitySelect]);
+
   // Measure dial position on screen
   const handleDialLayout = () => {
     measureDial();
@@ -216,40 +246,8 @@ export function IntensityScale({
         }
       },
 
-      onPanResponderRelease: () => {
-        const activeIntensity = currentIntensityRef.current;
-        // Snap to final position
-        const position = getPositionForIntensity(activeIntensity);
-
-        Animated.parallel([
-          Animated.spring(handleX, {
-            toValue: position.x - HANDLE_SIZE / 2,
-            tension: 50, // Reduced from 80 for gentler snap
-            friction: 12, // Increased from 8 for smoother motion
-            useNativeDriver: false,
-          }),
-          Animated.spring(handleY, {
-            toValue: position.y - HANDLE_SIZE / 2,
-            tension: 50, // Reduced from 80 for gentler snap
-            friction: 12, // Increased from 8 for smoother motion
-            useNativeDriver: false,
-          }),
-          Animated.spring(handleScale, {
-            toValue: 1,
-            tension: 80, // Reduced from 100 for softer scale
-            friction: 10, // Increased from 7 for smoother scale
-            useNativeDriver: false,
-          }),
-        ]).start();
-
-        // Call callback
-        onIntensitySelect(activeIntensity);
-        lastHapticIntensity.current = activeIntensity;
-        isDragging.current = false;
-      },
-      onPanResponderTerminate: () => {
-        isDragging.current = false;
-      },
+      onPanResponderRelease: finishDrag,
+      onPanResponderTerminate: finishDrag,
     })
   ).current;
 

@@ -27,9 +27,13 @@ export const PACKAGE_IDS = {
   LIFETIME: '$rc_lifetime', // RevenueCat default lifetime identifier
 } as const;
 
+// Track if RevenueCat has been initialized
+let isRevenueCatInitialized = false;
+
 /**
  * Initialize RevenueCat SDK
  * Call this once at app startup
+ * Safe to call multiple times - will only configure once
  */
 export async function initializeRevenueCat(userId?: string): Promise<void> {
   try {
@@ -40,21 +44,25 @@ export async function initializeRevenueCat(userId?: string): Promise<void> {
       return;
     }
 
-    // Configure SDK
-    Purchases.configure({ apiKey });
+    // Only configure once
+    if (!isRevenueCatInitialized) {
+      // Configure SDK
+      Purchases.configure({ apiKey });
 
-    // Set user ID if authenticated
+      // Enable debug logs in development
+      if (__DEV__) {
+        Purchases.setLogLevel(Purchases.LOG_LEVEL.DEBUG);
+      }
+
+      isRevenueCatInitialized = true;
+      console.log('RevenueCat initialized successfully');
+    }
+
+    // Set user ID if authenticated (safe to call multiple times)
     if (userId) {
       await Purchases.logIn(userId);
       console.log('RevenueCat: User logged in:', userId);
     }
-
-    // Enable debug logs in development
-    if (__DEV__) {
-      Purchases.setLogLevel(Purchases.LOG_LEVEL.DEBUG);
-    }
-
-    console.log('RevenueCat initialized successfully');
   } catch (error) {
     console.error('Error initializing RevenueCat:', error);
     throw error;

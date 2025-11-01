@@ -6,7 +6,7 @@
 export const colors = {
   // Background colors - Deep tropical dark tones
   background: {
-    primary: '#0A1612', // Deep forest background
+    primary: '#0a1f1a', // Deep forest background
     secondary: '#0F1F1A', // Card background
     tertiary: '#1A4D3C', // Elevated card background
     muted: '#1A2E26', // Muted elements

@@ -269,6 +269,10 @@ export default function Layout() {
           '/legal/privacy',
           '/legal/terms',
           '/mood-capture',
+          '/training/focus',
+          '/training/interrupt',
+          '/training/reframe',
+          '/training/execute',
         ]}
       />
     </ErrorBoundary>

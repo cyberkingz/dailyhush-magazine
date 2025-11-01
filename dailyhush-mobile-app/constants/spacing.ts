@@ -39,6 +39,11 @@ export const spacing = {
     height: 56, // h-14
     heightSmall: 48, // h-12
   },
+
+  // Tab bar height (bottom navigation)
+  tabBar: {
+    height: 72,
+  },
 } as const;
 
 export type Spacing = typeof spacing;

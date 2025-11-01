@@ -40,7 +40,11 @@ function ModuleCard({
       onPress={onPress}
       disabled={locked}
       className={`mb-4 rounded-2xl p-5 ${locked ? 'opacity-50' : 'active:opacity-90'}`}
-      style={{ backgroundColor: colors.background.secondary }}>
+      style={{
+        backgroundColor: colors.background.secondary,
+        borderWidth: 1,
+        borderColor: colors.emerald[600] + '20', // 12% opacity emerald border
+      }}>
       <View className="mb-3 flex-row items-center justify-between">
         <Text className="flex-1 text-lg font-bold" style={{ color: colors.text.primary }}>
           {title}
@@ -141,7 +145,7 @@ export default function Training() {
         contentContainerStyle={{
           paddingHorizontal: spacing.lg,
           paddingTop: spacing.lg,
-          paddingBottom: 72 + insets.bottom,
+          paddingBottom: spacing.tabBar.height + Math.max(insets.bottom, spacing.safeArea.bottom) + spacing['2xl'],
         }}
         showsVerticalScrollIndicator={false}>
         {/* Progress */}

@@ -25,6 +25,8 @@ import {
   Platform,
   ScrollView,
   Pressable,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { MotiView } from 'moti';
 import { Lock } from 'lucide-react-native';
@@ -118,7 +120,8 @@ export function FreeWriting({
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
       >
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
@@ -128,14 +131,18 @@ export function FreeWriting({
             duration: ANIMATIONS.fadeIn.duration,
           }}
         >
-          {/* Step Header */}
-          <View style={styles.header}>
-            <Text style={styles.title}>What's on your mind?</Text>
-            <Text style={styles.subtitle}>{STEP_SUBTITLES.step3}</Text>
-          </View>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              {/* Step Header */}
+              <View style={styles.header}>
+                <Text style={styles.title}>What's on your mind?</Text>
+                <Text style={styles.subtitle}>{STEP_SUBTITLES.step3}</Text>
+              </View>
 
-          {/* Writing Prompts */}
-          <PromptChips mood={selectedMood} onPromptSelect={handlePromptSelect} />
+              {/* Writing Prompts */}
+              <PromptChips mood={selectedMood} onPromptSelect={handlePromptSelect} />
+            </View>
+          </TouchableWithoutFeedback>
 
           {/* Text Area Wrapper */}
           <View style={styles.textAreaWrapper}>
@@ -164,30 +171,37 @@ export function FreeWriting({
                 autoCorrect
                 spellCheck
                 scrollEnabled
+                blurOnSubmit={true}
+                returnKeyType="done"
+                onSubmitEditing={() => Keyboard.dismiss()}
                 accessibilityRole="text"
                 accessibilityLabel="Journal entry text area"
-                accessibilityHint="Type your thoughts and feelings here"
+                accessibilityHint="Type your thoughts and feelings here. Tap outside or swipe down to close keyboard."
               />
             </Pressable>
           </View>
 
-          {/* Privacy Badge */}
-          <View style={styles.privacyBadge}>
-            <Lock
-              size={STATUS_INDICATORS.privacy.icon.size}
-              color={STATUS_INDICATORS.privacy.icon.color}
-            />
-            <Text style={styles.privacyText}>
-              {PRIVACY_MESSAGES.encrypted}
-            </Text>
-          </View>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              {/* Privacy Badge */}
+              <View style={styles.privacyBadge}>
+                <Lock
+                  size={STATUS_INDICATORS.privacy.icon.size}
+                  color={STATUS_INDICATORS.privacy.icon.color}
+                />
+                <Text style={styles.privacyText}>
+                  {PRIVACY_MESSAGES.encrypted}
+                </Text>
+              </View>
 
-          {/* Character Count (optional) */}
-          {shouldShowCharCount && (
-            <View style={styles.charCountContainer}>
-              <Text style={styles.charCountText}>{content.length} characters</Text>
+              {/* Character Count (optional) */}
+              {shouldShowCharCount && (
+                <View style={styles.charCountContainer}>
+                  <Text style={styles.charCountText}>{content.length} characters</Text>
+                </View>
+              )}
             </View>
-          )}
+          </TouchableWithoutFeedback>
         </MotiView>
       </ScrollView>
     </KeyboardAvoidingView>

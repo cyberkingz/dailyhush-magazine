@@ -187,7 +187,7 @@ export default function ReframeModule() {
         className="flex-1"
         contentContainerStyle={{
           paddingHorizontal: spacing.lg,
-          paddingBottom: spacing['3xl'],
+          paddingBottom: spacing.button.height + spacing.lg,
         }}
         showsVerticalScrollIndicator={false}
         bounces={false}
@@ -450,8 +450,12 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
       {/* Footer - Continue Button */}
       {currentScreen !== 'complete' && (
         <View
-          className="px-5"
-          style={{ paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }}>
+          className="absolute bottom-0 left-0 right-0 px-5"
+          style={{
+            paddingTop: spacing.lg,
+            paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom),
+            backgroundColor: colors.background.primary,
+          }}>
           <Pressable
             onPress={handleNext}
             className="flex-row items-center justify-center rounded-2xl active:opacity-90"

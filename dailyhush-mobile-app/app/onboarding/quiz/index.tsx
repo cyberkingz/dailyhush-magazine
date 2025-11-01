@@ -126,6 +126,7 @@ export default function QuizFlow() {
           description: result.description,
           insight: result.insight,
           ctaHook: result.ctaHook,
+          loopType: result.loopType, // NEW - for personalized paywall
           answers: JSON.stringify(answersArray),
         },
       });

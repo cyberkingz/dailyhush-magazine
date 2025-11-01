@@ -1,6 +1,20 @@
 import type { QuizQuestion } from '../types/quiz'
 
 export const quizQuestions: QuizQuestion[] = [
+  // SECTION 0: Trigger Type (Initial routing seed)
+  {
+    id: 'q0',
+    section: 'trigger-type',
+    type: 'single',
+    question: 'When your mind starts spinning, what usually triggers it?',
+    options: [
+      { id: 'q0_a', text: 'Something I said or did "wrong"', value: 0 },
+      { id: 'q0_b', text: "A decision I'm unsure about", value: 0 },
+      { id: 'q0_c', text: 'Worrying how someone saw me', value: 0 },
+      { id: 'q0_d', text: 'It just starts for no reason', value: 0 },
+    ],
+  },
+
   // SECTION 1: Thought Loops (Cognitive)
   {
     id: 'q1',
@@ -198,6 +212,55 @@ export const quizQuestions: QuizQuestion[] = [
         text: 'Replay convos / imagine worst-cases / redo decisions',
         value: 5,
       },
+    ],
+  },
+
+  // SECTION 6: Perfectionism
+  {
+    id: 'q17',
+    section: 'perfectionism',
+    type: 'single',
+    question: 'When you achieve something, what do you focus on most?',
+    options: [
+      { id: 'q17_a', text: 'What went well', value: 1 },
+      { id: 'q17_b', text: 'What could be better', value: 3 },
+      { id: 'q17_c', text: "What I didn't do perfectly", value: 5 },
+    ],
+  },
+  {
+    id: 'q18',
+    section: 'perfectionism',
+    type: 'single',
+    question: 'When you make a small mistake, your first thought is:',
+    options: [
+      { id: 'q18_a', text: '"Oh well, moving on"', value: 1 },
+      { id: 'q18_b', text: '"I should\'ve done better"', value: 3 },
+      { id: 'q18_c', text: '"I always mess things up"', value: 5 },
+    ],
+  },
+  {
+    id: 'q19',
+    section: 'perfectionism',
+    type: 'single',
+    question: 'Before sending a message (text or email), you:',
+    options: [
+      { id: 'q19_a', text: 'Send it right away', value: 1 },
+      { id: 'q19_b', text: 'Read it once, then send', value: 3 },
+      { id: 'q19_c', text: 'Rewrite or check multiple times', value: 5 },
+    ],
+  },
+
+  // SECTION 7: Emotional Bridge
+  {
+    id: 'q20',
+    section: 'emotional-bridge',
+    type: 'single',
+    question: 'If you could quiet one part of your mind right now, which would it be?',
+    options: [
+      { id: 'q20_a', text: 'The part that replays mistakes', value: 0 },
+      { id: 'q20_b', text: 'The part that needs control', value: 0 },
+      { id: 'q20_c', text: 'The part that worries what others think', value: 0 },
+      { id: 'q20_d', text: "The part that won't stop at night", value: 0 },
     ],
   },
 ]

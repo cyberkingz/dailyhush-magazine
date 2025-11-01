@@ -13,6 +13,7 @@ import {
   registerForPushNotifications,
   scheduleDailyQuoteNotification,
 } from '@/services/notifications';
+import { initializeRevenueCat } from '@/utils/revenueCat';
 import { useFonts } from 'expo-font';
 import {
   Poppins_300Light,
@@ -53,6 +54,7 @@ export default function Layout() {
 
   /**
    * Restore authentication session on app start
+   * Also initializes RevenueCat SDK
    */
   useEffect(() => {
     const initAuth = async () => {
@@ -63,10 +65,27 @@ export default function Layout() {
 
       if (result.success && result.userId) {
         console.log('Session restored successfully:', result.userId);
+
+        // Initialize RevenueCat with user ID
+        try {
+          await initializeRevenueCat(result.userId);
+          console.log('RevenueCat initialized with user:', result.userId);
+        } catch (error) {
+          console.error('Failed to initialize RevenueCat:', error);
+        }
+
         // Pass false for manageLoadingState since we're managing it here
         await syncUserProfile(result.userId, 0, false);
       } else {
         console.log('No existing session or failed to restore:', result.error);
+
+        // Initialize RevenueCat without user ID (anonymous)
+        try {
+          await initializeRevenueCat();
+          console.log('RevenueCat initialized (anonymous)');
+        } catch (error) {
+          console.error('Failed to initialize RevenueCat:', error);
+        }
       }
 
       setLoading(false);
@@ -218,6 +237,19 @@ export default function Layout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="subscription"
+          options={{
+            headerShown: false,
+            animation: 'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name="settings/subscription"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <PortalHost />
       <BottomNav
@@ -225,6 +257,7 @@ export default function Layout() {
           '/spiral',
           '/onboarding',
           '/settings',
+          '/subscription',
           '/auth',
           '/faq',
           '/legal/privacy',

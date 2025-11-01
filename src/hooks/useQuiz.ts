@@ -5,6 +5,7 @@ import type {
   QuizState,
   QuizResult,
   OverthinkerType,
+  LoopType,
 } from '../types/quiz'
 
 interface UseQuizOptions {
@@ -103,7 +104,7 @@ function calculateResult(
   answers: QuizAnswer[],
   questions: QuizQuestion[]
 ): QuizResult {
-  // Calculate total score by summing all answer values
+  // Calculate total score by summing all answer values (for severity)
   let totalScore = 0
 
   answers.forEach((answer) => {
@@ -119,7 +120,10 @@ function calculateResult(
     }
   })
 
-  // Determine overthinker type based on total score ranges
+  // Calculate loop type scores
+  const loopScores = calculateLoopScores(answers, questions)
+
+  // Determine overthinker type based on total score ranges (severity)
   let type: OverthinkerType
   if (totalScore >= 16 && totalScore <= 28) {
     type = 'mindful-thinker'
@@ -131,12 +135,107 @@ function calculateResult(
     type = 'overthinkaholic'
   }
 
-  // Return result based on type
-  return getResultForType(type)
+  // Return result based on type and loop
+  return getResultForType(type, loopScores.dominantLoop)
+}
+
+// Calculate scores for each loop type with weighting
+function calculateLoopScores(
+  answers: QuizAnswer[],
+  questions: QuizQuestion[]
+): { dominantLoop: LoopType; scores: Record<LoopType, number> } {
+  // Question mapping to loop types
+  const loopMapping: Record<string, LoopType> = {
+    // Sleep Loop: Q14, Q15, Q16
+    q14: 'sleep-loop',
+    q15: 'sleep-loop',
+    q16: 'sleep-loop',
+
+    // Decision Loop: Q2, Q8, Q9, Q10
+    q2: 'decision-loop',
+    q8: 'decision-loop',
+    q9: 'decision-loop',
+    q10: 'decision-loop',
+
+    // Social Loop: Q1, Q4, Q7, Q11, Q13
+    q1: 'social-loop',
+    q4: 'social-loop',
+    q7: 'social-loop',
+    q11: 'social-loop',
+    q13: 'social-loop',
+
+    // Perfectionism Loop: Q6, Q12, Q17, Q18, Q19
+    q6: 'perfectionism-loop',
+    q12: 'perfectionism-loop',
+    q17: 'perfectionism-loop',
+    q18: 'perfectionism-loop',
+    q19: 'perfectionism-loop',
+  }
+
+  // Count questions per loop type
+  const questionCounts: Record<LoopType, number> = {
+    'sleep-loop': 3,
+    'decision-loop': 4,
+    'social-loop': 5,
+    'perfectionism-loop': 5,
+  }
+
+  // Weights for each loop type
+  const weights: Record<LoopType, number> = {
+    'sleep-loop': 1.2,
+    'decision-loop': 1.0,
+    'social-loop': 0.9,
+    'perfectionism-loop': 1.0,
+  }
+
+  // Calculate raw scores
+  const rawScores: Record<LoopType, number> = {
+    'sleep-loop': 0,
+    'decision-loop': 0,
+    'social-loop': 0,
+    'perfectionism-loop': 0,
+  }
+
+  answers.forEach((answer) => {
+    const question = questions.find((q) => q.id === answer.questionId)
+    if (!question) return
+
+    const loopType = loopMapping[answer.questionId]
+    if (!loopType) return // Skip Q0, Q3, Q5, Q20 (trigger/severity questions)
+
+    if (answer.optionId && question.options) {
+      const option = question.options.find((o) => o.id === answer.optionId)
+      if (option) {
+        rawScores[loopType] += option.value
+      }
+    }
+  })
+
+  // Normalize and apply weights
+  const normalizedScores: Record<LoopType, number> = {
+    'sleep-loop': (rawScores['sleep-loop'] / (questionCounts['sleep-loop'] * 5)) * weights['sleep-loop'],
+    'decision-loop': (rawScores['decision-loop'] / (questionCounts['decision-loop'] * 5)) * weights['decision-loop'],
+    'social-loop': (rawScores['social-loop'] / (questionCounts['social-loop'] * 5)) * weights['social-loop'],
+    'perfectionism-loop': (rawScores['perfectionism-loop'] / (questionCounts['perfectionism-loop'] * 5)) * weights['perfectionism-loop'],
+  }
+
+  // Find dominant loop
+  let dominantLoop: LoopType = 'social-loop'
+  let maxScore = 0
+
+  Object.entries(normalizedScores).forEach(([loop, score]) => {
+    if (score > maxScore) {
+      maxScore = score
+      dominantLoop = loop as LoopType
+    }
+  })
+
+  return { dominantLoop, scores: normalizedScores }
 }
 
 function getResultForType(
-  type: OverthinkerType
+  type: OverthinkerType,
+  loopType: LoopType
 ): QuizResult {
   // Map each type to a normalized score out of 10
   // Everyone scores 8-9 - creates urgency while maintaining personalization
@@ -147,7 +246,7 @@ function getResultForType(
     'overthinkaholic': 9,
   }
 
-  const results: Record<OverthinkerType, Omit<QuizResult, 'score'>> = {
+  const results: Record<OverthinkerType, Omit<QuizResult, 'score' | 'loopType'>> = {
     'mindful-thinker': {
       type: 'mindful-thinker',
       title: 'The Mindful Thinker',
@@ -193,5 +292,6 @@ function getResultForType(
   return {
     ...results[type],
     score: normalizedScores[type],
+    loopType,
   }
 }

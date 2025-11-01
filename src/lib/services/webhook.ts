@@ -24,6 +24,7 @@ interface WebhookNotificationData {
   quiz_result_type?: string
   quiz_result_title?: string
   quiz_score?: number
+  routing?: string // Loop type for email sequence routing
 }
 
 /**
@@ -192,6 +193,7 @@ export async function notifyN8nContact(contactData: {
 export async function notifyN8nQuizCompletion(quizData: {
   email: string
   overthinker_type: string
+  routing: string // Loop type for email sequence routing (sleep-loop, decision-loop, social-loop, perfectionism-loop)
   result_title: string
   score: number
   source_page?: string
@@ -231,13 +233,15 @@ export async function notifyN8nQuizCompletion(quizData: {
       lead_magnet_title: '48h Action Diagnostic Quiz',
       quiz_result_type: quizData.overthinker_type,
       quiz_result_title: quizData.result_title,
-      quiz_score: quizData.score
+      quiz_score: quizData.score,
+      routing: quizData.routing // Loop type for n8n email sequence routing
     }
 
     // Log what we're sending to n8n
     console.log('🎯 Sending quiz completion to n8n:', {
       email: notificationData.email,
       quiz_result_type: notificationData.quiz_result_type,
+      routing: notificationData.routing,
       quiz_result_title: notificationData.quiz_result_title,
       quiz_score: notificationData.quiz_score,
       beehiiv_publication_id: notificationData.beehiiv_publication_id

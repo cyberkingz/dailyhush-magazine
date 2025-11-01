@@ -18,6 +18,7 @@ import {
   ChevronRight,
   LogOut,
   FileText,
+  Crown,
 } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
@@ -176,6 +177,19 @@ export default function Settings() {
             router.push('/profile');
           }}
         />
+
+        {/* Subscription Management - Only show for authenticated users */}
+        {!isGuest && (
+          <SettingRow
+            title="Subscription"
+            subtitle="Manage your Premium plan"
+            icon={<Crown size={20} color="#52B788" strokeWidth={2} />}
+            onPress={() => {
+              Haptics.selectionAsync();
+              router.push('/settings/subscription');
+            }}
+          />
+        )}
 
         {/* Logout Button - Only show for authenticated users */}
         {!isGuest && (

@@ -70,6 +70,7 @@ export async function submitQuiz(data: QuizSubmissionData): Promise<QuizSubmissi
     const submissionData = {
       email: data.email.trim().toLowerCase(),
       overthinker_type: data.result.type,
+      routing: data.result.loopType, // NEW - loop type for email sequence routing
       score: data.result.score,
       result_title: data.result.title,
       result_description: data.result.description,
@@ -157,6 +158,7 @@ export async function submitQuiz(data: QuizSubmissionData): Promise<QuizSubmissi
     notifyN8nQuizCompletion({
       email: data.email.trim().toLowerCase(),
       overthinker_type: data.result.type,
+      routing: data.result.loopType, // Loop type for email sequence routing
       result_title: data.result.title,
       score: data.result.score,
       source_page: trackingContext.source_page || 'quiz',

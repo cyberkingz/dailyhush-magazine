@@ -8,7 +8,7 @@ export interface QuizOption {
 
 export interface QuizQuestion {
   id: string;
-  section: 'thought-loops' | 'emotional-drivers' | 'decision-fatigue' | 'self-image' | 'bedtime-rumination';
+  section: 'trigger-type' | 'thought-loops' | 'emotional-drivers' | 'decision-fatigue' | 'self-image' | 'bedtime-rumination' | 'perfectionism' | 'emotional-bridge';
   type: QuestionType;
   question: string;
   description?: string;
@@ -34,8 +34,15 @@ export type OverthinkerType =
   | 'chronic-overthinker'
   | 'overthinkaholic';
 
+export type LoopType =
+  | 'sleep-loop'
+  | 'decision-loop'
+  | 'social-loop'
+  | 'perfectionism-loop';
+
 export interface QuizResult {
   type: OverthinkerType;
+  loopType: LoopType;
   score: number;
   title: string;
   description: string;

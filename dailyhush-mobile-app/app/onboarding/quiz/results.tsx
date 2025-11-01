@@ -1,30 +1,26 @@
 /**
  * DailyHush - Quiz Results Screen
- * Shows overthinker type and collects email for account creation
+ * Shows overthinker type with loop-specific Premium trial paywall
+ * Updated: 2025-10-31
  */
 
 import { useState, useEffect } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Pressable, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Sparkles, ChevronRight } from 'lucide-react-native';
+import { Sparkles, Crown } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
-import { supabase } from '@/utils/supabase';
-import { submitQuizToSupabase } from '@/utils/quizScoring';
-import type { QuizAnswer } from '@/utils/quizScoring';
-import type { OverthinkerType } from '@/data/quizQuestions';
+import type { OverthinkerType, LoopType } from '@/data/quizQuestions';
 import { QUIZ_REVEAL_CONFIG } from '@/constants/quiz';
-import { useStore } from '@/store/useStore';
 
 export default function QuizResults() {
   const router = useRouter();
-  const { setUser } = useStore();
   const params = useLocalSearchParams<{
     type: OverthinkerType;
     score: string;
@@ -33,16 +29,17 @@ export default function QuizResults() {
     description: string;
     insight: string;
     ctaHook: string;
+    loopType: LoopType;
     answers: string; // JSON stringified QuizAnswer[]
     reveal?: string;
   }>();
   const insets = useSafeAreaInsets();
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [isRevealing, setIsRevealing] = useState(false);
+  const [isRevealing, setIsRevealing] = useState(false);
 
   // Check if this is a results reveal (after signup) or legacy flow
   const isReveal = params.reveal === 'true';
+  const loopType = params.loopType;
 
   useEffect(() => {
     if (isReveal) {
@@ -54,97 +51,20 @@ export default function QuizResults() {
     }
   }, [isReveal]);
 
-  const handleContinue = async () => {
-    try {
-      setIsSubmitting(true);
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-      // Get current authenticated user
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (!session?.user) {
-        console.error('No authenticated user found');
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Parse answers from params
-      const answers: QuizAnswer[] = JSON.parse(params.answers);
-
-      const result = {
+  // Navigate to paywall screen
+  const handleViewPaywall = async () => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    router.push({
+      pathname: '/onboarding/quiz/paywall',
+      params: {
+        loopType: params.loopType,
         type: params.type,
-        score: parseInt(params.score),
-        rawScore: parseInt(params.rawScore),
-        title: params.title,
-        description: params.description,
-        insight: params.insight,
-        ctaHook: params.ctaHook,
-      };
-
-      // Submit quiz with the authenticated user\'s email
-      const { success, submissionId, error } = await submitQuizToSupabase(
-        session.user.email || '',
-        answers,
-        result,
-        supabase
-      );
-
-      if (!success || !submissionId) {
-        console.error('Failed to save quiz:', error);
-        setIsSubmitting(false);
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        return;
-      }
-
-      // Update user profile with quiz data and mark onboarding complete
-      const { error: updateError } = await supabase
-        .from('user_profiles')
-        .update({
-          quiz_email: session.user.email,
-          quiz_connected: true,
-          quiz_submission_id: submissionId,
-          quiz_overthinker_type: params.type,
-          quiz_connected_at: new Date().toISOString(),
-          onboarding_completed: true, // Profile already collected, quiz now linked
-        })
-        .eq('user_id', session.user.id);
-
-      if (updateError) {
-        console.error('Failed to update user profile:', updateError);
-        setIsSubmitting(false);
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        return;
-      }
-
-      // BEST PRACTICE: Fetch fresh profile from database (single source of truth)
-      // This ensures local store always matches database state
-      const { data: updatedProfile, error: fetchError } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('user_id', session.user.id)
-        .single();
-
-      if (fetchError || !updatedProfile) {
-        console.error('Failed to fetch updated profile:', fetchError);
-        // Continue anyway - database is updated, store will sync on next app launch
-      } else {
-        console.log('✅ Profile updated and synced from database');
-        setUser(updatedProfile);
-      }
-
-      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
-      // Route to home - onboarding complete!
-      router.replace('/');
-    } catch (error: any) {
-      console.error('Exception in handleContinue:', error);
-      setIsSubmitting(false);
-      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    }
+        answers: params.answers,
+      },
+    });
   };
 
+  // Show quiz results
   return (
     <>
       <Stack.Screen
@@ -156,7 +76,7 @@ export default function QuizResults() {
           },
           headerTintColor: colors.emerald[500],
           headerShadowVisible: false,
-          headerBackVisible: true, // Allow going back to fix email typos
+          headerBackVisible: true,
         }}
       />
       <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
@@ -265,12 +185,11 @@ export default function QuizResults() {
               </Text>
             </View>
 
-            {/* Continue Button */}
+            {/* Unlock Your Solution Button */}
             <Pressable
-              onPress={handleContinue}
-              disabled={isSubmitting}
+              onPress={handleViewPaywall}
               style={{
-                backgroundColor: isSubmitting ? colors.emerald[700] : colors.emerald[600],
+                backgroundColor: colors.emerald[600],
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
@@ -287,39 +206,17 @@ export default function QuizResults() {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    opacity: pressed && !isSubmitting ? 0.9 : 1,
+                    opacity: pressed ? 0.9 : 1,
                   }}>
-                  {isSubmitting ? (
-                    <>
-                      <ActivityIndicator size="small" color={colors.white} />
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          color: colors.white,
-                          marginLeft: 12,
-                        }}>
-                        Saving...
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      <ChevronRight
-                        size={24}
-                        color={colors.white}
-                        strokeWidth={2}
-                        style={{ marginRight: 12 }}
-                      />
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          color: colors.white,
-                        }}>
-                        Get Started
-                      </Text>
-                    </>
-                  )}
+                  <Sparkles size={24} color={colors.white} strokeWidth={2} style={{ marginRight: 12 }} />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: colors.white,
+                    }}>
+                    Unlock Your Path to Peace
+                  </Text>
                 </View>
               )}
             </Pressable>

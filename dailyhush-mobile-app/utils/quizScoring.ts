@@ -1,9 +1,11 @@
 /**
  * DailyHush - Quiz Scoring Utility
- * Calculates overthinker type based on quiz answers
+ * Calculates overthinker type and loop type based on quiz answers
+ * Synced with web app scoring logic
+ * Updated: 2025-10-31
  */
 
-import type { OverthinkerType, QuizResult } from '@/data/quizQuestions';
+import type { OverthinkerType, QuizResult, LoopType } from '@/data/quizQuestions';
 
 export interface QuizAnswer {
   questionId: string;
@@ -13,17 +15,20 @@ export interface QuizAnswer {
 
 /**
  * Calculate quiz result from answers
- * Score ranges:
+ * Score ranges for severity:
  * - 16-28: Mindful Thinker
  * - 29-44: Gentle Analyzer
  * - 45-60: Chronic Overthinker
  * - 61-80: Overthinkaholic
  */
 export function calculateQuizResult(answers: QuizAnswer[]): QuizResult {
-  // Calculate total raw score (16-80 range)
+  // Calculate total raw score (for severity)
   const rawScore = answers.reduce((total, answer) => total + answer.value, 0);
 
-  // Determine overthinker type based on score ranges
+  // Calculate loop type scores
+  const loopScores = calculateLoopScores(answers);
+
+  // Determine overthinker type based on score ranges (severity)
   let type: OverthinkerType;
   if (rawScore >= 16 && rawScore <= 28) {
     type = 'mindful-thinker';
@@ -35,13 +40,101 @@ export function calculateQuizResult(answers: QuizAnswer[]): QuizResult {
     type = 'overthinkaholic';
   }
 
-  return getResultForType(type, rawScore);
+  return getResultForType(type, loopScores.dominantLoop, rawScore);
+}
+
+/**
+ * Calculate scores for each loop type with weighting
+ * Same logic as web app
+ */
+function calculateLoopScores(
+  answers: QuizAnswer[]
+): { dominantLoop: LoopType; scores: Record<LoopType, number> } {
+  // Question mapping to loop types
+  const loopMapping: Record<string, LoopType> = {
+    // Sleep Loop: Q14, Q15, Q16
+    q14: 'sleep-loop',
+    q15: 'sleep-loop',
+    q16: 'sleep-loop',
+
+    // Decision Loop: Q2, Q8, Q9, Q10
+    q2: 'decision-loop',
+    q8: 'decision-loop',
+    q9: 'decision-loop',
+    q10: 'decision-loop',
+
+    // Social Loop: Q1, Q4, Q7, Q11, Q13
+    q1: 'social-loop',
+    q4: 'social-loop',
+    q7: 'social-loop',
+    q11: 'social-loop',
+    q13: 'social-loop',
+
+    // Perfectionism Loop: Q6, Q12, Q17, Q18, Q19
+    q6: 'perfectionism-loop',
+    q12: 'perfectionism-loop',
+    q17: 'perfectionism-loop',
+    q18: 'perfectionism-loop',
+    q19: 'perfectionism-loop',
+  };
+
+  // Count questions per loop type
+  const questionCounts: Record<LoopType, number> = {
+    'sleep-loop': 3,
+    'decision-loop': 4,
+    'social-loop': 5,
+    'perfectionism-loop': 5,
+  };
+
+  // Weights for each loop type
+  const weights: Record<LoopType, number> = {
+    'sleep-loop': 1.2,
+    'decision-loop': 1.0,
+    'social-loop': 0.9,
+    'perfectionism-loop': 1.0,
+  };
+
+  // Calculate raw scores
+  const rawScores: Record<LoopType, number> = {
+    'sleep-loop': 0,
+    'decision-loop': 0,
+    'social-loop': 0,
+    'perfectionism-loop': 0,
+  };
+
+  answers.forEach((answer) => {
+    const loopType = loopMapping[answer.questionId];
+    if (!loopType) return; // Skip Q0, Q3, Q5, Q20 (trigger/severity questions)
+
+    rawScores[loopType] += answer.value;
+  });
+
+  // Normalize and apply weights
+  const normalizedScores: Record<LoopType, number> = {
+    'sleep-loop': (rawScores['sleep-loop'] / (questionCounts['sleep-loop'] * 5)) * weights['sleep-loop'],
+    'decision-loop': (rawScores['decision-loop'] / (questionCounts['decision-loop'] * 5)) * weights['decision-loop'],
+    'social-loop': (rawScores['social-loop'] / (questionCounts['social-loop'] * 5)) * weights['social-loop'],
+    'perfectionism-loop': (rawScores['perfectionism-loop'] / (questionCounts['perfectionism-loop'] * 5)) * weights['perfectionism-loop'],
+  };
+
+  // Find dominant loop
+  let dominantLoop: LoopType = 'social-loop';
+  let maxScore = 0;
+
+  Object.entries(normalizedScores).forEach(([loop, score]) => {
+    if (score > maxScore) {
+      maxScore = score;
+      dominantLoop = loop as LoopType;
+    }
+  });
+
+  return { dominantLoop, scores: normalizedScores };
 }
 
 /**
  * Get result details for a specific overthinker type
  */
-function getResultForType(type: OverthinkerType, rawScore: number): QuizResult {
+function getResultForType(type: OverthinkerType, loopType: LoopType, rawScore: number): QuizResult {
   // Map each type to a normalized score out of 10
   // Everyone scores 8-9 - creates urgency while maintaining personalization
   const normalizedScores: Record<OverthinkerType, number> = {
@@ -51,7 +144,7 @@ function getResultForType(type: OverthinkerType, rawScore: number): QuizResult {
     overthinkaholic: 9,
   };
 
-  const results: Record<OverthinkerType, Omit<QuizResult, 'score' | 'rawScore'>> = {
+  const results: Record<OverthinkerType, Omit<QuizResult, 'score' | 'rawScore' | 'loopType'>> = {
     'mindful-thinker': {
       type: 'mindful-thinker',
       title: 'The Mindful Thinker',
@@ -89,6 +182,7 @@ function getResultForType(type: OverthinkerType, rawScore: number): QuizResult {
     ...results[type],
     score: normalizedScores[type],
     rawScore,
+    loopType,
   };
 }
 
@@ -107,6 +201,7 @@ export async function submitQuizToSupabase(
     const submissionData = {
       email: email.trim().toLowerCase(),
       overthinker_type: result.type,
+      routing: result.loopType, // Loop type for email sequence routing
       score: result.rawScore,
       result_title: result.title,
       result_description: result.description,
@@ -141,13 +236,14 @@ export async function submitQuizToSupabase(
     }
 
     console.log('✅ Quiz submission saved:', submission.id);
+    console.log('📊 Routing:', result.loopType, '| Severity:', result.type);
 
     // Prepare individual quiz answers for analytics
     const answersData = answers.map((answer) => ({
       submission_id: submission.id,
       question_id: answer.questionId,
       question_section: 'mobile-quiz', // Mobile app quiz section
-      question_type: 'scale', // All mobile quiz questions are scale type (1-5)
+      question_type: 'scale', // All mobile quiz questions are scale type (0-5)
       option_id: answer.optionId,
       option_value: answer.value,
       scale_value: answer.value,

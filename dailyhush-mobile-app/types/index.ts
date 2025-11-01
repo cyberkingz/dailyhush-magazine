@@ -33,6 +33,12 @@ export interface UserProfile {
   quiz_submission_id?: string | null; // Links to quiz_submissions table
   quiz_overthinker_type?: string | null; // Type from quiz: mindful-thinker, gentle-analyzer, chronic-overthinker, overthinkaholic
   quiz_connected_at?: string | null; // When quiz was connected to app account
+
+  // Premium Trial Fields (NO-CC 7-day trial)
+  premium_trial_active?: boolean; // Whether user is in active Premium trial
+  premium_trial_start?: string | null; // ISO timestamp when trial started
+  premium_trial_end?: string | null; // ISO timestamp when trial expires
+  loop_type?: string | null; // Loop type from quiz: sleep-loop, decision-loop, social-loop, perfectionism-loop
 }
 
 /**

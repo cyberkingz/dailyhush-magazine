@@ -10,7 +10,7 @@ import { View, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GentleSuggestion } from '@/components/moodCapture/steps/GentleSuggestion';
-import { BackButton, ContinueButton, SecondaryButton } from '@/components/moodCapture/NavigationButtons';
+import { BackButton, ContinueButton } from '@/components/moodCapture/NavigationButtons';
 import { ProgressIndicator } from '@/components/moodCapture/ProgressIndicator';
 import { updateMoodEntry } from '@/lib/mood-entries';
 import type { Enums } from '@/types/supabase';
@@ -65,7 +65,7 @@ export default function SuggestionScreen() {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 20 }]}>
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
       {/* Top Navigation */}
       <View style={styles.topNav}>
         <BackButton onPress={() => router.back()} />
@@ -85,15 +85,10 @@ export default function SuggestionScreen() {
 
       {/* Bottom Actions */}
       <View style={[styles.bottomActions, { paddingBottom: insets.bottom + 20 }]}>
-        <SecondaryButton
+        <ContinueButton
           label="Save & Close"
           onPress={handleSaveAndClose}
-          loading={isSubmitting}
-        />
-        <ContinueButton
-          label="Complete"
-          onPress={handleComplete}
-          loading={isSubmitting}
+          disabled={isSubmitting}
         />
       </View>
     </View>
@@ -108,9 +103,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 12,
-    height: 56,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    height: 44,
     position: 'relative',
   },
   progressContainer: {
@@ -121,8 +116,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomActions: {
-    flexDirection: 'row',
-    gap: 12,
     paddingHorizontal: 20,
     paddingTop: 16,
   },

@@ -81,7 +81,11 @@ export async function updateMoodEntry(
       updatePayload.journal_text_nonce = encrypted.nonce;
       updatePayload.journal_word_count = countWords(updates.journal_text);
     } catch (error) {
-      throw new Error(`Failed to encrypt journal text: ${error}`);
+      // If encryption fails (no key set up yet), just store word count
+      // Encryption key will be set up during onboarding
+      console.warn('Encryption key not available, skipping journal text encryption:', error);
+      updatePayload.journal_word_count = countWords(updates.journal_text);
+      // Don't save the text if we can't encrypt it (privacy protection)
     }
   }
 

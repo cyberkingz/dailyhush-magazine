@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 40,
+    paddingBottom: 100, // Extra space for bottom button
   },
   header: {
     alignItems: 'center',

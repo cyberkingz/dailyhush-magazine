@@ -41,7 +41,7 @@ export default function IntensityScreen() {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 20 }]}>
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
       {/* Top Navigation */}
       <View style={styles.topNav}>
         <BackButton onPress={() => router.back()} />
@@ -78,9 +78,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 12,
-    height: 56,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    height: 44,
     position: 'relative',
   },
   progressContainer: {

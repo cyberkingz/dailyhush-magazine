@@ -24,6 +24,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import { MotiView } from 'moti';
 import { Lock } from 'lucide-react-native';
@@ -36,9 +37,6 @@ import {
 } from '@/constants/moodCaptureDesign';
 import { STEP_SUBTITLES, PRIVACY_MESSAGES } from '@/constants/moodOptions';
 import { PromptChips } from '../PromptChips';
-import { VoiceToTextButton } from '../VoiceToTextButton';
-import { AutoSaveIndicator } from '../AutoSaveIndicator';
-import { useAutoSave, type AutoSaveStatus } from '@/hooks/useAutoSave';
 import type { Enums } from '@/types/supabase';
 
 // ============================================================================
@@ -65,14 +63,9 @@ interface FreeWritingProps {
   /**
    * Callback to save content (for auto-save)
    * Should call API to persist draft
+   * @deprecated Auto-save removed - content saved on continue button
    */
-  onSave: (content: string) => Promise<void>;
-
-  /**
-   * Enable voice-to-text
-   * @default true
-   */
-  enableVoice?: boolean;
+  onSave?: (content: string) => Promise<void>;
 
   /**
    * Show character count
@@ -94,18 +87,10 @@ export function FreeWriting({
   content,
   onContentChange,
   onSave,
-  enableVoice = true,
   showCharacterCount = false,
 }: FreeWritingProps) {
   const [isFocused, setIsFocused] = useState(false);
   const textInputRef = useRef<TextInput>(null);
-
-  // Auto-save hook (3-second debounce)
-  const autoSave = useAutoSave(content, {
-    onSave,
-    debounceMs: 3000,
-    savedIndicatorDuration: 2000,
-  });
 
   // Handle prompt chip selection
   const handlePromptSelect = (promptText: string) => {
@@ -117,15 +102,6 @@ export function FreeWriting({
     setTimeout(() => {
       textInputRef.current?.focus();
     }, 100);
-  };
-
-  // Handle voice transcription
-  const handleVoiceTranscription = (transcription: string) => {
-    // Append transcription to existing content
-    const newContent = content
-      ? `${content}\n\n${transcription}`
-      : transcription;
-    onContentChange(newContent);
   };
 
   // Show character count only if enabled and above threshold
@@ -142,7 +118,7 @@ export function FreeWriting({
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="always"
       >
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
@@ -161,57 +137,49 @@ export function FreeWriting({
           {/* Writing Prompts */}
           <PromptChips mood={selectedMood} onPromptSelect={handlePromptSelect} />
 
-          {/* Text Area */}
-          <View style={[styles.textAreaContainer, isFocused && styles.textAreaFocused]}>
-            <TextInput
-              ref={textInputRef}
-              style={styles.textInput}
-              value={content}
-              onChangeText={onContentChange}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholder="Start writing here... or tap a prompt above"
-              placeholderTextColor={TEXT_AREA.placeholder.color}
-              multiline
-              textAlignVertical="top"
-              autoCapitalize="sentences"
-              autoCorrect
-              spellCheck
-              accessibilityRole="text"
-              accessibilityLabel="Journal entry text area"
-              accessibilityHint="Type your thoughts and feelings here"
-            />
-
-            {/* Voice-to-Text Button (floating) */}
-            {enableVoice && (
-              <VoiceToTextButton
-                onTranscription={handleVoiceTranscription}
-                language="en-US"
-                maxDuration={120000}
+          {/* Text Area Wrapper */}
+          <View style={styles.textAreaWrapper}>
+            <Pressable
+              style={[styles.textAreaContainer, isFocused && styles.textAreaFocused]}
+              onPressIn={() => {
+                if (!isFocused) {
+                  textInputRef.current?.focus();
+                }
+              }}
+              android_disableSound
+              accessible={false}
+            >
+              <TextInput
+                ref={textInputRef}
+                style={styles.textInput}
+                value={content}
+                onChangeText={onContentChange}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                placeholder="Start writing here... or tap a prompt above"
+                placeholderTextColor={TEXT_AREA.placeholder.color}
+                multiline
+                textAlignVertical="top"
+                autoCapitalize="sentences"
+                autoCorrect
+                spellCheck
+                scrollEnabled
+                accessibilityRole="text"
+                accessibilityLabel="Journal entry text area"
+                accessibilityHint="Type your thoughts and feelings here"
               />
-            )}
+            </Pressable>
           </View>
 
-          {/* Status Indicators Row */}
-          <View style={styles.statusContainer}>
-            {/* Privacy Badge */}
-            <View style={styles.privacyBadge}>
-              <Lock
-                size={STATUS_INDICATORS.privacy.icon.size}
-                color={STATUS_INDICATORS.privacy.icon.color}
-              />
-              <Text style={styles.privacyText}>
-                {PRIVACY_MESSAGES.encrypted}
-              </Text>
-            </View>
-
-            {/* Auto-Save Indicator */}
-            <AutoSaveIndicator
-              status={autoSave.status}
-              lastSaved={autoSave.lastSaved}
-              error={autoSave.error}
-              onRetry={autoSave.retry}
+          {/* Privacy Badge */}
+          <View style={styles.privacyBadge}>
+            <Lock
+              size={STATUS_INDICATORS.privacy.icon.size}
+              color={STATUS_INDICATORS.privacy.icon.color}
             />
+            <Text style={styles.privacyText}>
+              {PRIVACY_MESSAGES.encrypted}
+            </Text>
           </View>
 
           {/* Character Count (optional) */}
@@ -252,21 +220,37 @@ const styles = StyleSheet.create({
   subtitle: {
     ...STEP_HEADER.subtitle,
   },
-  textAreaContainer: {
-    ...TEXT_AREA.container,
+  textAreaWrapper: {
     position: 'relative',
+  },
+  textAreaContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: TEXT_AREA.container.backgroundColor,
+    borderRadius: TEXT_AREA.container.borderRadius,
+    borderWidth: TEXT_AREA.container.borderWidth,
+    borderColor: TEXT_AREA.container.borderColor,
+    padding: TEXT_AREA.container.padding,
+    marginBottom: TEXT_AREA.container.marginBottom,
+    minHeight: TEXT_AREA.container.minHeight,
   },
   textAreaFocused: {
     ...TEXT_AREA.focused,
   },
   textInput: {
-    ...TEXT_AREA.input,
-  },
-  statusContainer: {
-    ...STATUS_INDICATORS.container,
+    flex: 1,
+    fontSize: TEXT_AREA.input.fontSize,
+    fontWeight: TEXT_AREA.input.fontWeight,
+    lineHeight: TEXT_AREA.input.lineHeight,
+    letterSpacing: TEXT_AREA.input.letterSpacing,
+    color: TEXT_AREA.input.color,
+    textAlignVertical: TEXT_AREA.input.textAlignVertical,
+    padding: TEXT_AREA.input.padding,
+    minHeight: TEXT_AREA.input.minHeight,
   },
   privacyBadge: {
     ...STATUS_INDICATORS.privacy,
+    marginTop: 12,
   },
   privacyText: {
     ...STATUS_INDICATORS.privacy.text,

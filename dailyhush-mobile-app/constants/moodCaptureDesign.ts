@@ -388,10 +388,10 @@ export const TEXT_AREA = {
 // ============================================================================
 
 export const VOICE_BUTTON = {
-  /** Positioned at top-right of text area */
+  /** Positioned at bottom-right of text area */
   container: {
     position: 'absolute' as const,
-    top: 12,
+    bottom: 12, // Changed from top to bottom
     right: 12,
     width: 56,
     height: 56, // WCAG AAA touch target
@@ -737,24 +737,19 @@ export const BUTTONS = {
   /** Back button (top-left) */
   back: {
     position: 'absolute' as const,
-    top: 12,
-    left: 16,
-    width: 56,
-    height: 56,
-    borderRadius: BORDER_RADIUS.full,
-    backgroundColor: colors.background.secondary, // #0F1F1A - Dark card
-    borderWidth: 2,
-    borderColor: colors.emerald[800], // #065F46 - Deep emerald
+    top: 0,
+    left: 4,
+    width: 44,
+    height: 44,
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
     zIndex: 10,
     icon: {
       size: 24,
-      strokeWidth: 2.5,
-      color: colors.text.primary,
+      strokeWidth: 2,
+      color: colors.text.secondary, // Subtle gray
     },
     pressed: {
-      backgroundColor: colors.background.tertiary, // #1A4D3C - Elevated dark
       transform: [{ scale: 0.95 }],
     },
   },

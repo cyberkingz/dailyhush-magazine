@@ -13,11 +13,14 @@ import { FreeWriting } from '@/components/moodCapture/steps/FreeWriting';
 import { BackButton, ContinueButton } from '@/components/moodCapture/NavigationButtons';
 import { ProgressIndicator } from '@/components/moodCapture/ProgressIndicator';
 import { createMoodEntry, updateMoodEntry } from '@/lib/mood-entries';
+import { useUser } from '@/store/useStore';
+import { MoodEntryStatus, MoodType } from '@/types/mood-entries';
 import type { Enums } from '@/types/supabase';
 
 export default function WritingScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const user = useUser();
   const params = useLocalSearchParams<{
     mood: string;
     moodLabel: string;
@@ -26,51 +29,47 @@ export default function WritingScreen() {
   }>();
 
   const [content, setContent] = useState('');
-  const [entryId, setEntryId] = useState<string | undefined>();
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleAutoSave = async (text: string) => {
-    if (!params.mood || !params.intensity) {
-      return;
-    }
+  const handleContinue = async () => {
+    if (!params.mood || !params.intensity || !user?.user_id) return;
+
+    setIsSaving(true);
 
     try {
-      const entryData = {
-        mood: params.mood as Enums<'mood_type'>,
-        intensity: parseInt(params.intensity, 10),
-        content: text || null,
-      };
+      // Step 1: Create draft mood entry
+      const entry = await createMoodEntry(user.user_id);
 
-      if (entryId) {
-        // Update existing entry
-        await updateMoodEntry(entryId, entryData);
-      } else {
-        // Create draft entry
-        const newEntry = await createMoodEntry(entryData);
-        setEntryId(newEntry.id);
-      }
+      // Step 2: Update entry with mood, intensity, and journal text
+      await updateMoodEntry(entry.id, {
+        id: entry.id,
+        mood_type: params.mood as MoodType,
+        mood_emoji: params.moodEmoji,
+        intensity_rating: parseInt(params.intensity, 10),
+        journal_text: content || '',
+        status: MoodEntryStatus.DRAFT,
+      });
+
+      // Navigate to suggestion screen with saved entry
+      router.push({
+        pathname: '/mood-capture/suggestion',
+        params: {
+          mood: params.mood,
+          moodLabel: params.moodLabel,
+          moodEmoji: params.moodEmoji,
+          intensity: params.intensity,
+          entryId: entry.id,
+          content,
+        },
+      });
     } catch (error) {
-      console.error('Auto-save failed:', error);
-      throw error;
+      console.error('Failed to save entry:', error);
+      setIsSaving(false);
     }
-  };
-
-  const handleContinue = () => {
-    // Navigate to suggestion screen with all data
-    router.push({
-      pathname: '/mood-capture/suggestion',
-      params: {
-        mood: params.mood,
-        moodLabel: params.moodLabel,
-        moodEmoji: params.moodEmoji,
-        intensity: params.intensity,
-        entryId: entryId || '',
-        content,
-      },
-    });
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 20 }]}>
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
       {/* Top Navigation */}
       <View style={styles.topNav}>
         <BackButton onPress={() => router.back()} />
@@ -85,15 +84,17 @@ export default function WritingScreen() {
           selectedMood={params.mood as Enums<'mood_type'>}
           content={content}
           onContentChange={setContent}
-          onSave={handleAutoSave}
-          enableVoice
           showCharacterCount
         />
       </View>
 
       {/* Bottom Actions */}
       <View style={[styles.bottomActions, { paddingBottom: insets.bottom + 20 }]}>
-        <ContinueButton label="Continue" onPress={handleContinue} />
+        <ContinueButton
+          label={isSaving ? "Saving..." : "Continue"}
+          onPress={handleContinue}
+          disabled={isSaving}
+        />
       </View>
     </View>
   );
@@ -107,9 +108,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 12,
-    height: 56,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    height: 44,
     position: 'relative',
   },
   progressContainer: {

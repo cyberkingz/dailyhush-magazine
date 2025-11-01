@@ -14,7 +14,8 @@ import { Brain, TrendingUp, Settings, History, Lightbulb, Infinity } from 'lucid
 import { Text } from '@/components/ui/text';
 import { useUser, useLoading } from '@/store/useStore';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
-import { MoodCard, CTAButton, FeatureGrid, FeatureItem, QuoteBanner } from '@/components/home';
+import { CTAButton, FeatureGrid, FeatureItem, QuoteBanner } from '@/components/home';
+import { EmotionalWeather } from '@/components/profile/EmotionalWeather';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
@@ -37,15 +38,16 @@ export default function HomeModern() {
   // const [spiralsToday, setSpiralsToday] = useState(0);
   // const [spiralsThisWeek, setSpiralsThisWeek] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
-  const [moodLoggedToday, setMoodLoggedToday] = useState(false);
-  // const [currentMood, setCurrentMood] = useState<
-  //   'calm' | 'good' | 'okay' | 'low' | 'anxious' | null
-  // >(null);
   // const { getTodaySpirals } = useSpiral();
   const greeting = getGreeting();
   const displayName = user?.name?.split(' ')[0] ?? 'Friend';
   const greetingLine = `${greeting}`;
   const welcomeLine = displayName === 'Friend' ? 'Welcome back' : `Welcome back, ${displayName}`;
+
+  // Navigate to mood capture flow
+  const handleCheckIn = () => {
+    router.push('/mood-capture/mood');
+  };
 
   // Feature grid configuration
   const features: FeatureItem[] = [
@@ -277,13 +279,9 @@ export default function HomeModern() {
         <QuoteBanner style={{ marginHorizontal: 20, marginBottom: 28, alignSelf: 'flex-end' }} />
 
         {/* Mood Logging Card */}
-        <MoodCard
-          isLogged={moodLoggedToday}
-          onLogMood={() => {
-            setMoodLoggedToday(true);
-            setCurrentMood('good');
-          }}
-        />
+        <View style={{ paddingHorizontal: 20 }}>
+          <EmotionalWeather onPress={handleCheckIn} />
+        </View>
 
         {/* Main CTA */}
         <CTAButton

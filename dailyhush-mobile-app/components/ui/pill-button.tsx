@@ -53,21 +53,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    shadowColor: colors.emerald[500],
+    shadowColor: colors.emerald[700],
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 6,
     elevation: 4,
   },
   primary: {
-    backgroundColor: colors.emerald[400],
+    backgroundColor: colors.emerald[700],
     borderWidth: 1,
-    borderColor: colors.emerald[500],
+    borderColor: colors.emerald[600],
   },
   secondary: {
     backgroundColor: colors.background.card,
     borderWidth: 1,
-    borderColor: colors.emerald[400],
+    borderColor: colors.emerald[700],
   },
   disabled: {
     opacity: 0.5,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   secondaryText: {
     fontSize: 15,
     fontWeight: '600',
-    color: colors.emerald[400],
+    color: colors.emerald[500],
     letterSpacing: 0.3,
   },
 });

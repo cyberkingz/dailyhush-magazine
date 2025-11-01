@@ -47,9 +47,10 @@ export function calculateQuizResult(answers: QuizAnswer[]): QuizResult {
  * Calculate scores for each loop type with weighting
  * Same logic as web app
  */
-function calculateLoopScores(
-  answers: QuizAnswer[]
-): { dominantLoop: LoopType; scores: Record<LoopType, number> } {
+function calculateLoopScores(answers: QuizAnswer[]): {
+  dominantLoop: LoopType;
+  scores: Record<LoopType, number>;
+} {
   // Question mapping to loop types
   const loopMapping: Record<string, LoopType> = {
     // Sleep Loop: Q14, Q15, Q16
@@ -111,10 +112,16 @@ function calculateLoopScores(
 
   // Normalize and apply weights
   const normalizedScores: Record<LoopType, number> = {
-    'sleep-loop': (rawScores['sleep-loop'] / (questionCounts['sleep-loop'] * 5)) * weights['sleep-loop'],
-    'decision-loop': (rawScores['decision-loop'] / (questionCounts['decision-loop'] * 5)) * weights['decision-loop'],
-    'social-loop': (rawScores['social-loop'] / (questionCounts['social-loop'] * 5)) * weights['social-loop'],
-    'perfectionism-loop': (rawScores['perfectionism-loop'] / (questionCounts['perfectionism-loop'] * 5)) * weights['perfectionism-loop'],
+    'sleep-loop':
+      (rawScores['sleep-loop'] / (questionCounts['sleep-loop'] * 5)) * weights['sleep-loop'],
+    'decision-loop':
+      (rawScores['decision-loop'] / (questionCounts['decision-loop'] * 5)) *
+      weights['decision-loop'],
+    'social-loop':
+      (rawScores['social-loop'] / (questionCounts['social-loop'] * 5)) * weights['social-loop'],
+    'perfectionism-loop':
+      (rawScores['perfectionism-loop'] / (questionCounts['perfectionism-loop'] * 5)) *
+      weights['perfectionism-loop'],
   };
 
   // Find dominant loop

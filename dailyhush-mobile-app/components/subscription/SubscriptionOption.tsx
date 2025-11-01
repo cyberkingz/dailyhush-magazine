@@ -109,8 +109,8 @@ export function SubscriptionOption({ plan, isSelected, onSelect }: SubscriptionO
                       plan.badge === 'MOST POPULAR'
                         ? colors.emerald[600]
                         : plan.badge === 'BEST VALUE'
-                        ? '#F59E0B'
-                        : colors.emerald[600],
+                          ? '#F59E0B'
+                          : colors.emerald[600],
                     paddingHorizontal: 8,
                     paddingVertical: 4,
                     borderRadius: 8,

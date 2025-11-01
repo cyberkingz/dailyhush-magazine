@@ -8,7 +8,6 @@ import Purchases, {
   PurchasesOffering,
   PurchasesPackage,
   CustomerInfo,
-  PurchasesStoreProduct,
 } from 'react-native-purchases';
 import { Platform } from 'react-native';
 
@@ -143,8 +142,8 @@ export async function checkPremiumStatus(): Promise<{
 
     if (premiumEntitlement) {
       // Check if in trial
-      const isTrial = premiumEntitlement.periodType === 'TRIAL' ||
-                      premiumEntitlement.periodType === 'INTRO';
+      const isTrial =
+        premiumEntitlement.periodType === 'TRIAL' || premiumEntitlement.periodType === 'INTRO';
 
       // Check for billing issues
       const billingIssueDetectedAt = premiumEntitlement.billingIssueDetectedAt || null;

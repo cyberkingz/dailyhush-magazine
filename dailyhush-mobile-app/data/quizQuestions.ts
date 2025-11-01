@@ -23,11 +23,7 @@ export type OverthinkerType =
   | 'chronic-overthinker'
   | 'overthinkaholic';
 
-export type LoopType =
-  | 'sleep-loop'
-  | 'decision-loop'
-  | 'social-loop'
-  | 'perfectionism-loop';
+export type LoopType = 'sleep-loop' | 'decision-loop' | 'social-loop' | 'perfectionism-loop';
 
 export interface QuizResult {
   type: OverthinkerType;

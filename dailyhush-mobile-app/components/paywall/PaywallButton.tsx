@@ -65,7 +65,12 @@ export function PaywallButton({
             </>
           ) : (
             <>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: subtitle ? 4 : 0 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: subtitle ? 4 : 0,
+                }}>
                 <Icon size={20} color={colors.white} strokeWidth={2} />
                 <Text
                   style={{

@@ -21,7 +21,8 @@ export const LOOP_PAYWALL_CONFIG: Record<LoopType, LoopPaywallConfig> = {
     icon: Moon,
     emoji: '🌙',
     title: 'Sleep-Loop Chronic Overthinker',
-    subtitle: 'Your mind won\'t quiet at bedtime.\nYou replay conversations at 3AM.\nYou deserve rest.',
+    subtitle:
+      "Your mind won't quiet at bedtime.\nYou replay conversations at 3AM.\nYou deserve rest.",
     features: [
       '3AM bedtime interrupt technique',
       'Evening rumination prevention',
@@ -35,7 +36,8 @@ export const LOOP_PAYWALL_CONFIG: Record<LoopType, LoopPaywallConfig> = {
     icon: Brain,
     emoji: '🧠',
     title: 'Decision-Loop Overthinker',
-    subtitle: 'You analyze every option.\nYou need certainty before acting.\nYou\'re exhausted from deciding.',
+    subtitle:
+      "You analyze every option.\nYou need certainty before acting.\nYou're exhausted from deciding.",
     features: [
       'Decision fatigue reset protocol',
       '10-second decision framework',
@@ -49,7 +51,8 @@ export const LOOP_PAYWALL_CONFIG: Record<LoopType, LoopPaywallConfig> = {
     icon: MessageCircle,
     emoji: '💬',
     title: 'Social-Loop Overthinker',
-    subtitle: 'You replay what you said.\nYou worry how they saw you.\nYou need peace after social moments.',
+    subtitle:
+      'You replay what you said.\nYou worry how they saw you.\nYou need peace after social moments.',
     features: [
       'Post-conversation spiral interrupt',
       'Social interaction reframe toolkit',
@@ -63,7 +66,8 @@ export const LOOP_PAYWALL_CONFIG: Record<LoopType, LoopPaywallConfig> = {
     icon: Target,
     emoji: '🎯',
     title: 'Perfectionism-Loop Overthinker',
-    subtitle: 'You focus on what went wrong.\nYou can\'t let mistakes go.\nYou deserve self-compassion.',
+    subtitle:
+      "You focus on what went wrong.\nYou can't let mistakes go.\nYou deserve self-compassion.",
     features: [
       'Mistake release protocol',
       'Good-enough decision training',

@@ -4,7 +4,7 @@
  * Created: 2025-10-31
  */
 
-import { View, Text as RNText } from 'react-native';
+import { View } from 'react-native';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import type { LoopType } from '@/data/quizQuestions';
@@ -12,7 +12,6 @@ import type { LoopType } from '@/data/quizQuestions';
 import { PaywallHeader } from '@/components/paywall/PaywallHeader';
 import { FeaturesList } from '@/components/paywall/FeaturesList';
 import { PaywallButton } from '@/components/paywall/PaywallButton';
-import { PaywallSecondaryButton } from '@/components/paywall/PaywallSecondaryButton';
 import { PaywallCloseButton } from '@/components/paywall/PaywallCloseButton';
 import { PricingPreview } from '@/components/paywall/PricingPreview';
 import { LOOP_PAYWALL_CONFIG } from '@/constants/loopPaywalls';
@@ -74,7 +73,9 @@ export function LoopSpecificPaywall({
 
       {/* Pricing Preview */}
       <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: 40 }}>
-        <PricingPreview text={`After trial: $9.99/month • $59.99/year • $149.99 lifetime\n${FREE_PLAN_DESCRIPTION}`} />
+        <PricingPreview
+          text={`After trial: $9.99/month • $59.99/year • $149.99 lifetime\n${FREE_PLAN_DESCRIPTION}`}
+        />
       </View>
     </View>
   );

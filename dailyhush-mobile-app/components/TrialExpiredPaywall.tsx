@@ -18,12 +18,18 @@ import { PaywallButton } from '@/components/paywall/PaywallButton';
 import { PaywallSecondaryButton } from '@/components/paywall/PaywallSecondaryButton';
 import { PaywallCloseButton } from '@/components/paywall/PaywallCloseButton';
 import { PricingPreview } from '@/components/paywall/PricingPreview';
-import { PREMIUM_FEATURES, PRICING_PREVIEW_TEXT, FREE_PLAN_DESCRIPTION } from '@/constants/subscription';
+import { LegalFooter } from '@/components/legal';
+import {
+  PREMIUM_FEATURES,
+  PRICING_PREVIEW_TEXT,
+  FREE_PLAN_DESCRIPTION,
+} from '@/constants/subscription';
 
 interface TrialExpiredPaywallProps {
   loopType: LoopType | null;
   onSubscribe: () => void;
   onContinueFree: () => void;
+  onRestorePurchases?: () => void | Promise<void>;
   onClose?: () => void;
   isLoading?: boolean;
   showClose?: boolean;
@@ -33,20 +39,20 @@ const LOOP_MESSAGES: Record<LoopType, { title: string; description: string }> = 
   'sleep-loop': {
     title: 'Your 3AM thoughts miss the quiet',
     description:
-      'You\'ve experienced better sleep these past 7 days.\nKeep breaking the nighttime rumination loop.',
+      "You've experienced better sleep these past 7 days.\nKeep breaking the nighttime rumination loop.",
   },
   'decision-loop': {
-    title: 'You\'ve made faster decisions this week',
+    title: "You've made faster decisions this week",
     description:
       'Analysis paralysis is fading.\nKeep building your confident decision-making momentum.',
   },
   'social-loop': {
-    title: 'You\'ve replayed fewer conversations',
+    title: "You've replayed fewer conversations",
     description:
       'Social interactions feel lighter now.\nKeep building confidence in your social moments.',
   },
   'perfectionism-loop': {
-    title: 'You\'ve let go of perfect this week',
+    title: "You've let go of perfect this week",
     description:
       'Mistakes sting less now.\nKeep practicing self-compassion and progress over perfection.',
   },
@@ -56,6 +62,7 @@ export function TrialExpiredPaywall({
   loopType,
   onSubscribe,
   onContinueFree,
+  onRestorePurchases,
   onClose,
   isLoading = false,
   showClose = false,
@@ -118,7 +125,12 @@ export function TrialExpiredPaywall({
               justifyContent: 'center',
               marginBottom: 16,
             }}>
-            <Crown size={20} color={colors.emerald[400]} strokeWidth={2} style={{ marginRight: 8 }} />
+            <Crown
+              size={20}
+              color={colors.emerald[400]}
+              strokeWidth={2}
+              style={{ marginRight: 8 }}
+            />
             <Text
               style={{
                 fontSize: 18,
@@ -156,7 +168,7 @@ export function TrialExpiredPaywall({
       </View>
 
       {/* Free Plan Description */}
-      <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: 40 }}>
+      <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: 24 }}>
         <Text
           style={{
             fontSize: 13,
@@ -167,6 +179,11 @@ export function TrialExpiredPaywall({
           {FREE_PLAN_DESCRIPTION}
         </Text>
       </View>
+
+      {/* Legal Footer */}
+      {onRestorePurchases && (
+        <LegalFooter showRestore={true} onRestorePurchases={onRestorePurchases} />
+      )}
     </View>
   );
 }

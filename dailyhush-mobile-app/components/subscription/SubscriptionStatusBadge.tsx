@@ -73,9 +73,8 @@ export function SubscriptionStatusBadge({ status, size = 'small' }: Subscription
         paddingVertical,
         borderRadius,
         alignSelf: 'flex-start',
-        shadowColor: isLarge && (status === 'active' || status === 'trial')
-          ? config.textColor
-          : 'transparent',
+        shadowColor:
+          isLarge && (status === 'active' || status === 'trial') ? config.textColor : 'transparent',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 8,

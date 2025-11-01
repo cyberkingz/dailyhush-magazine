@@ -5,7 +5,6 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { UserProfile } from '@/types';
 import type { LoopType } from '@/data/quizQuestions';
 
 const TRIAL_DURATION_DAYS = 7;
@@ -212,10 +211,7 @@ export function shouldShowTrialReminder(trialStatus: TrialStatus): boolean {
  * - Active trial, OR
  * - Active RevenueCat subscription
  */
-export async function isPremiumActive(
-  supabase: SupabaseClient,
-  userId: string
-): Promise<boolean> {
+export async function isPremiumActive(supabase: SupabaseClient, userId: string): Promise<boolean> {
   // Check trial status
   const trialStatus = await getTrialStatus(supabase, userId);
   if (trialStatus.isActive) {

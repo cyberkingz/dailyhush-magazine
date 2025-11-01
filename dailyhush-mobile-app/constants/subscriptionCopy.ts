@@ -41,8 +41,7 @@ export const SUBSCRIPTION_COPY = {
   paymentFailed: {
     header: 'Let us Keep Your Journey Going',
     body: 'We could not process your recent payment, but your progress matters to us. Update your payment method to continue quieting the noise.',
-    gracePeriod: (date: string) =>
-      `You have access until ${date} while we sort this out together.`,
+    gracePeriod: (date: string) => `You have access until ${date} while we sort this out together.`,
     cta: 'Update Payment Method',
     secondary: 'Not now',
     support: 'Need help? We are here for you.',
@@ -67,7 +66,8 @@ export const SUBSCRIPTION_COPY = {
     },
     notFound: {
       title: 'No Active Subscription',
-      message: 'We could not find an active subscription. If you think this is wrong, we are here to help.',
+      message:
+        'We could not find an active subscription. If you think this is wrong, we are here to help.',
       cta: 'Contact Support',
     },
     error: {
@@ -103,7 +103,8 @@ export const SUBSCRIPTION_COPY = {
   legal: {
     termsOfService: 'Terms of Service',
     privacyPolicy: 'Privacy Policy',
-    autoRenewal: 'Subscriptions renew automatically unless canceled 24 hours before the end of your current period.',
+    autoRenewal:
+      'Subscriptions renew automatically unless canceled 24 hours before the end of your current period.',
     cancellation: 'You can cancel anytime through your App Store or Google Play settings.',
   },
 

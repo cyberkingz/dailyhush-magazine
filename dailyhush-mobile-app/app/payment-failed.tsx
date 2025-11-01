@@ -50,7 +50,7 @@ export default function PaymentFailedScreen() {
   const handleContactSupport = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     // TODO: Open support email or contact screen
-    const email = 'support@dailyhush.com';
+    const email = 'hello@daily-hush.com';
     const subject = 'Help with Payment Issue';
     const mailUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 

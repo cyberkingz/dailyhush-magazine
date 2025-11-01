@@ -4,13 +4,13 @@
  * Updated: 2025-10-31
  */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Sparkles, Crown } from 'lucide-react-native';
+import { Sparkles } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
@@ -35,18 +35,14 @@ export default function QuizResults() {
   }>();
   const insets = useSafeAreaInsets();
 
-  const [isRevealing, setIsRevealing] = useState(false);
-
   // Check if this is a results reveal (after signup) or legacy flow
   const isReveal = params.reveal === 'true';
-  const loopType = params.loopType;
 
   useEffect(() => {
     if (isReveal) {
       // Show reveal animation
-      setIsRevealing(true);
       setTimeout(() => {
-        setIsRevealing(false);
+        // Animation complete
       }, QUIZ_REVEAL_CONFIG.ANIMATION_DURATION);
     }
   }, [isReveal]);
@@ -208,7 +204,12 @@ export default function QuizResults() {
                     justifyContent: 'center',
                     opacity: pressed ? 0.9 : 1,
                   }}>
-                  <Sparkles size={24} color={colors.white} strokeWidth={2} style={{ marginRight: 12 }} />
+                  <Sparkles
+                    size={24}
+                    color={colors.white}
+                    strokeWidth={2}
+                    style={{ marginRight: 12 }}
+                  />
                   <Text
                     style={{
                       fontSize: 20,

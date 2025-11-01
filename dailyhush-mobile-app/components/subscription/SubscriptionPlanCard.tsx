@@ -56,15 +56,11 @@ export function SubscriptionPlanCard({
       accessibilityLabel={`Current plan: ${planName}, ${price} ${period}, Status: ${status}`}
       accessibilityHint={dateText}
       style={{
-        backgroundColor: isActive
-          ? colors.emerald[900] + '40'
-          : colors.background.card,
+        backgroundColor: isActive ? colors.emerald[900] + '40' : colors.background.card,
         borderRadius: 20,
         padding: spacing.lg,
         borderWidth: 2,
-        borderColor: isActive
-          ? colors.emerald[600] + '50'
-          : colors.text.tertiary + '20',
+        borderColor: isActive ? colors.emerald[600] + '50' : colors.text.tertiary + '20',
         shadowColor: isActive ? colors.emerald[500] : 'transparent',
         shadowOffset: { width: 0, height: 6 },
         shadowOpacity: 0.15,

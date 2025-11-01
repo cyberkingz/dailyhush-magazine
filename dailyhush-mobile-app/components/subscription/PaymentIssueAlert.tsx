@@ -90,7 +90,9 @@ export function PaymentIssueAlert({ gracePeriodEnd, onUpdatePayment }: PaymentIs
                   color: colors.text.secondary,
                   lineHeight: 18,
                 }}>
-                {SUBSCRIPTION_COPY.paymentFailed.gracePeriod(formatSubscriptionDate(gracePeriodEnd, true))}
+                {SUBSCRIPTION_COPY.paymentFailed.gracePeriod(
+                  formatSubscriptionDate(gracePeriodEnd, true)
+                )}
               </Text>
             </View>
           )}

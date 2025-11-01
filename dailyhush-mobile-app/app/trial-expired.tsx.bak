@@ -132,6 +132,7 @@ export default function TrialExpiredScreen() {
         [{ text: 'OK' }]
       );
     } finally {
+      setIsRestoring(false);
     }
   };
 

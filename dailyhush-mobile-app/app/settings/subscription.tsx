@@ -7,7 +7,15 @@
 import { useState } from 'react';
 import { useRouter, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, ScrollView, Alert, Pressable, ActivityIndicator, Linking, Platform } from 'react-native';
+import {
+  View,
+  ScrollView,
+  Alert,
+  Pressable,
+  ActivityIndicator,
+  Linking,
+  Platform,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import {
@@ -105,7 +113,7 @@ export default function SubscriptionManagementScreen() {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     Alert.alert(
       SUBSCRIPTION_COPY.management.actions.contactSupport,
-      'For assistance, email support@dailyhush.com',
+      'For assistance, email hello@daily-hush.com',
       [{ text: 'OK' }]
     );
   };
@@ -125,7 +133,12 @@ export default function SubscriptionManagementScreen() {
         Alert.alert(
           SUBSCRIPTION_COPY.restore.success.title,
           SUBSCRIPTION_COPY.restore.success.message,
-          [{ text: SUBSCRIPTION_COPY.restore.success.cta, onPress: () => router.replace('/settings/subscription') }]
+          [
+            {
+              text: SUBSCRIPTION_COPY.restore.success.cta,
+              onPress: () => router.replace('/settings/subscription'),
+            },
+          ]
         );
       } else {
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
@@ -138,14 +151,10 @@ export default function SubscriptionManagementScreen() {
     } catch (error) {
       console.error('Restore error:', error);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      Alert.alert(
-        SUBSCRIPTION_COPY.restore.error.title,
-        SUBSCRIPTION_COPY.restore.error.message,
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: SUBSCRIPTION_COPY.restore.error.cta, onPress: handleRestore },
-        ]
-      );
+      Alert.alert(SUBSCRIPTION_COPY.restore.error.title, SUBSCRIPTION_COPY.restore.error.message, [
+        { text: 'Cancel', style: 'cancel' },
+        { text: SUBSCRIPTION_COPY.restore.error.cta, onPress: handleRestore },
+      ]);
     } finally {
       setIsRestoring(false);
     }
@@ -229,7 +238,6 @@ export default function SubscriptionManagementScreen() {
             paddingBottom: spacing.safeArea.bottom + insets.bottom + 32,
           }}
           showsVerticalScrollIndicator={false}>
-
           {/* Payment Issue Alert */}
           {premiumStatus.isInGracePeriod && (
             <View style={{ marginBottom: spacing.lg }}>
@@ -305,7 +313,9 @@ export default function SubscriptionManagementScreen() {
 
             {shouldShowRestore(premiumStatus) && (
               <SubscriptionActionButton
-                label={isRestoring ? SUBSCRIPTION_COPY.restore.loading : SUBSCRIPTION_COPY.restore.button}
+                label={
+                  isRestoring ? SUBSCRIPTION_COPY.restore.loading : SUBSCRIPTION_COPY.restore.button
+                }
                 icon={RefreshCw}
                 onPress={handleRestore}
                 loading={isRestoring}

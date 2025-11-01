@@ -24,6 +24,7 @@ import { ChevronLeft, AlertTriangle, Trash2, Check } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { AuthTextInput } from '@/components/auth/AuthTextInput';
+import { PrivacyDisclosure } from '@/components/legal';
 import { colors } from '@/constants/colors';
 import { useStore, useUser } from '@/store/useStore';
 import { supabase } from '@/utils/supabase';
@@ -333,6 +334,9 @@ export default function DeleteAccountScreen() {
                 DailyHush app after deleting your account.
               </Text>
             </View>
+
+            {/* Privacy Disclosure */}
+            <PrivacyDisclosure type="account-deletion" showIcon={true} />
 
             {/* Password confirmation */}
             <View style={styles.section}>

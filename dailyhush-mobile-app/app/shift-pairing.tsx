@@ -355,7 +355,7 @@ export default function ShiftPairing() {
                 color: Colors.text.slate500,
                 textAlign: 'center',
               }}>
-              Need help? Email support@dailyhush.com
+              Need help? Email hello@daily-hush.com
             </Text>
           </View>
         </View>

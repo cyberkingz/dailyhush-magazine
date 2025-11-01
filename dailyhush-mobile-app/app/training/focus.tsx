@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { ArrowLeft, ArrowRight } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react-native';
 import { debounce } from '@/utils/debounce';
 
 import { Text } from '@/components/ui/text';
@@ -336,15 +336,13 @@ Until you interrupt it."
                     selectedTriggers.includes(trigger) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                   }`}>
                   <View
-                    className={`mr-3 h-5 w-5 rounded border-2 ${
+                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
                       selectedTriggers.includes(trigger)
-                        ? 'border-white bg-white'
-                        : 'border-[#95B8A8]'
+                        ? 'border-2 border-white bg-white'
+                        : 'border-2 border-[#95B8A8]'
                     }`}>
                     {selectedTriggers.includes(trigger) && (
-                      <View className="flex-1 items-center justify-center">
-                        <View className="h-3 w-3 bg-[#40916C]" />
-                      </View>
+                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
                     )}
                   </View>
                   <Text

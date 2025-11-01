@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { ArrowLeft, ArrowRight, Target, Calendar } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, Target, Calendar, Check } from 'lucide-react-native';
 import { debounce } from '@/utils/debounce';
 
 import { Text } from '@/components/ui/text';
@@ -292,15 +292,13 @@ After I close my laptop (evening), I will do 5 deep breaths."
                     selectedRoutines.includes(routine) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                   }`}>
                   <View
-                    className={`mr-3 h-5 w-5 rounded border-2 ${
+                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
                       selectedRoutines.includes(routine)
-                        ? 'border-white bg-white'
-                        : 'border-[#95B8A8]'
+                        ? 'border-2 border-white bg-white'
+                        : 'border-2 border-[#95B8A8]'
                     }`}>
                     {selectedRoutines.includes(routine) && (
-                      <View className="flex-1 items-center justify-center">
-                        <View className="h-3 w-3 bg-[#40916C]" />
-                      </View>
+                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
                     )}
                   </View>
                   <Text
@@ -359,15 +357,13 @@ Change the environment, change the outcome."
                     selectedEnvironment.includes(change) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                   }`}>
                   <View
-                    className={`mr-3 h-5 w-5 rounded border-2 ${
+                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
                       selectedEnvironment.includes(change)
-                        ? 'border-white bg-white'
-                        : 'border-[#95B8A8]'
+                        ? 'border-2 border-white bg-white'
+                        : 'border-2 border-[#95B8A8]'
                     }`}>
                     {selectedEnvironment.includes(change) && (
-                      <View className="flex-1 items-center justify-center">
-                        <View className="h-3 w-3 bg-[#40916C]" />
-                      </View>
+                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
                     )}
                   </View>
                   <Text

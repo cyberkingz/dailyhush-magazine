@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, AlertCircle, Check } from 'lucide-react-native';
 import { debounce } from '@/utils/debounce';
 
 import { Text } from '@/components/ui/text';
@@ -293,13 +293,13 @@ Wait too long, and you're already looping."
                     selectedPhysical.includes(sign) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                   }`}>
                   <View
-                    className={`mr-3 h-5 w-5 rounded border-2 ${
-                      selectedPhysical.includes(sign) ? 'border-white bg-white' : 'border-[#95B8A8]'
+                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
+                      selectedPhysical.includes(sign)
+                        ? 'border-2 border-white bg-white'
+                        : 'border-2 border-[#95B8A8]'
                     }`}>
                     {selectedPhysical.includes(sign) && (
-                      <View className="flex-1 items-center justify-center">
-                        <View className="h-3 w-3 bg-[#40916C]" />
-                      </View>
+                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
                     )}
                   </View>
                   <Text
@@ -339,13 +339,13 @@ Wait too long, and you're already looping."
                     selectedMental.includes(cue) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
                   }`}>
                   <View
-                    className={`mr-3 h-5 w-5 rounded border-2 ${
-                      selectedMental.includes(cue) ? 'border-white bg-white' : 'border-[#95B8A8]'
+                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
+                      selectedMental.includes(cue)
+                        ? 'border-2 border-white bg-white'
+                        : 'border-2 border-[#95B8A8]'
                     }`}>
                     {selectedMental.includes(cue) && (
-                      <View className="flex-1 items-center justify-center">
-                        <View className="h-3 w-3 bg-[#40916C]" />
-                      </View>
+                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
                     )}
                   </View>
                   <Text

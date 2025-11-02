@@ -3,10 +3,25 @@
  * Handles login, logout, token refresh, and profile updates
  */
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/utils/supabase';
 import { useStore } from '@/store/useStore';
 import { loadUserProfile } from '@/services/auth';
+
+/**
+ * Global flag to suppress auth sync during signup
+ * This prevents race conditions when signUp() triggers SIGNED_IN before profile exists
+ */
+let isSignupInProgress = false;
+
+export function setSignupInProgress(value: boolean) {
+  isSignupInProgress = value;
+  if (value) {
+    console.log('🚫 Auth sync suppressed during signup');
+  } else {
+    console.log('✅ Auth sync re-enabled after signup');
+  }
+}
 
 /**
  * Check if error indicates profile doesn't exist yet
@@ -94,9 +109,17 @@ export function useAuthSync() {
       // Prevent state updates if component unmounted during async operations
       if (!isMounted) return;
 
+      // CRITICAL: Suppress auth sync during signup to prevent race conditions
+      // signUp() automatically triggers SIGNED_IN before profile exists
+      if (isSignupInProgress && (event === 'SIGNED_IN' || event === 'USER_UPDATED')) {
+        console.log('⏭️  Skipping auth sync - signup in progress');
+        return;
+      }
+
       try {
         switch (event) {
           case 'SIGNED_OUT':
+            // Trust the SIGNED_OUT event - signup guard prevents spurious events during onboarding
             console.log('User signed out - clearing store');
             setUser(null);
             break;

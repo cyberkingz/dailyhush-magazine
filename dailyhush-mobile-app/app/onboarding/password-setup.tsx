@@ -27,6 +27,7 @@ import { supabase } from '@/utils/supabase';
 import { useStore } from '@/store/useStore';
 import { withRetry } from '@/utils/retry';
 import { checkExistingAccount } from '@/services/auth';
+import { setSignupInProgress } from '@/hooks/useAuthSync';
 import { routes } from '@/constants/routes';
 
 export default function PasswordSetup() {
@@ -87,6 +88,9 @@ export default function PasswordSetup() {
       setIsCreating(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
+      // CRITICAL: Suppress auth sync during signup to prevent race conditions
+      setSignupInProgress(true);
+
       // DEFENSIVE CHECK: Verify auth account doesn't already exist
       // This catches cases where email-lookup's check failed or was bypassed
       console.log('🔍 Checking if auth account already exists for:', params.email);
@@ -98,6 +102,7 @@ export default function PasswordSetup() {
         console.log('⚠️ Auth account already exists! Redirecting to login...');
         setErrorMessage('An account with this email already exists. Redirecting to login...');
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+        setSignupInProgress(false); // Re-enable auth sync
 
         setTimeout(() => {
           router.replace({
@@ -128,6 +133,7 @@ export default function PasswordSetup() {
         }
 
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        setSignupInProgress(false); // Re-enable auth sync
         setIsCreating(false);
         return;
       }
@@ -135,6 +141,7 @@ export default function PasswordSetup() {
       if (!authData.user) {
         setErrorMessage('Failed to create account. Please try again.');
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        setSignupInProgress(false); // Re-enable auth sync
         setIsCreating(false);
         return;
       }
@@ -182,6 +189,7 @@ export default function PasswordSetup() {
         console.error('Error creating user profile after retries:', profileError);
         setErrorMessage('Account created but profile setup failed. Please contact support.');
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        setSignupInProgress(false); // Re-enable auth sync
         setIsCreating(false);
         return;
       }
@@ -214,6 +222,19 @@ export default function PasswordSetup() {
         updated_at: new Date().toISOString(),
       });
 
+      // CRITICAL: Set the session AFTER profile is created and loaded
+      // This prevents race condition where auth listener tries to load non-existent profile
+      if (authData.session) {
+        await supabase.auth.setSession({
+          access_token: authData.session.access_token,
+          refresh_token: authData.session.refresh_token,
+        });
+        console.log('✅ Session explicitly set after profile creation');
+      }
+
+      // Re-enable auth sync now that profile exists
+      setSignupInProgress(false);
+
       // Success!
       console.log('Account setup complete - quiz user connected');
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -232,6 +253,7 @@ export default function PasswordSetup() {
       console.error('Exception during account creation:', error);
       setErrorMessage(error?.message || 'An unexpected error occurred. Please try again.');
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      setSignupInProgress(false); // Re-enable auth sync on error
       setIsCreating(false);
     }
   };

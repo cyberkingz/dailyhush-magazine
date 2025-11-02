@@ -48,9 +48,11 @@ export default function QuizPaywall() {
   const [subscriptionOptions, setSubscriptionOptions] = useState<any[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
-  const config = LOOP_PAYWALL_CONFIG[params.loopType];
+  // Get config for the loop type, with fallback to social-loop if invalid
+  const config =
+    LOOP_PAYWALL_CONFIG[params.loopType as LoopType] || LOOP_PAYWALL_CONFIG['social-loop'];
 
-  // Verify user is authenticated on mount
+  // Verify user is authenticated on mount & mark onboarding complete
   useEffect(() => {
     const checkAuth = async () => {
       const {
@@ -65,6 +67,42 @@ export default function QuizPaywall() {
             onPress: () => router.replace('/onboarding/signup'),
           },
         ]);
+        return;
+      }
+
+      // Mark onboarding as complete since user reached the final onboarding screen
+      // This ensures they won't be redirected to onboarding on next login
+      try {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('onboarding_completed')
+          .eq('user_id', session.user.id)
+          .single();
+
+        if (profile && !profile.onboarding_completed) {
+          console.log('📝 Marking onboarding as complete (reached paywall)');
+          await supabase
+            .from('user_profiles')
+            .update({
+              onboarding_completed: true,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('user_id', session.user.id);
+
+          // Update store
+          const { data: updatedProfile } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .single();
+
+          if (updatedProfile) {
+            setUser(updatedProfile);
+          }
+        }
+      } catch (error) {
+        console.error('Error marking onboarding complete:', error);
+        // Don't block user if this fails
       }
     };
 
@@ -318,6 +356,33 @@ export default function QuizPaywall() {
       if (hasPremium) {
         // Success - Premium access restored
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+        // Mark onboarding as complete and update subscription status
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (session?.user) {
+          await supabase
+            .from('user_profiles')
+            .update({
+              onboarding_completed: true,
+              subscription_status: 'active',
+              updated_at: new Date().toISOString(),
+            })
+            .eq('user_id', session.user.id);
+
+          // Update store with fresh profile
+          const { data: updatedProfile } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .single();
+
+          if (updatedProfile) {
+            setUser(updatedProfile);
+          }
+        }
 
         Alert.alert(
           '✅ Purchases Restored',

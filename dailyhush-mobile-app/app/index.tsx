@@ -115,17 +115,15 @@ export default function HomeModern() {
     const checkOnboarding = async () => {
       if (isMounted && !isLoading) {
         if (user && !user.onboarding_completed) {
-          const { data: quizData } = await supabase
-            .from('quiz_submissions')
-            .select('*')
-            .eq('user_id', user.user_id)
-            .limit(1);
-
-          if (quizData && quizData.length > 0) {
+          // Check if user has quiz data connected (either from in-app quiz or website quiz)
+          // quiz_connected indicates the quiz was linked during password-setup flow
+          if (user.quiz_connected || user.quiz_submission_id) {
+            // User has quiz data but onboarding not complete - route to profile setup
             router.replace('/onboarding/profile-setup' as any);
             return;
           }
 
+          // No quiz data - start from beginning
           router.replace('/onboarding');
           return;
         }

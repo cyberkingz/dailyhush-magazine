@@ -59,61 +59,142 @@ export default function ProfileSetup() {
       } = await supabase.auth.getSession();
 
       if (session?.user && !session.user.is_anonymous) {
-        console.log('User already authenticated - creating profile directly');
+        console.log('User already authenticated - updating profile');
 
-        // Look up quiz data by email
-        const { data: quizData, error: quizError } = await supabase
-          .from('quiz_submissions')
+        // Check if profile already exists (from password-setup flow)
+        const { data: existingProfile } = await supabase
+          .from('user_profiles')
           .select('*')
-          .eq('email', session.user.email)
-          .order('created_at', { ascending: false })
-          .limit(1)
+          .eq('user_id', session.user.id)
           .single();
 
-        if (quizError || !quizData) {
-          console.error('Failed to fetch quiz data:', quizError);
-          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-          return;
-        }
+        if (existingProfile && existingProfile.quiz_connected) {
+          // Profile exists from password-setup flow
+          // Just update name/age and route to paywall
+          console.log('Updating existing profile from password-setup flow');
 
-        // Create or update profile with quiz data (upsert to handle existing profiles)
-        const { data: profile, error: profileError } = await supabase
-          .from('user_profiles')
-          .upsert(
-            {
-              user_id: session.user.id,
-              email: session.user.email,
+          const { error: updateError } = await supabase
+            .from('user_profiles')
+            .update({
               name: name.trim() || null,
               age: age ? parseInt(age) : null,
-              quiz_overthinker_type: quizData.overthinker_type,
-              quiz_submission_id: quizData.id,
-              quiz_email: session.user.email,
-              quiz_connected: true,
-              quiz_connected_at: new Date().toISOString(),
-              onboarding_completed: true,
               updated_at: new Date().toISOString(),
-            },
-            {
-              onConflict: 'user_id',
-            }
-          )
-          .select()
-          .single();
+            })
+            .eq('user_id', session.user.id);
 
-        if (profileError) {
-          console.error('Failed to create/update profile:', profileError);
-          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-          return;
+          if (updateError) {
+            console.error('Failed to update profile:', updateError);
+            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            return;
+          }
+
+          // Fetch updated profile
+          const { data: updatedProfile } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .single();
+
+          if (updatedProfile) {
+            useStore.getState().setUser(updatedProfile);
+          }
+
+          // Fetch quiz data to pass to paywall
+          const { data: quizSubmission } = await supabase
+            .from('quiz_submissions')
+            .select('*')
+            .eq('id', existingProfile.quiz_submission_id)
+            .single();
+
+          console.log('Quiz submission data:', {
+            id: quizSubmission?.id,
+            routing: quizSubmission?.routing, // Database column name
+            overthinker_type: quizSubmission?.overthinker_type,
+            has_answers: !!quizSubmission?.answers,
+          });
+
+          console.log('Profile updated - routing to paywall');
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+          // Route to paywall with quiz data (don't skip subscription!)
+          // Note: Database uses 'routing' column, not 'loop_type'
+          if (quizSubmission && quizSubmission.routing) {
+            router.replace({
+              pathname: '/onboarding/quiz/paywall' as any,
+              params: {
+                loopType: quizSubmission.routing, // routing column contains the loop type
+                type: existingProfile.quiz_overthinker_type || quizSubmission.overthinker_type,
+                answers: JSON.stringify(quizSubmission.answers || []),
+              },
+            });
+          } else {
+            // Fallback if quiz data incomplete - use default loop type
+            console.warn('Quiz data incomplete, using default loop type');
+            router.replace({
+              pathname: '/onboarding/quiz/paywall' as any,
+              params: {
+                loopType: 'social-loop', // Default to social-loop as most common
+                type: existingProfile.quiz_overthinker_type || 'worrier',
+                answers: '[]',
+              },
+            });
+          }
+        } else {
+          // Orphaned account recovery flow (no profile exists yet)
+          // Look up quiz data by email and create profile
+          const { data: quizData, error: quizError } = await supabase
+            .from('quiz_submissions')
+            .select('*')
+            .eq('email', session.user.email)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
+
+          if (quizError || !quizData) {
+            console.error('Failed to fetch quiz data:', quizError);
+            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            return;
+          }
+
+          // Create profile with quiz data
+          const { data: profile, error: profileError } = await supabase
+            .from('user_profiles')
+            .upsert(
+              {
+                user_id: session.user.id,
+                email: session.user.email,
+                name: name.trim() || null,
+                age: age ? parseInt(age) : null,
+                quiz_overthinker_type: quizData.overthinker_type,
+                quiz_submission_id: quizData.id,
+                quiz_email: session.user.email,
+                quiz_connected: true,
+                quiz_connected_at: new Date().toISOString(),
+                onboarding_completed: true, // Mark complete for orphaned account recovery
+                updated_at: new Date().toISOString(),
+              },
+              {
+                onConflict: 'user_id',
+              }
+            )
+            .select()
+            .single();
+
+          if (profileError) {
+            console.error('Failed to create profile:', profileError);
+            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            return;
+          }
+
+          // Update store with new profile
+          useStore.getState().setUser(profile);
+
+          console.log('Profile created (orphaned account) - navigating to home');
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+          // Navigate to home (orphaned account has already "completed" onboarding before)
+          router.replace('/');
         }
-
-        // Update store with new profile
-        useStore.getState().setUser(profile);
-
-        console.log('Profile created successfully - navigating to home');
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
-        // Navigate to home
-        router.replace('/');
       } else {
         // Not authenticated, continue to signup screen (existing flow)
         router.push({

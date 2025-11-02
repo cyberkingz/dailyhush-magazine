@@ -199,6 +199,16 @@ export async function upgradeToFullAccount(email: string, password: string): Pro
  */
 export async function signOut(): Promise<{ success: boolean; error?: string }> {
   try {
+    // Log out from RevenueCat first
+    try {
+      const { logoutRevenueCatUser } = await import('@/utils/revenueCat');
+      await logoutRevenueCatUser();
+      console.log('RevenueCat: User logged out');
+    } catch (rcError) {
+      console.warn('Failed to logout from RevenueCat:', rcError);
+      // Don't fail the entire logout if RevenueCat logout fails
+    }
+
     const { error } = await supabase.auth.signOut();
 
     if (error) {

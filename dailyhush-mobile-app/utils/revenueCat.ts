@@ -272,6 +272,7 @@ export function packageToSubscriptionPlan(
   let title = 'Premium';
   let period = '';
   let description = '';
+  let displayPrice = product.priceString;
 
   if (pkg.identifier === PACKAGE_IDS.MONTHLY) {
     title = 'Monthly';
@@ -279,8 +280,14 @@ export function packageToSubscriptionPlan(
     description = 'Perfect for trying Premium';
   } else if (pkg.identifier === PACKAGE_IDS.ANNUAL) {
     title = 'Annual';
-    period = '/year';
-    description = 'Best value - 2 months free';
+    // Calculate monthly equivalent for display
+    const monthlyEquivalent = product.price / 12;
+    // Extract currency symbol from original price string
+    const currencyMatch = product.priceString.match(/^[^0-9.,]+/);
+    const currencySymbol = currencyMatch ? currencyMatch[0] : '$';
+    displayPrice = `${currencySymbol}${monthlyEquivalent.toFixed(2)}`;
+    period = '/month';
+    description = `Billed ${product.priceString} annually`;
   } else if (pkg.identifier === PACKAGE_IDS.LIFETIME) {
     title = 'Lifetime';
     period = 'one-time';
@@ -290,8 +297,8 @@ export function packageToSubscriptionPlan(
   return {
     id: pkg.identifier,
     title,
-    price: product.priceString, // ✅ Already localized by App Store/Play Store (e.g., "$9.99", "€9.99")
-    priceValue: product.price, // Numeric value for sorting/logic
+    price: displayPrice, // For annual: show monthly equivalent instead of yearly price
+    priceValue: product.price, // Keep original numeric value for sorting/logic
     period,
     badge,
     savings,

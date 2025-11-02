@@ -125,6 +125,40 @@ export default function QuizResults() {
               {params.title}
             </Text>
 
+            {/* Loop Type Badge - Show specific pattern */}
+            {params.loopType && (
+              <View
+                style={{
+                  alignSelf: 'center',
+                  backgroundColor: colors.emerald[600] + '25',
+                  borderRadius: 20,
+                  paddingVertical: 8,
+                  paddingHorizontal: 16,
+                  marginBottom: 20,
+                  borderWidth: 1,
+                  borderColor: colors.emerald[600] + '40',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: '600',
+                    color: colors.emerald[400],
+                    textAlign: 'center',
+                  }}>
+                  {/* Add emoji based on loop type */}
+                  {params.loopType === 'sleep-loop' && '🌙 '}
+                  {params.loopType === 'decision-loop' && '🧠 '}
+                  {params.loopType === 'social-loop' && '💬 '}
+                  {params.loopType === 'perfectionism-loop' && '🎯 '}
+                  {params.loopType
+                    .split('-')
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')}{' '}
+                  Pattern
+                </Text>
+              </View>
+            )}
+
             {/* Description */}
             <Text
               style={{

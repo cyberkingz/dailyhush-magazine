@@ -10,7 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View, ScrollView, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Brain, Sparkles } from 'lucide-react-native';
+import { Sparkles } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { SubscriptionOption } from '@/components/subscription/SubscriptionOption';
@@ -182,7 +182,7 @@ export default function QuizPaywall() {
       ];
 
       setSubscriptionOptions(options);
-      setSelectedPlan(monthlyPkg.identifier); // Default to monthly
+      setSelectedPlan(annualPkg.identifier); // Default to annual (MOST POPULAR)
       setIsLoadingOfferings(false);
     } catch (error: any) {
       console.error('Error loading subscription options:', error);
@@ -442,50 +442,74 @@ export default function QuizPaywall() {
           }}
           showsVerticalScrollIndicator={false}>
           {/* Loop-Specific Header */}
-          <View style={{ alignItems: 'center', marginBottom: 24 }}>
+          <View style={{ alignItems: 'center', marginBottom: 32 }}>
+            {/* Emoji Section - Properly sized and aligned */}
             <View
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: 40,
-                backgroundColor: colors.emerald[600] + '20',
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderWidth: 2,
-                borderColor: colors.emerald[600] + '40',
-                marginBottom: 16,
+                marginBottom: 32,
+                height: 140,
+                width: '100%',
               }}>
-              <Brain size={40} color={colors.emerald[500]} strokeWidth={2} />
+              {/* Glow Effect - Positioned behind emoji */}
+              <View
+                style={{
+                  position: 'absolute',
+                  width: 110,
+                  height: 110,
+                  borderRadius: 55,
+                  backgroundColor: colors.emerald[500] + '25',
+                  top: '50%',
+                  left: '50%',
+                  transform: [{ translateX: -55 }, { translateY: -55 }],
+                }}
+              />
+
+              {/* Emoji Container - Ensures proper rendering space */}
+              <View
+                style={{
+                  width: 80,
+                  height: 80,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingTop: 4,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 64,
+                    textAlign: 'center',
+                    lineHeight: 72,
+                  }}
+                  allowFontScaling={false}>
+                  {config.emoji}
+                </Text>
+              </View>
             </View>
 
+            {/* Solution-focused title - Better spacing and hierarchy */}
             <Text
               style={{
-                fontSize: 28,
-                fontWeight: 'bold',
-                color: colors.text.primary,
-                textAlign: 'center',
-                marginBottom: 8,
-              }}>
-              You're a {config.emoji}
-            </Text>
-
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: 'bold',
+                fontSize: 32,
+                fontWeight: '800',
                 color: colors.emerald[400],
                 textAlign: 'center',
-                marginBottom: 12,
-              }}>
+                marginBottom: 16,
+                lineHeight: 40,
+                paddingHorizontal: 20,
+                letterSpacing: -1,
+              }}
+              allowFontScaling={false}>
               {config.title}
             </Text>
 
             <Text
               style={{
-                fontSize: 16,
+                fontSize: 17,
                 color: colors.text.secondary,
                 textAlign: 'center',
-                lineHeight: 24,
+                lineHeight: 26,
+                paddingHorizontal: 16,
               }}>
               {config.subtitle}
             </Text>
@@ -494,21 +518,21 @@ export default function QuizPaywall() {
           {/* Personalized Features */}
           <View
             style={{
-              backgroundColor: colors.emerald[800] + '30',
+              backgroundColor: colors.emerald[900] + '40',
               borderRadius: 16,
-              padding: 20,
+              padding: 24,
               marginBottom: 32,
               borderWidth: 1,
-              borderColor: colors.emerald[700] + '40',
+              borderColor: colors.emerald[600] + '30',
             }}>
             <Text
               style={{
                 fontSize: 18,
-                fontWeight: 'bold',
-                color: colors.emerald[200],
-                marginBottom: 16,
+                fontWeight: '700',
+                color: colors.text.primary,
+                marginBottom: 20,
               }}>
-              Your Personalized 7-Day Protocol:
+              What You'll Get:
             </Text>
 
             {config.features.map((feature, index) => (
@@ -517,25 +541,26 @@ export default function QuizPaywall() {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginBottom: index < config.features.length - 1 ? 12 : 0,
+                  marginBottom: index < config.features.length - 1 ? 16 : 0,
                 }}>
                 <View
                   style={{
-                    width: 24,
-                    height: 24,
-                    borderRadius: 12,
-                    backgroundColor: colors.emerald[600] + '40',
+                    width: 20,
+                    height: 20,
+                    borderRadius: 10,
+                    backgroundColor: colors.emerald[600],
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginRight: 12,
                   }}>
-                  <Text style={{ color: colors.emerald[400], fontSize: 16 }}>✓</Text>
+                  <Text style={{ color: colors.white, fontSize: 14, fontWeight: '700' }}>✓</Text>
                 </View>
                 <Text
                   style={{
                     fontSize: 16,
-                    color: colors.emerald[100],
+                    color: colors.text.secondary,
                     flex: 1,
+                    lineHeight: 24,
                   }}>
                   {feature}
                 </Text>
@@ -546,10 +571,10 @@ export default function QuizPaywall() {
           {/* Choose Your Plan */}
           <Text
             style={{
-              fontSize: 20,
-              fontWeight: 'bold',
+              fontSize: 22,
+              fontWeight: '700',
               color: colors.text.primary,
-              marginBottom: 16,
+              marginBottom: 20,
               textAlign: 'center',
             }}>
             Choose Your Plan
@@ -588,46 +613,31 @@ export default function QuizPaywall() {
           {!isLoadingOfferings && (
             <View
               style={{
-                backgroundColor: colors.emerald[800] + '20',
+                backgroundColor: colors.emerald[900] + '50',
                 borderRadius: 12,
-                padding: 16,
+                padding: 20,
                 marginTop: 24,
                 borderWidth: 1,
-                borderColor: colors.emerald[700] + '30',
+                borderColor: colors.emerald[600] + '40',
               }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: colors.text.primary,
+                  textAlign: 'center',
+                  marginBottom: 8,
+                }}>
+                7-Day Free Trial Included
+              </Text>
               <Text
                 style={{
                   fontSize: 15,
-                  color: colors.emerald[200],
+                  color: colors.text.secondary,
                   textAlign: 'center',
                   lineHeight: 22,
                 }}>
-                ✨ Start your 7-day FREE trial.{'\n'}
-                Cancel anytime before trial ends to avoid charges.
-              </Text>
-            </View>
-          )}
-
-          {/* Urgency */}
-          {!isLoadingOfferings && (
-            <View
-              style={{
-                marginTop: 16,
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                backgroundColor: 'rgba(255, 165, 0, 0.15)',
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: 'rgba(255, 165, 0, 0.3)',
-              }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: '#FFB84D',
-                  textAlign: 'center',
-                  fontWeight: '600',
-                }}>
-                {config.urgency}
+                Full access • Cancel anytime • No commitment
               </Text>
             </View>
           )}
@@ -709,7 +719,7 @@ export default function QuizPaywall() {
                           fontWeight: 'bold',
                           color: colors.white,
                         }}>
-                        Start 7-Day Free Trial
+                        Start My Free Trial
                       </Text>
                     </>
                   )}

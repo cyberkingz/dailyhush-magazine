@@ -25,10 +25,10 @@ const LOOP_ICONS: Record<LoopTypeIcon, React.ComponentType<any>> = {
 
 interface LoopTypeHeroProps {
   loopType: LoopType;
-  userName?: string;
+  userName?: string; // Kept for backwards compatibility but not used in display
 }
 
-export function LoopTypeHero({ loopType, userName }: LoopTypeHeroProps) {
+export function LoopTypeHero({ loopType }: LoopTypeHeroProps) {
   const config = getLoopTypeConfig(loopType);
   const IconComponent = LOOP_ICONS[config.iconName];
 
@@ -64,18 +64,6 @@ export function LoopTypeHero({ loopType, userName }: LoopTypeHeroProps) {
 
       {/* Content */}
       <View style={loopTypeHeroStyles.content}>
-        {/* Greeting */}
-        {userName && (
-          <Text
-            style={[
-              profileTypography.hero.greeting,
-              { color: colors.text.secondary, marginBottom: 16 },
-            ]}
-          >
-            Good {getTimeOfDay()}, {userName}
-          </Text>
-        )}
-
         {/* Icon */}
         <View style={loopTypeHeroStyles.iconContainer}>
           <IconComponent size={32} color={colors.emerald[600]} strokeWidth={2} />
@@ -103,14 +91,4 @@ export function LoopTypeHero({ loopType, userName }: LoopTypeHeroProps) {
       </View>
     </MotiView>
   );
-}
-
-/**
- * Helper to get time-based greeting
- */
-function getTimeOfDay(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'morning';
-  if (hour < 18) return 'afternoon';
-  return 'evening';
 }

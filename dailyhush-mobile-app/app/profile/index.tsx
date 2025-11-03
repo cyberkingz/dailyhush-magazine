@@ -34,6 +34,7 @@ import { colors } from '@/constants/colors';
 import { profileTypography } from '@/constants/profileTypography';
 import { BOTTOM_NAV, SPACING } from '@/constants/designTokens';
 import type { LoopType } from '@/constants/loopTypes';
+import { getLoopTypeConfig } from '@/constants/loopTypes';
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -211,6 +212,22 @@ export default function ProfileScreen() {
           />
         }
       >
+        {/* Warm Greeting */}
+        <View style={styles.greetingSection}>
+          <Text style={styles.greetingText}>
+            {(() => {
+              const hour = new Date().getHours();
+              if (hour < 12) return 'Good morning';
+              if (hour < 18) return 'Good afternoon';
+              return 'Good evening';
+            })()}
+            {profileData.user.full_name ? `, ${profileData.user.full_name.split(' ')[0]}` : ''}
+          </Text>
+          <Text style={styles.greetingSubtext}>
+            Welcome back to your journey. Let's see how you're doing.
+          </Text>
+        </View>
+
         {/* Loop Type Hero */}
         {profileData.user.loop_type && (
           <LoopTypeHero
@@ -219,25 +236,117 @@ export default function ProfileScreen() {
           />
         )}
 
-        {/* Emotional Weather - Today's Check-In */}
-        <EmotionalWeather
-          weather={profileData.todayCheckIn?.emotional_weather}
-          moodRating={profileData.todayCheckIn?.mood_rating}
-          notes={profileData.todayCheckIn?.notes || undefined}
-          onPress={handleCheckIn}
-        />
-
-        {/* Weekly Stats */}
+        {/* Section: Right Now */}
         <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text
+              style={[
+                profileTypography.sections.title,
+                { color: colors.text.primary },
+              ]}
+            >
+              Right Now
+            </Text>
+            <Text
+              style={[
+                profileTypography.sections.subtitle,
+                { color: colors.text.secondary },
+              ]}
+            >
+              Your emotional weather today
+            </Text>
+          </View>
+
+          <EmotionalWeather
+            weather={profileData.todayCheckIn?.emotional_weather}
+            moodRating={profileData.todayCheckIn?.mood_rating}
+            notes={profileData.todayCheckIn?.notes || undefined}
+            onPress={handleCheckIn}
+          />
+        </View>
+
+        {/* Section: Your Journey This Week */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text
+              style={[
+                profileTypography.sections.title,
+                { color: colors.text.primary },
+              ]}
+            >
+              Your Journey This Week
+            </Text>
+            <Text
+              style={[
+                profileTypography.sections.subtitle,
+                { color: colors.text.secondary },
+              ]}
+            >
+              Every check-in is a step toward understanding yourself
+            </Text>
+          </View>
+
           <ProfileStats
             currentStreak={profileData.stats.currentStreak}
             totalCheckIns={profileData.stats.totalCheckIns}
             avgMoodRating={profileData.stats.avgMoodRating}
           />
+
+          {/* Transitional text */}
+          <Text style={styles.transitionalText}>
+            These moments of self-reflection are building your self-awareness
+          </Text>
         </View>
 
-        {/* AI-Detected Patterns & Insights */}
-        {profileData.insights.length > 0 && (
+        {/* Subtle divider before insights */}
+        <View style={styles.narrativeDivider} />
+
+        {/* Section: What We're Learning Together */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text
+              style={[
+                profileTypography.sections.title,
+                { color: colors.text.primary },
+              ]}
+            >
+              What We're Learning Together
+            </Text>
+            <Text
+              style={[
+                profileTypography.sections.subtitle,
+                { color: colors.text.secondary },
+              ]}
+            >
+              {profileData.insights.length > 0
+                ? `Patterns emerging from your ${profileData.stats.totalCheckIns} check-ins`
+                : 'Your patterns are growing'}
+            </Text>
+          </View>
+
+          {profileData.insights.length > 0 ? (
+            profileData.insights.map((insight, index) => (
+              <PatternInsightCard
+                key={insight.id}
+                insight={insight}
+                index={index}
+                onDismiss={handleDismissInsight}
+              />
+            ))
+          ) : (
+            <View style={styles.emptyPatternsCard}>
+              <Text style={styles.emptyPatternsIcon}>🌱</Text>
+              <Text style={styles.emptyPatternsTitle}>Your patterns are growing</Text>
+              <Text style={styles.emptyPatternsBody}>
+                Keep checking in. After a few more reflections, we'll start to see patterns in
+                your emotional weather.
+              </Text>
+            </View>
+          )}
+        </View>
+
+        {/* Section: Making Sense of It All */}
+        {profileData.user.loop_type && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text
@@ -246,7 +355,7 @@ export default function ProfileScreen() {
                   { color: colors.text.primary },
                 ]}
               >
-                Your Patterns
+                Making Sense of It All
               </Text>
               <Text
                 style={[
@@ -254,25 +363,21 @@ export default function ProfileScreen() {
                   { color: colors.text.secondary },
                 ]}
               >
-                {profileData.insights.length} insight
-                {profileData.insights.length === 1 ? '' : 's'} discovered
+                What your{' '}
+                {getLoopTypeConfig(profileData.user.loop_type as LoopType).name.toLowerCase()}{' '}
+                pattern means for you
               </Text>
             </View>
 
-            {profileData.insights.map((insight, index) => (
-              <PatternInsightCard
-                key={insight.id}
-                insight={insight}
-                index={index}
-                onDismiss={handleDismissInsight}
-              />
-            ))}
-          </View>
-        )}
+            {/* Intro paragraph */}
+            <Text style={styles.loopIntroText}>
+              Your check-ins and patterns tell us you're navigating the{' '}
+              {getLoopTypeConfig(profileData.user.loop_type as LoopType).name}. Here's what that
+              means—and how you can work with it, not against it.
+            </Text>
 
-        {/* Loop Type Understanding */}
-        {profileData.user.loop_type && (
-          <LoopCharacteristics loopType={profileData.user.loop_type as LoopType} />
+            <LoopCharacteristics loopType={profileData.user.loop_type as LoopType} />
+          </View>
         )}
       </ScrollView>
     </View>
@@ -295,6 +400,23 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 24,
   },
+  greetingSection: {
+    marginBottom: 28,
+    paddingTop: 8,
+  },
+  greetingText: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: colors.text.primary,
+    marginBottom: 8,
+    letterSpacing: -0.5,
+  },
+  greetingSubtext: {
+    fontSize: 16,
+    color: colors.text.secondary,
+    lineHeight: 24,
+    fontWeight: '400',
+  },
   section: {
     marginBottom: 32,
   },
@@ -310,5 +432,55 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 12,
+  },
+  transitionalText: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    color: colors.text.secondary,
+    textAlign: 'center',
+    marginTop: 12,
+    marginBottom: 24,
+    paddingHorizontal: 24,
+    lineHeight: 20,
+  },
+  narrativeDivider: {
+    height: 1,
+    backgroundColor: colors.background.border,
+    opacity: 0.3,
+    marginVertical: 40,
+    marginHorizontal: 32,
+  },
+  loopIntroText: {
+    fontSize: 15,
+    color: colors.text.secondary,
+    lineHeight: 22,
+    textAlign: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 8,
+  },
+  emptyPatternsCard: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: 20,
+    padding: 32,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.background.border,
+  },
+  emptyPatternsIcon: {
+    fontSize: 48,
+    marginBottom: 16,
+  },
+  emptyPatternsTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text.primary,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  emptyPatternsBody: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: colors.text.secondary,
+    textAlign: 'center',
   },
 });

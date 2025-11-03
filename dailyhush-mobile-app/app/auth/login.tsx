@@ -25,11 +25,13 @@ import { ErrorAlert } from '@/components/auth/ErrorAlert';
 import { signInWithEmail, validateEmail } from '@/services/auth';
 import { useStore } from '@/store/useStore';
 import { authTypography, authSpacing, screenLayout } from '@/constants/authStyles';
+import { useAnalytics } from '@/utils/analytics';
 
 export default function Login() {
   const router = useRouter();
   const params = useLocalSearchParams<{ prefillEmail?: string }>();
   const { setUser } = useStore();
+  const analytics = useAnalytics();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -112,6 +114,18 @@ export default function Login() {
           setUser(profileResult.profile);
           hasProfile = true;
           console.log('User profile loaded into store:', profileResult.profile.email);
+
+          // Track successful login
+          analytics.track('LOGIN_COMPLETED', {
+            loop_type: profileResult.profile.loop_type,
+            is_premium: profileResult.profile.is_premium || false,
+          });
+
+          // Identify user for analytics
+          analytics.identify(result.userId, {
+            loop_type: profileResult.profile.loop_type,
+            is_premium: profileResult.profile.is_premium || false,
+          });
         } else {
           console.log('No profile found - orphaned account detected');
         }

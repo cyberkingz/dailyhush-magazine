@@ -22,10 +22,12 @@ import { calculateQuizResult } from '@/utils/quizScoring';
 import type { QuizAnswer } from '@/utils/quizScoring';
 import { routes } from '@/constants/routes';
 import { QUIZ_STORAGE_KEYS } from '@/constants/quiz';
+import { useAnalytics } from '@/utils/analytics';
 
 export default function QuizFlow() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const analytics = useAnalytics();
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Map<string, QuizAnswer>>(new Map());
@@ -37,7 +39,7 @@ export default function QuizFlow() {
   const currentAnswer = answers.get(currentQuestion.id);
   const canGoNext = currentAnswer !== undefined;
 
-  // Restore quiz progress on mount
+  // Restore quiz progress on mount + Track quiz start
   useEffect(() => {
     const restoreProgress = async () => {
       try {
@@ -58,13 +60,16 @@ export default function QuizFlow() {
             // Clear stale progress
             await AsyncStorage.removeItem('quiz_progress');
           }
+        } else {
+          // Only track quiz start if not restoring progress
+          analytics.track('QUIZ_STARTED');
         }
       } catch (error) {
         console.error('Failed to restore quiz progress:', error);
       }
     };
     restoreProgress();
-  }, []);
+  }, [analytics]);
 
   const handleSelectAnswer = async (optionId: string, value: number) => {
     const newAnswers = new Map(answers);
@@ -99,6 +104,12 @@ export default function QuizFlow() {
       // Calculate result
       const answersArray = Array.from(answers.values());
       const result = calculateQuizResult(answersArray);
+
+      // Track quiz completion
+      analytics.track('QUIZ_COMPLETED', {
+        loop_type: result.loopType,
+        overthinker_type: result.type,
+      });
 
       // Save quiz results temporarily
       try {

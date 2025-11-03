@@ -31,11 +31,13 @@ import { setSignupInProgress } from '@/hooks/useAuthSync';
 import { QUIZ_STORAGE_KEYS, QUIZ_REVEAL_CONFIG } from '@/constants/quiz';
 import { routes } from '@/constants/routes';
 import type { OverthinkerType } from '@/data/quizQuestions';
+import { useAnalytics } from '@/utils/analytics';
 
 export default function QuizSignup() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { setUser } = useStore();
+  const analytics = useAnalytics();
 
   const params = useLocalSearchParams<{
     type: OverthinkerType;
@@ -105,6 +107,12 @@ export default function QuizSignup() {
 
       setIsCreating(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+      // Track signup started
+      analytics.track('SIGNUP_STARTED', {
+        loop_type: params.loopType as any,
+        overthinker_type: params.type,
+      });
 
       // CRITICAL: Suppress auth sync during signup to prevent race conditions
       setSignupInProgress(true);
@@ -242,6 +250,19 @@ export default function QuizSignup() {
         console.log('✅ Profile synced from database');
         setUser(freshProfile);
       }
+
+      // Track signup completion and identify user
+      analytics.track('SIGNUP_COMPLETED', {
+        loop_type: params.loopType as any,
+        overthinker_type: params.type,
+      });
+
+      // Identify user for analytics
+      analytics.identify(authData.user.id, {
+        loop_type: params.loopType as any,
+        is_premium: false,
+        created_at: new Date().toISOString(),
+      });
 
       // CRITICAL: Set the session AFTER profile is created and loaded
       // This prevents race condition where auth listener tries to load non-existent profile

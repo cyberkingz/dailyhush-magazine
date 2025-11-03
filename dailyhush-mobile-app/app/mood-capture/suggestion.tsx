@@ -15,10 +15,14 @@ import { ProgressIndicator } from '@/components/moodCapture/ProgressIndicator';
 import { updateMoodEntry } from '@/lib/mood-entries';
 import type { Enums } from '@/types/supabase';
 import type { Suggestion } from '@/constants/suggestions';
+import { useAnalytics } from '@/utils/analytics';
+import { useStore } from '@/store/useStore';
 
 export default function SuggestionScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const analytics = useAnalytics();
+  const { user } = useStore();
   const params = useLocalSearchParams<{
     mood: string;
     moodLabel: string;
@@ -49,6 +53,12 @@ export default function SuggestionScreen() {
       await updateMoodEntry(params.entryId, {
         suggested_activity: selectedSuggestion?.id || null,
         suggestion_accepted: !!selectedSuggestion,
+      });
+
+      // Track check-in completion
+      analytics.track('CHECKIN_COMPLETED', {
+        streak_count: user?.current_streak || 0,
+        checkin_count: user?.total_check_ins || 0,
       });
 
       // Navigate back to profile (replace entire mood capture stack)

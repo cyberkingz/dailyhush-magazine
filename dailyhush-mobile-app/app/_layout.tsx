@@ -3,6 +3,7 @@ import '../global.css';
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { PortalHost } from '@rn-primitives/portal';
+import { PostHogProvider } from 'posthog-react-native';
 import { TopBar } from '@/components/TopBar';
 import { BottomNav } from '@/components/BottomNav';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -128,8 +129,19 @@ export default function Layout() {
   }
 
   return (
-    <ErrorBoundary>
-      <Stack
+    <PostHogProvider
+      apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY || ''}
+      options={{
+        host: process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+        // Enable autocapture for screen views
+        captureApplicationLifecycleEvents: true,
+        captureScreens: true,
+        // Privacy settings
+        enableSessionReplay: false, // Disable session replay for privacy (mental health app)
+      }}
+    >
+      <ErrorBoundary>
+        <Stack
         screenOptions={{
           headerShown: true,
           contentStyle: { backgroundColor: '#0A1612' },
@@ -276,5 +288,6 @@ export default function Layout() {
         ]}
       />
     </ErrorBoundary>
+    </PostHogProvider>
   );
 }

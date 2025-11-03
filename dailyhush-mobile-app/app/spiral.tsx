@@ -33,6 +33,7 @@ import { sendEncouragementNotification } from '@/services/notifications';
 import { useAudio } from '@/hooks/useAudio';
 import { supabase } from '@/utils/supabase';
 import { withRetry } from '@/utils/retry';
+import { useAnalytics } from '@/utils/analytics';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
@@ -43,6 +44,7 @@ export default function SpiralInterrupt() {
   const shiftDevice = useShiftDevice();
   const { setSpiraling } = useStore();
   const insets = useSafeAreaInsets();
+  const analytics = useAnalytics();
 
   // Audio for meditation sound
   const audio = useAudio();
@@ -90,6 +92,9 @@ export default function SpiralInterrupt() {
 
   useEffect(() => {
     setSpiraling(true);
+
+    // Track spiral start
+    analytics.track('SPIRAL_STARTED');
 
     // Load meditation sound
     // TODO: Add actual meditation sound file to /assets/sounds/
@@ -231,6 +236,9 @@ export default function SpiralInterrupt() {
         } else {
           console.log('Spiral logged successfully:', spiralLog);
           await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+          // Track spiral completion
+          analytics.track('SPIRAL_INTERRUPTED');
         }
       } catch (err) {
         console.error('Fatal error saving spiral log:', err);

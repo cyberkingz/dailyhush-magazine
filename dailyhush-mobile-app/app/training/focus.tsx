@@ -24,6 +24,7 @@ import { saveModuleProgress, loadModuleProgress } from '@/services/training';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { timing } from '@/constants/timing';
+import { useAnalytics } from '@/utils/analytics';
 
 type Screen =
   | 'welcome'
@@ -40,6 +41,7 @@ export default function FocusModule() {
   const user = useUser();
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
+  const analytics = useAnalytics();
   const [currentScreen, setCurrentScreen] = useState<Screen>('welcome');
   const [selectedTriggers, setSelectedTriggers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -116,13 +118,18 @@ export default function FocusModule() {
         if (data.focusData?.selectedTriggers) {
           setSelectedTriggers(data.focusData.selectedTriggers);
         }
+      } else {
+        // Track training start only if this is a new session (no saved progress)
+        analytics.track('TRAINING_STARTED', {
+          feature_name: FireModule.FOCUS,
+        });
       }
 
       setIsLoading(false);
     };
 
     loadProgress();
-  }, [user?.user_id]);
+  }, [user?.user_id, analytics]);
 
   // Create debounced save function (1 second delay)
   const debouncedSave = useMemo(

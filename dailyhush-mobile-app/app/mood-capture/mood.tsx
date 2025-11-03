@@ -5,17 +5,24 @@
  * Full screen with all moods visible.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MoodSelector } from '@/components/moodCapture/steps/MoodSelector';
 import { ProgressIndicator } from '@/components/moodCapture/ProgressIndicator';
 import type { MoodOption } from '@/constants/moodOptions';
+import { useAnalytics } from '@/utils/analytics';
 
 export default function MoodScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const analytics = useAnalytics();
+
+  // Track check-in start
+  useEffect(() => {
+    analytics.track('CHECKIN_STARTED');
+  }, [analytics]);
 
   const handleMoodSelect = (mood: MoodOption) => {
     // Navigate to intensity screen with mood data

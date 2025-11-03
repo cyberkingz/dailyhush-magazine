@@ -13,6 +13,7 @@ import { useUser, useStore } from '@/store/useStore';
 import { completeModule, updateUserFireProgress } from '@/services/training';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { useAnalytics } from '@/utils/analytics';
 
 interface ModuleCompleteProps {
   moduleTitle: string;
@@ -33,6 +34,7 @@ export function ModuleComplete({
 }: ModuleCompleteProps) {
   const user = useUser();
   const { completeFireModule } = useStore();
+  const analytics = useAnalytics();
 
   // Mark module as completed when component mounts
   useEffect(() => {
@@ -45,10 +47,15 @@ export function ModuleComplete({
       // Try to save to database (works for authenticated users)
       await completeModule(user.user_id, module);
       await updateUserFireProgress(user.user_id, module, true);
+
+      // Track training completion
+      analytics.track('TRAINING_COMPLETED', {
+        feature_name: module,
+      });
     };
 
     markComplete();
-  }, [user?.user_id, module, completeFireModule]);
+  }, [user?.user_id, module, completeFireModule, analytics]);
 
   const handleContinue = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

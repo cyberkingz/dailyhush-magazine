@@ -33,6 +33,8 @@ import {
   PREMIUM_ENTITLEMENT_ID,
 } from '@/utils/revenueCat';
 import { supabase } from '@/utils/supabase';
+import { useAnalytics } from '@/utils/analytics';
+import { useStore } from '@/store/useStore';
 
 interface SubscriptionPlanWithPackage {
   id: string;
@@ -50,6 +52,8 @@ export default function SubscriptionScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const premiumStatus = usePremiumStatus();
+  const analytics = useAnalytics();
+  const { user } = useStore();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -157,6 +161,11 @@ export default function SubscriptionScreen() {
       hasLoadedRef.current = true;
       setIsLoading(false);
       console.log('✅ Subscription options loaded successfully');
+
+      // Track paywall viewed
+      analytics.track('PAYWALL_VIEWED', {
+        loop_type: user?.loop_type,
+      });
     } catch (error) {
       console.error('❌ Error loading subscription options:', error);
       setErrorMessage('Failed to load subscription options. Please check your connection.');
@@ -164,7 +173,7 @@ export default function SubscriptionScreen() {
     } finally {
       isLoadingRef.current = false;
     }
-  }, []);
+  }, [analytics, user]);
 
   // Load RevenueCat offerings on mount
   useEffect(() => {
@@ -220,6 +229,21 @@ export default function SubscriptionScreen() {
       // Check if Premium entitlement is now active
       if (customerInfo.entitlements.active['premium']) {
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+        // Track successful purchase
+        const isTrial =
+          customerInfo.entitlements.active['premium'].periodType === 'TRIAL' ||
+          customerInfo.entitlements.active['premium'].isActive === true;
+
+        analytics.track('SUBSCRIPTION_PURCHASED', {
+          subscription_plan:
+            selectedOption.id === PACKAGE_IDS.MONTHLY
+              ? 'monthly'
+              : selectedOption.id === PACKAGE_IDS.ANNUAL
+              ? 'annual'
+              : 'lifetime',
+          is_trial: isTrial,
+        });
 
         // Update user profile in Supabase
         const {
@@ -441,6 +465,20 @@ export default function SubscriptionScreen() {
                   onSelect={(id) => {
                     setSelectedPlan(id);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                    // Track subscription plan selection
+                    const selected = subscriptionOptions.find((opt) => opt.id === id);
+                    if (selected) {
+                      analytics.track('SUBSCRIPTION_SELECTED', {
+                        subscription_plan:
+                          id === PACKAGE_IDS.MONTHLY
+                            ? 'monthly'
+                            : id === PACKAGE_IDS.ANNUAL
+                            ? 'annual'
+                            : 'lifetime',
+                        subscription_price: selected.priceValue,
+                      });
+                    }
                   }}
                 />
               ))}

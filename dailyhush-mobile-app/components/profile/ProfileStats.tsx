@@ -29,10 +29,11 @@ export function ProfileStats({
     <View style={styles.container}>
       {/* Total Check-ins */}
       <StatCard
-        icon={<Calendar size={24} color={colors.lime[500]} />}
+        icon={<Calendar size={26} color={colors.lime[500]} />}
         value={totalCheckIns}
         label="Check-ins"
         index={0}
+        isHero={true}
       />
 
       {/* Current Streak - HERO ELEMENT */}
@@ -47,10 +48,11 @@ export function ProfileStats({
 
       {/* Average Mood */}
       <StatCard
-        icon={<Heart size={24} color={colors.lime[500]} />}
+        icon={<Heart size={26} color={colors.lime[500]} />}
         value={avgMoodRating.toFixed(1)}
         label="Avg Mood"
         index={2}
+        isHero={true}
       />
     </View>
   );
@@ -129,13 +131,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 18,
     borderWidth: 2,
-    borderColor: colors.lime[500] + '30',
-    backgroundColor: colors.lime[500] + '05',
+    borderColor: colors.lime[500] + '25',
+    backgroundColor: colors.lime[500] + '06',
     shadowColor: colors.lime[500],
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 6,
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
+    elevation: 5,
   },
   milestoneCard: {
     borderColor: colors.lime[500] + '50',
@@ -148,15 +150,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   heroValue: {
-    fontSize: 36,
+    fontSize: 34,
     fontWeight: '800',
     color: colors.lime[500],
-    letterSpacing: -1,
+    letterSpacing: -0.5,
   },
   heroLabel: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
-    color: colors.lime[500],
+    color: colors.text.secondary,
     opacity: 0.9,
   },
   milestoneBadge: {

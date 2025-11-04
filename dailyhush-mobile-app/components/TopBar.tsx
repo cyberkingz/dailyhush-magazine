@@ -3,7 +3,7 @@
  * Branded app header with navigation
  */
 
-import { View, Pressable, Image } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Settings, Menu } from 'lucide-react-native';
@@ -11,6 +11,7 @@ import * as Haptics from 'expo-haptics';
 import { Text } from '@/components/ui/text';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { brandFonts } from '@/constants/profileTypography';
 
 interface TopBarProps {
   title?: string;
@@ -88,15 +89,16 @@ export function TopBar({
         {/* Center - Logo/Title */}
         <View style={{ flex: 1, alignItems: shouldCenter ? 'center' : 'flex-start' }}>
           {title === 'DailyHush' ? (
-            <Image
-              source={require('@/assets/img/inline-logo.png')}
+            <Text
               style={{
-                width: 140,
-                height: 32,
-                resizeMode: 'contain',
-                tintColor: colors.white,
-              }}
-            />
+                fontSize: 28,
+                fontFamily: brandFonts.headlineBold,
+                textAlign: shouldCenter ? 'center' : 'left',
+                color: colors.text.primary,
+                letterSpacing: 1,
+              }}>
+              Nœma
+            </Text>
           ) : (
             <Text
               style={{

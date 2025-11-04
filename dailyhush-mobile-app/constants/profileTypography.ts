@@ -7,6 +7,17 @@
 import { typography } from './typography';
 
 /**
+ * Brand Font Families
+ * Beautiful serif fonts for headlines and elegant text
+ */
+export const brandFonts = {
+  headlineBold: 'PlayfairDisplay_700Bold' as const,
+  headlineSemiBold: 'PlayfairDisplay_600SemiBold' as const,
+  headlineMedium: 'PlayfairDisplay_500Medium' as const,
+  headlineRegular: 'PlayfairDisplay_400Regular' as const,
+} as const;
+
+/**
  * Profile-Specific Typography Scale
  * Building on the base typography system
  */
@@ -28,6 +39,7 @@ export const profileTypography = {
     // "You're navigating the Sleep Loop"
     loopTitle: {
       fontSize: 24, // Reduced from 32px for better proportions at 240px
+      fontFamily: brandFonts.headlineBold,
       fontWeight: '700' as const,
       lineHeight: 32, // Reduced from 40px
       letterSpacing: 0.3, // Slightly reduced
@@ -53,6 +65,7 @@ export const profileTypography = {
     // "Your Journey This Month"
     title: {
       fontSize: 24,
+      fontFamily: brandFonts.headlineBold,
       fontWeight: '700' as const,
       lineHeight: 32,
       letterSpacing: 0.3,
@@ -89,6 +102,7 @@ export const profileTypography = {
     // Card title: "Sunday Evenings"
     title: {
       fontSize: 18,
+      fontFamily: brandFonts.headlineSemiBold,
       fontWeight: '600' as const,
       lineHeight: 24,
       letterSpacing: 0.2,
@@ -132,6 +146,7 @@ export const profileTypography = {
     // "Mostly sunny with gentle clarity"
     condition: {
       fontSize: 24,
+      fontFamily: brandFonts.headlineBold,
       fontWeight: '700' as const,
       lineHeight: 32,
       letterSpacing: 0.3,
@@ -331,6 +346,7 @@ export const profileTypography = {
     // "Unlock Premium"
     headline: {
       fontSize: 28,
+      fontFamily: brandFonts.headlineBold,
       fontWeight: '700' as const,
       lineHeight: 36,
       letterSpacing: 0.3,
@@ -372,6 +388,7 @@ export const profileTypography = {
     // Main quote text
     text: {
       fontSize: 20,
+      fontFamily: brandFonts.headlineMedium,
       fontWeight: '500' as const,
       lineHeight: 32, // 1.6x for quotes
       letterSpacing: 0.2,

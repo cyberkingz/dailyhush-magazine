@@ -21,6 +21,7 @@ import {
   Platform,
 } from 'react-native';
 import { useRouter, Stack, useFocusEffect } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Settings } from 'lucide-react-native';
 
 import { EmotionalWeather } from '@/components/profile/EmotionalWeather';
@@ -35,13 +36,14 @@ import {
 } from '@/services/profileService';
 
 import { colors } from '@/constants/colors';
-import { profileTypography } from '@/constants/profileTypography';
+import { profileTypography, brandFonts } from '@/constants/profileTypography';
 import { BOTTOM_NAV, SPACING } from '@/constants/designTokens';
 import type { LoopType } from '@/constants/loopTypes';
 import { getLoopTypeConfig } from '@/constants/loopTypes';
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const [profileData, setProfileData] = useState<ProfileSummary | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -180,7 +182,7 @@ export default function ProfileScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          headerTitle: 'Your Profile',
+          headerTitle: () => <Text style={styles.headerLogo}>Nœma</Text>,
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
@@ -210,7 +212,7 @@ export default function ProfileScreen() {
         contentContainerStyle={[
           styles.scrollContent,
           {
-            paddingBottom: BOTTOM_NAV.height + SPACING.xl, // Tab bar clearance + breathing room
+            paddingBottom: BOTTOM_NAV.height + insets.bottom + SPACING.xxl, // Tab bar + safe area + breathing room
           },
         ]}
         refreshControl={
@@ -236,7 +238,6 @@ export default function ProfileScreen() {
 
         {/* Section: Stats - HERO POSITION */}
         <View style={styles.section}>
-
           <ProfileStats
             currentStreak={profileData.stats.currentStreak}
             totalCheckIns={profileData.stats.totalCheckIns}
@@ -245,9 +246,12 @@ export default function ProfileScreen() {
 
           {/* Transitional text */}
           <Text style={styles.transitionalText}>
-            Let's check in on how you're feeling today
+            These moments of self-reflection are building your self-awareness
           </Text>
         </View>
+
+        {/* Subtle divider before emotional check-in */}
+        <View style={styles.narrativeDivider} />
 
         {/* Section: Right Now */}
         <View style={styles.section}>
@@ -267,9 +271,6 @@ export default function ProfileScreen() {
             onPress={handleCheckIn}
           />
         </View>
-
-        {/* Subtle divider before insights */}
-        <View style={styles.narrativeDivider} />
 
         {/* Section: What We're Learning Together */}
         <View style={styles.section}>
@@ -327,13 +328,22 @@ export default function ProfileScreen() {
                 <Text style={styles.loopTypeNameInline}>
                   {getLoopTypeConfig(profileData.user.loop_type as LoopType).name}
                 </Text>
-                —{getLoopTypeConfig(profileData.user.loop_type as LoopType).tagline.toLowerCase()}. Understanding this pattern helps you work with it, not against it.
+                —{getLoopTypeConfig(profileData.user.loop_type as LoopType).tagline.toLowerCase()}.
+                Understanding this pattern helps you work with it, not against it.
               </Text>
             </View>
 
             <LoopCharacteristics loopType={profileData.user.loop_type as LoopType} />
           </View>
         )}
+
+        {/* Inspirational Quote */}
+        <View style={styles.quoteSection}>
+          <Text style={styles.quoteText}>
+            "You are not your thoughts. You are the awareness behind them."
+          </Text>
+          <Text style={styles.quoteAuthor}>— Jon Kabat-Zinn</Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -374,7 +384,7 @@ const styles = StyleSheet.create({
     opacity: 0.75,
   },
   section: {
-    marginBottom: 40,
+    marginBottom: 32,
   },
   sectionHeader: {
     marginBottom: 20,
@@ -384,6 +394,12 @@ const styles = StyleSheet.create({
   },
   sectionHeaderNoBorder: {
     marginBottom: 20,
+  },
+  headerLogo: {
+    fontSize: 28,
+    fontFamily: 'PlayfairDisplay_700Bold',
+    color: colors.text.primary,
+    letterSpacing: 1,
   },
   headerButton: {
     marginRight: 16,
@@ -410,7 +426,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: colors.lime[500],
     opacity: 0.1,
-    marginVertical: 48,
+    marginVertical: 24,
     marginHorizontal: 40,
   },
   loopIntroParagraph: {
@@ -452,5 +468,28 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textAlign: 'center',
     maxWidth: 280,
+  },
+  quoteSection: {
+    marginTop: 48,
+    marginBottom: 0,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+  },
+  quoteText: {
+    fontSize: 18,
+    lineHeight: 28,
+    color: colors.text.secondary,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    marginBottom: 12,
+    opacity: 0.85,
+    letterSpacing: 0.3,
+  },
+  quoteAuthor: {
+    fontSize: 14,
+    color: colors.lime[500],
+    textAlign: 'center',
+    fontWeight: '500',
+    letterSpacing: 0.5,
   },
 });

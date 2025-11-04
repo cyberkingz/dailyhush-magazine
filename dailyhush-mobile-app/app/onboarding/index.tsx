@@ -30,6 +30,7 @@ import { supabase } from '@/utils/supabase';
 import { signInAnonymously } from '@/services/auth';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { brandFonts } from '@/constants/profileTypography';
 import type { UserProfile } from '@/types';
 
 // NEW: Reordered flow - demo before assessment
@@ -368,7 +369,7 @@ export default function Onboarding() {
               fontSize: 32,
               lineHeight: 42,
               letterSpacing: 0.3,
-              fontFamily: 'Poppins_600SemiBold',
+              fontFamily: brandFonts.headlineBold,
             }}>
             Quiet Your Mind{'\n'}in 90 Seconds
           </Text>

@@ -10,6 +10,7 @@ import { ArrowLeft } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { brandFonts } from '@/constants/profileTypography';
 
 interface PageHeaderProps {
   title: string;
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
+    fontFamily: brandFonts.headlineBold,
     fontWeight: '700',
     color: colors.text.primary,
     letterSpacing: -0.5,

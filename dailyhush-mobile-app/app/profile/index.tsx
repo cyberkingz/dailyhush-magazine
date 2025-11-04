@@ -372,6 +372,7 @@ const styles = StyleSheet.create({
   },
   greetingText: {
     fontSize: 32,
+    fontFamily: brandFonts.headlineBold,
     fontWeight: '700',
     color: colors.text.primary,
     marginBottom: 8,
@@ -397,7 +398,7 @@ const styles = StyleSheet.create({
   },
   headerLogo: {
     fontSize: 28,
-    fontFamily: 'PlayfairDisplay_700Bold',
+    fontFamily: brandFonts.headlineBold,
     color: colors.text.primary,
     letterSpacing: 1,
   },

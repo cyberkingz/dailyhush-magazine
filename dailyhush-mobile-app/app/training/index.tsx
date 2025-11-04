@@ -16,6 +16,7 @@ import { useUser } from '@/store/useStore';
 import { FireModule } from '@/types';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
+import { brandFonts } from '@/constants/profileTypography';
 
 interface ModuleCardProps {
   module: FireModule;
@@ -240,6 +241,7 @@ export default function Training() {
           <Text
             style={{
               fontSize: 28,
+              fontFamily: brandFonts.headlineBold,
               fontWeight: '700',
               color: colors.text.primary,
               marginBottom: 8,

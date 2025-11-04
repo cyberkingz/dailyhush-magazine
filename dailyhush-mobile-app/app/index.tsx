@@ -19,6 +19,7 @@ import { EmotionalWeather } from '@/components/profile/EmotionalWeather';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
+import { brandFonts } from '@/constants/profileTypography';
 // import { useSpiral } from '@/hooks/useSpiral';
 
 function getGreeting(): string {
@@ -237,6 +238,7 @@ export default function HomeModern() {
                 <Text
                   style={{
                     fontSize: 24,
+                    fontFamily: brandFonts.headlineBold,
                     fontWeight: '700',
                     color: colors.text.primary,
                     letterSpacing: 0.15,

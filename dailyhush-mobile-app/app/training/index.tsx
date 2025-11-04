@@ -245,6 +245,7 @@ export default function Training() {
               fontWeight: '700',
               color: colors.text.primary,
               marginBottom: 8,
+              lineHeight: 36,
             }}>
             F.I.R.E. Training
           </Text>

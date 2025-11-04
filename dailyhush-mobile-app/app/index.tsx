@@ -242,6 +242,7 @@ export default function HomeModern() {
                     fontWeight: '700',
                     color: colors.text.primary,
                     letterSpacing: 0.15,
+                    lineHeight: 32,
                   }}>
                   {greetingLine}
                 </Text>

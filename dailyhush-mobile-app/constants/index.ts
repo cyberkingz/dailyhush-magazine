@@ -18,6 +18,10 @@ export * from './profileAnimations';
 export * from './profileComponents';
 export * from './profileHelpers';
 
+// Navigation & Module System
+export * from './modules';
+export * from './methods';
+
 // Other constants
 export * from './routes';
 export * from './theme';

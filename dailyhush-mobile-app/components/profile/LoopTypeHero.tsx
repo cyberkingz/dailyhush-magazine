@@ -48,17 +48,14 @@ export function LoopTypeHero({ loopType }: LoopTypeHeroProps) {
       from={fadeAnimations.fadeInUp.from}
       animate={fadeAnimations.fadeInUp.to}
       transition={{ type: 'timing', duration: 600 }}
-      style={loopTypeHeroStyles.container}
-    >
-
+      style={loopTypeHeroStyles.container}>
       {/* Share button */}
       <TouchableOpacity
         style={loopTypeHeroStyles.shareButton}
         onPress={handleShare}
         activeOpacity={0.7}
         accessibilityLabel="Share your loop type"
-        accessibilityRole="button"
-      >
+        accessibilityRole="button">
         <Share2 size={20} color={colors.text.primary} strokeWidth={2} />
       </TouchableOpacity>
 
@@ -66,7 +63,7 @@ export function LoopTypeHero({ loopType }: LoopTypeHeroProps) {
       <View style={loopTypeHeroStyles.content}>
         {/* Icon */}
         <View style={loopTypeHeroStyles.iconContainer}>
-          <IconComponent size={32} color={colors.emerald[600]} strokeWidth={2} />
+          <IconComponent size={32} color={colors.lime[500]} strokeWidth={2} />
         </View>
 
         {/* Loop type name */}
@@ -74,18 +71,12 @@ export function LoopTypeHero({ loopType }: LoopTypeHeroProps) {
           style={[
             profileTypography.hero.loopTitle,
             { color: colors.text.primary, marginBottom: 12 },
-          ]}
-        >
+          ]}>
           {config.name}
         </Text>
 
         {/* Tagline */}
-        <Text
-          style={[
-            profileTypography.hero.description,
-            { color: colors.text.secondary },
-          ]}
-        >
+        <Text style={[profileTypography.hero.description, { color: colors.text.secondary }]}>
           {config.tagline}
         </Text>
       </View>

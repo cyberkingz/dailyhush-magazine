@@ -4,10 +4,17 @@
  * Optimized for 55-70 year old demographic
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ComponentProps } from 'react';
 import { useRouter, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, ActivityIndicator, Pressable, SafeAreaView, RefreshControl } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  Pressable,
+  SafeAreaView,
+  RefreshControl,
+  Platform,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
@@ -23,6 +30,7 @@ import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
+import { PageHeader } from '@/components/PageHeader';
 import { useUser } from '@/store/useStore';
 import { getWeeklyInsights, WeeklyInsights } from '@/services/insights';
 import { colors } from '@/constants/colors';
@@ -38,6 +46,19 @@ export default function Insights() {
   const [refreshing, setRefreshing] = useState(false);
   const [weeklyData, setWeeklyData] = useState<WeeklyInsights | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const refreshControlColors =
+    Platform.select<Partial<ComponentProps<typeof RefreshControl>>>({
+      ios: {
+        tintColor: colors.lime[500],
+        titleColor: colors.lime[500],
+      },
+      android: {
+        colors: [colors.lime[500], colors.lime[400], colors.lime[600]],
+        progressBackgroundColor: colors.background.primary,
+      },
+      default: {},
+    }) ?? {};
 
   // Fetch weekly insights on component mount
   const fetchInsights = async () => {
@@ -87,71 +108,27 @@ export default function Insights() {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: 'Pattern Insights',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: colors.background.primary,
+          },
+          headerTintColor: colors.text.primary,
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+          headerBackTitleVisible: false,
+        }}
+      />
       <SafeAreaView
         style={{
           flex: 1,
           backgroundColor: colors.background.primary,
-          paddingTop: insets.top,
         }}>
         <StatusBar style="light" />
-
-        {/* Custom Header */}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingHorizontal: spacing.lg,
-            paddingVertical: spacing.md,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.background.border,
-          }}>
-          <Pressable
-            onPress={async () => {
-              await Haptics.selectionAsync();
-              router.back();
-            }}
-            style={{
-              width: 56,
-              height: 56,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft: -12,
-            }}
-            accessible={true}
-            accessibilityRole="button"
-            accessibilityLabel="Go back"
-            accessibilityHint="Returns to previous screen">
-            <ArrowLeft size={28} color={colors.text.secondary} strokeWidth={2} />
-          </Pressable>
-
-          <View style={{ flex: 1, alignItems: 'center', paddingHorizontal: spacing.md }}>
-            <Text
-              style={{
-                fontSize: typography.size.xl,
-                fontWeight: typography.fontWeight.bold,
-                color: colors.text.primary,
-                lineHeight: typography.size.xl * typography.lineHeight.tight,
-              }}
-              accessible={true}
-              accessibilityRole="header">
-              Your Patterns
-            </Text>
-            <Text
-              style={{
-                fontSize: typography.size.xs,
-                color: colors.text.secondary,
-                marginTop: 4,
-                lineHeight: typography.size.xs * typography.lineHeight.normal,
-              }}>
-              This week&apos;s healing insights
-            </Text>
-          </View>
-
-          {/* Spacer for symmetry */}
-          <View style={{ width: 44 }} />
-        </View>
 
         {/* Loading State */}
         {loading && (
@@ -164,7 +141,7 @@ export default function Insights() {
             accessible={true}
             accessibilityLiveRegion="polite"
             accessibilityLabel="Loading your patterns">
-            <ActivityIndicator size="large" color={colors.button.primary} />
+            <ActivityIndicator size="large" color={colors.lime[500]} />
             <Text
               style={{
                 color: colors.text.secondary,
@@ -248,7 +225,7 @@ export default function Insights() {
               justifyContent: 'center',
               paddingHorizontal: spacing.xl,
             }}>
-            <Sparkles size={64} color={colors.emerald[500]} strokeWidth={2} />
+            <Sparkles size={64} color={colors.lime[500]} strokeWidth={2} />
             <Text
               style={{
                 color: colors.text.primary,
@@ -318,36 +295,40 @@ export default function Insights() {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                tintColor={colors.emerald[500]}
-                colors={[colors.emerald[500]]}
+                {...refreshControlColors}
               />
             }>
             {/* Hard Week Compassion Message */}
             {weeklyData.totalSpirals > 10 && (
               <View
                 style={{
-                  backgroundColor: colors.background.tertiary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.lg,
-                  borderLeftWidth: 4,
-                  borderLeftColor: colors.emerald[500],
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '33',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm }}>
-                  <Heart
-                    size={20}
-                    color={colors.emerald[500]}
-                    strokeWidth={2}
-                    fill={colors.emerald[500]}
-                  />
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                  <View
+                    style={{
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
+                      borderRadius: 12,
+                      marginRight: 12,
+                    }}>
+                    <Heart
+                      size={18}
+                      color={colors.lime[500]}
+                      strokeWidth={2.5}
+                      fill={colors.lime[500]}
+                    />
+                  </View>
                   <Text
                     style={{
                       color: colors.text.primary,
-                      fontSize: typography.size.base,
-                      fontWeight: typography.fontWeight.semibold,
-                      marginLeft: spacing.sm,
-                      lineHeight: typography.size.base * typography.lineHeight.tight,
+                      fontSize: 18,
+                      fontWeight: '700',
                     }}>
                     This Week Was Hard
                   </Text>
@@ -355,8 +336,8 @@ export default function Insights() {
                 <Text
                   style={{
                     color: colors.text.secondary,
-                    fontSize: typography.size.base,
-                    lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                    fontSize: 15,
+                    lineHeight: 22,
                   }}>
                   Seeing many spirals doesn&apos;t mean you&apos;re failing. It means you&apos;re
                   paying attention. That awareness is the first step toward healing.
@@ -364,34 +345,42 @@ export default function Insights() {
               </View>
             )}
 
-            {/* Progress Card - Only show when positive or reframe */}
+            {/* Progress Card - Modern Style */}
             {weeklyData.improvementVsLastWeek > 0 ? (
               <View
                 style={{
-                  backgroundColor: colors.emerald[700],
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.lg,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '33',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm }}>
-                  <Sparkles size={24} color={colors.emerald[100]} strokeWidth={2} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                  <View
+                    style={{
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
+                      borderRadius: 12,
+                      marginRight: 12,
+                    }}>
+                    <Sparkles size={20} color={colors.lime[500]} strokeWidth={2.5} />
+                  </View>
                   <Text
                     style={{
-                      color: colors.emerald[50],
-                      fontSize: typography.size.lg,
-                      fontWeight: typography.fontWeight.bold,
-                      marginLeft: spacing.sm,
-                      lineHeight: typography.size.lg * typography.lineHeight.tight,
+                      color: colors.text.primary,
+                      fontSize: 18,
+                      fontWeight: '700',
+                      flex: 1,
                     }}>
                     You're Noticing Patterns
                   </Text>
                 </View>
                 <Text
                   style={{
-                    color: colors.emerald[50],
-                    fontSize: typography.size.base,
-                    lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                    color: colors.text.secondary,
+                    fontSize: 15,
+                    lineHeight: 22,
                   }}>
                   You interrupted {weeklyData.improvementVsLastWeek}% more spirals than last week.
                   The awareness itself is healing.
@@ -400,30 +389,38 @@ export default function Insights() {
             ) : weeklyData.totalSpirals > 0 ? (
               <View
                 style={{
-                  backgroundColor: colors.emerald[700],
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.lg,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '33',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm }}>
-                  <Sparkles size={24} color={colors.emerald[100]} strokeWidth={2} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                  <View
+                    style={{
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
+                      borderRadius: 12,
+                      marginRight: 12,
+                    }}>
+                    <Sparkles size={20} color={colors.lime[500]} strokeWidth={2.5} />
+                  </View>
                   <Text
                     style={{
-                      color: colors.emerald[50],
-                      fontSize: typography.size.lg,
-                      fontWeight: typography.fontWeight.bold,
-                      marginLeft: spacing.sm,
-                      lineHeight: typography.size.lg * typography.lineHeight.tight,
+                      color: colors.text.primary,
+                      fontSize: 18,
+                      fontWeight: '700',
+                      flex: 1,
                     }}>
                     You're Building Awareness
                   </Text>
                 </View>
                 <Text
                   style={{
-                    color: colors.emerald[50],
-                    fontSize: typography.size.base,
-                    lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                    color: colors.text.secondary,
+                    fontSize: 15,
+                    lineHeight: 22,
                   }}>
                   Healing isn't linear. Some weeks are harder, and that's part of the process.
                   You're still rewiring the pattern.
@@ -431,104 +428,110 @@ export default function Insights() {
               </View>
             ) : null}
 
-            {/* Stats Grid - Reframed Labels */}
-            <View style={{ flexDirection: 'row', gap: spacing.md, marginBottom: spacing.lg }}>
+            {/* Stats Grid - Modern Style */}
+            <View style={{ flexDirection: 'row', gap: 12, marginBottom: spacing.lg }}>
               <View
                 style={{
                   flex: 1,
                   backgroundColor: colors.background.secondary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
-                  borderWidth: 1,
-                  borderColor: colors.background.border,
+                  borderRadius: 20,
+                  padding: 20,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '1A',
+                  minHeight: 160,
+                  justifyContent: 'center',
                 }}>
-                <Text
-                  style={{
-                    fontSize: typography.size['4xl'],
-                    lineHeight: typography.size['4xl'] * typography.lineHeight.tight,
-                    includeFontPadding: false,
-                    paddingVertical: spacing.sm,
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.emerald[500],
-                    textAlign: 'center',
-                    marginBottom: spacing.xs,
-                    minHeight: 64,
-                  }}
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  accessible={true}
-                  accessibilityRole="text"
-                  accessibilityLabel={`${weeklyData.totalSpirals} times you practiced this week`}>
-                  {weeklyData.totalSpirals}
-                </Text>
-                <Text
-                  style={{
-                    color: colors.text.secondary,
-                    fontSize: typography.size.base,
-                    textAlign: 'center',
-                    lineHeight: typography.size.base * typography.lineHeight.normal,
-                  }}>
-                  Times You Practiced
-                </Text>
-                <Text
-                  style={{
-                    color: colors.text.muted,
-                    fontSize: typography.size.xs,
-                    textAlign: 'center',
-                    marginTop: 4,
-                    lineHeight: typography.size.xs * typography.lineHeight.normal,
-                  }}>
-                  Each one rewires the pattern
-                </Text>
+                <View style={{ paddingVertical: 8 }}>
+                  <Text
+                    style={{
+                      fontSize: 44,
+                      fontWeight: '700',
+                      color: colors.lime[500],
+                      textAlign: 'center',
+                      marginBottom: 12,
+                      lineHeight: 52,
+                    }}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
+                    accessible={true}
+                    accessibilityRole="text"
+                    accessibilityLabel={`${weeklyData.totalSpirals} times you practiced this week`}>
+                    {weeklyData.totalSpirals}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 14,
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      marginBottom: 6,
+                      lineHeight: 18,
+                    }}>
+                    Times You Practiced
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.muted,
+                      fontSize: 11,
+                      textAlign: 'center',
+                      lineHeight: 15,
+                    }}>
+                    Each one rewires the pattern
+                  </Text>
+                </View>
               </View>
 
               <View
                 style={{
                   flex: 1,
                   backgroundColor: colors.background.secondary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
-                  borderWidth: 1,
-                  borderColor: colors.background.border,
+                  borderRadius: 20,
+                  padding: 20,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '1A',
+                  minHeight: 160,
+                  justifyContent: 'center',
                 }}>
-                <Text
-                  style={{
-                    fontSize: typography.size['4xl'],
-                    lineHeight: typography.size['4xl'] * typography.lineHeight.tight,
-                    includeFontPadding: false,
-                    paddingVertical: spacing.sm,
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.emerald[500],
-                    textAlign: 'center',
-                    marginBottom: spacing.xs,
-                    minHeight: 64,
-                  }}
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  accessible={true}
-                  accessibilityRole="text"
-                  accessibilityLabel={`${weeklyData.spiralsPrevented} spirals interrupted early`}>
-                  {weeklyData.spiralsPrevented}
-                </Text>
-                <Text
-                  style={{
-                    color: colors.text.secondary,
-                    fontSize: typography.size.base,
-                    textAlign: 'center',
-                    lineHeight: typography.size.base * typography.lineHeight.normal,
-                  }}>
-                  Interrupted Early
-                </Text>
-                <Text
-                  style={{
-                    color: colors.text.muted,
-                    fontSize: typography.size.xs,
-                    textAlign: 'center',
-                    marginTop: 4,
-                    lineHeight: typography.size.xs * typography.lineHeight.normal,
-                  }}>
-                  Caught before they grew
-                </Text>
+                <View style={{ paddingVertical: 8 }}>
+                  <Text
+                    style={{
+                      fontSize: 44,
+                      fontWeight: '700',
+                      color: colors.lime[500],
+                      textAlign: 'center',
+                      marginBottom: 12,
+                      lineHeight: 52,
+                    }}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
+                    accessible={true}
+                    accessibilityRole="text"
+                    accessibilityLabel={`${weeklyData.spiralsPrevented} spirals interrupted early`}>
+                    {weeklyData.spiralsPrevented}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 14,
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      marginBottom: 6,
+                      lineHeight: 18,
+                    }}>
+                    Interrupted Early
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.muted,
+                      fontSize: 11,
+                      textAlign: 'center',
+                      lineHeight: 15,
+                    }}>
+                    Caught before they grew
+                  </Text>
+                </View>
               </View>
             </View>
 
@@ -536,51 +539,54 @@ export default function Insights() {
             {weeklyData.avgDuration > 0 && (
               <View
                 style={{
-                  backgroundColor: colors.background.tertiary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.md,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '1A',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
                   <View
                     style={{
-                      backgroundColor: 'rgba(64, 145, 108, 0.2)',
-                      padding: spacing.sm,
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
                       borderRadius: 12,
-                      marginRight: spacing.sm,
+                      marginRight: 12,
                     }}>
-                    <Clock size={24} color={colors.emerald[500]} strokeWidth={2} />
+                    <Clock size={20} color={colors.lime[500]} strokeWidth={2.5} />
                   </View>
                   <Text
                     style={{
                       color: colors.text.secondary,
-                      fontSize: typography.size.base,
-                      lineHeight: typography.size.base * typography.lineHeight.normal,
+                      fontSize: 15,
+                      fontWeight: '600',
                     }}>
                     Typical Duration
                   </Text>
                 </View>
-                <Text
-                  style={{
-                    color: colors.text.primary,
-                    fontSize: typography.size['2xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    marginBottom: spacing.sm,
-                    lineHeight: typography.size['2xl'] * typography.lineHeight.tight,
-                  }}>
-                  {formatDuration(weeklyData.avgDuration)}
-                </Text>
-                <Text
-                  style={{
-                    color: colors.text.secondary,
-                    fontSize: typography.size.base,
-                    lineHeight: typography.size.base * typography.lineHeight.relaxed,
-                  }}>
-                  {weeklyData.avgDuration < 600
-                    ? "You're catching them quickly"
-                    : 'Each interrupt teaches your brain'}
-                </Text>
+                <View style={{ paddingVertical: 4 }}>
+                  <Text
+                    style={{
+                      color: colors.text.primary,
+                      fontSize: 36,
+                      fontWeight: '700',
+                      marginBottom: 12,
+                      lineHeight: 44,
+                    }}>
+                    {formatDuration(weeklyData.avgDuration)}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 14,
+                      lineHeight: 20,
+                    }}>
+                    {weeklyData.avgDuration < 600
+                      ? "You're catching them quickly"
+                      : 'Each interrupt teaches your brain'}
+                  </Text>
+                </View>
               </View>
             )}
 
@@ -588,49 +594,53 @@ export default function Insights() {
             {weeklyData.peakTime && (
               <View
                 style={{
-                  backgroundColor: colors.background.tertiary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.md,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '1A',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
                   <View
                     style={{
-                      backgroundColor: 'rgba(64, 145, 108, 0.2)',
-                      padding: spacing.sm,
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
                       borderRadius: 12,
-                      marginRight: spacing.sm,
+                      marginRight: 12,
                     }}>
-                    <Clock size={24} color={colors.emerald[500]} strokeWidth={2} />
+                    <Clock size={20} color={colors.lime[500]} strokeWidth={2.5} />
                   </View>
                   <Text
                     style={{
                       color: colors.text.secondary,
-                      fontSize: typography.size.base,
-                      lineHeight: typography.size.base * typography.lineHeight.normal,
+                      fontSize: 15,
+                      fontWeight: '600',
                     }}>
                     Pattern Time
                   </Text>
                 </View>
-                <Text
-                  style={{
-                    color: colors.text.primary,
-                    fontSize: typography.size['2xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    marginBottom: spacing.sm,
-                    lineHeight: typography.size['2xl'] * typography.lineHeight.tight,
-                  }}>
-                  {weeklyData.peakTime}
-                </Text>
-                <Text
-                  style={{
-                    color: colors.text.secondary,
-                    fontSize: typography.size.base,
-                    lineHeight: typography.size.base * typography.lineHeight.relaxed,
-                  }}>
-                  Around {weeklyData.peakTime}, your mind shows a pattern. What happens just before?
-                </Text>
+                <View style={{ paddingVertical: 4 }}>
+                  <Text
+                    style={{
+                      color: colors.text.primary,
+                      fontSize: 36,
+                      fontWeight: '700',
+                      marginBottom: 12,
+                      lineHeight: 44,
+                    }}>
+                    {weeklyData.peakTime}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.text.secondary,
+                      fontSize: 14,
+                      lineHeight: 20,
+                    }}>
+                    Around {weeklyData.peakTime}, your mind shows a pattern. What happens just
+                    before?
+                  </Text>
+                </View>
               </View>
             )}
 
@@ -638,27 +648,28 @@ export default function Insights() {
             {weeklyData.mostCommonTrigger && (
               <View
                 style={{
-                  backgroundColor: colors.background.tertiary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.lg,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '1A',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
                   <View
                     style={{
-                      backgroundColor: 'rgba(64, 145, 108, 0.2)',
-                      padding: spacing.sm,
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
                       borderRadius: 12,
-                      marginRight: spacing.sm,
+                      marginRight: 12,
                     }}>
-                    <TrendingUp size={24} color={colors.emerald[500]} strokeWidth={2} />
+                    <TrendingUp size={20} color={colors.lime[500]} strokeWidth={2.5} />
                   </View>
                   <Text
                     style={{
                       color: colors.text.secondary,
-                      fontSize: typography.size.base,
-                      lineHeight: typography.size.base * typography.lineHeight.normal,
+                      fontSize: 15,
+                      fontWeight: '600',
                     }}>
                     Common Pattern
                   </Text>
@@ -666,9 +677,9 @@ export default function Insights() {
                 <Text
                   style={{
                     color: colors.text.primary,
-                    fontSize: typography.size.lg,
-                    fontWeight: typography.fontWeight.semibold,
-                    lineHeight: typography.size.lg * typography.lineHeight.normal,
+                    fontSize: 18,
+                    fontWeight: '600',
+                    lineHeight: 26,
                   }}>
                   {weeklyData.mostCommonTrigger}
                 </Text>
@@ -679,21 +690,28 @@ export default function Insights() {
             {weeklyData.insights && weeklyData.insights.length > 0 && (
               <View
                 style={{
-                  backgroundColor: colors.background.tertiary,
-                  borderRadius: 16,
-                  padding: spacing.lg,
+                  backgroundColor: colors.background.secondary,
+                  borderRadius: 20,
+                  padding: 20,
                   marginBottom: spacing.lg,
+                  borderWidth: 2,
+                  borderColor: colors.lime[500] + '1A',
                 }}>
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.md }}>
-                  <Lightbulb size={24} color={colors.emerald[500]} strokeWidth={2} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+                  <View
+                    style={{
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
+                      borderRadius: 12,
+                      marginRight: 12,
+                    }}>
+                    <Lightbulb size={20} color={colors.lime[500]} strokeWidth={2.5} />
+                  </View>
                   <Text
                     style={{
                       color: colors.text.primary,
-                      fontSize: typography.size.lg,
-                      fontWeight: typography.fontWeight.bold,
-                      marginLeft: spacing.sm,
-                      lineHeight: typography.size.lg * typography.lineHeight.tight,
+                      fontSize: 18,
+                      fontWeight: '700',
                     }}>
                     Your Insights
                   </Text>
@@ -705,14 +723,14 @@ export default function Insights() {
                     style={{
                       flexDirection: 'row',
                       alignItems: 'flex-start',
-                      marginBottom: index < weeklyData.insights.length - 1 ? spacing.sm : 0,
+                      marginBottom: index < weeklyData.insights.length - 1 ? 12 : 0,
                     }}>
                     <Text
                       style={{
-                        color: colors.emerald[500],
-                        marginRight: spacing.sm,
-                        fontSize: typography.size.base,
-                        lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                        color: colors.lime[500],
+                        marginRight: 12,
+                        fontSize: 15,
+                        lineHeight: 22,
                       }}>
                       •
                     </Text>
@@ -720,8 +738,8 @@ export default function Insights() {
                       style={{
                         flex: 1,
                         color: colors.text.secondary,
-                        fontSize: typography.size.base,
-                        lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                        fontSize: 15,
+                        lineHeight: 22,
                       }}>
                       {insight}
                     </Text>
@@ -737,11 +755,12 @@ export default function Insights() {
                 router.push('/history' as any);
               }}
               style={{
-                backgroundColor: colors.background.tertiary,
-                borderRadius: 16,
-                padding: spacing.lg,
+                backgroundColor: colors.background.secondary,
+                borderRadius: 20,
+                padding: 20,
                 marginBottom: spacing.lg,
-                minHeight: 72,
+                borderWidth: 2,
+                borderColor: colors.lime[500] + '1A',
               }}
               accessible={true}
               accessibilityRole="button"
@@ -756,35 +775,34 @@ export default function Insights() {
                 <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
                   <View
                     style={{
-                      backgroundColor: 'rgba(64, 145, 108, 0.2)',
-                      padding: spacing.sm,
+                      backgroundColor: colors.lime[500] + '20',
+                      padding: 10,
                       borderRadius: 12,
-                      marginRight: spacing.md,
+                      marginRight: 16,
                     }}>
-                    <BarChart3 size={24} color={colors.emerald[500]} strokeWidth={2} />
+                    <BarChart3 size={20} color={colors.lime[500]} strokeWidth={2.5} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: colors.text.primary,
-                        fontSize: typography.size.lg,
-                        fontWeight: typography.fontWeight.bold,
+                        fontSize: 18,
+                        fontWeight: '700',
                         marginBottom: 4,
-                        lineHeight: typography.size.lg * typography.lineHeight.tight,
                       }}>
                       View Full History
                     </Text>
                     <Text
                       style={{
                         color: colors.text.secondary,
-                        fontSize: typography.size.base,
-                        lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                        fontSize: 15,
+                        lineHeight: 22,
                       }}>
                       See all your spirals and progress over time
                     </Text>
                   </View>
                 </View>
-                <ChevronRight size={24} color={colors.emerald[500]} strokeWidth={2.5} />
+                <ChevronRight size={24} color={colors.lime[500]} strokeWidth={2.5} />
               </View>
             </Pressable>
           </ScrollFadeView>

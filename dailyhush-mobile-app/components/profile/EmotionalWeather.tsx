@@ -8,6 +8,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MotiView } from 'moti';
+import { CloudSun } from 'lucide-react-native';
 import type { Enums } from '@/types/supabase';
 import { emotionalWeatherColors } from '@/constants/loopTypeColors';
 import { profileTypography } from '@/constants/profileTypography';
@@ -37,7 +38,7 @@ export function EmotionalWeather({
 
           {/* Icon Circle */}
           <View style={styles.iconCircle}>
-            <Text style={styles.sunEmoji}>🌤️</Text>
+            <CloudSun size={64} color={colors.lime[400]} strokeWidth={1.5} />
           </View>
 
           {/* Description */}
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.xxl + SPACING.xs, // 28px
     paddingBottom: SPACING.xxl * 2 + SPACING.lg, // 64px - extra padding for floating button
     borderWidth: 1,
-    borderColor: colors.emerald[600] + '20',
+    borderColor: colors.lime[600] + '20', // Lime-600 border with 20% opacity
   },
   emptyTitle: {
     fontSize: 22,
@@ -146,16 +147,11 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: colors.emerald[500] + '30',
+    backgroundColor: colors.lime[500] + '1A', // Lime with 10% opacity
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
     marginBottom: SPACING.xxl,
-  },
-  sunEmoji: {
-    fontSize: 64,
-    lineHeight: 64,
-    textAlign: 'center',
   },
   emptyDescription: {
     fontSize: 15,

@@ -1,0 +1,46 @@
+{
+  "name": "dailyhush-anna-backend",
+  "version": "1.0.0",
+  "description": "Anna AI conversation backend using Claude Agent SDK for DailyHush spiral interruption",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "therapy",
+    "mental-health",
+    "claude",
+    "websocket"
+  ],
+  "author": "DailyHush",
+  "license": "MIT",
+  "dependencies": {
+    "@openai/agents": "^0.2.1",
+    "@supabase/supabase-js": "^2.39.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "eslint": "^8.56.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  }
+}

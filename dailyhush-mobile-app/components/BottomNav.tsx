@@ -23,7 +23,7 @@ const NAV_ITEMS = [
   { id: 'insights', icon: TrendingUp, label: 'Insights', route: '/insights' },
   { id: 'profile', icon: User, label: 'Profile', route: '/profile' },
 ];
-const HIGHLIGHT_COLOR = '#7dd3c0';
+const HIGHLIGHT_COLOR = colors.lime[500]; // Lime-500 for active navigation states
 const NAV_EASING = Easing.bezier(0.4, 0.0, 0.2, 1);
 
 // Design tokens
@@ -62,8 +62,8 @@ function CenterButton({
         onPress(); // Execute immediately - no delay
         setTimeout(() => setIsPressed(false), 1000);
       }}
-      accessibilityLabel="Emergency spiral interrupt"
-      accessibilityHint="Tap to start 90-second spiral interrupt protocol"
+      accessibilityLabel="I'm Spiraling"
+      accessibilityHint="Start 90-second crisis reset immediately"
       accessibilityRole="button"
       style={({ pressed }) => [
         styles.centerPressable,
@@ -134,7 +134,7 @@ function CenterButton({
           Platform.OS === 'ios' ? styles.centerButtonShadowIOS : styles.centerButtonShadowAndroid,
         ]}>
         <LinearGradient
-          colors={['#7dd3c0', '#5cb5a3']}
+          colors={[colors.crisis.lime, colors.crisis.limeDark]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={StyleSheet.absoluteFillObject}
@@ -199,9 +199,9 @@ function TabButton({ item, isActive, isClicked, clickCycle, onPress, reduceMotio
                 <LinearGradient
                   pointerEvents="none"
                   colors={[
-                    'rgba(125, 211, 192, 0.28)',
-                    'rgba(125, 211, 192, 0.12)',
-                    'rgba(125, 211, 192, 0)',
+                    `${colors.lime[500]}47`, // Lime gradient with 28% opacity
+                    `${colors.lime[500]}1F`, // 12% opacity
+                    `${colors.lime[500]}00`, // 0% opacity
                   ]}
                   locations={[0, 0.55, 1]}
                   start={{ x: 0.5, y: 0.1 }}
@@ -300,7 +300,7 @@ export function BottomNav({ hideOnPaths = ['/spiral', '/onboarding'] }: BottomNa
         <BlurView pointerEvents="none" intensity={45} tint="dark" style={styles.blurOverlay} />
         <LinearGradient
           pointerEvents="none"
-          colors={['rgba(125, 211, 192, 0.08)', 'rgba(10, 31, 26, 0.55)']}
+          colors={[`${colors.lime[500]}14`, 'rgba(10, 31, 26, 0.55)']} // Lime gradient overlay (8% opacity)
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.gradientOverlay}
@@ -402,12 +402,12 @@ const styles = StyleSheet.create({
     height: TOUCH_TARGETS.centerButton + 8,
     borderRadius: (TOUCH_TARGETS.centerButton + 8) / 2,
     borderWidth: 2,
-    borderColor: HIGHLIGHT_COLOR,
+    borderColor: colors.crisis.lime,
     opacity: 0.4,
     pointerEvents: 'none',
     top: -4,
     left: -4,
-    shadowColor: HIGHLIGHT_COLOR,
+    shadowColor: colors.crisis.lime,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
     shadowRadius: 10,
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     width: TOUCH_TARGETS.centerButton,
     height: TOUCH_TARGETS.centerButton,
     borderRadius: TOUCH_TARGETS.centerButton / 2,
-    backgroundColor: HIGHLIGHT_COLOR,
+    backgroundColor: colors.crisis.lime,
     opacity: 0.3,
     pointerEvents: 'none',
     top: 0,
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     width: TOUCH_TARGETS.centerButton,
     height: TOUCH_TARGETS.centerButton,
     borderRadius: TOUCH_TARGETS.centerButton / 2,
-    backgroundColor: HIGHLIGHT_COLOR,
+    backgroundColor: colors.crisis.lime,
     opacity: 0.2,
     pointerEvents: 'none',
     top: 0,
@@ -442,10 +442,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: HIGHLIGHT_COLOR,
+    backgroundColor: colors.crisis.lime,
   },
   centerButtonShadowIOS: {
-    shadowColor: HIGHLIGHT_COLOR,
+    shadowColor: colors.crisis.lime,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.7,
     shadowRadius: 14,
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     borderRadius: 34,
     overflow: 'hidden',
     backgroundColor: 'transparent',
-    shadowColor: 'rgba(125, 211, 192, 0.35)',
+    shadowColor: colors.lime[500],
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: Platform.OS === 'android' ? 0 : 0.28,
     shadowRadius: 18,
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
   tabIconWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: 'rgba(125, 211, 192, 0.6)',
+    shadowColor: colors.lime[500],
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0,
     shadowRadius: 20,

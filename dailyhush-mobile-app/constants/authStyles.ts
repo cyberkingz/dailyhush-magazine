@@ -4,6 +4,7 @@
  */
 
 import { DimensionValue } from 'react-native';
+import { colors } from './colors';
 
 /**
  * Typography
@@ -48,13 +49,13 @@ export const authTypography = {
   buttonText: {
     fontSize: 18,
     fontWeight: '600' as const,
-    color: '#FFFFFF',
+    color: colors.background.primary, // Dark text on lime button
   },
 
   linkText: {
     fontSize: 16,
     fontWeight: '500' as const,
-    color: '#52B788',
+    color: colors.lime[500], // Lime-500 for link text
   },
 
   footerText: {
@@ -81,16 +82,16 @@ export const inputFieldStyles = {
     height: 56,
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: '#0F1F1A',
+    backgroundColor: colors.background.secondary,
     borderWidth: 2,
-    borderColor: 'rgba(64, 145, 108, 0.4)',
+    borderColor: colors.background.border,
     borderRadius: 12,
     ...authTypography.inputText,
   },
 
   inputFocused: {
-    borderColor: '#40916C',
-    backgroundColor: '#0F1F1A',
+    borderColor: colors.lime[500], // Lime-500 for focus state
+    backgroundColor: colors.background.secondary,
   },
 
   inputError: {
@@ -140,7 +141,7 @@ export const authButtons = {
     },
 
     style: {
-      backgroundColor: '#40916C',
+      backgroundColor: colors.lime[500], // Lime-500 primary button
       borderRadius: 12,
       height: 56,
       flexDirection: 'row' as const,
@@ -149,7 +150,7 @@ export const authButtons = {
     },
 
     pressedStyle: {
-      backgroundColor: '#2D6A4F',
+      backgroundColor: colors.lime[600], // Lime-600 pressed state
     },
 
     disabledStyle: {
@@ -174,7 +175,7 @@ export const authButtons = {
     style: {
       backgroundColor: 'transparent',
       borderWidth: 2,
-      borderColor: '#40916C',
+      borderColor: colors.lime[500], // Lime-500 border for secondary button
       borderRadius: 12,
       height: 56,
       flexDirection: 'row' as const,
@@ -183,7 +184,7 @@ export const authButtons = {
     },
 
     pressedStyle: {
-      backgroundColor: 'rgba(64, 145, 108, 0.1)',
+      backgroundColor: colors.lime[500] + '1A', // Lime background on press (10% opacity)
     },
 
     text: {
@@ -208,7 +209,7 @@ export const authButtons = {
     },
 
     pressedText: {
-      color: '#74C69D',
+      color: colors.lime[600], // Lime-600 for pressed link
     },
 
     hitSlop: { top: 12, bottom: 12, left: 12, right: 12 },
@@ -306,9 +307,9 @@ export const statusColors = {
   },
 
   success: {
-    border: '#52B788',
-    text: '#52B788',
-    background: 'rgba(82, 183, 136, 0.1)',
-    icon: '#52B788',
+    border: colors.lime[500], // Lime-500 for success
+    text: colors.lime[500],
+    background: colors.lime[500] + '1A', // 10% opacity
+    icon: colors.lime[500],
   },
 };

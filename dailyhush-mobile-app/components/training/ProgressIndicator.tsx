@@ -20,7 +20,7 @@ export function ProgressIndicator({ current, total, showText = true }: ProgressI
         {Array.from({ length: total }).map((_, index) => (
           <View
             key={index}
-            className={`h-2 w-2 rounded-full ${index < current ? 'bg-[#40916C]' : 'bg-[#1A2E26]'}`}
+            className={`h-2 w-2 rounded-full ${index < current ? 'bg-[#C5F82A]' : 'bg-[#1A2E26]'}`}
           />
         ))}
       </View>

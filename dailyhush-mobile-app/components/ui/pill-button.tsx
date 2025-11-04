@@ -53,21 +53,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    shadowColor: colors.emerald[700],
+    shadowColor: colors.shadow.lime, // Lime shadow
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 6,
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
     elevation: 4,
   },
   primary: {
-    backgroundColor: colors.emerald[700],
+    backgroundColor: colors.lime[600], // Lime-600 for subtle button
     borderWidth: 1,
-    borderColor: colors.emerald[600],
+    borderColor: colors.lime[500], // Lime-500 border
   },
   secondary: {
     backgroundColor: colors.background.card,
     borderWidth: 1,
-    borderColor: colors.emerald[700],
+    borderColor: colors.lime[600], // Lime-600 border
   },
   disabled: {
     opacity: 0.5,
@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
   primaryText: {
     fontSize: 15,
     fontWeight: '600',
-    color: colors.white,
+    color: colors.background.primary, // Dark text on lime background
     letterSpacing: 0.3,
   },
   secondaryText: {
     fontSize: 15,
     fontWeight: '600',
-    color: colors.emerald[500],
+    color: colors.lime[500], // Lime-500 text
     letterSpacing: 0.3,
   },
 });

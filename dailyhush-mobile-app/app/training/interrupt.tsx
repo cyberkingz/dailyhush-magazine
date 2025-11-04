@@ -5,7 +5,7 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -141,29 +141,29 @@ export default function InterruptModule() {
     loadProgress();
   }, [user?.user_id]);
 
-  // Create debounced save function (1 second delay)
-  const debouncedSave = useMemo(
-    () =>
-      debounce(async () => {
-        if (!user?.user_id) return;
+  // Create stable debounced save function using ref to avoid dependency issues
+  const debouncedSaveRef = useRef<((screen: Screen, physical: string[], mental: string[]) => void) | null>(null);
 
-        await saveModuleProgress(user.user_id, FireModule.INTERRUPT, {
-          currentScreen,
-          interruptData: {
-            selectedPhysicalSigns: selectedPhysical,
-            selectedMentalCues: selectedMental,
-          },
-        });
-      }, timing.debounce.save),
-    []
-  );
+  if (!debouncedSaveRef.current) {
+    debouncedSaveRef.current = debounce(async (screen: Screen, physical: string[], mental: string[]) => {
+      if (!user?.user_id) return;
+
+      await saveModuleProgress(user.user_id, FireModule.INTERRUPT, {
+        currentScreen: screen,
+        interruptData: {
+          selectedPhysicalSigns: physical,
+          selectedMentalCues: mental,
+        },
+      });
+    }, timing.debounce.save);
+  }
 
   // Auto-save progress when screen or selections change (debounced)
   useEffect(() => {
     if (isLoading || !user?.user_id) return;
 
-    debouncedSave();
-  }, [currentScreen, selectedPhysical, selectedMental, user?.user_id, isLoading, debouncedSave]);
+    debouncedSaveRef.current!(currentScreen, selectedPhysical, selectedMental);
+  }, [currentScreen, selectedPhysical, selectedMental, isLoading]);
 
   // Scroll to top when screen changes
   useEffect(() => {
@@ -211,7 +211,9 @@ export default function InterruptModule() {
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">The 10-Second Window</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              The 10-Second Window
+            </Text>
 
             <ContentCard
               body="You know the pattern now. You know your triggers.
@@ -227,15 +229,15 @@ You need to catch the spiral BEFORE it starts."
 This module teaches you to recognize it and use it."
             />
 
-            <Text className="text-base leading-relaxed text-[#95B8A8]">
+            <Text className="text-base leading-relaxed" style={{ color: colors.text.secondary }}>
               Most people who ruminate spend years trying to stop spirals once they've started.
             </Text>
 
-            <Text className="text-lg font-semibold text-[#E8F4F0]">
+            <Text className="text-lg font-semibold" style={{ color: colors.text.primary }}>
               That's like trying to stop a train after it leaves the station.
             </Text>
 
-            <Text className="text-base leading-relaxed text-[#95B8A8]">
+            <Text className="text-base leading-relaxed" style={{ color: colors.text.secondary }}>
               Instead, we're going to catch it at the platform.
             </Text>
           </View>
@@ -244,7 +246,9 @@ This module teaches you to recognize it and use it."
         {/* Screen 2: Early Warning */}
         {currentScreen === 'early-warning' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Early Warning Signs</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Early Warning Signs
+            </Text>
 
             <ContentCard
               heading="Your body knows BEFORE your mind does"
@@ -259,7 +263,7 @@ Most people ignore these. You're about to learn to catch them."
 
             <ContentCard
               variant="highlight"
-              icon={<AlertCircle size={24} color="#52B788" strokeWidth={2} />}
+              icon={<AlertCircle size={24} color={colors.lime[500]} strokeWidth={2} />}
               heading="Why this matters"
               body="Your body gives you a 3-10 second head start.
 
@@ -275,9 +279,11 @@ Wait too long, and you're already looping."
         {/* Screen 3: Physical Sensations */}
         {currentScreen === 'physical' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Physical Warning Signs</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Physical Warning Signs
+            </Text>
 
-            <Text className="text-base text-[#95B8A8]">
+            <Text className="text-base" style={{ color: colors.text.secondary }}>
               Which physical sensations do YOU experience? Check all that apply:
             </Text>
 
@@ -289,25 +295,35 @@ Wait too long, and you're already looping."
                     togglePhysical(sign);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`flex-row items-center rounded-2xl p-4 ${
-                    selectedPhysical.includes(sign) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
-                  }`}>
+                  className="flex-row items-center rounded-2xl p-4"
+                  style={{
+                    backgroundColor: selectedPhysical.includes(sign)
+                      ? colors.lime[600]
+                      : colors.background.secondary,
+                  }}>
                   <View
-                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
-                      selectedPhysical.includes(sign)
-                        ? 'border-2 border-white bg-white'
-                        : 'border-2 border-[#95B8A8]'
-                    }`}>
+                    className="mr-3 h-6 w-6 items-center justify-center rounded"
+                    style={{
+                      borderWidth: 2,
+                      borderColor: selectedPhysical.includes(sign)
+                        ? colors.background.primary
+                        : colors.text.secondary,
+                      backgroundColor: selectedPhysical.includes(sign)
+                        ? colors.background.primary
+                        : 'transparent',
+                    }}>
                     {selectedPhysical.includes(sign) && (
-                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
+                      <Check size={16} color={colors.lime[500]} strokeWidth={3} />
                     )}
                   </View>
                   <Text
-                    className={`flex-1 text-base ${
-                      selectedPhysical.includes(sign)
-                        ? 'font-semibold text-white'
-                        : 'text-[#E8F4F0]'
-                    }`}>
+                    className="flex-1 text-base"
+                    style={{
+                      fontWeight: selectedPhysical.includes(sign) ? '600' : '400',
+                      color: selectedPhysical.includes(sign)
+                        ? colors.background.primary
+                        : colors.text.primary,
+                    }}>
                     {sign}
                   </Text>
                 </Pressable>
@@ -321,9 +337,11 @@ Wait too long, and you're already looping."
         {/* Screen 4: Mental Cues */}
         {currentScreen === 'mental' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Mental Warning Cues</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Mental Warning Cues
+            </Text>
 
-            <Text className="text-base text-[#95B8A8]">
+            <Text className="text-base" style={{ color: colors.text.secondary }}>
               What mental patterns signal the start of a spiral? Check all that apply:
             </Text>
 
@@ -335,23 +353,35 @@ Wait too long, and you're already looping."
                     toggleMental(cue);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   }}
-                  className={`flex-row items-center rounded-2xl p-4 ${
-                    selectedMental.includes(cue) ? 'bg-[#40916C]' : 'bg-[#1A4D3C]'
-                  }`}>
+                  className="flex-row items-center rounded-2xl p-4"
+                  style={{
+                    backgroundColor: selectedMental.includes(cue)
+                      ? colors.lime[600]
+                      : colors.background.secondary,
+                  }}>
                   <View
-                    className={`mr-3 h-6 w-6 items-center justify-center rounded ${
-                      selectedMental.includes(cue)
-                        ? 'border-2 border-white bg-white'
-                        : 'border-2 border-[#95B8A8]'
-                    }`}>
+                    className="mr-3 h-6 w-6 items-center justify-center rounded"
+                    style={{
+                      borderWidth: 2,
+                      borderColor: selectedMental.includes(cue)
+                        ? colors.background.primary
+                        : colors.text.secondary,
+                      backgroundColor: selectedMental.includes(cue)
+                        ? colors.background.primary
+                        : 'transparent',
+                    }}>
                     {selectedMental.includes(cue) && (
-                      <Check size={16} color={colors.button.primary} strokeWidth={3} />
+                      <Check size={16} color={colors.lime[500]} strokeWidth={3} />
                     )}
                   </View>
                   <Text
-                    className={`flex-1 text-base ${
-                      selectedMental.includes(cue) ? 'font-semibold text-white' : 'text-[#E8F4F0]'
-                    }`}>
+                    className="flex-1 text-base"
+                    style={{
+                      fontWeight: selectedMental.includes(cue) ? '600' : '400',
+                      color: selectedMental.includes(cue)
+                        ? colors.background.primary
+                        : colors.text.primary,
+                    }}>
                     {cue}
                   </Text>
                 </Pressable>
@@ -363,7 +393,9 @@ Wait too long, and you're already looping."
         {/* Screen 5: Scenario 1 */}
         {currentScreen === 'scenario1' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Practice Scenario 1</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Practice Scenario 1
+            </Text>
 
             <ContentCard
               variant="highlight"
@@ -375,12 +407,18 @@ They don't respond.
 2 hours pass."
             />
 
-            <Text className="text-lg font-semibold text-[#E8F4F0]">
+            <Text className="text-lg font-semibold" style={{ color: colors.text.primary }}>
               The OLD Way (Missing the window):
             </Text>
 
-            <View className="rounded-2xl border border-[#DC2626]/40 bg-[#1A4D3C] p-5">
-              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: '#DC2626',
+                backgroundColor: colors.background.secondary,
+              }}>
+              <Text className="text-base leading-relaxed" style={{ color: colors.text.primary }}>
                 ❌ "Did I say something wrong?"
                 {'\n\n'}❌ Start replaying the text
                 {'\n\n'}❌ Check phone obsessively
@@ -388,12 +426,18 @@ They don't respond.
               </Text>
             </View>
 
-            <Text className="text-lg font-semibold text-[#E8F4F0]">
+            <Text className="text-lg font-semibold" style={{ color: colors.text.primary }}>
               The NEW Way (Using the window):
             </Text>
 
-            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
-              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: colors.lime[500],
+                backgroundColor: colors.lime[600],
+              }}>
+              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
                 ✓ Notice: Stomach drops (physical cue)
                 {'\n\n'}✓ Recognize: "This is my pattern"
                 {'\n\n'}✓ Interrupt: 5 deep breaths
@@ -408,7 +452,9 @@ They don't respond.
         {/* Screen 6: Scenario 2 */}
         {currentScreen === 'scenario2' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Practice Scenario 2</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Practice Scenario 2
+            </Text>
 
             <ContentCard
               variant="highlight"
@@ -420,20 +466,36 @@ Someone points it out.
 Everyone hears."
             />
 
-            <Text className="text-lg font-semibold text-[#E8F4F0]">The OLD Way:</Text>
+            <Text className="text-lg font-semibold" style={{ color: colors.text.primary }}>
+              The OLD Way:
+            </Text>
 
-            <View className="rounded-2xl border border-[#DC2626]/40 bg-[#1A4D3C] p-5">
-              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: '#DC2626',
+                backgroundColor: colors.background.secondary,
+              }}>
+              <Text className="text-base leading-relaxed" style={{ color: colors.text.primary }}>
                 ❌ Face gets hot
                 {'\n\n'}❌ "Everyone thinks I'm incompetent"
                 {'\n\n'}❌ Replay for days
               </Text>
             </View>
 
-            <Text className="text-lg font-semibold text-[#E8F4F0]">The NEW Way:</Text>
+            <Text className="text-lg font-semibold" style={{ color: colors.text.primary }}>
+              The NEW Way:
+            </Text>
 
-            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
-              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: colors.lime[500],
+                backgroundColor: colors.lime[600],
+              }}>
+              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
                 ✓ Notice: Face hot (physical cue)
                 {'\n\n'}✓ Catch the thought: "Everyone thinks..."
                 {'\n\n'}✓ Interrupt: "That's the pattern"
@@ -441,7 +503,7 @@ Everyone hears."
               </Text>
             </View>
 
-            <Text className="text-center text-base italic text-[#95B8A8]">
+            <Text className="text-center text-base italic" style={{ color: colors.text.secondary }}>
               You caught it. That's a win.
             </Text>
           </View>
@@ -450,7 +512,7 @@ Everyone hears."
         {/* Screen 7: Warning System */}
         {currentScreen === 'warning-system' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
               Your Personal Early Warning System
             </Text>
 
@@ -475,11 +537,11 @@ Mental: ${selectedMental.length > 0 ? selectedMental.slice(0, 2).join(', ') : 'T
 That's it. Keep it simple."
             />
 
-            <Text className="text-center text-base text-[#95B8A8]">
+            <Text className="text-center text-base" style={{ color: colors.text.secondary }}>
               The more you practice, the faster you'll catch it.
             </Text>
 
-            <Text className="text-center text-base font-semibold text-[#E8F4F0]">
+            <Text className="text-center text-base font-semibold" style={{ color: colors.text.primary }}>
               Most people go from 2 hours of rumination to 2 minutes in 30 days.
             </Text>
           </View>
@@ -518,10 +580,10 @@ That's it. Keep it simple."
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.white }}>
+            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.button.primaryText }}>
               Continue
             </Text>
-            <ArrowRight size={20} color={colors.white} strokeWidth={2} />
+            <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={2} />
           </Pressable>
         </View>
       )}

@@ -9,7 +9,7 @@
  * - Loop type understanding
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, type ComponentProps } from 'react';
 import {
   View,
   Text,
@@ -18,17 +18,21 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { useRouter, Stack, useFocusEffect } from 'expo-router';
 import { Settings } from 'lucide-react-native';
 
-import { LoopTypeHero } from '@/components/profile/LoopTypeHero';
 import { EmotionalWeather } from '@/components/profile/EmotionalWeather';
 import { ProfileStats } from '@/components/profile/ProfileStats';
 import { PatternInsightCard } from '@/components/profile/PatternInsightCard';
 import { LoopCharacteristics } from '@/components/profile/LoopCharacteristics';
 
-import { fetchProfileSummary, type ProfileSummary, dismissInsight } from '@/services/profileService';
+import {
+  fetchProfileSummary,
+  type ProfileSummary,
+  dismissInsight,
+} from '@/services/profileService';
 
 import { colors } from '@/constants/colors';
 import { profileTypography } from '@/constants/profileTypography';
@@ -43,6 +47,19 @@ export default function ProfileScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const refreshControlColors =
+    Platform.select<Partial<ComponentProps<typeof RefreshControl>>>({
+      ios: {
+        tintColor: colors.lime[500],
+        titleColor: colors.lime[500],
+      },
+      android: {
+        colors: [colors.lime[500], colors.lime[400], colors.lime[600]],
+        progressBackgroundColor: colors.background.primary,
+      },
+      default: {},
+    }) ?? {};
 
   // Load profile data
   const loadProfileData = async () => {
@@ -109,13 +126,12 @@ export default function ProfileScreen() {
             headerShown: false,
           }}
         />
-        <ActivityIndicator size="large" color={colors.emerald[600]} />
+        <ActivityIndicator size="large" color={colors.lime[500]} />
         <Text
           style={[
             profileTypography.sections.subtitle,
             { color: colors.text.secondary, marginTop: 16 },
-          ]}
-        >
+          ]}>
           Loading your profile...
         </Text>
       </View>
@@ -135,16 +151,14 @@ export default function ProfileScreen() {
           style={[
             profileTypography.sections.title,
             { color: colors.text.primary, marginBottom: 8 },
-          ]}
-        >
+          ]}>
           Oops!
         </Text>
         <Text
           style={[
             profileTypography.sections.subtitle,
             { color: colors.text.secondary, textAlign: 'center', marginBottom: 16 },
-          ]}
-        >
+          ]}>
           {error || 'Could not load profile'}
         </Text>
         <TouchableOpacity
@@ -152,11 +166,8 @@ export default function ProfileScreen() {
           onPress={() => {
             setIsLoading(true);
             loadProfileData();
-          }}
-        >
-          <Text
-            style={[profileTypography.buttons.primary, { color: colors.white }]}
-          >
+          }}>
+          <Text style={[profileTypography.buttons.primary, { color: colors.white }]}>
             Try Again
           </Text>
         </TouchableOpacity>
@@ -179,8 +190,7 @@ export default function ProfileScreen() {
               onPress={handleSettings}
               style={styles.headerButton}
               accessibilityLabel="Settings"
-              accessibilityRole="button"
-            >
+              accessibilityRole="button">
               <Settings size={24} color={colors.text.primary} />
             </TouchableOpacity>
           ),
@@ -207,13 +217,11 @@ export default function ProfileScreen() {
           <RefreshControl
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
-            tintColor={colors.emerald[600]}
-            colors={[colors.emerald[600]]}
+            {...refreshControlColors}
           />
-        }
-      >
-        {/* Warm Greeting */}
-        <View style={styles.greetingSection}>
+        }>
+        {/* Greeting + Journey Header Combined */}
+        <View style={styles.topSection}>
           <Text style={styles.greetingText}>
             {(() => {
               const hour = new Date().getHours();
@@ -223,36 +231,31 @@ export default function ProfileScreen() {
             })()}
             {profileData.user.full_name ? `, ${profileData.user.full_name.split(' ')[0]}` : ''}
           </Text>
-          <Text style={styles.greetingSubtext}>
-            Welcome back to your journey. Let's see how you're doing.
-          </Text>
+          <Text style={styles.journeySubtext}>Your journey this week</Text>
         </View>
 
-        {/* Loop Type Hero */}
-        {profileData.user.loop_type && (
-          <LoopTypeHero
-            loopType={profileData.user.loop_type as LoopType}
-            userName={profileData.user.full_name || undefined}
+        {/* Section: Stats - HERO POSITION */}
+        <View style={styles.section}>
+
+          <ProfileStats
+            currentStreak={profileData.stats.currentStreak}
+            totalCheckIns={profileData.stats.totalCheckIns}
+            avgMoodRating={profileData.stats.avgMoodRating}
           />
-        )}
+
+          {/* Transitional text */}
+          <Text style={styles.transitionalText}>
+            Let's check in on how you're feeling today
+          </Text>
+        </View>
 
         {/* Section: Right Now */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text
-              style={[
-                profileTypography.sections.title,
-                { color: colors.text.primary },
-              ]}
-            >
+            <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
               Right Now
             </Text>
-            <Text
-              style={[
-                profileTypography.sections.subtitle,
-                { color: colors.text.secondary },
-              ]}
-            >
+            <Text style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
               Your emotional weather today
             </Text>
           </View>
@@ -265,59 +268,16 @@ export default function ProfileScreen() {
           />
         </View>
 
-        {/* Section: Your Journey This Week */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text
-              style={[
-                profileTypography.sections.title,
-                { color: colors.text.primary },
-              ]}
-            >
-              Your Journey This Week
-            </Text>
-            <Text
-              style={[
-                profileTypography.sections.subtitle,
-                { color: colors.text.secondary },
-              ]}
-            >
-              Every check-in is a step toward understanding yourself
-            </Text>
-          </View>
-
-          <ProfileStats
-            currentStreak={profileData.stats.currentStreak}
-            totalCheckIns={profileData.stats.totalCheckIns}
-            avgMoodRating={profileData.stats.avgMoodRating}
-          />
-
-          {/* Transitional text */}
-          <Text style={styles.transitionalText}>
-            These moments of self-reflection are building your self-awareness
-          </Text>
-        </View>
-
         {/* Subtle divider before insights */}
         <View style={styles.narrativeDivider} />
 
         {/* Section: What We're Learning Together */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text
-              style={[
-                profileTypography.sections.title,
-                { color: colors.text.primary },
-              ]}
-            >
+          <View style={styles.sectionHeaderNoBorder}>
+            <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
               What We're Learning Together
             </Text>
-            <Text
-              style={[
-                profileTypography.sections.subtitle,
-                { color: colors.text.secondary },
-              ]}
-            >
+            <Text style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
               {profileData.insights.length > 0
                 ? `Patterns emerging from your ${profileData.stats.totalCheckIns} check-ins`
                 : 'Your patterns are growing'}
@@ -338,43 +298,38 @@ export default function ProfileScreen() {
               <Text style={styles.emptyPatternsIcon}>🌱</Text>
               <Text style={styles.emptyPatternsTitle}>Your patterns are growing</Text>
               <Text style={styles.emptyPatternsBody}>
-                Keep checking in. After a few more reflections, we'll start to see patterns in
-                your emotional weather.
+                Keep checking in. After a few more reflections, we'll start to see patterns in your
+                emotional weather.
               </Text>
             </View>
           )}
         </View>
 
-        {/* Section: Making Sense of It All */}
+        {/* Subtle divider before loop type */}
+        <View style={styles.narrativeDivider} />
+
+        {/* Section: Understanding Your Pattern */}
         {profileData.user.loop_type && (
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Text
-                style={[
-                  profileTypography.sections.title,
-                  { color: colors.text.primary },
-                ]}
-              >
-                Making Sense of It All
+            <View style={styles.sectionHeaderNoBorder}>
+              <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
+                Understanding Your Pattern
               </Text>
-              <Text
-                style={[
-                  profileTypography.sections.subtitle,
-                  { color: colors.text.secondary },
-                ]}
-              >
-                What your{' '}
-                {getLoopTypeConfig(profileData.user.loop_type as LoopType).name.toLowerCase()}{' '}
-                pattern means for you
+              <Text style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
+                The {getLoopTypeConfig(profileData.user.loop_type as LoopType).name} explained
               </Text>
             </View>
 
-            {/* Intro paragraph */}
-            <Text style={styles.loopIntroText}>
-              Your check-ins and patterns tell us you're navigating the{' '}
-              {getLoopTypeConfig(profileData.user.loop_type as LoopType).name}. Here's what that
-              means—and how you can work with it, not against it.
-            </Text>
+            {/* Loop type intro - paragraph format */}
+            <View style={styles.loopIntroParagraph}>
+              <Text style={styles.loopIntroText}>
+                Based on your check-ins, you're navigating the{' '}
+                <Text style={styles.loopTypeNameInline}>
+                  {getLoopTypeConfig(profileData.user.loop_type as LoopType).name}
+                </Text>
+                —{getLoopTypeConfig(profileData.user.loop_type as LoopType).tagline.toLowerCase()}. Understanding this pattern helps you work with it, not against it.
+              </Text>
+            </View>
 
             <LoopCharacteristics loopType={profileData.user.loop_type as LoopType} />
           </View>
@@ -398,81 +353,95 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 24,
+    paddingHorizontal: 20,
+    paddingTop: 16,
   },
-  greetingSection: {
+  topSection: {
     marginBottom: 28,
     paddingTop: 8,
   },
   greetingText: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: '700',
     color: colors.text.primary,
     marginBottom: 8,
     letterSpacing: -0.5,
   },
-  greetingSubtext: {
-    fontSize: 16,
+  journeySubtext: {
+    fontSize: 15,
     color: colors.text.secondary,
-    lineHeight: 24,
-    fontWeight: '400',
+    fontWeight: '500',
+    opacity: 0.75,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: 40,
   },
   sectionHeader: {
-    marginBottom: 16,
+    marginBottom: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.lime[500] + '08',
+  },
+  sectionHeaderNoBorder: {
+    marginBottom: 20,
   },
   headerButton: {
     marginRight: 16,
     padding: 8,
   },
   retryButton: {
-    backgroundColor: colors.emerald[600],
+    backgroundColor: colors.lime[500],
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 12,
   },
   transitionalText: {
-    fontSize: 14,
+    fontSize: 15,
     fontStyle: 'italic',
     color: colors.text.secondary,
     textAlign: 'center',
-    marginTop: 12,
+    marginTop: 16,
     marginBottom: 24,
     paddingHorizontal: 24,
-    lineHeight: 20,
+    lineHeight: 22,
+    opacity: 0.85,
   },
   narrativeDivider: {
     height: 1,
-    backgroundColor: colors.background.border,
-    opacity: 0.3,
-    marginVertical: 40,
-    marginHorizontal: 32,
+    backgroundColor: colors.lime[500],
+    opacity: 0.1,
+    marginVertical: 48,
+    marginHorizontal: 40,
+  },
+  loopIntroParagraph: {
+    marginBottom: 28,
+    paddingLeft: 4,
   },
   loopIntroText: {
-    fontSize: 15,
+    fontSize: 16,
     color: colors.text.secondary,
-    lineHeight: 22,
-    textAlign: 'center',
-    marginBottom: 20,
-    paddingHorizontal: 8,
+    lineHeight: 24,
+    textAlign: 'left',
+  },
+  loopTypeNameInline: {
+    color: colors.lime[500],
+    fontWeight: '600',
   },
   emptyPatternsCard: {
     backgroundColor: colors.background.secondary,
     borderRadius: 20,
     padding: 32,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.background.border,
+    borderWidth: 2,
+    borderColor: colors.lime[500] + '1A',
   },
   emptyPatternsIcon: {
-    fontSize: 48,
-    marginBottom: 16,
+    fontSize: 56,
+    marginBottom: 20,
   },
   emptyPatternsTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: '700',
     color: colors.text.primary,
     marginBottom: 12,
     textAlign: 'center',
@@ -482,5 +451,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: colors.text.secondary,
     textAlign: 'center',
+    maxWidth: 280,
   },
 });

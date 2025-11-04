@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { Text } from '@/components/ui/text';
+import { colors } from '@/constants/colors';
 
 interface InteractiveExerciseProps {
   emoji?: string;
@@ -44,17 +45,27 @@ export function InteractiveExercise({
   const isValid = characterCount >= minLength;
 
   return (
-    <View className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-6">
+    <View
+      className="rounded-2xl p-6"
+      style={{
+        borderWidth: 1,
+        borderColor: colors.background.border,
+        backgroundColor: colors.background.secondary,
+      }}>
       {/* Header */}
       <View className="mb-4 flex-row items-center">
         <Text className="mr-3 text-4xl" style={{ lineHeight: 48, paddingTop: 4 }}>
           {emoji}
         </Text>
-        <Text className="flex-1 text-lg font-semibold text-[#E8F4F0]">{title}</Text>
+        <Text className="flex-1 text-lg font-semibold" style={{ color: colors.text.primary }}>
+          {title}
+        </Text>
       </View>
 
       {/* Prompt */}
-      <Text className="mb-4 text-base leading-relaxed text-[#95B8A8]">{prompt}</Text>
+      <Text className="mb-4 text-base leading-relaxed" style={{ color: colors.text.secondary }}>
+        {prompt}
+      </Text>
 
       {/* Text Input */}
       <TextInput
@@ -63,23 +74,33 @@ export function InteractiveExercise({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
-        placeholderTextColor="#95B8A8"
+        placeholderTextColor={colors.text.muted}
         multiline={multiline}
         numberOfLines={multiline ? 4 : 1}
-        className={`rounded-xl border-2 bg-[#0A1612] p-4 text-base text-[#E8F4F0] ${
-          isFocused ? 'border-[#40916C]' : 'border-[#1A2E26]'
-        } ${multiline ? 'min-h-[100px]' : 'h-12'}`}
-        style={{ textAlignVertical: multiline ? 'top' : 'center' }}
+        style={{
+          borderRadius: 12,
+          borderWidth: 2,
+          borderColor: isFocused ? colors.lime[500] : colors.background.border,
+          backgroundColor: colors.background.primary,
+          padding: 16,
+          fontSize: 16,
+          color: colors.text.primary,
+          textAlignVertical: multiline ? 'top' : 'center',
+          minHeight: multiline ? 100 : 48,
+        }}
       />
 
       {/* Character Count */}
       <View className="mt-2 flex-row items-center justify-between">
         <Text
-          className={`text-xs ${isValid ? 'text-[#52B788]' : 'text-[#95B8A8]'}`}
-          style={{ lineHeight: 18 }}>
+          className="text-xs"
+          style={{
+            lineHeight: 18,
+            color: isValid ? colors.lime[500] : colors.text.secondary,
+          }}>
           {isValid ? '✓ Ready to continue' : `At least ${minLength} characters`}
         </Text>
-        <Text className="text-xs text-[#95B8A8]">
+        <Text className="text-xs" style={{ color: colors.text.secondary }}>
           {characterCount}/{maxLength}
         </Text>
       </View>

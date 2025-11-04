@@ -22,27 +22,32 @@ export function ProfileStats({
   totalCheckIns,
   avgMoodRating,
 }: ProfileStatsProps) {
+  // Check if it's a milestone streak
+  const isMilestone = [7, 14, 30, 60, 90, 180, 365].includes(currentStreak);
+
   return (
     <View style={styles.container}>
-      {/* Current Streak */}
+      {/* Total Check-ins */}
       <StatCard
-        icon={<Flame size={24} color={colors.emerald[600]} />}
-        value={currentStreak}
-        label="Day Streak"
+        icon={<Calendar size={24} color={colors.lime[500]} />}
+        value={totalCheckIns}
+        label="Check-ins"
         index={0}
       />
 
-      {/* Total Check-ins */}
+      {/* Current Streak - HERO ELEMENT */}
       <StatCard
-        icon={<Calendar size={24} color={colors.emerald[600]} />}
-        value={totalCheckIns}
-        label="Check-ins"
+        icon={<Flame size={28} color={colors.lime[500]} fill={colors.lime[500]} />}
+        value={currentStreak}
+        label="Day Streak"
         index={1}
+        isHero={true}
+        isMilestone={isMilestone}
       />
 
       {/* Average Mood */}
       <StatCard
-        icon={<Heart size={24} color={colors.emerald[600]} />}
+        icon={<Heart size={24} color={colors.lime[500]} />}
         value={avgMoodRating.toFixed(1)}
         label="Avg Mood"
         index={2}
@@ -56,9 +61,11 @@ interface StatCardProps {
   value: number | string;
   label: string;
   index: number;
+  isHero?: boolean;
+  isMilestone?: boolean;
 }
 
-function StatCard({ icon, value, label, index }: StatCardProps) {
+function StatCard({ icon, value, label, index, isHero = false, isMilestone = false }: StatCardProps) {
   return (
     <MotiView
       from={{ opacity: 0, scale: 0.9 }}
@@ -68,15 +75,36 @@ function StatCard({ icon, value, label, index }: StatCardProps) {
         duration: 400,
         delay: index * 100,
       }}
-      style={styles.statCard}
+      style={[
+        styles.statCard,
+        isHero && styles.heroCard,
+        isMilestone && styles.milestoneCard,
+      ]}
     >
-      <View style={styles.iconContainer}>{icon}</View>
-      <Text style={[profileTypography.stats.number, { color: colors.text.primary }]}>
+      <View style={[styles.iconContainer, isHero && styles.heroIcon]}>{icon}</View>
+      <Text
+        style={[
+          profileTypography.stats.number,
+          { color: colors.text.primary },
+          isHero && styles.heroValue,
+        ]}
+      >
         {value}
       </Text>
-      <Text style={[profileTypography.stats.label, { color: colors.text.secondary }]}>
+      <Text
+        style={[
+          profileTypography.stats.label,
+          { color: colors.text.secondary },
+          isHero && styles.heroLabel,
+        ]}
+      >
         {label}
       </Text>
+      {isMilestone && (
+        <View style={styles.milestoneBadge}>
+          <Text style={styles.milestoneBadgeText}>🎉</Text>
+        </View>
+      )}
     </MotiView>
   );
 }
@@ -97,7 +125,52 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.background.border,
   },
+  heroCard: {
+    paddingVertical: 20,
+    paddingHorizontal: 18,
+    borderWidth: 2,
+    borderColor: colors.lime[500] + '30',
+    backgroundColor: colors.lime[500] + '05',
+    shadowColor: colors.lime[500],
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  milestoneCard: {
+    borderColor: colors.lime[500] + '50',
+    backgroundColor: colors.lime[500] + '08',
+  },
   iconContainer: {
     marginBottom: 8,
+  },
+  heroIcon: {
+    marginBottom: 12,
+  },
+  heroValue: {
+    fontSize: 36,
+    fontWeight: '800',
+    color: colors.lime[500],
+    letterSpacing: -1,
+  },
+  heroLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.lime[500],
+    opacity: 0.9,
+  },
+  milestoneBadge: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: colors.lime[500],
+    borderRadius: 12,
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  milestoneBadgeText: {
+    fontSize: 14,
   },
 });

@@ -550,7 +550,7 @@ export default function Onboarding() {
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="text-lg font-bold" style={{ color: colors.white }}>
+            <Text className="text-lg font-bold" style={{ color: colors.button.primaryText }}>
               Try It Now (90 seconds)
             </Text>
           </Pressable>
@@ -724,7 +724,7 @@ export default function Onboarding() {
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="text-lg font-bold" style={{ color: colors.white }}>
+            <Text className="text-lg font-bold" style={{ color: colors.button.primaryText }}>
               Continue
             </Text>
           </Pressable>
@@ -789,7 +789,7 @@ export default function Onboarding() {
               onPress={() => router.push('/shift-pairing' as any)}
               className="w-full items-center rounded-2xl p-4 active:opacity-90"
               style={{ backgroundColor: colors.button.primary }}>
-              <Text className="text-base font-bold" style={{ color: colors.white }}>
+              <Text className="text-base font-bold" style={{ color: colors.button.primaryText }}>
                 Pair Now via Bluetooth
               </Text>
             </Pressable>
@@ -899,10 +899,10 @@ export default function Onboarding() {
             height: spacing.button.height,
           }}>
           <View className="flex-row items-center">
-            <Text className="mr-2 text-lg font-bold" style={{ color: colors.white }}>
+            <Text className="mr-2 text-lg font-bold" style={{ color: colors.button.primaryText }}>
               Start Using DailyHush
             </Text>
-            <ArrowRight size={20} color={colors.white} strokeWidth={3} />
+            <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={3} />
           </View>
         </Pressable>
       </View>

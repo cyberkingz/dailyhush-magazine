@@ -5,7 +5,7 @@
 
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -126,28 +126,28 @@ export default function ReframeModule() {
     loadProgress();
   }, [user?.user_id]);
 
-  // Create debounced save function
-  const debouncedSave = useMemo(
-    () =>
-      debounce(async () => {
-        if (!user?.user_id) return;
+  // Create stable debounced save function using ref to avoid dependency issues
+  const debouncedSaveRef = useRef<((screen: Screen, text: string) => void) | null>(null);
 
-        await saveModuleProgress(user.user_id, FireModule.REFRAME, {
-          currentScreen,
-          reframeData: {
-            reframeText,
-          },
-        });
-      }, timing.debounce.save),
-    []
-  );
+  if (!debouncedSaveRef.current) {
+    debouncedSaveRef.current = debounce(async (screen: Screen, text: string) => {
+      if (!user?.user_id) return;
+
+      await saveModuleProgress(user.user_id, FireModule.REFRAME, {
+        currentScreen: screen,
+        reframeData: {
+          reframeText: text,
+        },
+      });
+    }, timing.debounce.save);
+  }
 
   // Auto-save progress when screen or text changes (debounced)
   useEffect(() => {
     if (isLoading || !user?.user_id) return;
 
-    debouncedSave();
-  }, [currentScreen, reframeText, user?.user_id, isLoading, debouncedSave]);
+    debouncedSaveRef.current!(currentScreen, reframeText);
+  }, [currentScreen, reframeText, isLoading]);
 
   // Scroll to top when screen changes
   useEffect(() => {
@@ -195,7 +195,9 @@ export default function ReframeModule() {
         {/* Screen 1: Welcome */}
         {currentScreen === 'welcome' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Shame vs Growth</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Shame vs Growth
+            </Text>
 
             <ContentCard
               body="You can FOCUS on your pattern.
@@ -209,11 +211,11 @@ But there's still a voice:
 'Everyone else has it together.'"
             />
 
-            <Text className="text-base leading-relaxed text-[#95B8A8]">
+            <Text className="text-base leading-relaxed" style={{ color: colors.text.secondary }}>
               That's the shame spiral.
             </Text>
 
-            <Text className="text-lg font-semibold text-[#E8F4F0]">
+            <Text className="text-lg font-semibold" style={{ color: colors.text.primary }}>
               And it's killing your progress.
             </Text>
 
@@ -230,7 +232,9 @@ Just... truth."
         {/* Screen 2: Distortions */}
         {currentScreen === 'distortions' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Cognitive Distortions</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Cognitive Distortions
+            </Text>
 
             <ContentCard
               heading="All-or-Nothing Thinking"
@@ -264,12 +268,12 @@ When you recognize the distortion, you take away its power."
         {/* Screen 3: Perspective Shift */}
         {currentScreen === 'perspective' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
               Reframing Technique #1: Perspective Shift
             </Text>
 
             <ContentCard
-              icon={<RefreshCcw size={24} color="#52B788" strokeWidth={2} />}
+              icon={<RefreshCcw size={24} color={colors.lime[500]} strokeWidth={2} />}
               heading="The Formula"
               body="Shame thought → Evidence → Reframe
 
@@ -279,15 +283,23 @@ Evidence: I've had successful conversations
 Reframe: 'I'm learning what works'"
             />
 
-            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
-              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">Ask yourself:</Text>
-              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: colors.lime[500],
+                backgroundColor: colors.lime[600],
+              }}>
+              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+                Ask yourself:
+              </Text>
+              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
                 • Is this thought 100% true?{'\n\n'}• What evidence contradicts it?{'\n\n'}• What
                 would I tell a friend?{'\n\n'}• What's a more balanced view?
               </Text>
             </View>
 
-            <Text className="text-center text-base italic text-[#95B8A8]">
+            <Text className="text-center text-base italic" style={{ color: colors.text.secondary }}>
               You're not lying to yourself. You're telling the FULL truth, not just the shame
               version.
             </Text>
@@ -297,7 +309,7 @@ Reframe: 'I'm learning what works'"
         {/* Screen 4: Compassion */}
         {currentScreen === 'compassion' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
               Reframing Technique #2: Self-Compassion
             </Text>
 
@@ -307,8 +319,16 @@ Reframe: 'I'm learning what works'"
 Adding shame on top doesn't help. It makes it worse."
             />
 
-            <View className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-5">
-              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">The Shame Layer:</Text>
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: colors.background.border,
+                backgroundColor: colors.background.secondary,
+              }}>
+              <Text className="mb-3 text-base font-semibold" style={{ color: colors.text.primary }}>
+                The Shame Layer:
+              </Text>
               <Text className="text-base leading-relaxed text-[#DC2626]">
                 ❌ "I shouldn't be ruminating"
                 {'\n\n'}❌ "Why can't I just stop?"
@@ -316,11 +336,17 @@ Adding shame on top doesn't help. It makes it worse."
               </Text>
             </View>
 
-            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
-              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: colors.lime[500],
+                backgroundColor: colors.lime[600],
+              }}>
+              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
                 The Compassion Reframe:
               </Text>
-              <Text className="text-base leading-relaxed text-[#52B788]">
+              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
                 ✓ "This is hard. It's okay that it's hard"
                 {'\n\n'}✓ "I'm doing my best"
                 {'\n\n'}✓ "Millions of people struggle with this"
@@ -334,9 +360,11 @@ Adding shame on top doesn't help. It makes it worse."
         {/* Screen 5: Practice */}
         {currentScreen === 'practice' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Practice: Reframe Your Spiral</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Practice: Reframe Your Spiral
+            </Text>
 
-            <Text className="text-base text-[#95B8A8]">
+            <Text className="text-base" style={{ color: colors.text.secondary }}>
               Think of a recent rumination. Write the shame thought, then reframe it:
             </Text>
 
@@ -364,31 +392,44 @@ You're literally rewiring your brain."
         {/* Screen 6: Common Spirals */}
         {currentScreen === 'common-spirals' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
               Common Shame Spirals & Reframes
             </Text>
 
-            <Text className="text-base text-[#95B8A8]">
+            <Text className="text-base" style={{ color: colors.text.secondary }}>
               Here are reframes for the most common rumination patterns:
             </Text>
 
             {commonShameSpirals.map((item, index) => (
-              <View key={index} className="rounded-2xl border border-[#40916C]/20 bg-[#1A4D3C] p-5">
+              <View
+                key={index}
+                className="rounded-2xl p-5"
+                style={{
+                  borderWidth: 1,
+                  borderColor: colors.background.border,
+                  backgroundColor: colors.background.secondary,
+                }}>
                 <View className="mb-3">
-                  <Text className="mb-1 text-xs text-[#95B8A8]">Shame:</Text>
+                  <Text className="mb-1 text-xs" style={{ color: colors.text.secondary }}>
+                    Shame:
+                  </Text>
                   <Text className="text-base text-[#DC2626]">{item.spiral}</Text>
                 </View>
 
-                <View className="my-3 h-px bg-[#40916C]/30" />
+                <View className="my-3 h-px" style={{ backgroundColor: colors.lime[500] + '30' }} />
 
                 <View>
-                  <Text className="mb-1 text-xs text-[#95B8A8]">Reframe:</Text>
-                  <Text className="text-base font-semibold text-[#52B788]">{item.reframe}</Text>
+                  <Text className="mb-1 text-xs" style={{ color: colors.text.secondary }}>
+                    Reframe:
+                  </Text>
+                  <Text className="text-base font-semibold" style={{ color: colors.lime[500] }}>
+                    {item.reframe}
+                  </Text>
                 </View>
               </View>
             ))}
 
-            <Text className="text-center text-sm italic text-[#95B8A8]">
+            <Text className="text-center text-sm italic" style={{ color: colors.text.secondary }}>
               Screenshot these. Use them when you need them.
             </Text>
           </View>
@@ -397,7 +438,9 @@ You're literally rewiring your brain."
         {/* Screen 7: Library */}
         {currentScreen === 'library' && (
           <View className="gap-6">
-            <Text className="text-2xl font-bold text-[#E8F4F0]">Your Personal Reframe Library</Text>
+            <Text className="text-2xl font-bold" style={{ color: colors.text.primary }}>
+              Your Personal Reframe Library
+            </Text>
 
             <ContentCard
               heading="Build Your Collection"
@@ -406,9 +449,17 @@ You're literally rewiring your brain."
 Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
             />
 
-            <View className="rounded-2xl border border-[#40916C] bg-[#2D6A4F] p-5">
-              <Text className="mb-3 text-base font-semibold text-[#E8F4F0]">How to use this:</Text>
-              <Text className="text-base leading-relaxed text-[#E8F4F0]">
+            <View
+              className="rounded-2xl p-5"
+              style={{
+                borderWidth: 1,
+                borderColor: colors.lime[500],
+                backgroundColor: colors.lime[600],
+              }}>
+              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+                How to use this:
+              </Text>
+              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
                 1. Catch the shame thought
                 {'\n\n'}2. Pull up your library
                 {'\n\n'}3. Find a similar reframe
@@ -416,15 +467,15 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
               </Text>
             </View>
 
-            <Text className="text-center text-base text-[#95B8A8]">
+            <Text className="text-center text-base" style={{ color: colors.text.secondary }}>
               The pattern you repeat becomes your default.
             </Text>
 
-            <Text className="text-center text-lg font-semibold text-[#E8F4F0]">
+            <Text className="text-center text-lg font-semibold" style={{ color: colors.text.primary }}>
               Right now, shame is your default.
             </Text>
 
-            <Text className="text-center text-base text-[#95B8A8]">
+            <Text className="text-center text-base" style={{ color: colors.text.secondary }}>
               After 30 days of reframing, growth becomes your default.
             </Text>
           </View>
@@ -463,10 +514,10 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.white }}>
+            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.button.primaryText }}>
               Continue
             </Text>
-            <ArrowRight size={20} color={colors.white} strokeWidth={2} />
+            <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={2} />
           </Pressable>
         </View>
       )}

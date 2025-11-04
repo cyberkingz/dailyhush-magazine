@@ -56,8 +56,8 @@ export default function HomeModern() {
       title: 'F.I.R.E. Training',
       description: 'Master the Method',
       icon: Brain,
-      iconColor: colors.emerald[500],
-      iconBackgroundColor: colors.emerald[500] + '25',
+      iconColor: colors.lime[500], // Lime-500
+      iconBackgroundColor: colors.lime[500] + '25', // Lime background with 25% opacity
       onPress: () => router.push('/training'),
       isInteractive: true,
     },
@@ -66,8 +66,8 @@ export default function HomeModern() {
       title: 'Pattern Insights',
       description: 'Track Your Trends',
       icon: TrendingUp,
-      iconColor: colors.emerald[400],
-      iconBackgroundColor: colors.emerald[400] + '25',
+      iconColor: colors.lime[400], // Lime-400
+      iconBackgroundColor: colors.lime[400] + '25', // Lime background with 25% opacity
       onPress: () => router.push('/insights'),
       isInteractive: true,
     },
@@ -76,8 +76,8 @@ export default function HomeModern() {
       title: 'Spiral History',
       description: 'View Your Journey',
       icon: History,
-      iconColor: colors.emerald[300],
-      iconBackgroundColor: colors.emerald[300] + '25',
+      iconColor: colors.lime[300], // Lime-300
+      iconBackgroundColor: colors.lime[300] + '25', // Lime background with 25% opacity
       onPress: () => router.push('/history'),
       isInteractive: true,
     },
@@ -86,8 +86,8 @@ export default function HomeModern() {
       title: 'Did you know?',
       description: 'Name it to tame it',
       icon: Lightbulb,
-      iconColor: colors.emerald[200],
-      iconBackgroundColor: colors.emerald[200] + '25',
+      iconColor: colors.lime[200], // Lime-200
+      iconBackgroundColor: colors.lime[200] + '25', // Lime background with 25% opacity
       isInteractive: false,
     },
   ];
@@ -191,7 +191,7 @@ export default function HomeModern() {
           alignItems: 'center',
           backgroundColor: colors.background.primary,
         }}>
-        <ActivityIndicator size="large" color={colors.emerald[500]} />
+        <ActivityIndicator size="large" color={colors.lime[500]} />
       </View>
     );
   }
@@ -281,10 +281,10 @@ export default function HomeModern() {
           <EmotionalWeather onPress={handleCheckIn} />
         </View>
 
-        {/* Main CTA */}
+        {/* Main CTA - Direct to crisis interruption */}
         <CTAButton
           title="I'M SPIRALING"
-          subtitle="Start Interruption Protocol"
+          subtitle="90-Second Reset"
           icon={Infinity}
           onPress={() => router.push('/spiral')}
         />

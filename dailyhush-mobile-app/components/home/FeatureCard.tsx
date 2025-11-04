@@ -43,7 +43,7 @@ export function FeatureCard({
     borderRadius: 20,
     padding: 20,
     borderWidth: 1.5,
-    borderColor: colors.emerald[600] + '30',
+    borderColor: colors.lime[600] + '30', // Lime-600 border with 30% opacity
   };
 
   const content = (

@@ -39,7 +39,11 @@ type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete
 
 export default function SpiralInterrupt() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ from?: string }>();
+  const params = useLocalSearchParams<{
+    from?: string;
+    preFeelingRating?: string;
+    source?: string;
+  }>();
   const user = useUser();
   const shiftDevice = useShiftDevice();
   const { setSpiraling } = useStore();
@@ -50,8 +54,14 @@ export default function SpiralInterrupt() {
   const audio = useAudio();
 
   // Stage management
-  const [stage, setStage] = useState<Stage>('pre-check');
-  const [preFeelingRating, setPreFeelingRating] = useState<number>(5);
+  // If coming from Anna with a pre-feeling rating, skip directly to protocol
+  const initialStage: Stage = params.preFeelingRating ? 'protocol' : 'pre-check';
+  const initialPreFeeling = params.preFeelingRating
+    ? parseInt(params.preFeelingRating, 10)
+    : 5;
+
+  const [stage, setStage] = useState<Stage>(initialStage);
+  const [preFeelingRating, setPreFeelingRating] = useState<number>(initialPreFeeling);
   const [postFeelingRating, setPostFeelingRating] = useState<number | null>(null);
   const [selectedTrigger, setSelectedTrigger] = useState<string>('');
   const [customTriggerText, setCustomTriggerText] = useState<string>('');
@@ -94,13 +104,25 @@ export default function SpiralInterrupt() {
     setSpiraling(true);
 
     // Track spiral start
-    analytics.track('SPIRAL_STARTED');
+    const eventData = params.source === 'anna'
+      ? { source: 'anna', pre_feeling: initialPreFeeling }
+      : {};
+    analytics.track('SPIRAL_STARTED', eventData);
 
     // Load meditation sound
     // TODO: Add actual meditation sound file to /assets/sounds/
     // For now, this is a placeholder - the app will gracefully handle missing audio
     // Recommended: Calming ambient sound, nature sounds, or gentle meditation music
     loadMeditationSound();
+
+    // If coming from Anna, auto-start the protocol
+    if (params.source === 'anna' && params.preFeelingRating) {
+      setIsPlaying(true);
+      // Delay audio start slightly to ensure it's loaded
+      setTimeout(() => {
+        audio.play();
+      }, 100);
+    }
 
     return () => {
       setSpiraling(false);
@@ -191,10 +213,28 @@ export default function SpiralInterrupt() {
   const handleProtocolComplete = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setIsPlaying(false);
-    setStage('post-check');
 
     // Stop meditation sound
     audio.stop();
+
+    // If coming from Anna, navigate directly back to conversation (survey will come after)
+    if (params.source === 'anna') {
+      analytics.track('SPIRAL_COMPLETED_FROM_ANNA', {
+        pre_feeling: preFeelingRating,
+      });
+
+      router.push({
+        pathname: '/anna/conversation',
+        params: {
+          preFeelingScore: preFeelingRating.toString(),
+          fromExercise: 'true',
+          surveyPending: 'true', // Flag to show survey after victory message
+        },
+      } as any);
+    } else {
+      // For non-Anna flows, continue to post-check as before
+      setStage('post-check');
+    }
   };
 
   const handleFinish = async () => {
@@ -253,10 +293,29 @@ export default function SpiralInterrupt() {
 
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
+    // If coming from Anna, navigate back to conversation with post-feeling score
+    if (params.source === 'anna') {
+      analytics.track('SPIRAL_COMPLETED_FROM_ANNA', {
+        pre_feeling: preFeelingRating,
+        post_feeling: postFeelingRating || 5,
+        reduction: preFeelingRating - (postFeelingRating || 5),
+      });
+
+      router.push({
+        pathname: '/anna/conversation',
+        params: {
+          preFeelingScore: preFeelingRating.toString(),
+          postFeelingScore: (postFeelingRating || 5).toString(),
+          fromExercise: 'true',
+        },
+      } as any);
+    }
     // If coming from onboarding, navigate to next onboarding step
-    if (params.from === 'onboarding') {
+    else if (params.from === 'onboarding') {
       router.replace('/onboarding?completed=demo' as any);
-    } else {
+    }
+    // Otherwise, go back to previous screen
+    else {
       router.back();
     }
   };

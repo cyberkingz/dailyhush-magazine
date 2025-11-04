@@ -49,6 +49,30 @@ export const AnalyticsEvents = {
   SPIRAL_STARTED: 'spiral_started',
   SPIRAL_INTERRUPTED: 'spiral_interrupted',
 
+  // Anna AI Therapy
+  SPIRAL_CHOICE_ANNA: 'spiral_choice_anna',
+  SPIRAL_CHOICE_PROTOCOL: 'spiral_choice_protocol',
+  ANNA_CONVERSATION_STARTED: 'anna_conversation_started',
+  ANNA_CONVERSATION_ENDED: 'anna_conversation_ended',
+  ANNA_MESSAGE_SENT: 'anna_message_sent',
+  ANNA_EXERCISE_TRIGGERED: 'anna_exercise_triggered',
+  ANNA_EXERCISE_COMPLETED: 'anna_exercise_completed',
+  ANNA_CONVERSATION_BACK: 'anna_conversation_back',
+  SPIRAL_COMPLETED_FROM_ANNA: 'spiral_completed_from_anna',
+
+  // Exercise System (New)
+  EXERCISE_STARTED: 'exercise_started',
+  EXERCISE_COMPLETED: 'exercise_completed',
+  EXERCISE_ABANDONED: 'exercise_abandoned',
+  EXERCISE_SKIPPED: 'exercise_skipped',
+  EXERCISE_STAGE_TRANSITION: 'exercise_stage_transition',
+  EXERCISE_CYCLE_COMPLETED: 'exercise_cycle_completed',
+  EXERCISE_RATING_PRE: 'exercise_rating_pre',
+  EXERCISE_RATING_POST: 'exercise_rating_post',
+  EXERCISE_TRIGGER_LOGGED: 'exercise_trigger_logged',
+  EXERCISE_PAUSED: 'exercise_paused',
+  EXERCISE_RESUMED: 'exercise_resumed',
+
   // Profile
   PROFILE_VIEWED: 'profile_viewed',
   SETTINGS_UPDATED: 'settings_updated',
@@ -84,6 +108,51 @@ export interface AnalyticsProperties {
   // Funnels
   source?: string;
   step?: number;
+
+  // Anna AI Therapy
+  exercise_type?: '5-4-3-2-1' | 'breathing';
+  pre_feeling?: number;
+  pre_feeling_score?: number;
+  post_feeling?: number;
+  post_feeling_score?: number;
+  message_length?: number;
+  message_count?: number;
+  reduction?: number;
+  trigger?: string;
+
+  // Module Selection
+  module_id?: string;
+  module_name?: string;
+  module_count?: number;
+  method_id?: string;
+  method_title?: string;
+  duration?: string;
+  is_recommended?: boolean;
+  is_urgent?: boolean;
+  available_methods?: number;
+
+  // Exercise System (New)
+  exercise_type?: string;
+  exercise_name?: string;
+  exercise_category?: string;
+  completion_status?: 'completed' | 'abandoned' | 'skipped';
+  session_id?: string;
+  stage?: string;
+  from_stage?: string;
+  to_stage?: string;
+  cycle_number?: number;
+  total_cycles?: number;
+  pre_anxiety_rating?: number;
+  post_anxiety_rating?: number;
+  anxiety_reduction?: number;
+  reduction_percentage?: number;
+  duration_seconds?: number;
+  trigger_category?: string;
+  trigger_text?: string;
+  abandoned_at_percentage?: number;
+  skip_reason?: string;
+  device_type?: 'ios' | 'android' | 'web';
+  app_version?: string;
 }
 
 /**

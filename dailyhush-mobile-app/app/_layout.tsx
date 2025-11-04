@@ -173,6 +173,12 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
+          name="spiral-choice"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="spiral"
           options={{
             headerShown: false,
@@ -268,11 +274,68 @@ export default function Layout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="anna/conversation"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="modules/index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="modules/[moduleId]/method"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exercises/cyclic-sigh"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exercises/grounding"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exercises/breathing"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exercises/emotion-wheel"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exercises/brain-dump"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exercises/mind-clear"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <PortalHost />
       <BottomNav
         hideOnPaths={[
           '/spiral',
+          '/spiral-choice',
+          '/anna/conversation',
+          '/anna',
           '/onboarding',
           '/settings',
           '/subscription',
@@ -285,6 +348,13 @@ export default function Layout() {
           '/training/interrupt',
           '/training/reframe',
           '/training/execute',
+          '/modules',
+          '/exercises/cyclic-sigh',
+          '/exercises/grounding',
+          '/exercises/breathing',
+          '/exercises/emotion-wheel',
+          '/exercises/brain-dump',
+          '/exercises/mind-clear',
         ]}
       />
     </ErrorBoundary>

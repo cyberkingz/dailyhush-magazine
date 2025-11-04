@@ -28,8 +28,8 @@ export function CTAButton({
   icon: Icon,
   onPress,
   iconSize = 32,
-  backgroundColor = colors.emerald[400],
-  pressedColor = colors.emerald[500],
+  backgroundColor = colors.crisis.lime, // NEON LIME - Crisis monopoly branding
+  pressedColor = colors.crisis.limeDark, // Darker lime on press
 }: CTAButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -123,11 +123,11 @@ export function CTAButton({
           style={{
             borderRadius: 24,
             overflow: 'hidden',
-            shadowColor: colors.emerald[500],
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.4,
-            shadowRadius: 16,
-            elevation: 8,
+            shadowColor: colors.crisis.lime, // Neon lime glow
+            shadowOffset: { width: 0, height: 12 },
+            shadowOpacity: 0.6, // Stronger glow for crisis button
+            shadowRadius: 20,
+            elevation: 12,
           }}>
           <LinearGradient
             colors={[backgroundColor, pressedColor]}

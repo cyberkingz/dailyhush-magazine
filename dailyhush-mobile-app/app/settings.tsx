@@ -26,6 +26,7 @@ import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { useUser } from '@/store/useStore';
 import { signOut } from '@/services/auth';
 import { useState } from 'react';
+import { colors } from '@/constants/colors';
 
 interface SettingRowProps {
   title: string;
@@ -54,26 +55,53 @@ function SettingRow({
     <Pressable
       onPress={onPress}
       disabled={!onPress && !toggle}
-      className="mb-3 flex-row items-center rounded-2xl bg-[#1A4D3C] p-4 active:opacity-90">
-      {icon && <View className="mr-3 rounded-xl bg-[#40916C]/20 p-2">{icon}</View>}
+      style={{
+        marginBottom: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 16,
+        backgroundColor: colors.background.secondary,
+        padding: 16,
+      }}>
+      {icon && (
+        <View
+          style={{
+            marginRight: 12,
+            borderRadius: 12,
+            backgroundColor: colors.lime[500] + '20',
+            padding: 8,
+          }}>
+          {icon}
+        </View>
+      )}
 
-      <View className="flex-1">
-        <Text className="text-base font-semibold text-[#E8F4F0]">{title}</Text>
-        {subtitle && <Text className="mt-0.5 text-sm text-[#95B8A8]">{subtitle}</Text>}
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontSize: 16, fontWeight: '600', color: colors.text.primary }}>
+          {title}
+        </Text>
+        {subtitle && (
+          <Text style={{ marginTop: 2, fontSize: 14, color: colors.text.secondary }}>
+            {subtitle}
+          </Text>
+        )}
       </View>
 
       {toggle && (
         <Switch
           value={toggleValue}
           onValueChange={onToggle}
-          trackColor={{ false: '#1A2E26', true: '#40916C' }}
+          trackColor={{ false: colors.background.border, true: colors.lime[500] }}
           thumbColor="#FFFFFF"
         />
       )}
 
-      {value && <Text className="mr-2 text-sm text-[#95B8A8]">{value}</Text>}
+      {value && (
+        <Text style={{ marginRight: 8, fontSize: 14, color: colors.text.secondary }}>{value}</Text>
+      )}
 
-      {showChevron && !toggle && <ChevronRight size={20} color="#95B8A8" strokeWidth={2} />}
+      {showChevron && !toggle && (
+        <ChevronRight size={20} color={colors.text.secondary} strokeWidth={2} />
+      )}
     </Pressable>
   );
 }
@@ -126,18 +154,18 @@ export default function Settings() {
   };
 
   return (
-    <View className="flex-1 bg-[#0A1612]">
+    <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       <ScrollFadeView
-        className="flex-1"
+        style={{ flex: 1 }}
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingTop: 20,
           paddingBottom: 40 + insets.bottom,
         }}
         showsVerticalScrollIndicator={false}
-        fadeColor="#0A1612"
+        fadeColor={colors.background.primary}
         fadeHeight={48}
         fadeIntensity={0.95}
         fadeVisibility="always">
@@ -149,29 +177,58 @@ export default function Settings() {
                 Haptics.selectionAsync();
                 router.push('/onboarding');
               }}
-              className="rounded-2xl bg-[#2D6A4F] p-5 active:opacity-90">
-              <View className="mb-2 flex-row items-center">
-                <Shield size={20} color="#B7E4C7" strokeWidth={2} />
-                <Text className="ml-2 text-base font-bold text-[#E8F4F0]">Create Your Account</Text>
+              style={{
+                borderRadius: 16,
+                backgroundColor: colors.lime[600],
+                padding: 20,
+              }}>
+              <View style={{ marginBottom: 8, flexDirection: 'row', alignItems: 'center' }}>
+                <Shield size={20} color={colors.lime[200]} strokeWidth={2} />
+                <Text
+                  style={{
+                    marginLeft: 8,
+                    fontSize: 16,
+                    fontWeight: '700',
+                    color: colors.text.primary,
+                  }}>
+                  Create Your Account
+                </Text>
               </View>
-              <Text className="mb-3 text-sm leading-relaxed text-[#B7E4C7]">
+              <Text
+                style={{
+                  marginBottom: 12,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  color: colors.lime[200],
+                }}>
                 You&apos;re using DailyHush as a guest. Create an account to save your progress and
                 patterns across devices.
               </Text>
-              <View className="flex-row items-center">
-                <Text className="text-sm font-semibold text-[#52B788]">Create Account →</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ fontSize: 14, fontWeight: '600', color: colors.lime[300] }}>
+                  Create Account →
+                </Text>
               </View>
             </Pressable>
           </View>
         )}
 
         {/* Account Section */}
-        <Text className="mb-3 text-xs font-semibold uppercase text-[#95B8A8]">Account</Text>
+        <Text
+          style={{
+            marginBottom: 12,
+            fontSize: 12,
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            color: colors.text.secondary,
+          }}>
+          Account
+        </Text>
 
         <SettingRow
           title="Profile"
           subtitle={user?.email || 'Guest Account'}
-          icon={<User size={20} color="#52B788" strokeWidth={2} />}
+          icon={<User size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => {
             Haptics.selectionAsync();
             router.push('/profile');
@@ -183,7 +240,7 @@ export default function Settings() {
           <SettingRow
             title="Subscription"
             subtitle="Manage your Premium plan"
-            icon={<Crown size={20} color="#52B788" strokeWidth={2} />}
+            icon={<Crown size={20} color={colors.lime[500]} strokeWidth={2} />}
             onPress={() => {
               Haptics.selectionAsync();
               router.push('/settings/subscription');
@@ -215,14 +272,22 @@ export default function Settings() {
         )}
 
         {/* Preferences Section */}
-        <Text className="mb-3 mt-6 text-xs font-semibold uppercase text-[#95B8A8]">
+        <Text
+          style={{
+            marginBottom: 12,
+            marginTop: 24,
+            fontSize: 12,
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            color: colors.text.secondary,
+          }}>
           Preferences
         </Text>
 
         <SettingRow
           title="Notifications"
           subtitle="Daily check-ins and reminders"
-          icon={<Bell size={20} color="#52B788" strokeWidth={2} />}
+          icon={<Bell size={20} color={colors.lime[500]} strokeWidth={2} />}
           toggle
           toggleValue={true}
           onToggle={(value) => {
@@ -233,16 +298,26 @@ export default function Settings() {
         <SettingRow
           title="Text Size"
           value="Large"
-          icon={<Type size={20} color="#52B788" strokeWidth={2} />}
+          icon={<Type size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
         />
 
         {/* Support Section */}
-        <Text className="mb-3 mt-6 text-xs font-semibold uppercase text-[#95B8A8]">Support</Text>
+        <Text
+          style={{
+            marginBottom: 12,
+            marginTop: 24,
+            fontSize: 12,
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            color: colors.text.secondary,
+          }}>
+          Support
+        </Text>
 
         <SettingRow
           title="Help & FAQs"
-          icon={<HelpCircle size={20} color="#52B788" strokeWidth={2} />}
+          icon={<HelpCircle size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => {
             Haptics.selectionAsync();
             router.push('/faq' as any);
@@ -252,17 +327,27 @@ export default function Settings() {
         <SettingRow
           title="Contact Support"
           subtitle="hello@daily-hush.com"
-          icon={<Mail size={20} color="#52B788" strokeWidth={2} />}
+          icon={<Mail size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
         />
 
         {/* Legal Section */}
-        <Text className="mb-3 mt-6 text-xs font-semibold uppercase text-[#95B8A8]">Legal</Text>
+        <Text
+          style={{
+            marginBottom: 12,
+            marginTop: 24,
+            fontSize: 12,
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            color: colors.text.secondary,
+          }}>
+          Legal
+        </Text>
 
         <SettingRow
           title="Privacy Policy"
           subtitle="How we protect your data"
-          icon={<Shield size={20} color="#52B788" strokeWidth={2} />}
+          icon={<Shield size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => {
             Haptics.selectionAsync();
             router.push('/legal/privacy');
@@ -272,7 +357,7 @@ export default function Settings() {
         <SettingRow
           title="Terms of Service"
           subtitle="App usage agreement"
-          icon={<FileText size={20} color="#52B788" strokeWidth={2} />}
+          icon={<FileText size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => {
             Haptics.selectionAsync();
             router.push('/legal/terms');
@@ -280,9 +365,11 @@ export default function Settings() {
         />
 
         {/* App Info */}
-        <View className="mt-8 items-center">
-          <Text className="mb-1 text-xs text-[#95B8A8]">DailyHush v1.0.0</Text>
-          <Text className="text-center text-xs text-[#95B8A8]">
+        <View style={{ marginTop: 32, alignItems: 'center' }}>
+          <Text style={{ marginBottom: 4, fontSize: 12, color: colors.text.secondary }}>
+            DailyHush v1.0.0
+          </Text>
+          <Text style={{ textAlign: 'center', fontSize: 12, color: colors.text.secondary }}>
             Made with ❤️ for women who deserve peace of mind
           </Text>
         </View>

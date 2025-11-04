@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textTransform: 'uppercase',
     letterSpacing: 1.2,
-    color: colors.emerald[300],
+    color: colors.lime[500], // Lime-500 for daily quote label
     marginBottom: 8,
     fontWeight: '600',
     opacity: 0.9,

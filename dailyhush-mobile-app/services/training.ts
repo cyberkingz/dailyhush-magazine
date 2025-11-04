@@ -24,6 +24,14 @@ const RETRY_CONFIG = {
   backoffMultiplier: 2,
 };
 
+const isTrainingLoggingEnabled = process.env.EXPO_PUBLIC_FIRE_DEBUG === 'true';
+
+function logTraining(...messages: unknown[]) {
+  if (isTrainingLoggingEnabled) {
+    console.log('[training]', ...messages);
+  }
+}
+
 /**
  * Retry a function with exponential backoff
  */
@@ -54,7 +62,7 @@ async function retryWithBackoff<T>(
 
     // Wait with exponential backoff
     const nextDelay = Math.min(delay * RETRY_CONFIG.backoffMultiplier, RETRY_CONFIG.maxDelay);
-    console.log(`Retrying in ${delay}ms... (${retries} retries left)`);
+    logTraining(`Retrying in ${delay}ms... (${retries} retries left)`);
 
     await new Promise((resolve) => setTimeout(resolve, delay));
     return retryWithBackoff(fn, retries - 1, nextDelay);
@@ -173,7 +181,7 @@ export async function saveModuleProgress(
 
   // Use the authenticated user ID (works for both anonymous and email users)
   const actualUserId = authUser.id;
-  console.log('Saving progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
+  logTraining('Saving progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
 
   if (!module) {
     return {
@@ -262,13 +270,13 @@ export async function loadModuleProgress(
   } = await supabase.auth.getUser();
 
   if (!authUser) {
-    console.log('No authenticated user found, skipping load');
+    logTraining('No authenticated user found, skipping load');
     return { data: null }; // Return null to start fresh
   }
 
   // Use the authenticated user ID (works for both anonymous and email users)
   const actualUserId = authUser.id;
-  console.log('Loading progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
+  logTraining('Loading progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
 
   if (!module) {
     return {
@@ -361,7 +369,7 @@ export async function loadAllModuleProgress(
   } = await supabase.auth.getUser();
 
   if (!authUser) {
-    console.log('No authenticated user found, skipping load all');
+    logTraining('No authenticated user found, skipping load all');
     return { data: [] };
   }
 
@@ -447,12 +455,7 @@ export async function updateUserFireProgress(
 
   // Use the authenticated user ID (works for both anonymous and email users)
   const actualUserId = authUser.id;
-  console.log(
-    'Updating fire progress for user:',
-    actualUserId,
-    'isAnonymous:',
-    authUser.is_anonymous
-  );
+  logTraining('Updating fire progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
 
   if (!module) {
     return {

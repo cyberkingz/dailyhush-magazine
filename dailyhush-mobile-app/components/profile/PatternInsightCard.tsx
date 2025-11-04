@@ -20,14 +20,10 @@ interface PatternInsightCardProps {
   onDismiss?: (insightId: string) => void;
 }
 
-export function PatternInsightCard({
-  insight,
-  index = 0,
-  onDismiss,
-}: PatternInsightCardProps) {
+export function PatternInsightCard({ insight, index = 0, onDismiss }: PatternInsightCardProps) {
   // Get category styling
   const categoryConfig = insightCategoryColors[insight.category];
-  const categoryColor = categoryConfig?.primary || colors.emerald[600];
+  const categoryColor = categoryConfig?.primary || colors.lime[500];
 
   // Get icon component
   const IconComponent = getCategoryIcon(insight.category);
@@ -41,8 +37,7 @@ export function PatternInsightCard({
         duration: 400,
         delay: index * 100,
       }}
-      style={styles.container}
-    >
+      style={styles.container}>
       {/* Category indicator bar */}
       <View style={[styles.categoryBar, { backgroundColor: categoryColor }]} />
 
@@ -51,8 +46,7 @@ export function PatternInsightCard({
         <TouchableOpacity
           style={styles.dismissButton}
           onPress={() => onDismiss(insight.id)}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <X size={16} color={colors.text.secondary} />
         </TouchableOpacity>
       )}
@@ -72,18 +66,12 @@ export function PatternInsightCard({
           style={[
             profileTypography.insights.title,
             { color: colors.text.primary, marginBottom: 8 },
-          ]}
-        >
+          ]}>
           {insight.title}
         </Text>
 
         {/* Description */}
-        <Text
-          style={[
-            profileTypography.insights.description,
-            { color: colors.text.secondary },
-          ]}
-        >
+        <Text style={[profileTypography.insights.description, { color: colors.text.secondary }]}>
           {insight.description}
         </Text>
 
@@ -206,7 +194,7 @@ const styles = StyleSheet.create({
   confidence: {
     fontSize: 12,
     fontWeight: '600',
-    color: colors.emerald[600],
+    color: colors.lime[500],
   },
   date: {
     fontSize: 12,

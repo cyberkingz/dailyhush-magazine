@@ -29,25 +29,19 @@ export function ProductCard({ product, onPress, index = 0 }: ProductCardProps) {
         type: 'timing',
         duration: 400,
         delay: index * 100,
-      }}
-    >
+      }}>
       <TouchableOpacity
         style={styles.container}
         onPress={onPress}
         activeOpacity={0.9}
         accessibilityLabel={`${product.name}, $${priceInDollars}`}
-        accessibilityRole="button"
-      >
+        accessibilityRole="button">
         {/* Product image */}
         {product.thumbnail_url ? (
-          <Image
-            source={{ uri: product.thumbnail_url }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <Image source={{ uri: product.thumbnail_url }} style={styles.image} resizeMode="cover" />
         ) : (
           <View style={[styles.image, styles.placeholderImage]}>
-            <ShoppingBag size={32} color={colors.emerald[600]} />
+            <ShoppingBag size={32} color={colors.lime[500]} />
           </View>
         )}
 
@@ -56,38 +50,26 @@ export function ProductCard({ product, onPress, index = 0 }: ProductCardProps) {
           {/* Product name */}
           <Text
             style={[profileTypography.products.name, { color: colors.text.primary }]}
-            numberOfLines={2}
-          >
+            numberOfLines={2}>
             {product.name}
           </Text>
 
           {/* Short description */}
           {product.short_description && (
             <Text
-              style={[
-                profileTypography.products.description,
-                { color: colors.text.secondary },
-              ]}
-              numberOfLines={2}
-            >
+              style={[profileTypography.products.description, { color: colors.text.secondary }]}
+              numberOfLines={2}>
               {product.short_description}
             </Text>
           )}
 
           {/* Price and CTA */}
           <View style={styles.footer}>
-            <Text
-              style={[profileTypography.products.price, { color: colors.emerald[600] }]}
-            >
+            <Text style={[profileTypography.products.price, { color: colors.lime[500] }]}>
               ${priceInDollars}
             </Text>
             <View style={styles.ctaButton}>
-              <Text
-                style={[
-                  profileTypography.buttons.small,
-                  { color: colors.emerald[600] },
-                ]}
-              >
+              <Text style={[profileTypography.buttons.small, { color: colors.lime[500] }]}>
                 View
               </Text>
             </View>
@@ -128,7 +110,7 @@ const styles = StyleSheet.create({
   ctaButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: `${colors.emerald[600]}15`,
+    backgroundColor: `${colors.lime[500]}15`,
     borderRadius: 8,
   },
 });

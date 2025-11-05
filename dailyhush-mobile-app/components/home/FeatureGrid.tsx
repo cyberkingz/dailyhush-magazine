@@ -11,12 +11,11 @@ import Animated, {
   withSpring,
   withTiming,
   withDelay,
-  withSequence,
   Easing,
 } from 'react-native-reanimated';
 import { FeatureCard } from './FeatureCard';
 import { Text } from '@/components/ui/text';
-import { LucideIcon, Sparkles } from 'lucide-react-native';
+import { LucideIcon } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
 
@@ -35,56 +34,8 @@ interface FeatureGridProps {
   features: FeatureItem[];
 }
 
-// Sparkle particle component
-function SparkleParticle({ delay, x, y }: { delay: number; x: number; y: number }) {
-  const opacity = useSharedValue(0);
-  const translateY = useSharedValue(0);
-  const scale = useSharedValue(0);
-
-  useEffect(() => {
-    opacity.value = withDelay(
-      delay,
-      withSequence(
-        withTiming(1, { duration: 300 }),
-        withDelay(200, withTiming(0, { duration: 400 }))
-      )
-    );
-    translateY.value = withDelay(
-      delay,
-      withTiming(-30, { duration: 900, easing: Easing.out(Easing.ease) })
-    );
-    scale.value = withDelay(
-      delay,
-      withSequence(
-        withSpring(1, { damping: 8, stiffness: 100 }),
-        withDelay(200, withTiming(0, { duration: 400 }))
-      )
-    );
-  }, []);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    transform: [{ translateY: translateY.value }, { scale: scale.value }],
-  }));
-
-  return (
-    <Animated.View
-      style={[
-        {
-          position: 'absolute',
-          left: x,
-          top: y,
-        },
-        animatedStyle,
-      ]}>
-      <Sparkles size={12} color={colors.lime[400]} />
-    </Animated.View>
-  );
-}
-
 export function FeatureGrid({ features }: FeatureGridProps) {
   const [isQuoteRevealed, setIsQuoteRevealed] = useState(false);
-  const [showSparkles, setShowSparkles] = useState(false);
 
   // Animation values
   const quoteScale = useSharedValue(0);
@@ -101,30 +52,49 @@ export function FeatureGrid({ features }: FeatureGridProps) {
     height: 160,
   };
 
-  // Animate quote reveal
+  // Animate quote reveal with magical timing
   useEffect(() => {
     if (isQuoteRevealed) {
-      // Sparkle burst effect
-      setShowSparkles(true);
-      setTimeout(() => setShowSparkles(false), 1000);
+      // Icon gently shrinks and fades
+      iconScale.value = withTiming(0, {
+        duration: 400,
+        easing: Easing.bezier(0.4, 0.0, 0.2, 1)
+      });
 
-      // Icon shrinks and fades
-      iconScale.value = withTiming(0, { duration: 200 });
-
-      // Quote scales up and fades in
+      // Quote scales up and fades in with gentle spring
       quoteScale.value = withDelay(
-        100,
+        200,
         withSpring(1, {
-          damping: 12,
-          stiffness: 100,
+          damping: 20,
+          stiffness: 90,
+          mass: 0.8
         })
       );
-      quoteOpacity.value = withDelay(100, withTiming(1, { duration: 300 }));
+      quoteOpacity.value = withDelay(
+        200,
+        withTiming(1, {
+          duration: 600,
+          easing: Easing.bezier(0.4, 0.0, 0.2, 1)
+        })
+      );
     } else {
-      // Reset animations
-      quoteScale.value = withTiming(0, { duration: 200 });
-      quoteOpacity.value = withTiming(0, { duration: 200 });
-      iconScale.value = withDelay(200, withSpring(1, { damping: 10, stiffness: 100 }));
+      // Reset animations gently
+      quoteScale.value = withTiming(0, {
+        duration: 400,
+        easing: Easing.bezier(0.4, 0.0, 1, 1)
+      });
+      quoteOpacity.value = withTiming(0, {
+        duration: 400,
+        easing: Easing.bezier(0.4, 0.0, 1, 1)
+      });
+      iconScale.value = withDelay(
+        300,
+        withSpring(1, {
+          damping: 18,
+          stiffness: 90,
+          mass: 0.8
+        })
+      );
     }
   }, [isQuoteRevealed]);
 
@@ -137,16 +107,6 @@ export function FeatureGrid({ features }: FeatureGridProps) {
     opacity: iconScale.value,
     transform: [{ scale: iconScale.value }],
   }));
-
-  // Sparkle positions (scattered around the card)
-  const sparklePositions = [
-    { x: 20, y: 30, delay: 0 },
-    { x: 100, y: 20, delay: 50 },
-    { x: 60, y: 50, delay: 100 },
-    { x: 120, y: 70, delay: 150 },
-    { x: 30, y: 100, delay: 80 },
-    { x: 140, y: 40, delay: 120 },
-  ];
 
   return (
     <View style={{ paddingHorizontal: 20 }}>
@@ -199,12 +159,6 @@ export function FeatureGrid({ features }: FeatureGridProps) {
                   alignItems: 'center',
                   overflow: 'hidden',
                 }}>
-                {/* Sparkle particles */}
-                {showSparkles &&
-                  sparklePositions.map((pos, index) => (
-                    <SparkleParticle key={index} delay={pos.delay} x={pos.x} y={pos.y} />
-                  ))}
-
                 {/* Unrevealed state - tap to reveal */}
                 <Animated.View
                   style={[

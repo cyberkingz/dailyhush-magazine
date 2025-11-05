@@ -16,7 +16,9 @@ import {
   Platform,
   StyleSheet,
   ScrollView,
+  useWindowDimensions,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
@@ -58,6 +60,7 @@ export default function SpiralInterrupt() {
   const { setSpiraling } = useStore();
   const insets = useSafeAreaInsets();
   const analytics = useAnalytics();
+  const { width: windowWidth } = useWindowDimensions();
 
   // Audio for meditation sound
   const audio = useAudio();
@@ -80,6 +83,9 @@ export default function SpiralInterrupt() {
   const [timeRemaining, setTimeRemaining] = useState(90);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [audioMuted, setAudioMuted] = useState(false);
+  const [showSkipConfirm, setShowSkipConfirm] = useState(false);
+  const [hasShownPauseEncouragement, setHasShownPauseEncouragement] = useState(false);
+  const [showPauseEncouragement, setShowPauseEncouragement] = useState(false);
 
   // Animations
   const breatheScale = useRef(new Animated.Value(1)).current;
@@ -88,7 +94,9 @@ export default function SpiralInterrupt() {
   const breathGlowOpacity = useSharedValue(0.3);
 
   // Breathing orb animation for breathing steps (6-9)
-  const breathOrbScale = useSharedValue(1);
+  const BREATH_ORB_MIN_SCALE = 1.02;
+  const BREATH_ORB_MAX_SCALE = 1.12;
+  const breathOrbScale = useSharedValue(BREATH_ORB_MIN_SCALE);
 
   const protocolSteps = [
     {
@@ -115,30 +123,29 @@ export default function SpiralInterrupt() {
   ];
 
   const totalDuration = protocolSteps.reduce((sum, step) => sum + step.duration, 0);
+  const countdownSize = Math.min(windowWidth * 0.64, 240);
+  const haloSize = countdownSize + 16; // baseline halo always outside ring
+  const timeFontSize = Math.min(Math.max(countdownSize * 0.26, 40), 56);
+  const statusIndicatorWidth = Math.min(Math.max(countdownSize * 0.45, 90), 140);
 
   useEffect(() => {
     setSpiraling(true);
 
+    // Load audio mute preference
+    AsyncStorage.getItem('spiral_audio_preference').then((value) => {
+      setAudioMuted(value === 'muted');
+    });
+
     // Track spiral start
-    const eventData = params.source === 'anna'
-      ? { source: 'anna', pre_feeling: initialPreFeeling }
-      : {};
-    analytics.track('SPIRAL_STARTED', eventData);
+    analytics.track('SPIRAL_STARTED', {
+      pre_feeling: initialPreFeeling,
+    });
 
     // Load meditation sound
     // TODO: Add actual meditation sound file to /assets/sounds/
     // For now, this is a placeholder - the app will gracefully handle missing audio
     // Recommended: Calming ambient sound, nature sounds, or gentle meditation music
     loadMeditationSound();
-
-    // If coming from Anna, auto-start the protocol
-    if (params.source === 'anna' && params.preFeelingRating) {
-      setIsPlaying(true);
-      // Delay audio start slightly to ensure it's loaded
-      setTimeout(() => {
-        audio.play();
-      }, 100);
-    }
 
     return () => {
       setSpiraling(false);
@@ -187,7 +194,7 @@ export default function SpiralInterrupt() {
       if (isInhale) {
         // Inhale: expand
         breathOrbScale.value = withRepeat(
-          withTiming(1.3, {
+          withTiming(BREATH_ORB_MAX_SCALE, {
             duration: duration / 2,
             easing: Easing.bezier(0.4, 0, 0.2, 1)
           }),
@@ -197,7 +204,7 @@ export default function SpiralInterrupt() {
       } else {
         // Exhale: contract
         breathOrbScale.value = withRepeat(
-          withTiming(0.7, {
+          withTiming(BREATH_ORB_MIN_SCALE, {
             duration: duration / 2,
             easing: Easing.bezier(0.4, 0, 0.2, 1)
           }),
@@ -207,13 +214,50 @@ export default function SpiralInterrupt() {
       }
     } else {
       // Reset to normal size when not in breathing steps
-      breathOrbScale.value = withTiming(1, { duration: 500 });
+      breathOrbScale.value = withTiming(BREATH_ORB_MIN_SCALE, { duration: 500 });
     }
   }, [stage, isPlaying, currentStepIndex]);
+
+  // Keep audio playback in sync with mute state and stage
+  useEffect(() => {
+    if (stage !== 'protocol') {
+      audio.pause();
+      return;
+    }
+
+    if (audioMuted || !isPlaying) {
+      audio.pause();
+      return;
+    }
+
+    audio.play();
+  }, [stage, audioMuted, isPlaying, audio]);
 
   const breathOrbStyle = useAnimatedStyle(() => ({
     transform: [{ scale: breathOrbScale.value }],
   }));
+
+  // Haptic breathing rhythm during breathing steps
+  useEffect(() => {
+    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9) {
+      const step = protocolSteps[currentStepIndex];
+      const isInhale = step.text.toLowerCase().includes('breathe in');
+
+      // Initial haptic at step start
+      Haptics.impactAsync(
+        isInhale ? Haptics.ImpactFeedbackStyle.Light : Haptics.ImpactFeedbackStyle.Soft
+      );
+
+      // Rhythmic haptics during breathing (every 2 seconds for breath guidance)
+      const hapticInterval = setInterval(() => {
+        Haptics.impactAsync(
+          isInhale ? Haptics.ImpactFeedbackStyle.Light : Haptics.ImpactFeedbackStyle.Soft
+        );
+      }, 2000);
+
+      return () => clearInterval(hapticInterval);
+    }
+  }, [stage, isPlaying, currentStepIndex]);
 
   // Protocol timer
   useEffect(() => {
@@ -290,24 +334,19 @@ export default function SpiralInterrupt() {
     // Stop meditation sound
     audio.stop();
 
-    // If coming from Anna, navigate directly back to conversation (survey will come after)
-    if (params.source === 'anna') {
-      analytics.track('SPIRAL_COMPLETED_FROM_ANNA', {
-        pre_feeling: preFeelingRating,
-      });
+    // Track completion
+    analytics.track('SPIRAL_COMPLETED', {
+      pre_feeling: preFeelingRating,
+      duration: totalDuration,
+    });
 
-      router.push({
-        pathname: '/anna/conversation',
-        params: {
-          preFeelingScore: preFeelingRating.toString(),
-          fromExercise: 'true',
-          surveyPending: 'true', // Flag to show survey after victory message
-        },
-      } as any);
-    } else {
-      // For non-Anna flows, continue to post-check as before
+    // Show transition buffer before proceeding
+    setStage('transition-buffer');
+
+    // Auto-advance to post-check after 3 seconds
+    setTimeout(() => {
       setStage('post-check');
-    }
+    }, 3000);
   };
 
   const handleFinish = async () => {
@@ -366,28 +405,18 @@ export default function SpiralInterrupt() {
 
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-    // If coming from Anna, navigate back to conversation with post-feeling score
-    if (params.source === 'anna') {
-      analytics.track('SPIRAL_COMPLETED_FROM_ANNA', {
-        pre_feeling: preFeelingRating,
-        post_feeling: postFeelingRating || 5,
-        reduction: preFeelingRating - (postFeelingRating || 5),
-      });
+    // Track completion with reduction metric
+    analytics.track('SPIRAL_FINISHED', {
+      pre_feeling: preFeelingRating,
+      post_feeling: postFeelingRating || 5,
+      reduction: preFeelingRating - (postFeelingRating || 5),
+    });
 
-      router.push({
-        pathname: '/anna/conversation',
-        params: {
-          preFeelingScore: preFeelingRating.toString(),
-          postFeelingScore: (postFeelingRating || 5).toString(),
-          fromExercise: 'true',
-        },
-      } as any);
-    }
     // If coming from onboarding, navigate to next onboarding step
-    else if (params.from === 'onboarding') {
+    if (params.from === 'onboarding') {
       router.replace('/onboarding?completed=demo' as any);
     }
-    // Otherwise, go back to previous screen
+    // Otherwise, go back to previous screen (typically home)
     else {
       router.back();
     }
@@ -712,7 +741,7 @@ export default function SpiralInterrupt() {
               right: 0,
               bottom: 0,
               backgroundColor: 'transparent',
-              opacity: 0.3,
+              opacity: isPlaying ? 0.3 : 0.15,
             }}>
             <LinearGradient
               colors={[
@@ -726,24 +755,25 @@ export default function SpiralInterrupt() {
             />
           </View>
 
-          {/* Audio Mute Toggle - Top Right */}
+          {/* Audio Mute Toggle - Top Left Corner */}
           <Pressable
             onPress={() => {
               const newMutedState = !audioMuted;
               setAudioMuted(newMutedState);
-              if (newMutedState) {
-                audio.pause();
-              } else if (isPlaying) {
-                audio.play();
-              }
+
+              // Save preference to AsyncStorage
+              AsyncStorage.setItem(
+                'spiral_audio_preference',
+                newMutedState ? 'muted' : 'unmuted'
+              );
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             }}
             accessibilityLabel={audioMuted ? 'Unmute audio' : 'Mute audio'}
             accessibilityRole="button"
             style={{
               position: 'absolute',
-              top: insets.top + 16,
-              right: 16,
+              top: 48,
+              left: 20,
               width: 44,
               height: 44,
               borderRadius: 22,
@@ -761,57 +791,51 @@ export default function SpiralInterrupt() {
 
           <View className="flex-1 items-center justify-between px-6 py-12">
             {/* Top Section - Countdown with Progress Ring */}
-            <View className="items-center justify-center" style={{ height: 300, overflow: 'visible' }}>
+            <View
+              className="items-center justify-center"
+              style={{ height: haloSize + 80, overflow: 'visible' }}>
               <View
                 style={{
                   position: 'relative',
-                  width: 260,
-                  height: 260,
+                  width: countdownSize,
+                  height: countdownSize,
                   justifyContent: 'center',
                   alignItems: 'center',
                   overflow: 'visible',
                 }}>
-                {/* Outer glow layer */}
-                <View
-                  style={{
-                    position: 'absolute',
-                    width: 280,
-                    height: 280,
-                    borderRadius: 140,
-                    backgroundColor: colors.lime[500] + '10',
-                    shadowColor: colors.lime[500],
-                    shadowOffset: { width: 0, height: 0 },
-                    shadowOpacity: 0.4,
-                    shadowRadius: 40,
-                  }}
+                {/* Outer glow layer with breathing pulse */}
+                <AnimatedReanimated.View
+                  pointerEvents="none"
+                  style={[
+                    {
+                      position: 'absolute',
+                      width: haloSize,
+                      height: haloSize,
+                      borderRadius: haloSize / 2,
+                      borderWidth: 2,
+                      borderColor: colors.lime[600] + '35',
+                      backgroundColor: 'transparent',
+                      shadowColor: colors.lime[500],
+                      shadowOffset: { width: 0, height: 0 },
+                      shadowOpacity: isPlaying ? 0.25 : 0.12,
+                      shadowRadius: 28,
+                      opacity: isPlaying ? 1 : 0.65,
+                      zIndex: 1,
+                    },
+                    breathOrbStyle,
+                  ]}
                 />
 
                 {/* Animated progress ring */}
-                <CountdownRing
-                  size={260}
-                  strokeWidth={8}
-                  color={colors.lime[600]}
-                  glowColor={colors.lime[500]}
-                  progress={progress}
-                />
-
-                {/* Breathing orb visual guide - only visible during breathing steps */}
-                {currentStepIndex >= 6 && currentStepIndex <= 9 && (
-                  <AnimatedReanimated.View
-                    style={[
-                      {
-                        position: 'absolute',
-                        width: 180,
-                        height: 180,
-                        borderRadius: 90,
-                        backgroundColor: colors.lime[600] + '15',
-                        borderWidth: 2,
-                        borderColor: colors.lime[500] + '40',
-                      },
-                      breathOrbStyle,
-                    ]}
+                <View style={{ opacity: isPlaying ? 1 : 0.5, zIndex: 2 }}>
+                  <CountdownRing
+                    size={countdownSize}
+                    strokeWidth={8}
+                    color={colors.lime[600]}
+                    glowColor={colors.lime[500]}
+                    progress={progress}
                   />
-                )}
+                </View>
 
                 {/* Countdown text overlay */}
                 <Animated.View
@@ -820,14 +844,15 @@ export default function SpiralInterrupt() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     transform: [{ scale: breatheScale }],
+                    zIndex: 3,
                   }}>
                   <Text
                     style={{
-                      fontSize: 60,
+                      fontSize: timeFontSize,
                       fontFamily: 'Poppins_700Bold',
                       fontWeight: '700',
-                      lineHeight: 72,
-                      letterSpacing: 0.5,
+                      lineHeight: timeFontSize * 1.2,
+                      letterSpacing: 0.3,
                       color: colors.text.primary,
                       textShadowColor: colors.lime[500] + '30',
                       textShadowOffset: { width: 0, height: 2 },
@@ -839,17 +864,25 @@ export default function SpiralInterrupt() {
                     style={{
                       marginTop: 4,
                       fontSize: 14,
-                      fontFamily: 'Poppins_400Regular',
-                      letterSpacing: 0.5,
-                      color: colors.lime[400],
+                      fontFamily: 'Poppins_600SemiBold',
+                      letterSpacing: 2,
+                      color: !isPlaying
+                        ? colors.text.secondary
+                        : (currentStepIndex >= 6 && currentStepIndex <= 9)
+                          ? colors.lime[400]
+                          : colors.lime[500],
                     }}>
-                    seconds
+                    {!isPlaying
+                      ? 'PAUSED'
+                      : (currentStepIndex >= 6 && currentStepIndex <= 9)
+                        ? 'BREATHE'
+                        : 'GROUNDING'}
                   </Text>
                   {/* Ambient progress - minimal step counter */}
                   <View
                     style={{
                       marginTop: 12,
-                      width: 120,
+                      width: statusIndicatorWidth,
                       height: 3,
                       borderRadius: 2,
                       backgroundColor: colors.lime[800] + '40',
@@ -896,15 +929,48 @@ export default function SpiralInterrupt() {
                   {protocolSteps[currentStepIndex]?.text}
                 </Text>
               </View>
+
+              {/* First Pause Encouragement Toast */}
+              {showPauseEncouragement && (
+                <View
+                  style={{
+                    marginTop: 12,
+                    padding: 16,
+                    borderRadius: RADIUS.lg,
+                    backgroundColor: colors.lime[600] + '30',
+                    borderWidth: 1,
+                    borderColor: colors.lime[500] + '40',
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: 15,
+                      fontFamily: 'Poppins_500Medium',
+                      color: colors.lime[400],
+                      lineHeight: 22,
+                    }}>
+                    It's okay to pause. Resume when ready.
+                  </Text>
+                </View>
+              )}
             </View>
 
             {/* Bottom Section - Controls */}
-            <View className="w-full flex-row gap-3">
+            <View className="w-full">
+              <View className="flex-row gap-3">
               <Pressable
                 onPress={() => {
                   const newPlayingState = !isPlaying;
                   setIsPlaying(newPlayingState);
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                  // Show encouragement on first pause
+                  if (!newPlayingState && !hasShownPauseEncouragement) {
+                    setHasShownPauseEncouragement(true);
+                    setShowPauseEncouragement(true);
+                    // Hide after 3 seconds
+                    setTimeout(() => setShowPauseEncouragement(false), 3000);
+                  }
 
                   // Pause/resume meditation sound (respect mute state)
                   if (newPlayingState && !audioMuted) {
@@ -959,11 +1025,8 @@ export default function SpiralInterrupt() {
 
               <Pressable
                 onPress={() => {
-                  setStage('post-check');
+                  setShowSkipConfirm(true);
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-                  // Stop meditation sound when skipping
-                  audio.stop();
                 }}
                 className="flex-1 flex-row items-center justify-center active:opacity-90"
                 style={{
@@ -987,7 +1050,142 @@ export default function SpiralInterrupt() {
               </Pressable>
             </View>
           </View>
+          </View>
         </LinearGradient>
+      )}
+
+      {/* Skip Confirmation Modal */}
+      {showSkipConfirm && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: colors.background.primary + 'DD',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 24,
+            zIndex: 100,
+          }}>
+          <View
+            style={{
+              width: '100%',
+              maxWidth: 400,
+              backgroundColor: colors.background.card,
+              borderRadius: RADIUS.xl,
+              padding: 24,
+              borderWidth: 1,
+              borderColor: colors.lime[600] + '30',
+            }}>
+            <Text
+              style={{
+                fontSize: 22,
+                fontFamily: 'Poppins_700Bold',
+                color: colors.text.primary,
+                textAlign: 'center',
+                marginBottom: 12,
+              }}>
+              End protocol early?
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'Poppins_400Regular',
+                color: colors.text.secondary,
+                textAlign: 'center',
+                marginBottom: 24,
+                lineHeight: 24,
+              }}>
+              You're only {timeRemaining} seconds from complete interruption.
+            </Text>
+
+            {/* Buttons */}
+            <View style={{ gap: 12 }}>
+              <Pressable
+                onPress={() => {
+                  setShowSkipConfirm(false);
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }}
+                style={{
+                  backgroundColor: colors.lime[500],
+                  paddingVertical: 16,
+                  borderRadius: RADIUS.lg,
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Poppins_600SemiBold',
+                    color: colors.background.primary,
+                  }}>
+                  Keep Going
+                </Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  setShowSkipConfirm(false);
+                  setStage('post-check');
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  audio.stop();
+                }}
+                style={{
+                  backgroundColor: 'transparent',
+                  paddingVertical: 16,
+                  borderRadius: RADIUS.lg,
+                  alignItems: 'center',
+                  borderWidth: 1.5,
+                  borderColor: colors.lime[700] + '40',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Poppins_600SemiBold',
+                    color: colors.text.secondary,
+                  }}>
+                  Yes, End Now
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      )}
+
+      {/* Transition Buffer Stage - 3-Second Breathing Space */}
+      {stage === 'transition-buffer' && (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: colors.background.primary,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 24,
+          }}>
+          <SuccessRipple size={80} />
+          <Text
+            style={{
+              marginTop: 32,
+              fontSize: 24,
+              fontFamily: 'Poppins_600SemiBold',
+              color: colors.text.primary,
+              textAlign: 'center',
+            }}>
+            Take a breath.
+          </Text>
+          <Text
+            style={{
+              marginTop: 12,
+              fontSize: 17,
+              fontFamily: 'Poppins_400Regular',
+              color: colors.text.secondary,
+              textAlign: 'center',
+              lineHeight: 26,
+            }}>
+            Notice how you feel.
+          </Text>
+        </View>
       )}
 
       {/* Post-Check Stage */}

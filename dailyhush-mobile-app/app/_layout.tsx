@@ -183,12 +183,6 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="spiral-choice"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
           name="spiral"
           options={{
             headerShown: false,
@@ -343,7 +337,6 @@ export default function Layout() {
       <BottomNav
         hideOnPaths={[
           '/spiral',
-          '/spiral-choice',
           '/anna/conversation',
           '/anna',
           '/onboarding',

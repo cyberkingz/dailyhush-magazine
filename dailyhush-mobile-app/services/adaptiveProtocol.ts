@@ -271,7 +271,7 @@ export async function recordProtocolOutcome(outcome: ProtocolOutcome): Promise<v
       user_id: outcome.userId,
       timestamp: outcome.timestamp,
       technique_id: outcome.techniqueId,
-      technique_name: outcome.techniqueName,
+      technique_used: outcome.techniqueName, // Main technique name field
       duration_seconds: outcome.duration,
       pre_feeling: outcome.preFeel,
       post_feeling: outcome.postFeel,
@@ -281,7 +281,6 @@ export async function recordProtocolOutcome(outcome: ProtocolOutcome): Promise<v
       selection_confidence: outcome.confidence,
       selection_rationale: outcome.rationale,
       interactive_responses: outcome.interactiveResponses || null,
-      technique_used: outcome.techniqueName, // Legacy field
     };
 
     // Insert into spiral_logs (trigger will auto-update user_technique_stats)

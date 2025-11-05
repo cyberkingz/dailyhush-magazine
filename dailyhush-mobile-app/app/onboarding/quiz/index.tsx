@@ -322,7 +322,7 @@ export default function QuizFlow() {
                     style={{
                       fontSize: 18,
                       fontWeight: 'bold',
-                      color: canGoNext ? colors.white : colors.text.secondary,
+                      color: canGoNext ? colors.button.primaryText : colors.text.secondary,
                       marginRight: 8,
                       opacity: pressed && canGoNext ? 0.9 : 1,
                     }}>
@@ -330,7 +330,7 @@ export default function QuizFlow() {
                   </Text>
                   <ChevronRight
                     size={24}
-                    color={canGoNext ? colors.white : colors.text.secondary}
+                    color={canGoNext ? colors.button.primaryText : colors.text.secondary}
                     strokeWidth={2}
                     style={{ opacity: pressed && canGoNext ? 0.9 : 1 }}
                   />

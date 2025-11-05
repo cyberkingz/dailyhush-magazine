@@ -250,7 +250,7 @@ export default function Login() {
                       ...authTypography.linkText,
                       fontSize: 15,
                       textDecorationLine: 'underline',
-                      textDecorationColor: '#52B788',
+                      textDecorationColor: '#7AF859',
                     }}>
                     Forgot password?
                   </Text>

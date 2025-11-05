@@ -272,16 +272,15 @@ export async function recordProtocolOutcome(outcome: ProtocolOutcome): Promise<v
       timestamp: outcome.timestamp,
       technique_id: outcome.techniqueId,
       technique_name: outcome.techniqueName,
-      protocol_duration: outcome.duration,
+      duration_seconds: outcome.duration,
       pre_feeling: outcome.preFeel,
       post_feeling: outcome.postFeel,
-      interrupted: outcome.completed,
+      interrupted: !outcome.completed, // interrupted = NOT completed
       trigger: outcome.trigger || null,
       used_shift: false, // TODO: Detect from outcome or technique
       selection_confidence: outcome.confidence,
       selection_rationale: outcome.rationale,
       interactive_responses: outcome.interactiveResponses || null,
-      duration_seconds: outcome.duration,
       technique_used: outcome.techniqueName, // Legacy field
     };
 

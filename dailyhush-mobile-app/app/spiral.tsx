@@ -54,6 +54,7 @@ import { brandFonts } from '@/constants/profileTypography';
 import { useStore, useShiftDevice, useUser } from '@/store/useStore';
 import type { SpiralLog, Technique, AdaptiveProtocol, ProtocolOutcome } from '@/types';
 import { CountdownRing } from '@/components/CountdownRing';
+import { SuccessRipple } from '@/components/SuccessRipple';
 import { sendEncouragementNotification } from '@/services/notifications';
 import { useAudio } from '@/hooks/useAudio';
 import { supabase } from '@/utils/supabase';
@@ -135,11 +136,10 @@ export default function SpiralInterrupt() {
 
   const safeAreaTop = Math.max(insets.top, 16);
   const safeAreaBottom = Math.max(insets.bottom, 16);
-  const protocolPaddingTop = isInteractiveAwaitingResume ? safeAreaTop + 48 : safeAreaTop + 108;
+  const protocolPaddingTop = isInteractiveAwaitingResume ? safeAreaTop + 48 : safeAreaTop + 64;
   const protocolPaddingBottom = safeAreaBottom + 72;
-  const countdownRestingMarginTop = isInteractiveAwaitingResume
-    ? 0
-    : Math.max(safeAreaTop + 18, 96);
+  // Keep countdown positioned very high on ALL non-interactive steps to ensure room for buttons
+  const countdownRestingMarginTop = isInteractiveAwaitingResume ? 0 : 8;
   const gradientColors = [
     colors.background.primary,
     colors.background.secondary,
@@ -217,12 +217,23 @@ export default function SpiralInterrupt() {
         shiftDevice?.is_connected || false
       );
 
-      setSelectedProtocol(protocol);
-      setSelectedTechnique(protocol.technique);
-
       // Calculate total duration from technique steps
       const duration = protocol.technique.steps.reduce((sum, step) => sum + step.duration, 0);
+
+      // CRITICAL FIX: Reset currentStepIndex to 0 BEFORE setting technique
+      // This prevents race condition where step calculation runs with old timeRemaining
+      setCurrentStepIndex(0);
+
+      // Set time remaining BEFORE setting technique to prevent race condition
       setTimeRemaining(duration);
+
+      // ADDITIONAL FIX: Explicitly ensure buttons are visible on step 0
+      // Force isInteractiveAwaitingResume to false when starting protocol
+      setIsInteractiveAwaitingResume(false);
+
+      // Now set the protocol and technique
+      setSelectedProtocol(protocol);
+      setSelectedTechnique(protocol.technique);
 
       // Log selection
       console.log('[Spiral] Selected technique:', protocol.technique.name);
@@ -240,12 +251,15 @@ export default function SpiralInterrupt() {
       console.error('[Spiral] Error loading adaptive protocol:', error);
       // Fallback to default technique if adaptive selection fails
       console.log('[Spiral] Using fallback technique');
-      setSelectedTechnique(TECHNIQUE_LIBRARY[0]);
       const fallbackDuration = TECHNIQUE_LIBRARY[0].steps.reduce(
         (sum, step) => sum + step.duration,
         0
       );
+      // Reset step index and time for fallback too
+      setCurrentStepIndex(0);
       setTimeRemaining(fallbackDuration);
+      setIsInteractiveAwaitingResume(false); // Ensure buttons visible
+      setSelectedTechnique(TECHNIQUE_LIBRARY[0]);
     } finally {
       setIsLoadingProtocol(false);
     }
@@ -413,6 +427,15 @@ export default function SpiralInterrupt() {
   useEffect(() => {
     if (stage === 'protocol' && selectedTechnique) {
       const elapsed = totalDuration - timeRemaining;
+
+      // Safety check: if time remaining is greater than total (race condition), stay at step 0
+      if (timeRemaining > totalDuration || elapsed < 0) {
+        if (currentStepIndex !== 0) {
+          setCurrentStepIndex(0);
+        }
+        return;
+      }
+
       let stepDuration = 0;
       let stepIndex = 0;
 
@@ -432,52 +455,31 @@ export default function SpiralInterrupt() {
   }, [timeRemaining, stage, selectedTechnique]);
 
   useEffect(() => {
-    console.log('[DEBUG Interactive State] useEffect triggered', {
-      stage,
-      hasTechnique: !!selectedTechnique,
-      currentStepIndex,
-      techniqueId: selectedTechnique?.id,
-    });
-
     // Defense: Always show buttons if not in protocol stage or no technique
     if (stage !== 'protocol' || !selectedTechnique) {
-      console.log('[DEBUG Interactive State] Setting FALSE - not in protocol or no technique');
       setIsInteractiveAwaitingResume(false);
       return;
     }
 
     // Safe navigation to prevent undefined errors
     const currentStep = selectedTechnique.steps?.[currentStepIndex];
-    console.log('[DEBUG Interactive State] Current step:', {
-      stepIndex: currentStepIndex,
-      stepExists: !!currentStep,
-      hasInteractive: !!currentStep?.interactive,
-      stepText: currentStep?.text?.substring(0, 50),
-    });
 
     // Defense: If step doesn't exist or has no interactive field, show buttons
     if (!currentStep || !currentStep.interactive) {
-      console.log('[DEBUG Interactive State] Setting FALSE - non-interactive step');
       setIsInteractiveAwaitingResume(false);
       return;
     }
 
     // Only hide buttons for unacknowledged interactive steps
     const hasAcknowledged = interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
-    console.log('[DEBUG Interactive State] Interactive step', {
-      hasAcknowledged,
-      willHideButtons: !hasAcknowledged,
-    });
 
     if (!hasAcknowledged) {
       // Pause playback when entering interactive step
       if (isPlaying) {
         setIsPlaying(false);
       }
-      console.log('[DEBUG Interactive State] Setting TRUE - unacknowledged interactive step');
       setIsInteractiveAwaitingResume(true);
     } else {
-      console.log('[DEBUG Interactive State] Setting FALSE - acknowledged interactive step');
       setIsInteractiveAwaitingResume(false);
     }
   }, [stage, selectedTechnique, currentStepIndex]);
@@ -1157,8 +1159,8 @@ export default function SpiralInterrupt() {
 
             {/* Middle Section - Current Step Text */}
             <View
-              className="w-full px-2"
-              style={{ maxWidth: 680, width: '100%', alignSelf: 'center' }}>
+              className="w-full"
+              style={{ maxWidth: '100%', width: '100%', alignSelf: 'center', paddingHorizontal: 8 }}>
               {!selectedTechnique ? (
                 // Loading state
                 <View
@@ -1187,12 +1189,12 @@ export default function SpiralInterrupt() {
                   style={{
                     minHeight: 112,
                     justifyContent: 'center',
-                    paddingVertical: isInteractiveAwaitingResume ? 20 : 28,
-                    paddingHorizontal: isInteractiveAwaitingResume ? 0 : 30,
+                    paddingVertical: isInteractiveAwaitingResume ? 20 : 24,
+                    paddingHorizontal: isInteractiveAwaitingResume ? 0 : 12,
                     alignItems: 'stretch',
                     gap: 20,
                     width: '100%',
-                    maxWidth: 640,
+                    maxWidth: '100%',
                     alignSelf: 'center',
                   }}>
                   {(() => {
@@ -1359,10 +1361,6 @@ export default function SpiralInterrupt() {
             </View>
 
             {/* Bottom Section - Controls */}
-            {(() => {
-              console.log('[DEBUG Button Render] isInteractiveAwaitingResume:', isInteractiveAwaitingResume);
-              return null;
-            })()}
             {!isInteractiveAwaitingResume && (
               <View className="w-full">
                 <View className="flex-row gap-3">

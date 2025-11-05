@@ -19,10 +19,9 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Play, Pause, SkipForward, ArrowLeft, CloudRain, Zap, CloudSun, Sun, Check, Wind, Volume2, VolumeX } from 'lucide-react-native';
+import { Play, Pause, SkipForward, ArrowLeft, CloudRain, Zap, CloudSun, Sun, Check, Wind, Volume2, VolumeX, AlertCircle, Circle, CheckCircle } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedReanimated, {
   useAnimatedStyle,
@@ -45,6 +44,7 @@ import { withRetry } from '@/utils/retry';
 import { useAnalytics } from '@/utils/analytics';
 import { colors } from '@/constants/colors';
 import { SPACING, RADIUS } from '@/constants/design-tokens';
+import { brandFonts } from '@/constants/profileTypography';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
@@ -474,31 +474,22 @@ export default function SpiralInterrupt() {
     },
   ];
 
-  // Post-check options - relative comparison (animated WebP)
+  // Post-check options - simplified to 3 choices
   const postCheckOptions = [
     {
       value: 1,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Worried%20Face.webp',
+      icon: AlertCircle,
       label: 'Worse',
     },
     {
       value: 3,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp',
+      icon: Circle,
       label: 'Same',
     },
     {
       value: 5,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Slightly%20Smiling%20Face.webp',
+      icon: CheckCircle,
       label: 'Better',
-    },
-    {
-      value: 7,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20With%20Smiling%20Eyes.webp',
-      label: 'Much Better',
     },
   ];
 
@@ -1218,84 +1209,165 @@ export default function SpiralInterrupt() {
           colors={[colors.background.primary, colors.background.primary, colors.background.primary]}
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}>
-          <View className="flex-1 px-6 pt-16">
-            <View>
-              <View className="mb-1 self-center">
-                <SuccessRipple size={56} />
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 24,
+              paddingTop: insets.top + 32,
+              paddingBottom: insets.bottom + 24,
+              justifyContent: 'space-between',
+            }}>
+            {/* Success Section - Centered */}
+            <View style={{ alignItems: 'center' }}>
+              {/* Success icon badge */}
+              <View style={{ marginBottom: SPACING.md }}>
+                <View
+                  style={{
+                    height: 56,
+                    width: 56,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 16,
+                    backgroundColor: colors.lime[500],
+                  }}>
+                  <Check size={28} color={colors.background.primary} strokeWidth={2.5} />
+                </View>
               </View>
 
+              {/* Title */}
               <Text
-                className="mb-2 text-center text-2xl font-bold"
-                style={{ color: colors.text.primary }}>
-                You Just Interrupted the Loop
-              </Text>
-              <Text
-                className="mb-1 text-center text-base leading-relaxed"
-                style={{ color: colors.text.muted }}>
-                That pattern wanted to run for 72 hours.
-              </Text>
-              <Text
-                className="mb-1 text-center text-base leading-relaxed"
-                style={{ color: colors.text.muted }}>
-                You stopped it in 90 seconds.
-              </Text>
-              <Text
-                className="mb-5 text-center text-sm leading-relaxed"
-                style={{ color: colors.text.muted }}>
-                How do you feel now?
+                style={{
+                  fontSize: 28,
+                  fontFamily: brandFonts.headlineBold,
+                  fontWeight: '700',
+                  letterSpacing: 0.3,
+                  lineHeight: 36,
+                  color: colors.text.primary,
+                  textAlign: 'center',
+                  marginBottom: 12,
+                }}>
+                You Interrupted the Pattern
               </Text>
 
-              <View className="mb-6 flex-row flex-wrap justify-center gap-3">
-                {postCheckOptions.map((option) => (
+              {/* Description */}
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: 'Poppins_400Regular',
+                  lineHeight: 24,
+                  color: colors.text.secondary,
+                  textAlign: 'center',
+                  paddingHorizontal: 16,
+                }}>
+                You chose to pause and breathe. That's progress.
+              </Text>
+            </View>
+
+            {/* Feeling selection - 3 options, no subtitles */}
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              {/* Question - Left aligned, right above cards */}
+              <View style={{ marginBottom: 16 }}>
+                <Text
+                  style={{
+                    fontSize: 17,
+                    fontFamily: 'Poppins_600SemiBold',
+                    lineHeight: 24,
+                    color: colors.text.primary,
+                    textAlign: 'left',
+                    marginBottom: 6,
+                  }}>
+                  How do you feel now?
+                </Text>
+
+                {/* Subtext */}
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: 'Poppins_400Regular',
+                    lineHeight: 20,
+                    color: colors.text.secondary,
+                    textAlign: 'left',
+                  }}>
+                  Compared to before the exercise
+                </Text>
+              </View>
+              {postCheckOptions.map((option, index) => {
+                const Icon = option.icon;
+                const isSelected = postFeelingRating === option.value;
+                return (
                   <Pressable
                     key={option.value}
                     onPress={() => {
                       setPostFeelingRating(option.value);
                       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
-                    className="w-36 items-center rounded-2xl p-6"
+                    accessibilityLabel={`Select ${option.label} feeling level`}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: isSelected }}
                     style={{
-                      backgroundColor: postFeelingRating === option.value ? colors.lime[600] : colors.lime[800] + '40',
-                      borderWidth: 1,
-                      borderColor:
-                        postFeelingRating === option.value
-                          ? colors.lime[500] + '80'
-                          : colors.lime[600] + '33',
-                      ...(postFeelingRating === option.value
+                      height: 72,
+                      borderRadius: RADIUS.lg,
+                      marginBottom: index < postCheckOptions.length - 1 ? 12 : 0,
+                      paddingHorizontal: 20,
+                      paddingVertical: 12,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      backgroundColor: isSelected ? colors.lime[600] + '20' : colors.background.card,
+                      borderWidth: isSelected ? 2 : 1.5,
+                      borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '15',
+                      ...(isSelected
                         ? {
                             shadowColor: colors.lime[500],
-                            shadowOffset: { width: 0, height: 6 },
+                            shadowOffset: { width: 0, height: 4 },
                             shadowOpacity: 0.3,
                             shadowRadius: 12,
-                            elevation: 6,
+                            elevation: 4,
                           }
                         : {
                             shadowColor: colors.background.primary,
                             shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 4,
+                            shadowOpacity: 0.15,
+                            shadowRadius: 6,
                             elevation: 2,
                           }),
                     }}>
-                    <Image
-                      source={{ uri: option.emoji }}
-                      style={{ width: 56, height: 56, marginBottom: 8 }}
-                      contentFit="contain"
-                    />
-                    <Text
+                    {/* Icon Badge */}
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontFamily: 'Poppins_600SemiBold',
-                        color: postFeelingRating === option.value ? colors.button.primaryText : colors.text.primary,
+                        width: 48,
+                        height: 48,
+                        borderRadius: RADIUS.lg,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: colors.lime[500],
+                        marginRight: 16,
                       }}>
-                      {option.label}
-                    </Text>
+                      <Icon
+                        size={26}
+                        color={colors.background.primary}
+                        strokeWidth={2.5}
+                      />
+                    </View>
+
+                    {/* Text Content - Label only */}
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: 'Poppins_600SemiBold',
+                          lineHeight: 24,
+                          color: isSelected ? colors.lime[300] : colors.text.primary,
+                        }}>
+                        {option.label}
+                      </Text>
+                    </View>
                   </Pressable>
-                ))}
-              </View>
+                );
+              })}
             </View>
 
-            <View className="mt-6">
+            {/* Continue Button */}
+            <View>
               <Pressable
                 onPress={() => {
                   if (postFeelingRating) {
@@ -1304,11 +1376,15 @@ export default function SpiralInterrupt() {
                   }
                 }}
                 disabled={!postFeelingRating}
-                className="items-center justify-center"
+                accessibilityLabel="Continue"
+                accessibilityHint="Proceed to next step"
+                accessibilityRole="button"
                 style={{
-                  backgroundColor: postFeelingRating ? colors.lime[600] : colors.background.muted,
-                  height: 62,
-                  borderRadius: 100,
+                  backgroundColor: postFeelingRating ? colors.lime[500] : colors.background.muted,
+                  height: 56,
+                  borderRadius: RADIUS.full,
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   opacity: postFeelingRating ? 1 : 0.5,
                   ...(postFeelingRating && {
                     shadowColor: colors.lime[500],
@@ -1320,10 +1396,10 @@ export default function SpiralInterrupt() {
                 }}>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 17,
                     fontFamily: 'Poppins_600SemiBold',
                     letterSpacing: 0.3,
-                    color: postFeelingRating ? colors.white : colors.text.muted,
+                    color: postFeelingRating ? colors.button.primaryText : colors.text.muted,
                   }}>
                   Continue
                 </Text>

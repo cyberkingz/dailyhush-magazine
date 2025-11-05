@@ -171,7 +171,7 @@ export default function EmailLookup() {
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
-          headerTintColor: colors.emerald[500],
+          headerTintColor: colors.lime[500],
           headerShadowVisible: false,
         }}
       />
@@ -202,13 +202,13 @@ export default function EmailLookup() {
                   width: 80,
                   height: 80,
                   borderRadius: 40,
-                  backgroundColor: colors.emerald[600] + '20',
+                  backgroundColor: colors.lime[600] + '20',
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderWidth: 2,
-                  borderColor: colors.emerald[600] + '40',
+                  borderColor: colors.lime[600] + '40',
                 }}>
-                <Mail size={40} color={colors.emerald[500]} strokeWidth={2} />
+                <Mail size={40} color={colors.lime[500]} strokeWidth={2} />
               </View>
             </View>
 
@@ -272,7 +272,7 @@ export default function EmailLookup() {
                   minHeight: 56, // WCAG AAA compliance for 55-70 demographic
                   color: colors.text.primary,
                   borderWidth: 2,
-                  borderColor: errorMessage ? '#EF4444' : colors.emerald[700] + '60',
+                  borderColor: errorMessage ? '#EF4444' : colors.lime[700] + '60',
                 }}
               />
 
@@ -295,12 +295,12 @@ export default function EmailLookup() {
               onPress={handleLookup}
               disabled={isSearching}
               style={{
-                backgroundColor: isSearching ? colors.emerald[700] : colors.emerald[600],
+                backgroundColor: isSearching ? colors.lime[700] : colors.lime[600],
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
                 marginBottom: 24,
-                shadowColor: colors.emerald[500],
+                shadowColor: colors.lime[500],
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
@@ -316,12 +316,12 @@ export default function EmailLookup() {
                   }}>
                   {isSearching ? (
                     <>
-                      <ActivityIndicator size="small" color={colors.white} />
+                      <ActivityIndicator size="small" color={colors.button.primaryText} />
                       <Text
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          color: colors.white,
+                          color: colors.button.primaryText,
                           marginLeft: 12,
                         }}>
                         Searching...
@@ -331,7 +331,7 @@ export default function EmailLookup() {
                     <>
                       <Search
                         size={24}
-                        color={colors.white}
+                        color={colors.button.primaryText}
                         strokeWidth={2}
                         style={{ marginRight: 12 }}
                       />
@@ -339,7 +339,7 @@ export default function EmailLookup() {
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          color: colors.white,
+                          color: colors.button.primaryText,
                         }}>
                         Find My Quiz
                       </Text>
@@ -352,16 +352,16 @@ export default function EmailLookup() {
             {/* Helper Text */}
             <View
               style={{
-                backgroundColor: colors.emerald[800] + '30',
+                backgroundColor: colors.lime[800] + '30',
                 borderRadius: 16,
                 padding: 20,
                 borderWidth: 1,
-                borderColor: colors.emerald[700] + '40',
+                borderColor: colors.lime[700] + '40',
               }}>
               <Text
                 style={{
                   fontSize: 15,
-                  color: colors.emerald[200],
+                  color: colors.lime[200],
                   textAlign: 'center',
                   lineHeight: 22,
                 }}>

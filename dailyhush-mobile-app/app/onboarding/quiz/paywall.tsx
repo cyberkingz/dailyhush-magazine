@@ -426,7 +426,7 @@ export default function QuizPaywall() {
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
-          headerTintColor: colors.emerald[500],
+          headerTintColor: colors.lime[500],
           headerShadowVisible: false,
           headerBackVisible: true,
         }}
@@ -459,7 +459,7 @@ export default function QuizPaywall() {
                   width: 110,
                   height: 110,
                   borderRadius: 55,
-                  backgroundColor: colors.emerald[500] + '25',
+                  backgroundColor: colors.lime[500] + '25',
                   top: '50%',
                   left: '50%',
                   transform: [{ translateX: -55 }, { translateY: -55 }],
@@ -492,7 +492,7 @@ export default function QuizPaywall() {
               style={{
                 fontSize: 32,
                 fontWeight: '800',
-                color: colors.emerald[400],
+                color: colors.lime[400],
                 textAlign: 'center',
                 marginBottom: 16,
                 lineHeight: 40,
@@ -518,12 +518,12 @@ export default function QuizPaywall() {
           {/* Personalized Features */}
           <View
             style={{
-              backgroundColor: colors.emerald[900] + '40',
+              backgroundColor: colors.lime[900] + '40',
               borderRadius: 16,
               padding: 24,
               marginBottom: 32,
               borderWidth: 1,
-              borderColor: colors.emerald[600] + '30',
+              borderColor: colors.lime[600] + '30',
             }}>
             <Text
               style={{
@@ -548,12 +548,12 @@ export default function QuizPaywall() {
                     width: 20,
                     height: 20,
                     borderRadius: 10,
-                    backgroundColor: colors.emerald[600],
+                    backgroundColor: colors.lime[600],
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginRight: 12,
                   }}>
-                  <Text style={{ color: colors.white, fontSize: 14, fontWeight: '700' }}>✓</Text>
+                  <Text style={{ color: colors.button.primaryText, fontSize: 14, fontWeight: '700' }}>✓</Text>
                 </View>
                 <Text
                   style={{
@@ -583,7 +583,7 @@ export default function QuizPaywall() {
           {/* Loading State */}
           {isLoadingOfferings && (
             <View style={{ paddingVertical: 40, alignItems: 'center' }}>
-              <ActivityIndicator size="large" color={colors.emerald[500]} />
+              <ActivityIndicator size="large" color={colors.lime[500]} />
               <Text
                 style={{
                   fontSize: 16,
@@ -613,12 +613,12 @@ export default function QuizPaywall() {
           {!isLoadingOfferings && (
             <View
               style={{
-                backgroundColor: colors.emerald[900] + '50',
+                backgroundColor: colors.lime[900] + '50',
                 borderRadius: 12,
                 padding: 20,
                 marginTop: 24,
                 borderWidth: 1,
-                borderColor: colors.emerald[600] + '40',
+                borderColor: colors.lime[600] + '40',
               }}>
               <Text
                 style={{
@@ -665,17 +665,17 @@ export default function QuizPaywall() {
               paddingBottom: spacing.safeArea.bottom + insets.bottom,
               paddingHorizontal: spacing.screenPadding,
               borderTopWidth: 1,
-              borderTopColor: colors.emerald[800] + '20',
+              borderTopColor: colors.lime[800] + '20',
             }}>
             <Pressable
               onPress={handleStartTrial}
               disabled={isStartingTrial || !selectedPlan}
               style={{
-                backgroundColor: selectedPlan ? colors.emerald[600] : colors.background.muted,
+                backgroundColor: selectedPlan ? colors.lime[600] : colors.background.muted,
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
-                shadowColor: colors.emerald[500],
+                shadowColor: colors.lime[500],
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
@@ -693,14 +693,14 @@ export default function QuizPaywall() {
                     <>
                       <ActivityIndicator
                         size="small"
-                        color={colors.white}
+                        color={colors.button.primaryText}
                         style={{ marginRight: 12 }}
                       />
                       <Text
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          color: colors.white,
+                          color: colors.button.primaryText,
                         }}>
                         Starting Trial...
                       </Text>
@@ -709,7 +709,7 @@ export default function QuizPaywall() {
                     <>
                       <Sparkles
                         size={24}
-                        color={colors.white}
+                        color={colors.button.primaryText}
                         strokeWidth={2}
                         style={{ marginRight: 12 }}
                       />
@@ -717,7 +717,7 @@ export default function QuizPaywall() {
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          color: colors.white,
+                          color: colors.button.primaryText,
                         }}>
                         Start My Free Trial
                       </Text>

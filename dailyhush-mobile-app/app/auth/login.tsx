@@ -284,7 +284,7 @@ export default function Login() {
                 <Text
                   style={{
                     ...authTypography.footerText,
-                    color: '#52B788',
+                    color: '#7AF859',
                     fontWeight: '600',
                   }}>
                   Sign up

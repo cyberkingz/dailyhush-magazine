@@ -70,7 +70,7 @@ export default function QuizResults() {
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
-          headerTintColor: colors.emerald[500],
+          headerTintColor: colors.lime[500],
           headerShadowVisible: false,
           headerBackVisible: true,
         }}
@@ -102,13 +102,13 @@ export default function QuizResults() {
                   width: 80,
                   height: 80,
                   borderRadius: 40,
-                  backgroundColor: colors.emerald[600] + '20',
+                  backgroundColor: colors.lime[600] + '20',
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderWidth: 2,
-                  borderColor: colors.emerald[600] + '40',
+                  borderColor: colors.lime[600] + '40',
                 }}>
-                <Sparkles size={40} color={colors.emerald[500]} strokeWidth={2} />
+                <Sparkles size={40} color={colors.lime[500]} strokeWidth={2} />
               </View>
             </View>
 
@@ -130,19 +130,19 @@ export default function QuizResults() {
               <View
                 style={{
                   alignSelf: 'center',
-                  backgroundColor: colors.emerald[600] + '25',
+                  backgroundColor: colors.lime[600] + '25',
                   borderRadius: 20,
                   paddingVertical: 8,
                   paddingHorizontal: 16,
                   marginBottom: 20,
                   borderWidth: 1,
-                  borderColor: colors.emerald[600] + '40',
+                  borderColor: colors.lime[600] + '40',
                 }}>
                 <Text
                   style={{
                     fontSize: 15,
                     fontWeight: '600',
-                    color: colors.emerald[400],
+                    color: colors.lime[400],
                     textAlign: 'center',
                   }}>
                   {/* Add emoji based on loop type */}
@@ -174,17 +174,17 @@ export default function QuizResults() {
             {/* Insight Card */}
             <View
               style={{
-                backgroundColor: colors.emerald[800] + '30',
+                backgroundColor: colors.lime[800] + '30',
                 borderRadius: 16,
                 padding: 20,
                 marginBottom: 40,
                 borderWidth: 1,
-                borderColor: colors.emerald[700] + '40',
+                borderColor: colors.lime[700] + '40',
               }}>
               <Text
                 style={{
                   fontSize: 16,
-                  color: colors.emerald[200],
+                  color: colors.lime[200],
                   textAlign: 'center',
                   lineHeight: 24,
                   fontWeight: '600',
@@ -196,17 +196,17 @@ export default function QuizResults() {
             {/* Success Message */}
             <View
               style={{
-                backgroundColor: colors.emerald[800] + '30',
+                backgroundColor: colors.lime[800] + '30',
                 borderRadius: 16,
                 padding: spacing.lg,
                 marginBottom: spacing.xl,
                 borderWidth: 1,
-                borderColor: colors.emerald[700] + '40',
+                borderColor: colors.lime[700] + '40',
               }}>
               <Text
                 style={{
                   fontSize: 17,
-                  color: colors.emerald[200],
+                  color: colors.lime[200],
                   textAlign: 'center',
                   lineHeight: 26,
                   fontWeight: '600',
@@ -219,12 +219,12 @@ export default function QuizResults() {
             <Pressable
               onPress={handleViewPaywall}
               style={{
-                backgroundColor: colors.emerald[600],
+                backgroundColor: colors.lime[600],
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
                 marginBottom: 24,
-                shadowColor: colors.emerald[500],
+                shadowColor: colors.lime[500],
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
@@ -240,7 +240,7 @@ export default function QuizResults() {
                   }}>
                   <Sparkles
                     size={24}
-                    color={colors.white}
+                    color={colors.button.primaryText}
                     strokeWidth={2}
                     style={{ marginRight: 12 }}
                   />
@@ -248,7 +248,7 @@ export default function QuizResults() {
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      color: colors.white,
+                      color: colors.button.primaryText,
                     }}>
                     Unlock Your Path to Peace
                   </Text>
@@ -263,7 +263,7 @@ export default function QuizResults() {
                 borderRadius: 16,
                 padding: 20,
                 borderWidth: 1,
-                borderColor: colors.emerald[700] + '40',
+                borderColor: colors.lime[700] + '40',
               }}>
               <Text
                 style={{

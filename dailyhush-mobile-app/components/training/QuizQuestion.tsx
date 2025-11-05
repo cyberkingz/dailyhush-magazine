@@ -50,12 +50,12 @@ export function QuizQuestion({
 
   const getOptionStyle = (option: QuizOption) => {
     if (!hasAnswered) {
-      return selectedId === option.id ? 'bg-[#40916C]' : 'bg-[#1A4D3C]';
+      return selectedId === option.id ? 'bg-[#65D948]' : 'bg-[#1A4D3C]';
     }
 
     // After answering, show correct/incorrect
     if (option.isCorrect) {
-      return 'bg-[#2D6A4F] border border-[#40916C]';
+      return 'bg-[#50BA37] border border-[#65D948]';
     }
 
     if (selectedId === option.id && !option.isCorrect) {
@@ -67,7 +67,7 @@ export function QuizQuestion({
 
   const getTextColor = (option: QuizOption) => {
     if (!hasAnswered) {
-      return selectedId === option.id ? 'text-white' : 'text-[#E8F4F0]';
+      return selectedId === option.id ? 'text-[#0A1F1A]' : 'text-[#E8F4F0]';
     }
 
     if (option.isCorrect || selectedId === option.id) {
@@ -96,11 +96,11 @@ export function QuizQuestion({
               {/* Radio button */}
               <View
                 className={`mr-3 h-5 w-5 rounded-full border-2 ${
-                  selectedId === option.id ? 'border-white bg-white' : 'border-[#95B8A8]'
+                  selectedId === option.id ? 'border-[#0A1F1A] bg-[#65D948]' : 'border-[#95B8A8]'
                 }`}>
                 {selectedId === option.id && (
                   <View className="flex-1 items-center justify-center">
-                    <View className="h-2.5 w-2.5 rounded-full bg-[#40916C]" />
+                    <View className="h-2.5 w-2.5 rounded-full bg-[#0A1F1A]" />
                   </View>
                 )}
               </View>
@@ -112,7 +112,7 @@ export function QuizQuestion({
             {/* Checkmark for correct answer */}
             {hasAnswered && showFeedback && option.isCorrect && (
               <View className="ml-2">
-                <Check size={20} color="#52B788" strokeWidth={3} />
+                <Check size={20} color="#7AF859" strokeWidth={3} />
               </View>
             )}
           </Pressable>

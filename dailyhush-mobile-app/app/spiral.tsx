@@ -35,7 +35,7 @@ import AnimatedReanimated, {
 
 import { Text } from '@/components/ui/text';
 import { useStore, useShiftDevice, useUser } from '@/store/useStore';
-import type { SpiralLog } from '@/types';
+import type { SpiralLog, Technique, AdaptiveProtocol, ProtocolOutcome } from '@/types';
 import { SuccessRipple } from '@/components/SuccessRipple';
 import { CountdownRing } from '@/components/CountdownRing';
 import { sendEncouragementNotification } from '@/services/notifications';
@@ -45,6 +45,10 @@ import { withRetry } from '@/utils/retry';
 import { useAnalytics } from '@/utils/analytics';
 import { colors } from '@/constants/colors';
 import { SPACING, RADIUS } from '@/constants/design-tokens';
+import { selectAdaptiveProtocol, recordProtocolOutcome } from '@/services/adaptiveProtocol';
+import { InteractiveStepInput } from '@/components/protocol/InteractiveStepInput';
+import { TECHNIQUE_LIBRARY } from '@/constants/techniqueLibrary';
+import { ActivityIndicator } from 'react-native';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
@@ -99,31 +103,16 @@ export default function SpiralInterrupt() {
   const BREATH_ORB_MAX_SCALE = 1.12;
   const breathOrbScale = useSharedValue(BREATH_ORB_MIN_SCALE);
 
-  const protocolSteps = [
-    {
-      duration: 5,
-      text: "That conversation isn't happening right now.\nBut your body thinks it is.\nLet's interrupt this loop. Together.",
-    },
-    { duration: 5, text: 'Notice where you are\nright now.\nNot in that argument. Here.' },
-    { duration: 8, text: 'Name 5 things\nyou can see...' },
-    { duration: 8, text: '4 things\nyou can hear...' },
-    { duration: 8, text: '3 things\nyou can touch...' },
-    {
-      duration: 5,
-      text: shiftDevice?.is_connected ? 'Grab your\nShift necklace' : 'Take a\ndeep breath',
-    },
-    { duration: 10, text: 'Breathe in slowly...\n1... 2... 3... 4...' },
-    { duration: 15, text: 'Breathe out slowly...\n1... 2... 3... 4... 5...' },
-    { duration: 15, text: 'Again...\nBreathe in... and hold...' },
-    { duration: 10, text: 'And out...\nslowly... all the way...' },
-    {
-      duration: 5,
-      text: "This rumination?\nIt's a loop, not reality.\nYou're breaking the pattern.",
-    },
-    { duration: 6, text: "You just interrupted it.\nThis is the skill.\nYou're building it." },
-  ];
+  // Adaptive protocol state
+  const [selectedProtocol, setSelectedProtocol] = useState<AdaptiveProtocol | null>(null);
+  const [selectedTechnique, setSelectedTechnique] = useState<Technique | null>(null);
+  const [interactiveResponses, setInteractiveResponses] = useState<Record<number, string>>({});
+  const [isLoadingProtocol, setIsLoadingProtocol] = useState(false);
 
-  const totalDuration = protocolSteps.reduce((sum, step) => sum + step.duration, 0);
+  // Calculate total duration from selected technique
+  const totalDuration = selectedTechnique
+    ? selectedTechnique.steps.reduce((sum, step) => sum + step.duration, 0)
+    : 90; // Fallback to default 90 seconds
   const countdownSize = Math.min(windowWidth * 0.64, 240);
   const haloSize = countdownSize + 16; // baseline halo always outside ring
   const timeFontSize = Math.min(Math.max(countdownSize * 0.26, 40), 56);
@@ -166,6 +155,69 @@ export default function SpiralInterrupt() {
     }
   };
 
+  // Load adaptive protocol when entering protocol stage
+  const loadAdaptiveProtocol = async () => {
+    if (!user?.user_id) {
+      console.warn('[Spiral] No user_id - using fallback technique');
+      setSelectedTechnique(TECHNIQUE_LIBRARY[0]);
+      return;
+    }
+
+    try {
+      setIsLoadingProtocol(true);
+
+      // Select best technique based on intensity, trigger (if available), Shift connection
+      const protocol = await selectAdaptiveProtocol(
+        user.user_id,
+        preFeelingRating,
+        undefined, // No trigger yet (we ask after)
+        shiftDevice?.is_connected || false
+      );
+
+      setSelectedProtocol(protocol);
+      setSelectedTechnique(protocol.technique);
+
+      // Calculate total duration from technique steps
+      const duration = protocol.technique.steps.reduce(
+        (sum, step) => sum + step.duration,
+        0
+      );
+      setTimeRemaining(duration);
+
+      // Log selection
+      console.log('[Spiral] Selected technique:', protocol.technique.name);
+      console.log('[Spiral] Confidence:', protocol.confidence);
+      console.log('[Spiral] Rationale:', protocol.rationale);
+
+      // Track adaptive selection
+      analytics.track('ADAPTIVE_PROTOCOL_SELECTED', {
+        technique_id: protocol.technique.id,
+        technique_name: protocol.technique.name,
+        confidence: protocol.confidence,
+        pre_feeling: preFeelingRating,
+      });
+    } catch (error) {
+      console.error('[Spiral] Error loading adaptive protocol:', error);
+      // Fallback to default technique if adaptive selection fails
+      console.log('[Spiral] Using fallback technique');
+      setSelectedTechnique(TECHNIQUE_LIBRARY[0]);
+      const fallbackDuration = TECHNIQUE_LIBRARY[0].steps.reduce(
+        (sum, step) => sum + step.duration,
+        0
+      );
+      setTimeRemaining(fallbackDuration);
+    } finally {
+      setIsLoadingProtocol(false);
+    }
+  };
+
+  // Load adaptive protocol when entering protocol stage
+  useEffect(() => {
+    if (stage === 'protocol' && !selectedProtocol && !isLoadingProtocol) {
+      loadAdaptiveProtocol();
+    }
+  }, [stage]);
+
   // Subtle icon breathing animation (pre-check stage only)
   useEffect(() => {
     if (stage === 'pre-check') {
@@ -186,8 +238,10 @@ export default function SpiralInterrupt() {
 
   // Breathing orb animation for breathing steps (6-9)
   useEffect(() => {
-    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9) {
-      const step = protocolSteps[currentStepIndex];
+    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9 && selectedTechnique) {
+      const step = selectedTechnique.steps[currentStepIndex];
+      if (!step) return;
+
       const isInhale = step.text.toLowerCase().includes('breathe in');
       const duration = step.duration * 1000; // Convert to milliseconds
 
@@ -217,7 +271,7 @@ export default function SpiralInterrupt() {
       // Reset to normal size when not in breathing steps
       breathOrbScale.value = withTiming(BREATH_ORB_MIN_SCALE, { duration: 500 });
     }
-  }, [stage, isPlaying, currentStepIndex]);
+  }, [stage, isPlaying, currentStepIndex, selectedTechnique]);
 
   // Keep audio playback in sync with mute state and stage
   useEffect(() => {
@@ -240,8 +294,10 @@ export default function SpiralInterrupt() {
 
   // Haptic breathing rhythm during breathing steps
   useEffect(() => {
-    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9) {
-      const step = protocolSteps[currentStepIndex];
+    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9 && selectedTechnique) {
+      const step = selectedTechnique.steps[currentStepIndex];
+      if (!step) return;
+
       const isInhale = step.text.toLowerCase().includes('breathe in');
 
       // Initial haptic at step start
@@ -258,7 +314,7 @@ export default function SpiralInterrupt() {
 
       return () => clearInterval(hapticInterval);
     }
-  }, [stage, isPlaying, currentStepIndex]);
+  }, [stage, isPlaying, currentStepIndex, selectedTechnique]);
 
   // Protocol timer
   useEffect(() => {
@@ -280,13 +336,13 @@ export default function SpiralInterrupt() {
 
   // Calculate current step based on time
   useEffect(() => {
-    if (stage === 'protocol') {
+    if (stage === 'protocol' && selectedTechnique) {
       const elapsed = totalDuration - timeRemaining;
       let stepDuration = 0;
       let stepIndex = 0;
 
-      for (let i = 0; i < protocolSteps.length; i++) {
-        stepDuration += protocolSteps[i].duration;
+      for (let i = 0; i < selectedTechnique.steps.length; i++) {
+        stepDuration += selectedTechnique.steps[i].duration;
         if (elapsed < stepDuration) {
           stepIndex = i;
           break;
@@ -298,7 +354,7 @@ export default function SpiralInterrupt() {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }
     }
-  }, [timeRemaining, stage]);
+  }, [timeRemaining, stage, selectedTechnique]);
 
   const startBreathingAnimation = () => {
     if (breatheLoopRef.current) {
@@ -362,6 +418,8 @@ export default function SpiralInterrupt() {
     analytics.track('SPIRAL_COMPLETED', {
       pre_feeling: preFeelingRating,
       duration: totalDuration,
+      technique_id: selectedTechnique?.id,
+      technique_name: selectedTechnique?.name,
     });
 
     // Show transition buffer before proceeding
@@ -382,6 +440,39 @@ export default function SpiralInterrupt() {
           ? customTriggerText.trim()
           : selectedTrigger || undefined;
 
+      // Create protocol outcome object
+      const outcome: ProtocolOutcome = {
+        userId: user.user_id,
+        techniqueId: selectedTechnique?.id || 'unknown',
+        techniqueName: selectedTechnique?.name || 'Unknown',
+        duration: totalDuration - timeRemaining,
+        preFeel: preFeelingRating,
+        postFeel: postFeelingRating || 5,
+        reduction: preFeelingRating - (postFeelingRating || 5),
+        confidence: selectedProtocol?.confidence || 0,
+        rationale: selectedProtocol?.rationale || '',
+        trigger: finalTrigger,
+        interactiveResponses: Object.keys(interactiveResponses).length > 0
+          ? Object.fromEntries(
+              Object.entries(interactiveResponses).map(([stepIdx, response]) => [
+                selectedTechnique?.steps[parseInt(stepIdx)]?.text.substring(0, 30) || `step_${stepIdx}`,
+                response
+              ])
+            )
+          : undefined,
+        completed: timeRemaining === 0, // True if completed, false if skipped
+        timestamp: new Date().toISOString(),
+      };
+
+      // Record outcome (this will auto-update user_technique_stats via DB trigger)
+      try {
+        await recordProtocolOutcome(outcome);
+        console.log('[Spiral] Protocol outcome recorded:', outcome);
+      } catch (err) {
+        console.error('[Spiral] Error recording protocol outcome:', err);
+      }
+
+      // ALSO keep the existing spiral_logs insert for backwards compatibility
       const spiralLog: Partial<SpiralLog> = {
         user_id: user.user_id,
         timestamp: new Date().toISOString(),
@@ -390,7 +481,7 @@ export default function SpiralInterrupt() {
         pre_feeling: preFeelingRating,
         post_feeling: postFeelingRating || 5,
         used_shift: shiftDevice?.is_connected || false,
-        technique_used: '5-4-3-2-1 + breathing',
+        technique_used: selectedTechnique?.name || 'Unknown',
         trigger: finalTrigger,
       };
 
@@ -434,6 +525,8 @@ export default function SpiralInterrupt() {
       pre_feeling: preFeelingRating,
       post_feeling: postFeelingRating || 5,
       reduction: preFeelingRating - (postFeelingRating || 5),
+      technique_id: selectedTechnique?.id,
+      technique_name: selectedTechnique?.name,
     });
 
     // If coming from onboarding, navigate to next onboarding step
@@ -914,7 +1007,7 @@ export default function SpiralInterrupt() {
                     }}>
                     <View
                       style={{
-                        width: `${((currentStepIndex + 1) / protocolSteps.length) * 100}%`,
+                        width: `${((currentStepIndex + 1) / (selectedTechnique?.steps.length || 12)) * 100}%`,
                         height: '100%',
                         backgroundColor: colors.lime[500],
                       }}
@@ -926,33 +1019,84 @@ export default function SpiralInterrupt() {
 
             {/* Middle Section - Current Step Text */}
             <View className="w-full px-2">
-              <View
-                style={{
-                  minHeight: 112,
-                  justifyContent: 'center',
-                  borderRadius: RADIUS.lg,
-                  padding: 24,
-                  backgroundColor: colors.lime[700] + '20',
-                  borderWidth: 1.5,
-                  borderColor: colors.lime[600] + '30',
-                  shadowColor: colors.lime[500],
-                  shadowOffset: { width: 0, height: 4 },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 16,
-                  elevation: 6,
-                }}>
-                <Text
+              {!selectedTechnique ? (
+                // Loading state
+                <View
                   style={{
-                    textAlign: 'center',
-                    fontSize: 20,
-                    fontFamily: 'Poppins_500Medium',
-                    lineHeight: 30,
-                    color: colors.text.primary,
-                    letterSpacing: 0.3,
+                    minHeight: 112,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: RADIUS.lg,
+                    padding: 24,
+                    backgroundColor: colors.lime[700] + '20',
+                    borderWidth: 1.5,
+                    borderColor: colors.lime[600] + '30',
                   }}>
-                  {protocolSteps[currentStepIndex]?.text}
-                </Text>
-              </View>
+                  <ActivityIndicator size="large" color={colors.lime[500]} />
+                  <Text
+                    style={{
+                      marginTop: 16,
+                      fontSize: 16,
+                      fontFamily: 'Poppins_500Medium',
+                      color: colors.text.secondary,
+                      textAlign: 'center',
+                    }}>
+                    Selecting your protocol...
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    minHeight: 112,
+                    justifyContent: 'center',
+                    borderRadius: RADIUS.lg,
+                    padding: 24,
+                    backgroundColor: colors.lime[700] + '20',
+                    borderWidth: 1.5,
+                    borderColor: colors.lime[600] + '30',
+                    shadowColor: colors.lime[500],
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 16,
+                    elevation: 6,
+                  }}>
+                  {(() => {
+                    const currentStep = selectedTechnique.steps[currentStepIndex];
+                    return currentStep ? (
+                      <>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            fontSize: 20,
+                            fontFamily: 'Poppins_500Medium',
+                            lineHeight: 30,
+                            color: colors.text.primary,
+                            letterSpacing: 0.3,
+                          }}>
+                          {currentStep.text}
+                        </Text>
+
+                        {/* Interactive input - NEW */}
+                        {currentStep.interactive && (
+                          <View style={{ marginTop: 16 }}>
+                            <InteractiveStepInput
+                              config={currentStep.interactive}
+                              value={interactiveResponses[currentStepIndex] || ''}
+                              onChangeText={(text) => {
+                                setInteractiveResponses((prev) => ({
+                                  ...prev,
+                                  [currentStepIndex]: text,
+                                }));
+                              }}
+                              autoFocus={true}
+                            />
+                          </View>
+                        )}
+                      </>
+                    ) : null;
+                  })()}
+                </View>
+              )}
 
               {/* First Pause Encouragement Toast */}
               {showPauseEncouragement && (

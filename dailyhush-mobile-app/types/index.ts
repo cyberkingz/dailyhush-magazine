@@ -134,6 +134,102 @@ export interface ProtocolStep {
   instruction: string;
   duration_seconds: number;
   haptic_feedback?: boolean; // Vibrate phone or Shift necklace
+  interactive?: InteractiveStepConfig; // For collecting user input during protocol
+}
+
+/**
+ * Interactive Step Configuration
+ * Allows steps to collect user input without disrupting flow
+ */
+export interface InteractiveStepConfig {
+  type: 'text' | 'list' | 'count';
+  prompt: string;
+  placeholder?: string;
+  maxLength?: number;
+}
+
+/**
+ * Adaptive Protocol System Types
+ * For personalized technique selection and effectiveness tracking
+ */
+
+/**
+ * Technique - Complete protocol definition
+ */
+export interface Technique {
+  id: string;
+  name: string;
+  shortName: string;
+  description: string;
+  duration: number; // Total duration in seconds
+  bestFor: string[]; // Triggers this works well for: ['anxiety', 'panic', 'rumination']
+  intensityRange: 'severe' | 'moderate' | 'mild' | 'any';
+  requiresShift: boolean;
+  steps: TechniqueStep[];
+}
+
+/**
+ * Technique Step - Individual step within a technique
+ */
+export interface TechniqueStep {
+  duration: number; // seconds
+  text: string;
+  interactive?: InteractiveStepConfig;
+}
+
+/**
+ * User Technique Stats - Effectiveness tracking per user
+ */
+export interface UserTechniqueStats {
+  id: string;
+  userId: string;
+  techniqueId: string;
+  timesUsed: number;
+  timesSuccessful: number; // Where reduction >= 2 points
+  avgReduction: number; // Average pre_feeling - post_feeling
+  lastUsedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Adaptive Protocol - Selected protocol with context
+ */
+export interface AdaptiveProtocol {
+  technique: Technique;
+  confidence: number; // 0-1 scale of algorithm confidence
+  rationale: string; // Human-readable explanation of selection
+  adaptations?: string[]; // Real-time adjustments made
+}
+
+/**
+ * Protocol Outcome - Results after protocol execution
+ */
+export interface ProtocolOutcome {
+  userId: string;
+  techniqueId: string;
+  techniqueName: string;
+  duration: number;
+  preFeel: number;
+  postFeel: number;
+  reduction: number;
+  confidence: number;
+  rationale: string;
+  trigger?: string;
+  interactiveResponses?: Record<string, string>;
+  completed: boolean;
+  timestamp: string;
+}
+
+/**
+ * Pattern Detection Results
+ */
+export interface SpiralPattern {
+  peakTime: number | null; // Hour of day (0-23)
+  mostCommonTrigger: string | null;
+  avgSpiralsPerWeek: number;
+  mostEffectiveTechnique: string | null;
+  earlyDetectionRate: number; // Percentage caught at intensity 5+
 }
 
 /**

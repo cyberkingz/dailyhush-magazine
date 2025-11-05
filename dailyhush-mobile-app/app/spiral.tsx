@@ -432,33 +432,33 @@ export default function SpiralInterrupt() {
   }, [timeRemaining, stage, selectedTechnique]);
 
   useEffect(() => {
+    // Defense: Always show buttons if not in protocol stage or no technique
     if (stage !== 'protocol' || !selectedTechnique) {
       setIsInteractiveAwaitingResume(false);
       return;
     }
 
-    const interactiveSteps = selectedTechnique.steps;
-    const currentStep = interactiveSteps[currentStepIndex];
+    // Safe navigation to prevent undefined errors
+    const currentStep = selectedTechnique.steps?.[currentStepIndex];
 
-    if (!currentStep) {
+    // Defense: If step doesn't exist or has no interactive field, show buttons
+    if (!currentStep || !currentStep.interactive) {
       setIsInteractiveAwaitingResume(false);
       return;
     }
 
-    if (currentStep.interactive) {
-      const hasAcknowledged = interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
-      if (!hasAcknowledged) {
-        if (isPlaying) {
-          setIsPlaying(false);
-        }
-        setIsInteractiveAwaitingResume(true);
-      } else {
-        setIsInteractiveAwaitingResume(false);
+    // Only hide buttons for unacknowledged interactive steps
+    const hasAcknowledged = interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
+    if (!hasAcknowledged) {
+      // Pause playback when entering interactive step
+      if (isPlaying) {
+        setIsPlaying(false);
       }
+      setIsInteractiveAwaitingResume(true);
     } else {
       setIsInteractiveAwaitingResume(false);
     }
-  }, [stage, selectedTechnique, currentStepIndex, isPlaying]);
+  }, [stage, selectedTechnique, currentStepIndex]);
 
   const resumeInteractiveStep = useCallback(() => {
     if (stage !== 'protocol') {

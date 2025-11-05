@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { View, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Brain, TrendingUp, Settings, History, Lightbulb, Infinity } from 'lucide-react-native';
+import { Brain, TrendingUp, Settings, History, Sparkles, Infinity } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { useUser, useLoading } from '@/store/useStore';
@@ -86,9 +86,9 @@ export default function HomeModern() {
       id: 'did-you-know',
       title: 'Did you know?',
       description: 'Name it to tame it',
-      icon: Lightbulb,
-      iconColor: colors.lime[200], // Lime-200
-      iconBackgroundColor: colors.lime[200] + '25', // Lime background with 25% opacity
+      icon: Sparkles,
+      iconColor: colors.lime[400], // Lime-400
+      iconBackgroundColor: colors.lime[400] + '25', // Lime background with 25% opacity
       isInteractive: false,
     },
   ];

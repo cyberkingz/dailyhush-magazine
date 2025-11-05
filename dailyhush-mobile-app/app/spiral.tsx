@@ -17,11 +17,13 @@ import {
   StyleSheet,
   ScrollView,
   useWindowDimensions,
+  AccessibilityInfo,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Play, Pause, SkipForward, ArrowLeft, CloudRain, Zap, CloudSun, Sun, Check, Wind, Volume2, VolumeX, AlertCircle, Circle, CheckCircle } from 'lucide-react-native';
+import { Play, Pause, SkipForward, ArrowLeft, CloudRain, Zap, CloudSun, Sun, Check, Wind, Volume2, VolumeX, TrendingDown, Minus, TrendingUp } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedReanimated, {
   useAnimatedStyle,
@@ -77,6 +79,7 @@ export default function SpiralInterrupt() {
   const [postFeelingRating, setPostFeelingRating] = useState<number | null>(null);
   const [selectedTrigger, setSelectedTrigger] = useState<string>('');
   const [customTriggerText, setCustomTriggerText] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
 
   // Protocol state
   const [isPlaying, setIsPlaying] = useState(false);
@@ -350,6 +353,16 @@ export default function SpiralInterrupt() {
     return undefined;
   }, [isBreathingStep]);
 
+  // Accessibility announcement when post-check screen loads
+  useEffect(() => {
+    if (stage === 'post-check') {
+      // Announce for screen readers
+      AccessibilityInfo.announceForAccessibility(
+        'Exercise complete. You interrupted the pattern. How do you feel now?'
+      );
+    }
+  }, [stage]);
+
   const handleProtocolComplete = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setIsPlaying(false);
@@ -474,22 +487,28 @@ export default function SpiralInterrupt() {
     },
   ];
 
-  // Post-check options - simplified to 3 choices
+  // Post-check options - simplified to 3 choices with directional icons
   const postCheckOptions = [
     {
       value: 1,
-      icon: AlertCircle,
+      icon: TrendingDown,
       label: 'Worse',
+      iconColor: colors.lime[600], // Darker lime for worse
+      badgeColor: colors.lime[800] + '50',
     },
     {
       value: 3,
-      icon: Circle,
+      icon: Minus,
       label: 'Same',
+      iconColor: colors.lime[500],
+      badgeColor: colors.lime[800] + '40',
     },
     {
       value: 5,
-      icon: CheckCircle,
+      icon: TrendingUp,
       label: 'Better',
+      iconColor: colors.lime[300], // Brighter lime for better
+      badgeColor: colors.lime[600] + '30',
     },
   ];
 
@@ -1215,10 +1234,9 @@ export default function SpiralInterrupt() {
               paddingHorizontal: 24,
               paddingTop: insets.top + 32,
               paddingBottom: insets.bottom + 24,
-              justifyContent: 'space-between',
             }}>
             {/* Success Section - Centered */}
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ marginBottom: 32, alignItems: 'center' }}>
               {/* Success icon badge */}
               <View style={{ marginBottom: SPACING.md }}>
                 <View
@@ -1263,10 +1281,21 @@ export default function SpiralInterrupt() {
               </Text>
             </View>
 
+            {/* Subtle divider */}
+            <View
+              style={{
+                height: 1,
+                backgroundColor: colors.lime[800] + '20',
+                marginBottom: 40,
+                width: '60%',
+                alignSelf: 'center',
+              }}
+            />
+
             {/* Feeling selection - 3 options, no subtitles */}
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{ flex: 1 }}>
               {/* Question - Left aligned, right above cards */}
-              <View style={{ marginBottom: 16 }}>
+              <View style={{ marginBottom: 28 }}>
                 <Text
                   style={{
                     fontSize: 17,
@@ -1291,6 +1320,8 @@ export default function SpiralInterrupt() {
                   Compared to before the exercise
                 </Text>
               </View>
+
+              {/* Cards */}
               {postCheckOptions.map((option, index) => {
                 const Icon = option.icon;
                 const isSelected = postFeelingRating === option.value;
@@ -1301,9 +1332,10 @@ export default function SpiralInterrupt() {
                       setPostFeelingRating(option.value);
                       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
-                    accessibilityLabel={`Select ${option.label} feeling level`}
+                    accessibilityLabel={`${option.label}. Select if you feel ${option.label.toLowerCase()} compared to before the exercise`}
                     accessibilityRole="button"
                     accessibilityState={{ selected: isSelected }}
+                    accessibilityHint="Tap to select this option"
                     style={{
                       height: 72,
                       borderRadius: RADIUS.lg,
@@ -1314,24 +1346,9 @@ export default function SpiralInterrupt() {
                       alignItems: 'center',
                       backgroundColor: isSelected ? colors.lime[600] + '20' : colors.background.card,
                       borderWidth: isSelected ? 2 : 1.5,
-                      borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '15',
-                      ...(isSelected
-                        ? {
-                            shadowColor: colors.lime[500],
-                            shadowOffset: { width: 0, height: 4 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 12,
-                            elevation: 4,
-                          }
-                        : {
-                            shadowColor: colors.background.primary,
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.15,
-                            shadowRadius: 6,
-                            elevation: 2,
-                          }),
+                      borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '40',
                     }}>
-                    {/* Icon Badge */}
+                    {/* Icon Badge with dynamic color */}
                     <View
                       style={{
                         width: 48,
@@ -1339,12 +1356,12 @@ export default function SpiralInterrupt() {
                         borderRadius: RADIUS.lg,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: colors.lime[500],
+                        backgroundColor: option.badgeColor,
                         marginRight: 16,
                       }}>
                       <Icon
                         size={26}
-                        color={colors.background.primary}
+                        color={option.iconColor}
                         strokeWidth={2.5}
                       />
                     </View>
@@ -1367,17 +1384,29 @@ export default function SpiralInterrupt() {
             </View>
 
             {/* Continue Button */}
-            <View>
+            <View style={{ marginTop: 32 }}>
               <Pressable
-                onPress={() => {
-                  if (postFeelingRating) {
+                onPress={async () => {
+                  if (postFeelingRating && !isSaving) {
+                    setIsSaving(true);
+                    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+                    // Small delay for visual feedback
+                    await new Promise(resolve => setTimeout(resolve, 300));
+
+                    setIsSaving(false);
                     setStage('log-trigger');
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   }
                 }}
-                disabled={!postFeelingRating}
-                accessibilityLabel="Continue"
-                accessibilityHint="Proceed to next step"
+                disabled={!postFeelingRating || isSaving}
+                accessibilityLabel={
+                  isSaving
+                    ? "Saving..."
+                    : postFeelingRating
+                    ? "Continue to next step"
+                    : "Continue. Please select how you feel first"
+                }
+                accessibilityState={{ disabled: !postFeelingRating || isSaving }}
                 accessibilityRole="button"
                 style={{
                   backgroundColor: postFeelingRating ? colors.lime[500] : colors.background.muted,
@@ -1385,24 +1414,37 @@ export default function SpiralInterrupt() {
                   borderRadius: RADIUS.full,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  opacity: postFeelingRating ? 1 : 0.5,
-                  ...(postFeelingRating && {
-                    shadowColor: colors.lime[500],
-                    shadowOffset: { width: 0, height: 8 },
-                    shadowOpacity: 0.4,
-                    shadowRadius: 16,
-                    elevation: 8,
-                  }),
+                  flexDirection: 'row',
+                  opacity: postFeelingRating && !isSaving ? 1 : 0.5,
                 }}>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontFamily: 'Poppins_600SemiBold',
-                    letterSpacing: 0.3,
-                    color: postFeelingRating ? colors.button.primaryText : colors.text.muted,
-                  }}>
-                  Continue
-                </Text>
+                {isSaving ? (
+                  <>
+                    <ActivityIndicator
+                      size="small"
+                      color={colors.button.primaryText}
+                      style={{ marginRight: 8 }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        fontFamily: 'Poppins_600SemiBold',
+                        letterSpacing: 0.3,
+                        color: colors.button.primaryText,
+                      }}>
+                      Saving...
+                    </Text>
+                  </>
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontFamily: 'Poppins_600SemiBold',
+                      letterSpacing: 0.3,
+                      color: postFeelingRating ? colors.button.primaryText : colors.text.muted,
+                    }}>
+                    Continue
+                  </Text>
+                )}
               </Pressable>
             </View>
           </View>
@@ -1419,128 +1461,195 @@ export default function SpiralInterrupt() {
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={0}>
-            <View className="flex-1 justify-center px-6">
-              <Text
-                className="mb-4 text-2xl font-bold"
-                style={{ color: colors.text.primary }}>
-                What triggered this loop?
-              </Text>
-              <Text
-                className="mb-8 text-sm"
-                style={{ color: colors.text.muted }}>
-                Optional - but knowing your patterns helps us help you better
-              </Text>
-
-              <View className="mb-6 gap-3">
-                {commonTriggers.map((trigger) => (
-                  <Pressable
-                    key={trigger}
-                    onPress={() => {
-                      setSelectedTrigger(trigger);
-                      if (trigger !== 'Other') {
-                        setCustomTriggerText(''); // Clear custom text if switching away from Other
-                      }
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }}
-                    className="rounded-2xl p-4"
-                    style={{
-                      backgroundColor: selectedTrigger === trigger ? colors.lime[600] : colors.lime[800] + '40',
-                      borderWidth: 1,
-                      borderColor:
-                        selectedTrigger === trigger
-                          ? colors.lime[500] + '80'
-                          : colors.lime[600] + '33',
-                      ...(selectedTrigger === trigger
-                        ? {
-                            shadowColor: colors.lime[500],
-                            shadowOffset: { width: 0, height: 4 },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 10,
-                            elevation: 5,
-                          }
-                        : {
-                            shadowColor: colors.background.primary,
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 4,
-                            elevation: 2,
-                          }),
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily:
-                          selectedTrigger === trigger ? 'Poppins_600SemiBold' : 'Inter_400Regular',
-                        color: selectedTrigger === trigger ? colors.button.primaryText : colors.text.primary,
-                        letterSpacing: 0.2,
-                      }}>
-                      {trigger}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-
-              {/* Custom Trigger Text Input - Only show when "Other" is selected */}
-              {selectedTrigger === 'Other' && (
-                <View className="mb-6">
-                  <Text
-                    className="mb-3 text-sm"
-                    style={{ color: colors.text.muted }}>
-                    What specifically triggered it?
-                  </Text>
-                  <TextInput
-                    value={customTriggerText}
-                    onChangeText={setCustomTriggerText}
-                    placeholder="Type here (optional)..."
-                    placeholderTextColor={colors.text.muted}
-                    multiline
-                    numberOfLines={3}
-                    maxLength={200}
-                    style={{
-                      backgroundColor: colors.lime[800] + '40',
-                      borderRadius: 16,
-                      padding: 16,
-                      fontSize: 16,
-                      color: colors.text.primary,
-                      minHeight: 80,
-                      textAlignVertical: 'top',
-                    }}
-                    returnKeyType="done"
-                    blurOnSubmit
-                  />
-                  <Text
-                    className="mt-2 text-right text-xs"
-                    style={{ color: colors.text.muted }}>
-                    {customTriggerText.length}/200
-                  </Text>
-                </View>
-              )}
-
-              <Pressable
-                onPress={() => {
-                  handleFinish();
-                }}
-                className="items-center justify-center active:opacity-90"
-                style={{
-                  backgroundColor: colors.lime[600],
-                  height: 62,
-                  borderRadius: 100,
-                  shadowColor: colors.lime[500],
-                  shadowOffset: { width: 0, height: 8 },
-                  shadowOpacity: 0.4,
-                  shadowRadius: 16,
-                  elevation: 8,
-                }}>
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: 24,
+                paddingTop: insets.top + 32,
+                paddingBottom: insets.bottom + 24,
+              }}>
+              {/* Question Section - Fixed at top */}
+              <View style={{ marginBottom: 32 }}>
+                {/* Question - Left aligned */}
                 <Text
                   style={{
-                    color: colors.button.primaryText,
-                    fontSize: 18,
-                    fontFamily: 'Poppins_600SemiBold',
+                    fontSize: 28,
+                    fontFamily: brandFonts.headlineBold,
+                    fontWeight: '700',
                     letterSpacing: 0.3,
+                    lineHeight: 36,
+                    color: colors.text.primary,
+                    textAlign: 'left',
+                    marginBottom: 12,
                   }}>
-                  Done
+                  What triggered this loop?
                 </Text>
-              </Pressable>
+
+                {/* Subtext */}
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: 'Poppins_400Regular',
+                    lineHeight: 20,
+                    color: colors.text.secondary,
+                    textAlign: 'left',
+                  }}>
+                  Optional - but knowing your patterns helps us help you better
+                </Text>
+              </View>
+
+              {/* Scrollable content area */}
+              <ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled">
+                {/* Trigger Selection Cards */}
+                <View style={{ marginBottom: 16 }}>
+                  {commonTriggers.map((trigger, index) => {
+                    const isSelected = selectedTrigger === trigger;
+                    return (
+                      <Pressable
+                        key={trigger}
+                        onPress={() => {
+                          setSelectedTrigger(trigger);
+                          if (trigger !== 'Other') {
+                            setCustomTriggerText(''); // Clear custom text if switching away from Other
+                          }
+                          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                        }}
+                        style={{
+                          height: 60,
+                          borderRadius: RADIUS.lg,
+                          marginBottom: index < commonTriggers.length - 1 ? 12 : 0,
+                          paddingHorizontal: 20,
+                          paddingVertical: 12,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          backgroundColor: isSelected ? colors.lime[600] + '20' : colors.background.card,
+                          borderWidth: isSelected ? 2 : 1.5,
+                          borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '40',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontFamily: 'Poppins_600SemiBold',
+                            lineHeight: 24,
+                            color: isSelected ? colors.lime[300] : colors.text.primary,
+                          }}>
+                          {trigger}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+
+                {/* Custom Trigger Text Input - Only show when "Other" is selected */}
+                {selectedTrigger === 'Other' && (
+                  <View style={{ marginTop: 4 }}>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontFamily: 'Poppins_400Regular',
+                        color: colors.text.secondary,
+                        marginBottom: 12,
+                      }}>
+                      What specifically triggered it?
+                    </Text>
+                    <TextInput
+                      value={customTriggerText}
+                      onChangeText={setCustomTriggerText}
+                      placeholder="Type here (optional)..."
+                      placeholderTextColor={colors.text.muted}
+                      multiline
+                      numberOfLines={3}
+                      maxLength={200}
+                      style={{
+                        backgroundColor: colors.background.card,
+                        borderWidth: 1.5,
+                        borderColor: colors.lime[600] + '40',
+                        borderRadius: RADIUS.lg,
+                        padding: 16,
+                        fontSize: 15,
+                        fontFamily: 'Poppins_400Regular',
+                        color: colors.text.primary,
+                        minHeight: 100,
+                        textAlignVertical: 'top',
+                      }}
+                      returnKeyType="done"
+                      blurOnSubmit
+                    />
+                    <Text
+                      style={{
+                        marginTop: 8,
+                        textAlign: 'right',
+                        fontSize: 12,
+                        color: colors.text.muted,
+                      }}>
+                      {customTriggerText.length}/200
+                    </Text>
+                  </View>
+                )}
+              </ScrollView>
+
+              {/* Done Button - Fixed at bottom */}
+              <View style={{ marginTop: 20 }}>
+                <Pressable
+                  onPress={async () => {
+                    if (!isSaving) {
+                      setIsSaving(true);
+                      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+                      // Small delay for visual feedback
+                      await new Promise(resolve => setTimeout(resolve, 300));
+
+                      await handleFinish();
+                      setIsSaving(false);
+                    }
+                  }}
+                  disabled={isSaving}
+                  accessibilityLabel={isSaving ? "Saving your response..." : "Complete spiral session"}
+                  accessibilityState={{ disabled: isSaving }}
+                  accessibilityRole="button"
+                  style={{
+                    backgroundColor: colors.lime[500],
+                    height: 56,
+                    borderRadius: RADIUS.full,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    opacity: isSaving ? 0.7 : 1,
+                  }}>
+                  {isSaving ? (
+                    <>
+                      <ActivityIndicator
+                        size="small"
+                        color={colors.button.primaryText}
+                        style={{ marginRight: 8 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 17,
+                          fontFamily: 'Poppins_600SemiBold',
+                          letterSpacing: 0.3,
+                          color: colors.button.primaryText,
+                        }}>
+                        Saving...
+                      </Text>
+                    </>
+                  ) : (
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        fontFamily: 'Poppins_600SemiBold',
+                        letterSpacing: 0.3,
+                        color: colors.button.primaryText,
+                      }}>
+                      Done
+                    </Text>
+                  )}
+                </Pressable>
+              </View>
             </View>
           </KeyboardAvoidingView>
         </LinearGradient>

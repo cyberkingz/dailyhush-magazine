@@ -37,7 +37,8 @@ const GROUNDING_5_4_3_2_1: Technique = {
   id: 'grounding-5-4-3-2-1',
   name: 'Grounding 5-4-3-2-1',
   shortName: 'Grounding',
-  description: 'Use your five senses to reconnect with the present moment. Notice what\'s around you right now.',
+  description:
+    "Use your five senses to reconnect with the present moment. Notice what's around you right now.",
   duration: 90, // seconds
   bestFor: ['anxiety', 'overwhelm', 'general'],
   intensityRange: 'moderate',
@@ -47,7 +48,7 @@ const GROUNDING_5_4_3_2_1: Technique = {
     // Introduction (10 seconds)
     {
       duration: 10,
-      text: 'Let\'s gently bring you back to right now.\n\nYou\'re going to notice things around you.\n\nThere\'s no rush.',
+      text: "Let's gently bring you back to right now.\n\nYou're going to notice things around you.\n\nThere's no rush.",
     },
 
     // Step 1: See (20 seconds)
@@ -57,7 +58,8 @@ const GROUNDING_5_4_3_2_1: Technique = {
       interactive: {
         type: 'list',
         prompt: '5 things you can see',
-        placeholder: 'Example: blue coffee mug with a chip\nExample: wall clock showing 3:15\nExample: green plant on windowsill',
+        placeholder:
+          'Example: blue coffee mug with a chip\nExample: wall clock showing 3:15\nExample: green plant on windowsill',
         maxLength: 200,
       },
     },
@@ -69,7 +71,8 @@ const GROUNDING_5_4_3_2_1: Technique = {
       interactive: {
         type: 'list',
         prompt: '4 things you can touch',
-        placeholder: 'Example: smooth wood armrest\nExample: soft cotton of my shirt\nExample: cool metal of my phone',
+        placeholder:
+          'Example: smooth wood armrest\nExample: soft cotton of my shirt\nExample: cool metal of my phone',
         maxLength: 200,
       },
     },
@@ -81,7 +84,8 @@ const GROUNDING_5_4_3_2_1: Technique = {
       interactive: {
         type: 'list',
         prompt: '3 things you can hear',
-        placeholder: 'Example: birds chirping outside\nExample: gentle hum of air conditioner\nExample: neighbor\'s muffled TV',
+        placeholder:
+          "Example: birds chirping outside\nExample: gentle hum of air conditioner\nExample: neighbor's muffled TV",
         maxLength: 200,
       },
     },
@@ -89,7 +93,7 @@ const GROUNDING_5_4_3_2_1: Technique = {
     // Step 4: Smell (10 seconds)
     {
       duration: 10,
-      text: 'Take a gentle breath.\n\nName 2 things you can smell.\n\nOr notice that you smell nothing at all.\n\nThat\'s okay too.',
+      text: "Take a gentle breath.\n\nName 2 things you can smell.\n\nOr notice that you smell nothing at all.\n\nThat's okay too.",
     },
 
     // Step 5: Taste (10 seconds)
@@ -101,7 +105,7 @@ const GROUNDING_5_4_3_2_1: Technique = {
     // Closing (10 seconds)
     {
       duration: 10,
-      text: 'You\'re here.\n\nRight here, right now.\n\nYou pulled yourself back to this moment.\n\nThat took courage.',
+      text: "You're here.\n\nRight here, right now.\n\nYou pulled yourself back to this moment.\n\nThat took courage.",
     },
   ],
 };
@@ -121,7 +125,8 @@ const BOX_BREATHING: Technique = {
   id: 'box-breathing',
   name: 'Box Breathing',
   shortName: 'Box Breath',
-  description: 'A powerful 4-count breathing pattern. Used by Navy SEALs to stay calm under pressure.',
+  description:
+    'A powerful 4-count breathing pattern. Used by Navy SEALs to stay calm under pressure.',
   duration: 60, // seconds - rapid intervention
   bestFor: ['panic', 'acute-stress', 'health-concerns'],
   intensityRange: 'severe',
@@ -155,7 +160,7 @@ const BOX_BREATHING: Technique = {
     // Closing (4 seconds)
     {
       duration: 4,
-      text: 'You just calmed your nervous system.\n\nYou\'re in control.',
+      text: "You just calmed your nervous system.\n\nYou're in control.",
     },
   ],
 };
@@ -175,7 +180,8 @@ const COGNITIVE_REFRAME: Technique = {
   id: 'cognitive-reframe',
   name: 'Cognitive Reframe',
   shortName: 'Reframe',
-  description: 'Examine the thought that\'s bothering you. Look at it differently, without judgment.',
+  description:
+    "Examine the thought that's bothering you. Look at it differently, without judgment.",
   duration: 120, // seconds - longer, thought-focused
   bestFor: ['conversations', 'rumination', 'work-stress', 'relationships'],
   intensityRange: 'mild',
@@ -185,16 +191,16 @@ const COGNITIVE_REFRAME: Technique = {
     // Introduction (15 seconds)
     {
       duration: 15,
-      text: 'Let\'s look at what\'s bothering you.\n\nNot to judge it.\n\nJust to see it more clearly.',
+      text: "Let's look at what's bothering you.\n\nNot to judge it.\n\nJust to see it more clearly.",
     },
 
     // Step 1: Identify the thought (25 seconds)
     {
       duration: 25,
-      text: 'What\'s the main thought spinning in your mind?\n\nWrite it down exactly as you hear it.\n\nNo editing.',
+      text: "What's the main thought spinning in your mind?\n\nWrite it down exactly as you hear it.\n\nNo editing.",
       interactive: {
         type: 'text',
-        prompt: 'The thought that\'s bothering me',
+        prompt: "The thought that's bothering me",
         placeholder: 'Example: I should have said something different in that conversation',
         maxLength: 200,
       },
@@ -215,7 +221,7 @@ const COGNITIVE_REFRAME: Technique = {
     // Step 3: Control assessment (20 seconds)
     {
       duration: 20,
-      text: 'One more question:\n\nWhat part of this situation can you actually control right now?\n\nEven if it\'s very small.',
+      text: "One more question:\n\nWhat part of this situation can you actually control right now?\n\nEven if it's very small.",
       interactive: {
         type: 'text',
         prompt: 'What I can control',
@@ -233,7 +239,7 @@ const COGNITIVE_REFRAME: Technique = {
     // Closing (20 seconds)
     {
       duration: 20,
-      text: 'You just did something powerful.\n\nYou looked at your thought without drowning in it.\n\nThat\'s the beginning of letting it go.',
+      text: "You just did something powerful.\n\nYou looked at your thought without drowning in it.\n\nThat's the beginning of letting it go.",
     },
   ],
 };
@@ -263,7 +269,7 @@ const BODY_SCAN_RAPID: Technique = {
     // Introduction (10 seconds)
     {
       duration: 10,
-      text: 'Let\'s check in with your body.\n\nNotice where you\'re holding tension.\n\nNo judgment. Just awareness.',
+      text: "Let's check in with your body.\n\nNotice where you're holding tension.\n\nNo judgment. Just awareness.",
     },
 
     // Feet and legs (15 seconds)
@@ -293,7 +299,7 @@ const BODY_SCAN_RAPID: Technique = {
     // Closing (10 seconds)
     {
       duration: 10,
-      text: 'Your body was holding your worry.\n\nNow it\'s letting go.\n\nNotice how different you feel.',
+      text: "Your body was holding your worry.\n\nNow it's letting go.\n\nNotice how different you feel.",
     },
   ],
 };
@@ -313,7 +319,8 @@ const SHIFT_BIOMETRIC_SYNC: Technique = {
   id: 'shift-biometric-sync',
   name: 'Shift Biometric Sync',
   shortName: 'Shift Sync',
-  description: 'Let your Shift necklace guide your breathing. Sync with the vibrations for maximum calm.',
+  description:
+    'Let your Shift necklace guide your breathing. Sync with the vibrations for maximum calm.',
   duration: 90, // seconds
   bestFor: ['severe', 'panic', 'acute-stress'],
   intensityRange: 'severe',
@@ -347,13 +354,13 @@ const SHIFT_BIOMETRIC_SYNC: Technique = {
     // Synced breathing - Cycle 3 (20 seconds)
     {
       duration: 20,
-      text: 'You\'re in sync now.\n\nIn... and out...\n\nYour nervous system is calming.\n\nYou can feel it.',
+      text: "You're in sync now.\n\nIn... and out...\n\nYour nervous system is calming.\n\nYou can feel it.",
     },
 
     // Closing (8 seconds)
     {
       duration: 8,
-      text: 'Your Shift guided you back to calm.\n\nYou worked together.\n\nYou\'re safe.',
+      text: "Your Shift guided you back to calm.\n\nYou worked together.\n\nYou're safe.",
     },
   ],
 };
@@ -396,12 +403,9 @@ export function getTechniqueById(id: string): Technique | undefined {
 /**
  * Get techniques by intensity range
  */
-export function getTechniquesByIntensity(
-  intensity: 'severe' | 'moderate' | 'mild'
-): Technique[] {
+export function getTechniquesByIntensity(intensity: 'severe' | 'moderate' | 'mild'): Technique[] {
   return TECHNIQUE_LIBRARY.filter(
-    (technique) =>
-      technique.intensityRange === intensity || technique.intensityRange === 'any'
+    (technique) => technique.intensityRange === intensity || technique.intensityRange === 'any'
   );
 }
 
@@ -409,9 +413,7 @@ export function getTechniquesByIntensity(
  * Get techniques that match a specific trigger
  */
 export function getTechniquesByTrigger(trigger: string): Technique[] {
-  return TECHNIQUE_LIBRARY.filter((technique) =>
-    technique.bestFor.includes(trigger)
-  );
+  return TECHNIQUE_LIBRARY.filter((technique) => technique.bestFor.includes(trigger));
 }
 
 /**
@@ -437,7 +439,7 @@ export function getAllTechniqueIds(): string[] {
 // TYPE EXPORTS
 // ============================================================================
 
-export type TechniqueId = typeof TECHNIQUE_LIBRARY[number]['id'];
+export type TechniqueId = (typeof TECHNIQUE_LIBRARY)[number]['id'];
 export type IntensityRange = 'severe' | 'moderate' | 'mild' | 'any';
 export type TriggerCategory = string; // Flexible - can expand as needed
 

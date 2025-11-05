@@ -432,30 +432,52 @@ export default function SpiralInterrupt() {
   }, [timeRemaining, stage, selectedTechnique]);
 
   useEffect(() => {
+    console.log('[DEBUG Interactive State] useEffect triggered', {
+      stage,
+      hasTechnique: !!selectedTechnique,
+      currentStepIndex,
+      techniqueId: selectedTechnique?.id,
+    });
+
     // Defense: Always show buttons if not in protocol stage or no technique
     if (stage !== 'protocol' || !selectedTechnique) {
+      console.log('[DEBUG Interactive State] Setting FALSE - not in protocol or no technique');
       setIsInteractiveAwaitingResume(false);
       return;
     }
 
     // Safe navigation to prevent undefined errors
     const currentStep = selectedTechnique.steps?.[currentStepIndex];
+    console.log('[DEBUG Interactive State] Current step:', {
+      stepIndex: currentStepIndex,
+      stepExists: !!currentStep,
+      hasInteractive: !!currentStep?.interactive,
+      stepText: currentStep?.text?.substring(0, 50),
+    });
 
     // Defense: If step doesn't exist or has no interactive field, show buttons
     if (!currentStep || !currentStep.interactive) {
+      console.log('[DEBUG Interactive State] Setting FALSE - non-interactive step');
       setIsInteractiveAwaitingResume(false);
       return;
     }
 
     // Only hide buttons for unacknowledged interactive steps
     const hasAcknowledged = interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
+    console.log('[DEBUG Interactive State] Interactive step', {
+      hasAcknowledged,
+      willHideButtons: !hasAcknowledged,
+    });
+
     if (!hasAcknowledged) {
       // Pause playback when entering interactive step
       if (isPlaying) {
         setIsPlaying(false);
       }
+      console.log('[DEBUG Interactive State] Setting TRUE - unacknowledged interactive step');
       setIsInteractiveAwaitingResume(true);
     } else {
+      console.log('[DEBUG Interactive State] Setting FALSE - acknowledged interactive step');
       setIsInteractiveAwaitingResume(false);
     }
   }, [stage, selectedTechnique, currentStepIndex]);
@@ -1337,6 +1359,10 @@ export default function SpiralInterrupt() {
             </View>
 
             {/* Bottom Section - Controls */}
+            {(() => {
+              console.log('[DEBUG Button Render] isInteractiveAwaitingResume:', isInteractiveAwaitingResume);
+              return null;
+            })()}
             {!isInteractiveAwaitingResume && (
               <View className="w-full">
                 <View className="flex-row gap-3">

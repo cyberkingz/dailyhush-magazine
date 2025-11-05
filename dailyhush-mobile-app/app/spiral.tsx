@@ -6,7 +6,7 @@
 
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Pressable,
@@ -14,15 +14,31 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   ScrollView,
   useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Play, Pause, SkipForward, ArrowLeft, CloudRain, Zap, CloudSun, Sun, Check, Wind, Volume2, VolumeX } from 'lucide-react-native';
+import {
+  Play,
+  Pause,
+  SkipForward,
+  ArrowLeft,
+  CloudRain,
+  Zap,
+  CloudSun,
+  Sun,
+  Check,
+  Wind,
+  Volume2,
+  VolumeX,
+  Frown,
+  Meh,
+  Smile,
+  Laugh,
+} from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedReanimated, {
   useAnimatedStyle,
@@ -34,9 +50,9 @@ import AnimatedReanimated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@/components/ui/text';
+import { brandFonts } from '@/constants/profileTypography';
 import { useStore, useShiftDevice, useUser } from '@/store/useStore';
 import type { SpiralLog, Technique, AdaptiveProtocol, ProtocolOutcome } from '@/types';
-import { SuccessRipple } from '@/components/SuccessRipple';
 import { CountdownRing } from '@/components/CountdownRing';
 import { sendEncouragementNotification } from '@/services/notifications';
 import { useAudio } from '@/hooks/useAudio';
@@ -48,7 +64,15 @@ import { SPACING, RADIUS } from '@/constants/design-tokens';
 import { selectAdaptiveProtocol, recordProtocolOutcome } from '@/services/adaptiveProtocol';
 import { InteractiveStepInput } from '@/components/protocol/InteractiveStepInput';
 import { TECHNIQUE_LIBRARY } from '@/constants/techniqueLibrary';
-import { ActivityIndicator } from 'react-native';
+
+const HEADLINE_FONT_BOLD = brandFonts?.headlineBold ?? 'PlayfairDisplay_700Bold';
+const HEADLINE_FONT_SEMIBOLD = brandFonts?.headlineSemiBold ?? 'PlayfairDisplay_600SemiBold';
+const HEADLINE_FONT_MEDIUM = brandFonts?.headlineMedium ?? 'PlayfairDisplay_500Medium';
+const HEADLINE_FONT_REGULAR = brandFonts?.headlineRegular ?? 'PlayfairDisplay_400Regular';
+
+const BODY_FONT_REGULAR = 'Inter_400Regular';
+const BODY_FONT_MEDIUM = 'Inter_500Medium';
+const BODY_FONT_SEMIBOLD = 'Inter_600SemiBold';
 
 type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
 
@@ -72,9 +96,7 @@ export default function SpiralInterrupt() {
   // Stage management
   // If coming from Anna with a pre-feeling rating, skip directly to protocol
   const initialStage: Stage = params.preFeelingRating ? 'protocol' : 'pre-check';
-  const initialPreFeeling = params.preFeelingRating
-    ? parseInt(params.preFeelingRating, 10)
-    : 5;
+  const initialPreFeeling = params.preFeelingRating ? parseInt(params.preFeelingRating, 10) : 5;
 
   const [stage, setStage] = useState<Stage>(initialStage);
   const [preFeelingRating, setPreFeelingRating] = useState<number>(initialPreFeeling);
@@ -90,6 +112,8 @@ export default function SpiralInterrupt() {
   const [showSkipConfirm, setShowSkipConfirm] = useState(false);
   const [hasShownPauseEncouragement, setHasShownPauseEncouragement] = useState(false);
   const [showPauseEncouragement, setShowPauseEncouragement] = useState(false);
+  const interactiveStepsAcknowledgedRef = useRef<Set<number>>(new Set());
+  const [isInteractiveAwaitingResume, setIsInteractiveAwaitingResume] = useState(false);
 
   // Animations
   const breatheScale = useRef(new Animated.Value(1)).current;
@@ -109,6 +133,23 @@ export default function SpiralInterrupt() {
   const [interactiveResponses, setInteractiveResponses] = useState<Record<number, string>>({});
   const [isLoadingProtocol, setIsLoadingProtocol] = useState(false);
 
+  const safeAreaTop = Math.max(insets.top, 16);
+  const safeAreaBottom = Math.max(insets.bottom, 16);
+  const protocolPaddingTop = isInteractiveAwaitingResume ? safeAreaTop + 48 : safeAreaTop + 108;
+  const protocolPaddingBottom = safeAreaBottom + 72;
+  const countdownRestingMarginTop = isInteractiveAwaitingResume
+    ? 0
+    : Math.max(safeAreaTop + 18, 96);
+  const gradientColors = [
+    colors.background.primary,
+    colors.background.secondary,
+    colors.background.primary,
+  ] as const;
+  const postCheckPaddingTop = Math.max(safeAreaTop + 64, 110);
+  const postCheckPaddingBottom = Math.max(safeAreaBottom + 48, 80);
+  const logTriggerPaddingTop = Math.max(safeAreaTop + 84, 140);
+  const logTriggerPaddingBottom = Math.max(safeAreaBottom + 80, 124);
+
   // Calculate total duration from selected technique
   const totalDuration = selectedTechnique
     ? selectedTechnique.steps.reduce((sum, step) => sum + step.duration, 0)
@@ -117,6 +158,8 @@ export default function SpiralInterrupt() {
   const haloSize = countdownSize + 16; // baseline halo always outside ring
   const timeFontSize = Math.min(Math.max(countdownSize * 0.26, 40), 56);
   const statusIndicatorWidth = Math.min(Math.max(countdownSize * 0.45, 90), 140);
+  const countdownSectionHeight = haloSize + 80;
+  const countdownVisibility = useSharedValue(1);
 
   useEffect(() => {
     setSpiraling(true);
@@ -178,10 +221,7 @@ export default function SpiralInterrupt() {
       setSelectedTechnique(protocol.technique);
 
       // Calculate total duration from technique steps
-      const duration = protocol.technique.steps.reduce(
-        (sum, step) => sum + step.duration,
-        0
-      );
+      const duration = protocol.technique.steps.reduce((sum, step) => sum + step.duration, 0);
       setTimeRemaining(duration);
 
       // Log selection
@@ -218,6 +258,21 @@ export default function SpiralInterrupt() {
     }
   }, [stage]);
 
+  useEffect(() => {
+    if (stage === 'protocol') {
+      interactiveStepsAcknowledgedRef.current = new Set();
+    } else {
+      setIsInteractiveAwaitingResume(false);
+    }
+  }, [stage]);
+
+  useEffect(() => {
+    countdownVisibility.value = withTiming(isInteractiveAwaitingResume ? 0 : 1, {
+      duration: 350,
+      easing: Easing.bezier(0.4, 0, 0.2, 1),
+    });
+  }, [isInteractiveAwaitingResume, countdownVisibility]);
+
   // Subtle icon breathing animation (pre-check stage only)
   useEffect(() => {
     if (stage === 'pre-check') {
@@ -238,7 +293,13 @@ export default function SpiralInterrupt() {
 
   // Breathing orb animation for breathing steps (6-9)
   useEffect(() => {
-    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9 && selectedTechnique) {
+    if (
+      stage === 'protocol' &&
+      isPlaying &&
+      currentStepIndex >= 6 &&
+      currentStepIndex <= 9 &&
+      selectedTechnique
+    ) {
       const step = selectedTechnique.steps[currentStepIndex];
       if (!step) return;
 
@@ -251,7 +312,7 @@ export default function SpiralInterrupt() {
         breathOrbScale.value = withRepeat(
           withTiming(BREATH_ORB_MAX_SCALE, {
             duration: duration / 2,
-            easing: Easing.bezier(0.4, 0, 0.2, 1)
+            easing: Easing.bezier(0.4, 0, 0.2, 1),
           }),
           2, // Repeat twice per step
           true // Reverse
@@ -261,7 +322,7 @@ export default function SpiralInterrupt() {
         breathOrbScale.value = withRepeat(
           withTiming(BREATH_ORB_MIN_SCALE, {
             duration: duration / 2,
-            easing: Easing.bezier(0.4, 0, 0.2, 1)
+            easing: Easing.bezier(0.4, 0, 0.2, 1),
           }),
           2, // Repeat twice per step
           true // Reverse
@@ -291,10 +352,24 @@ export default function SpiralInterrupt() {
   const breathOrbStyle = useAnimatedStyle(() => ({
     transform: [{ scale: breathOrbScale.value }],
   }));
+  const countdownContainerStyle = useAnimatedStyle(() => {
+    const visibility = countdownVisibility.value;
+    return {
+      height: countdownSectionHeight * visibility,
+      opacity: visibility,
+      transform: [{ translateY: -24 * (1 - visibility) }, { scale: 0.95 + 0.05 * visibility }],
+    };
+  });
 
   // Haptic breathing rhythm during breathing steps
   useEffect(() => {
-    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9 && selectedTechnique) {
+    if (
+      stage === 'protocol' &&
+      isPlaying &&
+      currentStepIndex >= 6 &&
+      currentStepIndex <= 9 &&
+      selectedTechnique
+    ) {
       const step = selectedTechnique.steps[currentStepIndex];
       if (!step) return;
 
@@ -355,6 +430,51 @@ export default function SpiralInterrupt() {
       }
     }
   }, [timeRemaining, stage, selectedTechnique]);
+
+  useEffect(() => {
+    if (stage !== 'protocol' || !selectedTechnique) {
+      setIsInteractiveAwaitingResume(false);
+      return;
+    }
+
+    const interactiveSteps = selectedTechnique.steps;
+    const currentStep = interactiveSteps[currentStepIndex];
+
+    if (!currentStep) {
+      setIsInteractiveAwaitingResume(false);
+      return;
+    }
+
+    if (currentStep.interactive) {
+      const hasAcknowledged = interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
+      if (!hasAcknowledged) {
+        if (isPlaying) {
+          setIsPlaying(false);
+        }
+        setIsInteractiveAwaitingResume(true);
+      } else {
+        setIsInteractiveAwaitingResume(false);
+      }
+    } else {
+      setIsInteractiveAwaitingResume(false);
+    }
+  }, [stage, selectedTechnique, currentStepIndex, isPlaying]);
+
+  const resumeInteractiveStep = useCallback(() => {
+    if (stage !== 'protocol') {
+      return;
+    }
+
+    interactiveStepsAcknowledgedRef.current.add(currentStepIndex);
+    setIsInteractiveAwaitingResume(false);
+    setIsPlaying(true);
+
+    if (!audioMuted) {
+      audio.play();
+    }
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  }, [stage, currentStepIndex, audioMuted, audio]);
 
   const startBreathingAnimation = () => {
     if (breatheLoopRef.current) {
@@ -452,14 +572,16 @@ export default function SpiralInterrupt() {
         confidence: selectedProtocol?.confidence || 0,
         rationale: selectedProtocol?.rationale || '',
         trigger: finalTrigger,
-        interactiveResponses: Object.keys(interactiveResponses).length > 0
-          ? Object.fromEntries(
-              Object.entries(interactiveResponses).map(([stepIdx, response]) => [
-                selectedTechnique?.steps[parseInt(stepIdx)]?.text.substring(0, 30) || `step_${stepIdx}`,
-                response
-              ])
-            )
-          : undefined,
+        interactiveResponses:
+          Object.keys(interactiveResponses).length > 0
+            ? Object.fromEntries(
+                Object.entries(interactiveResponses).map(([stepIdx, response]) => [
+                  selectedTechnique?.steps[parseInt(stepIdx)]?.text.substring(0, 30) ||
+                    `step_${stepIdx}`,
+                  response,
+                ])
+              )
+            : undefined,
         completed: timeRemaining === 0, // True if completed, false if skipped
         timestamp: new Date().toISOString(),
       };
@@ -567,31 +689,31 @@ export default function SpiralInterrupt() {
     },
   ];
 
-  // Post-check options - relative comparison (animated WebP)
+  // Post-check options - mirror pre-check feel with iconography
   const postCheckOptions = [
     {
       value: 1,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Worried%20Face.webp',
+      icon: Frown,
       label: 'Worse',
+      subtitle: 'Still feels heavy',
     },
     {
       value: 3,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Neutral%20Face.webp',
+      icon: Meh,
       label: 'Same',
+      subtitle: 'Holding steady',
     },
     {
       value: 5,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Slightly%20Smiling%20Face.webp',
+      icon: Smile,
       label: 'Better',
+      subtitle: 'Feeling lighter',
     },
     {
       value: 7,
-      emoji:
-        'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20With%20Smiling%20Eyes.webp',
+      icon: Laugh,
       label: 'Much Better',
+      subtitle: 'Ready for what’s next',
     },
   ];
 
@@ -608,13 +730,17 @@ export default function SpiralInterrupt() {
   const progress = ((totalDuration - timeRemaining) / totalDuration) * 100;
 
   return (
-    <View className="flex-1 bg-background-primary">
+    <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
       <StatusBar style="light" />
 
       {/* Pre-Check Stage */}
       {stage === 'pre-check' && (
         <LinearGradient
-          colors={[colors.background.primary, colors.background.secondary, colors.background.primary]}
+          colors={[
+            colors.background.primary,
+            colors.background.secondary,
+            colors.background.primary,
+          ]}
           locations={[0, 0.5, 1]}
           style={{ flex: 1 }}>
           {/* Header */}
@@ -695,7 +821,13 @@ export default function SpiralInterrupt() {
               </Text>
             </View>
             {/* Intensity selection - vertical stack */}
-            <View style={{ width: '100%', maxWidth: 480, alignSelf: 'center', paddingHorizontal: SPACING.lg }}>
+            <View
+              style={{
+                width: '100%',
+                maxWidth: 480,
+                alignSelf: 'center',
+                paddingHorizontal: SPACING.lg,
+              }}>
               {preCheckOptions.map((option) => {
                 const Icon = option.icon;
                 const isSelected = preFeelingRating === option.value;
@@ -718,7 +850,9 @@ export default function SpiralInterrupt() {
                       paddingVertical: SPACING.lg,
                       flexDirection: 'row',
                       alignItems: 'center',
-                      backgroundColor: isSelected ? colors.lime[600] + '20' : colors.background.card,
+                      backgroundColor: isSelected
+                        ? colors.lime[600] + '20'
+                        : colors.background.card,
                       borderWidth: 1.5,
                       borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '15',
                       ...(isSelected
@@ -748,11 +882,7 @@ export default function SpiralInterrupt() {
                         backgroundColor: colors.lime[500],
                         marginRight: SPACING.xl,
                       }}>
-                      <Icon
-                        size={32}
-                        color={colors.background.primary}
-                        strokeWidth={2.5}
-                      />
+                      <Icon size={32} color={colors.background.primary} strokeWidth={2.5} />
                     </View>
 
                     {/* Text Content */}
@@ -841,76 +971,62 @@ export default function SpiralInterrupt() {
 
       {/* Protocol Running Stage */}
       {stage === 'protocol' && (
-        <LinearGradient
-          colors={[
-            colors.background.primary,
-            colors.lime[900] + '15',
-            colors.background.primary,
-          ]}
-          locations={[0, 0.4, 1]}
-          style={{ flex: 1 }}>
-          {/* Subtle radial overlay for depth */}
+        <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={{ flex: 1 }}>
+          {!isInteractiveAwaitingResume && (
+            <Pressable
+              onPress={() => {
+                const newMutedState = !audioMuted;
+                setAudioMuted(newMutedState);
+                AsyncStorage.setItem(
+                  'spiral_audio_preference',
+                  newMutedState ? 'muted' : 'unmuted'
+                );
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              }}
+              accessibilityLabel={audioMuted ? 'Unmute audio' : 'Mute audio'}
+              accessibilityRole="button"
+              style={{
+                position: 'absolute',
+                top: insets.top + 12,
+                left: 20,
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                backgroundColor: 'rgba(255,255,255,0.08)',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 20,
+              }}>
+              {audioMuted ? (
+                <VolumeX size={20} color={colors.text.muted} strokeWidth={2.5} />
+              ) : (
+                <Volume2 size={20} color={colors.lime[500]} strokeWidth={2.5} />
+              )}
+            </Pressable>
+          )}
+
           <View
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'transparent',
-              opacity: isPlaying ? 0.3 : 0.15,
-            }}>
-            <LinearGradient
-              colors={[
-                colors.lime[600] + '00',
-                colors.lime[600] + '20',
-                colors.lime[600] + '00',
-              ]}
-              start={{ x: 0.5, y: 0.2 }}
-              end={{ x: 0.5, y: 0.8 }}
-              style={{ flex: 1 }}
-            />
-          </View>
-
-          {/* Audio Mute Toggle - Top Left Corner */}
-          <Pressable
-            onPress={() => {
-              const newMutedState = !audioMuted;
-              setAudioMuted(newMutedState);
-
-              // Save preference to AsyncStorage
-              AsyncStorage.setItem(
-                'spiral_audio_preference',
-                newMutedState ? 'muted' : 'unmuted'
-              );
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            }}
-            accessibilityLabel={audioMuted ? 'Unmute audio' : 'Mute audio'}
-            accessibilityRole="button"
-            style={{
-              position: 'absolute',
-              top: 48,
-              left: 20,
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              backgroundColor: colors.lime[800] + '40',
+              flex: 1,
+              width: '100%',
+              paddingHorizontal: 24,
+              paddingTop: protocolPaddingTop,
+              paddingBottom: protocolPaddingBottom,
               alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
+              justifyContent: isInteractiveAwaitingResume ? 'center' : 'space-between',
+              gap: isInteractiveAwaitingResume ? 40 : 0,
             }}>
-            {audioMuted ? (
-              <VolumeX size={20} color={colors.text.muted} strokeWidth={2.5} />
-            ) : (
-              <Volume2 size={20} color={colors.lime[500]} strokeWidth={2.5} />
-            )}
-          </Pressable>
-
-          <View className="flex-1 items-center justify-between px-6 py-12">
             {/* Top Section - Countdown with Progress Ring */}
-            <View
+            <AnimatedReanimated.View
               className="items-center justify-center"
-              style={{ height: haloSize + 80, overflow: 'visible' }}>
+              style={[
+                {
+                  overflow: 'visible',
+                  marginTop: countdownRestingMarginTop,
+                },
+                countdownContainerStyle,
+              ]}
+              pointerEvents={isInteractiveAwaitingResume ? 'none' : 'auto'}>
               <View
                 style={{
                   position: 'relative',
@@ -985,13 +1101,13 @@ export default function SpiralInterrupt() {
                       letterSpacing: 2,
                       color: !isPlaying
                         ? colors.text.secondary
-                        : (currentStepIndex >= 6 && currentStepIndex <= 9)
+                        : currentStepIndex >= 6 && currentStepIndex <= 9
                           ? colors.lime[400]
                           : colors.lime[500],
                     }}>
                     {!isPlaying
                       ? 'PAUSED'
-                      : (currentStepIndex >= 6 && currentStepIndex <= 9)
+                      : currentStepIndex >= 6 && currentStepIndex <= 9
                         ? 'BREATHE'
                         : 'GROUNDING'}
                   </Text>
@@ -1009,16 +1125,18 @@ export default function SpiralInterrupt() {
                       style={{
                         width: `${((currentStepIndex + 1) / (selectedTechnique?.steps.length || 12)) * 100}%`,
                         height: '100%',
-                        backgroundColor: colors.lime[500],
+                        backgroundColor: colors.button.primary,
                       }}
                     />
                   </View>
                 </Animated.View>
               </View>
-            </View>
+            </AnimatedReanimated.View>
 
             {/* Middle Section - Current Step Text */}
-            <View className="w-full px-2">
+            <View
+              className="w-full px-2"
+              style={{ maxWidth: 680, width: '100%', alignSelf: 'center' }}>
               {!selectedTechnique ? (
                 // Loading state
                 <View
@@ -1026,11 +1144,9 @@ export default function SpiralInterrupt() {
                     minHeight: 112,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: RADIUS.lg,
-                    padding: 24,
-                    backgroundColor: colors.lime[700] + '20',
-                    borderWidth: 1.5,
-                    borderColor: colors.lime[600] + '30',
+                    paddingVertical: 26,
+                    paddingHorizontal: 28,
+                    gap: 18,
                   }}>
                   <ActivityIndicator size="large" color={colors.lime[500]} />
                   <Text
@@ -1049,36 +1165,93 @@ export default function SpiralInterrupt() {
                   style={{
                     minHeight: 112,
                     justifyContent: 'center',
-                    borderRadius: RADIUS.lg,
-                    padding: 24,
-                    backgroundColor: colors.lime[700] + '20',
-                    borderWidth: 1.5,
-                    borderColor: colors.lime[600] + '30',
-                    shadowColor: colors.lime[500],
-                    shadowOffset: { width: 0, height: 4 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 16,
-                    elevation: 6,
+                    paddingVertical: isInteractiveAwaitingResume ? 20 : 28,
+                    paddingHorizontal: isInteractiveAwaitingResume ? 0 : 30,
+                    alignItems: 'stretch',
+                    gap: 20,
+                    width: '100%',
+                    maxWidth: 640,
+                    alignSelf: 'center',
                   }}>
                   {(() => {
                     const currentStep = selectedTechnique.steps[currentStepIndex];
-                    return currentStep ? (
-                      <>
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            fontSize: 20,
-                            fontFamily: 'Poppins_500Medium',
-                            lineHeight: 30,
-                            color: colors.text.primary,
-                            letterSpacing: 0.3,
-                          }}>
-                          {currentStep.text}
-                        </Text>
+                    if (!currentStep) return null;
 
-                        {/* Interactive input - NEW */}
-                        {currentStep.interactive && (
-                          <View style={{ marginTop: 16 }}>
+                    const totalStepsForTechnique = selectedTechnique.steps.length;
+                    const paragraphs = currentStep.text
+                      .split('\n\n')
+                      .map((block) => block.trim())
+                      .filter(Boolean);
+                    const isInteractiveStep = Boolean(currentStep.interactive);
+                    const hasAcknowledged =
+                      interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
+                    const shouldShowNarrative = !(
+                      isInteractiveStep &&
+                      hasAcknowledged &&
+                      !isInteractiveAwaitingResume
+                    );
+
+                    return (
+                      <View style={{ gap: 22 }}>
+                        <View style={{ alignItems: 'flex-start', gap: 8 }}>
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              letterSpacing: 3,
+                              textTransform: 'uppercase',
+                              color: colors.text.muted,
+                              fontFamily: BODY_FONT_SEMIBOLD,
+                            }}>
+                            Step {currentStepIndex + 1} · {totalStepsForTechnique}
+                          </Text>
+                          <View
+                            style={{
+                              height: 2,
+                              width: 80,
+                              backgroundColor: colors.lime[500],
+                              borderRadius: 999,
+                            }}
+                          />
+                        </View>
+
+                        {shouldShowNarrative && (
+                          <View style={{ gap: 18 }}>
+                            {paragraphs.map((paragraph, idx) => (
+                              <Text
+                                key={idx}
+                                style={{
+                                  fontSize: 22,
+                                  lineHeight: 34,
+                                  color: colors.text.primary,
+                                  fontFamily: BODY_FONT_MEDIUM,
+                                  letterSpacing: 0.2,
+                                }}>
+                                {paragraph}
+                              </Text>
+                            ))}
+                          </View>
+                        )}
+
+                        {!shouldShowNarrative && (
+                          <Text
+                            style={{
+                              fontSize: 18,
+                              lineHeight: 30,
+                              color: colors.text.secondary,
+                              fontFamily: BODY_FONT_MEDIUM,
+                            }}>
+                            Nice work capturing that. Keep following the pace—we&apos;ll guide you
+                            to the next step.
+                          </Text>
+                        )}
+
+                        {isInteractiveStep && isInteractiveAwaitingResume && (
+                          <View
+                            style={{
+                              gap: 20,
+                              alignItems: 'center',
+                              width: '100%',
+                            }}>
                             <InteractiveStepInput
                               config={currentStep.interactive}
                               value={interactiveResponses[currentStepIndex] || ''}
@@ -1088,12 +1261,52 @@ export default function SpiralInterrupt() {
                                   [currentStepIndex]: text,
                                 }));
                               }}
+                              onSubmit={resumeInteractiveStep}
                               autoFocus={true}
                             />
+                            <View
+                              style={{
+                                gap: 12,
+                                alignItems: 'center',
+                                paddingHorizontal: 12,
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: 17,
+                                  lineHeight: 26,
+                                  fontFamily: BODY_FONT_MEDIUM,
+                                  color: colors.text.secondary,
+                                  textAlign: 'center',
+                                  maxWidth: 360,
+                                }}>
+                                Timer paused while you jot this down.
+                              </Text>
+                              <Pressable
+                                onPress={resumeInteractiveStep}
+                                accessibilityRole="button"
+                                accessibilityHint="Resume the guided exercise"
+                                style={{
+                                  paddingHorizontal: 42,
+                                  paddingVertical: 16,
+                                  borderRadius: RADIUS.full,
+                                  backgroundColor: colors.lime[600],
+                                  shadowColor: 'transparent',
+                                }}>
+                                <Text
+                                  style={{
+                                    fontSize: 18,
+                                    fontFamily: BODY_FONT_SEMIBOLD,
+                                    color: colors.button.primaryText,
+                                    letterSpacing: 0.3,
+                                  }}>
+                                  Submit Response
+                                </Text>
+                              </Pressable>
+                            </View>
                           </View>
                         )}
-                      </>
-                    ) : null;
+                      </View>
+                    );
                   })()}
                 </View>
               )}
@@ -1105,16 +1318,16 @@ export default function SpiralInterrupt() {
                     marginTop: 12,
                     padding: 16,
                     borderRadius: RADIUS.lg,
-                    backgroundColor: colors.lime[600] + '30',
+                    backgroundColor: colors.background.secondary,
                     borderWidth: 1,
-                    borderColor: colors.lime[500] + '40',
+                    borderColor: colors.background.border,
                   }}>
                   <Text
                     style={{
                       textAlign: 'center',
                       fontSize: 15,
                       fontFamily: 'Poppins_500Medium',
-                      color: colors.lime[400],
+                      color: colors.text.secondary,
                       lineHeight: 22,
                     }}>
                     It's okay to pause. Resume when ready.
@@ -1124,100 +1337,110 @@ export default function SpiralInterrupt() {
             </View>
 
             {/* Bottom Section - Controls */}
-            <View className="w-full">
-              <View className="flex-row gap-3">
-              <Pressable
-                onPress={() => {
-                  const newPlayingState = !isPlaying;
-                  setIsPlaying(newPlayingState);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            {!isInteractiveAwaitingResume && (
+              <View className="w-full">
+                <View className="flex-row gap-3">
+                  <Pressable
+                    onPress={() => {
+                      const newPlayingState = !isPlaying;
+                      setIsPlaying(newPlayingState);
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-                  // Show encouragement on first pause
-                  if (!newPlayingState && !hasShownPauseEncouragement) {
-                    setHasShownPauseEncouragement(true);
-                    setShowPauseEncouragement(true);
-                    // Hide after 3 seconds
-                    setTimeout(() => setShowPauseEncouragement(false), 3000);
-                  }
+                      if (newPlayingState && stage === 'protocol') {
+                        const step = selectedTechnique?.steps[currentStepIndex];
+                        if (step?.interactive) {
+                          interactiveStepsAcknowledgedRef.current.add(currentStepIndex);
+                          setIsInteractiveAwaitingResume(false);
+                        }
+                      }
 
-                  // Pause/resume meditation sound (respect mute state)
-                  if (newPlayingState && !audioMuted) {
-                    audio.play();
-                  } else {
-                    audio.pause();
-                  }
-                }}
-                className="flex-1 flex-row items-center justify-center active:opacity-90"
-                style={{
-                  backgroundColor: colors.lime[700] + '25',
-                  height: 62,
-                  borderRadius: RADIUS.full,
-                  borderWidth: 1.5,
-                  borderColor: colors.lime[500] + '30',
-                  shadowColor: colors.lime[600],
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 8,
-                  elevation: 3,
-                }}>
-                {isPlaying ? (
-                  <>
-                    <Pause size={20} color={colors.lime[400]} strokeWidth={2.5} />
+                      // Show encouragement on first pause
+                      if (!newPlayingState && !hasShownPauseEncouragement) {
+                        setHasShownPauseEncouragement(true);
+                        setShowPauseEncouragement(true);
+                        // Hide after 3 seconds
+                        setTimeout(() => setShowPauseEncouragement(false), 3000);
+                      }
+
+                      // Pause/resume meditation sound (respect mute state)
+                      if (newPlayingState && !audioMuted) {
+                        audio.play();
+                      } else {
+                        audio.pause();
+                      }
+                    }}
+                    className="flex-1 flex-row items-center justify-center active:opacity-90"
+                    style={{
+                      backgroundColor: colors.background.secondary,
+                      height: 62,
+                      borderRadius: RADIUS.full,
+                      borderWidth: 1,
+                      borderColor: colors.background.border,
+                      shadowColor: colors.shadow.dark,
+                      shadowOffset: { width: 0, height: 4 },
+                      shadowOpacity: 0.18,
+                      shadowRadius: 10,
+                      elevation: 3,
+                    }}>
+                    {isPlaying ? (
+                      <>
+                        <Pause size={20} color={colors.text.secondary} strokeWidth={2.5} />
+                        <Text
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 16,
+                            fontFamily: 'Poppins_600SemiBold',
+                            letterSpacing: 0.3,
+                            color: colors.text.secondary,
+                          }}>
+                          Pause
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <Play size={20} color={colors.text.secondary} strokeWidth={2.5} />
+                        <Text
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 16,
+                            fontFamily: 'Poppins_600SemiBold',
+                            letterSpacing: 0.3,
+                            color: colors.text.secondary,
+                          }}>
+                          Resume
+                        </Text>
+                      </>
+                    )}
+                  </Pressable>
+
+                  <Pressable
+                    onPress={() => {
+                      setShowSkipConfirm(true);
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }}
+                    className="flex-1 flex-row items-center justify-center active:opacity-90"
+                    style={{
+                      backgroundColor: colors.background.secondary,
+                      height: 62,
+                      borderRadius: RADIUS.full,
+                      borderWidth: 1,
+                      borderColor: colors.background.border,
+                    }}>
+                    <SkipForward size={20} color={colors.text.secondary} strokeWidth={2.5} />
                     <Text
                       style={{
                         marginLeft: 8,
                         fontSize: 16,
                         fontFamily: 'Poppins_600SemiBold',
                         letterSpacing: 0.3,
-                        color: colors.lime[400],
+                        color: colors.text.secondary,
                       }}>
-                      Pause
+                      Skip
                     </Text>
-                  </>
-                ) : (
-                  <>
-                    <Play size={20} color={colors.lime[400]} strokeWidth={2.5} />
-                    <Text
-                      style={{
-                        marginLeft: 8,
-                        fontSize: 16,
-                        fontFamily: 'Poppins_600SemiBold',
-                        letterSpacing: 0.3,
-                        color: colors.lime[400],
-                      }}>
-                      Resume
-                    </Text>
-                  </>
-                )}
-              </Pressable>
-
-              <Pressable
-                onPress={() => {
-                  setShowSkipConfirm(true);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }}
-                className="flex-1 flex-row items-center justify-center active:opacity-90"
-                style={{
-                  backgroundColor: 'transparent',
-                  height: 62,
-                  borderRadius: RADIUS.full,
-                  borderWidth: 1.5,
-                  borderColor: colors.lime[700] + '40',
-                }}>
-                <SkipForward size={20} color={colors.text.secondary} strokeWidth={2.5} />
-                <Text
-                  style={{
-                    marginLeft: 8,
-                    fontSize: 16,
-                    fontFamily: 'Poppins_600SemiBold',
-                    letterSpacing: 0.3,
-                    color: colors.text.secondary,
-                  }}>
-                  Skip
-                </Text>
-              </Pressable>
-            </View>
-          </View>
+                  </Pressable>
+                </View>
+              </View>
+            )}
           </View>
         </LinearGradient>
       )}
@@ -1326,7 +1549,7 @@ export default function SpiralInterrupt() {
         <View
           style={{
             flex: 1,
-            backgroundColor: colors.background.primary,
+            backgroundColor: '#000000',
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 24,
@@ -1358,88 +1581,163 @@ export default function SpiralInterrupt() {
 
       {/* Post-Check Stage */}
       {stage === 'post-check' && (
-        <LinearGradient
-          colors={[colors.background.primary, colors.background.primary, colors.background.primary]}
-          locations={[0, 0.5, 1]}
-          style={{ flex: 1 }}>
-          <View className="flex-1 px-6 pt-16">
-            <View>
-              <View className="mb-1 self-center">
-                <SuccessRipple size={56} />
-              </View>
-
+        <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={{ flex: 1 }}>
+          <View className="flex-1 px-6 pb-16 pt-24">
+            <View
+              style={{
+                width: '100%',
+                maxWidth: 560,
+                alignSelf: 'center',
+                paddingHorizontal: SPACING.lg,
+                gap: SPACING.lg,
+                alignItems: 'flex-start',
+              }}>
               <Text
-                className="mb-2 text-center text-2xl font-bold"
-                style={{ color: colors.text.primary }}>
+                style={{
+                  fontFamily: HEADLINE_FONT_BOLD,
+                  fontSize: 28,
+                  lineHeight: 36,
+                  letterSpacing: 0.3,
+                  color: colors.text.primary,
+                  textAlign: 'left',
+                }}>
                 You Just Interrupted the Loop
               </Text>
               <Text
-                className="mb-1 text-center text-base leading-relaxed"
-                style={{ color: colors.text.muted }}>
-                That pattern wanted to run for 72 hours.
+                style={{
+                  fontFamily: BODY_FONT_MEDIUM,
+                  fontSize: 18,
+                  lineHeight: 28,
+                  color: colors.text.muted,
+                  textAlign: 'left',
+                }}>
+                That pattern wanted to run for 72 hours. You stopped it in 90 seconds.
               </Text>
+              <View
+                style={{
+                  width: '100%',
+                  height: 1,
+                  backgroundColor: colors.background.border,
+                  marginTop: SPACING.sm,
+                  marginBottom: SPACING.sm,
+                }}
+              />
               <Text
-                className="mb-1 text-center text-base leading-relaxed"
-                style={{ color: colors.text.muted }}>
-                You stopped it in 90 seconds.
-              </Text>
-              <Text
-                className="mb-5 text-center text-sm leading-relaxed"
-                style={{ color: colors.text.muted }}>
+                style={{
+                  fontFamily: BODY_FONT_REGULAR,
+                  fontSize: 16,
+                  lineHeight: 24,
+                  color: colors.text.muted,
+                  textAlign: 'left',
+                }}>
                 How do you feel now?
               </Text>
 
-              <View className="mb-6 flex-row flex-wrap justify-center gap-3">
-                {postCheckOptions.map((option) => (
-                  <Pressable
-                    key={option.value}
-                    onPress={() => {
-                      setPostFeelingRating(option.value);
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }}
-                    className="w-36 items-center rounded-2xl p-6"
-                    style={{
-                      backgroundColor: postFeelingRating === option.value ? colors.lime[600] : colors.lime[800] + '40',
-                      borderWidth: 1,
-                      borderColor:
-                        postFeelingRating === option.value
-                          ? colors.lime[500] + '80'
-                          : colors.lime[600] + '33',
-                      ...(postFeelingRating === option.value
-                        ? {
+              <View style={{ gap: SPACING.md, width: '100%' }}>
+                {postCheckOptions.map((option) => {
+                  const Icon = option.icon;
+                  const isSelected = postFeelingRating === option.value;
+                  return (
+                    <Pressable
+                      key={option.value}
+                      onPress={() => {
+                        setPostFeelingRating(option.value);
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      }}
+                      accessibilityLabel={`Select ${option.label} feeling`}
+                      accessibilityHint={option.subtitle}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: isSelected }}
+                      style={{
+                        height: 100,
+                        borderRadius: RADIUS.lg,
+                        paddingHorizontal: SPACING.xl,
+                        paddingVertical: SPACING.lg,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: isSelected
+                          ? colors.lime[600] + '20'
+                          : colors.background.card,
+                        borderWidth: 1.5,
+                        borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '15',
+                        ...(isSelected
+                          ? {
+                              shadowColor: colors.lime[500],
+                              shadowOffset: { width: 0, height: 4 },
+                              shadowOpacity: 0.25,
+                              shadowRadius: 12,
+                              elevation: 4,
+                            }
+                          : {
+                              shadowColor: colors.background.primary,
+                              shadowOffset: { width: 0, height: 2 },
+                              shadowOpacity: 0.15,
+                              shadowRadius: 6,
+                              elevation: 2,
+                            }),
+                      }}>
+                      <View
+                        style={{
+                          width: 64,
+                          height: 64,
+                          borderRadius: RADIUS.lg,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: colors.lime[500],
+                          marginRight: SPACING.xl,
+                        }}>
+                        <Icon size={32} color={colors.background.primary} strokeWidth={2.5} />
+                      </View>
+
+                      <View style={{ flex: 1 }}>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontFamily: 'Inter_600SemiBold',
+                            lineHeight: 26,
+                            color: isSelected ? colors.lime[300] : colors.text.primary,
+                            marginBottom: 4,
+                            textAlign: 'left',
+                          }}>
+                          {option.label}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            fontFamily: 'Inter_400Regular',
+                            lineHeight: 20,
+                            color: colors.text.secondary,
+                            textAlign: 'left',
+                          }}>
+                          {option.subtitle}
+                        </Text>
+                      </View>
+
+                      {isSelected && (
+                        <View
+                          style={{
+                            width: 28,
+                            height: 28,
+                            borderRadius: 14,
+                            backgroundColor: colors.lime[500],
+                            alignItems: 'center',
+                            justifyContent: 'center',
                             shadowColor: colors.lime[500],
-                            shadowOffset: { width: 0, height: 6 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 12,
-                            elevation: 6,
-                          }
-                        : {
-                            shadowColor: colors.background.primary,
                             shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.3,
+                            shadowOpacity: 0.4,
                             shadowRadius: 4,
                             elevation: 2,
-                          }),
-                    }}>
-                    <Image
-                      source={{ uri: option.emoji }}
-                      style={{ width: 56, height: 56, marginBottom: 8 }}
-                      contentFit="contain"
-                    />
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: 'Poppins_600SemiBold',
-                        color: postFeelingRating === option.value ? colors.button.primaryText : colors.text.primary,
-                      }}>
-                      {option.label}
-                    </Text>
-                  </Pressable>
-                ))}
+                          }}>
+                          <Check size={18} color={colors.background.primary} strokeWidth={3} />
+                        </View>
+                      )}
+                    </Pressable>
+                  );
+                })}
               </View>
             </View>
 
-            <View className="mt-6">
+            <View style={{ width: '100%', alignItems: 'center', marginTop: SPACING.xl }}>
               <Pressable
                 onPress={() => {
                   if (postFeelingRating) {
@@ -1448,11 +1746,10 @@ export default function SpiralInterrupt() {
                   }
                 }}
                 disabled={!postFeelingRating}
-                className="items-center justify-center"
                 style={{
                   backgroundColor: postFeelingRating ? colors.lime[600] : colors.background.muted,
                   height: 62,
-                  borderRadius: 100,
+                  borderRadius: RADIUS.full,
                   opacity: postFeelingRating ? 1 : 0.5,
                   ...(postFeelingRating && {
                     shadowColor: colors.lime[500],
@@ -1461,13 +1758,17 @@ export default function SpiralInterrupt() {
                     shadowRadius: 16,
                     elevation: 8,
                   }),
+                  paddingHorizontal: SPACING.xl,
+                  minWidth: 260,
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
                 <Text
                   style={{
                     fontSize: 18,
-                    fontFamily: 'Poppins_600SemiBold',
+                    fontFamily: 'Inter_600SemiBold',
                     letterSpacing: 0.3,
-                    color: postFeelingRating ? colors.white : colors.text.muted,
+                    color: postFeelingRating ? colors.button.primaryText : colors.text.muted,
                   }}>
                   Continue
                 </Text>
@@ -1479,137 +1780,231 @@ export default function SpiralInterrupt() {
 
       {/* Log Trigger Stage */}
       {stage === 'log-trigger' && (
-        <LinearGradient
-          colors={[colors.background.primary, colors.background.primary, colors.background.primary]}
-          locations={[0, 0.5, 1]}
-          style={{ flex: 1 }}>
+        <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={{ flex: 1 }}>
           <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={0}>
-            <View className="flex-1 justify-center px-6">
-              <Text
-                className="mb-4 text-2xl font-bold"
-                style={{ color: colors.text.primary }}>
-                What triggered this loop?
-              </Text>
-              <Text
-                className="mb-8 text-sm"
-                style={{ color: colors.text.muted }}>
-                Optional - but knowing your patterns helps us help you better
-              </Text>
-
-              <View className="mb-6 gap-3">
-                {commonTriggers.map((trigger) => (
-                  <Pressable
-                    key={trigger}
-                    onPress={() => {
-                      setSelectedTrigger(trigger);
-                      if (trigger !== 'Other') {
-                        setCustomTriggerText(''); // Clear custom text if switching away from Other
-                      }
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }}
-                    className="rounded-2xl p-4"
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingHorizontal: 24,
+                paddingTop: logTriggerPaddingTop,
+                paddingBottom: logTriggerPaddingBottom,
+                alignItems: 'center',
+                gap: SPACING.xl,
+              }}>
+              <View
+                style={{
+                  width: '100%',
+                  maxWidth: 560,
+                  gap: SPACING.xxl,
+                  alignItems: 'flex-start',
+                }}>
+                <View style={{ gap: SPACING.xs }}>
+                  <Text
                     style={{
-                      backgroundColor: selectedTrigger === trigger ? colors.lime[600] : colors.lime[800] + '40',
-                      borderWidth: 1,
-                      borderColor:
-                        selectedTrigger === trigger
-                          ? colors.lime[500] + '80'
-                          : colors.lime[600] + '33',
-                      ...(selectedTrigger === trigger
-                        ? {
-                            shadowColor: colors.lime[500],
-                            shadowOffset: { width: 0, height: 4 },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 10,
-                            elevation: 5,
-                          }
-                        : {
-                            shadowColor: colors.background.primary,
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 4,
-                            elevation: 2,
-                          }),
+                      fontFamily: HEADLINE_FONT_BOLD,
+                      fontSize: 28,
+                      lineHeight: 36,
+                      letterSpacing: 0.3,
+                      color: colors.text.primary,
+                      textAlign: 'left',
+                    }}>
+                    What triggered this loop?
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: BODY_FONT_MEDIUM,
+                      fontSize: 16,
+                      lineHeight: 24,
+                      color: colors.text.muted,
+                      textAlign: 'left',
+                    }}>
+                    Optional, but naming the spark helps us spot patterns and soften future loops.
+                  </Text>
+                  <View
+                    style={{
+                      height: 1,
+                      backgroundColor: colors.background.border,
+                      marginVertical: SPACING.lg,
+                    }}
+                  />
+                </View>
+
+                <View style={{ gap: SPACING.lg, width: '100%' }}>
+                  <View style={{ gap: SPACING.xs, alignItems: 'flex-start' }}>
+                    <Text
+                      style={{
+                        fontFamily: BODY_FONT_SEMIBOLD,
+                        fontSize: 14,
+                        letterSpacing: 1.2,
+                        textTransform: 'uppercase',
+                        color: colors.text.muted,
+                      }}>
+                      Tap what fits best
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: BODY_FONT_REGULAR,
+                        fontSize: 14,
+                        lineHeight: 22,
+                        color: colors.text.muted,
+                        opacity: 0.85,
+                      }}>
+                      Pick the closest match—you can refine it later if something else comes to
+                      mind.
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: '100%',
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      gap: 12,
+                    }}>
+                    {commonTriggers.map((trigger) => {
+                      const isSelected = selectedTrigger === trigger;
+                      return (
+                        <Pressable
+                          key={trigger}
+                          onPress={() => {
+                            setSelectedTrigger(trigger);
+                            if (trigger !== 'Other') {
+                              setCustomTriggerText('');
+                            }
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                          }}
+                          style={{
+                            paddingVertical: 14,
+                            paddingHorizontal: 20,
+                            borderRadius: RADIUS.full,
+                            borderWidth: 1,
+                            borderColor: isSelected ? colors.lime[500] : colors.background.border,
+                            backgroundColor: isSelected ? colors.lime[600] + '1A' : 'transparent',
+                            minWidth: 140,
+                            flexGrow: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontFamily: BODY_FONT_SEMIBOLD,
+                              color: colors.text.primary,
+                              letterSpacing: 0.2,
+                            }}>
+                            {trigger}
+                          </Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                </View>
+
+                {selectedTrigger === 'Other' && (
+                  <View style={{ gap: SPACING.sm, width: '100%' }}>
+                    <Text
+                      style={{
+                        fontFamily: BODY_FONT_MEDIUM,
+                        fontSize: 16,
+                        lineHeight: 24,
+                        color: colors.text.muted,
+                        textAlign: 'left',
+                      }}>
+                      What specifically triggered it?
+                    </Text>
+                    <TextInput
+                      value={customTriggerText}
+                      onChangeText={setCustomTriggerText}
+                      placeholder="Type here (optional)..."
+                      placeholderTextColor={colors.text.muted}
+                      multiline
+                      numberOfLines={3}
+                      maxLength={200}
+                      style={{
+                        backgroundColor: colors.background.secondary,
+                        borderRadius: RADIUS.xl,
+                        padding: 16,
+                        fontSize: 16,
+                        fontFamily: BODY_FONT_REGULAR,
+                        color: colors.text.primary,
+                        minHeight: 96,
+                        textAlignVertical: 'top',
+                        borderWidth: 1,
+                        borderColor: colors.background.border,
+                      }}
+                      returnKeyType="done"
+                      blurOnSubmit
+                    />
+                    <Text
+                      style={{
+                        textAlign: 'right',
+                        fontFamily: BODY_FONT_REGULAR,
+                        fontSize: 13,
+                        color: colors.text.muted,
+                      }}>
+                      {customTriggerText.length}/200
+                    </Text>
+                  </View>
+                )}
+
+                <View style={{ width: '100%', gap: SPACING.lg }}>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: 1,
+                      backgroundColor: colors.background.border,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: BODY_FONT_REGULAR,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      color: colors.text.muted,
+                      textAlign: 'left',
+                    }}>
+                    You can always update this later in Insights. A rough guess is more than enough.
+                  </Text>
+                  <View
+                    style={{
+                      height: 1,
+                      backgroundColor: colors.background.border,
+                      marginVertical: SPACING.lg,
+                    }}
+                  />
+                  <Pressable
+                    onPress={handleFinish}
+                    style={{
+                      backgroundColor: colors.lime[600],
+                      height: 62,
+                      borderRadius: RADIUS.full,
+                      shadowColor: colors.lime[500],
+                      shadowOffset: { width: 0, height: 8 },
+                      shadowOpacity: 0.4,
+                      shadowRadius: 16,
+                      elevation: 8,
+                      paddingHorizontal: SPACING.xl,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      alignSelf: 'stretch',
                     }}>
                     <Text
                       style={{
-                        fontSize: 16,
-                        fontFamily:
-                          selectedTrigger === trigger ? 'Poppins_600SemiBold' : 'Inter_400Regular',
-                        color: selectedTrigger === trigger ? colors.button.primaryText : colors.text.primary,
-                        letterSpacing: 0.2,
+                        color: colors.button.primaryText,
+                        fontSize: 18,
+                        fontFamily: BODY_FONT_SEMIBOLD,
+                        letterSpacing: 0.3,
                       }}>
-                      {trigger}
+                      Done
                     </Text>
                   </Pressable>
-                ))}
-              </View>
-
-              {/* Custom Trigger Text Input - Only show when "Other" is selected */}
-              {selectedTrigger === 'Other' && (
-                <View className="mb-6">
-                  <Text
-                    className="mb-3 text-sm"
-                    style={{ color: colors.text.muted }}>
-                    What specifically triggered it?
-                  </Text>
-                  <TextInput
-                    value={customTriggerText}
-                    onChangeText={setCustomTriggerText}
-                    placeholder="Type here (optional)..."
-                    placeholderTextColor={colors.text.muted}
-                    multiline
-                    numberOfLines={3}
-                    maxLength={200}
-                    style={{
-                      backgroundColor: colors.lime[800] + '40',
-                      borderRadius: 16,
-                      padding: 16,
-                      fontSize: 16,
-                      color: colors.text.primary,
-                      minHeight: 80,
-                      textAlignVertical: 'top',
-                    }}
-                    returnKeyType="done"
-                    blurOnSubmit
-                  />
-                  <Text
-                    className="mt-2 text-right text-xs"
-                    style={{ color: colors.text.muted }}>
-                    {customTriggerText.length}/200
-                  </Text>
                 </View>
-              )}
-
-              <Pressable
-                onPress={() => {
-                  handleFinish();
-                }}
-                className="items-center justify-center active:opacity-90"
-                style={{
-                  backgroundColor: colors.lime[600],
-                  height: 62,
-                  borderRadius: 100,
-                  shadowColor: colors.lime[500],
-                  shadowOffset: { width: 0, height: 8 },
-                  shadowOpacity: 0.4,
-                  shadowRadius: 16,
-                  elevation: 8,
-                }}>
-                <Text
-                  style={{
-                    color: colors.button.primaryText,
-                    fontSize: 18,
-                    fontFamily: 'Poppins_600SemiBold',
-                    letterSpacing: 0.3,
-                  }}>
-                  Done
-                </Text>
-              </Pressable>
-            </View>
+              </View>
+            </ScrollView>
           </KeyboardAvoidingView>
         </LinearGradient>
       )}

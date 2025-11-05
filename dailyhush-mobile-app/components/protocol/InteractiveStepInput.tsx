@@ -207,7 +207,7 @@ export function InteractiveStepInput({
         value={value}
         onChangeText={handleTextChange}
         placeholder={getPlaceholder()}
-        placeholderTextColor={colors.text.secondary}
+        placeholderTextColor={colors.text.muted}
         keyboardType={getKeyboardType()}
         returnKeyType={getReturnKeyType()}
         multiline={isMultiline}
@@ -231,10 +231,6 @@ export function InteractiveStepInput({
         <Text style={styles.helperText}>{getHelperText()}</Text>
       )}
 
-      {/* Focus Glow Effect (iOS shadow effect) */}
-      {isFocused && Platform.OS === 'ios' && (
-        <View style={styles.glowEffect} pointerEvents="none" />
-      )}
     </View>
   );
 }
@@ -243,84 +239,61 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: spacing.xl,
     width: '100%',
+    maxWidth: 520,
+    alignSelf: 'center',
   },
 
   label: {
-    fontSize: 16,
-    fontFamily: TYPOGRAPHY.bodyMedium.fontFamily,
+    fontSize: 18,
+    lineHeight: 28,
+    fontFamily: 'Inter_600SemiBold',
     fontWeight: '600',
-    color: colors.text.secondary,
-    marginBottom: spacing.sm,
-    letterSpacing: 0.2,
+    color: colors.text.primary,
+    marginBottom: spacing.base,
+    letterSpacing: 0.3,
   },
 
   input: {
     minHeight: TOUCH_TARGET.min,
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.base,
-    backgroundColor: colors.background.secondary,
+    backgroundColor: '#000000',
     borderWidth: 1,
-    borderColor: colors.background.border,
-    borderRadius: RADIUS.md,
-    fontSize: TYPOGRAPHY.body.fontSize,
-    fontFamily: TYPOGRAPHY.body.fontFamily,
-    lineHeight: TYPOGRAPHY.body.lineHeight,
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: RADIUS.xl,
+    fontSize: 19,
+    lineHeight: 30,
+    fontFamily: 'Inter_500Medium',
     color: colors.text.primary,
-    // Smooth transition for therapeutic feel
+    letterSpacing: 0.2,
     ...Platform.select({
-      ios: {
-        // iOS uses shadow transitions
-      },
       android: {
-        // Android can use elevation for subtle depth
         elevation: 0,
       },
     }),
   },
 
   inputMultiline: {
-    minHeight: 120,
+    minHeight: 140,
     paddingTop: spacing.base,
     paddingBottom: spacing.base,
     textAlignVertical: 'top',
   },
 
   inputFocused: {
-    borderColor: colors.lime[500],
-    backgroundColor: colors.background.secondary,
-    // Subtle lime glow for focused state
-    ...Platform.select({
-      ios: {
-        shadowColor: colors.lime[500],
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    borderColor: colors.lime[600],
+    backgroundColor: '#051913',
   },
 
   helperText: {
-    fontSize: 14,
-    fontFamily: TYPOGRAPHY.bodySmall.fontFamily,
-    color: colors.text.secondary,
+    fontSize: 15,
+    fontFamily: 'Inter_400Regular',
+    color: colors.text.muted,
     marginTop: spacing.sm,
-    opacity: 0.8,
+    letterSpacing: 0.3,
   },
 
   glowEffect: {
-    position: 'absolute',
-    top: spacing.xl + 8, // Position below label
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: RADIUS.md,
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: colors.gradients.glowSubtle,
-    opacity: 0.6,
-    pointerEvents: 'none',
+    display: 'none',
   },
 });

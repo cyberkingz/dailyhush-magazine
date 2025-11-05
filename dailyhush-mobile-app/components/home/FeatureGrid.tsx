@@ -15,7 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { FeatureCard } from './FeatureCard';
 import { Text } from '@/components/ui/text';
-import { LucideIcon } from 'lucide-react-native';
+import { LucideIcon, Sparkles } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
 

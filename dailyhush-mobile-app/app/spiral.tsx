@@ -89,6 +89,7 @@ export default function SpiralInterrupt() {
 
   // Animations
   const breatheScale = useRef(new Animated.Value(1)).current;
+  const breatheLoopRef = useRef<Animated.CompositeAnimation | null>(null);
 
   // Breathing animation for background glow (react-native-reanimated)
   const breathGlowOpacity = useSharedValue(0.3);
@@ -299,33 +300,55 @@ export default function SpiralInterrupt() {
     }
   }, [timeRemaining, stage]);
 
-  // Breathing animation for breathing steps
-  useEffect(() => {
-    if (stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9) {
-      startBreathingAnimation();
-    }
-  }, [stage, isPlaying, currentStepIndex]);
-
   const startBreathingAnimation = () => {
-    Animated.loop(
+    if (breatheLoopRef.current) {
+      return;
+    }
+
+    const loop = Animated.loop(
       Animated.sequence([
-        // Inhale (4 seconds) - reduced from 1.3 to 1.15 for subtlety
         Animated.timing(breatheScale, {
-          toValue: 1.15,
+          toValue: 1.12,
           duration: 4000,
           useNativeDriver: true,
         }),
-        // Hold briefly
-        Animated.delay(500),
-        // Exhale (10 seconds)
+        Animated.delay(400),
         Animated.timing(breatheScale, {
           toValue: 1,
-          duration: 10000,
+          duration: 8000,
           useNativeDriver: true,
         }),
       ])
-    ).start();
+    );
+
+    breatheLoopRef.current = loop;
+    loop.start();
   };
+
+  const stopBreathingAnimation = () => {
+    if (breatheLoopRef.current) {
+      breatheLoopRef.current.stop();
+      breatheLoopRef.current = null;
+    }
+    breatheScale.stopAnimation(() => {
+      breatheScale.setValue(1);
+    });
+  };
+
+  const isBreathingStep =
+    stage === 'protocol' && isPlaying && currentStepIndex >= 6 && currentStepIndex <= 9;
+
+  useEffect(() => {
+    if (isBreathingStep) {
+      startBreathingAnimation();
+      return () => {
+        stopBreathingAnimation();
+      };
+    }
+
+    stopBreathingAnimation();
+    return undefined;
+  }, [isBreathingStep]);
 
   const handleProtocolComplete = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -333,6 +356,7 @@ export default function SpiralInterrupt() {
 
     // Stop meditation sound
     audio.stop();
+    stopBreathingAnimation();
 
     // Track completion
     analytics.track('SPIRAL_COMPLETED', {

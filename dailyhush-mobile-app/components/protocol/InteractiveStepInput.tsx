@@ -22,6 +22,8 @@ interface InteractiveStepInputProps {
   onSubmit?: () => void;
   /** Auto-focus on mount for smooth flow (optional) */
   autoFocus?: boolean;
+  /** Called when input gains focus */
+  onFocusInput?: () => void;
   /** Test ID for testing (optional) */
   testID?: string;
 }
@@ -54,6 +56,7 @@ export function InteractiveStepInput({
   onChangeText,
   onSubmit,
   autoFocus = false,
+  onFocusInput,
   testID,
 }: InteractiveStepInputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -156,10 +159,7 @@ export function InteractiveStepInput({
    * Get dynamic input styles based on state
    */
   const getInputStyle = () => {
-    const baseStyles = [
-      styles.input,
-      isMultiline && styles.inputMultiline,
-    ];
+    const baseStyles = [styles.input, isMultiline && styles.inputMultiline];
 
     if (isFocused) {
       return [...baseStyles, styles.inputFocused];
@@ -195,6 +195,15 @@ export function InteractiveStepInput({
     }
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+    onFocusInput?.();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <View style={styles.container}>
       {/* Prompt Label */}
@@ -213,8 +222,8 @@ export function InteractiveStepInput({
         multiline={isMultiline}
         numberOfLines={isMultiline ? getNumberOfLines() : 1}
         maxLength={config.maxLength}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         onSubmitEditing={handleSubmit}
         blurOnSubmit={!isMultiline}
         autoFocus={autoFocus}
@@ -227,10 +236,7 @@ export function InteractiveStepInput({
       />
 
       {/* Helper Text / Character Count */}
-      {getHelperText() && (
-        <Text style={styles.helperText}>{getHelperText()}</Text>
-      )}
-
+      {getHelperText() && <Text style={styles.helperText}>{getHelperText()}</Text>}
     </View>
   );
 }

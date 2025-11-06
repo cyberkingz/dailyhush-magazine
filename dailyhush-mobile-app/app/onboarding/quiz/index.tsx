@@ -69,7 +69,7 @@ export default function QuizFlow() {
       }
     };
     restoreProgress();
-  }, [analytics]);
+  }, []);
 
   const handleSelectAnswer = async (optionId: string, value: number) => {
     const newAnswers = new Map(answers);

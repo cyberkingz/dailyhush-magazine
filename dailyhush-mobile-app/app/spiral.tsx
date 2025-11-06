@@ -15,6 +15,11 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Keyboard,
+  KeyboardEvent,
+  LayoutChangeEvent,
+  LayoutAnimation,
+  UIManager,
   useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
@@ -115,6 +120,9 @@ export default function SpiralInterrupt() {
   const [showPauseEncouragement, setShowPauseEncouragement] = useState(false);
   const interactiveStepsAcknowledgedRef = useRef<Set<number>>(new Set());
   const [isInteractiveAwaitingResume, setIsInteractiveAwaitingResume] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [interactiveKeyboardPadding, setInteractiveKeyboardPadding] = useState(0);
 
   // Animations
   const breatheScale = useRef(new Animated.Value(1)).current;
@@ -133,11 +141,26 @@ export default function SpiralInterrupt() {
   const [selectedTechnique, setSelectedTechnique] = useState<Technique | null>(null);
   const [interactiveResponses, setInteractiveResponses] = useState<Record<number, string>>({});
   const [isLoadingProtocol, setIsLoadingProtocol] = useState(false);
+  const protocolScrollRef = useRef<ScrollView | null>(null);
+  const interactiveInputOffsetRef = useRef(0);
 
   const safeAreaTop = Math.max(insets.top, 16);
   const safeAreaBottom = Math.max(insets.bottom, 16);
   const protocolPaddingTop = isInteractiveAwaitingResume ? safeAreaTop + 48 : safeAreaTop + 64;
   const protocolPaddingBottom = safeAreaBottom + 72;
+  const effectiveKeyboardPadding = Math.max(keyboardHeight - safeAreaBottom, 0);
+
+  const handleInteractiveInputLayout = useCallback((event: LayoutChangeEvent) => {
+    interactiveInputOffsetRef.current = event.nativeEvent.layout.y;
+  }, []);
+
+  const focusInteractiveInput = useCallback(() => {
+    if (!protocolScrollRef.current) return;
+    requestAnimationFrame(() => {
+      const targetOffset = Math.max(interactiveInputOffsetRef.current - safeAreaTop - 32, 0);
+      protocolScrollRef.current?.scrollTo({ y: targetOffset, animated: true });
+    });
+  }, [safeAreaTop]);
   // Keep countdown positioned very high on ALL non-interactive steps to ensure room for buttons
   const countdownRestingMarginTop = isInteractiveAwaitingResume ? 0 : 8;
   const gradientColors = [
@@ -185,6 +208,70 @@ export default function SpiralInterrupt() {
       audio.stop(); // Stop audio when leaving screen
     };
   }, []);
+
+  useEffect(() => {
+    const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+
+    const handleKeyboardShow = (event: KeyboardEvent) => {
+      const height = event.endCoordinates?.height ?? 0;
+      setIsKeyboardVisible(true);
+      setKeyboardHeight(height);
+      if (isInteractiveAwaitingResume && protocolScrollRef.current) {
+        focusInteractiveInput();
+      }
+    };
+
+    const handleKeyboardHide = () => {
+      setIsKeyboardVisible(false);
+      setKeyboardHeight(0);
+      if (protocolScrollRef.current && !isInteractiveAwaitingResume) {
+        requestAnimationFrame(() => {
+          protocolScrollRef.current?.scrollTo({ y: 0, animated: true });
+        });
+      }
+    };
+
+    const showSub = Keyboard.addListener(showEvent, handleKeyboardShow);
+    const hideSub = Keyboard.addListener(hideEvent, handleKeyboardHide);
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, [focusInteractiveInput, isInteractiveAwaitingResume]);
+
+  useEffect(() => {
+    if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isInteractiveAwaitingResume && protocolScrollRef.current) {
+      protocolScrollRef.current.scrollTo({ y: 0, animated: false });
+    }
+  }, [isInteractiveAwaitingResume]);
+
+  useEffect(() => {
+    const targetPadding = isInteractiveAwaitingResume
+      ? isKeyboardVisible
+        ? effectiveKeyboardPadding + 40
+        : 0
+      : 0;
+
+    if (targetPadding === interactiveKeyboardPadding) {
+      return;
+    }
+
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setInteractiveKeyboardPadding(targetPadding);
+  }, [
+    effectiveKeyboardPadding,
+    interactiveKeyboardPadding,
+    isInteractiveAwaitingResume,
+    isKeyboardVisible,
+  ]);
 
   const loadMeditationSound = async () => {
     try {
@@ -1029,443 +1116,468 @@ export default function SpiralInterrupt() {
             </Pressable>
           )}
 
-          <View
-            style={{
-              flex: 1,
-              width: '100%',
-              paddingHorizontal: 24,
-              paddingTop: protocolPaddingTop,
-              paddingBottom: protocolPaddingBottom,
-              alignItems: 'center',
-              justifyContent: isInteractiveAwaitingResume ? 'center' : 'space-between',
-              gap: isInteractiveAwaitingResume ? 40 : 0,
-            }}>
-            {/* Top Section - Countdown with Progress Ring */}
-            <AnimatedReanimated.View
-              className="items-center justify-center"
-              style={[
-                {
-                  overflow: 'visible',
-                  marginTop: countdownRestingMarginTop,
-                },
-                countdownContainerStyle,
-              ]}
-              pointerEvents={isInteractiveAwaitingResume ? 'none' : 'auto'}>
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? safeAreaTop : 0}>
+            <ScrollView
+              ref={protocolScrollRef}
+              style={{ flex: 1, width: '100%' }}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                flexGrow: 1,
+                width: '100%',
+              }}>
               <View
                 style={{
-                  position: 'relative',
-                  width: countdownSize,
-                  height: countdownSize,
-                  justifyContent: 'center',
+                  flex: 1,
+                  width: '100%',
+                  paddingHorizontal: 24,
+                  paddingTop: protocolPaddingTop,
+                  paddingBottom: protocolPaddingBottom + interactiveKeyboardPadding,
                   alignItems: 'center',
-                  overflow: 'visible',
+                  justifyContent: isInteractiveAwaitingResume
+                    ? isKeyboardVisible
+                      ? 'flex-start'
+                      : 'center'
+                    : 'space-between',
+                  gap: isInteractiveAwaitingResume ? 40 : 0,
                 }}>
-                {/* Outer glow layer with breathing pulse */}
+                {/* Top Section - Countdown with Progress Ring */}
                 <AnimatedReanimated.View
-                  pointerEvents="none"
+                  className="items-center justify-center"
                   style={[
                     {
-                      position: 'absolute',
-                      width: haloSize,
-                      height: haloSize,
-                      borderRadius: haloSize / 2,
-                      borderWidth: 2,
-                      borderColor: colors.lime[600] + '35',
-                      backgroundColor: 'transparent',
-                      shadowColor: colors.lime[500],
-                      shadowOffset: { width: 0, height: 0 },
-                      shadowOpacity: isPlaying ? 0.25 : 0.12,
-                      shadowRadius: 28,
-                      opacity: isPlaying ? 1 : 0.65,
-                      zIndex: 1,
+                      overflow: 'visible',
+                      marginTop: countdownRestingMarginTop,
                     },
-                    breathOrbStyle,
+                    countdownContainerStyle,
                   ]}
-                />
-
-                {/* Animated progress ring */}
-                <View style={{ opacity: isPlaying ? 1 : 0.5, zIndex: 2 }}>
-                  <CountdownRing
-                    size={countdownSize}
-                    strokeWidth={8}
-                    color={colors.lime[600]}
-                    glowColor={colors.lime[500]}
-                    progress={progress}
-                  />
-                </View>
-
-                {/* Countdown text overlay */}
-                <Animated.View
-                  style={{
-                    position: 'absolute',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    transform: [{ scale: breatheScale }],
-                    zIndex: 3,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: timeFontSize,
-                      fontFamily: 'Poppins_700Bold',
-                      fontWeight: '700',
-                      lineHeight: timeFontSize * 1.2,
-                      letterSpacing: 0.3,
-                      color: colors.text.primary,
-                      textShadowColor: colors.lime[500] + '30',
-                      textShadowOffset: { width: 0, height: 2 },
-                      textShadowRadius: 8,
-                    }}>
-                    {timeRemaining}
-                  </Text>
-                  <Text
-                    style={{
-                      marginTop: 4,
-                      fontSize: 14,
-                      fontFamily: 'Poppins_600SemiBold',
-                      letterSpacing: 2,
-                      color: !isPlaying
-                        ? colors.text.secondary
-                        : currentStepIndex >= 6 && currentStepIndex <= 9
-                          ? colors.lime[400]
-                          : colors.lime[500],
-                    }}>
-                    {!isPlaying
-                      ? 'PAUSED'
-                      : currentStepIndex >= 6 && currentStepIndex <= 9
-                        ? 'BREATHE'
-                        : 'GROUNDING'}
-                  </Text>
-                  {/* Ambient progress - minimal step counter */}
+                  pointerEvents={isInteractiveAwaitingResume ? 'none' : 'auto'}>
                   <View
                     style={{
-                      marginTop: 12,
-                      width: statusIndicatorWidth,
-                      height: 3,
-                      borderRadius: 2,
-                      backgroundColor: colors.lime[800] + '40',
-                      overflow: 'hidden',
+                      position: 'relative',
+                      width: countdownSize,
+                      height: countdownSize,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      overflow: 'visible',
                     }}>
+                    {/* Outer glow layer with breathing pulse */}
+                    <AnimatedReanimated.View
+                      pointerEvents="none"
+                      style={[
+                        {
+                          position: 'absolute',
+                          width: haloSize,
+                          height: haloSize,
+                          borderRadius: haloSize / 2,
+                          borderWidth: 2,
+                          borderColor: colors.lime[600] + '35',
+                          backgroundColor: 'transparent',
+                          shadowColor: colors.lime[500],
+                          shadowOffset: { width: 0, height: 0 },
+                          shadowOpacity: isPlaying ? 0.25 : 0.12,
+                          shadowRadius: 28,
+                          opacity: isPlaying ? 1 : 0.65,
+                          zIndex: 1,
+                        },
+                        breathOrbStyle,
+                      ]}
+                    />
+
+                    {/* Animated progress ring */}
+                    <View style={{ opacity: isPlaying ? 1 : 0.5, zIndex: 2 }}>
+                      <CountdownRing
+                        size={countdownSize}
+                        strokeWidth={8}
+                        color={colors.lime[600]}
+                        glowColor={colors.lime[500]}
+                        progress={progress}
+                      />
+                    </View>
+
+                    {/* Countdown text overlay */}
+                    <Animated.View
+                      style={{
+                        position: 'absolute',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        transform: [{ scale: breatheScale }],
+                        zIndex: 3,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: timeFontSize,
+                          fontFamily: 'Poppins_700Bold',
+                          fontWeight: '700',
+                          lineHeight: timeFontSize * 1.2,
+                          letterSpacing: 0.3,
+                          color: colors.text.primary,
+                          textShadowColor: colors.lime[500] + '30',
+                          textShadowOffset: { width: 0, height: 2 },
+                          textShadowRadius: 8,
+                        }}>
+                        {timeRemaining}
+                      </Text>
+                      <Text
+                        style={{
+                          marginTop: 4,
+                          fontSize: 14,
+                          fontFamily: 'Poppins_600SemiBold',
+                          letterSpacing: 2,
+                          color: !isPlaying
+                            ? colors.text.secondary
+                            : currentStepIndex >= 6 && currentStepIndex <= 9
+                              ? colors.lime[400]
+                              : colors.lime[500],
+                        }}>
+                        {!isPlaying
+                          ? 'PAUSED'
+                          : currentStepIndex >= 6 && currentStepIndex <= 9
+                            ? 'BREATHE'
+                            : 'GROUNDING'}
+                      </Text>
+                      {/* Ambient progress - minimal step counter */}
+                      <View
+                        style={{
+                          marginTop: 12,
+                          width: statusIndicatorWidth,
+                          height: 3,
+                          borderRadius: 2,
+                          backgroundColor: colors.lime[800] + '40',
+                          overflow: 'hidden',
+                        }}>
+                        <View
+                          style={{
+                            width: `${((currentStepIndex + 1) / (selectedTechnique?.steps.length || 12)) * 100}%`,
+                            height: '100%',
+                            backgroundColor: colors.button.primary,
+                          }}
+                        />
+                      </View>
+                    </Animated.View>
+                  </View>
+                </AnimatedReanimated.View>
+
+                {/* Middle Section - Current Step Text */}
+                <View
+                  className="w-full"
+                  style={{
+                    maxWidth: '100%',
+                    width: '100%',
+                    alignSelf: 'center',
+                    paddingHorizontal: 8,
+                  }}>
+                  {!selectedTechnique ? (
+                    // Loading state
                     <View
                       style={{
-                        width: `${((currentStepIndex + 1) / (selectedTechnique?.steps.length || 12)) * 100}%`,
-                        height: '100%',
-                        backgroundColor: colors.button.primary,
-                      }}
-                    />
-                  </View>
-                </Animated.View>
-              </View>
-            </AnimatedReanimated.View>
-
-            {/* Middle Section - Current Step Text */}
-            <View
-              className="w-full"
-              style={{ maxWidth: '100%', width: '100%', alignSelf: 'center', paddingHorizontal: 8 }}>
-              {!selectedTechnique ? (
-                // Loading state
-                <View
-                  style={{
-                    minHeight: 112,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingVertical: 26,
-                    paddingHorizontal: 28,
-                    gap: 18,
-                  }}>
-                  <ActivityIndicator size="large" color={colors.lime[500]} />
-                  <Text
-                    style={{
-                      marginTop: 16,
-                      fontSize: 16,
-                      fontFamily: 'Poppins_500Medium',
-                      color: colors.text.secondary,
-                      textAlign: 'center',
-                    }}>
-                    Selecting your protocol...
-                  </Text>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    minHeight: 112,
-                    justifyContent: 'center',
-                    paddingVertical: isInteractiveAwaitingResume ? 20 : 24,
-                    paddingHorizontal: isInteractiveAwaitingResume ? 0 : 12,
-                    alignItems: 'stretch',
-                    gap: 20,
-                    width: '100%',
-                    maxWidth: '100%',
-                    alignSelf: 'center',
-                  }}>
-                  {(() => {
-                    const currentStep = selectedTechnique.steps[currentStepIndex];
-                    if (!currentStep) return null;
-
-                    const totalStepsForTechnique = selectedTechnique.steps.length;
-                    const paragraphs = currentStep.text
-                      .split('\n\n')
-                      .map((block) => block.trim())
-                      .filter(Boolean);
-                    const isInteractiveStep = Boolean(currentStep.interactive);
-                    const hasAcknowledged =
-                      interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
-                    const shouldShowNarrative = !(
-                      isInteractiveStep &&
-                      hasAcknowledged &&
-                      !isInteractiveAwaitingResume
-                    );
-
-                    return (
-                      <View style={{ gap: 22 }}>
-                        <View style={{ alignItems: 'flex-start', gap: 8 }}>
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              letterSpacing: 3,
-                              textTransform: 'uppercase',
-                              color: colors.text.muted,
-                              fontFamily: BODY_FONT_SEMIBOLD,
-                            }}>
-                            Step {currentStepIndex + 1} · {totalStepsForTechnique}
-                          </Text>
-                          <View
-                            style={{
-                              height: 2,
-                              width: 80,
-                              backgroundColor: colors.lime[500],
-                              borderRadius: 999,
-                            }}
-                          />
-                        </View>
-
-                        {shouldShowNarrative && (
-                          <View style={{ gap: 18 }}>
-                            {paragraphs.map((paragraph, idx) => (
-                              <Text
-                                key={idx}
-                                style={{
-                                  fontSize: 22,
-                                  lineHeight: 34,
-                                  color: colors.text.primary,
-                                  fontFamily: BODY_FONT_MEDIUM,
-                                  letterSpacing: 0.2,
-                                }}>
-                                {paragraph}
-                              </Text>
-                            ))}
-                          </View>
-                        )}
-
-                        {!shouldShowNarrative && (
-                          <Text
-                            style={{
-                              fontSize: 18,
-                              lineHeight: 30,
-                              color: colors.text.secondary,
-                              fontFamily: BODY_FONT_MEDIUM,
-                            }}>
-                            Nice work capturing that. Keep following the pace—we&apos;ll guide you
-                            to the next step.
-                          </Text>
-                        )}
-
-                        {isInteractiveStep && isInteractiveAwaitingResume && (
-                          <View
-                            style={{
-                              gap: 20,
-                              alignItems: 'center',
-                              width: '100%',
-                            }}>
-                            <InteractiveStepInput
-                              config={currentStep.interactive}
-                              value={interactiveResponses[currentStepIndex] || ''}
-                              onChangeText={(text) => {
-                                setInteractiveResponses((prev) => ({
-                                  ...prev,
-                                  [currentStepIndex]: text,
-                                }));
-                              }}
-                              onSubmit={resumeInteractiveStep}
-                              autoFocus={true}
-                            />
-                            <View
-                              style={{
-                                gap: 12,
-                                alignItems: 'center',
-                                paddingHorizontal: 12,
-                              }}>
-                              <Text
-                                style={{
-                                  fontSize: 17,
-                                  lineHeight: 26,
-                                  fontFamily: BODY_FONT_MEDIUM,
-                                  color: colors.text.secondary,
-                                  textAlign: 'center',
-                                  maxWidth: 360,
-                                }}>
-                                Timer paused while you jot this down.
-                              </Text>
-                              <Pressable
-                                onPress={resumeInteractiveStep}
-                                accessibilityRole="button"
-                                accessibilityHint="Resume the guided exercise"
-                                style={{
-                                  paddingHorizontal: 42,
-                                  paddingVertical: 16,
-                                  borderRadius: RADIUS.full,
-                                  backgroundColor: colors.lime[600],
-                                  shadowColor: 'transparent',
-                                }}>
-                                <Text
-                                  style={{
-                                    fontSize: 18,
-                                    fontFamily: BODY_FONT_SEMIBOLD,
-                                    color: colors.button.primaryText,
-                                    letterSpacing: 0.3,
-                                  }}>
-                                  Submit Response
-                                </Text>
-                              </Pressable>
-                            </View>
-                          </View>
-                        )}
-                      </View>
-                    );
-                  })()}
-                </View>
-              )}
-
-              {/* First Pause Encouragement Toast */}
-              {showPauseEncouragement && (
-                <View
-                  style={{
-                    marginTop: 12,
-                    padding: 16,
-                    borderRadius: RADIUS.lg,
-                    backgroundColor: colors.background.secondary,
-                    borderWidth: 1,
-                    borderColor: colors.background.border,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      fontSize: 15,
-                      fontFamily: 'Poppins_500Medium',
-                      color: colors.text.secondary,
-                      lineHeight: 22,
-                    }}>
-                    It's okay to pause. Resume when ready.
-                  </Text>
-                </View>
-              )}
-            </View>
-
-            {/* Bottom Section - Controls */}
-            {!isInteractiveAwaitingResume && (
-              <View className="w-full">
-                <View className="flex-row gap-3">
-                  <Pressable
-                    onPress={() => {
-                      const newPlayingState = !isPlaying;
-                      setIsPlaying(newPlayingState);
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-                      if (newPlayingState && stage === 'protocol') {
-                        const step = selectedTechnique?.steps[currentStepIndex];
-                        if (step?.interactive) {
-                          interactiveStepsAcknowledgedRef.current.add(currentStepIndex);
-                          setIsInteractiveAwaitingResume(false);
-                        }
-                      }
-
-                      // Show encouragement on first pause
-                      if (!newPlayingState && !hasShownPauseEncouragement) {
-                        setHasShownPauseEncouragement(true);
-                        setShowPauseEncouragement(true);
-                        // Hide after 3 seconds
-                        setTimeout(() => setShowPauseEncouragement(false), 3000);
-                      }
-
-                      // Pause/resume meditation sound (respect mute state)
-                      if (newPlayingState && !audioMuted) {
-                        audio.play();
-                      } else {
-                        audio.pause();
-                      }
-                    }}
-                    className="flex-1 flex-row items-center justify-center active:opacity-90"
-                    style={{
-                      backgroundColor: colors.background.secondary,
-                      height: 62,
-                      borderRadius: RADIUS.full,
-                      borderWidth: 1,
-                      borderColor: colors.background.border,
-                      shadowColor: colors.shadow.dark,
-                      shadowOffset: { width: 0, height: 4 },
-                      shadowOpacity: 0.18,
-                      shadowRadius: 10,
-                      elevation: 3,
-                    }}>
-                    {isPlaying ? (
-                      <>
-                        <Pause size={20} color={colors.text.secondary} strokeWidth={2.5} />
-                        <Text
-                          style={{
-                            marginLeft: 8,
-                            fontSize: 16,
-                            fontFamily: 'Poppins_600SemiBold',
-                            letterSpacing: 0.3,
-                            color: colors.text.secondary,
-                          }}>
-                          Pause
-                        </Text>
-                      </>
-                    ) : (
-                      <>
-                        <Play size={20} color={colors.text.secondary} strokeWidth={2.5} />
-                        <Text
-                          style={{
-                            marginLeft: 8,
-                            fontSize: 16,
-                            fontFamily: 'Poppins_600SemiBold',
-                            letterSpacing: 0.3,
-                            color: colors.text.secondary,
-                          }}>
-                          Resume
-                        </Text>
-                      </>
-                    )}
-                  </Pressable>
-
-                  <Pressable
-                    onPress={() => {
-                      setShowSkipConfirm(true);
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }}
-                    className="flex-1 flex-row items-center justify-center active:opacity-90"
-                    style={{
-                      backgroundColor: colors.background.secondary,
-                      height: 62,
-                      borderRadius: RADIUS.full,
-                      borderWidth: 1,
-                      borderColor: colors.background.border,
-                    }}>
-                    <SkipForward size={20} color={colors.text.secondary} strokeWidth={2.5} />
-                    <Text
-                      style={{
-                        marginLeft: 8,
-                        fontSize: 16,
-                        fontFamily: 'Poppins_600SemiBold',
-                        letterSpacing: 0.3,
-                        color: colors.text.secondary,
+                        minHeight: 112,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingVertical: 26,
+                        paddingHorizontal: 28,
+                        gap: 18,
                       }}>
-                      Skip
-                    </Text>
-                  </Pressable>
+                      <ActivityIndicator size="large" color={colors.lime[500]} />
+                      <Text
+                        style={{
+                          marginTop: 16,
+                          fontSize: 16,
+                          fontFamily: 'Poppins_500Medium',
+                          color: colors.text.secondary,
+                          textAlign: 'center',
+                        }}>
+                        Selecting your protocol...
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        minHeight: 112,
+                        justifyContent: 'center',
+                        paddingVertical: isInteractiveAwaitingResume ? 20 : 24,
+                        paddingHorizontal: isInteractiveAwaitingResume ? 0 : 12,
+                        alignItems: 'stretch',
+                        gap: 20,
+                        width: '100%',
+                        maxWidth: '100%',
+                        alignSelf: 'center',
+                      }}>
+                      {(() => {
+                        const currentStep = selectedTechnique.steps[currentStepIndex];
+                        if (!currentStep) return null;
+
+                        const totalStepsForTechnique = selectedTechnique.steps.length;
+                        const paragraphs = currentStep.text
+                          .split('\n\n')
+                          .map((block) => block.trim())
+                          .filter(Boolean);
+                        const isInteractiveStep = Boolean(currentStep.interactive);
+                        const hasAcknowledged =
+                          interactiveStepsAcknowledgedRef.current.has(currentStepIndex);
+                        const shouldShowNarrative = !(
+                          isInteractiveStep &&
+                          hasAcknowledged &&
+                          !isInteractiveAwaitingResume
+                        );
+
+                        return (
+                          <View style={{ gap: 22 }}>
+                            <View style={{ alignItems: 'flex-start', gap: 8 }}>
+                              <Text
+                                style={{
+                                  fontSize: 14,
+                                  letterSpacing: 3,
+                                  textTransform: 'uppercase',
+                                  color: colors.text.muted,
+                                  fontFamily: BODY_FONT_SEMIBOLD,
+                                }}>
+                                Step {currentStepIndex + 1} · {totalStepsForTechnique}
+                              </Text>
+                              <View
+                                style={{
+                                  height: 2,
+                                  width: 80,
+                                  backgroundColor: colors.lime[500],
+                                  borderRadius: 999,
+                                }}
+                              />
+                            </View>
+
+                            {shouldShowNarrative && (
+                              <View style={{ gap: 18 }}>
+                                {paragraphs.map((paragraph, idx) => (
+                                  <Text
+                                    key={idx}
+                                    style={{
+                                      fontSize: 22,
+                                      lineHeight: 34,
+                                      color: colors.text.primary,
+                                      fontFamily: BODY_FONT_MEDIUM,
+                                      letterSpacing: 0.2,
+                                    }}>
+                                    {paragraph}
+                                  </Text>
+                                ))}
+                              </View>
+                            )}
+
+                            {!shouldShowNarrative && (
+                              <Text
+                                style={{
+                                  fontSize: 18,
+                                  lineHeight: 30,
+                                  color: colors.text.secondary,
+                                  fontFamily: BODY_FONT_MEDIUM,
+                                }}>
+                                Nice work capturing that. Keep following the pace—we&apos;ll guide
+                                you to the next step.
+                              </Text>
+                            )}
+
+                            {isInteractiveStep && isInteractiveAwaitingResume && (
+                              <View
+                                onLayout={handleInteractiveInputLayout}
+                                style={{
+                                  gap: 20,
+                                  alignItems: 'center',
+                                  width: '100%',
+                                }}>
+                                <InteractiveStepInput
+                                  config={currentStep.interactive}
+                                  value={interactiveResponses[currentStepIndex] || ''}
+                                  onChangeText={(text) => {
+                                    setInteractiveResponses((prev) => ({
+                                      ...prev,
+                                      [currentStepIndex]: text,
+                                    }));
+                                  }}
+                                  onSubmit={resumeInteractiveStep}
+                                  onFocusInput={focusInteractiveInput}
+                                />
+                                <View
+                                  style={{
+                                    gap: 12,
+                                    alignItems: 'center',
+                                    paddingHorizontal: 12,
+                                  }}>
+                                  <Text
+                                    style={{
+                                      fontSize: 17,
+                                      lineHeight: 26,
+                                      fontFamily: BODY_FONT_MEDIUM,
+                                      color: colors.text.secondary,
+                                      textAlign: 'center',
+                                      maxWidth: 360,
+                                    }}>
+                                    Timer paused while you jot this down.
+                                  </Text>
+                                  <Pressable
+                                    onPress={resumeInteractiveStep}
+                                    accessibilityRole="button"
+                                    accessibilityHint="Resume the guided exercise"
+                                    style={{
+                                      paddingHorizontal: 42,
+                                      paddingVertical: 16,
+                                      borderRadius: RADIUS.full,
+                                      backgroundColor: colors.lime[600],
+                                      shadowColor: 'transparent',
+                                    }}>
+                                    <Text
+                                      style={{
+                                        fontSize: 18,
+                                        fontFamily: BODY_FONT_SEMIBOLD,
+                                        color: colors.button.primaryText,
+                                        letterSpacing: 0.3,
+                                      }}>
+                                      Submit Response
+                                    </Text>
+                                  </Pressable>
+                                </View>
+                              </View>
+                            )}
+                          </View>
+                        );
+                      })()}
+                    </View>
+                  )}
+
+                  {/* First Pause Encouragement Toast */}
+                  {showPauseEncouragement && (
+                    <View
+                      style={{
+                        marginTop: 12,
+                        padding: 16,
+                        borderRadius: RADIUS.lg,
+                        backgroundColor: colors.background.secondary,
+                        borderWidth: 1,
+                        borderColor: colors.background.border,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          fontSize: 15,
+                          fontFamily: 'Poppins_500Medium',
+                          color: colors.text.secondary,
+                          lineHeight: 22,
+                        }}>
+                        It's okay to pause. Resume when ready.
+                      </Text>
+                    </View>
+                  )}
                 </View>
+
+                {/* Bottom Section - Controls */}
+                {!isInteractiveAwaitingResume && (
+                  <View className="w-full">
+                    <View className="flex-row gap-3">
+                      <Pressable
+                        onPress={() => {
+                          const newPlayingState = !isPlaying;
+                          setIsPlaying(newPlayingState);
+                          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+                          if (newPlayingState && stage === 'protocol') {
+                            const step = selectedTechnique?.steps[currentStepIndex];
+                            if (step?.interactive) {
+                              interactiveStepsAcknowledgedRef.current.add(currentStepIndex);
+                              setIsInteractiveAwaitingResume(false);
+                            }
+                          }
+
+                          // Show encouragement on first pause
+                          if (!newPlayingState && !hasShownPauseEncouragement) {
+                            setHasShownPauseEncouragement(true);
+                            setShowPauseEncouragement(true);
+                            // Hide after 3 seconds
+                            setTimeout(() => setShowPauseEncouragement(false), 3000);
+                          }
+
+                          // Pause/resume meditation sound (respect mute state)
+                          if (newPlayingState && !audioMuted) {
+                            audio.play();
+                          } else {
+                            audio.pause();
+                          }
+                        }}
+                        className="flex-1 flex-row items-center justify-center active:opacity-90"
+                        style={{
+                          backgroundColor: colors.background.secondary,
+                          height: 62,
+                          borderRadius: RADIUS.full,
+                          borderWidth: 1,
+                          borderColor: colors.background.border,
+                          shadowColor: colors.shadow.dark,
+                          shadowOffset: { width: 0, height: 4 },
+                          shadowOpacity: 0.18,
+                          shadowRadius: 10,
+                          elevation: 3,
+                        }}>
+                        {isPlaying ? (
+                          <>
+                            <Pause size={20} color={colors.text.secondary} strokeWidth={2.5} />
+                            <Text
+                              style={{
+                                marginLeft: 8,
+                                fontSize: 16,
+                                fontFamily: 'Poppins_600SemiBold',
+                                letterSpacing: 0.3,
+                                color: colors.text.secondary,
+                              }}>
+                              Pause
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <Play size={20} color={colors.text.secondary} strokeWidth={2.5} />
+                            <Text
+                              style={{
+                                marginLeft: 8,
+                                fontSize: 16,
+                                fontFamily: 'Poppins_600SemiBold',
+                                letterSpacing: 0.3,
+                                color: colors.text.secondary,
+                              }}>
+                              Resume
+                            </Text>
+                          </>
+                        )}
+                      </Pressable>
+
+                      <Pressable
+                        onPress={() => {
+                          setShowSkipConfirm(true);
+                          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                        }}
+                        className="flex-1 flex-row items-center justify-center active:opacity-90"
+                        style={{
+                          backgroundColor: colors.background.secondary,
+                          height: 62,
+                          borderRadius: RADIUS.full,
+                          borderWidth: 1,
+                          borderColor: colors.background.border,
+                        }}>
+                        <SkipForward size={20} color={colors.text.secondary} strokeWidth={2.5} />
+                        <Text
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 16,
+                            fontFamily: 'Poppins_600SemiBold',
+                            letterSpacing: 0.3,
+                            color: colors.text.secondary,
+                          }}>
+                          Skip
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                )}
               </View>
-            )}
-          </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
         </LinearGradient>
       )}
 

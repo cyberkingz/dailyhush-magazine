@@ -442,13 +442,17 @@ export default function SpiralInterrupt() {
       return;
     }
 
-    if (audioMuted || !isPlaying) {
+    if (audioMuted) {
       audio.pause();
       return;
     }
 
-    audio.play();
-  }, [stage, audioMuted, isPlaying, audio]);
+    if (isInteractiveAwaitingResume || isPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }, [stage, audioMuted, isPlaying, isInteractiveAwaitingResume, audio]);
 
   const breathOrbStyle = useAnimatedStyle(() => ({
     transform: [{ scale: breathOrbScale.value }],

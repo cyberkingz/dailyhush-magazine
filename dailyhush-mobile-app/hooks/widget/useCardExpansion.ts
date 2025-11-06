@@ -13,7 +13,7 @@
  * @module hooks/widget/useCardExpansion
  */
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   useSharedValue,
   useAnimatedStyle,
@@ -78,6 +78,16 @@ export function useCardExpansion(
   } = config;
 
   // ========================================================================
+  // STATE
+  // ========================================================================
+
+  /**
+   * Expansion state (boolean)
+   * Used for conditional rendering (cannot read .value during render)
+   */
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // ========================================================================
   // ANIMATED VALUES
   // ========================================================================
 
@@ -102,40 +112,42 @@ export function useCardExpansion(
    * Smoothly animates from collapsed to expanded state
    */
   const expand = useCallback(() => {
-    'worklet';
+    // Update state immediately for conditional rendering
+    setIsExpanded(true);
 
-    // Animate height
+    // Run animation on UI thread
     height.value = withTiming(expandedHeight, {
       duration: expansionDuration,
       easing: Easing.bezier(...EASING_CURVES.expansion),
     });
 
-    // Animate expansion progress
     expansionProgress.value = withTiming(1, {
       duration: expansionDuration,
       easing: Easing.bezier(...EASING_CURVES.expansion),
     });
   }, [expandedHeight, expansionDuration]);
+  // Note: height and expansionProgress are shared values (refs) - NOT in deps
 
   /**
    * Collapse the card
    * Smoothly animates from expanded to collapsed state
    */
   const collapse = useCallback(() => {
-    'worklet';
+    // Update state immediately for conditional rendering
+    setIsExpanded(false);
 
-    // Animate height
+    // Run animation on UI thread
     height.value = withTiming(collapsedHeight, {
       duration: collapseDuration,
       easing: Easing.bezier(...EASING_CURVES.collapse),
     });
 
-    // Animate expansion progress
     expansionProgress.value = withTiming(0, {
       duration: collapseDuration,
       easing: Easing.bezier(...EASING_CURVES.collapse),
     });
   }, [collapsedHeight, collapseDuration]);
+  // Note: height and expansionProgress are shared values (refs) - NOT in deps
 
   // ========================================================================
   // ANIMATED STYLES
@@ -186,6 +198,6 @@ export function useCardExpansion(
     expand,
     collapse,
     animatedCardStyle,
-    isExpanded: expansionProgress.value > 0.5, // Consider expanded if > 50% progress
+    isExpanded, // Use state value (safe for render)
   };
 }

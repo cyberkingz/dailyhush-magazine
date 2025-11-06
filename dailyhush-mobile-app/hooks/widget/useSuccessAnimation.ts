@@ -14,7 +14,7 @@
  * @module hooks/widget/useSuccessAnimation
  */
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import {
   useSharedValue,
   useAnimatedStyle,
@@ -94,6 +94,15 @@ export function useSuccessAnimation(
   const { duration, enableHaptics, showGlow, onComplete } = config;
 
   // ========================================================================
+  // STATE
+  // ========================================================================
+
+  /**
+   * Is animation currently playing (React state - safe for render)
+   */
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // ========================================================================
   // ANIMATED VALUES
   // ========================================================================
 
@@ -117,11 +126,6 @@ export function useSuccessAnimation(
    */
   const glowOpacity = useSharedValue(0);
 
-  /**
-   * Is animation currently playing
-   */
-  const isPlaying = useSharedValue(false);
-
   // ========================================================================
   // TRIGGER ANIMATION
   // ========================================================================
@@ -130,74 +134,88 @@ export function useSuccessAnimation(
    * Trigger the success animation
    */
   const trigger = useCallback(() => {
-    'worklet';
-
-    isPlaying.value = true;
+    console.log('[Animation] Trigger start');
+    setIsPlaying(true);
+    console.log('[Animation] setIsPlaying done');
 
     // ========================================
     // PATH DRAWING
     // ========================================
 
     // Draw checkmark from 0% to 100%
+    console.log('[Animation] Starting path animation');
     drawProgress.value = withTiming(1, {
       duration,
       easing: Easing.out(Easing.ease),
     });
+    console.log('[Animation] Path animation queued');
 
     // ========================================
     // SCALE BOUNCE
     // ========================================
 
-    // Scale: 0 → 1.2 → 1 (bounce in)
+    // Scale: 0 → 1.1 → 1 (subtle bounce in)
+    console.log('[Animation] Starting scale animation');
     scale.value = withSequence(
       withTiming(0, { duration: 0 }), // Start at 0
-      withTiming(1.2, { duration: duration * 0.5 }), // Grow to 1.2
-      withSpring(1, { damping: 10, stiffness: 100 }) // Settle to 1
+      withTiming(1.1, { duration: duration * 0.4, easing: Easing.out(Easing.ease) }), // Grow to 1.1
+      withSpring(1, { damping: 14, stiffness: 120 }) // Settle to 1 (more subtle)
     );
+    console.log('[Animation] Scale animation queued');
 
     // ========================================
-    // ROTATION
+    // ROTATION (DISABLED - too distracting)
     // ========================================
 
-    // Rotate 360 degrees during animation
-    rotate.value = withTiming(360, {
-      duration: duration,
-      easing: Easing.out(Easing.ease),
-    });
+    // No rotation for more subtle effect
+    console.log('[Animation] Setting rotation');
+    rotate.value = 0;
+    console.log('[Animation] Rotation set');
 
     // ========================================
     // GLOW PULSE (if enabled)
     // ========================================
 
+    console.log('[Animation] Checking glow:', showGlow);
     if (showGlow) {
-      // Pulse glow: 0 → 0.6 → 0.3 (fade in then settle)
+      // Subtle glow: 0 → 0.4 → 0.2 (fade in then settle - more subtle)
+      console.log('[Animation] Starting glow animation');
       glowOpacity.value = withSequence(
-        withTiming(0.6, { duration: duration * 0.5 }),
-        withTiming(0.3, { duration: duration * 0.5 })
+        withTiming(0.4, { duration: duration * 0.5, easing: Easing.out(Easing.ease) }),
+        withTiming(0.2, { duration: duration * 0.5, easing: Easing.inOut(Easing.ease) })
       );
+      console.log('[Animation] Glow animation queued');
     }
 
     // ========================================
     // HAPTIC FEEDBACK
     // ========================================
 
-    if (enableHaptics) {
-      // Success haptic notification
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    }
+    // Temporarily disabled - crashes on simulator
+    // if (enableHaptics) {
+    //   // Success haptic notification
+    //   Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    // }
 
     // ========================================
     // COMPLETION CALLBACK
     // ========================================
 
     // Call onComplete after animation finishes
+    console.log('[Animation] Setting completion callback, hasCallback:', !!onComplete);
     if (onComplete) {
       setTimeout(() => {
-        isPlaying.value = false;
+        console.log('[Animation] Completion callback executing');
+        setIsPlaying(false);
+        console.log('[Animation] setIsPlaying(false) done');
         onComplete();
+        console.log('[Animation] onComplete() done');
       }, duration);
     }
+    console.log('[Animation] Trigger complete');
   }, [duration, enableHaptics, showGlow, onComplete]);
+  // Note: Shared values (drawProgress, scale, rotate, glowOpacity) are NOT included
+  // because they're refs and don't change identity
 
   // ========================================================================
   // ANIMATED PROPS (for SVG)
@@ -265,6 +283,6 @@ export function useSuccessAnimation(
     trigger,
     animatedProps,
     animatedStyle,
-    isPlaying: isPlaying.value,
+    isPlaying, // Use state value (safe for render)
   };
 }

@@ -87,19 +87,19 @@ export const DEFAULT_ANIMATION_CONFIG: AnimationConfig = {
   expansionDuration: 300,
 
   /** Card collapse duration (smooth ease-in) */
-  collapseDuration: 400,
+  collapseDuration: 300,
 
   /** Delay between mood choice stagger (creates wave effect) */
   moodStaggerDelay: 50,
 
   /** Success checkmark animation duration */
-  successDuration: 400,
+  successDuration: 300,
 
   /** How long to show success before auto-collapse */
-  successDisplayDelay: 800,
+  successDisplayDelay: 400,
 
   /** Content fade in/out duration */
-  contentFadeDuration: 200,
+  contentFadeDuration: 250,
 };
 
 /**

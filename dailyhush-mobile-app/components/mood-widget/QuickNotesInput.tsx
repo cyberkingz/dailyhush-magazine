@@ -9,7 +9,7 @@
  */
 
 import React, { useRef, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { PillButton } from '@/components/ui/pill-button';
 import type { QuickNotesInputProps } from '@/types/widget.types';
 import { colors } from '@/constants/colors';
@@ -40,6 +40,13 @@ export function QuickNotesInput({
     }
   }, [visible, config.autoFocus]);
 
+  // Dismiss keyboard when component unmounts
+  useEffect(() => {
+    return () => {
+      Keyboard.dismiss();
+    };
+  }, []);
+
   if (!visible) {
     return null;
   }
@@ -47,6 +54,11 @@ export function QuickNotesInput({
   const characterCount = value.length;
   const maxLength = config.maxLength || 200;
   const isOverLimit = characterCount > maxLength;
+
+  // Handle keyboard dismiss
+  const handleDismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   return (
     <KeyboardAvoidingView
@@ -75,6 +87,10 @@ export function QuickNotesInput({
         accessibilityLabel={ACCESSIBILITY_LABELS.quickNotes.input}
         accessibilityHint={ACCESSIBILITY_LABELS.quickNotes.inputHint}
         editable={!isSubmitting}
+        returnKeyType="done"
+        blurOnSubmit={true}
+        onSubmitEditing={handleDismissKeyboard}
+        keyboardAppearance="dark"
       />
 
       {/* Character counter */}
@@ -93,7 +109,10 @@ export function QuickNotesInput({
       <View style={styles.actions}>
         <PillButton
           label="Skip"
-          onPress={onSkip}
+          onPress={() => {
+            Keyboard.dismiss();
+            onSkip();
+          }}
           variant="secondary"
           style={styles.actionButton}
           disabled={isSubmitting}
@@ -102,7 +121,10 @@ export function QuickNotesInput({
         />
         <PillButton
           label={isSubmitting ? 'Saving...' : 'Submit'}
-          onPress={onSubmit}
+          onPress={() => {
+            Keyboard.dismiss();
+            onSubmit();
+          }}
           variant="primary"
           style={styles.actionButton}
           disabled={isSubmitting || isOverLimit}

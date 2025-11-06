@@ -7,17 +7,18 @@
  * @module components/mood-widget/SuccessCheckmark
  */
 
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Animated from 'react-native-reanimated';
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 import type { SuccessCheckmarkProps } from '@/types/widget.types';
 import { useSuccessAnimation } from '@/hooks/widget';
 import { colors } from '@/constants/colors';
 import { SPACING } from '@/constants/designTokens';
 
-// Create animated SVG path
+// Create animated SVG path and Text
 const AnimatedPath = Animated.createAnimatedComponent(Path);
+const AnimatedText = Animated.createAnimatedComponent(Animated.Text);
 
 /**
  * SuccessCheckmark component
@@ -28,32 +29,55 @@ export function SuccessCheckmark({
   onComplete,
   config,
 }: SuccessCheckmarkProps) {
+  // Opacity for fade-out
+  const opacity = useSharedValue(1);
+
+  // Track if animation has been triggered for current visibility cycle
+  const hasTriggered = useRef(false);
+
   // Use success animation hook
   const { trigger, animatedProps, animatedStyle } = useSuccessAnimation({
     duration: config.duration || 400,
     enableHaptics: true,
     showGlow: config.showGlow,
-    onComplete,
+    onComplete: () => {
+      // Skip fade-out animation to avoid nested Reanimated conflicts
+      console.log('[SuccessCheckmark] Animation complete, calling parent onComplete');
+      onComplete?.();
+    },
   });
 
-  // Trigger animation when visible
+  // Container fade animation
+  const containerStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  // Trigger animation when visible (only once per visibility cycle)
   useEffect(() => {
-    if (visible) {
+    if (visible && !hasTriggered.current) {
+      console.log('[SuccessCheckmark] Triggering animation (first time)');
+      hasTriggered.current = true;
+      opacity.value = 1; // Reset opacity
       trigger();
+    } else if (visible && hasTriggered.current) {
+      console.log('[SuccessCheckmark] Skipping trigger (already triggered)');
+    } else if (!visible) {
+      // Reset flag when component becomes invisible
+      hasTriggered.current = false;
     }
-  }, [visible, trigger]);
+  }, [visible]);
 
   if (!visible) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, containerStyle]}>
       {/* Animated checkmark SVG */}
       <Animated.View style={[styles.svgContainer, animatedStyle]}>
-        <Svg width={80} height={80} viewBox="0 0 80 80">
+        <Svg width={64} height={64} viewBox="0 0 64 64">
           <AnimatedPath
-            d="M 20,40 L 35,55 L 60,25"
+            d="M 16,32 L 28,44 L 48,20"
             stroke={config.color}
             strokeWidth={config.strokeWidth}
             fill="none"
@@ -66,10 +90,10 @@ export function SuccessCheckmark({
       </Animated.View>
 
       {/* Success message */}
-      <Text style={styles.message} accessibilityLiveRegion="polite">
+      <AnimatedText style={styles.message} accessibilityLiveRegion="polite">
         {config.message}
-      </Text>
-    </View>
+      </AnimatedText>
+    </Animated.View>
   );
 }
 
@@ -84,9 +108,10 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.lg,
   },
   message: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: colors.lime[500],
     textAlign: 'center',
+    opacity: 0.9,
   },
 });

@@ -345,14 +345,32 @@ export async function saveMoodLog(
         });
 
         // Upsert mood log (insert or update if exists)
-        const { data: savedLog, error } = await supabase
-          .from('mood_logs')
-          .upsert(upsertData, {
-            onConflict: 'user_id,log_date',
-            ignoreDuplicates: false,
-          })
-          .select()
-          .single();
+        console.log('[MoodService] Starting Supabase upsert...');
+
+        let savedLog, error;
+        try {
+          console.log('[MoodService] Calling upsert without single()...');
+
+          // Try without .single() to see if that's the issue
+          const result = await supabase
+            .from('mood_logs')
+            .upsert(upsertData, {
+              onConflict: 'user_id,log_date',
+              ignoreDuplicates: false,
+            })
+            .select();
+
+          console.log('[MoodService] Upsert returned, checking result...');
+
+          // Manually get first result instead of using .single()
+          savedLog = result.data?.[0];
+          error = result.error;
+
+          console.log('[MoodService] Supabase upsert complete');
+        } catch (nativeError) {
+          console.error('[MoodService] Native crash caught:', nativeError);
+          throw nativeError;
+        }
 
         console.log('[MoodService] saveMoodLog result:', {
           success: !!savedLog,
@@ -366,7 +384,40 @@ export async function saveMoodLog(
         }
 
         if (!savedLog) {
-          throw new Error('No data returned from insert');
+          console.warn('[MoodService] saveMoodLog: upsert returned no data, fetching manually');
+
+          const { data: fallbackLog, error: fallbackError } = await supabase
+            .from('mood_logs')
+            .select('*')
+            .eq('user_id', userId)
+            .eq('log_date', logDate)
+            .is('deleted_at', null)
+            .order('updated_at', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+          if (fallbackError) {
+            console.error('[MoodService] saveMoodLog fallback fetch error:', fallbackError);
+            throw new MoodLoggingErrorClass(
+              'UNKNOWN_ERROR' as MoodLoggingErrorCode,
+              'We saved your mood but could not confirm it. Please try again.',
+              fallbackError
+            );
+          }
+
+          if (!fallbackLog) {
+            throw new MoodLoggingErrorClass(
+              'UNKNOWN_ERROR' as MoodLoggingErrorCode,
+              'We saved your mood but could not confirm it. Please try again.',
+              null
+            );
+          }
+
+          console.log('[MoodService] saveMoodLog fallback success:', {
+            fallbackLogId: fallbackLog.id,
+          });
+
+          return fallbackLog as MoodLog;
         }
 
         return savedLog as MoodLog;

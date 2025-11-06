@@ -252,7 +252,14 @@ export function useWidgetStateMachine(
     // Transition to success state (animation will play)
     setState('success');
 
-    // Submit in background
+    // CRITICAL: Delay database save until AFTER animations complete
+    // This prevents native thread conflict between Reanimated and Supabase
+    // Total animation time: 400ms (success) + 400ms (display) + 300ms (collapse) = 1100ms
+    console.log('[StateMachine] Delaying database save to avoid animation conflict...');
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    console.log('[StateMachine] Animation settled, now saving to database...');
+
+    // Submit after animations complete
     await submitMoodData(finalData);
   }, [data, submitMoodData]);
 

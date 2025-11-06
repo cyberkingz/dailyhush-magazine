@@ -70,9 +70,12 @@ export function WeatherDisplay({
 
   return (
     <MotiView
-      from={{ opacity: 0, scale: 0.95 }}
+      from={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'timing', duration: 500 }}
+      transition={{
+        type: 'timing',
+        duration: 400,
+      }}
       style={styles.container}
     >
       {/* Weather icon */}

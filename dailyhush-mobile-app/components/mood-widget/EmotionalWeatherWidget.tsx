@@ -116,16 +116,6 @@ export function EmotionalWeatherWidget({
 
   // When mood data is loaded from props, transition to display state
   useEffect(() => {
-    console.log('[Widget] Checking state sync:', {
-      hasWeather: !!weather,
-      hasMoodRating: moodRating !== undefined,
-      currentState: state,
-      weather,
-      moodRating,
-      notes,
-      hasInternalData: !!(data.mood && data.intensity),
-    });
-
     // Transition to display when mood data is present
     if (weather && moodRating !== undefined && state === 'empty') {
       console.log('[Widget] ✅ Mood data present, transitioning to display state');
@@ -202,11 +192,23 @@ export function EmotionalWeatherWidget({
 
   /**
    * Complete success animation
-   * Collapses card and transitions to display
+   * Smoothly transitions: success → delay → collapse → display
    */
   const handleCompleteSuccess = () => {
-    collapse();
-    completeSuccess();
+    console.log('[Widget] handleCompleteSuccess called');
+
+    // Step 1: Show success for a moment (400ms)
+    setTimeout(() => {
+      console.log('[Widget] Starting collapse animation');
+      // Step 2: Start collapsing the card (300ms)
+      collapse();
+
+      // Step 3: After collapse completes, transition to display state
+      setTimeout(() => {
+        console.log('[Widget] Calling completeSuccess to transition to display');
+        completeSuccess();
+      }, config.animation.collapseDuration + 100); // Add 100ms buffer for smooth transition
+    }, config.animation.successDisplayDelay);
   };
 
   /**
@@ -302,10 +304,6 @@ export function EmotionalWeatherWidget({
         {isExpanded && isOffline && <OfflineIndicator visible={isOffline} />}
 
         {/* Content based on state - or error if present */}
-        {(() => {
-          console.log('[Widget] Rendering state:', state, 'hasError:', !!error);
-          return null;
-        })()}
         {error ? (
           <ErrorDisplay
             error={error}
@@ -397,7 +395,7 @@ export function EmotionalWeatherWidget({
               />
             )}
 
-            {state === 'display' && weather && moodRating !== undefined && (
+            {state === 'display' && weather && moodRating !== undefined && !isExpanded && (
               <WeatherDisplay
                 weather={weather as any}
                 moodRating={moodRating}

@@ -15,7 +15,8 @@ import { Text } from '@/components/ui/text';
 import { useUser, useLoading } from '@/store/useStore';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { CTAButton, FeatureGrid, FeatureItem, QuoteBanner } from '@/components/home';
-import { EmotionalWeather } from '@/components/profile/EmotionalWeather';
+import { EmotionalWeatherWidget } from '@/components/mood-widget';
+import { useMoodLogging } from '@/hooks/useMoodLogging';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
@@ -45,9 +46,45 @@ export default function HomeModern() {
   const greetingLine = `${greeting}`;
   const welcomeLine = displayName === 'Friend' ? 'Welcome back' : `Welcome back, ${displayName}`;
 
-  // Navigate to mood capture flow
-  const handleCheckIn = () => {
-    router.push('/mood-capture/mood');
+  // Mood logging integration
+  const { logMood, getTodayMood, isLoggingMood, moodError } = useMoodLogging();
+  const [todayMood, setTodayMood] = useState<{
+    weather: string;
+    intensity: number;
+    notes?: string;
+  } | null>(null);
+
+  // Handle mood submission
+  const handleMoodSubmit = async (moodData: {
+    mood: string;
+    intensity: number;
+    notes?: string;
+  }) => {
+    try {
+      await logMood({
+        emotional_weather: moodData.mood as any,
+        mood_rating: moodData.intensity,
+        mood_notes: moodData.notes,
+      });
+
+      // Refresh today's mood after successful submission
+      const refreshedMood = await getTodayMood();
+      if (refreshedMood) {
+        setTodayMood({
+          weather: refreshedMood.emotional_weather,
+          intensity: refreshedMood.mood_rating,
+          notes: refreshedMood.mood_notes,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to log mood:', error);
+    }
+  };
+
+  // Handle mood update (same as submit for inline widget)
+  const handleMoodUpdate = () => {
+    // The widget handles the update flow - no need to navigate
+    console.log('Update mood clicked - widget will expand');
   };
 
   // Feature grid configuration
@@ -97,6 +134,28 @@ export default function HomeModern() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Fetch today's mood on mount
+  useEffect(() => {
+    const fetchTodayMood = async () => {
+      if (user && isMounted) {
+        try {
+          const mood = await getTodayMood();
+          if (mood) {
+            setTodayMood({
+              weather: mood.emotional_weather,
+              intensity: mood.mood_rating,
+              notes: mood.mood_notes,
+            });
+          }
+        } catch (error) {
+          console.error('Failed to fetch today\'s mood:', error);
+        }
+      }
+    };
+
+    fetchTodayMood();
+  }, [user, isMounted, getTodayMood]);
 
   // Fetch spiral stats
   // useEffect(() => {
@@ -281,7 +340,13 @@ export default function HomeModern() {
 
         {/* Mood Logging Card */}
         <View style={{ paddingHorizontal: 20 }}>
-          <EmotionalWeather onPress={handleCheckIn} />
+          <EmotionalWeatherWidget
+            weather={todayMood?.weather as any}
+            moodRating={todayMood?.intensity}
+            notes={todayMood?.notes}
+            onMoodSubmit={handleMoodSubmit}
+            onUpdate={handleMoodUpdate}
+          />
         </View>
 
         {/* Main CTA - Direct to crisis interruption */}

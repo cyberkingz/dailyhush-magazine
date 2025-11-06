@@ -206,25 +206,35 @@ export function useWidgetStateMachine(
       };
 
       // Submit to API
-      const result = await submitMood(submitData);
+      // Note: submitMood returns null when offline (which is OK - it queues for sync)
+      console.log('[Widget] Submitting mood:', {
+        mood: submitData.mood,
+        intensity: submitData.intensity,
+        hasNotes: !!submitData.notes,
+      });
 
-      if (result) {
-        // Success!
-        setError(null);
-        onSuccess?.(submitData);
+      await submitMood(submitData);
 
-        // Calculate time to complete (for analytics)
-        if (startTime) {
-          const timeToComplete = Date.now() - startTime.getTime();
-          console.log(`[Widget] Mood logged in ${timeToComplete}ms`);
-        }
-      } else {
-        throw new Error('Failed to submit mood');
+      console.log('[Widget] Mood submitted successfully');
+
+      // Success! (including offline queue)
+      setError(null);
+      onSuccess?.(submitData);
+
+      // Calculate time to complete (for analytics)
+      if (startTime) {
+        const timeToComplete = Date.now() - startTime.getTime();
+        console.log(`[Widget] Mood logged in ${timeToComplete}ms`);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to submit mood';
       setError(errorMessage);
       console.error('[Widget] Submit error:', err);
+      console.error('[Widget] Error details:', {
+        type: err?.constructor?.name,
+        message: errorMessage,
+        stack: err instanceof Error ? err.stack : undefined,
+      });
 
       // Don't advance to success on error
       // Stay on current state so user can retry
@@ -282,6 +292,21 @@ export function useWidgetStateMachine(
     reset();
   }, [onCancel, reset]);
 
+  /**
+   * Clear error state
+   */
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
+
+  /**
+   * Update notes in real-time (as user types)
+   * Does not transition state, just updates data
+   */
+  const updateNotes = useCallback((notes: string) => {
+    setData((prev) => ({ ...prev, notes }));
+  }, []);
+
   // ========================================================================
   // ERROR HANDLING
   // ========================================================================
@@ -309,6 +334,8 @@ export function useWidgetStateMachine(
     completeSuccess,
     reset,
     cancel,
+    clearError,
+    updateNotes,
 
     // Status
     isLoading: isSubmitting,

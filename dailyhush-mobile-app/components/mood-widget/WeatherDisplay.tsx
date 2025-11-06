@@ -24,11 +24,45 @@ export function WeatherDisplay({
   weather,
   moodRating,
   notes,
+  createdAt,
+  updatedAt,
   onUpdate,
   visible,
 }: WeatherDisplayProps) {
   // Get weather config for icon display
   const weatherConfig = emotionalWeatherColors[weather as keyof typeof emotionalWeatherColors] || emotionalWeatherColors.cloudy;
+
+  // Format timestamp for display
+  const formatTimestamp = (timestamp?: string) => {
+    if (!timestamp) return null;
+
+    const date = new Date(timestamp);
+    const now = new Date();
+    const isToday = date.toDateString() === now.toDateString();
+
+    const timeString = date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+
+    if (isToday) {
+      return `Today at ${timeString}`;
+    }
+
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  // Determine which timestamp to show
+  const displayTimestamp = updatedAt && updatedAt !== createdAt
+    ? `Updated ${formatTimestamp(updatedAt)}`
+    : `Logged ${formatTimestamp(createdAt)}`;
 
   if (!visible) {
     return null;
@@ -94,12 +128,26 @@ export function WeatherDisplay({
         <Text style={styles.todayLabel}>
           Today's Check-In
         </Text>
+
+        {/* Timestamp */}
+        {displayTimestamp && (
+          <Text
+            style={styles.timestamp}
+            accessible={true}
+            accessibilityLabel={displayTimestamp}
+          >
+            {displayTimestamp}
+          </Text>
+        )}
       </View>
 
       {/* Update button */}
       <TouchableOpacity
         style={styles.updateButton}
-        onPress={onUpdate}
+        onPress={() => {
+          console.log('[WeatherDisplay] Update button pressed');
+          onUpdate();
+        }}
         accessibilityLabel={ACCESSIBILITY_LABELS.weatherDisplay.updateButton}
         accessibilityHint={ACCESSIBILITY_LABELS.weatherDisplay.updateHint}
         accessibilityRole="button"
@@ -113,6 +161,7 @@ export function WeatherDisplay({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    position: 'relative', // Ensure absolute children position relative to this
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: SPACING.xxl,
@@ -166,6 +215,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     opacity: 0.7,
   },
+  timestamp: {
+    fontSize: 11,
+    color: colors.text.secondary,
+    textAlign: 'center',
+    opacity: 0.6,
+    marginTop: SPACING.xs,
+  },
   updateButton: {
     position: 'absolute',
     top: SPACING.lg,
@@ -176,6 +232,8 @@ const styles = StyleSheet.create({
     borderRadius: SPACING.xl,
     borderWidth: 1,
     borderColor: colors.lime[500] + '40', // Lime with 25% opacity
+    zIndex: 10, // Ensure button is above other content
+    elevation: 5, // Android shadow/elevation
   },
   updateButtonText: {
     color: colors.lime[500],

@@ -112,16 +112,8 @@ function valueToPosition(
  * </GestureDetector>
  * ```
  */
-export function useIntensitySlider(
-  config: UseIntensitySliderConfig
-): UseIntensitySliderReturn {
-  const {
-    range,
-    initialValue,
-    sliderWidth,
-    onChange,
-    enableHaptics,
-  } = config;
+export function useIntensitySlider(config: UseIntensitySliderConfig): UseIntensitySliderReturn {
+  const { range, initialValue, sliderWidth, onChange, enableHaptics } = config;
 
   // ========================================================================
   // STATE
@@ -137,9 +129,7 @@ export function useIntensitySlider(
    * Thumb position (0 to sliderWidth)
    * Starts at initial value position
    */
-  const thumbPosition = useSharedValue(
-    valueToPosition(initialValue, sliderWidth, range)
-  );
+  const thumbPosition = useSharedValue(valueToPosition(initialValue, sliderWidth, range));
 
   /**
    * Thumb scale (for press feedback)
@@ -160,41 +150,48 @@ export function useIntensitySlider(
    * Set intensity value (programmatically)
    * Animates thumb to new position
    */
-  const setValue = useCallback((value: IntensityValue) => {
-    setCurrentValue(value);
+  const setValue = useCallback(
+    (value: IntensityValue) => {
+      setCurrentValue(value);
 
-    // Animate thumb to new position
-    thumbPosition.value = withSpring(
-      valueToPosition(value, sliderWidth, range),
-      SPRING_CONFIGS.sliderSnap
-    );
+      // Animate thumb to new position
+      thumbPosition.value = withSpring(
+        valueToPosition(value, sliderWidth, range),
+        SPRING_CONFIGS.sliderSnap
+      );
 
-    // Trigger haptic feedback
-    if (enableHaptics) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
+      // Trigger haptic feedback
+      if (enableHaptics) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
 
-    // Call onChange callback
-    onChange(value);
-  }, [sliderWidth, range, enableHaptics, onChange]);
+      // Call onChange callback
+      onChange(value);
+    },
+    [sliderWidth, range, enableHaptics, onChange]
+  );
 
   /**
    * Update value from position (internal use)
    */
-  const updateValueFromPosition = useCallback((position: number) => {
-    const newValue = positionToValue(position, sliderWidth, range);
+  const updateValueFromPosition = useCallback(
+    (position: number) => {
+      const clampedPosition = Math.max(0, Math.min(sliderWidth, position));
+      const newValue = positionToValue(clampedPosition, sliderWidth, range);
 
-    // Only update if value actually changed
-    if (newValue !== currentValue) {
-      setCurrentValue(newValue);
-      onChange(newValue);
+      // Only update if value actually changed
+      if (newValue !== currentValue) {
+        setCurrentValue(newValue);
+        onChange(newValue);
 
-      // Haptic feedback on step change
-      if (enableHaptics) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        // Haptic feedback on step change
+        if (enableHaptics) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
       }
-    }
-  }, [currentValue, sliderWidth, range, enableHaptics, onChange]);
+    },
+    [currentValue, sliderWidth, range, enableHaptics, onChange]
+  );
 
   // ========================================================================
   // GESTURE HANDLER
@@ -205,6 +202,17 @@ export function useIntensitySlider(
    * Supports both dragging and tapping
    */
   const panGesture = Gesture.Pan()
+    .manualActivation(true)
+    .onTouchesDown((_, stateManager) => {
+      'worklet';
+      stateManager.begin();
+      stateManager.activate();
+    })
+    .onTouchesMove((_, stateManager) => {
+      'worklet';
+      stateManager.begin();
+      stateManager.activate();
+    })
     .onBegin(() => {
       'worklet';
 
@@ -217,14 +225,8 @@ export function useIntensitySlider(
     .onUpdate((event) => {
       'worklet';
 
-      // Calculate new position
       const newPosition = startPosition.value + event.translationX;
-
-      // Clamp to slider bounds
-      const clampedPosition = Math.max(0, Math.min(sliderWidth, newPosition));
-
-      // Update thumb position
-      thumbPosition.value = clampedPosition;
+      thumbPosition.value = Math.max(0, Math.min(sliderWidth, newPosition));
     })
     .onChange((event) => {
       'worklet';
@@ -281,10 +283,7 @@ export function useIntensitySlider(
     'worklet';
 
     return {
-      transform: [
-        { translateX: thumbPosition.value },
-        { scale: thumbScale.value },
-      ],
+      transform: [{ translateX: thumbPosition.value }, { scale: thumbScale.value }],
     };
   }, []);
 

@@ -40,7 +40,8 @@ export type MoodChoice = 'calm' | 'anxious' | 'sad' | 'frustrated' | 'mixed';
 export interface MoodOption {
   value: MoodChoice;
   label: string;
-  emoji: string;
+  emoji: string; // Kept for backward compatibility
+  icon: React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
   color: string;
   description?: string;
 }
@@ -204,6 +205,9 @@ export interface SuccessConfig {
 
   /** Success message text */
   message: string;
+
+  /** Animation duration (ms) */
+  duration?: number;
 }
 
 /**
@@ -236,6 +240,12 @@ export interface EmotionalWeatherWidgetProps {
   /** Existing notes */
   notes?: string;
 
+  /** Timestamp when mood was created */
+  createdAt?: string;
+
+  /** Timestamp when mood was last updated */
+  updatedAt?: string;
+
   /** Callback when mood is submitted */
   onMoodSubmit: (data: MoodSubmitData) => Promise<void>;
 
@@ -253,9 +263,6 @@ export interface EmotionalWeatherWidgetProps {
  * Empty state component props
  */
 export interface EmptyStateProps {
-  /** Callback when "Log Mood" is pressed */
-  onPress: () => void;
-
   /** Custom title */
   title?: string;
 
@@ -358,6 +365,12 @@ export interface WeatherDisplayProps {
 
   /** Notes preview */
   notes?: string;
+
+  /** Timestamp when mood was created */
+  createdAt?: string;
+
+  /** Timestamp when mood was last updated */
+  updatedAt?: string;
 
   /** Callback when update button is pressed */
   onUpdate: () => void;
@@ -474,6 +487,12 @@ export interface UseWidgetStateMachineReturn {
 
   /** Cancel flow (any state → collapse to original) */
   cancel: () => void;
+
+  /** Clear error state */
+  clearError: () => void;
+
+  /** Update notes in real-time (as user types) */
+  updateNotes: (notes: string) => void;
 
   /** Is widget in loading state */
   isLoading: boolean;

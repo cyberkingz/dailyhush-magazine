@@ -16,6 +16,7 @@ export const SPACING = {
   lg: 16, // Component spacing, section margins
   xl: 20, // Large sections, major spacing
   xxl: 24, // Extra large spacing
+  xxxl: 40, // Super large spacing for major sections
 } as const;
 
 // ============================================================================

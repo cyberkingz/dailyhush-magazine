@@ -28,13 +28,6 @@ export function MoodSelector({
   visible,
   config,
 }: MoodSelectorProps) {
-  // Use mood selection hook
-  const { selectMood, moodAnimations } = useMoodSelection({
-    moods,
-    staggerDelay: config.spacing,
-    visible,
-  });
-
   if (!visible) {
     return null;
   }
@@ -45,52 +38,45 @@ export function MoodSelector({
       accessibilityRole="radiogroup"
       accessibilityLabel="Select your current mood"
     >
-      {config.showLabels && (
-        <Text style={styles.instruction}>
-          How are you feeling?
-        </Text>
-      )}
+      <Text style={styles.headline}>
+        How are you feeling?
+      </Text>
 
-      <View style={[
-        styles.grid,
-        config.layout === 'horizontal' && styles.horizontal,
-      ]}>
+      <View style={styles.column}>
         {moods.map((mood) => {
           const isSelected = selected === mood.value;
-          const animation = moodAnimations[mood.value];
 
           return (
-            <Animated.View
+            <View
               key={mood.value}
-              style={[styles.moodWrapper, animation?.style]}
+              style={styles.moodWrapper}
             >
               <Pressable
                 onPress={() => {
                   if (config.spacing) {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   }
-                  selectMood(mood);
                   onSelect(mood);
                 }}
-                style={({ pressed }) => [
-                  styles.moodButton,
-                  isSelected && styles.moodButtonSelected,
-                  pressed && styles.moodButtonPressed,
-                ]}
-                accessibilityRole="radio"
-                accessibilityState={{ checked: isSelected }}
-                accessibilityLabel={ACCESSIBILITY_LABELS.moodSelector.moodButton(mood.label)}
-                accessibilityHint={ACCESSIBILITY_LABELS.moodSelector.moodHint(mood.label)}
+                style={{
+                  backgroundColor: isSelected ? '#7AF859' : '#65D948',
+                  padding: 16,
+                  borderRadius: 999,
+                  width: '100%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
               >
-                {/* Emoji */}
-                <Text style={styles.emoji}>{mood.emoji}</Text>
-
-                {/* Label (if enabled) */}
-                {config.showLabels && (
-                  <Text style={styles.label}>{mood.label}</Text>
-                )}
+                <mood.icon
+                  size={20}
+                  color="#0a1f1a"
+                  strokeWidth={2.5}
+                />
+                <Text style={{ color: '#0a1f1a', fontSize: 16, fontWeight: '600', marginLeft: 12 }}>
+                  {mood.label}
+                </Text>
               </Pressable>
-            </Animated.View>
+            </View>
           );
         })}
       </View>
@@ -101,55 +87,44 @@ export function MoodSelector({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingVertical: SPACING.lg,
+    paddingTop: SPACING.xxl,
+    paddingBottom: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
   },
-  instruction: {
-    fontSize: 16,
-    fontWeight: '600',
+  headline: {
+    fontSize: 20,
+    fontWeight: '700',
     color: colors.text.primary,
-    textAlign: 'center',
     marginBottom: SPACING.lg,
+    textAlign: 'center',
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: SPACING.md,
-  },
-  horizontal: {
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-around',
+  column: {
+    flexDirection: 'column',
+    width: '100%',
   },
   moodWrapper: {
-    // Animated wrapper
+    width: '100%',
+    marginBottom: 12,
   },
   moodButton: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: SPACING.md,
-    borderRadius: SPACING.lg,
-    backgroundColor: colors.background.secondary,
-    borderWidth: 2,
-    borderColor: 'transparent',
-    minWidth: 72,
-    minHeight: 72,
+    justifyContent: 'flex-start',
+    backgroundColor: '#65D948',
+    padding: 16,
+    borderRadius: 999,
+    width: '100%',
   },
   moodButtonSelected: {
-    borderColor: colors.lime[500],
-    backgroundColor: colors.lime[500] + '20', // 20% opacity
+    backgroundColor: '#7AF859',
   },
   moodButtonPressed: {
-    opacity: 0.7,
-    transform: [{ scale: 0.95 }],
-  },
-  emoji: {
-    fontSize: 32,
+    opacity: 0.85,
   },
   label: {
-    fontSize: 12,
-    color: colors.text.secondary,
-    marginTop: SPACING.xs,
-    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#0a1f1a',
+    marginLeft: 12,
   },
 });

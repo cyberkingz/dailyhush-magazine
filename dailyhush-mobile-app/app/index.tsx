@@ -3,9 +3,9 @@
  * Grid layout inspired by modern wellness apps
  */
 
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -21,6 +21,7 @@ import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { supabase } from '@/utils/supabase';
 import { brandFonts } from '@/constants/profileTypography';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useSpiral } from '@/hooks/useSpiral';
 
 function getGreeting(): string {
@@ -47,37 +48,63 @@ export default function HomeModern() {
   const welcomeLine = displayName === 'Friend' ? 'Welcome back' : `Welcome back, ${displayName}`;
 
   // Mood logging integration
-  const { logMood, getTodayMood, isLoggingMood, moodError } = useMoodLogging();
+  const { submitMood, getTodayMood, isSubmitting, error: moodError } = useMoodLogging();
   const [todayMood, setTodayMood] = useState<{
     weather: string;
     intensity: number;
     notes?: string;
+    createdAt?: string;
+    updatedAt?: string;
   } | null>(null);
+  const [isFetchingMood, setIsFetchingMood] = useState(false);
 
   // Handle mood submission
+  // Note: The widget already submitted the mood - this callback just updates the UI
   const handleMoodSubmit = async (moodData: {
     mood: string;
     intensity: number;
     notes?: string;
   }) => {
-    try {
-      await logMood({
-        emotional_weather: moodData.mood as any,
-        mood_rating: moodData.intensity,
-        mood_notes: moodData.notes,
-      });
+    console.log('[Home] Mood submit callback received:', moodData);
 
-      // Refresh today's mood after successful submission
-      const refreshedMood = await getTodayMood();
+    try {
+      // Update local state immediately with the submitted data
+      const now = new Date().toISOString();
+      setTodayMood({
+        weather: moodData.mood,
+        intensity: moodData.intensity,
+        notes: moodData.notes,
+        createdAt: now,
+        updatedAt: now,
+      });
+      console.log('[Home] Local state updated optimistically');
+
+      // Optionally refresh from server to get full record with timestamps, etc.
+      // This runs in background and updates UI if needed
+      console.log('[Home] Refreshing mood from server...');
+      const refreshedMood = await getTodayMood(true); // force fetch
+
       if (refreshedMood) {
-        setTodayMood({
-          weather: refreshedMood.emotional_weather,
-          intensity: refreshedMood.mood_rating,
-          notes: refreshedMood.mood_notes,
+        console.log('[Home] Refreshed mood from server:', {
+          mood: refreshedMood.mood,
+          intensity: refreshedMood.intensity,
+          hasNotes: !!refreshedMood.notes,
         });
+        setTodayMood({
+          weather: refreshedMood.mood as string,
+          intensity: refreshedMood.intensity,
+          notes: refreshedMood.notes || undefined,
+        });
+      } else {
+        console.log('[Home] No mood returned from server (using optimistic data)');
       }
     } catch (error) {
-      console.error('Failed to log mood:', error);
+      console.error('[Home] Failed to refresh mood:', error);
+      console.error('[Home] Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        type: error?.constructor?.name,
+      });
+      // Keep the optimistic update even if refresh fails
     }
   };
 
@@ -130,32 +157,74 @@ export default function HomeModern() {
     },
   ];
 
+  // Clear mood cache on mount (TEMPORARY - for debugging)
+  useEffect(() => {
+    async function clearCache() {
+      try {
+        await AsyncStorage.removeItem('@dailyhush/today_mood_cache');
+        await AsyncStorage.removeItem('@dailyhush/offline_mood_queue');
+        console.log('[Home] ✅ Cleared mood cache on mount');
+      } catch (error) {
+        console.error('[Home] ❌ Failed to clear cache:', error);
+      }
+    }
+    clearCache();
+  }, []);
+
   // Mark component as mounted
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  // Fetch today's mood function
+  const fetchTodayMood = useCallback(async () => {
+    if (user) {
+      try {
+        setIsFetchingMood(true);
+        console.log('[Home] Fetching today\'s mood...');
+        const mood = await getTodayMood();
+        if (mood) {
+          console.log('[Home] Mood found:', {
+            mood: mood.mood,
+            intensity: mood.intensity,
+            hasNotes: !!mood.notes,
+            createdAt: mood.created_at,
+            updatedAt: mood.updated_at,
+          });
+          setTodayMood({
+            weather: mood.mood as string,
+            intensity: mood.intensity,
+            notes: mood.notes || undefined,
+            createdAt: mood.created_at,
+            updatedAt: mood.updated_at,
+          });
+        } else {
+          console.log('[Home] No mood found for today');
+          setTodayMood(null);
+        }
+      } catch (error) {
+        console.error('[Home] Failed to fetch today\'s mood:', error);
+        setTodayMood(null);
+      } finally {
+        setIsFetchingMood(false);
+      }
+    }
+  }, [user, getTodayMood]);
+
   // Fetch today's mood on mount
   useEffect(() => {
-    const fetchTodayMood = async () => {
-      if (user && isMounted) {
-        try {
-          const mood = await getTodayMood();
-          if (mood) {
-            setTodayMood({
-              weather: mood.emotional_weather,
-              intensity: mood.mood_rating,
-              notes: mood.mood_notes,
-            });
-          }
-        } catch (error) {
-          console.error('Failed to fetch today\'s mood:', error);
-        }
-      }
-    };
+    if (isMounted) {
+      fetchTodayMood();
+    }
+  }, [isMounted, fetchTodayMood]);
 
-    fetchTodayMood();
-  }, [user, isMounted, getTodayMood]);
+  // Refetch mood when screen comes into focus (when user returns to home)
+  useFocusEffect(
+    useCallback(() => {
+      console.log('[Home] Screen focused, refreshing mood...');
+      fetchTodayMood();
+    }, [fetchTodayMood])
+  );
 
   // Fetch spiral stats
   // useEffect(() => {
@@ -274,8 +343,8 @@ export default function HomeModern() {
         {/* Header & Greeting */}
         <View
           style={{
-            paddingHorizontal: 20,
-            marginBottom: 28,
+            paddingHorizontal: spacing.screenPadding,
+            marginBottom: spacing.xl,
           }}>
           <View
             style={{
@@ -336,14 +405,16 @@ export default function HomeModern() {
         </View>
 
         {/* Daily Quote */}
-        <QuoteBanner style={{ marginHorizontal: 20, marginBottom: 28, alignSelf: 'flex-end' }} />
+        <QuoteBanner style={{ marginHorizontal: spacing.screenPadding, marginBottom: spacing.xl, alignSelf: 'flex-end' }} />
 
         {/* Mood Logging Card */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: spacing['2xl'] }}>
           <EmotionalWeatherWidget
             weather={todayMood?.weather as any}
             moodRating={todayMood?.intensity}
             notes={todayMood?.notes}
+            createdAt={todayMood?.createdAt}
+            updatedAt={todayMood?.updatedAt}
             onMoodSubmit={handleMoodSubmit}
             onUpdate={handleMoodUpdate}
           />

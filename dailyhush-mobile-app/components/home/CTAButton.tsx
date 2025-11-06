@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { LucideIcon } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
 
 interface CTAButtonProps {
   title: string;
@@ -108,7 +109,7 @@ export function CTAButton({
   };
 
   return (
-    <View style={{ paddingHorizontal: 20, marginBottom: 24 }}>
+    <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: spacing.xl }}>
       <Animated.View
         style={{
           transform: [{ scale: reduceMotion ? 1 : pressScale }],

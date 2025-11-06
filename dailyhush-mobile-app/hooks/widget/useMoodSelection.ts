@@ -94,27 +94,147 @@ export function useMoodSelection(
   const [isComplete, setIsComplete] = useState(false);
 
   // ========================================================================
-  // ANIMATED VALUES (Per Mood)
+  // ANIMATED VALUES (Per Mood) - CALLED AT TOP LEVEL
   // ========================================================================
 
-  /**
-   * Create animated values for each mood
-   * Using useMemo to avoid recreating on every render
-   */
-  const moodAnimatedValues = useMemo(() => {
-    const values: Record<MoodChoice, MoodAnimatedValues> = {} as any;
+  // CALM mood animated values
+  const calmOpacity = useSharedValue(1); // Start visible
+  const calmTranslateY = useSharedValue(0); // Start in position
+  const calmScale = useSharedValue(1); // Start full size
+  const calmRotate = useSharedValue(0);
 
-    moods.forEach((mood) => {
-      values[mood.value] = {
-        opacity: useSharedValue(0),
-        translateY: useSharedValue(60), // Start 60px below
-        scale: useSharedValue(0.8), // Start slightly smaller
-        rotate: useSharedValue(0), // For wiggle effect
-      };
-    });
+  // ANXIOUS mood animated values
+  const anxiousOpacity = useSharedValue(1);
+  const anxiousTranslateY = useSharedValue(0);
+  const anxiousScale = useSharedValue(1);
+  const anxiousRotate = useSharedValue(0);
 
-    return values;
-  }, [moods.length]); // Only recreate if mood count changes
+  // SAD mood animated values
+  const sadOpacity = useSharedValue(1);
+  const sadTranslateY = useSharedValue(0);
+  const sadScale = useSharedValue(1);
+  const sadRotate = useSharedValue(0);
+
+  // FRUSTRATED mood animated values
+  const frustratedOpacity = useSharedValue(1);
+  const frustratedTranslateY = useSharedValue(0);
+  const frustratedScale = useSharedValue(1);
+  const frustratedRotate = useSharedValue(0);
+
+  // MIXED mood animated values
+  const mixedOpacity = useSharedValue(1);
+  const mixedTranslateY = useSharedValue(0);
+  const mixedScale = useSharedValue(1);
+  const mixedRotate = useSharedValue(0);
+
+  // ========================================================================
+  // ANIMATED STYLES (Per Mood) - CALLED AT TOP LEVEL
+  // ========================================================================
+
+  const calmAnimatedStyle = useAnimatedStyle(() => {
+    'worklet';
+    return {
+      opacity: calmOpacity.value,
+      transform: [
+        { translateY: calmTranslateY.value },
+        { scale: calmScale.value },
+        { rotate: `${calmRotate.value}deg` },
+      ],
+    };
+  }, []);
+
+  const anxiousAnimatedStyle = useAnimatedStyle(() => {
+    'worklet';
+    return {
+      opacity: anxiousOpacity.value,
+      transform: [
+        { translateY: anxiousTranslateY.value },
+        { scale: anxiousScale.value },
+        { rotate: `${anxiousRotate.value}deg` },
+      ],
+    };
+  }, []);
+
+  const sadAnimatedStyle = useAnimatedStyle(() => {
+    'worklet';
+    return {
+      opacity: sadOpacity.value,
+      transform: [
+        { translateY: sadTranslateY.value },
+        { scale: sadScale.value },
+        { rotate: `${sadRotate.value}deg` },
+      ],
+    };
+  }, []);
+
+  const frustratedAnimatedStyle = useAnimatedStyle(() => {
+    'worklet';
+    return {
+      opacity: frustratedOpacity.value,
+      transform: [
+        { translateY: frustratedTranslateY.value },
+        { scale: frustratedScale.value },
+        { rotate: `${frustratedRotate.value}deg` },
+      ],
+    };
+  }, []);
+
+  const mixedAnimatedStyle = useAnimatedStyle(() => {
+    'worklet';
+    return {
+      opacity: mixedOpacity.value,
+      transform: [
+        { translateY: mixedTranslateY.value },
+        { scale: mixedScale.value },
+        { rotate: `${mixedRotate.value}deg` },
+      ],
+    };
+  }, []);
+
+  // ========================================================================
+  // ASSEMBLE INTO RECORDS
+  // ========================================================================
+
+  const moodAnimatedValues = useMemo<Record<MoodChoice, MoodAnimatedValues>>(() => ({
+    calm: {
+      opacity: calmOpacity,
+      translateY: calmTranslateY,
+      scale: calmScale,
+      rotate: calmRotate,
+    },
+    anxious: {
+      opacity: anxiousOpacity,
+      translateY: anxiousTranslateY,
+      scale: anxiousScale,
+      rotate: anxiousRotate,
+    },
+    sad: {
+      opacity: sadOpacity,
+      translateY: sadTranslateY,
+      scale: sadScale,
+      rotate: sadRotate,
+    },
+    frustrated: {
+      opacity: frustratedOpacity,
+      translateY: frustratedTranslateY,
+      scale: frustratedScale,
+      rotate: frustratedRotate,
+    },
+    mixed: {
+      opacity: mixedOpacity,
+      translateY: mixedTranslateY,
+      scale: mixedScale,
+      rotate: mixedRotate,
+    },
+  }), []);
+
+  const moodAnimations = useMemo<Record<MoodChoice, { style: any }>>(() => ({
+    calm: { style: calmAnimatedStyle },
+    anxious: { style: anxiousAnimatedStyle },
+    sad: { style: sadAnimatedStyle },
+    frustrated: { style: frustratedAnimatedStyle },
+    mixed: { style: mixedAnimatedStyle },
+  }), [calmAnimatedStyle, anxiousAnimatedStyle, sadAnimatedStyle, frustratedAnimatedStyle, mixedAnimatedStyle]);
 
   // ========================================================================
   // ENTRANCE ANIMATION
@@ -149,7 +269,7 @@ export function useMoodSelection(
         );
       });
     }
-  }, [visible, selectedMood]);
+  }, [visible, selectedMood, moods, staggerDelay, moodAnimatedValues]);
 
   // ========================================================================
   // SELECTION ANIMATION
@@ -191,12 +311,7 @@ export function useMoodSelection(
       if (otherMood.value !== mood.value) {
         const otherValues = moodAnimatedValues[otherMood.value];
 
-        // Determine fly-out direction
-        // Moods on left fly left, moods on right fly right
-        const selectedIndex = moods.findIndex((m) => m.value === mood.value);
-        const direction = index < selectedIndex ? -1 : 1;
-
-        // Fly out to side with stagger
+        // Fly out with stagger
         otherValues.translateY.value = withDelay(
           index * 30, // Small stagger for wave effect
           withTiming(0, { duration: 200 })
@@ -206,10 +321,6 @@ export function useMoodSelection(
           index * 30,
           withTiming(0, { duration: 200 })
         );
-
-        // Move to side (left or right)
-        const translateX = useSharedValue(0);
-        translateX.value = withTiming(direction * 100, { duration: 200 });
       }
     });
 
@@ -217,39 +328,6 @@ export function useMoodSelection(
     setTimeout(() => {
       setIsComplete(true);
     }, 400);
-  }, [moods, moodAnimatedValues]);
-
-  // ========================================================================
-  // ANIMATED STYLES (Per Mood)
-  // ========================================================================
-
-  /**
-   * Create animated style for each mood
-   */
-  const moodAnimations = useMemo(() => {
-    const animations: Record<MoodChoice, { style: any }> = {} as any;
-
-    moods.forEach((mood) => {
-      const values = moodAnimatedValues[mood.value];
-
-      // Create animated style
-      animations[mood.value] = {
-        style: useAnimatedStyle(() => {
-          'worklet';
-
-          return {
-            opacity: values.opacity.value,
-            transform: [
-              { translateY: values.translateY.value },
-              { scale: values.scale.value },
-              { rotate: `${values.rotate.value}deg` },
-            ],
-          };
-        }, []),
-      };
-    });
-
-    return animations;
   }, [moods, moodAnimatedValues]);
 
   // ========================================================================
@@ -261,13 +339,35 @@ export function useMoodSelection(
    */
   useEffect(() => {
     return () => {
-      moods.forEach((mood) => {
-        const values = moodAnimatedValues[mood.value];
-        cancelAnimation(values.opacity);
-        cancelAnimation(values.translateY);
-        cancelAnimation(values.scale);
-        cancelAnimation(values.rotate);
-      });
+      // Cancel calm animations
+      cancelAnimation(calmOpacity);
+      cancelAnimation(calmTranslateY);
+      cancelAnimation(calmScale);
+      cancelAnimation(calmRotate);
+
+      // Cancel anxious animations
+      cancelAnimation(anxiousOpacity);
+      cancelAnimation(anxiousTranslateY);
+      cancelAnimation(anxiousScale);
+      cancelAnimation(anxiousRotate);
+
+      // Cancel sad animations
+      cancelAnimation(sadOpacity);
+      cancelAnimation(sadTranslateY);
+      cancelAnimation(sadScale);
+      cancelAnimation(sadRotate);
+
+      // Cancel frustrated animations
+      cancelAnimation(frustratedOpacity);
+      cancelAnimation(frustratedTranslateY);
+      cancelAnimation(frustratedScale);
+      cancelAnimation(frustratedRotate);
+
+      // Cancel mixed animations
+      cancelAnimation(mixedOpacity);
+      cancelAnimation(mixedTranslateY);
+      cancelAnimation(mixedScale);
+      cancelAnimation(mixedRotate);
     };
   }, []);
 

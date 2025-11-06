@@ -1,47 +1,42 @@
 /**
- * DailyHush - Step 2: Intensity Circular Dial
+ * IntensityCircular Component (Widget Optimized)
  *
- * Circular dial with draggable handle to select intensity (1-10).
- * User can drag the handle around the circle or tap on a position.
+ * Compact circular dial for inline mood widget.
+ * Smaller size optimized to fit within card layout.
  */
 
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, PanResponder, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Animated, PanResponder, TouchableOpacity, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import {
-  getMoodEmoji,
-  getMoodLabel,
-  type IntensityValue,
-  INTENSITY_LABELS,
-} from '@/constants/moodOptions';
 import { colors } from '@/constants/colors';
-import type { Enums } from '@/types/supabase';
+import { SPACING } from '@/constants/designTokens';
+import type { IntensityValue } from '@/types/widget.types';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const DIAL_SIZE = Math.min(SCREEN_WIDTH - 80, 320);
+// Compact dimensions for widget card
+const DIAL_SIZE = 240; // Reduced from 320
 const DIAL_RADIUS = DIAL_SIZE / 2;
-const HANDLE_SIZE = 64; // Increased from 56 for better accessibility
-const TRACK_RADIUS = DIAL_RADIUS - 40; // Handle moves on this circle
-const INTENSITY_VALUES: IntensityValue[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const HANDLE_SIZE = 48; // Reduced from 64
+const TRACK_RADIUS = DIAL_RADIUS - 32; // Handle moves on this circle
+const INTENSITY_VALUES: IntensityValue[] = [1, 2, 3, 4, 5, 6, 7];
 const INTENSITY_STEP_DEGREES = 360 / INTENSITY_VALUES.length;
-const INTENSITY_START_ANGLE = 90; // Intensity 1 is at the top of the circle
+const INTENSITY_START_ANGLE = 90; // Intensity 1 is at the top
 
-// ============================================================================
-// TYPES
-// ============================================================================
+const INTENSITY_LABELS: Record<IntensityValue, string> = {
+  1: 'Very Low',
+  2: 'Low',
+  3: 'Mild',
+  4: 'Moderate',
+  5: 'Strong',
+  6: 'Very Strong',
+  7: 'Extreme',
+};
 
-interface IntensityScaleProps {
-  selectedMood: Enums<'mood_type'>;
+interface IntensityCircularProps {
   selectedIntensity?: IntensityValue;
   onIntensitySelect: (intensity: IntensityValue) => void;
-  autoAdvance?: boolean;
 }
 
-// ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
-// Calculate angle from center (0° = right, increases counter-clockwise)
+// Calculate angle from center
 function calculateAngle(x: number, y: number): number {
   const angle = Math.atan2(-y, x) * (180 / Math.PI);
   return (angle + 360) % 360;
@@ -54,7 +49,6 @@ function getAngleForIntensity(intensity: IntensityValue): number {
   return (angle + 360) % 360;
 }
 
-// Snap angle to nearest intensity position
 function snapToIntensity(angle: number): IntensityValue {
   let closestIntensity = INTENSITY_VALUES[0];
   let minDiff = 360;
@@ -73,37 +67,23 @@ function snapToIntensity(angle: number): IntensityValue {
   return closestIntensity;
 }
 
-// Get position for a given intensity (centered on handle, not top-left)
-function getPositionForIntensity(intensity: IntensityValue): { x: number; y: number; angle: number } {
+function getPositionForIntensity(intensity: IntensityValue): { x: number; y: number } {
   const angle = getAngleForIntensity(intensity);
   const radians = (angle * Math.PI) / 180;
-
-  // Calculate position on circle (centered coordinates)
   const x = DIAL_RADIUS + TRACK_RADIUS * Math.cos(radians);
   const y = DIAL_RADIUS - TRACK_RADIUS * Math.sin(radians);
-
-  return { x, y, angle };
+  return { x, y };
 }
 
-// ============================================================================
-// COMPONENT
-// ============================================================================
-
-export function IntensityScale({
-  selectedMood,
-  selectedIntensity,
-  onIntensitySelect,
-  autoAdvance = true,
-}: IntensityScaleProps) {
-  const [currentIntensity, setCurrentIntensity] = useState<IntensityValue>(selectedIntensity || 3);
+export function IntensityCircular({ selectedIntensity, onIntensitySelect }: IntensityCircularProps) {
+  const [currentIntensity, setCurrentIntensity] = useState<IntensityValue>(selectedIntensity || 4);
   const lastHapticIntensity = useRef<IntensityValue | null>(null);
   const dialRef = useRef<View>(null);
   const dialCenter = useRef({ x: 0, y: 0 }).current;
   const hasMeasuredDial = useRef(false);
-  const currentIntensityRef = useRef<IntensityValue>(selectedIntensity || 3);
+  const currentIntensityRef = useRef<IntensityValue>(selectedIntensity || 4);
   const isDragging = useRef(false);
 
-  // Animation values - all using JS driver
   const handleX = useRef(new Animated.Value(0)).current;
   const handleY = useRef(new Animated.Value(0)).current;
   const handleScale = useRef(new Animated.Value(1)).current;
@@ -125,7 +105,6 @@ export function IntensityScale({
     });
   }, [dialCenter]);
 
-  // Initialize handle position
   React.useEffect(() => {
     if (isDragging.current) return;
     updateHandlePosition(currentIntensity);
@@ -135,13 +114,20 @@ export function IntensityScale({
     currentIntensityRef.current = currentIntensity;
   }, [currentIntensity]);
 
-  // Update if parent provides a new selected intensity
   React.useEffect(() => {
     if (selectedIntensity === undefined) return;
     if (selectedIntensity !== currentIntensityRef.current) {
       setCurrentIntensity(selectedIntensity);
     }
   }, [selectedIntensity]);
+
+  // Force measurement after mount to ensure drag works immediately
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      measureDial();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [measureDial]);
 
   const finishDrag = React.useCallback(() => {
     const activeIntensity = currentIntensityRef.current;
@@ -168,42 +154,32 @@ export function IntensityScale({
       }),
     ]).start();
 
-    onIntensitySelect(activeIntensity);
+    // Don't auto-advance - user must click Continue button
     lastHapticIntensity.current = activeIntensity;
     isDragging.current = false;
-  }, [handleX, handleY, handleScale, onIntensitySelect]);
-
-  // Measure dial position on screen
-  const handleDialLayout = () => {
-    measureDial();
-  };
+  }, [handleX, handleY, handleScale]);
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => false, // Don't let parent ScrollView steal the gesture
+
       onPanResponderGrant: () => {
         isDragging.current = true;
         measureDial();
 
-        // Scale up handle
         Animated.spring(handleScale, {
-          toValue: 1.12, // Slightly reduced from 1.15 for subtlety
-          tension: 90, // Reduced from 100 for softer animation
-          friction: 9, // Increased from 7 for smoother motion
+          toValue: 1.12,
+          tension: 90,
+          friction: 9,
           useNativeDriver: false,
         }).start();
 
-        // Haptic feedback
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       },
 
       onPanResponderMove: (event, gestureState) => {
-        if (!hasMeasuredDial.current) {
-          measureDial();
-          return;
-        }
-
         // Get absolute touch position
         const touchX = event.nativeEvent.pageX ?? gestureState.moveX;
         const touchY = event.nativeEvent.pageY ?? gestureState.moveY;
@@ -231,9 +207,9 @@ export function IntensityScale({
         // Update intensity and trigger haptic if changed
         if (newIntensity !== activeIntensity) {
           const hapticStyle =
-            newIntensity >= 4
+            newIntensity >= 6
               ? Haptics.ImpactFeedbackStyle.Heavy
-              : newIntensity >= 3
+              : newIntensity >= 4
               ? Haptics.ImpactFeedbackStyle.Medium
               : Haptics.ImpactFeedbackStyle.Light;
 
@@ -250,23 +226,18 @@ export function IntensityScale({
     })
   ).current;
 
-  const moodEmoji = getMoodEmoji(selectedMood);
-  const moodLabel = getMoodLabel(selectedMood);
-
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>
-          How {moodLabel.toLowerCase()} {moodEmoji}
-        </Text>
-        <Text style={styles.subtitle}>Drag to rate the intensity</Text>
-      </View>
+      <Text style={styles.title}>Rate the intensity</Text>
 
       {/* Circular Dial */}
       <View style={styles.dialContainer}>
-        {/* Dial Background */}
-        <View ref={dialRef} onLayout={handleDialLayout} style={styles.dialBackground}>
+        <View
+          ref={dialRef}
+          onLayout={() => measureDial()}
+          style={styles.dialBackground}
+        >
           {/* Center Label */}
           <View style={styles.centerLabel}>
             <Text style={styles.intensityNumber}>{currentIntensity}</Text>
@@ -275,10 +246,10 @@ export function IntensityScale({
             </Text>
           </View>
 
-          {/* Arc/Track - Render BEFORE markers so markers appear on top */}
+          {/* Track */}
           <View style={styles.track} />
 
-          {/* Position Markers - Now render AFTER track for proper layering */}
+          {/* Position Markers */}
           {INTENSITY_VALUES.map((intensity) => {
             const position = getPositionForIntensity(intensity);
             const isActive = intensity === currentIntensity;
@@ -289,33 +260,28 @@ export function IntensityScale({
                 style={[
                   styles.markerTouchable,
                   {
-                    left: position.x - 24, // Center 48px tap area
-                    top: position.y - 24,
+                    left: position.x - 20,
+                    top: position.y - 20,
                   },
                 ]}
                 onPress={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   setCurrentIntensity(intensity);
                   updateHandlePosition(intensity);
-                  onIntensitySelect(intensity);
                 }}
-                accessibilityLabel={`Intensity ${intensity}: ${INTENSITY_LABELS[intensity]}`}
+                accessibilityLabel={`Intensity ${intensity}`}
                 accessibilityRole="button"
               >
                 <View
                   style={[
                     styles.marker,
                     {
-                      backgroundColor: isActive
-                        ? colors.emerald[500] // Solid emerald when active
-                        : 'rgba(15, 50, 41, 0.95)', // Solid dark background when inactive
-                      borderWidth: isActive ? 0 : 3, // Ring only when inactive
-                      borderColor: isActive
-                        ? 'transparent'
-                        : 'rgba(16, 185, 129, 0.75)', // Emerald ring for inactive markers
-                      width: isActive ? 18 : 14, // Slightly larger for better visibility
-                      height: isActive ? 18 : 14,
-                      borderRadius: isActive ? 9 : 7,
+                      backgroundColor: isActive ? colors.lime[500] : 'rgba(15, 50, 41, 0.95)',
+                      borderWidth: isActive ? 0 : 2,
+                      borderColor: isActive ? 'transparent' : 'rgba(122, 248, 89, 0.75)',
+                      width: isActive ? 14 : 10,
+                      height: isActive ? 14 : 10,
+                      borderRadius: isActive ? 7 : 5,
                     },
                   ]}
                 />
@@ -340,58 +306,49 @@ export function IntensityScale({
         </View>
       </View>
 
-      {/* Helper copy */}
-      <View style={styles.helperTextContainer}>
-        <Text style={styles.helperText}>Drag or tap to adjust intensity</Text>
-      </View>
+      {/* Helper text */}
+      <Text style={styles.helperText}>Drag or tap to adjust</Text>
+
+      {/* Continue button */}
+      <Pressable
+        style={styles.continueButton}
+        onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          onIntensitySelect(currentIntensity);
+        }}
+      >
+        <Text style={styles.continueButtonText}>Continue</Text>
+      </Pressable>
     </View>
   );
 }
 
-// ============================================================================
-// STYLES
-// ============================================================================
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 20,
+    width: '100%',
+    paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
     alignItems: 'center',
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 40,
   },
   title: {
-    fontSize: 28,
+    fontSize: 18,
     fontWeight: '600',
-    lineHeight: 36,
-    letterSpacing: -0.2,
     color: colors.text.primary,
     textAlign: 'center',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16, // Increased from 15 for readability
-    fontWeight: '400',
-    lineHeight: 22,
-    color: colors.text.secondary,
-    textAlign: 'center',
-    opacity: 0.85, // Increased from 0.7 for contrast
+    marginBottom: SPACING.md,
   },
   dialContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 32,
+    marginBottom: SPACING.md,
   },
   dialBackground: {
     width: DIAL_SIZE,
     height: DIAL_SIZE,
     borderRadius: DIAL_SIZE / 2,
-    backgroundColor: 'rgba(15, 50, 41, 0.65)', // Increased from 0.4 for better contrast
+    backgroundColor: 'rgba(15, 50, 41, 0.65)',
     borderWidth: 2,
-    borderColor: 'rgba(16, 185, 129, 0.30)', // Increased from 0.15 for visibility
+    borderColor: 'rgba(122, 248, 89, 0.30)',
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
@@ -402,9 +359,9 @@ const styles = StyleSheet.create({
     height: TRACK_RADIUS * 2,
     borderRadius: TRACK_RADIUS,
     borderWidth: 2,
-    borderColor: 'rgba(16, 185, 129, 0.25)', // More subtle to let markers stand out
+    borderColor: 'rgba(122, 248, 89, 0.25)',
     borderStyle: 'dashed',
-    zIndex: 1, // Below markers but above background
+    zIndex: 1,
   },
   centerLabel: {
     alignItems: 'center',
@@ -412,55 +369,54 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   intensityNumber: {
-    fontSize: 48, // Reduced from 56 for better hierarchy
+    fontSize: 40,
     fontWeight: '700',
-    color: colors.emerald[400], // Softer than 500 for less intensity
-    lineHeight: 56,
-    marginBottom: 4,
+    color: colors.lime[500],
+    lineHeight: 48,
+    marginBottom: 2,
   },
   intensityLabel: {
-    fontSize: 20, // Increased from 18 for prominence
+    fontSize: 16,
     fontWeight: '600',
     color: colors.text.primary,
     textAlign: 'center',
-    letterSpacing: 0.5, // Better readability
   },
   markerTouchable: {
     position: 'absolute',
-    width: 48, // Large tap target for accessibility
-    height: 48,
+    width: 40,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 10, // Ensure markers render above track
+    zIndex: 10,
   },
   marker: {
-    shadowColor: colors.emerald[500],
+    shadowColor: colors.lime[500],
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.6, // Enhanced shadow for depth
-    shadowRadius: 6, // Larger glow
-    elevation: 3, // Higher elevation for Android
+    shadowOpacity: 0.6,
+    shadowRadius: 4,
+    elevation: 3,
   },
   handle: {
     position: 'absolute',
     width: HANDLE_SIZE,
     height: HANDLE_SIZE,
     borderRadius: HANDLE_SIZE / 2,
-    backgroundColor: colors.emerald[500], // Lighter for better visibility
+    backgroundColor: colors.lime[500],
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: colors.emerald[400], // Lighter shadow for visibility
+    shadowColor: colors.lime[500],
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.7, // Increased from 0.5 for stronger glow
-    shadowRadius: 12, // Increased from 8 for more prominent shadow
-    elevation: 10, // Increased from 8
-    borderWidth: 5, // Increased from 4 for better affordance
-    borderColor: 'rgba(255, 255, 255, 0.6)', // Increased from 0.3 for visibility
-    zIndex: 20, // Highest layer - handle should always be on top
+    shadowOpacity: 0.7,
+    shadowRadius: 10,
+    elevation: 8,
+    borderWidth: 4,
+    borderColor: 'rgba(255, 255, 255, 0.6)',
+    zIndex: 20,
   },
   handleInner: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -468,16 +424,25 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
-  helperTextContainer: {
-    width: DIAL_SIZE,
-    marginTop: 4,
-    alignItems: 'center',
-  },
   helperText: {
-    fontSize: 15, // Increased from 14 for readability
+    fontSize: 13,
     fontWeight: '500',
     textAlign: 'center',
     color: colors.text.secondary,
-    opacity: 0.80, // Increased from 0.75 for contrast
+    opacity: 0.80,
+    marginBottom: SPACING.md,
+  },
+  continueButton: {
+    backgroundColor: colors.lime[600],
+    paddingHorizontal: 32,
+    paddingVertical: 12,
+    borderRadius: 999,
+    minWidth: 140,
+  },
+  continueButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.background.primary,
+    textAlign: 'center',
   },
 });

@@ -2,13 +2,14 @@
  * LoadingOverlay Component
  *
  * Semi-transparent overlay with spinner during submission.
+ * Shows context-aware messages based on current operation.
  *
  * ADDRESSES UX P0 FINDING #8: Loading states during submission
  *
  * @module components/mood-widget/LoadingOverlay
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { colors } from '@/constants/colors';
 import { SPACING } from '@/constants/designTokens';
@@ -20,12 +21,27 @@ interface LoadingOverlayProps {
 
 /**
  * LoadingOverlay component
- * Shows spinner during async operations
+ * Shows spinner during async operations with encouraging messages
  */
 export function LoadingOverlay({
   visible,
   message = 'Saving your mood...',
 }: LoadingOverlayProps) {
+  const [displayMessage, setDisplayMessage] = useState(message);
+
+  // Update message after 2 seconds if still loading
+  useEffect(() => {
+    if (!visible) return;
+
+    setDisplayMessage(message);
+
+    const timer = setTimeout(() => {
+      setDisplayMessage('Almost there...');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [visible, message]);
+
   if (!visible) {
     return null;
   }
@@ -34,12 +50,12 @@ export function LoadingOverlay({
     <View
       style={styles.overlay}
       accessible={true}
-      accessibilityLabel={message}
-      accessibilityLiveRegion="polite"
-    >
+      accessibilityLabel={displayMessage}
+      accessibilityLiveRegion="polite">
       <View style={styles.content}>
         <ActivityIndicator size="large" color={colors.lime[500]} />
-        <Text style={styles.message}>{message}</Text>
+        <Text style={styles.message}>{displayMessage}</Text>
+        <Text style={styles.submessage}>This won't take long</Text>
       </View>
     </View>
   );
@@ -55,11 +71,18 @@ const styles = StyleSheet.create({
   },
   content: {
     alignItems: 'center',
-    gap: SPACING.md,
+    gap: SPACING.sm,
   },
   message: {
     fontSize: 16,
     color: colors.text.primary,
-    fontWeight: '500',
+    fontWeight: '600',
+    marginTop: SPACING.sm,
+  },
+  submessage: {
+    fontSize: 14,
+    color: colors.text.secondary,
+    fontWeight: '400',
+    marginTop: SPACING.xs,
   },
 });

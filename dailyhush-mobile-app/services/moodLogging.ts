@@ -337,6 +337,13 @@ export async function saveMoodLog(
           log_date: logDate,
         };
 
+        console.log('[MoodService] saveMoodLog upsert:', {
+          user_id: userId,
+          mood: data.mood,
+          intensity: data.intensity,
+          log_date: logDate,
+        });
+
         // Upsert mood log (insert or update if exists)
         const { data: savedLog, error } = await supabase
           .from('mood_logs')
@@ -347,7 +354,14 @@ export async function saveMoodLog(
           .select()
           .single();
 
+        console.log('[MoodService] saveMoodLog result:', {
+          success: !!savedLog,
+          error: error?.message,
+          savedLogId: savedLog?.id,
+        });
+
         if (error) {
+          console.error('[MoodService] saveMoodLog error:', error);
           throw error;
         }
 
@@ -393,6 +407,8 @@ export async function getTodayMoodLog(
     // Get today's date in user's timezone
     const today = getLocalDateString(new Date());
 
+    console.log('[MoodService] getTodayMoodLog query:', { uid, today });
+
     // Query today's mood log
     const { data, error } = await supabase
       .from('mood_logs')
@@ -402,7 +418,14 @@ export async function getTodayMoodLog(
       .is('deleted_at', null)
       .maybeSingle();
 
+    console.log('[MoodService] getTodayMoodLog result:', {
+      hasData: !!data,
+      error: error?.message,
+      data: data ? { mood: data.mood, intensity: data.intensity } : null,
+    });
+
     if (error) {
+      console.error('[MoodService] getTodayMoodLog error:', error);
       throw error;
     }
 

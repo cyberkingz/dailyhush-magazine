@@ -20,6 +20,7 @@ import type {
 } from '@/types/widget.types';
 import { colors } from './colors';
 import { SPACING } from './designTokens';
+import { Sun, CloudRain, CloudDrizzle, CloudLightning, Cloudy } from 'lucide-react-native';
 
 // ============================================================================
 // MOOD OPTIONS
@@ -28,12 +29,14 @@ import { SPACING } from './designTokens';
 /**
  * Available mood choices with display metadata
  * Matches emotional_weather enum in database
+ * Uses weather-themed Lucide icons for high-quality visuals
  */
 export const MOOD_OPTIONS: MoodOption[] = [
   {
     value: 'calm',
     label: 'Calm',
-    emoji: '😊',
+    emoji: '😊', // Kept for backward compatibility
+    icon: Sun,
     color: colors.lime[400],
     description: 'Feeling peaceful and centered',
   },
@@ -41,6 +44,7 @@ export const MOOD_OPTIONS: MoodOption[] = [
     value: 'anxious',
     label: 'Anxious',
     emoji: '😰',
+    icon: CloudRain,
     color: colors.status.warning,
     description: 'Feeling worried or nervous',
   },
@@ -48,6 +52,7 @@ export const MOOD_OPTIONS: MoodOption[] = [
     value: 'sad',
     label: 'Sad',
     emoji: '😢',
+    icon: CloudDrizzle,
     color: colors.text.secondary,
     description: 'Feeling down or blue',
   },
@@ -55,6 +60,7 @@ export const MOOD_OPTIONS: MoodOption[] = [
     value: 'frustrated',
     label: 'Frustrated',
     emoji: '😤',
+    icon: CloudLightning,
     color: colors.status.error,
     description: 'Feeling irritated or stuck',
   },
@@ -62,6 +68,7 @@ export const MOOD_OPTIONS: MoodOption[] = [
     value: 'mixed',
     label: 'Mixed',
     emoji: '😐',
+    icon: Cloudy,
     color: colors.text.muted,
     description: 'Feeling a blend of emotions',
   },
@@ -143,10 +150,10 @@ export const SPRING_CONFIGS = {
  */
 export const DEFAULT_DIMENSION_CONFIG: DimensionConfig = {
   /** Card height when collapsed (showing empty state or weather) */
-  collapsedHeight: 240,
+  collapsedHeight: 360, // Increased for additional breathing room
 
   /** Card height when expanded (showing mood/intensity/notes) */
-  expandedHeight: 480,
+  expandedHeight: 500, // Optimized for compact circular intensity dial + continue button
 
   /** Mood emoji size */
   moodEmojiSize: 48,
@@ -168,15 +175,15 @@ export const DEFAULT_DIMENSION_CONFIG: DimensionConfig = {
 export const RESPONSIVE_DIMENSIONS = {
   small: {
     // iPhone SE (375x667)
-    collapsedHeight: 220,
-    expandedHeight: 420,
+    collapsedHeight: 280, // Increased from 220
+    expandedHeight: 400, // Optimized for vertical pill button layout
     moodEmojiSize: 40,
     sliderWidth: 240,
   },
   large: {
     // iPad (744x1133)
-    collapsedHeight: 280,
-    expandedHeight: 560,
+    collapsedHeight: 360, // Increased from 280
+    expandedHeight: 480, // Optimized for vertical pill button layout with more space
     moodEmojiSize: 56,
     sliderWidth: 360,
   },
@@ -226,7 +233,7 @@ export const DEFAULT_MOOD_SELECTOR_CONFIG: MoodSelectorConfig = {
   /** Spacing between mood choices */
   spacing: SPACING.md, // 12px
 
-  /** Show mood labels below emojis (for clarity) */
+  /** Show mood labels below icons */
   showLabels: true,
 };
 
@@ -247,8 +254,8 @@ export const DEFAULT_INTENSITY_SLIDER_CONFIG: IntensitySliderConfig = {
   /** Show scale labels (addresses P0 UX finding) */
   showScaleLabels: true,
 
-  /** Enable gesture slider WITH tap-to-select fallback (accessibility) */
-  enableGesture: true,
+  /** Disable gesture slider, use tap-to-select buttons only (simpler, no GestureHandlerRootView required) */
+  enableGesture: false,
 
   /** Default intensity value (middle of range) */
   defaultValue: 4,
@@ -263,7 +270,7 @@ export const DEFAULT_INTENSITY_SLIDER_CONFIG: IntensitySliderConfig = {
  */
 export const DEFAULT_QUICK_NOTES_CONFIG: QuickNotesConfig = {
   /** Placeholder text */
-  placeholder: 'What\'s on your mind? (optional)',
+  placeholder: "What's on your mind? (optional)",
 
   /** Maximum character length (keep notes brief) */
   maxLength: 200,
@@ -291,6 +298,9 @@ export const DEFAULT_SUCCESS_CONFIG: SuccessConfig = {
 
   /** Show glow effect around checkmark */
   showGlow: true,
+
+  /** Animation duration (ms) */
+  duration: 400,
 
   /** Success message text */
   message: 'Mood logged!',
@@ -326,7 +336,7 @@ export const ACCESSIBILITY_LABELS = {
   /** Empty state */
   emptyState: {
     logMoodButton: 'Log your mood',
-    logMoodHint: 'Opens mood selector to record how you\'re feeling',
+    logMoodHint: "Opens mood selector to record how you're feeling",
   },
 
   /** Mood selector */

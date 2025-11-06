@@ -236,7 +236,7 @@ export const authSpacing = {
 export const screenLayout = {
   container: {
     flex: 1,
-    backgroundColor: '#0A1612',
+    backgroundColor: colors.background.primary,
   },
 
   contentContainer: {

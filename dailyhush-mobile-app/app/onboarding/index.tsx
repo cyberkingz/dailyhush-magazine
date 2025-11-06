@@ -644,7 +644,7 @@ export default function Onboarding() {
                 <Text
                   className="text-lg font-bold"
                   style={{
-                    color: selectedQuizAnswer === num ? colors.white : colors.text.primary,
+                    color: selectedQuizAnswer === num ? colors.button.primaryText : colors.text.primary,
                   }}>
                   {num}
                 </Text>
@@ -683,7 +683,7 @@ export default function Onboarding() {
                 className="text-sm font-semibold"
                 style={{
                   color:
-                    assessmentData.hasShiftNecklace === true ? colors.white : colors.text.primary,
+                    assessmentData.hasShiftNecklace === true ? colors.button.primaryText : colors.text.primary,
                 }}>
                 Yes
               </Text>
@@ -705,7 +705,7 @@ export default function Onboarding() {
                 className="text-sm font-semibold"
                 style={{
                   color:
-                    assessmentData.hasShiftNecklace === false ? colors.white : colors.text.primary,
+                    assessmentData.hasShiftNecklace === false ? colors.button.primaryText : colors.text.primary,
                 }}>
                 No
               </Text>

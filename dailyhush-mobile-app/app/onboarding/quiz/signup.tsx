@@ -311,7 +311,7 @@ export default function QuizSignup() {
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
-          headerTintColor: colors.emerald[500],
+          headerTintColor: colors.lime[500],
           headerShadowVisible: false,
         }}
       />
@@ -342,13 +342,13 @@ export default function QuizSignup() {
                   width: 80,
                   height: 80,
                   borderRadius: 40,
-                  backgroundColor: colors.emerald[600] + '20',
+                  backgroundColor: colors.lime[600] + '20',
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderWidth: 2,
-                  borderColor: colors.emerald[600] + '40',
+                  borderColor: colors.lime[600] + '40',
                 }}>
-                <Sparkles size={40} color={colors.emerald[500]} strokeWidth={2} />
+                <Sparkles size={40} color={colors.lime[500]} strokeWidth={2} />
               </View>
             </View>
 
@@ -427,7 +427,7 @@ export default function QuizSignup() {
                     minHeight: 56,
                     color: colors.text.primary,
                     borderWidth: 2,
-                    borderColor: emailError ? '#EF4444' : colors.emerald[700] + '60',
+                    borderColor: emailError ? '#EF4444' : colors.lime[700] + '60',
                   }}
                 />
               </View>
@@ -497,7 +497,7 @@ export default function QuizSignup() {
                     minHeight: 56,
                     color: colors.text.primary,
                     borderWidth: 2,
-                    borderColor: passwordError ? '#EF4444' : colors.emerald[700] + '60',
+                    borderColor: passwordError ? '#EF4444' : colors.lime[700] + '60',
                   }}
                 />
                 <Pressable
@@ -560,12 +560,12 @@ export default function QuizSignup() {
               onPress={handleCreateAccount}
               disabled={isCreating}
               style={{
-                backgroundColor: isCreating ? colors.emerald[700] : colors.emerald[600],
+                backgroundColor: isCreating ? colors.lime[700] : colors.lime[600],
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
                 marginBottom: spacing.lg,
-                shadowColor: colors.emerald[500],
+                shadowColor: colors.lime[500],
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
@@ -581,12 +581,12 @@ export default function QuizSignup() {
                   }}>
                   {isCreating ? (
                     <>
-                      <ActivityIndicator size="small" color={colors.white} />
+                      <ActivityIndicator size="small" color={colors.button.primaryText} />
                       <Text
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          color: colors.white,
+                          color: colors.button.primaryText,
                           marginLeft: 12,
                         }}>
                         Creating Account...
@@ -596,7 +596,7 @@ export default function QuizSignup() {
                     <>
                       <Sparkles
                         size={24}
-                        color={colors.white}
+                        color={colors.button.primaryText}
                         strokeWidth={2}
                         style={{ marginRight: 12 }}
                       />
@@ -604,7 +604,7 @@ export default function QuizSignup() {
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          color: colors.white,
+                          color: colors.button.primaryText,
                         }}>
                         Unlock My Results
                       </Text>
@@ -617,16 +617,16 @@ export default function QuizSignup() {
             {/* Privacy Note */}
             <View
               style={{
-                backgroundColor: colors.emerald[800] + '30',
+                backgroundColor: colors.lime[800] + '30',
                 borderRadius: 16,
                 padding: spacing.md,
                 borderWidth: 1,
-                borderColor: colors.emerald[700] + '40',
+                borderColor: colors.lime[700] + '40',
               }}>
               <Text
                 style={{
                   fontSize: 14,
-                  color: colors.emerald[200],
+                  color: colors.lime[200],
                   textAlign: 'center',
                   lineHeight: 20,
                 }}>

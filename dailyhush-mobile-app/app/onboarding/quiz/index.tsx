@@ -69,7 +69,7 @@ export default function QuizFlow() {
       }
     };
     restoreProgress();
-  }, [analytics]);
+  }, []);
 
   const handleSelectAnswer = async (optionId: string, value: number) => {
     const newAnswers = new Map(answers);
@@ -162,7 +162,7 @@ export default function QuizFlow() {
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
-          headerTintColor: colors.emerald[500],
+          headerTintColor: colors.lime[500],
           headerShadowVisible: false,
         }}
       />
@@ -194,7 +194,7 @@ export default function QuizFlow() {
             <Text
               style={{
                 fontSize: 15,
-                color: colors.emerald[400],
+                color: colors.lime[400],
                 fontWeight: '600',
               }}>
               {Math.round(progress)}%
@@ -203,7 +203,7 @@ export default function QuizFlow() {
           <View
             style={{
               height: 8,
-              backgroundColor: colors.emerald[900] + '40',
+              backgroundColor: colors.lime[900] + '40',
               borderRadius: 4,
               overflow: 'hidden',
             }}>
@@ -211,7 +211,7 @@ export default function QuizFlow() {
               style={{
                 height: '100%',
                 width: `${progress}%`,
-                backgroundColor: colors.emerald[600],
+                backgroundColor: colors.lime[600],
                 borderRadius: 4,
               }}
             />
@@ -250,7 +250,7 @@ export default function QuizFlow() {
             paddingTop: 16,
             paddingBottom: spacing.safeArea.bottom + insets.bottom,
             borderTopWidth: 1,
-            borderTopColor: colors.emerald[800] + '30',
+            borderTopColor: colors.lime[800] + '30',
           }}>
           <View
             style={{
@@ -271,14 +271,14 @@ export default function QuizFlow() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderWidth: 2,
-                  borderColor: colors.emerald[700],
+                  borderColor: colors.lime[700],
                   minHeight: 56,
                 }}>
                 {({ pressed }) => (
                   <>
                     <ChevronLeft
                       size={24}
-                      color={colors.emerald[500]}
+                      color={colors.lime[500]}
                       strokeWidth={2}
                       style={{ marginRight: 8, opacity: pressed ? 0.7 : 1 }}
                     />
@@ -302,7 +302,7 @@ export default function QuizFlow() {
               disabled={!canGoNext}
               style={{
                 flex: isFirstQuestion ? 1 : 2,
-                backgroundColor: canGoNext ? colors.emerald[600] : colors.emerald[800] + '40',
+                backgroundColor: canGoNext ? colors.lime[600] : colors.lime[800] + '40',
                 borderRadius: 16,
                 paddingVertical: 18,
                 paddingHorizontal: 24,
@@ -310,7 +310,7 @@ export default function QuizFlow() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: 56,
-                shadowColor: canGoNext ? colors.emerald[500] : 'transparent',
+                shadowColor: canGoNext ? colors.lime[500] : 'transparent',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
@@ -322,7 +322,7 @@ export default function QuizFlow() {
                     style={{
                       fontSize: 18,
                       fontWeight: 'bold',
-                      color: canGoNext ? colors.white : colors.text.secondary,
+                      color: canGoNext ? colors.button.primaryText : colors.text.secondary,
                       marginRight: 8,
                       opacity: pressed && canGoNext ? 0.9 : 1,
                     }}>
@@ -330,7 +330,7 @@ export default function QuizFlow() {
                   </Text>
                   <ChevronRight
                     size={24}
-                    color={canGoNext ? colors.white : colors.text.secondary}
+                    color={canGoNext ? colors.button.primaryText : colors.text.secondary}
                     strokeWidth={2}
                     style={{ opacity: pressed && canGoNext ? 0.9 : 1 }}
                   />

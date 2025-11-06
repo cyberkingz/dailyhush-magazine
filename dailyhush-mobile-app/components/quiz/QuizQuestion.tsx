@@ -51,7 +51,7 @@ export function QuizQuestion({ question, options, selectedOptionId, onSelect }: 
               accessibilityState={{ checked: isSelected }}
               testID={`quiz-option-${option.id}`}
               style={{
-                backgroundColor: isSelected ? colors.emerald[700] + '40' : colors.background.card,
+                backgroundColor: isSelected ? colors.lime[700] + '40' : colors.background.card,
                 borderRadius: 16,
                 paddingVertical: 18,
                 paddingHorizontal: 20,
@@ -59,7 +59,7 @@ export function QuizQuestion({ question, options, selectedOptionId, onSelect }: 
                 flexDirection: 'row',
                 alignItems: 'center',
                 borderWidth: 2,
-                borderColor: isSelected ? colors.emerald[600] : colors.emerald[800] + '30',
+                borderColor: isSelected ? colors.lime[600] : colors.lime[800] + '30',
               }}>
               {({ pressed }) => (
                 <>
@@ -70,8 +70,8 @@ export function QuizQuestion({ question, options, selectedOptionId, onSelect }: 
                       height: 24,
                       borderRadius: 12,
                       borderWidth: 2,
-                      borderColor: isSelected ? colors.emerald[500] : colors.text.secondary + '60',
-                      backgroundColor: isSelected ? colors.emerald[600] : 'transparent',
+                      borderColor: isSelected ? colors.lime[500] : colors.text.secondary + '60',
+                      backgroundColor: isSelected ? colors.lime[600] : 'transparent',
                       marginRight: 16,
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -83,7 +83,7 @@ export function QuizQuestion({ question, options, selectedOptionId, onSelect }: 
                           width: 10,
                           height: 10,
                           borderRadius: 5,
-                          backgroundColor: colors.white,
+                          backgroundColor: colors.button.primaryText,
                         }}
                       />
                     )}

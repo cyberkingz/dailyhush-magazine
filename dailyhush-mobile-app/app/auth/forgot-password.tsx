@@ -122,7 +122,7 @@ export default function ForgotPassword() {
               onPress={handleBackToLogin}
               hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
               style={{ marginBottom: 24, alignSelf: 'flex-start' }}>
-              <ArrowLeft size={24} color="#52B788" strokeWidth={2} />
+              <ArrowLeft size={24} color="#7AF859" strokeWidth={2} />
             </Pressable>
 
             {/* Header */}
@@ -217,7 +217,7 @@ export default function ForgotPassword() {
                       style={{
                         ...authTypography.linkText,
                         textDecorationLine: 'underline',
-                        textDecorationColor: '#52B788',
+                        textDecorationColor: '#7AF859',
                       }}>
                       Back to Sign In
                     </Text>

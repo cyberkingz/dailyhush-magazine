@@ -182,7 +182,6 @@ export function IntensityScale({
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-
       onPanResponderGrant: () => {
         isDragging.current = true;
         measureDial();

@@ -62,13 +62,13 @@ export default function QuizRecognition() {
               width: 96,
               height: 96,
               borderRadius: 48,
-              backgroundColor: colors.emerald[600] + '20',
+              backgroundColor: colors.lime[600] + '20',
               alignItems: 'center',
               justifyContent: 'center',
               borderWidth: 2,
-              borderColor: colors.emerald[600] + '40',
+              borderColor: colors.lime[600] + '40',
             }}>
-            <Sparkles size={48} color={colors.emerald[500]} strokeWidth={2} />
+            <Sparkles size={48} color={colors.lime[500]} strokeWidth={2} />
           </View>
         </View>
 
@@ -103,12 +103,12 @@ export default function QuizRecognition() {
           <Pressable
             onPress={handleTookQuiz}
             style={{
-              backgroundColor: colors.emerald[600],
+              backgroundColor: colors.lime[600],
               borderRadius: 20,
               paddingVertical: 20,
               paddingHorizontal: 32,
               marginBottom: 16,
-              shadowColor: colors.emerald[500],
+              shadowColor: colors.lime[500],
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 12,
@@ -124,7 +124,7 @@ export default function QuizRecognition() {
                 }}>
                 <CheckCircle2
                   size={24}
-                  color={colors.white}
+                  color={colors.button.primaryText}
                   strokeWidth={2}
                   style={{ marginRight: 12 }}
                 />
@@ -132,7 +132,7 @@ export default function QuizRecognition() {
                   style={{
                     fontSize: 20,
                     fontWeight: 'bold',
-                    color: colors.white,
+                    color: colors.button.primaryText,
                   }}>
                   Yes, I took the quiz
                 </Text>
@@ -149,7 +149,7 @@ export default function QuizRecognition() {
               paddingVertical: 20,
               paddingHorizontal: 32,
               borderWidth: 2,
-              borderColor: colors.emerald[700],
+              borderColor: colors.lime[700],
             }}>
             {({ pressed }) => (
               <View
@@ -161,7 +161,7 @@ export default function QuizRecognition() {
                 }}>
                 <Sparkles
                   size={24}
-                  color={colors.emerald[500]}
+                  color={colors.lime[500]}
                   strokeWidth={2}
                   style={{ marginRight: 12 }}
                 />
@@ -190,7 +190,7 @@ export default function QuizRecognition() {
               <Text
                 style={{
                   fontSize: 17,
-                  color: colors.emerald[400],
+                  color: colors.lime[400],
                   opacity: pressed ? 0.5 : 1,
                   fontWeight: '600',
                 }}>
@@ -204,16 +204,16 @@ export default function QuizRecognition() {
         <View
           style={{
             marginTop: 40,
-            backgroundColor: colors.emerald[800] + '40',
+            backgroundColor: colors.lime[800] + '40',
             borderRadius: 16,
             padding: 20,
             borderWidth: 1,
-            borderColor: colors.emerald[700] + '40',
+            borderColor: colors.lime[700] + '40',
           }}>
           <Text
             style={{
               fontSize: 15,
-              color: colors.emerald[200],
+              color: colors.lime[200],
               textAlign: 'center',
               lineHeight: 22,
             }}>

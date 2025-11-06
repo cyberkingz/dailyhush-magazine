@@ -228,7 +228,7 @@ export default function ProfileSetup() {
           headerStyle: {
             backgroundColor: colors.background.primary,
           },
-          headerTintColor: colors.emerald[500],
+          headerTintColor: colors.lime[500],
           headerShadowVisible: false,
         }}
       />
@@ -267,7 +267,7 @@ export default function ProfileSetup() {
             {/* Name Input */}
             <View style={{ marginBottom: 24 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                <User size={20} color={colors.emerald[500]} strokeWidth={2} />
+                <User size={20} color={colors.lime[500]} strokeWidth={2} />
                 <Text
                   style={{
                     fontSize: 16,
@@ -296,7 +296,7 @@ export default function ProfileSetup() {
                   minHeight: 56,
                   color: colors.text.primary,
                   borderWidth: 2,
-                  borderColor: colors.emerald[700] + '60',
+                  borderColor: colors.lime[700] + '60',
                 }}
               />
             </View>
@@ -304,7 +304,7 @@ export default function ProfileSetup() {
             {/* Age Input */}
             <View style={{ marginBottom: 32 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                <Calendar size={20} color={colors.emerald[500]} strokeWidth={2} />
+                <Calendar size={20} color={colors.lime[500]} strokeWidth={2} />
                 <Text
                   style={{
                     fontSize: 16,
@@ -337,7 +337,7 @@ export default function ProfileSetup() {
                   minHeight: 56,
                   color: colors.text.primary,
                   borderWidth: 2,
-                  borderColor: colors.emerald[700] + '60',
+                  borderColor: colors.lime[700] + '60',
                 }}
               />
             </View>
@@ -345,7 +345,7 @@ export default function ProfileSetup() {
             {/* Rumination Frequency */}
             <View style={{ marginBottom: 32 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                <Brain size={20} color={colors.emerald[500]} strokeWidth={2} />
+                <Brain size={20} color={colors.lime[500]} strokeWidth={2} />
                 <Text
                   style={{
                     fontSize: 16,
@@ -371,7 +371,7 @@ export default function ProfileSetup() {
                   style={{
                     backgroundColor:
                       ruminationFrequency === option.value
-                        ? colors.emerald[600] + '30'
+                        ? colors.lime[600] + '30'
                         : colors.background.card,
                     borderRadius: 16,
                     paddingVertical: 18,
@@ -380,8 +380,8 @@ export default function ProfileSetup() {
                     borderWidth: 2,
                     borderColor:
                       ruminationFrequency === option.value
-                        ? colors.emerald[600]
-                        : colors.emerald[700] + '40',
+                        ? colors.lime[600]
+                        : colors.lime[700] + '40',
                   }}>
                   {({ pressed }) => (
                     <View
@@ -406,11 +406,11 @@ export default function ProfileSetup() {
                             width: 24,
                             height: 24,
                             borderRadius: 12,
-                            backgroundColor: colors.emerald[600],
+                            backgroundColor: colors.lime[600],
                             alignItems: 'center',
                             justifyContent: 'center',
                           }}>
-                          <Text style={{ color: colors.white, fontSize: 16, fontWeight: 'bold' }}>
+                          <Text style={{ color: colors.button.primaryText, fontSize: 16, fontWeight: 'bold' }}>
                             ✓
                           </Text>
                         </View>
@@ -427,12 +427,12 @@ export default function ProfileSetup() {
               disabled={!canContinue || isSaving}
               style={{
                 backgroundColor:
-                  canContinue && !isSaving ? colors.emerald[600] : colors.emerald[700] + '60',
+                  canContinue && !isSaving ? colors.lime[600] : colors.lime[700] + '60',
                 borderRadius: 20,
                 paddingVertical: 20,
                 paddingHorizontal: 32,
                 marginBottom: 24,
-                shadowColor: canContinue ? colors.emerald[500] : 'transparent',
+                shadowColor: canContinue ? colors.lime[500] : 'transparent',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.3,
                 shadowRadius: 12,
@@ -450,7 +450,7 @@ export default function ProfileSetup() {
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      color: colors.white,
+                      color: colors.button.primaryText,
                     }}>
                     {isSaving ? 'Saving...' : 'Complete Setup'}
                   </Text>

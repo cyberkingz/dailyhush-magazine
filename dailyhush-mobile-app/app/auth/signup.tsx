@@ -257,7 +257,7 @@ export default function SignUp() {
                   style={legalStyles.checkboxRow}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                   {agreedToTerms ? (
-                    <CheckSquare size={24} color={colors.emerald[500]} strokeWidth={2} />
+                    <CheckSquare size={24} color={colors.lime[500]} strokeWidth={2} />
                   ) : (
                     <Square size={24} color={colors.text.muted} strokeWidth={2} />
                   )}
@@ -279,7 +279,7 @@ export default function SignUp() {
                   style={legalStyles.checkboxRow}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                   {agreedToPrivacy ? (
-                    <CheckSquare size={24} color={colors.emerald[500]} strokeWidth={2} />
+                    <CheckSquare size={24} color={colors.lime[500]} strokeWidth={2} />
                   ) : (
                     <Square size={24} color={colors.text.muted} strokeWidth={2} />
                   )}
@@ -321,7 +321,7 @@ export default function SignUp() {
                 <Text
                   style={{
                     ...authTypography.footerText,
-                    color: '#52B788',
+                    color: '#7AF859',
                     fontWeight: '600',
                   }}>
                   Sign in
@@ -353,7 +353,7 @@ const legalStyles = StyleSheet.create({
     color: colors.text.secondary,
   },
   link: {
-    color: colors.emerald[500],
+    color: colors.lime[500],
     fontWeight: '600',
     textDecorationLine: 'underline',
   },

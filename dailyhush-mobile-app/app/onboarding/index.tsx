@@ -402,7 +402,7 @@ export default function Onboarding() {
                 alignItems: 'center',
                 marginBottom: 4,
               }}>
-              <Lock size={16} color={colors.emerald[400]} strokeWidth={2} />
+              <Lock size={16} color={colors.lime[400]} strokeWidth={2} />
               <Text
                 style={{
                   color: colors.text.secondary,
@@ -431,11 +431,11 @@ export default function Onboarding() {
             onPress={nextStep}
             className="items-center justify-center active:opacity-90"
             style={{
-              backgroundColor: colors.emerald[600],
+              backgroundColor: colors.lime[600],
               height: 62,
               borderRadius: 100,
               marginBottom: 12,
-              shadowColor: colors.emerald[500],
+              shadowColor: colors.lime[500],
               shadowOffset: { width: 0, height: 8 },
               shadowOpacity: 0.4,
               shadowRadius: 16,
@@ -443,7 +443,7 @@ export default function Onboarding() {
             }}>
             <Text
               style={{
-                color: colors.white,
+                color: colors.button.primaryText,
                 fontSize: 19,
                 fontFamily: 'Poppins_600SemiBold',
                 letterSpacing: 0.3,
@@ -473,7 +473,7 @@ export default function Onboarding() {
               Already have an account?{' '}
               <Text
                 style={{
-                  color: colors.emerald[500],
+                  color: colors.lime[500],
                   fontFamily: 'Inter_600SemiBold',
                 }}>
                 Sign in
@@ -517,7 +517,7 @@ export default function Onboarding() {
             <View
               className="mb-4 rounded-full p-5"
               style={{ backgroundColor: colors.button.primary + '20' }}>
-              <Clock size={52} color={colors.emerald[400]} strokeWidth={2} />
+              <Clock size={52} color={colors.lime[400]} strokeWidth={2} />
             </View>
 
             <Text
@@ -533,7 +533,7 @@ export default function Onboarding() {
             </Text>
           </View>
 
-          <Text className="mb-3 text-center text-xs" style={{ color: colors.emerald[400] }}>
+          <Text className="mb-3 text-center text-xs" style={{ color: colors.lime[400] }}>
             Recommended - see what makes DailyHush different
           </Text>
         </View>
@@ -644,7 +644,7 @@ export default function Onboarding() {
                 <Text
                   className="text-lg font-bold"
                   style={{
-                    color: selectedQuizAnswer === num ? colors.white : colors.text.primary,
+                    color: selectedQuizAnswer === num ? colors.button.primaryText : colors.text.primary,
                   }}>
                   {num}
                 </Text>
@@ -683,7 +683,7 @@ export default function Onboarding() {
                 className="text-sm font-semibold"
                 style={{
                   color:
-                    assessmentData.hasShiftNecklace === true ? colors.white : colors.text.primary,
+                    assessmentData.hasShiftNecklace === true ? colors.button.primaryText : colors.text.primary,
                 }}>
                 Yes
               </Text>
@@ -705,7 +705,7 @@ export default function Onboarding() {
                 className="text-sm font-semibold"
                 style={{
                   color:
-                    assessmentData.hasShiftNecklace === false ? colors.white : colors.text.primary,
+                    assessmentData.hasShiftNecklace === false ? colors.button.primaryText : colors.text.primary,
                 }}>
                 No
               </Text>
@@ -771,7 +771,7 @@ export default function Onboarding() {
             <View
               className="mb-4 rounded-full p-5"
               style={{ backgroundColor: colors.button.primary + '20' }}>
-              <Sparkles size={52} color={colors.emerald[400]} strokeWidth={2} />
+              <Sparkles size={52} color={colors.lime[400]} strokeWidth={2} />
             </View>
 
             <Text
@@ -831,7 +831,7 @@ export default function Onboarding() {
             <View
               className="mb-6 h-24 w-24 items-center justify-center rounded-full"
               style={{ backgroundColor: colors.background.tertiary }}>
-              <Check size={52} color={colors.emerald[100]} strokeWidth={3} />
+              <Check size={52} color={colors.lime[100]} strokeWidth={3} />
             </View>
 
             <Text
@@ -884,7 +884,7 @@ export default function Onboarding() {
 
           {/* Privacy Note */}
           <View className="flex-row items-center justify-center">
-            <Lock size={12} color={colors.emerald[400]} strokeWidth={2} />
+            <Lock size={12} color={colors.lime[400]} strokeWidth={2} />
             <Text className="ml-1.5 text-center text-xs" style={{ color: colors.text.secondary }}>
               Your anonymous profile is saved.
             </Text>

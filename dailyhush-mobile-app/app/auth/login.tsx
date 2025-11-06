@@ -250,7 +250,7 @@ export default function Login() {
                       ...authTypography.linkText,
                       fontSize: 15,
                       textDecorationLine: 'underline',
-                      textDecorationColor: '#52B788',
+                      textDecorationColor: '#7AF859',
                     }}>
                     Forgot password?
                   </Text>
@@ -284,7 +284,7 @@ export default function Login() {
                 <Text
                   style={{
                     ...authTypography.footerText,
-                    color: '#52B788',
+                    color: '#7AF859',
                     fontWeight: '600',
                   }}>
                   Sign up

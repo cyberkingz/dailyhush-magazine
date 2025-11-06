@@ -1,0 +1,270 @@
+/**
+ * useSuccessAnimation Hook
+ *
+ * Manages success checkmark animation with SVG path drawing.
+ * Includes scale bounce, rotation, and optional glow effects.
+ *
+ * Features:
+ * - SVG path drawing animation (0% → 100%)
+ * - Scale bounce effect
+ * - Rotation for celebration feel
+ * - Glow effect (optional)
+ * - Auto-trigger on visibility
+ *
+ * @module hooks/widget/useSuccessAnimation
+ */
+
+import { useEffect, useCallback } from 'react';
+import {
+  useSharedValue,
+  useAnimatedStyle,
+  useAnimatedProps,
+  withTiming,
+  withSequence,
+  withSpring,
+  Easing,
+  cancelAnimation,
+} from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics';
+import type { UseSuccessAnimationReturn } from '@/types/widget.types';
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+interface UseSuccessAnimationConfig {
+  /** Animation duration (ms) */
+  duration: number;
+
+  /** Enable haptic feedback */
+  enableHaptics: boolean;
+
+  /** Show glow effect */
+  showGlow: boolean;
+
+  /** Callback when animation completes */
+  onComplete?: () => void;
+}
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/**
+ * SVG checkmark path length (approximate)
+ * Used for strokeDasharray/strokeDashoffset animation
+ */
+const CHECKMARK_PATH_LENGTH = 100;
+
+// ============================================================================
+// HOOK
+// ============================================================================
+
+/**
+ * Success animation hook
+ *
+ * @param config - Animation configuration
+ * @returns Trigger function and animated props
+ *
+ * @example
+ * ```tsx
+ * const { trigger, animatedProps, animatedStyle } = useSuccessAnimation({
+ *   duration: 400,
+ *   enableHaptics: true,
+ *   showGlow: true,
+ *   onComplete: () => console.log('Animation complete!'),
+ * });
+ *
+ * // SVG checkmark
+ * <Svg width={80} height={80}>
+ *   <AnimatedPath
+ *     d="M 10,40 L 30,60 L 70,20"
+ *     stroke={colors.lime[500]}
+ *     strokeWidth={4}
+ *     fill="none"
+ *     strokeDasharray={100}
+ *     animatedProps={animatedProps}
+ *   />
+ * </Svg>
+ * ```
+ */
+export function useSuccessAnimation(
+  config: UseSuccessAnimationConfig
+): UseSuccessAnimationReturn {
+  const { duration, enableHaptics, showGlow, onComplete } = config;
+
+  // ========================================================================
+  // ANIMATED VALUES
+  // ========================================================================
+
+  /**
+   * Path drawing progress (0 = not drawn, 1 = fully drawn)
+   */
+  const drawProgress = useSharedValue(0);
+
+  /**
+   * Scale value (for bounce effect)
+   */
+  const scale = useSharedValue(0);
+
+  /**
+   * Rotation value (for celebration spin)
+   */
+  const rotate = useSharedValue(0);
+
+  /**
+   * Glow opacity (pulse effect)
+   */
+  const glowOpacity = useSharedValue(0);
+
+  /**
+   * Is animation currently playing
+   */
+  const isPlaying = useSharedValue(false);
+
+  // ========================================================================
+  // TRIGGER ANIMATION
+  // ========================================================================
+
+  /**
+   * Trigger the success animation
+   */
+  const trigger = useCallback(() => {
+    'worklet';
+
+    isPlaying.value = true;
+
+    // ========================================
+    // PATH DRAWING
+    // ========================================
+
+    // Draw checkmark from 0% to 100%
+    drawProgress.value = withTiming(1, {
+      duration,
+      easing: Easing.out(Easing.ease),
+    });
+
+    // ========================================
+    // SCALE BOUNCE
+    // ========================================
+
+    // Scale: 0 → 1.2 → 1 (bounce in)
+    scale.value = withSequence(
+      withTiming(0, { duration: 0 }), // Start at 0
+      withTiming(1.2, { duration: duration * 0.5 }), // Grow to 1.2
+      withSpring(1, { damping: 10, stiffness: 100 }) // Settle to 1
+    );
+
+    // ========================================
+    // ROTATION
+    // ========================================
+
+    // Rotate 360 degrees during animation
+    rotate.value = withTiming(360, {
+      duration: duration,
+      easing: Easing.out(Easing.ease),
+    });
+
+    // ========================================
+    // GLOW PULSE (if enabled)
+    // ========================================
+
+    if (showGlow) {
+      // Pulse glow: 0 → 0.6 → 0.3 (fade in then settle)
+      glowOpacity.value = withSequence(
+        withTiming(0.6, { duration: duration * 0.5 }),
+        withTiming(0.3, { duration: duration * 0.5 })
+      );
+    }
+
+    // ========================================
+    // HAPTIC FEEDBACK
+    // ========================================
+
+    if (enableHaptics) {
+      // Success haptic notification
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
+
+    // ========================================
+    // COMPLETION CALLBACK
+    // ========================================
+
+    // Call onComplete after animation finishes
+    if (onComplete) {
+      setTimeout(() => {
+        isPlaying.value = false;
+        onComplete();
+      }, duration);
+    }
+  }, [duration, enableHaptics, showGlow, onComplete]);
+
+  // ========================================================================
+  // ANIMATED PROPS (for SVG)
+  // ========================================================================
+
+  /**
+   * Animated props for SVG path
+   * Controls strokeDashoffset to create drawing effect
+   */
+  const animatedProps = useAnimatedProps(() => {
+    'worklet';
+
+    return {
+      strokeDashoffset: (1 - drawProgress.value) * CHECKMARK_PATH_LENGTH,
+    };
+  }, []);
+
+  // ========================================================================
+  // ANIMATED STYLE (for container)
+  // ========================================================================
+
+  /**
+   * Animated style for checkmark container
+   * Handles scale, rotation, and glow
+   */
+  const animatedStyle = useAnimatedStyle(() => {
+    'worklet';
+
+    return {
+      transform: [
+        { scale: scale.value },
+        { rotate: `${rotate.value}deg` },
+      ],
+      // Glow shadow effect (if enabled)
+      ...(showGlow && {
+        shadowOpacity: glowOpacity.value,
+        shadowRadius: 16,
+        shadowColor: '#7AF859', // Lime-500
+        shadowOffset: { width: 0, height: 0 },
+      }),
+    };
+  }, [showGlow]);
+
+  // ========================================================================
+  // CLEANUP
+  // ========================================================================
+
+  /**
+   * Cancel animations on unmount
+   */
+  useEffect(() => {
+    return () => {
+      cancelAnimation(drawProgress);
+      cancelAnimation(scale);
+      cancelAnimation(rotate);
+      cancelAnimation(glowOpacity);
+    };
+  }, []);
+
+  // ========================================================================
+  // RETURN
+  // ========================================================================
+
+  return {
+    trigger,
+    animatedProps,
+    animatedStyle,
+    isPlaying: isPlaying.value,
+  };
+}

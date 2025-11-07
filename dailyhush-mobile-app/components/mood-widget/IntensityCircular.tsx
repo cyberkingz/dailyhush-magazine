@@ -11,6 +11,7 @@ import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
 import { SPACING } from '@/constants/designTokens';
 import type { IntensityValue } from '@/types/widget.types';
+import { useScrollControl } from './ScrollControlContext';
 
 // Compact dimensions for widget card
 const DIAL_SIZE = 240; // Reduced from 320
@@ -84,6 +85,9 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
   const currentIntensityRef = useRef<IntensityValue>(selectedIntensity || 4);
   const isDragging = useRef(false);
 
+  // Get scroll control to disable parent ScrollView during drag
+  const { setScrollEnabled } = useScrollControl();
+
   const handleX = useRef(new Animated.Value(0)).current;
   const handleY = useRef(new Animated.Value(0)).current;
   const handleScale = useRef(new Animated.Value(1)).current;
@@ -133,6 +137,9 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
     const activeIntensity = currentIntensityRef.current;
     const position = getPositionForIntensity(activeIntensity);
 
+    // Re-enable parent ScrollView after drag completes
+    setScrollEnabled(true);
+
     Animated.parallel([
       Animated.spring(handleX, {
         toValue: position.x - HANDLE_SIZE / 2,
@@ -157,7 +164,7 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
     // Don't auto-advance - user must click Continue button
     lastHapticIntensity.current = activeIntensity;
     isDragging.current = false;
-  }, [handleX, handleY, handleScale]);
+  }, [handleX, handleY, handleScale, setScrollEnabled]);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -168,6 +175,9 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
       onPanResponderGrant: () => {
         isDragging.current = true;
         measureDial();
+
+        // Disable parent ScrollView to prevent scroll during drag
+        setScrollEnabled(false);
 
         Animated.spring(handleScale, {
           toValue: 1.12,

@@ -16,6 +16,7 @@ import { useUser, useLoading } from '@/store/useStore';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { CTAButton, FeatureGrid, FeatureItem, QuoteBanner } from '@/components/home';
 import { EmotionalWeatherWidget } from '@/components/mood-widget';
+import { ScrollControlProvider } from '@/components/mood-widget/ScrollControlContext';
 import { useMoodLogging } from '@/hooks/useMoodLogging';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
@@ -326,10 +327,11 @@ export default function HomeModern() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
-      <StatusBar style="light" />
+    <ScrollControlProvider>
+      <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
+        <StatusBar style="light" />
 
-      <ScrollFadeView
+        <ScrollFadeView
         style={{ flex: 1 }}
         contentContainerStyle={{
           paddingTop: insets.top + spacing.safeArea.top,
@@ -434,6 +436,7 @@ export default function HomeModern() {
         {/* Bottom spacing */}
         <View style={{ height: 24 }} />
       </ScrollFadeView>
-    </View>
+      </View>
+    </ScrollControlProvider>
   );
 }

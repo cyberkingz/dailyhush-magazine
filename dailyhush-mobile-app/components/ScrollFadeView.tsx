@@ -8,6 +8,7 @@ import {
   NativeSyntheticEvent,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useScrollControl } from '@/components/mood-widget/ScrollControlContext';
 
 export interface ScrollFadeViewProps extends ScrollViewProps {
   /**
@@ -88,6 +89,9 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
   });
 
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  // Get scroll control from context (allows nested components to disable scroll)
+  const { scrollEnabled: scrollEnabledFromContext } = useScrollControl();
 
   /**
    * Handle scroll events to determine fade visibility
@@ -203,6 +207,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({
         contentContainerStyle={contentContainerStyle}
         onScroll={handleScroll}
         scrollEventThrottle={16} // Smooth 60fps scroll updates
+        scrollEnabled={scrollEnabledFromContext} // Allow nested components to disable scroll
       >
         {children}
       </ScrollView>

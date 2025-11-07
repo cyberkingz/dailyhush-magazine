@@ -46,7 +46,8 @@ export function Backdrop({ visible, onPress }: BackdropProps) {
 const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.black + '60', // 60% opacity black
+    backgroundColor: colors.black + '40', // Lighter dim for subtlety (was 60)
     zIndex: -1, // Behind the widget card
+    borderRadius: 24, // Match card's borderRadius to prevent dark corners
   },
 });

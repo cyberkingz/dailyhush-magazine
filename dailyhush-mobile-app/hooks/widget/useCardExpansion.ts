@@ -164,14 +164,8 @@ export function useCardExpansion(
       height: height.value,
       // Subtle background color change during expansion
       backgroundColor: colors.background.card,
-      // Shadow intensity increases when expanded (adds depth)
-      shadowOpacity: 0.1 + (expansionProgress.value * 0.1),
-      shadowRadius: 4 + (expansionProgress.value * 8),
-      shadowOffset: {
-        width: 0,
-        height: 2 + (expansionProgress.value * 4),
-      },
-      shadowColor: colors.black,
+      // Removed shadow to prevent dark corners (shadow doesn't respect borderRadius on Animated.View)
+      // Can be replaced with elevation on Android if needed
     };
   }, []);
 

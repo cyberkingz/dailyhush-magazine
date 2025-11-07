@@ -24,6 +24,9 @@ export { LoadingOverlay } from './LoadingOverlay';
 export { ErrorDisplay } from './ErrorDisplay';
 export { Backdrop } from './Backdrop';
 
+// Context providers
+export { ScrollControlProvider, useScrollControl } from './ScrollControlContext';
+
 // Re-export types
 export type {
   EmotionalWeatherWidgetProps,

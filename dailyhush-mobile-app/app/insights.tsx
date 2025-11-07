@@ -30,6 +30,7 @@ import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
+import { ScrollControlProvider } from '@/components/mood-widget/ScrollControlContext';
 import { PageHeader } from '@/components/PageHeader';
 import { useUser } from '@/store/useStore';
 import { getWeeklyInsights, WeeklyInsights } from '@/services/insights';
@@ -133,11 +134,12 @@ export default function Insights() {
   ];
 
   return (
-    <>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: 'Pattern Insights',
+    <ScrollControlProvider>
+      <>
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: 'Pattern Insights',
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: colors.background.primary,
@@ -346,6 +348,7 @@ export default function Insights() {
           </>
         )}
       </SafeAreaView>
-    </>
+      </>
+    </ScrollControlProvider>
   );
 }

@@ -23,6 +23,7 @@ import {
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
+import { ScrollControlProvider } from '@/components/mood-widget/ScrollControlContext';
 import { useUser } from '@/store/useStore';
 import { signOut } from '@/services/auth';
 import { useState } from 'react';
@@ -154,10 +155,11 @@ export default function Settings() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
-      <StatusBar style="light" />
+    <ScrollControlProvider>
+      <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
+        <StatusBar style="light" />
 
-      <ScrollFadeView
+        <ScrollFadeView
         style={{ flex: 1 }}
         contentContainerStyle={{
           paddingHorizontal: 20,
@@ -374,6 +376,7 @@ export default function Settings() {
           </Text>
         </View>
       </ScrollFadeView>
-    </View>
+      </View>
+    </ScrollControlProvider>
   );
 }

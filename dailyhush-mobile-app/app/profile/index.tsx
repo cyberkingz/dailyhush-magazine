@@ -13,18 +13,19 @@ import React, { useEffect, useState, type ComponentProps } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   RefreshControl,
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
   Platform,
 } from 'react-native';
+import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { useRouter, Stack, useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Settings } from 'lucide-react-native';
 
-import { EmotionalWeather } from '@/components/profile/EmotionalWeather';
+import { EmotionalWeatherWidget } from '@/components/mood-widget';
+import { ScrollControlProvider } from '@/components/mood-widget/ScrollControlContext';
 import { ProfileStats } from '@/components/profile/ProfileStats';
 import { PatternInsightCard } from '@/components/profile/PatternInsightCard';
 import { LoopCharacteristics } from '@/components/profile/LoopCharacteristics';
@@ -178,8 +179,9 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
+    <ScrollControlProvider>
+      <View style={styles.container}>
+        <Stack.Screen
         options={{
           headerShown: true,
           headerTitle: () => <Text style={styles.headerLogo}>Nœma</Text>,
@@ -207,7 +209,7 @@ export default function ProfileScreen() {
         - SPACING.xl (24px) provides breathing room between last card and tab bar
         - Total: 104px bottom padding ensures "gentle suggestion" card doesn't touch tab bar
       */}
-      <ScrollView
+      <ScrollFadeView
         style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContent,
@@ -221,7 +223,11 @@ export default function ProfileScreen() {
             onRefresh={handleRefresh}
             {...refreshControlColors}
           />
-        }>
+        }
+        fadeColor={colors.background.primary}
+        fadeHeight={48}
+        fadeIntensity={0.95}
+        fadeVisibility="always">
         {/* Greeting + Journey Header Combined */}
         <View style={styles.topSection}>
           <Text style={styles.greetingText}>
@@ -255,20 +261,21 @@ export default function ProfileScreen() {
 
         {/* Section: Right Now */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
-              Right Now
-            </Text>
-            <Text style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
-              Your emotional weather today
-            </Text>
-          </View>
-
-          <EmotionalWeather
-            weather={profileData.todayCheckIn?.emotional_weather}
+          <EmotionalWeatherWidget
+            weather={profileData.todayCheckIn?.emotional_weather as any}
             moodRating={profileData.todayCheckIn?.mood_rating}
             notes={profileData.todayCheckIn?.notes || undefined}
-            onPress={handleCheckIn}
+            createdAt={profileData.todayCheckIn?.created_at}
+            updatedAt={profileData.todayCheckIn?.updated_at}
+            onMoodSubmit={(data) => {
+              console.log('[Profile] Mood submitted:', data);
+              // Refresh profile data to show new mood
+              loadProfileData();
+            }}
+            onUpdate={() => {
+              console.log('[Profile] Update mood clicked');
+              // Widget handles the update flow internally
+            }}
           />
         </View>
 
@@ -344,8 +351,9 @@ export default function ProfileScreen() {
           </Text>
           <Text style={styles.quoteAuthor}>— Jon Kabat-Zinn</Text>
         </View>
-      </ScrollView>
-    </View>
+      </ScrollFadeView>
+      </View>
+    </ScrollControlProvider>
   );
 }
 

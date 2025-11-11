@@ -766,8 +766,8 @@ async function autoSaveWithRetry(entryId: string, text: string, retries = 3) {
 ## Support
 
 For questions or issues:
-- Email: support@dailyhush.com
-- Docs: https://docs.dailyhush.com
+- Email: support@trynoema.com
+- Docs: https://docs.trynoema.com
 - GitHub: https://github.com/dailyhush/mobile-app
 
 ---

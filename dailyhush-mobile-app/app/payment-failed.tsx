@@ -50,7 +50,7 @@ export default function PaymentFailedScreen() {
   const handleContactSupport = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     // TODO: Open support email or contact screen
-    const email = 'hello@noema.app';
+    const email = 'hello@trynoema.com';
     const subject = 'Help with Payment Issue';
     const mailUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 

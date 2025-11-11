@@ -107,7 +107,7 @@ export const generateShareCardData = (loopType: LoopType, userName?: string) => 
     icon: icon.emoji,
     title: `I'm a ${metadata.name} Navigator ${icon.emoji}`,
     subtitle: userName ? `${userName} on Nœma` : 'on Nœma',
-    cta: 'Discover your loop type at noema.app',
+    cta: 'Discover your loop type at trynoema.com',
     dimensions: {
       width: 1080,
       height: 1920, // Instagram Story dimensions

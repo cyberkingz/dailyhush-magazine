@@ -9,7 +9,7 @@ Welcome to Nœma, owned and operated by Red Impact LLC. This Privacy Policy expl
 **Company Information:**
 - **Company Name:** Red Impact LLC DBA Nœma
 - **Address:** 30 N Gould St Ste R, Sheridan, Wyoming, 82801
-- **Email:** hello@noema.app
+- **Email:** hello@trynoema.com
 - **Phone:** +1 201-367-0512
 - **Company Number:** 2024-001419992
 
@@ -140,7 +140,7 @@ You have the right to:
 - Request a copy of your data in a portable format (JSON)
 - Export your spiral logs, quiz results, and usage data
 
-**How to Request:** Go to Settings → Privacy → Download My Data or email hello@noema.app
+**How to Request:** Go to Settings → Privacy → Download My Data or email hello@trynoema.com
 
 ### 5.2 Correction and Deletion
 You have the right to:
@@ -152,7 +152,7 @@ You have the right to:
 2. Go to Settings → Account → Delete Account
 3. Confirm deletion (this action cannot be undone)
 
-OR email hello@noema.app with subject "Delete My Account"
+OR email hello@trynoema.com with subject "Delete My Account"
 
 **What Happens When You Delete:**
 - Your account is permanently deleted within 30 days
@@ -174,7 +174,7 @@ If you are a California resident, you have additional rights:
 - Right to deletion (as described above)
 - Right to non-discrimination for exercising privacy rights
 
-**How to Exercise CCPA Rights:** Email hello@noema.app with subject "CCPA Request"
+**How to Exercise CCPA Rights:** Email hello@trynoema.com with subject "CCPA Request"
 
 ### 5.5 European Privacy Rights (GDPR)
 If you are an EU/EEA resident, you have additional rights:
@@ -186,7 +186,7 @@ If you are an EU/EEA resident, you have additional rights:
 - Right to object to processing
 - Right to withdraw consent at any time
 
-**How to Exercise GDPR Rights:** Email hello@noema.app with subject "GDPR Request"
+**How to Exercise GDPR Rights:** Email hello@trynoema.com with subject "GDPR Request"
 
 **Legal Basis for Processing:**
 - **Consent** - For optional features like voice journaling
@@ -197,7 +197,7 @@ If you are an EU/EEA resident, you have additional rights:
 
 Nœma is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
 
-If you believe we have collected information from a child under 13, please contact us immediately at hello@noema.app and we will delete it.
+If you believe we have collected information from a child under 13, please contact us immediately at hello@trynoema.com and we will delete it.
 
 For users aged 13-18, we recommend parental guidance when using the app.
 
@@ -246,7 +246,7 @@ We do not currently respond to "Do Not Track" (DNT) browser signals, as there is
 
 If you have questions or concerns about this Privacy Policy, please contact us:
 
-**Email:** hello@noema.app
+**Email:** hello@trynoema.com
 **Phone:** +1 201-367-0512
 **Mail:** Red Impact LLC DBA Nœma, 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 
@@ -261,4 +261,4 @@ By using the Nœma mobile app, you hereby consent to our Privacy Policy and agre
 **Red Impact LLC DBA Nœma**
 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 Company #: 2024-001419992
-hello@noema.app
+hello@trynoema.com

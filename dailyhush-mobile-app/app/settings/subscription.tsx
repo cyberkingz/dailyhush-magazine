@@ -113,7 +113,7 @@ export default function SubscriptionManagementScreen() {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     Alert.alert(
       SUBSCRIPTION_COPY.management.actions.contactSupport,
-      'For assistance, email hello@noema.app',
+      'For assistance, email hello@trynoema.com',
       [{ text: 'OK' }]
     );
   };

@@ -9,7 +9,7 @@ Welcome to Nœma, a mobile application operated by Red Impact LLC. These Terms o
 **Company Information:**
 - **Company Name:** Red Impact LLC DBA Nœma
 - **Address:** 30 N Gould St Ste R, Sheridan, Wyoming, 82801
-- **Email:** hello@noema.app
+- **Email:** hello@trynoema.com
 - **Phone:** +1 201-367-0512
 - **Company Number:** 2024-001419992
 
@@ -61,7 +61,7 @@ You are responsible for:
 - All activities that occur under your account
 - Notifying us immediately of any unauthorized use
 
-**We will never ask for your password.** If someone requests your password claiming to be from Nœma, do not provide it and report it to hello@noema.app.
+**We will never ask for your password.** If someone requests your password claiming to be from Nœma, do not provide it and report it to hello@trynoema.com.
 
 ### 2.3 Account Termination
 
@@ -70,7 +70,7 @@ You are responsible for:
 2. Going to Settings → Account → Delete Account
 3. Confirming deletion
 
-OR emailing hello@noema.app with subject "Delete My Account"
+OR emailing hello@trynoema.com with subject "Delete My Account"
 
 **We may terminate or suspend your account if you:**
 - Violate these Terms
@@ -128,7 +128,7 @@ Nœma does not directly process refunds for in-app purchases.
 
 ### 3.5 The Shift Necklace (Physical Product)
 
-The Shift necklace is sold separately and is not included in app subscriptions. Purchase terms for physical products are available at [www.noema.app/shift](https://www.noema.app/shift).
+The Shift necklace is sold separately and is not included in app subscriptions. Purchase terms for physical products are available at [www.trynoema.com/shift](https://www.trynoema.com/shift).
 
 ## 4. User Conduct
 
@@ -302,7 +302,7 @@ We will notify users of significant changes via in-app notifications or email.
 
 Your privacy is important to us. Please review our Privacy Policy, which explains how we collect, use, and protect your information.
 
-**Privacy Policy Location:** Settings → Privacy → Privacy Policy in the app, or at [www.noema.app/privacy](https://www.noema.app/privacy)
+**Privacy Policy Location:** Settings → Privacy → Privacy Policy in the app, or at [www.trynoema.com/privacy](https://www.trynoema.com/privacy)
 
 ## 11. Governing Law and Dispute Resolution
 
@@ -317,7 +317,7 @@ Any legal action or proceeding arising out of or relating to these Terms or your
 ### 11.3 Dispute Resolution
 
 **Before filing any legal claim, you agree to:**
-1. Contact us at hello@noema.app to attempt to resolve the dispute informally
+1. Contact us at hello@trynoema.com to attempt to resolve the dispute informally
 2. Wait 30 days to allow us to investigate and respond
 3. Engage in good faith negotiations to reach a resolution
 
@@ -380,7 +380,7 @@ The following provisions shall survive termination of these Terms:
 
 If you have any questions about these Terms, please contact us:
 
-**Email:** hello@noema.app
+**Email:** hello@trynoema.com
 **Phone:** +1 201-367-0512
 **Mail:** Red Impact LLC DBA Nœma, 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 
@@ -395,6 +395,6 @@ If you have any questions about these Terms, please contact us:
 **Red Impact LLC DBA Nœma**
 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 Company #: 2024-001419992
-hello@noema.app
+hello@trynoema.com
 
-**For The Shift Necklace product support:** support@noema.app
+**For The Shift Necklace product support:** support@trynoema.com

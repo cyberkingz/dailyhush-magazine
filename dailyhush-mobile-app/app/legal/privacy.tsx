@@ -518,7 +518,7 @@ export default function PrivacyPolicy() {
             }}>
             Nœma is intended for users 18 years and older. We do not knowingly collect
             information from children under 18. If you believe we have collected information from a
-            child under 18, please contact us at hello@noema.app.
+            child under 18, please contact us at hello@trynoema.com.
           </Text>
         </View>
 
@@ -566,7 +566,7 @@ export default function PrivacyPolicy() {
             contact us at:{'\n\n'}
             <Text
               style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>
-              hello@noema.app
+              hello@trynoema.com
             </Text>
           </Text>
         </View>

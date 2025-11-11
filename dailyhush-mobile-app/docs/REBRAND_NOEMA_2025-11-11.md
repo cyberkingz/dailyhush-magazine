@@ -29,7 +29,7 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 - **Package Name:** `dailyhush-mobile-app-new` → `noema-mobile-app`
 
 #### eas.json
-- **Apple ID Email:** `toni@dailyhush.com` → `toni@noema.app`
+- **Apple ID Email:** `toni@trynoema.com` → `toni@trynoema.com`
 
 ---
 
@@ -38,7 +38,7 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 #### Privacy Policy
 - ✅ `app/legal/privacy.tsx` - Updated all DailyHush references to Nœma
 - ✅ `legal/PRIVACY_POLICY.md` - Updated markdown version
-- ✅ Email contact: `hello@daily-hush.com` → `hello@noema.app`
+- ✅ Email contact: `hello@daily-hush.com` → `hello@trynoema.com`
 
 #### Terms of Service
 - ✅ `app/legal/terms.tsx` - Updated all DailyHush references to Nœma
@@ -139,8 +139,8 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
    - App Preview videos (if any)
    - Description (update with Nœma branding)
    - Keywords
-   - Support URL: `https://noema.app/support`
-   - Privacy Policy URL: `https://noema.app/privacy`
+   - Support URL: `https://trynoema.com/support`
+   - Privacy Policy URL: `https://trynoema.com/privacy`
 
 4. Get NEW `ascAppId` and update `eas.json`:
 ```json
@@ -182,22 +182,22 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
 
 ### 4. **Domain & Email Setup**
 
-#### Domain: noema.app
+#### Domain: trynoema.com
 **Status:** Referenced in code but may not be registered yet
 
 **Required Actions:**
-1. Register domain: `noema.app` (or `noema.com`)
-2. Set up email: `hello@noema.app`
-3. Create support email: `support@noema.app`
+1. Register domain: `trynoema.com` (or `noema.com`)
+2. Set up email: `hello@trynoema.com`
+3. Create support email: `support@trynoema.com`
 4. Update DNS records:
    - MX records for email
    - A/AAAA records for website
    - TXT records for SPF/DKIM (email authentication)
 
 #### Email Addresses Updated in Code:
-- `hello@noema.app` (Privacy Policy contact)
-- `support@noema.app` (Support requests)
-- `toni@noema.app` (EAS submission Apple ID)
+- `hello@trynoema.com` (Privacy Policy contact)
+- `support@trynoema.com` (Support requests)
+- `toni@trynoema.com` (EAS submission Apple ID)
 
 ⚠️ **You'll need to use a valid Apple ID email for EAS submission!**
 
@@ -215,7 +215,7 @@ Before submitting to App Store, test thoroughly with the new branding:
 
 ### Test in App
 - [ ] All screens show "Nœma" not "DailyHush"
-- [ ] Legal pages link to correct domain (`noema.app`)
+- [ ] Legal pages link to correct domain (`trynoema.com`)
 - [ ] Support emails go to correct address
 - [ ] Permission prompts show "Nœma" in descriptions
 
@@ -273,7 +273,7 @@ eas submit --platform ios
 ✅ **Legal Compliance** - Privacy Policy & Terms of Service updated
 ✅ **User Experience** - All visible text updated to Nœma
 ✅ **Code Quality** - Comments and documentation updated
-✅ **Email Domain** - All references point to noema.app
+✅ **Email Domain** - All references point to trynoema.com
 
 **Status:** Ready for App Store submission **once you complete the external setup steps above**.
 

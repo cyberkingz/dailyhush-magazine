@@ -328,7 +328,7 @@ export default function Settings() {
 
         <SettingRow
           title="Contact Support"
-          subtitle="hello@noema.app"
+          subtitle="hello@trynoema.com"
           icon={<Mail size={20} color={colors.lime[500]} strokeWidth={2} />}
           onPress={() => Haptics.selectionAsync()}
         />

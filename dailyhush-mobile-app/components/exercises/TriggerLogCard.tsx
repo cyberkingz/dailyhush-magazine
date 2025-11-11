@@ -1,5 +1,5 @@
 /**
- * DailyHush - Trigger Log Card Component
+ * Nœma - Trigger Log Card Component
  *
  * Optional stage to log what triggered the anxiety
  *

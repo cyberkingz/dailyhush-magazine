@@ -1,5 +1,5 @@
 /**
- * DailyHush - Mood Capture Design System
+ * Nœma - Mood Capture Design System
  *
  * Complete design tokens for the therapeutic mood capture bottom sheet flow.
  * Extracted from UI/UX specification for consistent implementation.

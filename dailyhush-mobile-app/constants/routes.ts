@@ -1,5 +1,5 @@
 /**
- * DailyHush - Route Constants
+ * Nœma - Route Constants
  * Centralized route paths for type-safe navigation
  */
 

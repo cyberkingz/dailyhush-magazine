@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Summary Screen
+ * Nœma - Profile Summary Screen
  *
  * Beautiful, holistic wellness dashboard showing:
  * - Loop type identity

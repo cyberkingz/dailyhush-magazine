@@ -1,5 +1,5 @@
 /**
- * DailyHush - Payment Failed Screen
+ * Nœma - Payment Failed Screen
  * Full-screen alert for billing issues with grace period countdown
  * Created: 2025-11-01
  */

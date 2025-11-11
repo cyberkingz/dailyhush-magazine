@@ -1,5 +1,5 @@
 /**
- * DailyHush - ProgressIndicator Component
+ * Nœma - ProgressIndicator Component
  * Visual dot-based progress indicator for module screens
  */
 

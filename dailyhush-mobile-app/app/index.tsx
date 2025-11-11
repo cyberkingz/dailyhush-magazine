@@ -1,5 +1,5 @@
 /**
- * DailyHush - Modern Wellness Home Screen
+ * Nœma - Modern Wellness Home Screen
  * Grid layout inspired by modern wellness apps
  */
 

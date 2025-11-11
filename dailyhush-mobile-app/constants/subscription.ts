@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Constants
+ * Nœma - Subscription Constants
  * Features and subscription-related configuration
  *
  * NOTE: Pricing data below is for REFERENCE ONLY and is NOT used in production.

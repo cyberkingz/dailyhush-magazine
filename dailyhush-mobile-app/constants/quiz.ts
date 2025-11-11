@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Flow Constants
+ * Nœma - Quiz Flow Constants
  * Centralized configuration for quiz onboarding flow
  */
 

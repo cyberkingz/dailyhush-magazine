@@ -1,5 +1,5 @@
 /**
- * DailyHush Global State Management
+ * Nœma Global State Management
  * Using Zustand for simple, performant state
  */
 
@@ -12,7 +12,7 @@ import type {
   AppState,
 } from '@/types';
 
-interface DailyHushStore extends AppState {
+interface NœmaStore extends AppState {
   // Actions
   setUser: (user: UserProfile | null) => void;
   setSubscription: (subscription: Subscription | null) => void;
@@ -35,7 +35,7 @@ const initialState: AppState = {
   error: null,
 };
 
-export const useStore = create<DailyHushStore>((set) => ({
+export const useStore = create<NœmaStore>((set) => ({
   ...initialState,
 
   // User management

@@ -1,5 +1,5 @@
 /**
- * DailyHush - ModuleLoading Component
+ * Nœma - ModuleLoading Component
  * Loading state for modules while loading saved progress
  */
 

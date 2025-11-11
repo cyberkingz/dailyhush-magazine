@@ -1,5 +1,5 @@
 /**
- * DailyHush - Authentication Screen Styles
+ * Nœma - Authentication Screen Styles
  * Simple, clean design system
  */
 

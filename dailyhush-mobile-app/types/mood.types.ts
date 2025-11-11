@@ -1,5 +1,5 @@
 /**
- * DailyHush - Mood Logging Types
+ * Nœma - Mood Logging Types
  *
  * Type definitions for the inline mood logging widget.
  * This is a simplified, quick mood capture vs. the full therapeutic 4-step flow.

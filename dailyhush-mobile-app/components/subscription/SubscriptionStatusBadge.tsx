@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Status Badge Component
+ * Nœma - Subscription Status Badge Component
  * Displays current subscription status with appropriate styling
  * Created: 2025-11-01
  */

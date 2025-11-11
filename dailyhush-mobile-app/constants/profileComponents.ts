@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Component Visual Specifications
+ * Nœma - Profile Component Visual Specifications
  * Complete styling constants for all profile page components
  * Glassmorphism, shadows, borders, and layout specs
  */

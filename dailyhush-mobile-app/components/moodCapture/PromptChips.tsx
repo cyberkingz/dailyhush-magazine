@@ -1,5 +1,5 @@
 /**
- * DailyHush - Prompt Chips Component
+ * Nœma - Prompt Chips Component
  *
  * Displays gentle writing prompts as tappable chips to help users begin journaling.
  * Filters prompts based on selected mood to show most relevant suggestions.

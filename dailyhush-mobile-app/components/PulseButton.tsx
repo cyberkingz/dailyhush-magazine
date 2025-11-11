@@ -1,5 +1,5 @@
 /**
- * DailyHush - Premium Pulse Button Component
+ * Nœma - Premium Pulse Button Component
  * Enhanced animated button with gradient, glow, and organic pulsing aura
  */
 

@@ -1,5 +1,5 @@
 /**
- * DailyHush - useMoodCapture Hook
+ * Nœma - useMoodCapture Hook
  *
  * Central state management for mood capture bottom sheet flow.
  * Manages navigation between 4 steps and data collection.

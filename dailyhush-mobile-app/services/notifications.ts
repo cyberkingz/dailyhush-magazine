@@ -1,5 +1,5 @@
 /**
- * DailyHush - Notifications Service
+ * Nœma - Notifications Service
  * Handle push notifications for daily quotes and encouragement
  */
 
@@ -77,7 +77,7 @@ export async function scheduleDailyQuoteNotification(): Promise<void> {
     // Schedule for 9:00 AM daily
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: '💚 Daily Wisdom from DailyHush',
+        title: '💚 Daily Wisdom from Nœma',
         body: quote.text,
         data: {
           type: 'daily-quote',

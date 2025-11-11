@@ -1,5 +1,5 @@
 /**
- * DailyHush - Analytics Utilities
+ * Nœma - Analytics Utilities
  *
  * Privacy-first event tracking with PostHog
  *

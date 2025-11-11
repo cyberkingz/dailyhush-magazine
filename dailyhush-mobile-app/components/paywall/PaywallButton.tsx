@@ -1,5 +1,5 @@
 /**
- * DailyHush - Paywall Button Component
+ * Nœma - Paywall Button Component
  * Reusable CTA button for paywall screens
  */
 

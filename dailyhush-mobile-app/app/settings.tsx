@@ -1,5 +1,5 @@
 /**
- * DailyHush - Settings Screen
+ * Nœma - Settings Screen
  * Clean emerald design matching home page
  */
 
@@ -203,7 +203,7 @@ export default function Settings() {
                   lineHeight: 20,
                   color: colors.lime[200],
                 }}>
-                You&apos;re using DailyHush as a guest. Create an account to save your progress and
+                You&apos;re using Nœma as a guest. Create an account to save your progress and
                 patterns across devices.
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -369,7 +369,7 @@ export default function Settings() {
         {/* App Info */}
         <View style={{ marginTop: 32, alignItems: 'center' }}>
           <Text style={{ marginBottom: 4, fontSize: 12, color: colors.text.secondary }}>
-            DailyHush v1.0.0
+            Nœma v1.0.0
           </Text>
           <Text style={{ textAlign: 'center', fontSize: 12, color: colors.text.secondary }}>
             Made with ❤️ for women who deserve peace of mind

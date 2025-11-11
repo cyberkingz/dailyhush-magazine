@@ -1,5 +1,5 @@
 /**
- * DailyHush - Interactive Step Input Component
+ * Nœma - Interactive Step Input Component
  * Beautiful, therapeutic input for spiral interrupt protocols
  * Supports text, list, and count input types with calm, supportive design
  */

@@ -1,5 +1,5 @@
 /**
- * DailyHush - InteractiveExercise Component
+ * Nœma - InteractiveExercise Component
  * Text input exercise for reflection and practice
  */
 

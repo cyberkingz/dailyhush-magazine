@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Page Animation System
+ * Nœma - Profile Page Animation System
  * Calm, therapeutic animations for profile components
  * Using React Native Reanimated and Moti
  */

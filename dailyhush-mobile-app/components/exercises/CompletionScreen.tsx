@@ -1,5 +1,5 @@
 /**
- * DailyHush - Completion Screen Component
+ * Nœma - Completion Screen Component
  *
  * Celebration screen shown after exercise completion
  *

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Trial Guard Hook
+ * Nœma - Trial Guard Hook
  * Detects trial expiration and redirects to trial-expired screen
  * Created: 2025-10-31
  */

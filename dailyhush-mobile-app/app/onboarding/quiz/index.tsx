@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Flow Screen
+ * Nœma - Quiz Flow Screen
  * In-app quiz for new users who haven't taken the website quiz
  */
 

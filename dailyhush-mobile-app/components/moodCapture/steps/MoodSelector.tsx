@@ -1,5 +1,5 @@
 /**
- * DailyHush - Step 1: Mood Selector
+ * Nœma - Step 1: Mood Selector
  *
  * Clean vertical card list with calming micro-interactions.
  * Staggered entrance, ripple effects, emoji bounce, and smooth selection.

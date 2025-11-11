@@ -1,5 +1,5 @@
 /**
- * DailyHush - Crisis Support Footer
+ * Nœma - Crisis Support Footer
  * Persistent safety messaging for mental health app
  */
 

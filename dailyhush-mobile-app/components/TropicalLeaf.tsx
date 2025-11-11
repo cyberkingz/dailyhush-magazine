@@ -1,5 +1,5 @@
 /**
- * DailyHush - Tropical Leaf SVG Component
+ * Nœma - Tropical Leaf SVG Component
  * Simple decorative leaf for tropical theme
  */
 

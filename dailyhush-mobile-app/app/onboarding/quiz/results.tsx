@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Results Screen
+ * Nœma - Quiz Results Screen
  * Shows overthinker type with loop-specific Premium trial paywall
  * Updated: 2025-10-31
  */

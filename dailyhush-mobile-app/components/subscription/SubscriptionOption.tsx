@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Option Component
+ * Nœma - Subscription Option Component
  * Selectable subscription plan card with accessibility support
  * Updated: 2025-11-01 - Added priceValue, accessibility, haptics
  */

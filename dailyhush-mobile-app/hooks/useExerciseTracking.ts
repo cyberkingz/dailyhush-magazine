@@ -1,7 +1,7 @@
 // ============================================================================
 // REACT NATIVE HOOK: useExerciseTracking
 // ============================================================================
-// Complete hook for tracking exercise sessions in DailyHush app
+// Complete hook for tracking exercise sessions in Nœma app
 // ============================================================================
 
 import { useState, useEffect, useCallback } from 'react';

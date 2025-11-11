@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Setup Screen
+ * Nœma - Profile Setup Screen
  * Collects basic user information: name, age, rumination frequency
  */
 
@@ -261,7 +261,7 @@ export default function ProfileSetup() {
                 lineHeight: 26,
                 marginBottom: 32,
               }}>
-              Help us personalize your DailyHush experience
+              Help us personalize your Nœma experience
             </Text>
 
             {/* Name Input */}

@@ -2,7 +2,7 @@
  * SplashScreen Usage Examples
  *
  * This file contains example implementations of the SplashScreen component
- * for various use cases in the DailyHush app.
+ * for various use cases in the Nœma app.
  */
 
 import React, { useEffect, useState } from 'react';

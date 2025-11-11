@@ -1,5 +1,5 @@
 /**
- * DailyHush - Navigation Buttons Component
+ * Nœma - Navigation Buttons Component
  *
  * Reusable navigation buttons for mood capture flow:
  * - Back button (top-left, Steps 2-4)

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Error Boundary Component
+ * Nœma - Error Boundary Component
  * Modern, friendly error UI with recovery options
  */
 

@@ -1,5 +1,5 @@
 /**
- * DailyHush - useMoodLogging Hook
+ * Nœma - useMoodLogging Hook
  *
  * React hook for inline mood logging widget with advanced features:
  * - Optimistic UI updates

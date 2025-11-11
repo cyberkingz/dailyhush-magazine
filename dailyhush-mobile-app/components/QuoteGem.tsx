@@ -1,5 +1,5 @@
 /**
- * DailyHush - QuoteGem Component
+ * Nœma - QuoteGem Component
  * Minimalist beautiful quote display
  */
 

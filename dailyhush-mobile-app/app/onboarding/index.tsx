@@ -1,5 +1,5 @@
 /**
- * DailyHush - Improved Onboarding Flow
+ * Nœma - Improved Onboarding Flow
  * Based on comprehensive UX audit
  *
  * NEW Flow (UX-optimized with Quiz Connection):
@@ -331,7 +331,7 @@ export default function Onboarding() {
         }}>
         {/* Main content centered */}
         <View className="items-center" style={{ flex: 1, justifyContent: 'center', maxWidth: 400 }}>
-          {/* DailyHush Logo */}
+          {/* Nœma Logo */}
           <View className="mb-12">
             <Image
               source={require('@/assets/img/rounded-logo.png')}
@@ -516,7 +516,7 @@ export default function Onboarding() {
           </View>
 
           <Text className="mb-3 text-center text-xs" style={{ color: colors.lime[400] }}>
-            Recommended - see what makes DailyHush different
+            Recommended - see what makes Nœma different
           </Text>
         </View>
 
@@ -703,7 +703,7 @@ export default function Onboarding() {
             <Text
               className="mb-6 text-center text-sm leading-relaxed"
               style={{ color: colors.text.secondary }}>
-              DailyHush is ready to help you find peace of mind
+              Nœma is ready to help you find peace of mind
             </Text>
           </View>
 
@@ -761,7 +761,7 @@ export default function Onboarding() {
           }}>
           <View className="flex-row items-center">
             <Text className="mr-2 text-lg font-bold" style={{ color: colors.button.primaryText }}>
-              Start Using DailyHush
+              Start Using Nœma
             </Text>
             <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={3} />
           </View>

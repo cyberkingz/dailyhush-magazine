@@ -1,5 +1,5 @@
 /**
- * DailyHush - Email Lookup Screen
+ * Nœma - Email Lookup Screen
  * Looks up user's email in quiz_submissions table
  * Routes to password setup if found
  */
@@ -77,7 +77,7 @@ export default function EmailLookup() {
       setIsSearching(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-      // FIRST: Check if this email already has a DailyHush account
+      // FIRST: Check if this email already has a Nœma account
       const accountCheck = await checkExistingAccount(email);
 
       if (accountCheck.error) {
@@ -365,7 +365,7 @@ export default function EmailLookup() {
                   textAlign: 'center',
                   lineHeight: 22,
                 }}>
-                Can't find your quiz? No worries! You can still use DailyHush and take the quiz
+                Can't find your quiz? No worries! You can still use Nœma and take the quiz
                 later.
               </Text>
             </View>

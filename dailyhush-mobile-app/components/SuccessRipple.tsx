@@ -1,5 +1,5 @@
 /**
- * DailyHush - Success Animation
+ * Nœma - Success Animation
  * Celebratory sparkle animation for completion states
  */
 

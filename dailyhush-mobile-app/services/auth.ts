@@ -1,5 +1,5 @@
 /**
- * DailyHush - Authentication Service
+ * Nœma - Authentication Service
  * Handles anonymous auth and account upgrades
  */
 

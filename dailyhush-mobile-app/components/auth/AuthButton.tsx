@@ -1,5 +1,5 @@
 /**
- * DailyHush - Auth Button Component
+ * Nœma - Auth Button Component
  * Reusable button for authentication screens
  * Supports primary, secondary, and link variants
  */

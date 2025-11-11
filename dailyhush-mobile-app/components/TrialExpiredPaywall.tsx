@@ -1,5 +1,5 @@
 /**
- * DailyHush - Trial Expired Paywall Component
+ * Nœma - Trial Expired Paywall Component
  * Shows when 7-day Premium trial expires
  * Offers subscription or Free tier continuation
  * Created: 2025-10-31

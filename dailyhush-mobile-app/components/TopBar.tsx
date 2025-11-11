@@ -1,5 +1,5 @@
 /**
- * DailyHush - Top Bar Component
+ * Nœma - Top Bar Component
  * Branded app header with navigation
  */
 
@@ -28,7 +28,7 @@ interface TopBarProps {
 }
 
 export function TopBar({
-  title = 'DailyHush',
+  title = 'Nœma',
   subtitle,
   showBack = false,
   showSettings = false,
@@ -88,7 +88,7 @@ export function TopBar({
 
         {/* Center - Logo/Title */}
         <View style={{ flex: 1, alignItems: shouldCenter ? 'center' : 'flex-start' }}>
-          {title === 'DailyHush' ? (
+          {title === 'Nœma' ? (
             <Text
               style={{
                 fontSize: 28,

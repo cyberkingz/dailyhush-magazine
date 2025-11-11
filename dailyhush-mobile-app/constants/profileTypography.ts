@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Page Typography System
+ * Nœma - Profile Page Typography System
  * Extended typography scale specifically for profile components
  * Optimized for emotional impact and readability
  */

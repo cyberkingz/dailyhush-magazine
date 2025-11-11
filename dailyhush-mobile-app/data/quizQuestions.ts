@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Questions
+ * Nœma - Quiz Questions
  * Synced with web app quiz - 20 questions across 7 sections
  * Updated: 2025-10-31
  */

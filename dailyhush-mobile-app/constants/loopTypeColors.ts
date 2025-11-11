@@ -1,5 +1,5 @@
 /**
- * DailyHush - Loop Type Color System
+ * Nœma - Loop Type Color System
  * Therapeutic, calming color palettes for each loop type
  * WCAG AAA compliant on dark backgrounds (4.5:1 minimum contrast)
  */

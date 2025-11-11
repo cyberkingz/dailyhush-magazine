@@ -1,5 +1,5 @@
 /**
- * DailyHush - Premium Card Component
+ * Nœma - Premium Card Component
  * Enhanced card with glassmorphism, shadows, and gradient overlays
  */
 

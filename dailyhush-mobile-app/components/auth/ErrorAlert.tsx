@@ -1,5 +1,5 @@
 /**
- * DailyHush - Error Alert Component
+ * Nœma - Error Alert Component
  * Screen-level error and success messages
  * For authentication screens and general use
  */

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Step 3: Free Writing Component
+ * Nœma - Step 3: Free Writing Component
  *
  * Third step in mood capture flow where users write about their feelings.
  * Most important step - allows free-form expression with gentle support.

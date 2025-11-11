@@ -1,5 +1,5 @@
 /**
- * DailyHush - Anxiety Rating Circular Dial
+ * Nœma - Anxiety Rating Circular Dial
  *
  * Circular dial with draggable handle to select anxiety level (1-10).
  * Adapted from IntensityScale for exercise pre/post ratings.

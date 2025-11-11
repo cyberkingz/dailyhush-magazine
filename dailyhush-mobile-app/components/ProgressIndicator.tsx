@@ -1,5 +1,5 @@
 /**
- * DailyHush - Progress Indicator
+ * Nœma - Progress Indicator
  * Shows step progress through onboarding
  */
 

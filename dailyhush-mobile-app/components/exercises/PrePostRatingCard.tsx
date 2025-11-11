@@ -1,5 +1,5 @@
 /**
- * DailyHush - Pre/Post Rating Card Component
+ * Nœma - Pre/Post Rating Card Component
  *
  * 1-10 anxiety rating scale used before and after exercises
  *

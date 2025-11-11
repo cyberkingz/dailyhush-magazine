@@ -1,5 +1,5 @@
 /**
- * DailyHush - RevenueCat SDK Configuration & Utilities
+ * Nœma - RevenueCat SDK Configuration & Utilities
  * Handles subscription management, purchases, and entitlements
  * Created: 2025-11-01
  */

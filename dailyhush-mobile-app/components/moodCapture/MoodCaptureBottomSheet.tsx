@@ -1,5 +1,5 @@
 /**
- * DailyHush - Mood Capture Bottom Sheet (Orchestrator)
+ * Nœma - Mood Capture Bottom Sheet (Orchestrator)
  *
  * Main orchestrator component that manages the 4-step mood capture flow.
  * Handles navigation, state management, data persistence, and animations.

@@ -1,5 +1,5 @@
 /**
- * DailyHush - useExerciseSession Hook
+ * Nœma - useExerciseSession Hook
  * Manages exercise session state, stage transitions, and persistence
  *
  * Features:

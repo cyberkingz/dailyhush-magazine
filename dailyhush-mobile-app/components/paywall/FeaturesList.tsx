@@ -1,5 +1,5 @@
 /**
- * DailyHush - Features List Component
+ * Nœma - Features List Component
  * Reusable features list with checkmarks
  */
 

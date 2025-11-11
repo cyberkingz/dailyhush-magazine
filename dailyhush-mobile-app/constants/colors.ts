@@ -1,5 +1,5 @@
 /**
- * DailyHush - Tropical Rainforest Color Theme
+ * Nœma - Tropical Rainforest Color Theme
  * Enhanced color palette matching web version for premium feel
  */
 

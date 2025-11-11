@@ -1,5 +1,5 @@
 /**
- * DailyHush - InteractiveStepInput Usage Examples
+ * Nœma - InteractiveStepInput Usage Examples
  * Demonstrates all three input types in action
  */
 

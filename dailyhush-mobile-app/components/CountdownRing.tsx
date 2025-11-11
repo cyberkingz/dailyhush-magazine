@@ -1,5 +1,5 @@
 /**
- * DailyHush - Countdown Ring Component
+ * Nœma - Countdown Ring Component
  * Solid green progress ring with enhanced glow effect
  * Optimized for anxiety relief - no visual complexity
  */

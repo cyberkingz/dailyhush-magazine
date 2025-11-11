@@ -1,5 +1,5 @@
 /**
- * DailyHush - Legal Footer Component
+ * Nœma - Legal Footer Component
  * Reusable footer with Privacy Policy, Terms of Service, and optional Restore Purchases links
  * Designed for subscription/paywall screens to build user trust and App Store compliance
  * Created: 2025-01-01

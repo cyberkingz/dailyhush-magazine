@@ -1,5 +1,5 @@
 /**
- * DailyHush - Bottom Navigation Bar
+ * Nœma - Bottom Navigation Bar
  * Glassmorphism design with blur effect
  * Optimized for 55-70 demographic with large touch targets
  */

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Step 2: Intensity Circular Dial
+ * Nœma - Step 2: Intensity Circular Dial
  *
  * Circular dial with draggable handle to select intensity (1-10).
  * User can drag the handle around the circle or tap on a position.

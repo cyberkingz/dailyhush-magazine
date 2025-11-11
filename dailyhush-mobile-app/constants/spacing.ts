@@ -1,5 +1,5 @@
 /**
- * DailyHush - Spacing Constants
+ * Nœma - Spacing Constants
  * Centralized spacing values for consistent layout
  */
 

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Action Button Component
+ * Nœma - Subscription Action Button Component
  * Reusable button for subscription actions
  * Created: 2025-11-01
  */

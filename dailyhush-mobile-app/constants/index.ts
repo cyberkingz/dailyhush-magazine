@@ -1,5 +1,5 @@
 /**
- * DailyHush - Design System Entry Point
+ * Nœma - Design System Entry Point
  * Central export for all design constants
  */
 

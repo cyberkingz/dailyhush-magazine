@@ -1,5 +1,5 @@
 /**
- * DailyHush - Auth Text Input Component
+ * Nœma - Auth Text Input Component
  * Simple, clean input field
  */
 

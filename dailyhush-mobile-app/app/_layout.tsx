@@ -162,7 +162,7 @@ export default function Layout() {
 
             return (
               <TopBar
-                title={options.title || 'DailyHush'}
+                title={options.title || 'Nœma'}
                 subtitle={undefined}
                 showBack={options.headerBackVisible !== false}
                 showSettings={options.headerRight !== undefined}

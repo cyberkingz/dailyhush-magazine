@@ -1,5 +1,5 @@
 /**
- * DailyHush - Pattern Detection Service
+ * Nœma - Pattern Detection Service
  *
  * Analyzes user's spiral history to identify patterns using simple SQL queries.
  * NO machine learning - just aggregations (GROUP BY, COUNT, AVG).

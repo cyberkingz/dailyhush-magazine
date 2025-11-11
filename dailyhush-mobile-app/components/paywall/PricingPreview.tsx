@@ -1,5 +1,5 @@
 /**
- * DailyHush - Pricing Preview Component
+ * Nœma - Pricing Preview Component
  * Shows pricing information in a card
  */
 

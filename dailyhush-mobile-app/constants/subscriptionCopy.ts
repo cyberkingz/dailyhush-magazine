@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Copy Constants
+ * Nœma - Subscription Copy Constants
  * Emotional, supportive messaging for subscription features
  * Following brand voice: warm, empathetic, transformation-focused
  * Created: 2025-11-01

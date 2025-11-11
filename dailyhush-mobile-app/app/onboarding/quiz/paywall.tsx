@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Paywall Screen
+ * Nœma - Quiz Paywall Screen
  * Shows subscription options with 7-day trial
  * Created: 2025-11-01
  */

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Text Input Component
+ * Nœma - Profile Text Input Component
  * Consistent with AuthTextInput but for profile editing
  * Optimized for 55-70 demographic with 56px height and 17px text
  */

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Typography Constants
+ * Nœma - Typography Constants
  * Age-friendly typography optimized for 55-70 year old demographic
  * WCAG AAA compliant font sizes and line heights
  */

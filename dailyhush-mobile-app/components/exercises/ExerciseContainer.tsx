@@ -1,5 +1,5 @@
 /**
- * DailyHush - Exercise Container Component
+ * Nœma - Exercise Container Component
  *
  * Universal wrapper for all exercise screens
  * Handles:

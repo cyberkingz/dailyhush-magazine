@@ -1,5 +1,5 @@
 /**
- * DailyHush - Password Setup Screen
+ * Nœma - Password Setup Screen
  * Creates account for quiz users (email already verified via quiz)
  * Links quiz results to new user profile
  */

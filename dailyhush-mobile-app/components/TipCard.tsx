@@ -1,5 +1,5 @@
 /**
- * DailyHush - Daily Tip Card Component
+ * Nœma - Daily Tip Card Component
  * Educational tips that rotate daily with sparkle icon
  */
 

@@ -1,5 +1,5 @@
 /**
- * DailyHush - KeyTakeaway Component
+ * Nœma - KeyTakeaway Component
  * Highlighted key learning point for module content
  */
 

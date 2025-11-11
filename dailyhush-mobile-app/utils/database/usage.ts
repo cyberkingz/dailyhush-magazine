@@ -1,5 +1,5 @@
 /**
- * Usage Tracking Functions for DailyHush
+ * Usage Tracking Functions for Nœma
  *
  * Handles tier-based usage limits for conversations, exercises, and other resources.
  * Integrates with RevenueCat subscriptions to enforce free vs premium limits.

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Pattern Insights Dashboard
+ * Nœma - Pattern Insights Dashboard
  * Healing-focused weekly insights with WCAG AAA accessibility
  * Optimized for 55-70 year old demographic
  */

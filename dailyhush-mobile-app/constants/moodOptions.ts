@@ -1,5 +1,5 @@
 /**
- * DailyHush - Mood Options & Writing Prompts
+ * Nœma - Mood Options & Writing Prompts
  *
  * Therapeutic mood options and gentle writing prompts for mood capture flow.
  * Designed for women 55-70 with compassionate, non-clinical language.

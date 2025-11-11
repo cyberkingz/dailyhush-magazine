@@ -1,5 +1,5 @@
 /**
- * DailyHush - Loop-Specific Paywall Configurations
+ * Nœma - Loop-Specific Paywall Configurations
  * Personalized messaging for each overthinker loop type
  */
 

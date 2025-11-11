@@ -1,5 +1,5 @@
 /**
- * DailyHush - QuoteCard Component
+ * Nœma - QuoteCard Component
  * Displays daily mindful quote with elegant tropical styling
  */
 

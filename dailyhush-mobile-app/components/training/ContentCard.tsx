@@ -1,5 +1,5 @@
 /**
- * DailyHush - ContentCard Component
+ * Nœma - ContentCard Component
  * Reusable card for training module educational content
  */
 

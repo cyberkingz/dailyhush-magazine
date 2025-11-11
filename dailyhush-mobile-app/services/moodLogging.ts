@@ -1,5 +1,5 @@
 /**
- * DailyHush - Mood Logging Service
+ * Nœma - Mood Logging Service
  *
  * Service layer for inline mood logging widget operations.
  * Handles all CRUD operations for quick mood logs with robust error handling.

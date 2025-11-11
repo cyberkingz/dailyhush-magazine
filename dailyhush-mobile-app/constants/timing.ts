@@ -1,5 +1,5 @@
 /**
- * DailyHush - Timing Constants
+ * Nœma - Timing Constants
  * Centralized timing values for animations, delays, and protocol durations
  */
 

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Insights Service
+ * Nœma - Insights Service
  * Fetch and aggregate spiral pattern data for user insights
  */
 

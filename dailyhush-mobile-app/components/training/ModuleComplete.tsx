@@ -1,5 +1,5 @@
 /**
- * DailyHush - ModuleComplete Component
+ * Nœma - ModuleComplete Component
  * Success state component for module completion
  */
 

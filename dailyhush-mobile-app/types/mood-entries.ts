@@ -1,5 +1,5 @@
 /**
- * DailyHush Mobile App - Mood Entry Types
+ * Nœma Mobile App - Mood Entry Types
  * Therapeutic 4-step mood capture flow
  */
 

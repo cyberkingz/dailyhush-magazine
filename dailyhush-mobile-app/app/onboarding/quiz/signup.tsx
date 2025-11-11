@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Signup Screen
+ * Nœma - Quiz Signup Screen
  * Collects email and password BEFORE revealing quiz results
  * Creates psychological motivation to complete signup
  */

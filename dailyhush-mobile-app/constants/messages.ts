@@ -1,5 +1,5 @@
 /**
- * DailyHush - User-facing Messages
+ * Nœma - User-facing Messages
  * Centralized messages for consistency and easy localization
  */
 
@@ -38,7 +38,7 @@ export const messages = {
   // Onboarding messages
   onboarding: {
     quizNotFound: "We couldn't find a quiz with this email.",
-    continueAsNewUser: 'You can still use DailyHush and take the quiz later.',
+    continueAsNewUser: 'You can still use Nœma and take the quiz later.',
   },
 } as const;
 

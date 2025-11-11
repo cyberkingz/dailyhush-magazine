@@ -1,5 +1,5 @@
 /**
- * DailyHush - Loop Type Constants
+ * Nœma - Loop Type Constants
  *
  * Defines the 4 core overthinking loop types with their characteristics,
  * visual identities, and recommended interventions.

@@ -1,5 +1,5 @@
 /**
- * DailyHush Design Token System
+ * Nœma Design Token System
  * Complete design system for module-based navigation
  * Optimized for dark theme with emerald accent (#40916C)
  */

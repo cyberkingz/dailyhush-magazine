@@ -1,5 +1,5 @@
 /**
- * DailyHush - Spiral Interrupt Screen
+ * Nœma - Spiral Interrupt Screen
  * Immersive 90-second guided protocol to interrupt rumination
  * Clean, calming design with pulsing aura and countdown
  */

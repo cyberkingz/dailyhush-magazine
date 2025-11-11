@@ -1,5 +1,5 @@
 /**
- * DailyHush - Technique Library
+ * Nœma - Technique Library
  *
  * Rotating library of 3 spiral interrupt protocols for personalized anxiety relief.
  * Each technique targets different triggers and intensity levels.
@@ -33,7 +33,7 @@ import { colors } from '@/constants/colors';
  * Most versatile protocol - works for general anxiety, overwhelm, and mild-to-moderate spirals.
  *
  * Evidence: CBT-approved sensory grounding technique. Forces immediate environment
- * processing, interrupting rumination loops. Most popular technique in DailyHush library.
+ * processing, interrupting rumination loops. Most popular technique in Nœma library.
  */
 const GROUNDING_5_4_3_2_1: Technique = {
   id: 'grounding-5-4-3-2-1',

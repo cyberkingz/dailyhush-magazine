@@ -1,5 +1,5 @@
 /**
- * DailyHush - Therapeutic Suggestion Templates
+ * Nœma - Therapeutic Suggestion Templates
  *
  * Pre-defined gentle activity suggestions for Step 4 of mood capture flow.
  * Each suggestion is tailored to specific moods and intensity levels.

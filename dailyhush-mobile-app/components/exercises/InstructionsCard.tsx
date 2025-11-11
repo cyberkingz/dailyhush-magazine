@@ -1,5 +1,5 @@
 /**
- * DailyHush - Exercise Instructions Card
+ * Nœma - Exercise Instructions Card
  * Reusable component for displaying exercise instructions with persuasion hooks
  *
  * Features:

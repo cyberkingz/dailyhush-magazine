@@ -1,5 +1,5 @@
 /**
- * DailyHush - QuizQuestion Component
+ * Nœma - QuizQuestion Component
  * Interactive quiz question with radio button answers
  */
 

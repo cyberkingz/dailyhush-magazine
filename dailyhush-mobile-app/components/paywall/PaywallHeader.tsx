@@ -1,5 +1,5 @@
 /**
- * DailyHush - Paywall Header Component
+ * Nœma - Paywall Header Component
  * Reusable header for paywall screens
  */
 

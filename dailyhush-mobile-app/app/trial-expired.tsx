@@ -1,5 +1,5 @@
 /**
- * DailyHush - Trial Expired Screen
+ * Nœma - Trial Expired Screen
  * Shown when user's 7-day Premium trial expires
  * Offers subscription options or Free tier continuation
  * Created: 2025-10-31

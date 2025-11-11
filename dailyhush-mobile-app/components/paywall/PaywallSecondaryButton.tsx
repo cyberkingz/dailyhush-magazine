@@ -1,5 +1,5 @@
 /**
- * DailyHush - Paywall Secondary Button
+ * Nœma - Paywall Secondary Button
  * Reusable secondary action button (e.g., "Continue with Free")
  */
 

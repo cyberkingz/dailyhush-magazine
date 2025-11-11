@@ -1,5 +1,5 @@
 /**
- * DailyHush - Debounce Utility
+ * Nœma - Debounce Utility
  * Delays function execution until after a specified wait time
  */
 

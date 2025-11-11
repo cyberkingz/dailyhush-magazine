@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Scoring Utility
+ * Nœma - Quiz Scoring Utility
  * Calculates overthinker type and loop type based on quiz answers
  * Synced with web app scoring logic
  * Updated: 2025-10-31

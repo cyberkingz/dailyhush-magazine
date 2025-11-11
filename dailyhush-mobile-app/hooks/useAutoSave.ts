@@ -1,5 +1,5 @@
 /**
- * DailyHush - useAutoSave Hook
+ * Nœma - useAutoSave Hook
  *
  * Debounced auto-save functionality for mood capture writing step.
  * Prevents data loss by automatically saving drafts every 3 seconds after typing stops.

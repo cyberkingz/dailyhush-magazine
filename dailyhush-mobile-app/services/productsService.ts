@@ -1,5 +1,5 @@
 /**
- * DailyHush - Products API Service
+ * Nœma - Products API Service
  *
  * Handles all API interactions for products and commerce including:
  * - Product recommendations (personalized by loop type)

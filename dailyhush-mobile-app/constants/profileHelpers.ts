@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Design System Helpers
+ * Nœma - Profile Design System Helpers
  * Utility functions for working with the profile visual design system
  */
 
@@ -106,7 +106,7 @@ export const generateShareCardData = (loopType: LoopType, userName?: string) => 
     gradientColors: [colors.gradient.start, colors.gradient.middle, colors.gradient.end],
     icon: icon.emoji,
     title: `I'm a ${metadata.name} Navigator ${icon.emoji}`,
-    subtitle: userName ? `${userName} on DailyHush` : 'on DailyHush',
+    subtitle: userName ? `${userName} on Nœma` : 'on Nœma',
     cta: 'Discover your loop type at daily-hush.com',
     dimensions: {
       width: 1080,

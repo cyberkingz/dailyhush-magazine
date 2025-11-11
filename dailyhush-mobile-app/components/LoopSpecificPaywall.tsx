@@ -1,5 +1,5 @@
 /**
- * DailyHush - Loop-Specific Paywall Component
+ * Nœma - Loop-Specific Paywall Component
  * Shows personalized Premium trial offer based on quiz loop type
  * Created: 2025-10-31
  */

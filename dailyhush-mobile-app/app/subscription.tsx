@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Screen
+ * Nœma - Subscription Screen
  * Shows RevenueCat subscription options with localized pricing
  * Monthly, Annual, Lifetime (prices from RevenueCat/App Store)
  * Created: 2025-10-31

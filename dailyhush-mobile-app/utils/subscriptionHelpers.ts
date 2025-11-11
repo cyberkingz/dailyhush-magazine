@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Helper Utilities
+ * Nœma - Subscription Helper Utilities
  * Pure functions for transforming subscription data
  * Created: 2025-11-01
  */

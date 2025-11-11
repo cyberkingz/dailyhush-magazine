@@ -1,5 +1,5 @@
 /**
- * DailyHush - FAQ (Frequently Asked Questions)
+ * Nœma - FAQ (Frequently Asked Questions)
  * Help users understand how to use the app
  */
 
@@ -26,7 +26,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is a "spiral"?',
     answer:
-      'A spiral is an overthinking pattern where your thoughts loop repeatedly, often triggered by shame or anxiety. It&apos;s that feeling when you can&apos;t stop replaying a conversation, worrying about what someone thinks of you, or catastrophizing about the future. DailyHush helps you recognize and interrupt these patterns.',
+      'A spiral is an overthinking pattern where your thoughts loop repeatedly, often triggered by shame or anxiety. It&apos;s that feeling when you can&apos;t stop replaying a conversation, worrying about what someone thinks of you, or catastrophizing about the future. Nœma helps you recognize and interrupt these patterns.',
   },
   {
     question: 'How does the 90-second interrupt work?',
@@ -41,7 +41,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What are "patterns"?',
     answer:
-      'Patterns are AI-generated insights about your spiraling triggers, times, and situations. DailyHush analyzes your spiral logs (completely privately) to help you notice what triggers spirals—like certain times of day, locations, or situations. This awareness is the first step toward healing.',
+      'Patterns are AI-generated insights about your spiraling triggers, times, and situations. Nœma analyzes your spiral logs (completely privately) to help you notice what triggers spirals—like certain times of day, locations, or situations. This awareness is the first step toward healing.',
   },
   {
     question: 'Do I need to log every spiral?',
@@ -56,17 +56,17 @@ const faqs: FAQItem[] = [
   {
     question: 'What if I&apos;m having a mental health crisis?',
     answer:
-      'DailyHush is a wellness tool, not a replacement for professional mental health support. If you&apos;re in crisis, please contact:\n\n• National Suicide Prevention Lifeline: 988\n• Crisis Text Line: Text HOME to 741741\n• Emergency Services: 911\n\nFor ongoing support, please consider working with a licensed therapist.',
+      'Nœma is a wellness tool, not a replacement for professional mental health support. If you&apos;re in crisis, please contact:\n\n• National Suicide Prevention Lifeline: 988\n• Crisis Text Line: Text HOME to 741741\n• Emergency Services: 911\n\nFor ongoing support, please consider working with a licensed therapist.',
   },
   {
-    question: 'Can I use DailyHush without creating an account?',
+    question: 'Can I use Nœma without creating an account?',
     answer:
       'Yes! When you first open the app, you can try the spiral interrupt protocol without signing up. However, to save your spiral logs, track patterns, and sync across devices, you&apos;ll need to create a free account.',
   },
   {
-    question: 'How much does DailyHush cost?',
+    question: 'How much does Nœma cost?',
     answer:
-      'DailyHush is currently free to use. All core features—spiral interrupts, pattern tracking, and AI insights—are available at no cost. We believe everyone deserves access to mental wellness tools.',
+      'Nœma is currently free to use. All core features—spiral interrupts, pattern tracking, and AI insights—are available at no cost. We believe everyone deserves access to mental wellness tools.',
   },
   {
     question: 'Why do you ask for my age?',
@@ -89,7 +89,7 @@ const faqs: FAQItem[] = [
       'Email us at hello@daily-hush.com. We typically respond within 24-48 hours. For urgent app issues, please include "URGENT" in your subject line.',
   },
   {
-    question: 'Does DailyHush work offline?',
+    question: 'Does Nœma work offline?',
     answer:
       'Yes! You can use the spiral interrupt protocol and log spirals offline. Your data will sync automatically when you reconnect to the internet.',
   },
@@ -177,7 +177,7 @@ export default function FAQ() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            Common questions about using DailyHush. Can&apos;t find what you&apos;re looking for?
+            Common questions about using Nœma. Can&apos;t find what you&apos;re looking for?
             Email us at{' '}
             <Text
               style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Analytics Service
+ * Nœma - Analytics Service
  * Track F.I.R.E. Training engagement metrics and user progress
  */
 

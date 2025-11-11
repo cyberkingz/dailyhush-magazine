@@ -1,5 +1,5 @@
 /**
- * DailyHush - Terms of Service
+ * Nœma - Terms of Service
  * Clear, user-friendly terms for using the app
  */
 
@@ -105,13 +105,13 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            By accessing or using DailyHush (the &quot;App&quot;), you agree to be bound by these
+            By accessing or using Nœma (the &quot;App&quot;), you agree to be bound by these
             Terms of Service (&quot;Terms&quot;). If you disagree with any part of these terms, you
             may not use our App.
           </Text>
         </View>
 
-        {/* Who Can Use DailyHush */}
+        {/* Who Can Use Nœma */}
         <View style={{ marginBottom: spacing.xl }}>
           <Text
             style={{
@@ -120,7 +120,7 @@ export default function TermsOfService() {
               color: colors.text.primary,
               marginBottom: spacing.md,
             }}>
-            Who Can Use DailyHush
+            Who Can Use Nœma
           </Text>
           <Text
             style={{
@@ -128,13 +128,13 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            You must be at least 18 years old to use DailyHush. By using the App, you represent and
+            You must be at least 18 years old to use Nœma. By using the App, you represent and
             warrant that you meet this age requirement. If you are under 18, you may not use the
             App.
           </Text>
         </View>
 
-        {/* What DailyHush Is (And Isn&apos;t) */}
+        {/* What Nœma Is (And Isn&apos;t) */}
         <View
           style={{
             marginBottom: spacing.xl,
@@ -151,7 +151,7 @@ export default function TermsOfService() {
               color: colors.text.primary,
               marginBottom: spacing.md,
             }}>
-            What DailyHush Is (And Isn&apos;t)
+            What Nœma Is (And Isn&apos;t)
           </Text>
           <Text
             style={{
@@ -160,7 +160,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               marginBottom: spacing.md,
             }}>
-            DailyHush is a wellness tool designed to help you interrupt overthinking spirals. It is
+            Nœma is a wellness tool designed to help you interrupt overthinking spirals. It is
             NOT:
           </Text>
           <Text
@@ -345,7 +345,7 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            • Use the App in any way that could harm DailyHush or our users
+            • Use the App in any way that could harm Nœma or our users
           </Text>
         </View>
 
@@ -377,7 +377,7 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            You retain all rights to the content you create in DailyHush (spiral logs, notes,
+            You retain all rights to the content you create in Nœma (spiral logs, notes,
             journal entries). We never claim ownership of your personal data.
           </Text>
 
@@ -421,7 +421,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               marginBottom: spacing.md,
             }}>
-            DailyHush is currently free to use. If we introduce paid features or subscriptions in
+            Nœma is currently free to use. If we introduce paid features or subscriptions in
             the future:
           </Text>
           <Text
@@ -477,7 +477,7 @@ export default function TermsOfService() {
               marginBottom: spacing.md,
             }}>
             The App and its original content (excluding your personal data), features, and
-            functionality are owned by DailyHush and are protected by international copyright,
+            functionality are owned by Nœma and are protected by international copyright,
             trademark, patent, trade secret, and other intellectual property laws.
           </Text>
           <Text
@@ -572,7 +572,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               marginBottom: spacing.md,
             }}>
-            To the maximum extent permitted by law, DailyHush shall not be liable for any indirect,
+            To the maximum extent permitted by law, Nœma shall not be liable for any indirect,
             incidental, special, consequential, or punitive damages, or any loss of profits or
             revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill,
             or other intangible losses resulting from:
@@ -637,7 +637,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               marginBottom: spacing.md,
             }}>
-            DailyHush is NOT a medical device and does NOT provide medical advice, diagnosis, or
+            Nœma is NOT a medical device and does NOT provide medical advice, diagnosis, or
             treatment. Always seek the advice of your physician or other qualified health provider
             with any questions regarding a medical condition.
           </Text>
@@ -648,7 +648,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
             Never disregard professional medical advice or delay seeking it because of something you
-            read in DailyHush. If you think you may have a medical emergency, call 911 immediately.
+            read in Nœma. If you think you may have a medical emergency, call 911 immediately.
           </Text>
         </View>
 
@@ -743,7 +743,7 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            Your continued use of DailyHush after changes become effective means you accept the
+            Your continued use of Nœma after changes become effective means you accept the
             updated Terms.
           </Text>
         </View>
@@ -796,7 +796,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               textAlign: 'center',
             }}>
-            By using DailyHush, you acknowledge that you have read, understood, and agree to be
+            By using Nœma, you acknowledge that you have read, understood, and agree to be
             bound by these Terms of Service.
           </Text>
         </View>

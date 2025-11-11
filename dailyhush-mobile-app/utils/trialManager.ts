@@ -1,5 +1,5 @@
 /**
- * DailyHush - Premium Trial Manager
+ * Nœma - Premium Trial Manager
  * Manages 7-day NO-CC Premium trial system
  * Updated: 2025-10-31
  */

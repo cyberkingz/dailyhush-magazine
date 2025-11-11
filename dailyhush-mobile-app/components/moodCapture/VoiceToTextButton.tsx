@@ -1,5 +1,5 @@
 /**
- * DailyHush - Voice to Text Button Component
+ * Nœma - Voice to Text Button Component
  *
  * Floating microphone button for voice recording and transcription.
  * Designed for accessibility (55-70 age group) with clear visual feedback.

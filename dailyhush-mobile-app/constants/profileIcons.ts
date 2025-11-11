@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile Page Icon System
+ * Nœma - Profile Page Icon System
  * Consistent icon mapping for loop types, insights, and UI elements
  * Using emoji for primary icons and lucide-react-native for UI
  */

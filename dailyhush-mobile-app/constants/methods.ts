@@ -1,5 +1,5 @@
 /**
- * DailyHush - Method Configuration
+ * Nœma - Method Configuration
  * Defines how users can engage with each module
  *
  * Design Philosophy:

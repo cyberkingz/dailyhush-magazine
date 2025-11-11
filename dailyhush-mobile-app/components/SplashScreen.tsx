@@ -135,7 +135,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
           </View>
 
           {/* App Name */}
-          <Text style={styles.appName}>DailyHush</Text>
+          <Text style={styles.appName}>Nœma</Text>
         </Animated.View>
 
         {/* Tagline */}

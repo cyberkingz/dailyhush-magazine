@@ -1,5 +1,5 @@
 /**
- * DailyHush - Breathing Animation Component
+ * Nœma - Breathing Animation Component
  *
  * Clean countdown-based breathing interface matching Spiral exercise
  *

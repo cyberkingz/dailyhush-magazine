@@ -1,5 +1,5 @@
 /**
- * DailyHush - Your Progress (Spiral History)
+ * Nœma - Your Progress (Spiral History)
  * View all past spiral interrupts with healing-focused framing
  * Optimized for 55-70 year old demographic with WCAG AAA compliance
  */

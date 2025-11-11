@@ -1,5 +1,5 @@
 /**
- * DailyHush - useVoiceToText Hook
+ * Nœma - useVoiceToText Hook
  *
  * Voice recording and transcription for mood capture writing step.
  * Uses Expo Speech Recognition for accessibility (55-70 demographic).

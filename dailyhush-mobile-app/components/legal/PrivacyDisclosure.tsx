@@ -1,5 +1,5 @@
 /**
- * DailyHush - Privacy Disclosure Component
+ * Nœma - Privacy Disclosure Component
  * Reusable warning/disclosure component for privacy-sensitive actions
  * Used on account deletion and other data-related screens
  * Created: 2025-01-01

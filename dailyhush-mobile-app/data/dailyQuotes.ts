@@ -1,5 +1,5 @@
 /**
- * DailyHush - Daily Mindful Quotes
+ * Nœma - Daily Mindful Quotes
  * Curated collection of wisdom for people who ruminate
  * Focus: Self-compassion, growth mindset, interrupting spirals
  */

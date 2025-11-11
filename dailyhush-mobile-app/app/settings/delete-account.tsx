@@ -1,5 +1,5 @@
 /**
- * DailyHush - Delete Account Screen
+ * Nœma - Delete Account Screen
  * REQUIRED for Apple App Store compliance (Guideline 5.1.1 (v))
  *
  * Deletes user's authentication account (prevents login)
@@ -47,7 +47,7 @@ export default function DeleteAccountScreen() {
           <AlertTriangle size={48} color={colors.status.error} />
           <Text style={styles.errorTitle}>No Account Found</Text>
           <Text style={styles.errorText}>
-            You&apos;re using DailyHush as a guest. Only authenticated accounts can be deleted.
+            You&apos;re using Nœma as a guest. Only authenticated accounts can be deleted.
           </Text>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
             <Text style={styles.backButtonText}>Go Back</Text>
@@ -282,7 +282,7 @@ export default function DeleteAccountScreen() {
                 <View style={styles.deleteItemIcon}>
                   <Check size={16} color={colors.status.error} strokeWidth={2} />
                 </View>
-                <Text style={styles.deleteItemText}>Access to your DailyHush data</Text>
+                <Text style={styles.deleteItemText}>Access to your Nœma data</Text>
               </View>
             </View>
 
@@ -321,7 +321,7 @@ export default function DeleteAccountScreen() {
               </View>
 
               <Text style={styles.retainNote}>
-                This data helps us improve DailyHush for everyone. It cannot be accessed after
+                This data helps us improve Nœma for everyone. It cannot be accessed after
                 account deletion.
               </Text>
             </View>
@@ -331,7 +331,7 @@ export default function DeleteAccountScreen() {
               <Text style={styles.noteTitle}>Note About Local Data</Text>
               <Text style={styles.noteText}>
                 Voice journals are stored only on your device. To fully delete them, uninstall the
-                DailyHush app after deleting your account.
+                Nœma app after deleting your account.
               </Text>
             </View>
 

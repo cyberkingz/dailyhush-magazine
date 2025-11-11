@@ -1,5 +1,5 @@
 /**
- * DailyHush - Exercise Type Definitions
+ * Nœma - Exercise Type Definitions
  * Comprehensive TypeScript interfaces for the exercise system
  *
  * Architecture:

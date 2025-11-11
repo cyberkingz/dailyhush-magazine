@@ -1,5 +1,5 @@
 /**
- * DailyHush - Test React Native Reusables Components
+ * Nœma - Test React Native Reusables Components
  * Test page for RNR components with emerald theme
  */
 

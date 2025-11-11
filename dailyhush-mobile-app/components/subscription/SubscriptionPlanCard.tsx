@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Plan Card Component
+ * Nœma - Subscription Plan Card Component
  * Shows current subscription plan details with premium visual design
  * Created: 2025-11-01
  * Updated: 2025-11-01 - Enhanced UI/UX with improved hierarchy and premium feel

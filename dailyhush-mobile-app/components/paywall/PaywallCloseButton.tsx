@@ -1,5 +1,5 @@
 /**
- * DailyHush - Paywall Close Button
+ * Nœma - Paywall Close Button
  * Reusable close button for dismissible paywalls
  */
 

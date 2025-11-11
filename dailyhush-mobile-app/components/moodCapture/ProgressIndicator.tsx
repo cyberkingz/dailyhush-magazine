@@ -1,5 +1,5 @@
 /**
- * DailyHush - Progress Indicator Component
+ * Nœma - Progress Indicator Component
  *
  * Visual progress dots showing current step in mood capture flow (1-4).
  * Uses smooth animations for transitions between steps.

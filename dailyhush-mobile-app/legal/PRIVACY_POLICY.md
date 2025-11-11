@@ -4,16 +4,16 @@
 
 ## Introduction
 
-Welcome to DailyHush, owned and operated by Red Impact LLC. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and services.
+Welcome to Nœma, owned and operated by Red Impact LLC. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and services.
 
 **Company Information:**
-- **Company Name:** Red Impact LLC DBA DailyHush
+- **Company Name:** Red Impact LLC DBA Nœma
 - **Address:** 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 - **Email:** hello@daily-hush.com
 - **Phone:** +1 201-367-0512
 - **Company Number:** 2024-001419992
 
-By using DailyHush, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, do not use our mobile application.
+By using Nœma, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, do not use our mobile application.
 
 ## 1. Information We Collect
 
@@ -28,7 +28,7 @@ When you create an account, we collect:
 
 ### 1.2 Information Automatically Collected
 
-When you use the DailyHush mobile app, we automatically collect:
+When you use the Nœma mobile app, we automatically collect:
 - **Device Information** - device type, operating system, unique device identifiers
 - **Usage Data** - app features you use, time spent in app, interaction patterns
 - **Spiral Logs** - timestamps, duration, triggers, and intervention outcomes when you log rumination spirals
@@ -37,7 +37,7 @@ When you use the DailyHush mobile app, we automatically collect:
 
 ### 1.3 Mobile-Specific Permissions
 
-The DailyHush app requests the following permissions:
+The Nœma app requests the following permissions:
 
 **Bluetooth** - To connect with The Shift necklace for breathing exercises and haptic feedback
 - Data collected: device connection status, battery level, sync timestamps
@@ -110,7 +110,7 @@ We may disclose your information if required by law or in response to:
 - Investigation of fraud or security issues
 
 ### 3.3 Business Transfers
-If DailyHush is acquired or merged with another company, your information may be transferred. You will be notified of any such change.
+If Nœma is acquired or merged with another company, your information may be transferred. You will be notified of any such change.
 
 ## 4. Data Security
 
@@ -148,7 +148,7 @@ You have the right to:
 - Delete your account and all associated data
 
 **How to Delete Your Account:**
-1. Open DailyHush app
+1. Open Nœma app
 2. Go to Settings → Account → Delete Account
 3. Confirm deletion (this action cannot be undone)
 
@@ -195,7 +195,7 @@ If you are an EU/EEA resident, you have additional rights:
 
 ## 6. Children's Privacy
 
-DailyHush is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
+Nœma is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
 
 If you believe we have collected information from a child under 13, please contact us immediately at hello@daily-hush.com and we will delete it.
 
@@ -248,17 +248,17 @@ If you have questions or concerns about this Privacy Policy, please contact us:
 
 **Email:** hello@daily-hush.com
 **Phone:** +1 201-367-0512
-**Mail:** Red Impact LLC DBA DailyHush, 30 N Gould St Ste R, Sheridan, Wyoming, 82801
+**Mail:** Red Impact LLC DBA Nœma, 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 
 **Response Time:** We aim to respond to all privacy inquiries within 7 business days.
 
 ## 13. Consent
 
-By using the DailyHush mobile app, you hereby consent to our Privacy Policy and agree to its terms.
+By using the Nœma mobile app, you hereby consent to our Privacy Policy and agree to its terms.
 
 ---
 
-**Red Impact LLC DBA DailyHush**
+**Red Impact LLC DBA Nœma**
 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 Company #: 2024-001419992
 hello@daily-hush.com

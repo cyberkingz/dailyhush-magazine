@@ -1,5 +1,5 @@
 /**
- * DailyHush - Step 4: Gentle Suggestion Component
+ * Nœma - Step 4: Gentle Suggestion Component
  *
  * Final step in mood capture flow showing a personalized therapeutic activity.
  * Suggestions are matched to mood and intensity for relevance.

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subtle Background Pattern Component
+ * Nœma - Subtle Background Pattern Component
  * Optional decorative background texture for premium feel
  */
 

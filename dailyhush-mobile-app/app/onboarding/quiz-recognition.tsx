@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Recognition Screen
+ * Nœma - Quiz Recognition Screen
  * First screen in quiz-to-app connection flow
  * Asks if user has already taken the website quiz
  */
@@ -217,7 +217,7 @@ export default function QuizRecognition() {
               textAlign: 'center',
               lineHeight: 22,
             }}>
-            If you took our quiz, we can personalize your DailyHush experience using your quiz
+            If you took our quiz, we can personalize your Nœma experience using your quiz
             results.
           </Text>
         </View>

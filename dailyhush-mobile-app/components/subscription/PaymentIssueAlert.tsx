@@ -1,5 +1,5 @@
 /**
- * DailyHush - Payment Issue Alert Component
+ * Nœma - Payment Issue Alert Component
  * Displays warning when there's a billing problem
  * Created: 2025-11-01
  */

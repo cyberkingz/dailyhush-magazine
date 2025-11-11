@@ -1,5 +1,5 @@
 /**
- * DailyHush - Exercise Configurations
+ * Nœma - Exercise Configurations
  * Static configuration registry for all 6 exercises
  *
  * Each config includes:

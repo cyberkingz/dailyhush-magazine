@@ -1,5 +1,5 @@
 /**
- * DailyHush - Subscription Management Screen
+ * Nœma - Subscription Management Screen
  * Manage active subscription, handle billing issues, restore purchases
  * Created: 2025-11-01
  */

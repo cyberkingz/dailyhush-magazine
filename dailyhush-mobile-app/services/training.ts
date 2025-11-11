@@ -1,5 +1,5 @@
 /**
- * DailyHush - F.I.R.E. Training Service
+ * Nœma - F.I.R.E. Training Service
  * Handles save/resume functionality and progress tracking
  */
 

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Magma Loader Component
+ * Nœma - Magma Loader Component
  * Organic morphing loading animation with emerald theme
  */
 

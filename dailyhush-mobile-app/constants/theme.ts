@@ -1,8 +1,8 @@
 /**
- * DailyHush Design System - Theme Constants
+ * Nœma Design System - Theme Constants
  * Based on PRD Section 8.2: Visual Design System
  *
- * Brand colors match the DailyHush admin dashboard for consistency
+ * Brand colors match the Nœma admin dashboard for consistency
  * Updated to match tailwind.config.js from webapp
  */
 

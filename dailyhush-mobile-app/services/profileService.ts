@@ -1,5 +1,5 @@
 /**
- * DailyHush - Profile API Service
+ * Nœma - Profile API Service
  *
  * Handles all API interactions for the profile page including:
  * - Fetching profile summary data

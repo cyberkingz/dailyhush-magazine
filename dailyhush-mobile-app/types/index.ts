@@ -1,5 +1,5 @@
 /**
- * DailyHush Mobile App - TypeScript Type Definitions
+ * Nœma Mobile App - TypeScript Type Definitions
  * Based on PRD Section 7.3: Data Architecture
  */
 

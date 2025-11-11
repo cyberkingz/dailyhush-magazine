@@ -1,5 +1,5 @@
 /**
- * DailyHush - Auto Save Indicator Component
+ * Nœma - Auto Save Indicator Component
  *
  * Shows save status for mood capture writing (Step 3).
  * Displays "Saving...", "Saved ✓", or error state.

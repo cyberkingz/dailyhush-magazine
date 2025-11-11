@@ -1,5 +1,5 @@
 /**
- * DailyHush - Quiz Question Component
+ * Nœma - Quiz Question Component
  * Mobile-optimized radio button question with WCAG AAA compliance
  */
 

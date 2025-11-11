@@ -1,5 +1,5 @@
 /**
- * DailyHush - Module Configuration
+ * Nœma - Module Configuration
  * Defines the core help modules users can access based on their needs
  *
  * Design Philosophy:

@@ -1,5 +1,5 @@
 /**
- * DailyHush - Empty Subscription Card Component
+ * Nœma - Empty Subscription Card Component
  * Displays when user has no active subscription
  * Created: 2025-11-01
  */

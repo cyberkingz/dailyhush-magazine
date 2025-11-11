@@ -1,5 +1,5 @@
 /**
- * Analytics Queries for DailyHush
+ * Analytics Queries for Nœma
  *
  * Comprehensive analytics functions for user statistics, usage patterns,
  * and progress tracking across spirals, conversations, and check-ins.

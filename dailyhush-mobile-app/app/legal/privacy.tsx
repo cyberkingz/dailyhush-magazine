@@ -1,5 +1,5 @@
 /**
- * DailyHush - Privacy Policy
+ * Nœma - Privacy Policy
  * How we protect and handle user data
  */
 
@@ -105,7 +105,7 @@ export default function PrivacyPolicy() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            DailyHush is built with your privacy at its core. We believe your healing journey should
+            Nœma is built with your privacy at its core. We believe your healing journey should
             be completely private. This policy explains how we collect, use, and protect your
             information.
           </Text>
@@ -516,7 +516,7 @@ export default function PrivacyPolicy() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            DailyHush is intended for users 18 years and older. We do not knowingly collect
+            Nœma is intended for users 18 years and older. We do not knowingly collect
             information from children under 18. If you believe we have collected information from a
             child under 18, please contact us at hello@daily-hush.com.
           </Text>
@@ -540,7 +540,7 @@ export default function PrivacyPolicy() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
             We may update this privacy policy from time to time. We&apos;ll notify you of
-            significant changes via email or in-app notification. Continued use of DailyHush after
+            significant changes via email or in-app notification. Continued use of Nœma after
             changes means you accept the updated policy.
           </Text>
         </View>

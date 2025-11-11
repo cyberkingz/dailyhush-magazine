@@ -1,5 +1,5 @@
 /**
- * DailyHush - Adaptive Protocol Selection Service
+ * Nœma - Adaptive Protocol Selection Service
  *
  * Implements a simple mathematical scoring algorithm (NO machine learning)
  * to select the most effective spiral interrupt technique for each user.

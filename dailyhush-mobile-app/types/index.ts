@@ -330,7 +330,6 @@ export type RootStackParamList = {
   'training/[module]': { module: FireModule };
   insights: undefined;
   settings: undefined;
-  'shift-pairing': undefined;
 };
 
 /**

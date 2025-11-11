@@ -277,7 +277,7 @@ export async function recordProtocolOutcome(outcome: ProtocolOutcome): Promise<v
       post_feeling: outcome.postFeel,
       interrupted: !outcome.completed, // interrupted = NOT completed
       trigger: outcome.trigger || null,
-      used_shift: false, // TODO: Detect from outcome or technique
+      used_shift: false, // Shift hardware removed from app (standalone app decision)
       selection_confidence: outcome.confidence,
       selection_rationale: outcome.rationale,
       interactive_responses: outcome.interactiveResponses || null,

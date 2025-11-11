@@ -1,19 +1,21 @@
 /**
  * DailyHush - Technique Library
  *
- * Rotating library of 5 spiral interrupt protocols for personalized anxiety relief.
+ * Rotating library of 3 spiral interrupt protocols for personalized anxiety relief.
  * Each technique targets different triggers and intensity levels.
  *
  * Target audience: Women 65+ with chronic rumination
  * Tone: Calm, validating, non-judgmental
  * Language: Simple, direct, no clinical jargon
  *
- * Design Philosophy:
- * - Grounding (sensory-based) for general anxiety
- * - Box Breathing (tactical) for acute panic
+ * Design Philosophy (Rebalanced Nov 2025):
+ * - Cyclic Sigh (physiological) for acute panic - Stanford-tested most effective
+ * - Grounding (sensory-based) for general anxiety and overwhelm
  * - Cognitive Reframe for rumination and overthinking
- * - Body Scan for physical tension and health anxiety
- * - Shift Sync (biometric) for severe episodes with device
+ *
+ * Gateway Protocol: 60-second sessions are the START of the protocol.
+ * Research shows 5+ minutes is optimal, but 60 seconds provides immediate relief.
+ * Users are prompted to continue after initial session.
  *
  * @see types/index.ts for Technique and TechniqueStep interfaces
  */
@@ -31,14 +33,14 @@ import { colors } from '@/constants/colors';
  * Most versatile protocol - works for general anxiety, overwhelm, and mild-to-moderate spirals.
  *
  * Evidence: CBT-approved sensory grounding technique. Forces immediate environment
- * processing, interrupting rumination loops.
+ * processing, interrupting rumination loops. Most popular technique in DailyHush library.
  */
 const GROUNDING_5_4_3_2_1: Technique = {
   id: 'grounding-5-4-3-2-1',
   name: 'Grounding 5-4-3-2-1',
   shortName: 'Grounding',
   description:
-    "Use your five senses to reconnect with the present moment. Notice what's around you right now.",
+    "Use your five senses to reconnect with the present moment. CBT-approved sensory technique that interrupts rumination by engaging with your immediate environment.",
   duration: 90, // seconds
   bestFor: ['anxiety', 'overwhelm', 'general'],
   intensityRange: 'moderate',
@@ -111,56 +113,69 @@ const GROUNDING_5_4_3_2_1: Technique = {
 };
 
 // ============================================================================
-// TECHNIQUE 2: BOX BREATHING
+// TECHNIQUE 2: CYCLIC PHYSIOLOGICAL SIGH
 // ============================================================================
 
 /**
- * Navy SEAL tactical breathing for acute panic and severe anxiety.
- * Fast intervention (60 seconds). No interactive steps - too intense for typing.
+ * Stanford-tested rapid calm-down technique using double inhales and extended exhales.
+ * Most effective breathing intervention for acute panic (2023 research).
  *
- * Evidence: 4-4-4-4 pattern activates parasympathetic nervous system.
- * Used by military for high-stress situations.
+ * Evidence: Stanford neuroscientists tested 5 breathing techniques.
+ * Cyclic Sigh reduced anxiety fastest by maximizing CO₂ offload.
+ * Research shows 5 minutes is optimal, but 60 seconds provides immediate relief.
+ *
+ * Gateway Protocol: This 60-second version is the START of the protocol.
+ * Users are prompted to continue after completion for full benefit.
+ *
+ * Mechanism: Two inhales fully expand lungs (including collapsed alveoli),
+ * then long exhale dumps CO₂ and signals parasympathetic activation.
  */
-const BOX_BREATHING: Technique = {
-  id: 'box-breathing',
-  name: 'Box Breathing',
-  shortName: 'Box Breath',
+const CYCLIC_SIGH: Technique = {
+  id: 'cyclic-sigh',
+  name: 'Cyclic Physiological Sigh',
+  shortName: 'Cyclic Sigh',
   description:
-    'A powerful 4-count breathing pattern. Used by Navy SEALs to stay calm under pressure.',
-  duration: 60, // seconds - rapid intervention
-  bestFor: ['panic', 'acute-stress', 'health-concerns'],
+    "Two quick inhales through your nose, then one long exhale through your mouth. Stanford research shows 5 minutes is optimal - we'll start with 60 seconds, you can continue as long as you need.",
+  duration: 60, // seconds - gateway to longer session
+  bestFor: ['panic', 'acute-stress', 'severe'],
   intensityRange: 'severe',
   requiresShift: false,
 
   steps: [
-    // Introduction (8 seconds)
+    // Introduction (8 seconds) - Gateway Protocol transparency
     {
       duration: 8,
-      text: 'This is a tactical breathing technique.\n\nIt works fast.\n\nJust follow the counts.',
+      text: 'This is the most effective breathing technique.\n\nStanford-tested.\n\nResearch shows 5 minutes is optimal.\n\nWe will start with 60 seconds.',
     },
 
-    // Cycle 1 (16 seconds)
+    // Instruction (10 seconds)
     {
-      duration: 16,
-      text: 'Breathe in through your nose.\n\n1... 2... 3... 4...\n\nHold.\n\n1... 2... 3... 4...\n\nBreathe out through your mouth.\n\n1... 2... 3... 4...\n\nHold empty.\n\n1... 2... 3... 4...',
+      duration: 10,
+      text: "Here's how it works:\n\nTwo quick inhales through your nose.\n\nThen one long exhale through your mouth.\n\nLet's begin.",
     },
 
-    // Cycle 2 (16 seconds)
+    // Cycle 1 (12 seconds)
     {
-      duration: 16,
-      text: 'Again.\n\nIn: 1... 2... 3... 4...\n\nHold: 1... 2... 3... 4...\n\nOut: 1... 2... 3... 4...\n\nHold: 1... 2... 3... 4...',
+      duration: 12,
+      text: 'Breathe in through your nose.\n\nNow take one more quick inhale.\n\n...\n\nNow exhale slowly through your mouth.\n\nAll the way out.',
     },
 
-    // Cycle 3 (16 seconds)
+    // Cycle 2 (12 seconds)
     {
-      duration: 16,
-      text: 'One more.\n\nIn: 1... 2... 3... 4...\n\nHold: 1... 2... 3... 4...\n\nOut: 1... 2... 3... 4...\n\nHold: 1... 2... 3... 4...',
+      duration: 12,
+      text: 'Again.\n\nDouble inhale through your nose.\n\nSniff... sniff.\n\n...\n\nLong exhale out your mouth.\n\nEmpty your lungs.',
     },
 
-    // Closing (4 seconds)
+    // Cycle 3 (12 seconds)
     {
-      duration: 4,
-      text: "You just calmed your nervous system.\n\nYou're in control.",
+      duration: 12,
+      text: "You're doing it.\n\nTwo inhales in.\n\nSniff... sniff.\n\n...\n\nOne long exhale out.\n\nFeel the release.",
+    },
+
+    // Closing with continuation prompt (6 seconds)
+    {
+      duration: 6,
+      text: 'You just dumped CO₂ from your bloodstream.\n\nYour nervous system is calming.\n\nContinue longer for full effect.',
     },
   ],
 };
@@ -174,14 +189,15 @@ const BOX_BREATHING: Technique = {
  * Longer duration (120 seconds) - requires cognitive engagement.
  *
  * Evidence: CBT-based cognitive restructuring. Examines thoughts without
- * judgment, creating distance from rumination patterns.
+ * judgment, creating distance from rumination patterns. Expert consensus:
+ * Perfect perceived value - users report feeling like they've done "real psychological work."
  */
 const COGNITIVE_REFRAME: Technique = {
   id: 'cognitive-reframe',
   name: 'Cognitive Reframe',
   shortName: 'Reframe',
   description:
-    "Examine the thought that's bothering you. Look at it differently, without judgment.",
+    "Examine the thought that's bothering you without judgment. CBT cognitive restructuring technique designed specifically for rumination and overthinking patterns.",
   duration: 120, // seconds - longer, thought-focused
   bestFor: ['conversations', 'rumination', 'work-stress', 'relationships'],
   intensityRange: 'mild',
@@ -245,133 +261,32 @@ const COGNITIVE_REFRAME: Technique = {
 };
 
 // ============================================================================
-// TECHNIQUE 4: RAPID BODY SCAN
+// REMOVED TECHNIQUES (Nov 2025 Rebalancing)
 // ============================================================================
-
-/**
- * Quick body awareness for physical tension and health anxiety.
- * Focuses on releasing tension systematically.
- *
- * Evidence: Mindfulness-based body scan reduces somatic anxiety symptoms.
- * Particularly effective for health-related rumination.
- */
-const BODY_SCAN_RAPID: Technique = {
-  id: 'body-scan-rapid',
-  name: 'Rapid Body Scan',
-  shortName: 'Body Scan',
-  description: 'Notice tension in your body, then gently release it. From feet to head.',
-  duration: 75, // seconds
-  bestFor: ['physical-tension', 'health-concerns', 'anxiety'],
-  intensityRange: 'moderate',
-  requiresShift: false,
-
-  steps: [
-    // Introduction (10 seconds)
-    {
-      duration: 10,
-      text: "Let's check in with your body.\n\nNotice where you're holding tension.\n\nNo judgment. Just awareness.",
-    },
-
-    // Feet and legs (15 seconds)
-    {
-      duration: 15,
-      text: 'Start with your feet.\n\nNotice your toes. Your ankles. Your legs.\n\nAre they tense?\n\nGently wiggle your toes. Soften your feet.',
-    },
-
-    // Belly and chest (15 seconds)
-    {
-      duration: 15,
-      text: 'Move to your belly.\n\nIs it tight? Holding?\n\nTake a slow breath into your belly.\n\nLet it soften and expand.',
-    },
-
-    // Shoulders and neck (15 seconds)
-    {
-      duration: 15,
-      text: 'Notice your shoulders.\n\nAre they up by your ears?\n\nGently roll them back and down.\n\nLet your neck lengthen.',
-    },
-
-    // Jaw and face (10 seconds)
-    {
-      duration: 10,
-      text: 'Check your jaw.\n\nUnclench your teeth.\n\nRelax your tongue.\n\nSoften the space between your eyebrows.',
-    },
-
-    // Closing (10 seconds)
-    {
-      duration: 10,
-      text: "Your body was holding your worry.\n\nNow it's letting go.\n\nNotice how different you feel.",
-    },
-  ],
-};
-
-// ============================================================================
-// TECHNIQUE 5: SHIFT BIOMETRIC SYNC
-// ============================================================================
-
-/**
- * Advanced protocol for Shift necklace users.
- * Syncs breathing with device vibrations for severe anxiety episodes.
- *
- * Evidence: Biometric feedback + breathing creates faster parasympathetic
- * activation than breathing alone.
- */
-const SHIFT_BIOMETRIC_SYNC: Technique = {
-  id: 'shift-biometric-sync',
-  name: 'Shift Biometric Sync',
-  shortName: 'Shift Sync',
-  description:
-    'Let your Shift necklace guide your breathing. Sync with the vibrations for maximum calm.',
-  duration: 90, // seconds
-  bestFor: ['severe', 'panic', 'acute-stress'],
-  intensityRange: 'severe',
-  requiresShift: true, // Only available to necklace users
-
-  steps: [
-    // Introduction (12 seconds)
-    {
-      duration: 12,
-      text: 'Your Shift necklace is ready.\n\nIt will guide your breathing with gentle vibrations.\n\nJust follow along.',
-    },
-
-    // Sync preparation (10 seconds)
-    {
-      duration: 10,
-      text: 'Hold your Shift gently.\n\nFeel its weight in your hand.\n\nOr rest it against your chest.',
-    },
-
-    // Synced breathing - Cycle 1 (20 seconds)
-    {
-      duration: 20,
-      text: 'The vibration starts...\n\nBreathe in as it pulses.\n\n...\n\nBreathe out as it fades.\n\nLet the necklace set the rhythm.',
-    },
-
-    // Synced breathing - Cycle 2 (20 seconds)
-    {
-      duration: 20,
-      text: 'Keep following.\n\nIn with the pulse.\n\nOut with the fade.\n\nYour breath and the device are one.',
-    },
-
-    // Synced breathing - Cycle 3 (20 seconds)
-    {
-      duration: 20,
-      text: "You're in sync now.\n\nIn... and out...\n\nYour nervous system is calming.\n\nYou can feel it.",
-    },
-
-    // Closing (8 seconds)
-    {
-      duration: 8,
-      text: "Your Shift guided you back to calm.\n\nYou worked together.\n\nYou're safe.",
-    },
-  ],
-};
+// - BODY_SCAN_RAPID: Removed per expert consensus (all 5 experts flagged as problematic)
+// - SHIFT_BIOMETRIC_SYNC: Removed per business decision (app should be standalone)
+// - BOX_BREATHING: Removed per 11-expert brainstorm consensus
+//   * Reason: Cyclic Sigh is research-proven superior for acute anxiety
+//   * Phase 2: May return in separate "Focus & Performance" section for non-crisis use
 
 // ============================================================================
 // TECHNIQUE LIBRARY EXPORT
 // ============================================================================
 
 /**
- * Complete technique library array.
+ * Complete technique library array (3 techniques).
  * Used by adaptive protocol selector to choose personalized interventions.
+ *
+ * Final rebalancing (Nov 2025):
+ * - 33% breathing (Cyclic Sigh only - research-proven most effective)
+ * - 33% sensory grounding (5-4-3-2-1)
+ * - 33% cognitive (Reframe)
+ *
+ * Based on consensus from 11 experts (5 psychology + 6 marketing/copywriting).
+ * Box Breathing removed - redundant with superior Cyclic Sigh technique.
+ *
+ * Gateway Protocol: All breathing techniques start at 60s with prompt to continue.
+ * Research shows 5+ minutes optimal, but 60s provides immediate relief.
  *
  * Rotation strategy:
  * 1. Filter by intensity match
@@ -382,11 +297,9 @@ const SHIFT_BIOMETRIC_SYNC: Technique = {
  * @see app/(authenticated)/spiral/hooks/useAdaptiveProtocol.ts for selection logic
  */
 export const TECHNIQUE_LIBRARY: readonly Technique[] = [
+  CYCLIC_SIGH,
   GROUNDING_5_4_3_2_1,
-  BOX_BREATHING,
   COGNITIVE_REFRAME,
-  BODY_SCAN_RAPID,
-  SHIFT_BIOMETRIC_SYNC,
 ] as const;
 
 // ============================================================================
@@ -417,18 +330,6 @@ export function getTechniquesByTrigger(trigger: string): Technique[] {
 }
 
 /**
- * Get techniques available to user (filters by Shift ownership)
- */
-export function getAvailableTechniques(hasShift: boolean): Technique[] {
-  if (hasShift) {
-    return [...TECHNIQUE_LIBRARY];
-  }
-
-  // Filter out Shift-only techniques
-  return TECHNIQUE_LIBRARY.filter((technique) => !technique.requiresShift);
-}
-
-/**
  * Get all technique IDs (useful for analytics and stats queries)
  */
 export function getAllTechniqueIds(): string[] {
@@ -452,35 +353,23 @@ export type TriggerCategory = string; // Flexible - can expand as needed
  * Maps technique IDs to display properties
  */
 export const TECHNIQUE_METADATA = {
+  'cyclic-sigh': {
+    icon: '🫁',
+    color: colors.lime[600],
+    badge: 'Most Effective',
+    authorityNote: 'Stanford-tested 2023',
+  },
   'grounding-5-4-3-2-1': {
     icon: '👁️',
     color: colors.emerald[600],
     badge: 'Most Popular',
     authorityNote: 'CBT-approved sensory grounding',
   },
-  'box-breathing': {
-    icon: '🔲',
-    color: colors.lime[500],
-    badge: 'Fast Acting',
-    authorityNote: 'Navy SEAL technique',
-  },
   'cognitive-reframe': {
     icon: '🧠',
     color: colors.emerald[500],
     badge: 'For Overthinking',
     authorityNote: 'CBT cognitive restructuring',
-  },
-  'body-scan-rapid': {
-    icon: '🌊',
-    color: colors.emerald[400],
-    badge: 'For Physical Tension',
-    authorityNote: 'Mindfulness-based body awareness',
-  },
-  'shift-biometric-sync': {
-    icon: '💎',
-    color: colors.lime[600],
-    badge: 'Premium',
-    authorityNote: 'Biometric feedback enhanced',
   },
 } as const;
 

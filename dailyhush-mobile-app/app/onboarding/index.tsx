@@ -34,7 +34,7 @@ import { brandFonts } from '@/constants/profileTypography';
 import type { UserProfile } from '@/types';
 
 // NEW: Reordered flow - demo before assessment
-type OnboardingStep = 'welcome' | 'demo' | 'assessment' | 'shift' | 'complete';
+type OnboardingStep = 'welcome' | 'demo' | 'assessment' | 'complete';
 
 interface AssessmentData {
   name?: string;
@@ -131,11 +131,10 @@ export default function Onboarding() {
   }, [params.completed]);
 
   /**
-   * Get total steps (conditional based on Shift ownership)
+   * Get total steps (fixed at 4: welcome, demo, assessment, complete)
    */
   const getTotalSteps = () => {
-    // If user has Shift, show all 5 steps. Otherwise skip Shift screen = 4 steps
-    return assessmentData.hasShiftNecklace === true ? 5 : 4;
+    return 4;
   };
 
   /**
@@ -152,13 +151,6 @@ export default function Onboarding() {
     } else if (currentStep === 'demo') {
       setCurrentStep('assessment');
     } else if (currentStep === 'assessment') {
-      // Conditional: Skip Shift if user doesn\'t have one
-      if (assessmentData.hasShiftNecklace === true) {
-        setCurrentStep('shift');
-      } else {
-        setCurrentStep('complete');
-      }
-    } else if (currentStep === 'shift') {
       setCurrentStep('complete');
     } else if (currentStep === 'complete') {
       await completeOnboarding();
@@ -175,14 +167,8 @@ export default function Onboarding() {
       setCurrentStep('welcome');
     } else if (currentStep === 'assessment') {
       setCurrentStep('demo');
-    } else if (currentStep === 'shift') {
-      setCurrentStep('assessment');
     } else if (currentStep === 'complete') {
-      if (assessmentData.hasShiftNecklace === true) {
-        setCurrentStep('shift');
-      } else {
-        setCurrentStep('assessment');
-      }
+      setCurrentStep('assessment');
     }
   };
 
@@ -192,11 +178,7 @@ export default function Onboarding() {
   const skipAssessment = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     // Skip to next step without requiring answers
-    if (assessmentData.hasShiftNecklace === true) {
-      setCurrentStep('shift');
-    } else {
-      setCurrentStep('complete');
-    }
+    setCurrentStep('complete');
   };
 
   /**
@@ -661,58 +643,6 @@ export default function Onboarding() {
           </View>
         </View>
 
-        {/* Question 3: Shift Necklace */}
-        <View className="mb-5">
-          <Text className="mb-2 text-sm font-semibold" style={{ color: colors.text.primary }}>
-            Do you have The Shift necklace?
-          </Text>
-          <View className="flex-row gap-2">
-            <Pressable
-              onPress={() => {
-                setAssessmentData({ ...assessmentData, hasShiftNecklace: true });
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              className="flex-1 items-center rounded-xl p-3"
-              style={{
-                backgroundColor:
-                  assessmentData.hasShiftNecklace === true
-                    ? colors.button.primary
-                    : colors.background.secondary,
-              }}>
-              <Text
-                className="text-sm font-semibold"
-                style={{
-                  color:
-                    assessmentData.hasShiftNecklace === true ? colors.button.primaryText : colors.text.primary,
-                }}>
-                Yes
-              </Text>
-            </Pressable>
-
-            <Pressable
-              onPress={() => {
-                setAssessmentData({ ...assessmentData, hasShiftNecklace: false });
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              className="flex-1 items-center rounded-xl p-3"
-              style={{
-                backgroundColor:
-                  assessmentData.hasShiftNecklace === false
-                    ? colors.button.primary
-                    : colors.background.secondary,
-              }}>
-              <Text
-                className="text-sm font-semibold"
-                style={{
-                  color:
-                    assessmentData.hasShiftNecklace === false ? colors.button.primaryText : colors.text.primary,
-                }}>
-                No
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-
         {/* Spacer */}
         <View className="flex-1" />
 
@@ -741,76 +671,6 @@ export default function Onboarding() {
         </View>
       </View>
     </KeyboardAvoidingView>
-  );
-
-  /**
-   * Shift Screen - Fixed layout with top nav
-   */
-  const renderShift = () => (
-    <View className="flex-1" style={{ backgroundColor: colors.background.primary }}>
-      <StatusBar style="light" />
-
-      <TopBar showBack onBackPress={previousStep} progressDots={{ current: 4, total: 5 }} />
-
-      {/* Content - Fixed height, no scroll */}
-      <View
-        className="flex-1 justify-between px-5"
-        style={{ paddingTop: 20, paddingBottom: insets.bottom + 20 }}>
-        <View>
-          <Text className="mb-2 text-3xl font-bold" style={{ color: colors.text.primary }}>
-            Pair Your Shift
-          </Text>
-          <Text className="mb-8 text-sm" style={{ color: colors.text.secondary }}>
-            Connect your Shift necklace for instant calm anywhere
-          </Text>
-
-          {/* Shift Card - Compact */}
-          <View
-            className="mb-6 items-center rounded-2xl p-6"
-            style={{ backgroundColor: colors.background.secondary }}>
-            <View
-              className="mb-4 rounded-full p-5"
-              style={{ backgroundColor: colors.button.primary + '20' }}>
-              <Sparkles size={52} color={colors.lime[400]} strokeWidth={2} />
-            </View>
-
-            <Text
-              className="mb-3 text-center text-xl font-bold"
-              style={{ color: colors.text.primary }}>
-              The Shift Necklace
-            </Text>
-
-            <Text
-              className="mb-5 text-center text-sm leading-relaxed"
-              style={{ color: colors.text.secondary }}>
-              Gentle vibrations guide your breathing. Works silently, even in public.
-            </Text>
-
-            <Pressable
-              onPress={() => router.push('/shift-pairing' as any)}
-              className="w-full items-center rounded-2xl p-4 active:opacity-90"
-              style={{ backgroundColor: colors.button.primary }}>
-              <Text className="text-base font-bold" style={{ color: colors.button.primaryText }}>
-                Pair Now via Bluetooth
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-
-        {/* Continue Button - Bottom */}
-        <Pressable
-          onPress={nextStep}
-          className="items-center justify-center rounded-2xl active:opacity-90"
-          style={{
-            backgroundColor: colors.background.secondary,
-            height: spacing.button.height,
-          }}>
-          <Text className="text-lg font-bold" style={{ color: colors.text.primary }}>
-            I&apos;ll Pair Later
-          </Text>
-        </Pressable>
-      </View>
-    </View>
   );
 
   /**
@@ -918,7 +778,6 @@ export default function Onboarding() {
       {currentStep === 'welcome' && renderWelcome()}
       {currentStep === 'demo' && renderDemo()}
       {currentStep === 'assessment' && renderAssessment()}
-      {currentStep === 'shift' && renderShift()}
       {currentStep === 'complete' && renderComplete()}
     </>
   );

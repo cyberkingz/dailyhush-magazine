@@ -14,7 +14,7 @@
  */
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import * as Speech from 'expo-speech';
+// import * as Speech from 'expo-speech'; // Not used - expo-speech is for text-to-speech, not speech-to-text
 // Note: Expo doesn't have built-in speech recognition yet
 // Using placeholder for now - will need @react-native-voice/voice or similar
 // For this implementation, we'll create the interface that would work with such a library

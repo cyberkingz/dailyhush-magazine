@@ -3,6 +3,7 @@
  * Utility functions for working with the profile visual design system
  */
 
+import * as React from 'react';
 import { Platform, Dimensions, AccessibilityInfo } from 'react-native';
 import type { LoopType } from './loopTypeColors';
 import { getLoopTypeColors } from './loopTypeColors';
@@ -163,9 +164,15 @@ export const useReducedMotion = () => {
 
 /**
  * Get animation duration based on reduced motion preference
+ * @param prefersReduced - Whether the user prefers reduced motion (get this from useReducedMotion hook)
+ * @param normalDuration - Normal animation duration in ms
+ * @param reducedDuration - Optional reduced duration, defaults to half of normal
  */
-export const getAccessibleDuration = (normalDuration: number, reducedDuration?: number) => {
-  const prefersReduced = useReducedMotion();
+export const getAccessibleDuration = (
+  prefersReduced: boolean,
+  normalDuration: number,
+  reducedDuration?: number
+) => {
   return prefersReduced ? (reducedDuration || normalDuration * 0.5) : normalDuration;
 };
 
@@ -403,8 +410,3 @@ export const getGrowthMessage = (
 export const isLoopType = (value: any): value is LoopType => {
   return ['sleep-loop', 'decision-loop', 'social-loop', 'perfectionism-loop'].includes(value);
 };
-
-/**
- * Export React import for hooks used above
- */
-import * as React from 'react';

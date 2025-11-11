@@ -5,7 +5,7 @@
 // ============================================================================
 
 import { useState, useEffect, useCallback } from 'react';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/useStore';
 import { ExerciseLogsAPI } from '@/utils/supabase/exercise-logs';
 import type {
   ExerciseLog,

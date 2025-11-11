@@ -5,8 +5,10 @@
 
 // Core design tokens
 export * from './colors';
-export * from './typography';
-export * from './spacing';
+export { typography } from './typography';
+export type { Typography } from './typography';
+export { spacing } from './spacing';
+export type { Spacing } from './spacing';
 export * from './timing';
 export * from './designTokens';
 
@@ -24,7 +26,15 @@ export * from './methods';
 
 // Other constants
 export * from './routes';
-export * from './theme';
+export {
+  Colors,
+  Typography as ThemeTypography,
+  Spacing as ThemeSpacing,
+  BorderRadius,
+  Shadows,
+  Accessibility,
+  Animation
+} from './theme';
 export * from './authStyles';
 export * from './messages';
 export * from './quiz';

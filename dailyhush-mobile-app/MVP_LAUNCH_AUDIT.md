@@ -471,12 +471,12 @@ When submitting to App Store Connect, you'll need:
    - Age rating: 12+ (mental health themes)
 
 3. **Privacy Policy URL**
-   - Host at: `www.daily-hush.com/privacy`
+   - Host at: `www.noema.app/privacy`
    - Or use GitHub Pages
 
 4. **Support URL**
-   - Provide: `www.daily-hush.com/support`
-   - Or email: `hello@daily-hush.com`
+   - Provide: `www.noema.app/support`
+   - Or email: `hello@noema.app`
 
 5. **App Privacy Questionnaire**
    - Data collected: Email, name (optional), user content, device ID
@@ -519,7 +519,7 @@ After successful App Store approval:
 ## 📞 SUPPORT & RESOURCES
 
 **Company:** Red Impact LLC DBA DailyHush
-**Contact:** hello@daily-hush.com
+**Contact:** hello@noema.app
 **Address:** 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 **Phone:** +1 201-367-0512
 

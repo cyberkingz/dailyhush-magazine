@@ -837,7 +837,7 @@ DailyHush demonstrates **strong foundational UX** with clear information archite
 
 **User Feedback Channels:**
 - In-app feedback form (after first spiral)
-- Email support: support@dailyhush.com
+- Email support: support@noema.app
 - App Store reviews monitoring
 - User interview opt-in (incentivize with free premium month)
 

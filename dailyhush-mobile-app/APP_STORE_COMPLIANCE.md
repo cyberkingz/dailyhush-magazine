@@ -174,7 +174,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - ✅ Full RevenueCat integration with error handling
   - ✅ User feedback: Success/Warning/Error alerts with haptic feedback
   - ✅ Auto-navigation to home on successful restore
-  - ✅ Support email provided on failure (hello@daily-hush.com)
+  - ✅ Support email provided on failure (hello@noema.app)
 
 **Apple Requirement:** Apps offering subscriptions MUST provide "Restore Purchases" functionality (Guideline 3.1.2). ✅ COMPLIANT
 
@@ -372,9 +372,9 @@ When submitting to App Store Connect, ensure:
 - [ ] App icon uploaded (1024x1024 PNG)
 - [ ] App description written (clear, no medical claims)
 - [ ] Keywords added (max 100 characters)
-- [ ] Support URL provided (www.daily-hush.com/support)
-- [ ] Marketing URL provided (www.daily-hush.com)
-- [ ] Privacy Policy URL provided (www.daily-hush.com/privacy)
+- [ ] Support URL provided (www.noema.app/support)
+- [ ] Marketing URL provided (www.noema.app)
+- [ ] Privacy Policy URL provided (www.noema.app/privacy)
 - [ ] Age rating set to 12+
 - [ ] Pricing and subscription tiers configured
 - [ ] In-App Purchases created and reviewed
@@ -385,7 +385,7 @@ When submitting to App Store Connect, ensure:
 
 ## 📞 Support and Contact
 
-**App Support Email:** hello@daily-hush.com
+**App Support Email:** hello@noema.app
 **Company:** Red Impact LLC DBA DailyHush
 **Address:** 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 **Phone:** +1 201-367-0512
@@ -432,7 +432,7 @@ The in-app account deletion feature has been fully implemented to comply with Ap
    - Clear warning banner explaining auth-only deletion and data retention
    - Two sections: "What Will Be Deleted" (3 items) and "What Will Be Retained" (4 items)
    - Note about voice journals being local-only
-   - Support contact information (hello@daily-hush.com)
+   - Support contact information (hello@noema.app)
    - Error handling with user-friendly messages
    - Success feedback with haptics
    - Navigation to home screen after deletion

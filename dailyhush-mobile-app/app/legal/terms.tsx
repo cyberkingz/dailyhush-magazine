@@ -775,7 +775,7 @@ export default function TermsOfService() {
               fontWeight: typography.fontWeight.semibold,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            hello@daily-hush.com
+            hello@noema.app
           </Text>
         </View>
 

@@ -347,7 +347,7 @@ const getErrorMessage = (error: any): string => {
 
   // Database errors
   if (error.message?.includes('unique') || error.message?.includes('duplicate')) {
-    return "This information is already in use. If you're having trouble, please contact support@dailyhush.com.";
+    return "This information is already in use. If you're having trouble, please contact support@noema.app.";
   }
 
   // Generic fallback

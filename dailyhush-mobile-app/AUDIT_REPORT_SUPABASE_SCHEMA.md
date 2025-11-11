@@ -451,7 +451,7 @@ if (existingUser.find(u => u.email === email)) {
   "overthinker_type": "chronic-overthinker",
   "score": 52,
   "source_page": "quiz", ← Default value, identifies web origin
-  "source_url": "https://dailyhush.com/quiz",
+  "source_url": "https://noema.app/quiz",
   "device_type": "desktop",
   "created_at": "2025-01-20T..."
 }

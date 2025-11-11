@@ -1102,7 +1102,7 @@ function getHumanReadableError(error: any) {
   // Default
   return {
     title: 'Payment Error',
-    description: 'Something went wrong. Contact support at hello@daily-hush.com'
+    description: 'Something went wrong. Contact support at hello@noema.app'
   };
 }
 ```

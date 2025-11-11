@@ -94,7 +94,7 @@ Setting exists but is completely non-functional. Should either work or be remove
 ```tsx
 <SettingRow
   title="Contact Support"
-  subtitle="hello@daily-hush.com"  // Shows email
+  subtitle="hello@noema.app"  // Shows email
   icon={<Mail size={20} color="#52B788" strokeWidth={2} />}
   onPress={() => Haptics.selectionAsync()}  // ❌ Only haptics
 />
@@ -106,7 +106,7 @@ Setting exists but is completely non-functional. Should either work or be remove
 - Currently only triggers haptics
 
 **Backend Availability:**
-- ✅ Can use `Linking.openURL('mailto:hello@daily-hush.com')`
+- ✅ Can use `Linking.openURL('mailto:hello@noema.app')`
 - ✅ React Native Linking API available
 
 **Impact:** **MEDIUM**
@@ -211,7 +211,7 @@ import { Linking, Alert } from 'react-native';
 const openEmailClient = async () => {
   await Haptics.selectionAsync();
 
-  const email = 'hello@daily-hush.com';
+  const email = 'hello@noema.app';
   const subject = 'DailyHush Support Request';
   const body = `\n\n---\nApp Version: 1.0.0\nUser: ${user?.email || 'Guest'}`;
 
@@ -223,7 +223,7 @@ const openEmailClient = async () => {
   } else {
     Alert.alert(
       'Email Client Not Available',
-      'Please email us at hello@daily-hush.com',
+      'Please email us at hello@noema.app',
       [{ text: 'OK' }]
     );
   }
@@ -231,7 +231,7 @@ const openEmailClient = async () => {
 
 <SettingRow
   title="Contact Support"
-  subtitle="hello@daily-hush.com"
+  subtitle="hello@noema.app"
   icon={<Mail size={20} color="#52B788" strokeWidth={2} />}
   onPress={openEmailClient}
 />

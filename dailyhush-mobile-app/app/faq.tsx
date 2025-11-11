@@ -86,7 +86,7 @@ const faqs: FAQItem[] = [
   {
     question: 'How do I contact support?',
     answer:
-      'Email us at hello@daily-hush.com. We typically respond within 24-48 hours. For urgent app issues, please include "URGENT" in your subject line.',
+      'Email us at hello@noema.app. We typically respond within 24-48 hours. For urgent app issues, please include "URGENT" in your subject line.',
   },
   {
     question: 'Does Nœma work offline?',
@@ -96,7 +96,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What if the app isn&apos;t working?',
     answer:
-      'First, try:\n\n1. Force-closing the app and reopening\n2. Checking for app updates in the App Store\n3. Restarting your phone\n\nIf issues persist, email hello@daily-hush.com with details about what&apos;s happening and screenshots if possible.',
+      'First, try:\n\n1. Force-closing the app and reopening\n2. Checking for app updates in the App Store\n3. Restarting your phone\n\nIf issues persist, email hello@noema.app with details about what&apos;s happening and screenshots if possible.',
   },
 ];
 
@@ -181,7 +181,7 @@ export default function FAQ() {
             Email us at{' '}
             <Text
               style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>
-              hello@daily-hush.com
+              hello@noema.app
             </Text>
           </Text>
         </View>
@@ -275,7 +275,7 @@ export default function FAQ() {
             We&apos;re here for you. Email{' '}
             <Text
               style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>
-              hello@daily-hush.com
+              hello@noema.app
             </Text>{' '}
             and we&apos;ll get back to you within 24-48 hours.
           </Text>

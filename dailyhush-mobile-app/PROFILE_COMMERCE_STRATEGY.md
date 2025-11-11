@@ -90,7 +90,7 @@ Every loop type needs:
 - Beautiful gradient background
 - Loop type icon (large, centered)
 - "I'm a Sleep Loop Navigator 🌙"
-- "Discover your loop type at daily-hush.com"
+- "Discover your loop type at noema.app"
 - Minimal, aesthetic, screenshot-worthy
 - **Goal:** User posts to Instagram → Friends take quiz → Viral loop
 
@@ -351,7 +351,7 @@ Includes:
 - One-tap share to Instagram Stories
 - Beautiful, aesthetic card design
 - Loop type as status symbol
-- "Discover yours at daily-hush.com"
+- "Discover yours at noema.app"
 
 ### **Loop 2: Newsletter → Product → App → Engagement**
 

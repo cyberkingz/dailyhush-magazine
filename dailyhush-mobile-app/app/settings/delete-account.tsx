@@ -138,7 +138,7 @@ export default function DeleteAccountScreen() {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
         console.error('Failed to delete account via Edge Function:', errorData);
-        setError('Failed to delete account. Please contact support at hello@daily-hush.com');
+        setError('Failed to delete account. Please contact support at hello@noema.app');
         setIsDeleting(false);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
@@ -390,7 +390,7 @@ export default function DeleteAccountScreen() {
             {/* Support contact */}
             <View style={styles.supportSection}>
               <Text style={styles.supportText}>Need help or have questions?</Text>
-              <Text style={styles.supportEmail}>hello@daily-hush.com</Text>
+              <Text style={styles.supportEmail}>hello@noema.app</Text>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

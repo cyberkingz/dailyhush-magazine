@@ -503,7 +503,7 @@ components/legal/
 ## Support
 
 For questions or issues:
-- **Email:** hello@daily-hush.com
+- **Email:** hello@noema.app
 - **Documentation:** See related docs above
 - **Code Review:** All components follow senior developer best practices
 

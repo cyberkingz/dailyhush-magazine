@@ -210,7 +210,7 @@ Welcome
   result_title: "The Chronic Overthinker",
   // ... same fields ...
   source_page: "quiz",  // ← Different from mobile
-  source_url: "https://dailyhush.com/quiz",
+  source_url: "https://noema.app/quiz",
   device_type: "desktop",
   created_at: "2025-01-20T..."
 }

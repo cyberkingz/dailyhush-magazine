@@ -117,7 +117,7 @@ export default function TrialExpiredScreen() {
 
         Alert.alert(
           'No Purchases Found',
-          'We could not find any active subscriptions linked to your account. If you believe this is an error, please contact support at hello@daily-hush.com.',
+          'We could not find any active subscriptions linked to your account. If you believe this is an error, please contact support at hello@noema.app.',
           [{ text: 'OK' }]
         );
       }

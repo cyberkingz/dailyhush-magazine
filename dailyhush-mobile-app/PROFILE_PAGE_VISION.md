@@ -471,7 +471,7 @@ Exit Points:
 - Beautiful, minimal design
 - "I'm navigating the Sleep Loop 🌙"
 - No data, just aesthetic + type
-- "Take the quiz at daily-hush.com"
+- "Take the quiz at noema.app"
 - Instagram story-optimized (1080x1920)
 
 **Monthly Summary Card:**

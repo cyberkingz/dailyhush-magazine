@@ -629,5 +629,5 @@ Before App Store submission, verify:
 **Last Updated:** January 1, 2025
 **Implementation Completed:** January 1, 2025
 **Next Review:** Before App Store submission
-**Contact:** hello@daily-hush.com
+**Contact:** hello@noema.app
 **Status:** ✅ COMPLETE - All recommendations implemented

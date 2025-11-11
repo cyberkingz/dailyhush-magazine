@@ -57,8 +57,7 @@ export default function TrialExpiredScreen() {
       setIsLoading(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
-      // Navigate to subscription screen
-      // TODO: Create subscription screen with RevenueCat integration
+      // Navigate to subscription screen (RevenueCat integration complete)
       router.push('/subscription');
     } catch (error) {
       console.error('Error navigating to subscription:', error);

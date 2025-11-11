@@ -11,6 +11,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import * as Crypto from 'expo-crypto';
@@ -163,7 +164,7 @@ export function useExerciseSession({
           exercise_name: config.title,
           module_context: moduleContext,
           fire_module_screen: moduleScreen,
-          device_type: 'ios', // TODO: Detect platform
+          device_type: Platform.OS, // 'ios' | 'android' | 'web'
         });
 
         // Update session with log_id

@@ -144,7 +144,7 @@ export default function Layout() {
       options={{
         host: process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
         // Enable autocapture for screen views
-        captureApplicationLifecycleEvents: true,
+        captureAppLifecycleEvents: true,
         captureScreens: true,
         // Privacy settings
         enableSessionReplay: false, // Disable session replay for privacy (mental health app)

@@ -275,10 +275,10 @@ function GroundingExerciseStage({
 
     const updatedSenses = { ...groundingData.senses };
     updatedSenses[currentSense] = {
-      ...senseData,
+      ...(senseData as any),
       identified: senseData.identified + 1,
       items: [...senseData.items, currentInput.trim()],
-    };
+    } as any;
 
     const newTotalIdentified = groundingData.totalIdentified + 1;
 

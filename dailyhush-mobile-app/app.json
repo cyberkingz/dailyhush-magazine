@@ -59,7 +59,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.noema.mobile",
+      "bundleIdentifier": "com.anthony.noema",
       "buildNumber": "1.0.0",
       "splash": {
         "image": "./assets/splash.png",
@@ -88,7 +88,7 @@
       }
     },
     "android": {
-      "package": "com.noema.mobile",
+      "package": "com.anthony.noema",
       "versionCode": 1,
       "splash": {
         "image": "./assets/splash.png",

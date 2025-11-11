@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "DailyHush",
-    "slug": "dailyhush",
+    "name": "Nœma",
+    "slug": "noema",
     "version": "1.0.0",
-    "scheme": "dailyhush",
+    "scheme": "noema",
     "platforms": [
       "ios",
       "android"
@@ -18,7 +18,7 @@
       [
         "expo-av",
         {
-          "microphonePermission": "DailyHush needs microphone access for voice journaling features."
+          "microphonePermission": "Nœma needs microphone access for voice journaling features."
         }
       ],
       [
@@ -29,7 +29,7 @@
             "peripheral",
             "central"
           ],
-          "bluetoothAlwaysPermission": "DailyHush needs Bluetooth to connect with your Shift necklace for guided breathing exercises."
+          "bluetoothAlwaysPermission": "Nœma needs Bluetooth to connect with your Shift necklace for guided breathing exercises."
         }
       ],
       [
@@ -59,7 +59,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dailyhush.mobile",
+      "bundleIdentifier": "com.noema.mobile",
       "buildNumber": "1.0.0",
       "splash": {
         "image": "./assets/splash.png",
@@ -67,10 +67,10 @@
         "backgroundColor": "#0A1612"
       },
       "infoPlist": {
-        "NSBluetoothAlwaysUsageDescription": "DailyHush needs Bluetooth to connect with your Shift necklace for guided breathing exercises.",
-        "NSBluetoothPeripheralUsageDescription": "DailyHush needs Bluetooth to connect with your Shift necklace.",
-        "NSMicrophoneUsageDescription": "DailyHush needs microphone access for voice journaling features.",
-        "NSUserNotificationsUsageDescription": "DailyHush sends daily mindful quotes to help you interrupt rumination patterns.",
+        "NSBluetoothAlwaysUsageDescription": "Nœma needs Bluetooth to connect with your Shift necklace for guided breathing exercises.",
+        "NSBluetoothPeripheralUsageDescription": "Nœma needs Bluetooth to connect with your Shift necklace.",
+        "NSMicrophoneUsageDescription": "Nœma needs microphone access for voice journaling features.",
+        "NSUserNotificationsUsageDescription": "Nœma sends daily mindful quotes to help you interrupt rumination patterns.",
         "UIBackgroundModes": [
           "audio",
           "bluetooth-central"
@@ -88,7 +88,7 @@
       }
     },
     "android": {
-      "package": "com.dailyhush.mobile",
+      "package": "com.noema.mobile",
       "versionCode": 1,
       "splash": {
         "image": "./assets/splash.png",
@@ -114,7 +114,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "dailyhush-mobile-app"
+        "projectId": "noema-mobile-app"
       }
     }
   }

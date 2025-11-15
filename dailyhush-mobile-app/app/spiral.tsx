@@ -36,7 +36,6 @@ import {
   CloudSun,
   Sun,
   Check,
-  Wind,
   Volume2,
   VolumeX,
   Frown,
@@ -894,20 +893,6 @@ export default function SpiralInterrupt() {
             showsVerticalScrollIndicator={false}>
             {/* Minimalist "We're Here" Section */}
             <View style={{ marginBottom: SPACING.xl, alignItems: 'center' }}>
-              {/* Compact Wind icon badge */}
-              <View style={{ marginBottom: SPACING.md }}>
-                <View
-                  style={{
-                    height: 56,
-                    width: 56,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 16,
-                    backgroundColor: colors.lime[500],
-                  }}>
-                  <Wind size={28} color={colors.background.primary} strokeWidth={2.5} />
-                </View>
-              </View>
               {/* Title */}
               <Text
                 style={{

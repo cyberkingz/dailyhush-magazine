@@ -26,7 +26,6 @@ import { Settings } from 'lucide-react-native';
 
 import { EmotionalWeatherWidget } from '@/components/mood-widget';
 import { ScrollControlProvider } from '@/components/mood-widget/ScrollControlContext';
-import { ProfileStats } from '@/components/profile/ProfileStats';
 import { PatternInsightCard } from '@/components/profile/PatternInsightCard';
 import { LoopCharacteristics } from '@/components/profile/LoopCharacteristics';
 
@@ -242,22 +241,7 @@ export default function ProfileScreen() {
           <Text style={styles.journeySubtext}>Your journey this week</Text>
         </View>
 
-        {/* Section: Stats - HERO POSITION */}
-        <View style={styles.section}>
-          <ProfileStats
-            currentStreak={profileData.stats.currentStreak}
-            totalCheckIns={profileData.stats.totalCheckIns}
-            avgMoodRating={profileData.stats.avgMoodRating}
-          />
-
-          {/* Transitional text */}
-          <Text style={styles.transitionalText}>
-            These moments of self-reflection are building your self-awareness
-          </Text>
-        </View>
-
-        {/* Subtle divider before emotional check-in */}
-        <View style={styles.narrativeDivider} />
+        {/* Remove stats section until real data is wired up */}
 
         {/* Section: Right Now */}
         <View style={styles.section}>
@@ -419,17 +403,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 12,
-  },
-  transitionalText: {
-    fontSize: 15,
-    fontStyle: 'italic',
-    color: colors.text.secondary,
-    textAlign: 'center',
-    marginTop: 16,
-    marginBottom: 24,
-    paddingHorizontal: 24,
-    lineHeight: 22,
-    opacity: 0.85,
   },
   narrativeDivider: {
     height: 1,

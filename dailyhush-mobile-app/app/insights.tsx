@@ -16,29 +16,15 @@ import {
   Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  ArrowLeft,
-  Sparkles,
-  Clock,
-  Lightbulb,
-  BarChart3,
-  ChevronRight,
-  TrendingUp,
-  Heart,
-} from 'lucide-react-native';
+import { Sparkles, BarChart3 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
 import { ScrollFadeView } from '@/components/ScrollFadeView';
 import { ScrollControlProvider } from '@/components/mood-widget/ScrollControlContext';
-import { PageHeader } from '@/components/PageHeader';
 import { useUser } from '@/store/useStore';
 import { getWeeklyInsights, WeeklyInsights } from '@/services/insights';
-import { getTechniqueRankings, detectSpiralPatterns } from '@/services/patternDetection';
-import { TabBar, Tab } from '@/components/insights/TabBar';
 import { WeeklyInsightsContent } from '@/components/insights/WeeklyInsightsContent';
-import { TechniquesInsightsContent } from '@/components/insights/TechniquesInsightsContent';
-import type { SpiralPattern } from '@/types';
 import { colors } from '@/constants/colors';
 import { typography } from '@/constants/typography';
 import { spacing } from '@/constants/spacing';
@@ -52,9 +38,6 @@ export default function Insights() {
   const [refreshing, setRefreshing] = useState(false);
   const [weeklyData, setWeeklyData] = useState<WeeklyInsights | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<string>('weekly');
-  const [techniqueRankings, setTechniqueRankings] = useState<any[]>([]);
-  const [spiralPatterns, setSpiralPatterns] = useState<SpiralPattern | null>(null);
 
   const refreshControlColors =
     Platform.select<Partial<ComponentProps<typeof RefreshControl>>>({
@@ -80,21 +63,13 @@ export default function Insights() {
     setError(null);
 
     try {
-      // Fetch both in parallel
-      const [weeklyResult, rankingsData, patternsData] = await Promise.all([
-        getWeeklyInsights(user.user_id),
-        getTechniqueRankings(user.user_id),
-        detectSpiralPatterns(user.user_id, 30),
-      ]);
+      const weeklyResult = await getWeeklyInsights(user.user_id);
 
       if (!weeklyResult.success || !weeklyResult.data) {
         setError(weeklyResult.error || 'Failed to load insights');
       } else {
         setWeeklyData(weeklyResult.data);
       }
-
-      setTechniqueRankings(rankingsData);
-      setSpiralPatterns(patternsData);
 
     } catch (err) {
       console.error('Error fetching insights:', err);
@@ -116,22 +91,6 @@ export default function Insights() {
     setRefreshing(true);
     fetchInsights();
   };
-
-  // Define tabs
-  const tabs: Tab[] = [
-    {
-      id: 'weekly',
-      label: 'Weekly',
-      accessibilityLabel: 'Weekly insights tab',
-      accessibilityHint: 'Shows your weekly spiral patterns and progress',
-    },
-    {
-      id: 'techniques',
-      label: 'Techniques',
-      accessibilityLabel: 'Techniques tab',
-      accessibilityHint: 'Shows which techniques work best for you',
-    },
-  ];
 
   return (
     <ScrollControlProvider>
@@ -307,45 +266,27 @@ export default function Insights() {
 
         {/* Data State - Show insights */}
         {!loading && !error && weeklyData && weeklyData.totalSpirals > 0 && (
-          <>
-            <TabBar
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-            />
-
-            <ScrollFadeView
-              style={{ flex: 1 }}
-              contentContainerStyle={{
-                paddingHorizontal: spacing.lg,
-                paddingTop: spacing.md,
-                paddingBottom: 72 + insets.bottom,
-              }}
-              showsVerticalScrollIndicator={false}
-              fadeColor={colors.background.primary}
-              fadeHeight={48}
-              fadeIntensity={0.95}
-              fadeVisibility="always"
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                  {...refreshControlColors}
-                />
-              }>
-              {activeTab === 'weekly' ? (
-                <WeeklyInsightsContent weeklyData={weeklyData} />
-              ) : (
-                <TechniquesInsightsContent
-                  rankings={techniqueRankings}
-                  peakTime={spiralPatterns?.peakTime ?? null}
-                  mostCommonTrigger={spiralPatterns?.mostCommonTrigger ?? null}
-                  avgSpiralsPerWeek={spiralPatterns?.avgSpiralsPerWeek ?? 0}
-                  earlyDetectionRate={spiralPatterns?.earlyDetectionRate ?? 0}
-                />
-              )}
-            </ScrollFadeView>
-          </>
+          <ScrollFadeView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              paddingHorizontal: spacing.lg,
+              paddingTop: spacing.md,
+              paddingBottom: 72 + insets.bottom,
+            }}
+            showsVerticalScrollIndicator={false}
+            fadeColor={colors.background.primary}
+            fadeHeight={48}
+            fadeIntensity={0.95}
+            fadeVisibility="always"
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                {...refreshControlColors}
+              />
+            }>
+            <WeeklyInsightsContent weeklyData={weeklyData} />
+          </ScrollFadeView>
         )}
       </SafeAreaView>
       </>

@@ -40,7 +40,15 @@
           "sounds": []
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "react-native",
+          "organization": "noema-sa"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

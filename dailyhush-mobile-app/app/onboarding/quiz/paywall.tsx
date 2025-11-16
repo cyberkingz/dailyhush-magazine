@@ -43,10 +43,18 @@ export default function QuizPaywall() {
     answers: string; // JSON stringified QuizAnswer[]
   }>();
 
-  const [isStartingTrial, setIsStartingTrial] = useState(false);
+  const [isProcessingPurchase, setIsProcessingPurchase] = useState(false);
   const [isLoadingOfferings, setIsLoadingOfferings] = useState(true);
   const [subscriptionOptions, setSubscriptionOptions] = useState<any[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  const planIncludesTrial =
+    selectedPlan === PACKAGE_IDS.MONTHLY || selectedPlan === PACKAGE_IDS.ANNUAL;
+  const isLifetimeSelected = selectedPlan === PACKAGE_IDS.LIFETIME;
+  const primaryButtonLabel = isLifetimeSelected ? 'Unlock Lifetime Access' : 'Start My Free Trial';
+  const primaryButtonLoadingLabel = isLifetimeSelected
+    ? 'Processing Purchase...'
+    : 'Starting Trial...';
 
   // Get config for the loop type, with fallback to social-loop if invalid
   const config =
@@ -199,7 +207,7 @@ export default function QuizPaywall() {
     }
 
     try {
-      setIsStartingTrial(true);
+      setIsProcessingPurchase(true);
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
       // Get current authenticated user
@@ -211,7 +219,7 @@ export default function QuizPaywall() {
       if (sessionError) {
         console.error('Session error:', sessionError);
         Alert.alert('Authentication Error', 'Please try signing in again.');
-        setIsStartingTrial(false);
+        setIsProcessingPurchase(false);
         return;
       }
 
@@ -229,7 +237,7 @@ export default function QuizPaywall() {
               onPress: () => router.replace('/onboarding/signup'),
             },
           ]);
-          setIsStartingTrial(false);
+          setIsProcessingPurchase(false);
           return;
         }
 
@@ -245,7 +253,7 @@ export default function QuizPaywall() {
       if (!finalSession?.user) {
         console.error('Unable to establish authenticated session');
         Alert.alert('Authentication Error', 'Unable to verify your account. Please try again.');
-        setIsStartingTrial(false);
+        setIsProcessingPurchase(false);
         return;
       }
 
@@ -257,7 +265,7 @@ export default function QuizPaywall() {
       if (!selectedOption?.package) {
         console.error('Selected package not found');
         Alert.alert('Error', 'Unable to process subscription. Please try again.');
-        setIsStartingTrial(false);
+        setIsProcessingPurchase(false);
         return;
       }
 
@@ -274,7 +282,7 @@ export default function QuizPaywall() {
 
       if (!quizSuccess) {
         console.error('Failed to save quiz');
-        setIsStartingTrial(false);
+        setIsProcessingPurchase(false);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
@@ -284,7 +292,7 @@ export default function QuizPaywall() {
 
       if (userCancelled) {
         console.log('User cancelled subscription purchase');
-        setIsStartingTrial(false);
+        setIsProcessingPurchase(false);
         return;
       }
 
@@ -293,7 +301,7 @@ export default function QuizPaywall() {
       if (!hasPremium) {
         console.error('Premium entitlement not granted after purchase');
         Alert.alert('Error', 'Subscription activation failed. Please contact support.');
-        setIsStartingTrial(false);
+        setIsProcessingPurchase(false);
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         return;
       }
@@ -334,7 +342,7 @@ export default function QuizPaywall() {
         'Subscription Error',
         error.message || 'Unable to start subscription. Please try again.'
       );
-      setIsStartingTrial(false);
+      setIsProcessingPurchase(false);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     }
   };
@@ -609,8 +617,8 @@ export default function QuizPaywall() {
               />
             ))}
 
-          {/* Trial Info */}
-          {!isLoadingOfferings && (
+          {/* Trial / Lifetime Info */}
+          {!isLoadingOfferings && planIncludesTrial && (
             <View
               style={{
                 backgroundColor: colors.lime[900] + '50',
@@ -638,6 +646,37 @@ export default function QuizPaywall() {
                   lineHeight: 22,
                 }}>
                 Full access • Cancel anytime • No commitment
+              </Text>
+            </View>
+          )}
+          {!isLoadingOfferings && isLifetimeSelected && (
+            <View
+              style={{
+                backgroundColor: colors.lime[900] + '50',
+                borderRadius: 12,
+                padding: 20,
+                marginTop: 24,
+                borderWidth: 1,
+                borderColor: colors.lime[600] + '40',
+              }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: colors.text.primary,
+                  textAlign: 'center',
+                  marginBottom: 8,
+                }}>
+                Instant Lifetime Access
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: colors.text.secondary,
+                  textAlign: 'center',
+                  lineHeight: 22,
+                }}>
+                Pay once, keep Premium forever. No renewal or trial period required.
               </Text>
             </View>
           )}
@@ -669,7 +708,7 @@ export default function QuizPaywall() {
             }}>
             <Pressable
               onPress={handleStartTrial}
-              disabled={isStartingTrial || !selectedPlan}
+              disabled={isProcessingPurchase || !selectedPlan}
               style={{
                 backgroundColor: selectedPlan ? colors.lime[600] : colors.background.muted,
                 borderRadius: 20,
@@ -687,9 +726,9 @@ export default function QuizPaywall() {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    opacity: pressed && !isStartingTrial ? 0.9 : 1,
+                    opacity: pressed && !isProcessingPurchase ? 0.9 : 1,
                   }}>
-                  {isStartingTrial ? (
+                  {isProcessingPurchase ? (
                     <>
                       <ActivityIndicator
                         size="small"
@@ -702,7 +741,7 @@ export default function QuizPaywall() {
                           fontWeight: 'bold',
                           color: colors.button.primaryText,
                         }}>
-                        Starting Trial...
+                        {primaryButtonLoadingLabel}
                       </Text>
                     </>
                   ) : (
@@ -719,7 +758,7 @@ export default function QuizPaywall() {
                           fontWeight: 'bold',
                           color: colors.button.primaryText,
                         }}>
-                        Start My Free Trial
+                        {primaryButtonLabel}
                       </Text>
                     </>
                   )}

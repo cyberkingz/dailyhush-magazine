@@ -13,14 +13,20 @@
     "preview": {
       "distribution": "internal",
       "ios": {
-        "simulator": false,
-        "buildType": "app-store"
+        "simulator": false
       }
     },
     "production": {
       "distribution": "store",
-      "ios": {
-        "buildType": "app-store"
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://kisewkjogomsstgvqggc.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtpc2V3a2pvZ29tc3N0Z3ZxZ2djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTczMzkzODIsImV4cCI6MjA3MjkxNTM4Mn0.pyoxO368d_1lDbimZcRiGfmjDs34mXk7h-ZaQPKiUqo",
+        "EXPO_PUBLIC_REVENUECAT_IOS_KEY": "appl_URekFOERLWIiXnSYeGkOJWUYKpM",
+        "EXPO_PUBLIC_REVENUECAT_ANDROID_KEY": "test_KwZxiLPuioAGRBeGrmnYhpsOzug",
+        "EXPO_PUBLIC_POSTHOG_API_KEY": "phc_FH6zOGLX7Zv3rIL3e4aMvQmmizQ8Ugi1kKbENgkoq6S",
+        "EXPO_PUBLIC_POSTHOG_HOST": "https://us.i.posthog.com",
+        "SENTRY_AUTH_TOKEN": "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",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "false"
       }
     }
   },

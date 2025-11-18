@@ -57,6 +57,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "cli": {
+      "appVersionSource": "remote"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -68,7 +71,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anthony.noema",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.4",
       "splash": {
         "image": "./assets/splash.png",
         "resizeMode": "cover",
@@ -79,6 +82,7 @@
         "NSBluetoothPeripheralUsageDescription": "Nœma needs Bluetooth to connect with your Shift necklace.",
         "NSMicrophoneUsageDescription": "Nœma needs microphone access for voice journaling features.",
         "NSUserNotificationsUsageDescription": "Nœma sends daily mindful quotes to help you interrupt rumination patterns.",
+        "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": [
           "audio",
           "bluetooth-central"
@@ -114,7 +118,12 @@
         "BLUETOOTH_SCAN",
         "ACCESS_FINE_LOCATION",
         "RECORD_AUDIO",
-        "NOTIFICATIONS"
+        "NOTIFICATIONS",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT"
       ]
     },
     "extra": {
@@ -122,8 +131,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "noema-mobile-app"
+        "projectId": "e38bc727-1cf7-4f03-a5ce-bf5d43c3bb45"
       }
-    }
+    },
+    "owner": "tonyrcd"
   }
 }

@@ -99,3 +99,4 @@ Si les produits sont prêts :
 3. Soumettre les produits pour review si nécessaire
 
 Une fois que les produits auront un statut "Active" ou "Ready" dans RevenueCat, l'offering devrait fonctionner correctement.
+

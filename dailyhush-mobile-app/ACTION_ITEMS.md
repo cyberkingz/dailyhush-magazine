@@ -128,3 +128,4 @@
 5. **Soumission:** 2 minutes
 
 **Total estimé:** 30-60 minutes (principalement des délais de traitement Apple)
+

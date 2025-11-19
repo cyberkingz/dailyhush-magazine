@@ -52,3 +52,4 @@ Une fois que tu as vérifié, dis-moi :
 - Le **statut** de chaque produit
 - S'il y a des **métadonnées manquantes**
 - Si les produits sont **"Ready to Submit"** ou **"Approved"**
+

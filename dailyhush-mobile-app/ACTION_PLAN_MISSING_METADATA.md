@@ -107,3 +107,4 @@ Une fois toutes les actions complétées :
 - ✅ Après approbation Apple, le statut passera à "Ready to Submit" ou "Approved"
 - ✅ RevenueCat se synchronisera et les produits seront disponibles dans l'offering
 - ✅ L'app sur TestFlight pourra utiliser les subscriptions correctement
+

@@ -38,3 +38,4 @@ L'offering "default" doit être marqué comme **"Current Offering"** dans Revenu
 1. Vérifier que l'offering "default" est marqué comme "Current" dans RevenueCat
 2. Vérifier que les produits App Store sont bien actifs et approuvés
 3. Vérifier que les produits sont bien liés à l'entitlement "premium"
+

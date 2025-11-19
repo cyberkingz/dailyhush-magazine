@@ -90,3 +90,4 @@ Le statut **"Missing Metadata"** peut être causé par :
 - **Subscription Group**: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscription-groups/21829692
 - **Monthly Product**: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752
 - **Pricing Page**: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752/pricing
+

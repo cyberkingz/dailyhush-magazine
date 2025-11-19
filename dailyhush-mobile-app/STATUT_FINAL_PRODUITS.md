@@ -128,3 +128,4 @@ Après l'approbation dans App Store Connect :
 - [App Store Connect - In-App Purchases](https://appstoreconnect.apple.com/apps/6755148761/features/in-app-purchase)
 - [RevenueCat - Products](https://app.revenuecat.com/projects/2aae4d1b/product-catalog/products)
 - [Documentation Apple - In-App Purchase Statuses](https://developer.apple.com/help/app-store-connect/reference/in-app-purchase-statuses/)
+

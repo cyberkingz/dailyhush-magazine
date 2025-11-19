@@ -42,3 +42,4 @@ eas secret:create --scope project --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value "
 ```
 
 Voir `GUIDE_ENV_VARIABLES_EAS.md` pour plus de détails.
+

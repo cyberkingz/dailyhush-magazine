@@ -90,3 +90,4 @@ Le statut **"Missing Metadata"** dans App Store Connect signifie qu'il manque de
 5. Vérifier que le statut se met à jour dans RevenueCat
 
 Une fois que les produits auront le statut "Ready to Submit" ou "Approved" dans App Store Connect, le statut se mettra à jour dans RevenueCat et l'offering fonctionnera correctement !
+

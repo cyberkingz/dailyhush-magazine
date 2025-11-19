@@ -181,3 +181,4 @@ Une fois la version soumise, si les produits passent à "Waiting for Review", Re
 - Les utilisateurs TestFlight pourront acheter les subscriptions
 
 **Note** : Apple Review prend généralement 24-72h, mais les subscriptions seront disponibles sur TestFlight dès qu'elles sont "Waiting for Review", pas besoin d'attendre l'approbation finale.
+

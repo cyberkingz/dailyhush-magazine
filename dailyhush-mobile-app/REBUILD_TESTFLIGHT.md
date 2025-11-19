@@ -128,3 +128,4 @@ eas build:list --platform ios --limit 1
 ---
 
 **C'est parti ! Lance le build maintenant ! 🚀**
+

@@ -159,3 +159,4 @@
 3. **Section "In-App Purchases and Subscriptions":** Cette section peut n'apparaître qu'après l'upload d'un build. C'est une exigence d'Apple pour la première soumission de subscriptions.
 
 4. **App Privacy:** La configuration partielle devrait suffire pour la soumission initiale, mais une configuration complète est recommandée.
+

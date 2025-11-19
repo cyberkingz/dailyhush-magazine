@@ -191,3 +191,4 @@ Après avoir configuré les variables et rebuild l'app, teste sur TestFlight :
 ---
 
 **Recommandation :** Utilise la **Méthode 1 (Secrets EAS)** pour plus de sécurité ! 🔒
+

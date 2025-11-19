@@ -86,3 +86,4 @@ Chercher dans la documentation RevenueCat si les produits "Missing Metadata" peu
 **Il est possible que les produits App Store doivent être au moins "Waiting for Review" ou "Approved" avant que RevenueCat puisse les utiliser, même en sandbox/TestFlight.**
 
 C'est probablement pour ça que l'app affiche "Setup Required" - RevenueCat ne peut pas récupérer les informations des produits car ils ne sont pas encore soumis pour review dans App Store Connect.
+

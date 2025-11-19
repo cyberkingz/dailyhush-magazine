@@ -222,3 +222,4 @@ Subscriptions auto-renew unless canceled 24 hours before the end of the current 
 ---
 
 **Note:** Tous les textes sont prêts à être copiés directement dans App Store Connect. Les descriptions sont optimisées pour l'App Store et les Review Notes expliquent clairement les produits à Apple.
+

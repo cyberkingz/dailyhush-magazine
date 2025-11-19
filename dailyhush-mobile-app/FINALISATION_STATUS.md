@@ -139,3 +139,4 @@
 - Apple traite actuellement le pricing pour tous les pays (175 pays)
 - Une fois le traitement terminé, le bouton "Add Introductory Offer" devrait apparaître
 - Le statut "Missing Metadata" devrait se résoudre automatiquement une fois tout complété
+

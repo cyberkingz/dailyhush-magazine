@@ -133,3 +133,4 @@ Peut-être qu'il faut d'abord soumettre chaque produit individuellement pour qu'
 Le message d'erreur dans l'app ("Subscription options are not configured yet") vient du fait que RevenueCat ne peut pas récupérer les produits car ils ont le statut "Missing Metadata" dans App Store Connect.
 
 **Une fois que les produits seront soumis et auront le statut "Waiting for Review" ou "Approved", RevenueCat pourra les synchroniser et l'erreur disparaîtra.**
+

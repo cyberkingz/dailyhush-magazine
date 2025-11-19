@@ -99,3 +99,4 @@ Apple affiche ce message sur chaque produit :
 ---
 
 **Note:** Les subscriptions doivent être soumises avec une version de l'app, pas individuellement. Le statut "Missing Metadata" peut persister jusqu'à ce que tous les éléments soient complétés et traités par Apple.
+

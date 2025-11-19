@@ -49,3 +49,4 @@ Les deux trials sont configurés pour:
 ## 📝 Note
 
 Le statut "Upcoming Changes" pour Monthly signifie que le trial est programmé pour commencer le 27 novembre 2025. Le statut "Current Introductory Offers" pour Annual signifie que le trial est actuellement actif.
+

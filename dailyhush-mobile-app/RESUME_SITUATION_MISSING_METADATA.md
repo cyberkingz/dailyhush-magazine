@@ -107,3 +107,4 @@ Le statut **"Missing Metadata"** dans RevenueCat devrait disparaître une fois q
 3. ✅ Apple approuve les produits (24-48h)
 
 Une fois approuvés, RevenueCat se synchronisera automatiquement et les produits seront disponibles dans l'offering "default".
+

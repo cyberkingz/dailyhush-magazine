@@ -262,3 +262,4 @@ Il y a une incohérence dans la documentation :
 ---
 
 **Prochaine étape:** Une fois toutes les vérifications faites, tester l'achat dans l'app avec un compte Sandbox Tester.
+

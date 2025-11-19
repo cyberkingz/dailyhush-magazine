@@ -63,3 +63,4 @@ Une fois que la version sera soumise pour review avec les produits sélectionné
 **La section "In-App Purchases and Subscriptions" n'apparaît sur la page de version qu'après qu'un build soit uploadé.** C'est pour ça qu'on ne peut pas sélectionner les produits maintenant.
 
 Une fois le build uploadé, cette section apparaîtra automatiquement et on pourra sélectionner les 3 produits avant de soumettre pour review.
+

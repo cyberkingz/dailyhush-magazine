@@ -107,3 +107,4 @@
 4. ⬜ Ajouter catégorie secondaire
 5. ⬜ Ajouter screenshots supplémentaires
 6. ⬜ Créer App Preview vidéos
+

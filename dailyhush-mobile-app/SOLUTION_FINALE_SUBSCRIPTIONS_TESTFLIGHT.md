@@ -241,3 +241,4 @@ const loadSubscriptionOptions = async () => {
 5. Les subscriptions fonctionneront pour tous les Apple ID
 
 Quelle solution tu veux utiliser ?
+

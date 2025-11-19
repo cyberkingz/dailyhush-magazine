@@ -1,4 +1,5 @@
 # Adaptive Protocol Implementation Guide
+
 ## No Machine Learning Required - Simple Math & SQL
 
 **Last Updated:** November 5, 2025
@@ -9,6 +10,7 @@
 ## Executive Summary
 
 Transform the spiral interrupt from a **memorizable technique** into a **personalized interrupt engine** using:
+
 - ✅ Simple database queries (no ML)
 - ✅ Basic averaging and counting
 - ✅ Client-side calculations
@@ -23,12 +25,14 @@ Transform the spiral interrupt from a **memorizable technique** into a **persona
 ## The Problem We're Solving
 
 ### Current State (Self-Obsoleting Product)
+
 ```
 User uses app → Learns 5-4-3-2-1 → Memorizes it → Doesn't need app
 Result: Churn after 20 uses
 ```
 
 ### Future State (Personalized Engine)
+
 ```
 User uses app → App learns what works → Gets better over time → Lock-in
 Result: Increasing value with usage
@@ -41,12 +45,15 @@ Result: Increasing value with usage
 ### Three Core Components
 
 #### 1. **Technique Library** (Static)
+
 5 different protocols that rotate based on effectiveness
 
 #### 2. **Simple Scoring System** (Logic)
+
 Basic math to pick the best technique for this moment
 
 #### 3. **Effectiveness Tracking** (Data)
+
 Store outcomes and calculate averages
 
 ---
@@ -406,19 +413,16 @@ export async function selectAdaptiveProtocol(
   trigger?: string,
   shiftConnected: boolean = false
 ): Promise<AdaptiveProtocol> {
-
   // 1. Get user's technique history (simple SQL query)
   const userStats = await getUserTechniqueStats(userId);
 
   // 2. Filter available techniques
-  const available = TECHNIQUE_LIBRARY.filter(tech =>
-    !tech.requiresShift || shiftConnected
-  );
+  const available = TECHNIQUE_LIBRARY.filter((tech) => !tech.requiresShift || shiftConnected);
 
   // 3. Score each technique using SIMPLE MATH
-  const scored = available.map(technique => {
+  const scored = available.map((technique) => {
     let score = 0;
-    const stats = userStats.find(s => s.techniqueId === technique.id);
+    const stats = userStats.find((s) => s.techniqueId === technique.id);
 
     // RULE 1: Past effectiveness (most important)
     if (stats && stats.timesUsed > 0) {
@@ -430,7 +434,7 @@ export async function selectAdaptiveProtocol(
     // RULE 2: Trigger match
     if (trigger) {
       const triggerLower = trigger.toLowerCase();
-      if (technique.bestFor.some(t => triggerLower.includes(t.toLowerCase()))) {
+      if (technique.bestFor.some((t) => triggerLower.includes(t.toLowerCase()))) {
         score += 8; // Strong match bonus
       }
     }
@@ -468,9 +472,7 @@ export async function selectAdaptiveProtocol(
   // 5. Exploration vs Exploitation (80/20 rule)
   // 80% of time pick best, 20% of time try something new
   const shouldExplore = Math.random() < 0.2;
-  const selected = shouldExplore && scored[1]
-    ? scored[1]
-    : scored[0];
+  const selected = shouldExplore && scored[1] ? scored[1] : scored[0];
 
   // 6. Calculate confidence (0-1)
   const maxPossibleScore = 59; // Sum of all bonuses
@@ -482,7 +484,7 @@ export async function selectAdaptiveProtocol(
   return {
     technique: selected.technique,
     confidence,
-    rationale
+    rationale,
   };
 }
 
@@ -500,11 +502,11 @@ async function getUserTechniqueStats(userId: string): Promise<TechniqueStats[]> 
     return [];
   }
 
-  return (data || []).map(row => ({
+  return (data || []).map((row) => ({
     techniqueId: row.technique_id,
     timesUsed: row.times_used,
     avgReduction: row.avg_reduction,
-    lastUsedAt: row.last_used_at ? new Date(row.last_used_at) : null
+    lastUsedAt: row.last_used_at ? new Date(row.last_used_at) : null,
   }));
 }
 
@@ -512,17 +514,19 @@ async function getUserTechniqueStats(userId: string): Promise<TechniqueStats[]> 
  * Generate human-readable explanation
  */
 function generateRationale(
-  selected: { technique: Technique, score: number },
+  selected: { technique: Technique; score: number },
   intensity: number,
   trigger: string | undefined,
   userStats: TechniqueStats[]
 ): string {
   const reasons = [];
-  const stats = userStats.find(s => s.techniqueId === selected.technique.id);
+  const stats = userStats.find((s) => s.techniqueId === selected.technique.id);
 
   // Effectiveness reason
   if (stats && stats.avgReduction > 2) {
-    reasons.push(`Last time this reduced your intensity by ${stats.avgReduction.toFixed(1)} points`);
+    reasons.push(
+      `Last time this reduced your intensity by ${stats.avgReduction.toFixed(1)} points`
+    );
   } else if (stats && stats.avgReduction > 0) {
     reasons.push(`This usually helps you feel ${stats.avgReduction.toFixed(1)} points better`);
   }
@@ -536,7 +540,7 @@ function generateRationale(
   if (intensity <= 3) {
     reasons.push("You're in a strong spiral, so we're using a more intensive protocol");
   } else if (intensity >= 6) {
-    reasons.push("You caught it early - this quick protocol should help");
+    reasons.push('You caught it early - this quick protocol should help');
   }
 
   // Novelty reason
@@ -546,7 +550,7 @@ function generateRationale(
 
   // Default if no specific reasons
   if (reasons.length === 0) {
-    reasons.push("This technique is effective for most people");
+    reasons.push('This technique is effective for most people');
   }
 
   return reasons.slice(0, 2).join('. ') + '.';
@@ -569,23 +573,21 @@ export async function recordProtocolOutcome(
 ): Promise<void> {
   // Just insert into spiral_logs
   // The database trigger will auto-update user_technique_stats
-  const { error } = await supabase
-    .from('spiral_logs')
-    .insert({
-      user_id: userId,
-      technique_id: techniqueId,
-      technique_name: techniqueName,
-      protocol_duration: duration,
-      selection_confidence: confidence,
-      selection_rationale: rationale,
-      pre_feeling: preFeel,
-      post_feeling: postFeel,
-      trigger: trigger || null,
-      interactive_responses: interactiveResponses || null,
-      interrupted: true,
-      duration_seconds: duration,
-      timestamp: new Date().toISOString()
-    });
+  const { error } = await supabase.from('spiral_logs').insert({
+    user_id: userId,
+    technique_id: techniqueId,
+    technique_name: techniqueName,
+    protocol_duration: duration,
+    selection_confidence: confidence,
+    selection_rationale: rationale,
+    pre_feeling: preFeel,
+    post_feeling: postFeel,
+    trigger: trigger || null,
+    interactive_responses: interactiveResponses || null,
+    interrupted: true,
+    duration_seconds: duration,
+    timestamp: new Date().toISOString(),
+  });
 
   if (error) {
     console.error('Error recording protocol outcome:', error);
@@ -619,7 +621,7 @@ export async function getPeakSpiralTime(userId: string): Promise<number | null> 
 
   // Count spirals by hour
   const hourCounts: Record<number, number> = {};
-  data.forEach(log => {
+  data.forEach((log) => {
     const hour = new Date(log.timestamp).getHours();
     hourCounts[hour] = (hourCounts[hour] || 0) + 1;
   });
@@ -628,7 +630,7 @@ export async function getPeakSpiralTime(userId: string): Promise<number | null> 
   const entries = Object.entries(hourCounts);
   if (entries.length === 0) return null;
 
-  entries.sort(([,a], [,b]) => (b as number) - (a as number));
+  entries.sort(([, a], [, b]) => (b as number) - (a as number));
   return parseInt(entries[0][0]);
 }
 
@@ -649,7 +651,7 @@ export async function getMostCommonTrigger(userId: string): Promise<string | nul
 
   // Count triggers
   const triggerCounts: Record<string, number> = {};
-  data.forEach(log => {
+  data.forEach((log) => {
     if (log.trigger) {
       triggerCounts[log.trigger] = (triggerCounts[log.trigger] || 0) + 1;
     }
@@ -659,7 +661,7 @@ export async function getMostCommonTrigger(userId: string): Promise<string | nul
   const entries = Object.entries(triggerCounts);
   if (entries.length === 0) return null;
 
-  entries.sort(([,a], [,b]) => (b as number) - (a as number));
+  entries.sort(([, a], [, b]) => (b as number) - (a as number));
   return entries[0][0];
 }
 
@@ -679,10 +681,11 @@ export async function getTechniqueRankings(userId: string) {
 
   return data.map((stat, index) => ({
     rank: index + 1,
-    techniqueName: TECHNIQUE_LIBRARY.find(t => t.id === stat.technique_id)?.name || stat.technique_id,
+    techniqueName:
+      TECHNIQUE_LIBRARY.find((t) => t.id === stat.technique_id)?.name || stat.technique_id,
     avgReduction: stat.avg_reduction,
     timesUsed: stat.times_used,
-    successRate: stat.times_successful / stat.times_used
+    successRate: stat.times_successful / stat.times_used,
   }));
 }
 ```
@@ -968,16 +971,19 @@ const styles = StyleSheet.create({
 ## Implementation Timeline
 
 ### Week 1: Database & Core Logic
+
 - ✅ Day 1-2: Database migration
 - ✅ Day 3-4: Technique library
 - ✅ Day 5-7: Scoring algorithm
 
 ### Week 2: Integration
+
 - ✅ Day 8-10: Update spiral.tsx to use adaptive selection
 - ✅ Day 11-12: Add interactive steps
 - ✅ Day 13-14: Testing with mock data
 
 ### Week 3: User-Facing Features
+
 - ✅ Day 15-17: Insights screen
 - ✅ Day 18-19: Pattern detection
 - ✅ Day 20-21: Polish and bug fixes
@@ -987,6 +993,7 @@ const styles = StyleSheet.create({
 ## Testing Strategy
 
 ### 1. Seed Test Data
+
 ```sql
 -- Create test spiral logs with varied outcomes
 INSERT INTO spiral_logs (user_id, technique_id, technique_name, pre_feeling, post_feeling, trigger, timestamp)
@@ -998,6 +1005,7 @@ VALUES
 ```
 
 ### 2. Verify Stats Auto-Update
+
 ```typescript
 // Should show box-breathing has avgReduction of 3.33
 const stats = await getUserTechniqueStats('test-user-id');
@@ -1005,6 +1013,7 @@ console.log(stats);
 ```
 
 ### 3. Test Selection Logic
+
 ```typescript
 // For panic trigger at intensity 2, should select box-breathing
 const protocol = await selectAdaptiveProtocol('test-user-id', 2, 'panic', false);
@@ -1038,6 +1047,7 @@ Track these to validate the system works:
 **Additional Costs:** $0
 
 **Why it's free:**
+
 - No external APIs
 - All logic runs client-side
 - Database queries covered by Supabase free tier (500MB)

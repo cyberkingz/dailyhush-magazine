@@ -57,8 +57,7 @@ export default function Layout() {
           headerShown: true,
           contentStyle: { backgroundColor: '#0A1612' },
           // ... rest of your config
-        }}
-      >
+        }}>
         {/* Your screens */}
       </Stack>
     </>
@@ -160,11 +159,7 @@ export default function Layout() {
 
   // Only hide splash when BOTH conditions are true
   if (!isReady || !minTimeElapsed) {
-    return (
-      <SplashScreen
-        showLoading={!isReady}
-      />
-    );
+    return <SplashScreen showLoading={!isReady} />;
   }
 
   return (
@@ -194,6 +189,7 @@ Update your `app.json` to use a simpler placeholder until React Native loads:
 ```
 
 Create a simple `splash-simple.png`:
+
 - Solid color: `#0A1612`
 - Just the "DailyHush" text centered
 - Or completely blank (just the background color)
@@ -300,7 +296,7 @@ npm start
 ```tsx
 <SplashScreen
   onAnimationComplete={() => setIsReady(true)}
-  showLoading={false}  // No loading indicator
+  showLoading={false} // No loading indicator
 />
 ```
 
@@ -326,6 +322,7 @@ npm start
 **Problem**: Brief flash of white between Expo splash and custom splash
 
 **Solution**: Ensure background colors match:
+
 ```json
 // app.json
 "splash": {
@@ -338,6 +335,7 @@ npm start
 **Problem**: Animations don't run smoothly (< 60fps)
 
 **Solutions**:
+
 - Ensure `useNativeDriver: true` is set (already done in component)
 - Test on physical device (simulators can be slower)
 - Close other apps to free up resources
@@ -348,6 +346,7 @@ npm start
 **Problem**: Splash screen doesn't dismiss after initialization
 
 **Solution**: Add timeout fallback:
+
 ```tsx
 useEffect(() => {
   // Fallback: Force dismiss after 5 seconds
@@ -370,7 +369,9 @@ useEffect(() => {
 **Problem**: Spiral graphic doesn't appear
 
 **Solutions**:
+
 1. Ensure `react-native-svg` is installed:
+
    ```bash
    npx expo install react-native-svg
    ```
@@ -389,6 +390,7 @@ useEffect(() => {
 **Problem**: Background appears solid, no gradient
 
 **Solution**: Install Expo Linear Gradient:
+
 ```bash
 npx expo install expo-linear-gradient
 ```
@@ -416,12 +418,7 @@ export default function Layout() {
     setIsReady(true);
   };
 
-  return (
-    <SplashScreen
-      onAnimationComplete={handleSplashComplete}
-      showLoading={true}
-    />
-  );
+  return <SplashScreen onAnimationComplete={handleSplashComplete} showLoading={true} />;
 }
 ```
 
@@ -442,7 +439,7 @@ export default function Layout() {
 
   useEffect(() => {
     // Check if user prefers reduced motion
-    AccessibilityInfo.isReduceMotionEnabled().then(enabled => {
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
       setReducedMotion(enabled);
     });
   }, []);
@@ -469,9 +466,7 @@ import { AccessibilityInfo } from 'react-native';
 useEffect(() => {
   // Announce to screen readers when app is ready
   if (isReady) {
-    AccessibilityInfo.announceForAccessibility(
-      'DailyHush is ready. Welcome back.'
-    );
+    AccessibilityInfo.announceForAccessibility('DailyHush is ready. Welcome back.');
   }
 }, [isReady]);
 ```
@@ -497,6 +492,7 @@ eas build --platform android --profile production
 ### Test Build Splash
 
 After building:
+
 1. Install on device
 2. Completely close app
 3. Open app cold (not from background)
@@ -518,6 +514,7 @@ After building:
 ## Questions or Issues?
 
 Refer to:
+
 - Main design spec: `SPLASH_SCREEN_DESIGN.md`
 - Component code: `components/SplashScreen.tsx`
 - Expo docs: https://docs.expo.dev/guides/splash-screens/

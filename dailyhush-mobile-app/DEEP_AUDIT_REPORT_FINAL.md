@@ -23,11 +23,13 @@
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Property 'card' does not exist on type '{ readonly primary: "#0A1612"; readonly secondary: "#0F1F1A"; readonly tertiary: "#1A4D3C"; readonly muted: "#1A2E26"; readonly border: "rgba(64, 145, 108, 0.15)"; }'
 ```
 
 **Files with errors:**
+
 - `app/onboarding/email-lookup.tsx:215`
 - `app/onboarding/password-setup.tsx:300`
 - `app/onboarding/password-setup.tsx:363`
@@ -38,6 +40,7 @@ Property 'card' does not exist on type '{ readonly primary: "#0A1612"; readonly 
 
 **Root Cause:**
 `constants/colors.ts` defines:
+
 ```typescript
 background: {
   primary: '#0A1612',
@@ -51,6 +54,7 @@ background: {
 
 **Fix Required:**
 Add `card` property to `colors.background`:
+
 ```typescript
 background: {
   primary: '#0A1612',
@@ -73,12 +77,14 @@ background: {
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Property 'formWrapper' does not exist on type '{ container: {...}; contentContainer: {...}; centerWrapper: {...} }'
 Property 'footerSection' does not exist on type '{ container: {...}; contentContainer: {...}; centerWrapper: {...} }'
 ```
 
 **Files with errors:**
+
 - `app/auth/forgot-password.tsx:124` - Missing `formWrapper`
 - `app/auth/login.tsx:156` - Missing `formWrapper`
 - `app/auth/login.tsx:255` - Missing `footerSection`
@@ -92,11 +98,18 @@ Auth screens reference styles that don't exist in the inline StyleSheet objects.
 Add missing styles to each auth screen OR remove references to these styles.
 
 **Example Fix (login.tsx):**
+
 ```typescript
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background.primary },
   contentContainer: { flex: 1, paddingHorizontal: 24, paddingTop: 40, paddingBottom: 24 },
-  centerWrapper: { flex: 1, justifyContent: 'center', maxWidth: 400, width: '100%' as any, alignSelf: 'center' },
+  centerWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    maxWidth: 400,
+    width: '100%' as any,
+    alignSelf: 'center',
+  },
   formWrapper: { marginBottom: 32 }, // ADD THIS
   footerSection: { marginTop: 24, alignItems: 'center' }, // ADD THIS
 });
@@ -113,11 +126,13 @@ const styles = StyleSheet.create({
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Property 'headerSubtitle' does not exist on type 'NativeStackNavigationOptions'
 ```
 
 **File:**
+
 - `app/_layout.tsx:83, 120, 128`
 
 **Root Cause:**
@@ -125,6 +140,7 @@ Property 'headerSubtitle' does not exist on type 'NativeStackNavigationOptions'
 
 **Fix Required:**
 Remove `headerSubtitle` or replace with custom header component:
+
 ```typescript
 // BEFORE (❌ Invalid):
 <Stack.Screen
@@ -156,15 +172,18 @@ Remove `headerSubtitle` or replace with custom header component:
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Type '{ user_id: string; email: string; ... }' is missing the following properties from type 'UserProfile': has_shift_necklace, shift_paired, fire_progress, triggers
 ```
 
 **File:**
+
 - `app/onboarding/password-setup.tsx:142`
 
 **Root Cause:**
 When creating a user through quiz onboarding, `setUser()` is called with incomplete UserProfile object. Missing required fields:
+
 - `has_shift_necklace: boolean`
 - `shift_paired: boolean`
 - `fire_progress: { focus: boolean; interrupt: boolean; reframe: boolean; execute: boolean }`
@@ -172,6 +191,7 @@ When creating a user through quiz onboarding, `setUser()` is called with incompl
 
 **Fix Required:**
 Add missing required fields with default values:
+
 ```typescript
 setUser({
   user_id: authData.user.id,
@@ -209,11 +229,13 @@ setUser({
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Type 'PostgrestFilterBuilder<any, any, any, null, "user_profiles", unknown, "POST">' is missing the following properties from type 'Promise<unknown>': catch, finally, [Symbol.toStringTag]
 ```
 
 **Files:**
+
 - `app/onboarding/password-setup.tsx:109`
 - `app/profile.tsx:58`
 - `app/spiral.tsx:190`
@@ -222,6 +244,7 @@ Type 'PostgrestFilterBuilder<any, any, any, null, "user_profiles", unknown, "POS
 `withRetry()` expects a function that returns a Promise, but Supabase query builders are not yet promises until you call them.
 
 **Current Code (❌ Wrong):**
+
 ```typescript
 const { error: profileError } = await withRetry(
   () => supabase
@@ -233,6 +256,7 @@ const { error: profileError } = await withRetry(
 
 **Fix Required:**
 Ensure Supabase query is properly awaited:
+
 ```typescript
 const { error: profileError } = await withRetry(
   async () => await supabase
@@ -243,6 +267,7 @@ const { error: profileError } = await withRetry(
 ```
 
 **Alternative Fix:**
+
 ```typescript
 const { error: profileError } = await withRetry(
   () => supabase
@@ -263,17 +288,20 @@ const { error: profileError } = await withRetry(
 **Impact:** Runtime crash if authData.user is null
 
 **Error:**
+
 ```
 'authData.user' is possibly 'null'
 ```
 
 **File:**
+
 - `app/onboarding/password-setup.tsx:112`
 
 **Root Cause:**
 Code assumes `authData.user` exists without null check after auth creation.
 
 **Current Code (❌ Unsafe):**
+
 ```typescript
 const { data: authData, error: authError } = await supabase.auth.signUp({
   email: params.email,
@@ -290,6 +318,7 @@ console.log('Auth account created:', authData.user.id);
 
 **Fix Required:**
 Add explicit null check:
+
 ```typescript
 if (authError) {
   // Handle error
@@ -317,23 +346,26 @@ console.log('Auth account created:', authData.user.id);
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Property 'green100' does not exist on type '{ 50: string; 100: string; 500: string; 600: string; 700: string; }'
 ```
 
 **File:**
+
 - `app/shift-pairing.tsx:95`
 
 **Root Cause:**
 Code references `colors.emerald.green100` but the property doesn't exist. Should be `colors.emerald[100]`.
 
 **Fix Required:**
+
 ```typescript
 // BEFORE (❌):
-color: colors.emerald.green100
+color: colors.emerald.green100;
 
 // AFTER (✅):
-color: colors.emerald[100]
+color: colors.emerald[100];
 ```
 
 **Estimated Fix Time:** 30 seconds
@@ -347,17 +379,20 @@ color: colors.emerald[100]
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Type 'string' is not assignable to type 'DimensionValue | undefined'
 ```
 
 **Files:**
+
 - `app/auth/index.tsx:115`
 
 **Root Cause:**
 StyleSheet `width` property expects `DimensionValue` (number or percentage), not raw string `'100%'`.
 
 **Current Code (❌ Wrong):**
+
 ```typescript
 const styles = StyleSheet.create({
   centerWrapper: {
@@ -372,6 +407,7 @@ const styles = StyleSheet.create({
 
 **Fix Required:**
 Use type assertion:
+
 ```typescript
 const styles = StyleSheet.create({
   centerWrapper: {
@@ -395,11 +431,13 @@ const styles = StyleSheet.create({
 **Impact:** TypeScript compilation fails
 
 **Error:**
+
 ```
 Type 'TextStyle' is not assignable to type 'StyleProp<ViewStyle>'
 ```
 
 **File:**
+
 - `components/auth/AuthButton.tsx:99, 112, 122, 125, 143`
 
 **Root Cause:**
@@ -407,6 +445,7 @@ Mixing ViewStyle and TextStyle properties in wrong component types.
 
 **Fix Required:**
 Properly separate View and Text styles:
+
 ```typescript
 // Ensure View components only get ViewStyle
 // Ensure Text components only get TextStyle
@@ -421,6 +460,7 @@ Properly separate View and Text styles:
 
 **Total Errors Found:** 27+
 **Categories:**
+
 - ❌ Missing properties: 8 errors (colors.background.card, auth styles, headerSubtitle)
 - ❌ Type mismatches: 10 errors (UserProfile, width, style mixing)
 - ❌ Supabase query issues: 4 errors (withRetry, async/await)
@@ -428,6 +468,7 @@ Properly separate View and Text styles:
 - ❌ Invalid properties: 4+ errors (emerald.green100, etc.)
 
 **Impact:**
+
 - 🔴 **App WILL NOT compile**
 - 🔴 **App WILL NOT run**
 - 🔴 **TypeScript tooling broken**
@@ -445,11 +486,13 @@ Properly separate View and Text styles:
 **Impact:** Visual inconsistencies, harder to maintain
 
 **Findings:**
+
 1. Some components use `colors.background.secondary` for cards
 2. Other components use `colors.background.card` (which doesn't exist)
 3. No consistent pattern for card backgrounds
 
 **Recommendation:**
+
 1. Add `colors.background.card` to colors.ts
 2. Audit all card components to use consistent color
 3. Document color usage patterns in README
@@ -465,6 +508,7 @@ Properly separate View and Text styles:
 
 **Findings:**
 No error boundaries implemented in:
+
 - Root `_layout.tsx`
 - Onboarding flow
 - Quiz screens
@@ -472,6 +516,7 @@ No error boundaries implemented in:
 
 **Recommendation:**
 Add React Error Boundaries to catch and display errors gracefully:
+
 ```typescript
 // Add to app/_layout.tsx
 import { ErrorBoundary } from 'react-error-boundary';
@@ -505,6 +550,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 
 **Findings:**
 Several database operations lack loading indicators:
+
 - Quiz submission (has loading for button, but no full-screen indicator)
 - Email lookup (no loading state)
 - Profile updates (inconsistent loading states)
@@ -525,6 +571,7 @@ Add consistent loading states with visual feedback for all async operations.
 
 **Findings:**
 Different error handling patterns across files:
+
 - Some use `try/catch` with error state
 - Some use Supabase error checking
 - Some use withRetry, some don't
@@ -532,6 +579,7 @@ Different error handling patterns across files:
 
 **Recommendation:**
 Standardize error handling:
+
 1. Use withRetry for all database operations
 2. Consistent error state management
 3. Consistent error message format
@@ -548,12 +596,14 @@ Standardize error handling:
 
 **Findings:**
 Quiz answer selection doesn't validate:
+
 - Answer value range (should be 1-5)
 - Answer completeness (all 16 questions)
 - Answer format
 
 **Recommendation:**
 Add validation before quiz submission:
+
 ```typescript
 function validateQuizAnswers(answers: Map<string, QuizAnswer>): boolean {
   // Check all 16 questions answered
@@ -579,6 +629,7 @@ function validateQuizAnswers(answers: Map<string, QuizAnswer>): boolean {
 
 **Findings:**
 All strings are hardcoded in English:
+
 - UI text
 - Error messages
 - Button labels
@@ -586,6 +637,7 @@ All strings are hardcoded in English:
 
 **Recommendation:**
 While not critical for beta, consider planning for i18n:
+
 1. Extract strings to constants file
 2. Use translation keys
 3. Set up i18n library (react-i18next)
@@ -603,6 +655,7 @@ While not critical for beta, consider planning for i18n:
 
 **Findings:**
 Most interactive elements lack:
+
 - `accessibilityLabel`
 - `accessibilityHint`
 - `accessibilityRole`
@@ -621,6 +674,7 @@ Add accessibility labels to all buttons, inputs, and interactive elements.
 
 **Findings:**
 No analytics events for:
+
 - Quiz completion
 - Email lookup success/failure
 - Password setup
@@ -628,6 +682,7 @@ No analytics events for:
 
 **Recommendation:**
 Add analytics tracking (Segment, Mixpanel, or custom):
+
 ```typescript
 analytics.track('Quiz Completed', {
   overthinker_type: result.type,
@@ -647,12 +702,14 @@ analytics.track('Quiz Completed', {
 
 **Findings:**
 Zero test files found:
+
 - No unit tests
 - No integration tests
 - No E2E tests
 
 **Recommendation:**
 Add tests for critical paths:
+
 1. Quiz scoring logic
 2. Email validation
 3. Password strength validation
@@ -686,6 +743,7 @@ Add tests for critical paths:
 
 **Recommendation:**
 Add rate limiting:
+
 - Max 3 quiz submissions per email per day
 - Implement in Supabase RLS policy or Edge Function
 
@@ -695,6 +753,7 @@ Add rate limiting:
 **Impact:** Email addresses logged in console
 
 **Findings:**
+
 ```typescript
 console.log('Auth account created:', authData.user.id); // ✅ OK (ID only)
 console.log('✅ Quiz submitted for:', email); // ⚠️ PII in logs
@@ -710,6 +769,7 @@ Remove or hash PII before logging in production.
 ### Versions Check
 
 **Critical Dependencies:**
+
 - ✅ `expo`: ^54.0.0 (Latest stable)
 - ✅ `react`: 19.1.0 (Latest)
 - ✅ `react-native`: 0.81.5 (Latest)
@@ -717,10 +777,12 @@ Remove or hash PII before logging in production.
 - ✅ `typescript`: ~5.9.2 (Latest)
 
 **Potential Issues:**
+
 - ⚠️ `nativewind: latest` - Should pin to specific version for stability
 - ⚠️ No package-lock.json found - Use npm ci for reproducible builds
 
 **Recommendation:**
+
 1. Pin nativewind to specific version
 2. Run `npm install` to generate package-lock.json
 3. Commit package-lock.json for reproducible builds
@@ -732,18 +794,21 @@ Remove or hash PII before logging in production.
 ### Consistency Check
 
 **✅ GOOD:**
+
 - Consistent color scheme across screens
 - Consistent button styling
 - Consistent spacing (using spacing constants)
 - Consistent typography
 
 **⚠️ NEEDS IMPROVEMENT:**
+
 - Inconsistent loading states
 - Inconsistent error message placement
 - Some screens missing safe area insets
 - Inconsistent keyboard handling
 
 **Recommendation:**
+
 - Standardize loading spinner component
 - Standardize error message component
 - Audit all screens for safe area insets
@@ -754,23 +819,23 @@ Remove or hash PII before logging in production.
 
 ### By Severity:
 
-| Severity | Count | Status | Blocks Beta? |
-|----------|-------|--------|--------------|
-| 🔴 BLOCKER | 9 issues | ❌ MUST FIX | YES |
-| 🟡 HIGH | 3 issues | ⚠️ SHOULD FIX | NO |
-| 🟡 MEDIUM | 3 issues | ⏳ CAN WAIT | NO |
-| 🟢 LOW | 3 issues | 📋 POST-BETA | NO |
+| Severity   | Count    | Status        | Blocks Beta? |
+| ---------- | -------- | ------------- | ------------ |
+| 🔴 BLOCKER | 9 issues | ❌ MUST FIX   | YES          |
+| 🟡 HIGH    | 3 issues | ⚠️ SHOULD FIX | NO           |
+| 🟡 MEDIUM  | 3 issues | ⏳ CAN WAIT   | NO           |
+| 🟢 LOW     | 3 issues | 📋 POST-BETA  | NO           |
 
 ### Total Issues: 18 critical findings
 
 ### Time Estimates:
 
-| Phase | Time | Priority |
-|-------|------|----------|
-| Fix BLOCKER issues | ~45 min | CRITICAL |
-| Fix HIGH priority | ~2.5 hours | RECOMMENDED |
-| Fix MEDIUM priority | ~6.5 hours | OPTIONAL |
-| Fix LOW priority | ~13+ hours | POST-BETA |
+| Phase               | Time       | Priority    |
+| ------------------- | ---------- | ----------- |
+| Fix BLOCKER issues  | ~45 min    | CRITICAL    |
+| Fix HIGH priority   | ~2.5 hours | RECOMMENDED |
+| Fix MEDIUM priority | ~6.5 hours | OPTIONAL    |
+| Fix LOW priority    | ~13+ hours | POST-BETA   |
 
 ---
 
@@ -792,6 +857,7 @@ Remove or hash PII before logging in production.
 10. ✅ Run `npx tsc --noEmit` to verify 0 errors (2 min)
 
 **Acceptance Criteria:**
+
 - TypeScript compiles with 0 errors
 - App can run on simulator
 
@@ -806,6 +872,7 @@ Remove or hash PII before logging in production.
 3. Add loading states for all async operations
 
 **Acceptance Criteria:**
+
 - All database operations have loading states
 - Error boundaries catch crashes gracefully
 - Color usage is consistent
@@ -821,6 +888,7 @@ Remove or hash PII before logging in production.
 3. Plan for i18n
 
 **Acceptance Criteria:**
+
 - Consistent error handling across app
 - Invalid quiz data cannot be submitted
 
@@ -842,11 +910,13 @@ Remove or hash PII before logging in production.
 **Current Status:** 🔴 **NOT READY**
 
 **Blockers:**
+
 - 9 critical TypeScript compilation errors
 
 **Estimated Time to Beta-Ready:** 45 minutes (Phase 1 only)
 
 **Recommended Timeline:**
+
 - **Now:** Fix Phase 1 (BLOCKER issues) - 45 min
 - **Before Beta:** Fix Phase 2 (HIGH priority) - 2.5 hours
 - **After Beta:** Fix Phase 3 & 4 - 19.5 hours

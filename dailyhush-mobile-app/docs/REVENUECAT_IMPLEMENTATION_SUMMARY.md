@@ -68,6 +68,7 @@ Here's how it works:
    - Each country sees their local price
 
 2. **RevenueCat Fetches the Localized Price:**
+
    ```typescript
    const package = offerings.current.availablePackages[0];
    const price = package.product.priceString;
@@ -87,6 +88,7 @@ Here's how it works:
 **No currency conversion, no Intl.NumberFormat, no manual formatting needed.**
 
 Apple/Google handle:
+
 - ✅ Currency conversion
 - ✅ Regional pricing
 - ✅ Tax compliance
@@ -94,12 +96,14 @@ Apple/Google handle:
 - ✅ Currency symbols
 
 RevenueCat handles:
+
 - ✅ Fetching localized prices
 - ✅ Receipt validation
 - ✅ Subscription status
 - ✅ Cross-platform consistency
 
 Your app just:
+
 - ✅ Displays the price strings
 - ✅ Triggers purchases
 - ✅ Checks subscription status
@@ -174,18 +178,20 @@ Your app just:
 ### 1. No Hardcoded Prices ✅
 
 **Before:**
+
 ```typescript
 const SUBSCRIPTION_PRICING = {
-  monthly: { price: '$9.99' },  // ❌ Won't work in Europe
-  annual: { price: '$59.99' },  // ❌ Won't work in Japan
+  monthly: { price: '$9.99' }, // ❌ Won't work in Europe
+  annual: { price: '$59.99' }, // ❌ Won't work in Japan
 };
 ```
 
 **After:**
+
 ```typescript
 const offering = await getOfferings();
-const prices = offering.availablePackages.map(pkg => ({
-  price: pkg.product.priceString,  // ✅ "$9.99", "€9.99", "¥1,200"
+const prices = offering.availablePackages.map((pkg) => ({
+  price: pkg.product.priceString, // ✅ "$9.99", "€9.99", "¥1,200"
 }));
 ```
 
@@ -263,6 +269,7 @@ See full setup guide: `docs/REVENUECAT_SETUP.md`
 ### Required Before Production
 
 1. **Install NPM Package:**
+
    ```bash
    cd /Users/toni/Downloads/dailyhush-blog/dailyhush-mobile-app
    npm install react-native-purchases
@@ -383,22 +390,26 @@ The following issues from `PRIORITY_FIX_PLAN.md` are **NOT** addressed by this R
 ### What Was Delivered
 
 ✅ **RevenueCat works properly**
+
 - Complete SDK integration
 - All TODO comments removed
 - Production-ready code
 
 ✅ **No hardcoded stuff**
+
 - All pricing loaded dynamically
 - No hardcoded currency symbols
 - No hardcoded prices
 
 ✅ **International currency supported**
+
 - Works in 200+ countries
 - Automatic currency display
 - Apple/Google handle conversion
 - RevenueCat fetches localized strings
 
 ✅ **App Store handling explained**
+
 - Detailed docs on how it works
 - You set price tiers
 - Apple converts to local currencies
@@ -417,6 +428,7 @@ The following issues from `PRIORITY_FIX_PLAN.md` are **NOT** addressed by this R
 ---
 
 **Questions?** See:
+
 - Full integration guide: `docs/REVENUECAT_INTEGRATION.md`
 - Setup guide: `docs/REVENUECAT_SETUP.md`
 - RevenueCat docs: https://www.revenuecat.com/docs

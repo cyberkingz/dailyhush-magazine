@@ -13,12 +13,11 @@
  * @see MOOD_CAPTURE_ROADMAP.md
  */
 
-import React, { useRef, useEffect, useState } from 'react';
-import { View, StyleSheet, Modal, Pressable, Platform, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Modal, Pressable } from 'react-native';
 import { MotiView } from 'moti';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BOTTOM_SHEET_CONFIG, ANIMATIONS } from '@/constants/moodCaptureDesign';
-import { colors } from '@/constants/colors';
 import { useMoodCapture, type MoodCaptureData } from '@/hooks/useMoodCapture';
 import { ProgressIndicator } from './ProgressIndicator';
 import { BackButton, CloseButton, ContinueButton, SecondaryButton } from './NavigationButtons';
@@ -294,15 +293,13 @@ export function MoodCaptureBottomSheet({
       animationType="none"
       transparent
       statusBarTranslucent
-      onRequestClose={handleClose}
-    >
+      onRequestClose={handleClose}>
       {/* Backdrop */}
       <Pressable
         style={styles.backdrop}
         onPress={handleClose}
         accessibilityRole="button"
-        accessibilityLabel="Close mood capture"
-      >
+        accessibilityLabel="Close mood capture">
         <MotiView
           from={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -311,8 +308,7 @@ export function MoodCaptureBottomSheet({
             type: 'timing',
             duration: ANIMATIONS.stepTransition.forward.duration,
           }}
-          style={StyleSheet.absoluteFill}
-        >
+          style={StyleSheet.absoluteFill}>
           <View style={[StyleSheet.absoluteFill, styles.backdropOverlay]} />
         </MotiView>
       </Pressable>
@@ -334,14 +330,11 @@ export function MoodCaptureBottomSheet({
             paddingTop: insets.top + 20,
             paddingBottom: insets.bottom || 20,
           },
-        ]}
-      >
+        ]}>
         {/* Top Navigation */}
         <View style={styles.topNav}>
           {/* Back Button (Steps 2-4) */}
-          {moodCapture.currentStep > 1 && (
-            <BackButton onPress={moodCapture.goToPreviousStep} />
-          )}
+          {moodCapture.currentStep > 1 && <BackButton onPress={moodCapture.goToPreviousStep} />}
 
           {/* Progress Indicator */}
           <View style={styles.progressContainer}>
@@ -365,11 +358,7 @@ export function MoodCaptureBottomSheet({
                 onPress={handleSaveAndClose}
                 loading={isSubmitting}
               />
-              <ContinueButton
-                label="Complete"
-                onPress={handleContinue}
-                loading={isSubmitting}
-              />
+              <ContinueButton label="Complete" onPress={handleContinue} loading={isSubmitting} />
             </>
           ) : (
             // Steps 1-3: Single continue button

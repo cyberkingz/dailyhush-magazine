@@ -511,6 +511,7 @@ Therapeutic journal entries are **highly sensitive personal data**. E2EE ensures
 ### How It Works
 
 1. **Key Generation** (Onboarding)
+
    ```
    User Password → PBKDF2 → Password Key
    Random Generator → Master Key
@@ -520,6 +521,7 @@ Therapeutic journal entries are **highly sensitive personal data**. E2EE ensures
    ```
 
 2. **Encryption** (Writing)
+
    ```
    Journal Text → AES-256-GCM + Master Key + Random Nonce → Ciphertext
    Ciphertext + Nonce → Supabase Database
@@ -577,9 +579,7 @@ describe('Encryption', () => {
     const encrypted = await encryptText('Test');
     const wrongNonce = 'wrongnonce';
 
-    await expect(
-      decryptText(encrypted.ciphertext, wrongNonce)
-    ).rejects.toThrow();
+    await expect(decryptText(encrypted.ciphertext, wrongNonce)).rejects.toThrow();
   });
 
   it('should pass encryption test', async () => {
@@ -721,6 +721,7 @@ await unlockEncryptionKey(userId, password);
 ### "Decryption failed"
 
 **Possible causes**:
+
 1. Wrong encryption key (user changed password without migration)
 2. Corrupted ciphertext
 3. Wrong nonce
@@ -766,6 +767,7 @@ async function autoSaveWithRetry(entryId: string, text: string, retries = 3) {
 ## Support
 
 For questions or issues:
+
 - Email: support@trynoema.com
 - Docs: https://docs.trynoema.com
 - GitHub: https://github.com/dailyhush/mobile-app

@@ -45,4 +45,3 @@ Remplace la clé de test par la clé de production dans `eas.json` :
 ---
 
 **Une fois que tu as la clé de production, dis-moi et je la mettrai dans `eas.json` !**
-

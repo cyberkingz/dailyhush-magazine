@@ -10,7 +10,7 @@
  */
 
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ExerciseContainer } from '@/components/exercises/ExerciseContainer';
 import { PrePostRatingCard } from '@/components/exercises/PrePostRatingCard';
@@ -23,11 +23,41 @@ import { BREATHING_4_7_8_CONFIG } from '@/constants/exerciseConfigs';
 import type { TriggerOption } from '@/types/exercises';
 
 const MOCK_TRIGGERS: TriggerOption[] = [
-  { trigger_id: '1', trigger_name: 'Work stress', trigger_category: 'work', display_order: 1, loop_type: 'all' },
-  { trigger_id: '2', trigger_name: 'Social situation', trigger_category: 'social', display_order: 2, loop_type: 'all' },
-  { trigger_id: '3', trigger_name: 'Health worry', trigger_category: 'health', display_order: 3, loop_type: 'all' },
-  { trigger_id: '4', trigger_name: 'Relationship', trigger_category: 'relationship', display_order: 4, loop_type: 'all' },
-  { trigger_id: '5', trigger_name: 'Financial concern', trigger_category: 'financial', display_order: 5, loop_type: 'all' },
+  {
+    trigger_id: '1',
+    trigger_name: 'Work stress',
+    trigger_category: 'work',
+    display_order: 1,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '2',
+    trigger_name: 'Social situation',
+    trigger_category: 'social',
+    display_order: 2,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '3',
+    trigger_name: 'Health worry',
+    trigger_category: 'health',
+    display_order: 3,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '4',
+    trigger_name: 'Relationship',
+    trigger_category: 'relationship',
+    display_order: 4,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '5',
+    trigger_name: 'Financial concern',
+    trigger_category: 'financial',
+    display_order: 5,
+    loop_type: 'all',
+  },
 ];
 
 export default function Breathing478Exercise() {
@@ -87,21 +117,23 @@ export default function Breathing478Exercise() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center">
+      <View className="bg-forest-900 flex-1 items-center justify-center">
         <ActivityIndicator size="large" color="#4FD1C5" />
-        <Text className="text-sage-300 font-inter-medium text-base mt-4">Loading exercise...</Text>
+        <Text className="font-inter-medium mt-4 text-base text-sage-300">Loading exercise...</Text>
       </View>
     );
   }
 
   if (error || !session) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center px-6">
-        <Text className="text-red-400 font-poppins-semibold text-xl mb-2">Error</Text>
-        <Text className="text-sage-300 font-inter-regular text-base text-center mb-6">
+      <View className="bg-forest-900 flex-1 items-center justify-center px-6">
+        <Text className="font-poppins-semibold mb-2 text-xl text-red-400">Error</Text>
+        <Text className="font-inter-regular mb-6 text-center text-base text-sage-300">
           {error || 'Failed to start exercise'}
         </Text>
-        <TouchableOpacity onPress={() => router.back()} className="bg-mindful-teal rounded-xl px-6 py-3">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="bg-mindful-teal rounded-xl px-6 py-3">
           <Text className="text-forest-900 font-poppins-semibold text-base">Go Back</Text>
         </TouchableOpacity>
       </View>
@@ -121,7 +153,9 @@ export default function Breathing478Exercise() {
         );
 
       case 'instructions':
-        return <InstructionsCard config={BREATHING_4_7_8_CONFIG} onContinue={() => goToNextStage()} />;
+        return (
+          <InstructionsCard config={BREATHING_4_7_8_CONFIG} onContinue={() => goToNextStage()} />
+        );
 
       case 'exercise':
         const breathingData = session.exerciseData;
@@ -174,10 +208,12 @@ export default function Breathing478Exercise() {
         );
 
       case 'complete':
-        const reduction = session.preRating && session.postRating ? session.preRating - session.postRating : 0;
-        const reductionPercentage = session.preRating && session.preRating > 0
-          ? Math.round((reduction / session.preRating) * 100)
-          : 0;
+        const reduction =
+          session.preRating && session.postRating ? session.preRating - session.postRating : 0;
+        const reductionPercentage =
+          session.preRating && session.preRating > 0
+            ? Math.round((reduction / session.preRating) * 100)
+            : 0;
 
         return (
           <CompletionScreen
@@ -206,10 +242,8 @@ export default function Breathing478Exercise() {
       session={session}
       onPause={pause}
       onResume={resume}
-      onAbandon={abandon}
-    >
+      onAbandon={abandon}>
       {renderStage()}
     </ExerciseContainer>
   );
 }
-

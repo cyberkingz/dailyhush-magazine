@@ -168,219 +168,218 @@ export default Sentry.wrap(function Layout() {
         captureScreens: true,
         // Privacy settings
         enableSessionReplay: false, // Disable session replay for privacy (mental health app)
-      }}
-    >
+      }}>
       <ErrorBoundary>
         <Stack
-        screenOptions={{
-          headerShown: true,
-          contentStyle: { backgroundColor: '#0A1612' },
-          animation: 'slide_from_right',
-          header: ({ options }) => {
-            // Don't show header if explicitly disabled
-            if (options.headerShown === false) return null;
+          screenOptions={{
+            headerShown: true,
+            contentStyle: { backgroundColor: '#0A1612' },
+            animation: 'slide_from_right',
+            header: ({ options }) => {
+              // Don't show header if explicitly disabled
+              if (options.headerShown === false) return null;
 
-            return (
-              <TopBar
-                title={options.title || 'Nœma'}
-                subtitle={undefined}
-                showBack={options.headerBackVisible !== false}
-                showSettings={options.headerRight !== undefined}
-              />
-            );
-          },
-        }}>
-        <Stack.Screen
-          name="index"
-          options={{
-            headerShown: false,
-          }}
+              return (
+                <TopBar
+                  title={options.title || 'Nœma'}
+                  subtitle={undefined}
+                  showBack={options.headerBackVisible !== false}
+                  showSettings={options.headerRight !== undefined}
+                />
+              );
+            },
+          }}>
+          <Stack.Screen
+            name="index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="onboarding/index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="spiral"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="settings"
+            options={{
+              title: 'Settings',
+              headerBackVisible: true,
+            }}
+          />
+          <Stack.Screen
+            name="insights"
+            options={{
+              title: 'Pattern Insights',
+              headerBackVisible: true,
+            }}
+          />
+          <Stack.Screen
+            name="training/index"
+            options={{
+              title: 'F.I.R.E. Training',
+              headerBackVisible: true,
+            }}
+          />
+          <Stack.Screen
+            name="training/focus"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="training/interrupt"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="training/reframe"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="training/execute"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="auth/index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="auth/signup"
+            options={{
+              title: 'Create Account',
+              headerBackVisible: true,
+            }}
+          />
+          <Stack.Screen
+            name="auth/login"
+            options={{
+              title: 'Sign In',
+              headerBackVisible: true,
+            }}
+          />
+          <Stack.Screen
+            name="auth/forgot-password"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="subscription"
+            options={{
+              headerShown: false,
+              animation: 'slide_from_bottom',
+            }}
+          />
+          <Stack.Screen
+            name="settings/subscription"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="mood-capture"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="anna/conversation"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="modules/index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="modules/[moduleId]/method"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="exercises/cyclic-sigh"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="exercises/grounding"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="exercises/breathing"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="exercises/emotion-wheel"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="exercises/brain-dump"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="exercises/mind-clear"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+        <PortalHost />
+        <BottomNav
+          hideOnPaths={[
+            '/spiral',
+            '/anna/conversation',
+            '/anna',
+            '/onboarding',
+            '/settings',
+            '/subscription',
+            '/auth',
+            '/faq',
+            '/legal/privacy',
+            '/legal/terms',
+            '/mood-capture',
+            '/training/focus',
+            '/training/interrupt',
+            '/training/reframe',
+            '/training/execute',
+            '/modules',
+            '/exercises/cyclic-sigh',
+            '/exercises/grounding',
+            '/exercises/breathing',
+            '/exercises/emotion-wheel',
+            '/exercises/brain-dump',
+            '/exercises/mind-clear',
+          ]}
         />
-        <Stack.Screen
-          name="onboarding/index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="spiral"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="settings"
-          options={{
-            title: 'Settings',
-            headerBackVisible: true,
-          }}
-        />
-        <Stack.Screen
-          name="insights"
-          options={{
-            title: 'Pattern Insights',
-            headerBackVisible: true,
-          }}
-        />
-        <Stack.Screen
-          name="training/index"
-          options={{
-            title: 'F.I.R.E. Training',
-            headerBackVisible: true,
-          }}
-        />
-        <Stack.Screen
-          name="training/focus"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="training/interrupt"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="training/reframe"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="training/execute"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="auth/index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="auth/signup"
-          options={{
-            title: 'Create Account',
-            headerBackVisible: true,
-          }}
-        />
-        <Stack.Screen
-          name="auth/login"
-          options={{
-            title: 'Sign In',
-            headerBackVisible: true,
-          }}
-        />
-        <Stack.Screen
-          name="auth/forgot-password"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="subscription"
-          options={{
-            headerShown: false,
-            animation: 'slide_from_bottom',
-          }}
-        />
-        <Stack.Screen
-          name="settings/subscription"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="mood-capture"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="anna/conversation"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="modules/index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="modules/[moduleId]/method"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="exercises/cyclic-sigh"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="exercises/grounding"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="exercises/breathing"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="exercises/emotion-wheel"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="exercises/brain-dump"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="exercises/mind-clear"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-      <PortalHost />
-      <BottomNav
-        hideOnPaths={[
-          '/spiral',
-          '/anna/conversation',
-          '/anna',
-          '/onboarding',
-          '/settings',
-          '/subscription',
-          '/auth',
-          '/faq',
-          '/legal/privacy',
-          '/legal/terms',
-          '/mood-capture',
-          '/training/focus',
-          '/training/interrupt',
-          '/training/reframe',
-          '/training/execute',
-          '/modules',
-          '/exercises/cyclic-sigh',
-          '/exercises/grounding',
-          '/exercises/breathing',
-          '/exercises/emotion-wheel',
-          '/exercises/brain-dump',
-          '/exercises/mind-clear',
-        ]}
-      />
-    </ErrorBoundary>
+      </ErrorBoundary>
     </PostHogProvider>
   );
 });

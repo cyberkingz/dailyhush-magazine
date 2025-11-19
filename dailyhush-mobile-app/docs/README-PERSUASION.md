@@ -1,4 +1,5 @@
 # DailyHush Exercise Persuasion Architecture
+
 ## Complete Implementation Guide
 
 **Consultant:** Robert Cialdini, Author of "Influence: The Psychology of Persuasion"
@@ -55,6 +56,7 @@ The 7 principles FIX this by reducing uncertainty at each stage.
 **Psychological State:** "Should I even look at this?"
 
 **Principles Applied:**
+
 - **AUTHORITY:** "Stanford-tested • 30 sec" (institutional credibility)
 - **SOCIAL PROOF:** "10,247 used this today" (others are doing it)
 - **SCARCITY:** "30 sec" (low time commitment removes barrier)
@@ -68,6 +70,7 @@ The 7 principles FIX this by reducing uncertainty at each stage.
 **Psychological State:** "Is this legit? Will this work for ME?"
 
 **Principles Applied:**
+
 - **AUTHORITY:** Stanford study, specific numbers (114 participants, 65% reduction)
 - **LIKING:** Anna's personal testimonial ("I use this when I'm spiraling")
 - **SOCIAL PROOF:** Effect metrics (65% anxiety reduction in 2 min)
@@ -81,6 +84,7 @@ The 7 principles FIX this by reducing uncertainty at each stage.
 **Psychological State:** "Am I doing this right? Should I keep going?"
 
 **Principles Applied:**
+
 - **COMMITMENT:** Once they start, consistency principle activates
 - **AUTHORITY:** Micro-encouragement ("Your nervous system is already responding")
 - **PROGRESS CUES:** "Round 2 of 3" (halfway = keep going)
@@ -94,6 +98,7 @@ The 7 principles FIX this by reducing uncertainty at each stage.
 **Psychological State:** "Did that work? What do I do now?"
 
 **Principles Applied:**
+
 - **UNITY:** "You're part of the 10,000 who know how to interrupt panic"
 - **COMMITMENT:** Bookmark prompt, reminder setting
 - **RECIPROCITY:** Show word count, progress stats (giving value)
@@ -124,9 +129,11 @@ After Persuasion Architecture:
 ## WHAT I'VE DELIVERED
 
 ### DOCUMENT 1: Strategic Framework
+
 **File:** `/docs/exercise-persuasion-architecture.md`
 
 **Contents:**
+
 - Full persuasion architecture for all 6 exercises
 - Principle-by-principle breakdown
 - Specific copy for every screen (opening, during, completion)
@@ -138,9 +145,11 @@ After Persuasion Architecture:
 ---
 
 ### DOCUMENT 2: Implementation Guide
+
 **File:** `/docs/exercise-implementation-guide.md`
 
 **Contents:**
+
 - React Native component specifications
 - TypeScript interfaces
 - Actual code examples
@@ -154,9 +163,11 @@ After Persuasion Architecture:
 ---
 
 ### DOCUMENT 3: Measurement Framework
+
 **File:** `/docs/exercise-persuasion-metrics.md`
 
 **Contents:**
+
 - Baseline metrics to track
 - Expected improvements per principle
 - PostHog analytics setup
@@ -171,17 +182,20 @@ After Persuasion Architecture:
 ## IMPLEMENTATION ROADMAP
 
 ### PHASE 1: OPENING SCREENS (Week 1-2)
+
 **Priority:** Highest ROI
 **Effort:** Medium
 **Impact:** +20-30% funnel conversion
 
 **Tasks:**
+
 - [ ] Add research citations to all 6 exercises
 - [ ] Add Anna testimonials
 - [ ] Add effect metric displays (65% reduction, etc.)
 - [ ] Design authority badge system
 
 **Files to modify:**
+
 - Create: `/components/exercises/ExerciseOpening.tsx`
 - Update: Each exercise screen (`/app/exercises/*.tsx`)
 
@@ -190,17 +204,20 @@ After Persuasion Architecture:
 ---
 
 ### PHASE 2: REAL-TIME SOCIAL PROOF (Week 3-4)
+
 **Priority:** High ROI
 **Effort:** High (requires backend)
 **Impact:** +15-20% card-click rate
 
 **Tasks:**
+
 - [ ] Create `exercise_completions` table in Supabase
 - [ ] Build real-time stats service
 - [ ] Display "X people used this today" with REAL numbers
 - [ ] Update numbers daily
 
 **Files to create:**
+
 - `/services/exerciseStats.ts`
 - Database migration for `exercise_completions`
 
@@ -209,16 +226,19 @@ After Persuasion Architecture:
 ---
 
 ### PHASE 3: MICRO-ENCOURAGEMENT (Week 5-6)
+
 **Priority:** Medium-High ROI
 **Effort:** Low
 **Impact:** +10-15% completion rate
 
 **Tasks:**
+
 - [ ] Add progress messages at Round 1, 2, 3
 - [ ] "Your nervous system is already responding"
 - [ ] Halfway indicators
 
 **Files to create:**
+
 - `/components/exercises/ProgressEncouragement.tsx`
 
 **Expected Result:** Fewer people abandon mid-exercise
@@ -226,16 +246,19 @@ After Persuasion Architecture:
 ---
 
 ### PHASE 4: UNITY MESSAGING (Week 7-8)
+
 **Priority:** Medium ROI (long-term retention)
 **Effort:** Low
 **Impact:** +20-25% repeat usage
 
 **Tasks:**
+
 - [ ] Add "You're part of X people who..." on completion
 - [ ] Build community feed component
 - [ ] Post-rating unity messages
 
 **Files to create:**
+
 - `/components/exercises/CommunityFeed.tsx`
 - `/components/exercises/PostRatingAction.tsx`
 
@@ -244,17 +267,20 @@ After Persuasion Architecture:
 ---
 
 ### PHASE 5: STREAK TRACKING (Week 9-10)
+
 **Priority:** High retention impact
 **Effort:** Medium
 **Impact:** +30-40% daily active usage
 
 **Tasks:**
+
 - [ ] Create `exercise_streaks` table
 - [ ] Build streak counter component
 - [ ] 7-day, 14-day, 30-day milestone notifications
 - [ ] Loss aversion messaging ("Don't break your streak!")
 
 **Files to create:**
+
 - `/components/exercises/StreakCard.tsx`
 - Database migration for `exercise_streaks`
 
@@ -263,16 +289,19 @@ After Persuasion Architecture:
 ---
 
 ### PHASE 6: COMMITMENT MECHANISMS (Week 11-12)
+
 **Priority:** Medium-High retention
 **Effort:** Low-Medium
 **Impact:** +25-35% in long-term retention
 
 **Tasks:**
+
 - [ ] Bookmark functionality
 - [ ] Reminder system (8am, 3pm, bedtime)
 - [ ] "Set 8am Reminder" CTAs with specific times
 
 **Files to create:**
+
 - `/components/exercises/BookmarkButton.tsx`
 - Notification scheduling system
 
@@ -287,6 +316,7 @@ If you can only do 3 things this week, do these:
 ### 1. ADD AUTHORITY CITATIONS TO OPENING SCREENS
 
 **Current Opening (Example - Cyclic Sigh):**
+
 ```
 🫁 Cyclic Physiological Sigh
 
@@ -296,6 +326,7 @@ This breathing technique calms your nervous system.
 ```
 
 **NEW Opening (With Authority):**
+
 ```
 🫁 Cyclic Physiological Sigh
 
@@ -318,6 +349,7 @@ It works embarrassingly fast."
 ### 2. ADD REAL-TIME SOCIAL PROOF TO CARDS
 
 **Current Card:**
+
 ```
 🫁 Cyclic Physiological Sigh
 30 seconds
@@ -326,6 +358,7 @@ The fastest way to calm your nervous system
 ```
 
 **NEW Card:**
+
 ```
 🫁 Cyclic Physiological Sigh
 Stanford-tested • 30 sec
@@ -343,6 +376,7 @@ The fastest way to calm your nervous system
 ### 3. ADD MICRO-ENCOURAGEMENT DURING EXERCISES
 
 **Current Experience:**
+
 ```
 [Round 1 of 3]
 [Breathing animation]
@@ -350,6 +384,7 @@ The fastest way to calm your nervous system
 ```
 
 **NEW Experience:**
+
 ```
 [Round 1 of 3]
 [Breathing animation]
@@ -371,31 +406,37 @@ The fastest way to calm your nervous system
 I've written production-ready copy for all 6 exercises. Here's where to find it:
 
 **Cyclic Physiological Sigh:**
+
 - Opening screen: Line 156-172 in `exercise-implementation-guide.md`
 - Micro-encouragement: Line 185-192
 - Completion: Line 215-228
 
 **5-4-3-2-1 Grounding:**
+
 - Opening screen: Line 234-251
 - Interactive prompts: Line 267-282
 - Completion: Line 300-315
 
 **4-7-8 Breathing:**
+
 - Opening screen: Line 321-338
 - Navy SEAL framing: Line 344-351
 - Completion: Line 385-400
 
 **Emotion Wheel:**
+
 - Opening screen: Line 406-425
 - Progressive selection: Line 440-458
 - Affect labeling explanation: Line 475-490
 
 **Brain Dump:**
+
 - Opening screen: Line 496-515
 - Cognitive offloading framing: Line 530-545
 - Word count feedback: Line 565-580
 
 **Mind Clear:**
+
 - Opening screen: Line 586-603
 - Attention Restoration Theory: Line 618-635
 - Completion: Line 650-665
@@ -476,6 +517,7 @@ The difference is ALIGNMENT. If your product helps people AND the persuasion hel
 Then you use the principles to help them find the RIGHT exercise, not force them into the wrong one.
 
 **Example:** If someone rates "No Change" after Cyclic Sigh, show them:
+
 ```
 "This works best for acute stress. Try Brain Dump for racing thoughts instead."
 
@@ -509,16 +551,19 @@ Yes. In fact, you SHOULD.
 I've provided baseline copy based on 40 years of research, but your audience might respond differently. Test these variations:
 
 **Authority Citation:**
+
 - Control: "In a 2023 Stanford study..."
 - Variant A: "Stanford University researchers found..."
 - Variant B: "In a 2023 Stanford RCT with 114 participants..."
 
 **Anna Testimonial:**
+
 - Control: "I use this when I'm spiraling."
 - Variant A: "I use this when I'm spiraling. It works embarrassingly fast."
 - Variant B: "I do this every night. It's the only thing that turns off my brain."
 
 **Social Proof:**
+
 - Control: "10,000+ people used this"
 - Variant A: "10,247 people used this today"
 - Variant B: "10,247 people are using this right now"
@@ -536,6 +581,7 @@ USE REAL NUMBERS. Even if it's "427 people used this today," that's MORE persuas
 Specificity beats scale. "427" feels real. "1 million" feels fake.
 
 **Rule:** If you have <100 users per day, don't show daily counts. Instead:
+
 - "Used by 2,847 people total"
 - "347 completions this week"
 - "Rated 4.8/5 by 127 users"
@@ -561,26 +607,31 @@ But you'll see IMMEDIATE improvements in opening screen conversion (Week 1).
 ## NEXT STEPS
 
 ### This Week:
+
 1. Read `exercise-persuasion-architecture.md` (understand the strategy)
 2. Review `exercise-implementation-guide.md` (see the components)
 3. Set up baseline tracking in PostHog (measure current state)
 
 ### Next Week:
+
 4. Implement Phase 1 (opening screens with authority)
 5. Track "Begin Exercise" click rate
 6. Compare to baseline
 
 ### Month 1:
+
 7. Implement Phases 1-3 (opening, social proof, encouragement)
 8. Run first A/B tests on copy variations
 9. Measure funnel improvements
 
 ### Month 2:
+
 10. Implement Phases 4-6 (unity, streaks, commitments)
 11. Build community feed
 12. Optimize based on data
 
 ### Month 3:
+
 13. Scale to all exercises
 14. Run advanced A/B tests
 15. Achieve 25%+ funnel conversion target
@@ -624,6 +675,7 @@ But you'll see IMMEDIATE improvements in opening screen conversion (Week 1).
 Anxiety sufferers are in a state of HIGH UNCERTAINTY. The 7 principles reduce that uncertainty at every stage of the funnel.
 
 I've given you:
+
 1. **The strategy** (why it works)
 2. **The tactics** (how to build it)
 3. **The measurement** (how to prove it)

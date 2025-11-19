@@ -4,8 +4,6 @@
  * Using emoji for primary icons and lucide-react-native for UI
  */
 
-import type { LucideIcon } from 'lucide-react-native';
-
 /**
  * Loop Type Primary Icons
  * Large display icons for hero cards and identity
@@ -71,7 +69,7 @@ export const insightIcons = {
   'progress-made': '📈',
   'consistency-streak': '🔥',
   'milestone-reached': '🎯',
-  'breakthrough': '✨',
+  breakthrough: '✨',
 
   // Activity patterns
   'journaling-habit': '📖',

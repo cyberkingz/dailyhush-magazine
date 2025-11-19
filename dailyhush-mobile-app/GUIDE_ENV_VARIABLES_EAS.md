@@ -19,6 +19,7 @@ D'après le code, voici les variables utilisées :
 ## 🎯 MÉTHODE 1 : Secrets EAS (Recommandé - Plus sécurisé)
 
 **Avantages :**
+
 - ✅ Secrets stockés de manière sécurisée
 - ✅ Pas de secrets dans le repo git
 - ✅ Gestion centralisée
@@ -62,10 +63,12 @@ Tu devrais voir toutes les variables listées.
 ## 🎯 MÉTHODE 2 : eas.json (Plus simple mais moins sécurisé)
 
 **Avantages :**
+
 - ✅ Simple et rapide
 - ✅ Toutes les variables au même endroit
 
 **Inconvénients :**
+
 - ⚠️ Les secrets sont visibles dans le repo git
 - ⚠️ Si tu commits `eas.json`, les secrets sont exposés
 
@@ -148,6 +151,7 @@ Si tu ne te souviens plus des valeurs, tu peux :
 2. **Copier chaque valeur** et la coller dans la commande `eas secret:create` ou dans `eas.json`
 
 **Exemple :**
+
 ```bash
 # Dans ton .env, tu as :
 EXPO_PUBLIC_SUPABASE_URL=https://kisewkjogomsstgvqggc.supabase.co
@@ -187,4 +191,3 @@ Après avoir configuré les variables et rebuild l'app, teste sur TestFlight :
 ---
 
 **Recommandation :** Utilise la **Méthode 1 (Secrets EAS)** pour plus de sécurité ! 🔒
-

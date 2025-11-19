@@ -1,4 +1,5 @@
 # DailyHush Profile Page - Visual Design System
+
 **Complete Design Specifications**
 **Created:** January 1, 2025
 **Version:** 1.0
@@ -24,6 +25,7 @@
 Each loop type has a unique gradient identity designed for calm, therapeutic aesthetics on dark backgrounds.
 
 #### Sleep Loop 🌙
+
 **Theme:** Bedtime Rumination - Deep indigo to soft lavender
 **Energy:** Calming, nighttime, cosmic, dreamy
 
@@ -44,6 +46,7 @@ WCAG Compliance: 8.2:1 contrast on #0A0A0A
 ```
 
 #### Decision Loop 🧭
+
 **Theme:** Analysis Paralysis - Warm amber to soft gold
 **Energy:** Thoughtful, contemplative, crossroads
 
@@ -64,6 +67,7 @@ WCAG Compliance: 5.8:1 contrast on #0A0A0A
 ```
 
 #### Social Loop 💬
+
 **Theme:** Social Anxiety - Soft coral to warm peach
 **Energy:** Gentle, human connection, warm, approachable
 
@@ -84,6 +88,7 @@ WCAG Compliance: 5.2:1 contrast on #0A0A0A
 ```
 
 #### Perfectionism Loop 🌱
+
 **Theme:** Never Good Enough - Cool sage to mint green
 **Energy:** Growth-focused, organic, natural, calming
 
@@ -107,14 +112,14 @@ WCAG Compliance: 6.8:1 contrast on #0A0A0A
 
 Weather-based mood visualization system:
 
-| Weather | Gradient | Icon | Background | Text |
-|---------|----------|------|------------|------|
-| Sunny | `#FCD34D → #FBBF24 → #F59E0B` | ☀️ | `rgba(251, 191, 36, 0.1)` | `#FEF3C7` |
-| Partly Cloudy | `#93C5FD → #60A5FA → #3B82F6` | 🌤️ | `rgba(96, 165, 250, 0.1)` | `#DBEAFE` |
-| Cloudy | `#CBD5E1 → #94A3B8 → #64748B` | ☁️ | `rgba(148, 163, 184, 0.1)` | `#F1F5F9` |
-| Rainy | `#7DD3FC → #38BDF8 → #0EA5E9` | 🌧️ | `rgba(56, 189, 248, 0.1)` | `#E0F2FE` |
-| Stormy | `#6366F1 → #4F46E5 → #4338CA` | ⛈️ | `rgba(79, 70, 229, 0.1)` | `#E0E7FF` |
-| Foggy | `#A5B4FC → #818CF8 → #6366F1` | 🌫️ | `rgba(129, 140, 248, 0.1)` | `#E0E7FF` |
+| Weather       | Gradient                      | Icon | Background                 | Text      |
+| ------------- | ----------------------------- | ---- | -------------------------- | --------- |
+| Sunny         | `#FCD34D → #FBBF24 → #F59E0B` | ☀️   | `rgba(251, 191, 36, 0.1)`  | `#FEF3C7` |
+| Partly Cloudy | `#93C5FD → #60A5FA → #3B82F6` | 🌤️   | `rgba(96, 165, 250, 0.1)`  | `#DBEAFE` |
+| Cloudy        | `#CBD5E1 → #94A3B8 → #64748B` | ☁️   | `rgba(148, 163, 184, 0.1)` | `#F1F5F9` |
+| Rainy         | `#7DD3FC → #38BDF8 → #0EA5E9` | 🌧️   | `rgba(56, 189, 248, 0.1)`  | `#E0F2FE` |
+| Stormy        | `#6366F1 → #4F46E5 → #4338CA` | ⛈️   | `rgba(79, 70, 229, 0.1)`   | `#E0E7FF` |
+| Foggy         | `#A5B4FC → #818CF8 → #6366F1` | 🌫️   | `rgba(129, 140, 248, 0.1)` | `#E0E7FF` |
 
 ---
 
@@ -124,12 +129,12 @@ Weather-based mood visualization system:
 
 **Large display icons for hero cards and identity:**
 
-| Loop Type | Emoji | Name | Supporting Icons |
-|-----------|-------|------|------------------|
-| Sleep Loop | 🌙 | Moon | ⭐ 🛌 ✨ 🌌 💤 |
-| Decision Loop | 🧭 | Compass | 🔀 🤔 🗺️ ⚖️ 💭 |
-| Social Loop | 💬 | Speech Bubble | 🤝 🌸 💫 🦋 🌺 |
-| Perfectionism Loop | 🌱 | Seedling | 🎯 ✨ 🌿 🌻 🌳 |
+| Loop Type          | Emoji | Name          | Supporting Icons |
+| ------------------ | ----- | ------------- | ---------------- |
+| Sleep Loop         | 🌙    | Moon          | ⭐ 🛌 ✨ 🌌 💤   |
+| Decision Loop      | 🧭    | Compass       | 🔀 🤔 🗺️ ⚖️ 💭   |
+| Social Loop        | 💬    | Speech Bubble | 🤝 🌸 💫 🦋 🌺   |
+| Perfectionism Loop | 🌱    | Seedling      | 🎯 ✨ 🌿 🌻 🌳   |
 
 ### Pattern Insight Icons
 
@@ -166,14 +171,14 @@ Activity Patterns:
 **Lucide React Native icon names for interface elements:**
 
 ```typescript
-Navigation: ChevronLeft, ChevronRight, X, Menu, Home
-Actions: Share2, Edit3, Save, Trash2, RefreshCw, Download
-Status: Check, AlertCircle, XCircle, Info, Lock, Unlock
-Content: Calendar, Clock, Heart, Star, Bookmark, Tag
-Profile: User, Settings, Bell, Mail
-Charts: TrendingUp, TrendingDown, Activity, BarChart3, PieChart
-Commerce: ShoppingBag, Package, CreditCard, Gift
-Wellness: Sparkles, Zap, Moon, Sun, Leaf
+Navigation: (ChevronLeft, ChevronRight, X, Menu, Home);
+Actions: (Share2, Edit3, Save, Trash2, RefreshCw, Download);
+Status: (Check, AlertCircle, XCircle, Info, Lock, Unlock);
+Content: (Calendar, Clock, Heart, Star, Bookmark, Tag);
+Profile: (User, Settings, Bell, Mail);
+Charts: (TrendingUp, TrendingDown, Activity, BarChart3, PieChart);
+Commerce: (ShoppingBag, Package, CreditCard, Gift);
+Wellness: (Sparkles, Zap, Moon, Sun, Leaf);
 ```
 
 ### Icon Size Scale
@@ -204,10 +209,10 @@ xl: 80px   // Container for 48px icon
 ### Lucide Icon Stroke Widths
 
 ```typescript
-thin: 1.5
-regular: 2.0
-medium: 2.5
-bold: 3.0
+thin: 1.5;
+regular: 2.0;
+medium: 2.5;
+bold: 3.0;
 ```
 
 ---
@@ -360,11 +365,11 @@ Rating:
 ### Opacity Scale for Text Hierarchy
 
 ```typescript
-primary: 1.0     // Main content
-secondary: 0.85  // Supporting content
-tertiary: 0.7    // Metadata
-muted: 0.6       // Labels, hints
-disabled: 0.4    // Disabled text
+primary: 1.0; // Main content
+secondary: 0.85; // Supporting content
+tertiary: 0.7; // Metadata
+muted: 0.6; // Labels, hints
+disabled: 0.4; // Disabled text
 ```
 
 ---
@@ -374,28 +379,28 @@ disabled: 0.4    // Disabled text
 ### Animation Durations (milliseconds)
 
 ```typescript
-instant: 0       // No animation
-fast: 150        // Quick feedback (button press)
-normal: 300      // Standard transitions
-slow: 500        // Gentle, emphasized transitions
-relaxed: 800     // Very slow, calming
-breathing: 4000  // Breathing animation cycle
+instant: 0; // No animation
+fast: 150; // Quick feedback (button press)
+normal: 300; // Standard transitions
+slow: 500; // Gentle, emphasized transitions
+relaxed: 800; // Very slow, calming
+breathing: 4000; // Breathing animation cycle
 ```
 
 ### Animation Easing Curves
 
 ```typescript
 // Standard easings
-linear: [0, 0, 1, 1]
-easeIn: [0.42, 0, 1, 1]
-easeOut: [0, 0, 0.58, 1]
-easeInOut: [0.42, 0, 0.58, 1]
+linear: [0, 0, 1, 1];
+easeIn: [0.42, 0, 1, 1];
+easeOut: [0, 0, 0.58, 1];
+easeInOut: [0.42, 0, 0.58, 1];
 
 // Custom therapeutic easings
-gentle: [0.25, 0.46, 0.45, 0.94]  // Very smooth
-calm: [0.4, 0, 0.2, 1]             // Material Design emphasized
-therapeutic: [0.34, 1.56, 0.64, 1] // Slight bounce for delight
-breathing: [0.37, 0, 0.63, 1]      // Smooth breathing rhythm
+gentle: [0.25, 0.46, 0.45, 0.94]; // Very smooth
+calm: [0.4, 0, 0.2, 1]; // Material Design emphasized
+therapeutic: [0.34, 1.56, 0.64, 1]; // Slight bounce for delight
+breathing: [0.37, 0, 0.63, 1]; // Smooth breathing rhythm
 ```
 
 ### Fade Animations
@@ -1190,6 +1195,7 @@ const PatternInsightCard = React.memo(({ insight }) => {
 ### Brand Consistency
 
 **DO:**
+
 - Always use loop-specific gradients from loopTypeColors.ts
 - Use iconSizes scale for all icon dimensions
 - Apply profileTypography for all text elements
@@ -1197,6 +1203,7 @@ const PatternInsightCard = React.memo(({ insight }) => {
 - Follow glassmorphismPresets for card backgrounds
 
 **DON'T:**
+
 - Hardcode color values in components
 - Use arbitrary font sizes
 - Create custom animation timings without adding to constants
@@ -1264,6 +1271,7 @@ Variants:
 ## 📝 Version History
 
 **v1.0 - January 1, 2025**
+
 - Initial design system for profile page
 - Loop type color palettes defined
 - Icon system established

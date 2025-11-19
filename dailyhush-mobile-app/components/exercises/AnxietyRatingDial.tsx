@@ -9,10 +9,18 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, PanResponder, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  PanResponder,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { ANXIETY_SCALE } from '@/types/exercises';
-import { COLORS, SPACING, TYPOGRAPHY, RADIUS, OPACITY } from '@/constants/design-tokens';
+import { COLORS, OPACITY } from '@/constants/design-tokens';
 import { colors } from '@/constants/colors';
 import { typography } from '@/constants/typography';
 import { spacing } from '@/constants/spacing';
@@ -50,7 +58,7 @@ interface AnxietyColorSet {
   border: string;
 }
 
-type RatingValue = typeof RATING_VALUES[number];
+type RatingValue = (typeof RATING_VALUES)[number];
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -313,11 +321,12 @@ export function AnxietyRatingDial({
         <View
           ref={dialRef}
           onLayout={handleDialLayout}
-          style={[styles.dialBackground, { borderColor: colorScheme.border }]}
-        >
+          style={[styles.dialBackground, { borderColor: colorScheme.border }]}>
           {/* Center Label */}
           <View style={styles.centerLabel}>
-            <Text style={[styles.ratingNumber, { color: colorScheme.primary }]}>{currentRating}</Text>
+            <Text style={[styles.ratingNumber, { color: colorScheme.primary }]}>
+              {currentRating}
+            </Text>
             <Text style={styles.ratingLabel}>{ratingLabel}</Text>
           </View>
 
@@ -347,8 +356,7 @@ export function AnxietyRatingDial({
                   onRatingSelect(rating);
                 }}
                 accessibilityLabel={`Rating ${rating}: ${ANXIETY_SCALE[rating]}`}
-                accessibilityRole="button"
-              >
+                accessibilityRole="button">
                 <View
                   style={[
                     styles.marker,
@@ -378,8 +386,7 @@ export function AnxietyRatingDial({
                 backgroundColor: colorScheme.primary,
                 shadowColor: colorScheme.shadow,
               },
-            ]}
-          >
+            ]}>
             <View style={styles.handleInner} />
           </Animated.View>
         </View>

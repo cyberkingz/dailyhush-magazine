@@ -77,11 +77,7 @@ export function useWidgetStateMachine(
   // MOOD LOGGING API
   // ========================================================================
 
-  const {
-    submitMood,
-    isSubmitting,
-    error: apiError,
-  } = useMoodLogging();
+  const { submitMood, isSubmitting, error: apiError } = useMoodLogging();
 
   // ========================================================================
   // STATE
@@ -158,110 +154,122 @@ export function useWidgetStateMachine(
    * Transition: mood → intensity
    * Save selected mood and advance to intensity
    */
-  const selectMood = useCallback((mood: MoodChoice) => {
-    if (!validateMood(mood)) return;
+  const selectMood = useCallback(
+    (mood: MoodChoice) => {
+      if (!validateMood(mood)) return;
 
-    setData((prev) => ({ ...prev, mood }));
-    setState('intensity');
-  }, [validateMood]);
+      setData((prev) => ({ ...prev, mood }));
+      setState('intensity');
+    },
+    [validateMood]
+  );
 
   /**
    * Transition: intensity → notes (or success if notes disabled)
    * Save selected intensity and advance
    */
-  const selectIntensity = useCallback((intensity: IntensityValue) => {
-    if (!validateIntensity(intensity)) return;
+  const selectIntensity = useCallback(
+    (intensity: IntensityValue) => {
+      if (!validateIntensity(intensity)) return;
 
-    setData((prev) => ({ ...prev, intensity }));
+      setData((prev) => ({ ...prev, intensity }));
 
-    // If notes are disabled, go straight to submit
-    if (!enableQuickNotes) {
-      setState('success');
-      submitMoodData({ ...data, intensity });
-    } else {
-      setState('notes');
-    }
-  }, [validateIntensity, enableQuickNotes, data]);
+      // If notes are disabled, go straight to submit
+      if (!enableQuickNotes) {
+        setState('success');
+        submitMoodData({ ...data, intensity });
+      } else {
+        setState('notes');
+      }
+    },
+    [validateIntensity, enableQuickNotes, data]
+  );
 
   /**
    * Submit mood data to API
    * Internal helper function
    */
-  const submitMoodData = useCallback(async (finalData: Partial<MoodSubmitData>) => {
-    try {
-      // Validate required fields
-      if (!finalData.mood) {
-        throw new Error('Mood is required');
+  const submitMoodData = useCallback(
+    async (finalData: Partial<MoodSubmitData>) => {
+      try {
+        // Validate required fields
+        if (!finalData.mood) {
+          throw new Error('Mood is required');
+        }
+        if (!finalData.intensity) {
+          throw new Error('Intensity is required');
+        }
+
+        // Prepare submission data
+        const submitData: MoodSubmitData = {
+          mood: finalData.mood,
+          intensity: finalData.intensity,
+          notes: finalData.notes,
+          timestamp: new Date(),
+        };
+
+        // Submit to API
+        // Note: submitMood returns null when offline (which is OK - it queues for sync)
+        console.log('[Widget] Submitting mood:', {
+          mood: submitData.mood,
+          intensity: submitData.intensity,
+          hasNotes: !!submitData.notes,
+        });
+
+        await submitMood(submitData);
+
+        console.log('[Widget] Mood submitted successfully');
+
+        // Success! (including offline queue)
+        setError(null);
+        onSuccess?.(submitData);
+
+        // Calculate time to complete (for analytics)
+        if (startTime) {
+          const timeToComplete = Date.now() - startTime.getTime();
+          console.log(`[Widget] Mood logged in ${timeToComplete}ms`);
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to submit mood';
+        setError(errorMessage);
+        console.error('[Widget] Submit error:', err);
+        console.error('[Widget] Error details:', {
+          type: err?.constructor?.name,
+          message: errorMessage,
+          stack: err instanceof Error ? err.stack : undefined,
+        });
+
+        // Don't advance to success on error
+        // Stay on current state so user can retry
       }
-      if (!finalData.intensity) {
-        throw new Error('Intensity is required');
-      }
-
-      // Prepare submission data
-      const submitData: MoodSubmitData = {
-        mood: finalData.mood,
-        intensity: finalData.intensity,
-        notes: finalData.notes,
-        timestamp: new Date(),
-      };
-
-      // Submit to API
-      // Note: submitMood returns null when offline (which is OK - it queues for sync)
-      console.log('[Widget] Submitting mood:', {
-        mood: submitData.mood,
-        intensity: submitData.intensity,
-        hasNotes: !!submitData.notes,
-      });
-
-      await submitMood(submitData);
-
-      console.log('[Widget] Mood submitted successfully');
-
-      // Success! (including offline queue)
-      setError(null);
-      onSuccess?.(submitData);
-
-      // Calculate time to complete (for analytics)
-      if (startTime) {
-        const timeToComplete = Date.now() - startTime.getTime();
-        console.log(`[Widget] Mood logged in ${timeToComplete}ms`);
-      }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to submit mood';
-      setError(errorMessage);
-      console.error('[Widget] Submit error:', err);
-      console.error('[Widget] Error details:', {
-        type: err?.constructor?.name,
-        message: errorMessage,
-        stack: err instanceof Error ? err.stack : undefined,
-      });
-
-      // Don't advance to success on error
-      // Stay on current state so user can retry
-    }
-  }, [submitMood, onSuccess, startTime]);
+    },
+    [submitMood, onSuccess, startTime]
+  );
 
   /**
    * Transition: notes → success
    * Save notes and submit to API
    */
-  const submitNotes = useCallback(async (notes?: string) => {
-    const finalData = { ...data, notes };
-    setData(finalData);
+  const submitNotes = useCallback(
+    async (notes?: string) => {
+      const finalData = { ...data, notes };
+      setData(finalData);
 
-    // Transition to success state (animation will play)
-    setState('success');
+      // Transition to success state (animation will play)
+      setState('success');
 
-    // CRITICAL: Delay database save until AFTER animations complete
-    // This prevents native thread conflict between Reanimated and Supabase
-    // Total animation time: 400ms (success) + 400ms (display) + 300ms (collapse) = 1100ms
-    console.log('[StateMachine] Delaying database save to avoid animation conflict...');
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    console.log('[StateMachine] Animation settled, now saving to database...');
+      // CRITICAL: Delay database save until AFTER animations complete
+      // This prevents native thread conflict between Reanimated and Supabase
+      // Total animation time: 400ms (success) + 400ms (display) + 300ms (collapse) = 1100ms
+      console.log('[StateMachine] Delaying database save to avoid animation conflict...');
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      console.log('[StateMachine] Animation settled, now saving to database...');
 
-    // Submit after animations complete
-    await submitMoodData(finalData);
-  }, [data, submitMoodData]);
+      // Submit after animations complete
+      await submitMoodData(finalData);
+    },
+    [data, submitMoodData]
+  );
 
   /**
    * Transition: notes → success (skip notes)

@@ -21,11 +21,7 @@ interface ProgressIndicatorProps {
  * ProgressIndicator component
  * Step counter (dots or text)
  */
-export function ProgressIndicator({
-  currentStep,
-  totalSteps,
-  visible,
-}: ProgressIndicatorProps) {
+export function ProgressIndicator({ currentStep, totalSteps, visible }: ProgressIndicatorProps) {
   if (!visible) {
     return null;
   }
@@ -36,8 +32,7 @@ export function ProgressIndicator({
       accessible={true}
       accessibilityLabel={`Step ${currentStep} of ${totalSteps}`}
       accessibilityRole="progressbar"
-      accessibilityValue={{ min: 1, max: totalSteps, now: currentStep }}
-    >
+      accessibilityValue={{ min: 1, max: totalSteps, now: currentStep }}>
       {/* Dot indicators */}
       <View style={styles.dots}>
         {Array.from({ length: totalSteps }).map((_, index) => (

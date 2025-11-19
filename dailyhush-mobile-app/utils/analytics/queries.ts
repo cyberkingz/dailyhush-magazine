@@ -15,7 +15,7 @@ export interface UserStats {
   totalSpirals: number;
   averageReduction: number;
   mostCommonTrigger: string | null;
-  spiralsByDay: Array<{ day: string; count: number }>;
+  spiralsByDay: { day: string; count: number }[];
 }
 
 export interface UsagePatterns {
@@ -81,10 +81,7 @@ export interface ComprehensiveStats {
  * @param userId - The user's UUID
  * @param days - Number of days to analyze (default: 30)
  */
-export async function getUserStats(
-  userId: string,
-  days: number = 30
-): Promise<UserStats> {
+export async function getUserStats(userId: string, days: number = 30): Promise<UserStats> {
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
 
@@ -116,9 +113,7 @@ export async function getUserStats(
     .map((s) => s.pre_feeling - s.post_feeling);
 
   const averageReduction =
-    reductions.length > 0
-      ? reductions.reduce((a, b) => a + b, 0) / reductions.length
-      : 0;
+    reductions.length > 0 ? reductions.reduce((a, b) => a + b, 0) / reductions.length : 0;
 
   // Find most common trigger
   const triggerCounts = spirals.reduce(
@@ -150,7 +145,7 @@ export async function getUserStats(
       }
       return acc;
     },
-    [] as Array<{ day: string; count: number }>
+    [] as { day: string; count: number }[]
   );
 
   return {
@@ -170,10 +165,7 @@ export async function getUserStats(
  * @param userId - The user's UUID
  * @param days - Number of days to analyze (default: 30)
  */
-export async function getUsagePatterns(
-  userId: string,
-  days: number = 30
-): Promise<UsagePatterns> {
+export async function getUsagePatterns(userId: string, days: number = 30): Promise<UsagePatterns> {
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
 
@@ -238,9 +230,7 @@ export async function getUsagePatterns(
 
   const totalInterventions = spirals.filter((s) => s.interrupted).length;
   const successRate =
-    totalInterventions > 0
-      ? Math.round((successfulInterventions / totalInterventions) * 100)
-      : 0;
+    totalInterventions > 0 ? Math.round((successfulInterventions / totalInterventions) * 100) : 0;
 
   return {
     highRiskHours,
@@ -300,9 +290,8 @@ export async function getWeeklyProgress(userId: string): Promise<WeeklyProgress>
   const weeklyConversations = thisWeekConversations?.length || 0;
 
   // Calculate average intensity (pre_feeling)
-  const thisWeekIntensities = thisWeekSpirals
-    ?.filter((s) => s.pre_feeling)
-    .map((s) => s.pre_feeling) || [];
+  const thisWeekIntensities =
+    thisWeekSpirals?.filter((s) => s.pre_feeling).map((s) => s.pre_feeling) || [];
 
   const averageIntensity =
     thisWeekIntensities.length > 0
@@ -310,9 +299,8 @@ export async function getWeeklyProgress(userId: string): Promise<WeeklyProgress>
       : 0;
 
   // Calculate trend
-  const lastWeekIntensities = lastWeekSpirals
-    ?.filter((s) => s.pre_feeling)
-    .map((s) => s.pre_feeling) || [];
+  const lastWeekIntensities =
+    lastWeekSpirals?.filter((s) => s.pre_feeling).map((s) => s.pre_feeling) || [];
 
   const lastWeekAvg =
     lastWeekIntensities.length > 0
@@ -408,10 +396,7 @@ export async function getConversationStats(
  * @param userId - The user's UUID
  * @param days - Number of days to analyze (default: 30)
  */
-export async function getCheckInStats(
-  userId: string,
-  days: number = 30
-): Promise<CheckInStats> {
+export async function getCheckInStats(userId: string, days: number = 30): Promise<CheckInStats> {
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
 
@@ -448,8 +433,7 @@ export async function getCheckInStats(
   const averageMood = moods.length > 0 ? moods.reduce((a, b) => a + b, 0) / moods.length : 0;
   const averageEnergy =
     energies.length > 0 ? energies.reduce((a, b) => a + b, 0) / energies.length : 0;
-  const averageSleep =
-    sleeps.length > 0 ? sleeps.reduce((a, b) => a + b, 0) / sleeps.length : 0;
+  const averageSleep = sleeps.length > 0 ? sleeps.reduce((a, b) => a + b, 0) / sleeps.length : 0;
 
   // Calculate streak
   let streakDays = 0;
@@ -537,10 +521,7 @@ export async function getComprehensiveStats(
  * @param userId - The user's UUID
  * @param callback - Function to call when data changes
  */
-export function subscribeToSpiralUpdates(
-  userId: string,
-  callback: (payload: any) => void
-) {
+export function subscribeToSpiralUpdates(userId: string, callback: (payload: any) => void) {
   return supabase
     .channel(`spiral-updates-${userId}`)
     .on(
@@ -561,10 +542,7 @@ export function subscribeToSpiralUpdates(
  * @param userId - The user's UUID
  * @param callback - Function to call when data changes
  */
-export function subscribeToConversationUpdates(
-  userId: string,
-  callback: (payload: any) => void
-) {
+export function subscribeToConversationUpdates(userId: string, callback: (payload: any) => void) {
   return supabase
     .channel(`conversation-updates-${userId}`)
     .on(
@@ -585,10 +563,7 @@ export function subscribeToConversationUpdates(
  * @param userId - The user's UUID
  * @param callback - Function to call when data changes
  */
-export function subscribeToCheckInUpdates(
-  userId: string,
-  callback: (payload: any) => void
-) {
+export function subscribeToCheckInUpdates(userId: string, callback: (payload: any) => void) {
   return supabase
     .channel(`check-in-updates-${userId}`)
     .on(

@@ -365,8 +365,7 @@ export default function EmailLookup() {
                   textAlign: 'center',
                   lineHeight: 22,
                 }}>
-                Can't find your quiz? No worries! You can still use Nœma and take the quiz
-                later.
+                Can't find your quiz? No worries! You can still use Nœma and take the quiz later.
               </Text>
             </View>
 

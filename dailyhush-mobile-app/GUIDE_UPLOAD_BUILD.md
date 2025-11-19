@@ -10,6 +10,7 @@
 ## 🎯 MÉTHODE RECOMMANDÉE : EAS Build + EAS Submit
 
 **Avantages :**
+
 - ✅ Automatique et simple
 - ✅ Pas besoin de Xcode
 - ✅ Build dans le cloud
@@ -36,6 +37,7 @@ Utilise ton compte Expo (celui lié à `hello@trynoema.com`)
 ### 3. Vérifier la configuration
 
 Ton `eas.json` est déjà configuré avec :
+
 - ✅ Profile `production` pour App Store
 - ✅ Submit configuré avec ton App Store Connect ID
 
@@ -50,12 +52,14 @@ eas build --platform ios --profile production
 ```
 
 **Ce qui se passe :**
+
 1. EAS upload ton code vers leurs serveurs
 2. Build automatique dans le cloud
 3. Génération du fichier `.ipa`
 4. Temps estimé : **15-30 minutes**
 
 **Pendant le build :**
+
 - Tu peux suivre la progression sur [expo.dev](https://expo.dev)
 - Tu recevras une notification quand c'est terminé
 
@@ -66,10 +70,12 @@ eas build --platform ios --profile production --local
 ```
 
 **Avantages :**
+
 - Plus rapide (pas d'attente de queue)
 - Plus de contrôle
 
 **Inconvénients :**
+
 - Nécessite Xcode installé
 - Nécessite un Mac
 
@@ -84,6 +90,7 @@ eas submit --platform ios --latest
 ```
 
 **Ce qui se passe :**
+
 1. EAS récupère le dernier build
 2. Upload vers App Store Connect
 3. Le build apparaît dans App Store Connect en 5-15 minutes
@@ -175,6 +182,7 @@ Après l'upload (quelque soit la méthode) :
 ### Erreur : "No builds found"
 
 **Solution :** Vérifie que le build est terminé :
+
 ```bash
 eas build:list --platform ios
 ```
@@ -182,21 +190,25 @@ eas build:list --platform ios
 ### Erreur : "Invalid Bundle Identifier"
 
 **Solution :** Vérifie que le Bundle ID dans `app.json` correspond à celui dans App Store Connect :
+
 - `app.json` : `com.anthony.noema`
 - App Store Connect : `com.anthony.noema`
 
 ### Erreur : "Missing Compliance"
 
 **Solution :** Si Apple demande des informations de conformité :
+
 - Va dans App Store Connect > App Privacy
 - Vérifie que tout est configuré (déjà fait ✅)
 
 ### Erreur : "Invalid Provisioning Profile"
 
-**Solution :** 
+**Solution :**
+
 ```bash
 eas credentials
 ```
+
 Puis sélectionne "iOS" et vérifie/regénère les credentials.
 
 ---
@@ -214,11 +226,11 @@ Puis sélectionne "iOS" et vérifie/regénère les credentials.
 
 ## ⏱️ TEMPS ESTIMÉ
 
-| Méthode | Temps Build | Temps Upload | Total |
-|---------|-------------|--------------|-------|
-| **EAS Build (cloud)** | 15-30 min | 5-15 min | **20-45 min** |
-| **EAS Build (local)** | 10-20 min | 5-15 min | **15-35 min** |
-| **Xcode Archive** | 5-10 min | 5-15 min | **10-25 min** |
+| Méthode               | Temps Build | Temps Upload | Total         |
+| --------------------- | ----------- | ------------ | ------------- |
+| **EAS Build (cloud)** | 15-30 min   | 5-15 min     | **20-45 min** |
+| **EAS Build (local)** | 10-20 min   | 5-15 min     | **15-35 min** |
+| **Xcode Archive**     | 5-10 min    | 5-15 min     | **10-25 min** |
 
 ---
 
@@ -268,4 +280,3 @@ Si tu rencontres un problème :
 ---
 
 **Bonne chance pour le build ! 🚀**
-

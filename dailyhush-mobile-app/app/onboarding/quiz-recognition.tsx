@@ -217,8 +217,7 @@ export default function QuizRecognition() {
               textAlign: 'center',
               lineHeight: 22,
             }}>
-            If you took our quiz, we can personalize your Nœma experience using your quiz
-            results.
+            If you took our quiz, we can personalize your Nœma experience using your quiz results.
           </Text>
         </View>
       </ScrollFadeView>

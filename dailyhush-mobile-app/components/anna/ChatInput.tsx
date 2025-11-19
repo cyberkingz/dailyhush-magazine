@@ -20,7 +20,7 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({
   onSend,
   disabled = false,
-  placeholder = 'Share what\'s on your mind...',
+  placeholder = "Share what's on your mind...",
 }) => {
   const [message, setMessage] = useState('');
   const [inputHeight, setInputHeight] = useState(44);
@@ -57,16 +57,14 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-    >
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
       <View
         style={[
           styles.container,
           {
             paddingBottom: Math.max(insets.bottom, 12),
           },
-        ]}
-      >
+        ]}>
         <View style={styles.inputContainer}>
           <TextInput
             ref={inputRef}
@@ -95,13 +93,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             ]}
             onPress={handleSend}
             disabled={!canSend}
-            activeOpacity={0.7}
-          >
-            <Ionicons
-              name="send"
-              size={20}
-              color={canSend ? '#FFFFFF' : '#A0AEC0'}
-            />
+            activeOpacity={0.7}>
+            <Ionicons name="send" size={20} color={canSend ? '#FFFFFF' : '#A0AEC0'} />
           </TouchableOpacity>
         </View>
       </View>

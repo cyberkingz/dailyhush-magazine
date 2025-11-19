@@ -23,12 +23,14 @@ import { MoodType } from '@/types/mood-entries';
 ## 📝 Common Operations
 
 ### Create Entry
+
 ```typescript
 const entry = await createMoodEntry(userId);
 // Returns: { id: '...', status: 'draft', ... }
 ```
 
 ### Update Entry (Auto-Save)
+
 ```typescript
 await updateMoodEntry(entryId, {
   mood_type: MoodType.CALM,
@@ -38,11 +40,13 @@ await updateMoodEntry(entryId, {
 ```
 
 ### Complete Entry
+
 ```typescript
 await completeMoodEntry(entryId, timeSpentSeconds, suggestionAccepted);
 ```
 
 ### List Entries
+
 ```typescript
 const { entries, total_count, has_more } = await listMoodEntries(userId, {
   limit: 20,
@@ -52,6 +56,7 @@ const { entries, total_count, has_more } = await listMoodEntries(userId, {
 ```
 
 ### Get Patterns
+
 ```typescript
 const patterns = await getMoodPatterns(userId, 30);
 // Returns: { total_entries, most_common_mood, avg_intensity, ... }
@@ -62,21 +67,25 @@ const patterns = await getMoodPatterns(userId, 30);
 ## 🔐 Encryption
 
 ### Setup (Onboarding)
+
 ```typescript
 await generateEncryptionKey(userId, password);
 ```
 
 ### Unlock (Login)
+
 ```typescript
 await unlockEncryptionKey(userId, password);
 ```
 
 ### Clear (Logout)
+
 ```typescript
 await clearEncryptionKeys();
 ```
 
 ### Encrypt/Decrypt
+
 ```typescript
 const { ciphertext, nonce } = await encryptText('My journal entry');
 const plaintext = await decryptText(ciphertext, nonce);
@@ -87,6 +96,7 @@ const plaintext = await decryptText(ciphertext, nonce);
 ## 🎨 UI Components
 
 ### Mood Selection
+
 ```typescript
 <MoodSelector
   onSelect={(mood) => {
@@ -97,6 +107,7 @@ const plaintext = await decryptText(ciphertext, nonce);
 ```
 
 ### Intensity Rating
+
 ```typescript
 <IntensityRating
   value={intensity}
@@ -108,6 +119,7 @@ const plaintext = await decryptText(ciphertext, nonce);
 ```
 
 ### Free Writing (with Auto-Save)
+
 ```typescript
 const [journalText, setJournalText] = useState('');
 
@@ -132,6 +144,7 @@ useEffect(() => {
 ## 📊 Analytics Queries
 
 ### Mood Distribution
+
 ```sql
 SELECT mood_type, COUNT(*) as count
 FROM mood_entries
@@ -141,6 +154,7 @@ ORDER BY count DESC;
 ```
 
 ### Average Intensity by Mood
+
 ```sql
 SELECT mood_type, AVG(intensity_rating) as avg_intensity
 FROM mood_entries
@@ -149,6 +163,7 @@ GROUP BY mood_type;
 ```
 
 ### Entry Frequency (Last 7 Days)
+
 ```sql
 SELECT DATE(created_at) as date, COUNT(*) as count
 FROM mood_entries
@@ -165,12 +180,14 @@ ORDER BY date DESC;
 ## 🧪 Testing Snippets
 
 ### Test Encryption
+
 ```typescript
 const isWorking = await testEncryption();
 console.log('Encryption working:', isWorking); // Should be true
 ```
 
 ### Test CRUD
+
 ```typescript
 // Create
 const entry = await createMoodEntry(userId);
@@ -195,13 +212,17 @@ await deleteMoodEntry(entry.id);
 ## 🐛 Common Issues
 
 ### Issue: "Encryption key not found"
+
 **Solution**: User needs to unlock with password
+
 ```typescript
 await unlockEncryptionKey(userId, password);
 ```
 
 ### Issue: Auto-save not working
+
 **Solution**: Check timeout logic and network
+
 ```typescript
 // Add retry logic
 for (let i = 0; i < 3; i++) {
@@ -210,13 +231,15 @@ for (let i = 0; i < 3; i++) {
     break;
   } catch (error) {
     if (i === 2) throw error;
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 1000));
   }
 }
 ```
 
 ### Issue: "Decryption failed"
+
 **Solution**: Verify key version and nonce
+
 ```typescript
 const keyValid = await validateEncryptionKey();
 if (!keyValid) {
@@ -229,6 +252,7 @@ if (!keyValid) {
 ## 📱 React Query Hooks
 
 ### Mood History
+
 ```typescript
 const { data, isLoading } = useQuery({
   queryKey: ['mood-entries', userId],
@@ -237,6 +261,7 @@ const { data, isLoading } = useQuery({
 ```
 
 ### Mood Patterns
+
 ```typescript
 const { data: patterns } = useQuery({
   queryKey: ['mood-patterns', userId, 30],
@@ -246,6 +271,7 @@ const { data: patterns } = useQuery({
 ```
 
 ### Draft Entries
+
 ```typescript
 const { data: drafts } = useQuery({
   queryKey: ['mood-drafts', userId],
@@ -254,23 +280,21 @@ const { data: drafts } = useQuery({
 ```
 
 ### Mutation with Optimistic Update
+
 ```typescript
 const mutation = useMutation({
   mutationFn: updateMoodEntry,
   onMutate: async (variables) => {
     await queryClient.cancelQueries(['mood-entries', variables.entryId]);
     const previous = queryClient.getQueryData(['mood-entries', variables.entryId]);
-    queryClient.setQueryData(['mood-entries', variables.entryId], old => ({
+    queryClient.setQueryData(['mood-entries', variables.entryId], (old) => ({
       ...old,
       ...variables,
     }));
     return { previous };
   },
   onError: (err, variables, context) => {
-    queryClient.setQueryData(
-      ['mood-entries', variables.entryId],
-      context?.previous
-    );
+    queryClient.setQueryData(['mood-entries', variables.entryId], context?.previous);
   },
 });
 ```
@@ -316,6 +340,7 @@ interface MoodEntry {
 ## 🔧 Database Functions
 
 ### Get User History
+
 ```typescript
 const { data } = await supabase.rpc('get_user_mood_history', {
   p_user_id: userId,
@@ -326,6 +351,7 @@ const { data } = await supabase.rpc('get_user_mood_history', {
 ```
 
 ### Get Patterns
+
 ```typescript
 const { data } = await supabase.rpc('get_mood_patterns', {
   p_user_id: userId,
@@ -334,6 +360,7 @@ const { data } = await supabase.rpc('get_mood_patterns', {
 ```
 
 ### Cleanup Old Drafts (Admin)
+
 ```typescript
 const { data: deletedCount } = await supabase.rpc('cleanup_old_mood_drafts');
 console.log(`Deleted ${deletedCount} old drafts`);

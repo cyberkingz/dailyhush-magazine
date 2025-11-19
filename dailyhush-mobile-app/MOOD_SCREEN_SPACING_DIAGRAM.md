@@ -3,6 +3,7 @@
 ## Visual Comparison: Before vs After
 
 ### BEFORE - Original Layout (724px total)
+
 ```
 ┌────────────────────────────────────────────────┐
 │                                                │
@@ -89,6 +90,7 @@ Overflow: 54px
 ```
 
 ### AFTER - Optimized Layout (638px total)
+
 ```
 ┌────────────────────────────────────────────────┐
 │                                                │
@@ -195,6 +197,7 @@ Buffer: 32px
 ## Detailed Spacing Changes
 
 ### Header Area
+
 ```
 Component              BEFORE  →  AFTER    CHANGE
 ─────────────────────────────────────────────────
@@ -210,6 +213,7 @@ SUBTOTAL SAVED:                              50px
 ```
 
 ### Card List Area
+
 ```
 Component              BEFORE  →  AFTER    CHANGE
 ─────────────────────────────────────────────────
@@ -225,6 +229,7 @@ SUBTOTAL SAVED:                              36px
 ```
 
 ### Total Optimization
+
 ```
 Header area saved:        50px
 Card list area saved:     36px
@@ -268,6 +273,7 @@ Remaining buffer:         32px ✓
 ```
 
 ### Progress Dots
+
 ```
 Before:  ● (10×10px) ━━━━ (32×10px) ● (10×10px) ● (10×10px)
 After:   ● (8×8px)   ━━━━ (28×8px)   ● (8×8px)   ● (8×8px)
@@ -334,16 +340,19 @@ Note: Safe area accounts for status bar, notch/Dynamic Island,
 ## Responsive Behavior
 
 ### Portrait (Optimized)
+
 - All 5 cards visible
 - Centered vertically with flex
 - 32px buffer on iPhone 13/14
 
 ### Landscape (Future Consideration)
+
 - Current layout may require horizontal scroll
 - Recommended: Switch to 2-column grid
 - Or reduce card height proportionally
 
 ### iPad (Current Behavior)
+
 - Cards will be centered
 - May want to add maxWidth constraint
 - Consider 2 or 3 column layout
@@ -353,6 +362,7 @@ Note: Safe area accounts for status bar, notch/Dynamic Island,
 ## Animation Performance
 
 ### No Changes to Timing
+
 ```typescript
 // Card entrance stagger: 50ms per card
 Card 1: 0ms
@@ -365,6 +375,7 @@ Total entrance time: 600ms (400ms + 200ms stagger)
 ```
 
 ### Layout Shift Prevention
+
 ```typescript
 // All cards have defined dimensions:
 minHeight: 88px        // Prevents layout shift
@@ -379,20 +390,21 @@ gap: 12px              // Fixed spacing
 
 ## Comparison at a Glance
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| **Total Height** | 724px | 638px | **-86px (12%)** |
-| **Cards Visible** | 4.5 | 5.0 | **+0.5 cards** |
-| **Touch Target** | 88px | 88px | Maintained ✓ |
-| **Contrast Ratio** | 7:1+ | 7:1+ | Maintained ✓ |
-| **Font Sizes** | 28/20/15px | 28/20/15px | Maintained ✓ |
-| **Buffer (iPhone 13)** | -54px | +32px | **+86px** |
+| Metric                 | Before     | After      | Improvement     |
+| ---------------------- | ---------- | ---------- | --------------- |
+| **Total Height**       | 724px      | 638px      | **-86px (12%)** |
+| **Cards Visible**      | 4.5        | 5.0        | **+0.5 cards**  |
+| **Touch Target**       | 88px       | 88px       | Maintained ✓    |
+| **Contrast Ratio**     | 7:1+       | 7:1+       | Maintained ✓    |
+| **Font Sizes**         | 28/20/15px | 28/20/15px | Maintained ✓    |
+| **Buffer (iPhone 13)** | -54px      | +32px      | **+86px**       |
 
 ---
 
 ## Mathematical Verification
 
 ### iPhone 13/14 Standard
+
 ```
 Screen height:           844px
 Status bar:              ~44px
@@ -407,6 +419,7 @@ Remaining buffer:        32px ✓
 ```
 
 ### Space Distribution
+
 ```
 Header (title + subtitle):  ~160px (25%)
 Progress indicator:          ~20px  (3%)
@@ -422,6 +435,7 @@ Total:                       638px (100%)
 ## Design Token Reference
 
 ### Spacing Scale Applied
+
 ```
 SPACING.xs:  4px   → Header paddingTop
 SPACING.sm:  8px   → Progress padding, top padding
@@ -432,6 +446,7 @@ SPACING.xxl: 32px  → (Not used in optimized layout)
 ```
 
 ### Border Radius (Unchanged)
+
 ```
 BORDER_RADIUS.md:   12px  → Cards
 BORDER_RADIUS.lg:   16px  → (Reserved)
@@ -441,6 +456,6 @@ BORDER_RADIUS.full: 9999  → Progress dots
 
 ---
 
-*This diagram provides a pixel-perfect visualization of spacing changes.*
-*All measurements verified against iOS safe area calculations.*
-*Optimized for iPhone 13/14 standard size (844×390pt).*
+_This diagram provides a pixel-perfect visualization of spacing changes._
+_All measurements verified against iOS safe area calculations._
+_Optimized for iPhone 13/14 standard size (844×390pt)._

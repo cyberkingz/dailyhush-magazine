@@ -1,4 +1,5 @@
 # DailyHush Exercise Persuasion Architecture
+
 ## By Robert Cialdini
 
 **Date:** November 4, 2025
@@ -650,6 +651,7 @@ Your heart rate is slowing down right now.
 **PERSUASION PRINCIPLE:** COMMITMENT & PRE-SUASION
 
 By TELLING them their heart rate is slowing, you're:
+
 1. Creating the perception of physiological change
 2. Making them PAY ATTENTION to their body
 3. Activating placebo effect (which is fine - it works)
@@ -743,6 +745,7 @@ try Cyclic Physiological Sigh instead.
 **PERSUASION PRINCIPLE:** AUTHORITY + RECIPROCITY
 
 By explaining WHY it didn't work + offering an alternative, you're:
+
 1. Maintaining authority (you know when each technique works)
 2. Showing you care about their outcome (reciprocity)
 
@@ -885,7 +888,7 @@ The act of selecting a primary emotion is a BEHAVIORAL commitment. Once they cho
 
 **Screen 2: Secondary Emotion Refinement**
 
-*After selecting "Fear," for example:*
+_After selecting "Fear," for example:_
 
 ```
 ┌─────────────────────────────────┐
@@ -1617,31 +1620,37 @@ Every element I've designed passes the TRANSPARENCY TEST:
 ## FINAL PERSUASION ARCHITECTURE SUMMARY
 
 ### CYCLIC PHYSIOLOGICAL SIGH
+
 **Primary:** Authority (Stanford)
 **Secondary:** Social Proof (10K users)
 **Completion Driver:** Clinical precision + fast results
 
 ### 5-4-3-2-1 GROUNDING
+
 **Primary:** Authority (DBT, Dr. Linehan)
 **Secondary:** Unity (panic attack survivors)
 **Completion Driver:** Behavioral engagement + therapist validation
 
 ### 4-7-8 BREATHING
+
 **Primary:** Authority (Navy SEALs, Dr. Weil)
 **Secondary:** Social Proof (12K bedtime users)
 **Completion Driver:** Multiple use cases + neurophysiology
 
 ### EMOTION WHEEL
+
 **Primary:** Authority (Plutchik, UCLA)
 **Secondary:** Liking (Anna's discovery)
 **Completion Driver:** Self-discovery + neuroscience validation
 
 ### BRAIN DUMP
+
 **Primary:** Authority (Pennebaker, cognitive offloading)
 **Secondary:** Reciprocity (privacy promise)
 **Completion Driver:** Word count feedback + morning routine
 
 ### MIND CLEAR
+
 **Primary:** Authority (Attention Restoration Theory)
 **Secondary:** Scarcity (shortest, fastest)
 **Completion Driver:** Low barrier + immediate clarity
@@ -1691,6 +1700,7 @@ The 7 principles bridge that gap.
 When you stack these correctly, you create a COMPOUND PERSUASION EFFECT.
 
 The user thinks:
+
 1. "This is scientifically proven" (Authority)
 2. "Other people like me are doing it" (Social Proof + Unity)
 3. "Anna herself uses this" (Liking)

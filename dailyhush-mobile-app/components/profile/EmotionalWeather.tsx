@@ -11,7 +11,6 @@ import { MotiView } from 'moti';
 import { CloudSun } from 'lucide-react-native';
 import type { Enums } from '@/types/supabase';
 import { emotionalWeatherColors } from '@/constants/loopTypeColors';
-import { profileTypography } from '@/constants/profileTypography';
 import { colors } from '@/constants/colors';
 import { SPACING } from '@/constants/designTokens';
 import { PillButton } from '@/components/ui/pill-button';
@@ -23,12 +22,7 @@ interface EmotionalWeatherProps {
   onPress?: () => void;
 }
 
-export function EmotionalWeather({
-  weather,
-  moodRating,
-  notes,
-  onPress,
-}: EmotionalWeatherProps) {
+export function EmotionalWeather({ weather, moodRating, notes, onPress }: EmotionalWeatherProps) {
   // If no check-in today, show prompt (matching home page layout)
   if (!weather && !moodRating) {
     return (
@@ -42,9 +36,7 @@ export function EmotionalWeather({
           </View>
 
           {/* Description */}
-          <Text style={styles.emptyDescription}>
-            Check in with your emotional weather
-          </Text>
+          <Text style={styles.emptyDescription}>Check in with your emotional weather</Text>
         </View>
 
         {/* Floating Log Mood Button */}
@@ -68,8 +60,7 @@ export function EmotionalWeather({
       from={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'timing', duration: 500 }}
-      style={styles.activeContainer}
-    >
+      style={styles.activeContainer}>
       {/* Content */}
       <View style={styles.content}>
         {/* Weather icon */}
@@ -77,9 +68,7 @@ export function EmotionalWeather({
 
         {/* Weather description */}
         <View style={styles.textContent}>
-          <Text style={styles.weatherTitle}>
-            {weatherConfig?.name || 'Your Emotional Weather'}
-          </Text>
+          <Text style={styles.weatherTitle}>{weatherConfig?.name || 'Your Emotional Weather'}</Text>
 
           {/* Mood rating */}
           {moodRating && (
@@ -90,8 +79,7 @@ export function EmotionalWeather({
                   style={[
                     styles.moodDot,
                     i < moodRating ? styles.moodDotFilled : styles.moodDotEmpty,
-                  ]}
-                >
+                  ]}>
                   {i < moodRating ? '●' : '○'}
                 </Text>
               ))}

@@ -11,14 +11,18 @@ The adaptive protocol system tracks which spiral interrupt techniques work best 
 ## What This Migration Creates
 
 ### 1. `user_technique_stats` Table
+
 Automatically tracks technique effectiveness metrics:
+
 - **times_used**: How many times the user tried this technique
 - **times_successful**: How many times it reduced anxiety by 2+ points
 - **avg_reduction**: Running average of anxiety reduction (pre_feeling - post_feeling)
 - **last_used_at**: When they last used this technique
 
 ### 2. Enhanced `spiral_logs` Table
+
 New columns for protocol tracking:
+
 - **technique_id**: Unique identifier (e.g., "breathing", "5-4-3-2-1")
 - **technique_name**: Human-readable name
 - **protocol_duration**: How long the protocol ran
@@ -27,25 +31,30 @@ New columns for protocol tracking:
 - **interactive_responses**: User responses during protocol (JSONB)
 
 ### 3. Automatic Stats Updates
+
 A trigger automatically updates `user_technique_stats` whenever a new spiral log is inserted. No manual calculation needed!
 
 ### 4. Performance Indexes
+
 Optimized for fast queries when selecting personalized techniques.
 
 ## Running the Migration
 
 ### Option 1: Via Supabase Dashboard
+
 1. Go to Supabase Dashboard → SQL Editor
 2. Copy contents of `20251106_adaptive_protocols.sql`
 3. Click "Run"
 
 ### Option 2: Via Supabase CLI
+
 ```bash
 cd dailyhush-mobile-app
 supabase db push
 ```
 
 ### Option 3: Via Supabase MCP (if configured)
+
 Use the MCP tools to execute the migration directly.
 
 ## App Integration Examples
@@ -54,28 +63,26 @@ Use the MCP tools to execute the migration directly.
 
 ```typescript
 // When user completes a protocol
-const { data, error } = await supabase
-  .from('spiral_logs')
-  .insert({
-    user_id: currentUser.id,
-    timestamp: new Date().toISOString(),
-    trigger: 'health concerns',
-    duration_seconds: 180,
-    interrupted: true,
-    pre_feeling: 8,
-    post_feeling: 4,
+const { data, error } = await supabase.from('spiral_logs').insert({
+  user_id: currentUser.id,
+  timestamp: new Date().toISOString(),
+  trigger: 'health concerns',
+  duration_seconds: 180,
+  interrupted: true,
+  pre_feeling: 8,
+  post_feeling: 4,
 
-    // NEW: Protocol-specific fields
-    technique_id: 'breathing-4-7-8',
-    technique_name: '4-7-8 Breathing',
-    protocol_duration: 60,
-    selection_confidence: 0.85,
-    selection_rationale: 'High success rate (78%) for health-related triggers',
-    interactive_responses: {
-      breaths_completed: 4,
-      felt_calmer: true
-    }
-  });
+  // NEW: Protocol-specific fields
+  technique_id: 'breathing-4-7-8',
+  technique_name: '4-7-8 Breathing',
+  protocol_duration: 60,
+  selection_confidence: 0.85,
+  selection_rationale: 'High success rate (78%) for health-related triggers',
+  interactive_responses: {
+    breaths_completed: 4,
+    felt_calmer: true,
+  },
+});
 
 // The trigger automatically updates user_technique_stats!
 ```
@@ -111,9 +118,7 @@ const { data: stats } = await supabase
   .eq('technique_id', 'breathing-4-7-8')
   .single();
 
-const successRate = stats.times_used > 0
-  ? (stats.times_successful / stats.times_used) * 100
-  : 0;
+const successRate = stats.times_used > 0 ? (stats.times_successful / stats.times_used) * 100 : 0;
 
 console.log(`Success rate: ${successRate.toFixed(1)}%`);
 console.log(`Average reduction: ${stats.avg_reduction} points`);
@@ -136,22 +141,18 @@ async function selectTechnique(userId: string, trigger?: string) {
     return {
       technique_id: 'breathing-box',
       confidence: 0.5,
-      rationale: 'Default technique for new users'
+      rationale: 'Default technique for new users',
     };
   }
 
   // Calculate weighted score for each technique
-  const scored = userStats.map(stat => {
+  const scored = userStats.map((stat) => {
     const successRate = stat.times_successful / stat.times_used;
-    const recency = stat.last_used_at
-      ? daysSince(stat.last_used_at)
-      : 999;
+    const recency = stat.last_used_at ? daysSince(stat.last_used_at) : 999;
 
     // Weight: 50% success rate, 30% avg reduction, 20% recency bonus
     const score =
-      (successRate * 0.5) +
-      (Math.min(stat.avg_reduction / 5, 1) * 0.3) +
-      (recency > 7 ? 0.2 : 0); // Bonus if not used recently
+      successRate * 0.5 + Math.min(stat.avg_reduction / 5, 1) * 0.3 + (recency > 7 ? 0.2 : 0); // Bonus if not used recently
 
     return { ...stat, score };
   });
@@ -162,7 +163,7 @@ async function selectTechnique(userId: string, trigger?: string) {
   return {
     technique_id: best.technique_id,
     confidence: Math.min(best.score, 0.95),
-    rationale: `High success rate (${(best.times_successful / best.times_used * 100).toFixed(0)}%) with ${best.avg_reduction.toFixed(1)} point average reduction`
+    rationale: `High success rate (${((best.times_successful / best.times_used) * 100).toFixed(0)}%) with ${best.avg_reduction.toFixed(1)} point average reduction`,
   };
 }
 ```
@@ -177,21 +178,20 @@ const interactiveData = {
   things_heard: ['typing', 'traffic', 'birds'],
   things_smelled: ['coffee', 'fresh air'],
   things_tasted: ['mint'],
-  completion_rate: 1.0 // Completed all steps
+  completion_rate: 1.0, // Completed all steps
 };
 
-await supabase
-  .from('spiral_logs')
-  .insert({
-    // ... other fields
-    technique_id: '5-4-3-2-1',
-    interactive_responses: interactiveData
-  });
+await supabase.from('spiral_logs').insert({
+  // ... other fields
+  technique_id: '5-4-3-2-1',
+  interactive_responses: interactiveData,
+});
 ```
 
 ## Useful Queries
 
 ### Get User's Technique Dashboard
+
 ```sql
 SELECT
   technique_id,
@@ -207,6 +207,7 @@ ORDER BY avg_reduction DESC;
 ```
 
 ### Find Techniques User Hasn't Tried
+
 ```sql
 -- Get all available techniques from logs
 WITH available_techniques AS (
@@ -226,6 +227,7 @@ WHERE ut.technique_id IS NULL;
 ```
 
 ### Analyze Technique Effectiveness Over Time
+
 ```sql
 SELECT
   DATE_TRUNC('week', timestamp) as week,
@@ -244,6 +246,7 @@ ORDER BY week DESC, avg_reduction DESC;
 ## Testing the Migration
 
 ### 1. Insert Test Data
+
 ```sql
 -- Insert a test spiral log
 INSERT INTO spiral_logs (
@@ -264,6 +267,7 @@ INSERT INTO spiral_logs (
 ```
 
 ### 2. Verify Stats Were Created
+
 ```sql
 SELECT * FROM user_technique_stats
 WHERE user_id = '00000000-0000-0000-0000-000000000000'
@@ -271,12 +275,14 @@ WHERE user_id = '00000000-0000-0000-0000-000000000000'
 ```
 
 Expected result:
+
 - times_used = 1
 - times_successful = 1 (because 8-4 = 4, which is >= 2)
 - avg_reduction = 4.00
 - last_used_at = recent timestamp
 
 ### 3. Insert Another Log
+
 ```sql
 INSERT INTO spiral_logs (
   user_id,
@@ -294,6 +300,7 @@ INSERT INTO spiral_logs (
 ```
 
 ### 4. Verify Stats Updated
+
 ```sql
 SELECT * FROM user_technique_stats
 WHERE user_id = '00000000-0000-0000-0000-000000000000'
@@ -301,6 +308,7 @@ WHERE user_id = '00000000-0000-0000-0000-000000000000'
 ```
 
 Expected result:
+
 - times_used = 2
 - times_successful = 1 (second attempt only reduced by 1 point)
 - avg_reduction = 2.50 (average of 4.00 and 1.00)
@@ -309,10 +317,12 @@ Expected result:
 ## Success Criteria
 
 A technique is considered "successful" if:
+
 - Anxiety reduction >= 2 points
 - Formula: `(pre_feeling - post_feeling) >= 2`
 
 Examples:
+
 - Pre: 8, Post: 6 → Reduction: 2 → **Successful** ✓
 - Pre: 9, Post: 5 → Reduction: 4 → **Successful** ✓
 - Pre: 7, Post: 6 → Reduction: 1 → Not successful ✗
@@ -353,6 +363,7 @@ DROP TABLE IF EXISTS user_technique_stats;
 ## Questions or Issues?
 
 If you encounter any problems with this migration:
+
 1. Check Supabase logs in Dashboard → Database → Logs
 2. Verify trigger is executing: `SELECT * FROM pg_trigger WHERE tgname = 'trigger_update_technique_stats';`
 3. Test trigger function manually: Insert a test spiral_log and check user_technique_stats

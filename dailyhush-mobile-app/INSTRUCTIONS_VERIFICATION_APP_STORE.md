@@ -13,6 +13,7 @@
 Pour chaque produit (Monthly, Annual, Lifetime), vérifie :
 
 ### Statut du produit
+
 - ✅ **"Ready to Submit"** = Prêt à être soumis
 - ✅ **"Approved"** = Approuvé par Apple
 - ⚠️ **"Missing Metadata"** = Métadonnées manquantes
@@ -20,6 +21,7 @@ Pour chaque produit (Monthly, Annual, Lifetime), vérifie :
 - ❌ **"Rejected"** = Rejeté (voir les raisons)
 
 ### Métadonnées requises
+
 - ✅ **Subscription Display Name** (ex: "Premium Monthly")
 - ✅ **Description** (visible dans l'App Store)
 - ✅ **Review Notes** (pour Apple)
@@ -27,11 +29,13 @@ Pour chaque produit (Monthly, Annual, Lifetime), vérifie :
 - ✅ **Screenshots** (si requis)
 
 ### Pour les subscriptions (Monthly, Annual)
+
 - ✅ **Subscription Duration** (1 month, 1 year)
 - ✅ **Introductory Offers** (7-day free trial si configuré)
 - ✅ **Subscription Group** ("Noema Premium")
 
 ### Pour le Lifetime
+
 - ✅ **Product Type** (Non-consumable)
 - ✅ **Pricing** (Tier 150 = $149.99)
 
@@ -44,7 +48,7 @@ Pour chaque produit (Monthly, Annual, Lifetime), vérifie :
 ## 📝 Résultat attendu
 
 Une fois que tu as vérifié, dis-moi :
+
 - Le **statut** de chaque produit
 - S'il y a des **métadonnées manquantes**
 - Si les produits sont **"Ready to Submit"** ou **"Approved"**
-

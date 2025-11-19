@@ -1,4 +1,5 @@
 # Mood Widget UX Review & Recommendations
+
 **Date**: 2025-11-06
 **Reviewer**: UX Expert Agent
 **Project**: DailyHush Mobile App - Inline Mood Logging Widget
@@ -13,6 +14,7 @@ The transformation from a navigation-based multi-screen flow to an inline animat
 ### Key Findings
 
 ✅ **Strengths**
+
 - Eliminates context-switching between screens (massive win)
 - Maintains visual context on home screen
 - Progressive disclosure pattern is sound
@@ -20,6 +22,7 @@ The transformation from a navigation-based multi-screen flow to an inline animat
 - Success celebration creates positive reinforcement
 
 ⚠️ **Critical Concerns**
+
 - Lack of clear escape/cancel mechanism at each stage
 - Potential cognitive overload during expansion
 - Slider gesture may exclude users with motor impairments
@@ -27,6 +30,7 @@ The transformation from a navigation-based multi-screen flow to an inline animat
 - Android back button behavior undefined
 
 🔧 **Priority Recommendations**
+
 - **P0**: Add explicit cancel/close button throughout flow
 - **P0**: Provide alternative to slider for intensity selection
 - **P0**: Define tap-outside-to-cancel behavior
@@ -58,6 +62,7 @@ Stage 5: Display State (240px, collapse to original size)
 **Assessment**: ✅ **YES**, with modifications
 
 **Rationale**:
+
 - The flow follows **progressive disclosure** principles (reveal complexity gradually)
 - Each stage has a **single, clear action** (select mood → rate intensity → add context → confirm)
 - Cognitive load is distributed across stages rather than presented all at once
@@ -80,6 +85,7 @@ Stage 2: Intensity Rating
 ```
 
 **Benefits**:
+
 - Respects user intent (quick check-in vs. reflective journaling)
 - Reduces completion time for users who don't want to write
 - Makes notes feel optional without hiding the option
@@ -104,6 +110,7 @@ Stage 2: Intensity Rating
 ```
 
 **Trade-offs**:
+
 - ✅ Reduces stages from 4 to 3
 - ✅ Faster completion for experienced users
 - ❌ More cognitive load upfront
@@ -119,12 +126,14 @@ Stage 2: Intensity Rating
 **Recommendation**: ✅ **OPTIONAL** (strongly recommended)
 
 **Rationale**:
+
 1. **Friction Reduction**: Requiring notes will drop completion rates by 30-50% based on industry benchmarks for form completion
 2. **Daily Habit Formation**: Lower barrier = higher daily engagement
 3. **Mood Logging vs. Journaling**: These are different behaviors with different intents
 4. **Data Quality**: Optional fields get higher-quality responses than forced fields
 
 **Implementation**:
+
 - Present notes as an **enhancement**, not a requirement
 - Use inviting placeholder text: "How are you feeling? (optional)"
 - Add "Skip" button with equal visual weight to "Submit"
@@ -138,14 +147,15 @@ Stage 2: Intensity Rating
 
 **Flow Maps to Human Thought Process**:
 
-| Stage | User Question | Mental Model |
-|-------|--------------|--------------|
-| Mood Selection | "What am I feeling?" | Identify the emotion |
-| Intensity | "How strongly?" | Gauge the magnitude |
-| Notes | "Why do I feel this way?" | Reflect on context |
-| Success | "Did it save?" | Seek confirmation |
+| Stage          | User Question             | Mental Model         |
+| -------------- | ------------------------- | -------------------- |
+| Mood Selection | "What am I feeling?"      | Identify the emotion |
+| Intensity      | "How strongly?"           | Gauge the magnitude  |
+| Notes          | "Why do I feel this way?" | Reflect on context   |
+| Success        | "Did it save?"            | Seek confirmation    |
 
 **Strengths**:
+
 - Mirrors the **Jobs-to-be-Done** framework: When I want to check in emotionally, I want to identify and record my mood, so I can track patterns over time
 - Each stage builds on the previous (can't rate intensity without knowing mood)
 - Progressive commitment: small action → bigger action → optional reflection
@@ -164,6 +174,7 @@ Low intensity               High intensity
 ```
 
 **Alternative Labels** (more emotionally resonant):
+
 - "Barely noticeable" ← → "Overwhelming"
 - "Subtle" ← → "Intense"
 - "Mild" ← → "Strong"
@@ -203,19 +214,21 @@ Low intensity               High intensity
 
 **Cognitive Load Analysis**:
 
-| Aspect | Load Type | Mitigation Strategy |
-|--------|-----------|---------------------|
-| Card expansion (240px → 480px) | **Intrinsic** (necessary) | Smooth animation cues change |
-| Mood choices appearing | **Extraneous** (potentially distracting) | Stagger animation reduces shock |
-| Content fadeout during expansion | **Germane** (helpful) | Clear transition signal |
-| Button morphing ("Log Mood" → "Rate Intensity") | **Extraneous** (confusing) | ⚠️ Reconsider this approach |
+| Aspect                                          | Load Type                                | Mitigation Strategy             |
+| ----------------------------------------------- | ---------------------------------------- | ------------------------------- |
+| Card expansion (240px → 480px)                  | **Intrinsic** (necessary)                | Smooth animation cues change    |
+| Mood choices appearing                          | **Extraneous** (potentially distracting) | Stagger animation reduces shock |
+| Content fadeout during expansion                | **Germane** (helpful)                    | Clear transition signal         |
+| Button morphing ("Log Mood" → "Rate Intensity") | **Extraneous** (confusing)               | ⚠️ Reconsider this approach     |
 
 #### 2.1 Button Morphing Concern
 
 **Problem**: The concept doc proposes morphing the "Log Mood" button text through each stage:
+
 - "Log Mood" → "Rate Intensity" → "Submit"
 
 **Cognitive Load Issue**:
+
 - Users lose the **stable reference point** that grounds them in the flow
 - Button changes position AND label AND function
 - Violates **consistency** heuristic
@@ -235,6 +248,7 @@ Low intensity               High intensity
 ```
 
 **Benefits**:
+
 - Close button is always in the same place (muscle memory)
 - Action button is contextual to the stage
 - Clear visual hierarchy
@@ -246,6 +260,7 @@ Low intensity               High intensity
 **Assessment**: ⚠️ **BORDERLINE** - needs careful visual design
 
 **Complexity Metrics**:
+
 - 6 distinct states (empty, mood, intensity, notes, success, display)
 - 15+ animated values (card height, opacity, translate, scale, rotate)
 - Gesture handling (pan gesture for slider)
@@ -270,6 +285,7 @@ Low intensity               High intensity
 ```
 
 **Benefits**:
+
 - Sets expectation of multi-step flow
 - Shows progress (motivates completion)
 - Communicates that user can back out
@@ -317,6 +333,7 @@ Stage 3 (Notes):
 ```
 
 **Benefits**:
+
 - Users always know what they've selected
 - Easy to spot mistakes before submission
 - Reinforces progress through flow
@@ -329,21 +346,23 @@ Stage 3 (Notes):
 
 **Recommended Timing Tweaks**:
 
-| Transition | Current | Recommended | Rationale |
-|------------|---------|-------------|-----------|
-| Expansion (empty → mood) | 300ms | 350-400ms | Current feels rushed; users need time to process |
-| Mood → Intensity | 400ms | 350ms | Can be slightly faster; user already engaged |
-| Success display | 800ms | 1000-1200ms | Give users time to feel accomplishment |
-| Collapse | 400ms | 500ms | Slower collapse feels more intentional |
+| Transition               | Current | Recommended | Rationale                                        |
+| ------------------------ | ------- | ----------- | ------------------------------------------------ |
+| Expansion (empty → mood) | 300ms   | 350-400ms   | Current feels rushed; users need time to process |
+| Mood → Intensity         | 400ms   | 350ms       | Can be slightly faster; user already engaged     |
+| Success display          | 800ms   | 1000-1200ms | Give users time to feel accomplishment           |
+| Collapse                 | 400ms   | 500ms       | Slower collapse feels more intentional           |
 
 **Easing Adjustments**:
 
 Current concept uses: `Easing.bezier(0.25, 0.1, 0.25, 1)` (ease-out)
 
 **Recommendation for expansion**: Use **anticipation easing**
+
 ```
 Easing.bezier(0.68, -0.55, 0.265, 1.55)
 ```
+
 This creates a slight "bounce" that signals the card is becoming interactive.
 
 **Priority**: P2 (Nice-to-have, fine-tune during implementation)
@@ -363,6 +382,7 @@ This creates a slight "bounce" that signals the card is becoming interactive.
 **Recommendation**: ✅ **Always-visible close button** at top-right
 
 **Visual Design**:
+
 ```
 ┌─────────────────────────────────┐
 │                          [✕]    │ ← 44pt touch target minimum
@@ -374,15 +394,16 @@ This creates a slight "bounce" that signals the card is becoming interactive.
 
 **Behavior by Stage**:
 
-| Stage | Close Button Action | Confirmation? |
-|-------|---------------------|---------------|
-| Mood Selection | Collapse card immediately | No (no data entered) |
-| Intensity | Show "Discard mood?" dialog | Yes (one selection made) |
-| Notes | Show "Discard mood log?" dialog | Yes (two selections made) |
-| Success | Disabled (submission in progress) | N/A |
-| Display | N/A (not in flow) | N/A |
+| Stage          | Close Button Action               | Confirmation?             |
+| -------------- | --------------------------------- | ------------------------- |
+| Mood Selection | Collapse card immediately         | No (no data entered)      |
+| Intensity      | Show "Discard mood?" dialog       | Yes (one selection made)  |
+| Notes          | Show "Discard mood log?" dialog   | Yes (two selections made) |
+| Success        | Disabled (submission in progress) | N/A                       |
+| Display        | N/A (not in flow)                 | N/A                       |
 
 **Dialog Design**:
+
 ```
 ┌─────────────────────────────────┐
 │   Discard this mood log?        │
@@ -407,21 +428,25 @@ This creates a slight "bounce" that signals the card is becoming interactive.
 Add a semi-transparent backdrop when widget expands:
 
 ```tsx
-{isExpanded && (
-  <Pressable
-    style={styles.backdrop}
-    onPress={handleBackdropPress}
-    accessibilityLabel="Close mood logging"
-    accessibilityHint="Tap to exit without saving"
-  />
-)}
+{
+  isExpanded && (
+    <Pressable
+      style={styles.backdrop}
+      onPress={handleBackdropPress}
+      accessibilityLabel="Close mood logging"
+      accessibilityHint="Tap to exit without saving"
+    />
+  );
+}
 ```
 
 **Behavior**:
+
 - **Stage 1 (Mood)**: Tap outside → collapse immediately (no data loss)
 - **Stage 2+ (Intensity, Notes)**: Tap outside → show confirmation dialog
 
 **Visual Feedback**:
+
 - Backdrop opacity: 40% black
 - Card gains subtle shadow/elevation to feel "lifted"
 - Tap creates ripple effect from tap point
@@ -436,12 +461,12 @@ Add a semi-transparent backdrop when widget expands:
 
 **Behavior**:
 
-| Exit Point | Save Draft? | Restoration |
-|------------|-------------|-------------|
-| Mood selected only | No | Don't save incomplete data |
-| Intensity set | Yes | Save as draft, offer to "Continue where you left off" on next open |
-| Notes partially written | Yes | Save draft with timestamp |
-| Mid-submission | Yes | Queue for retry when back online |
+| Exit Point              | Save Draft? | Restoration                                                        |
+| ----------------------- | ----------- | ------------------------------------------------------------------ |
+| Mood selected only      | No          | Don't save incomplete data                                         |
+| Intensity set           | Yes         | Save as draft, offer to "Continue where you left off" on next open |
+| Notes partially written | Yes         | Save draft with timestamp                                          |
+| Mid-submission          | Yes         | Queue for retry when back online                                   |
 
 **Implementation**:
 
@@ -461,6 +486,7 @@ Add a semi-transparent backdrop when widget expands:
 **UI for Draft Restoration**:
 
 When user opens widget with existing draft:
+
 ```
 ┌─────────────────────────────────┐
 │   Continue your mood log?       │
@@ -473,6 +499,7 @@ When user opens widget with existing draft:
 ```
 
 **Trade-offs**:
+
 - ✅ Prevents data loss from accidental exits
 - ✅ Respects user's time investment
 - ❌ Adds complexity (draft storage, restoration logic)
@@ -497,6 +524,7 @@ When user opens widget with existing draft:
 **Solution**: Add error state between submit and success
 
 **Flow**:
+
 ```
 User taps Submit
    ↓
@@ -510,6 +538,7 @@ Show loading indicator (spinner in submit button)
 ```
 
 **Error Message Design**:
+
 ```
 ┌─────────────────────────────────┐
 │            ⚠️                   │
@@ -523,6 +552,7 @@ Show loading indicator (spinner in submit button)
 ```
 
 **Retry Behavior**:
+
 - Retry button shows loading spinner
 - Maximum 3 auto-retries with exponential backoff
 - After 3 failures, save to queue for later sync
@@ -532,6 +562,7 @@ Show loading indicator (spinner in submit button)
 #### 4.2 Offline Queue
 
 **Implementation**:
+
 - Save submission to local queue if offline
 - Show immediate success animation (optimistic UI)
 - Sync when connection restored
@@ -542,6 +573,7 @@ Show loading indicator (spinner in submit button)
 ### Validation Errors
 
 **Potential Errors**:
+
 1. No mood selected (shouldn't happen with UI flow)
 2. No intensity set (shouldn't happen with UI flow)
 3. Invalid data (corrupted state)
@@ -555,7 +587,7 @@ const handleMoodSelect = (mood: string) => {
     Toast.show({
       type: 'error',
       text1: 'Invalid mood selection',
-      text2: 'Please try again'
+      text2: 'Please try again',
     });
     return;
   }
@@ -572,11 +604,13 @@ const handleMoodSelect = (mood: string) => {
 #### 4.3 Submission Timeout
 
 **Behavior**:
+
 - Set 10-second timeout for submission request
 - If timeout occurs, show error message with retry option
 - Save to offline queue as fallback
 
 **Implementation**:
+
 ```tsx
 const submitMoodLog = async (data: MoodData) => {
   const controller = new AbortController();
@@ -608,6 +642,7 @@ const submitMoodLog = async (data: MoodData) => {
 #### 4.4 Error Recovery Patterns
 
 **Pattern 1: Inline Retry**
+
 ```
 ┌─────────────────────────────────┐
 │            ⚠️                   │
@@ -616,16 +651,19 @@ const submitMoodLog = async (data: MoodData) => {
 │   [Retry]     [Save for Later]  │
 └─────────────────────────────────┘
 ```
+
 - Keeps user in widget context
 - Preserves all entered data
 - Retry is primary action
 
 **Pattern 2: Graceful Degradation**
+
 - If submission fails after 3 retries, offer "Save Offline"
 - Widget collapses showing "Mood saved offline" state
 - Sync indicator shows when online again
 
 **Pattern 3: Escape Hatch**
+
 - Always provide "Cancel" or "Back" option in error states
 - Canceling from error state asks "Discard mood log?"
 - User can exit cleanly without feeling trapped
@@ -645,23 +683,20 @@ const submitMoodLog = async (data: MoodData) => {
 **Implementation**: Announce each stage transition
 
 ```tsx
-<View
-  accessibilityLiveRegion="polite"
-  accessibilityLabel={getStageAnnouncement()}
->
+<View accessibilityLiveRegion="polite" accessibilityLabel={getStageAnnouncement()}>
   {/* Stage content */}
 </View>
 ```
 
 **Announcements by Stage**:
 
-| Stage | Announcement |
-|-------|--------------|
-| Expansion | "Mood logging opened. Select your mood. Step 1 of 4." |
-| Mood → Intensity | "Happy selected. Rate the intensity. Step 2 of 4." |
+| Stage             | Announcement                                                  |
+| ----------------- | ------------------------------------------------------------- |
+| Expansion         | "Mood logging opened. Select your mood. Step 1 of 4."         |
+| Mood → Intensity  | "Happy selected. Rate the intensity. Step 2 of 4."            |
 | Intensity → Notes | "Intensity 5 of 7 selected. Add optional notes. Step 3 of 4." |
-| Notes → Success | "Mood log saved successfully. Step 4 of 4." |
-| Success → Display | "Mood log complete. Showing today's emotional weather." |
+| Notes → Success   | "Mood log saved successfully. Step 4 of 4."                   |
+| Success → Display | "Mood log complete. Showing today's emotional weather."       |
 
 **Priority**: P0 (Must-fix for accessibility)
 
@@ -729,14 +764,15 @@ useEffect(() => {
 **Problem**: ⚠️ **Pan gesture slider excludes users who can't perform swipe gestures**
 
 **Critical Issue**: The concept doc proposes a gesture-based slider:
+
 ```tsx
-const panGesture = Gesture.Pan()
-  .onUpdate((e) => {
-    sliderX.value = Math.max(0, Math.min(e.translationX, sliderWidth));
-  })
+const panGesture = Gesture.Pan().onUpdate((e) => {
+  sliderX.value = Math.max(0, Math.min(e.translationX, sliderWidth));
+});
 ```
 
 **Users Who Can't Use This**:
+
 - Motor impairments (Parkinson's, tremors, limited dexterity)
 - Switch control users
 - Voice control users
@@ -773,6 +809,7 @@ const panGesture = Gesture.Pan()
 ```
 
 **Interaction**:
+
 - Tap any number to select
 - Can also drag between numbers (gesture enhancement, not requirement)
 - Selected state is visually clear (filled dot, color change)
@@ -786,12 +823,12 @@ const panGesture = Gesture.Pan()
 
 **Audit Current Design**:
 
-| Element | Current Size | Compliant? | Fix |
-|---------|--------------|------------|-----|
-| Mood emojis | TBD by UI designer | Unknown | Ensure 44x44pt minimum |
-| Intensity dots | TBD | Unknown | 44x44pt minimum + 8pt spacing |
-| Close button | TBD | Unknown | 44x44pt minimum |
-| Skip button | TBD | Unknown | 44x44pt minimum |
+| Element        | Current Size       | Compliant? | Fix                           |
+| -------------- | ------------------ | ---------- | ----------------------------- |
+| Mood emojis    | TBD by UI designer | Unknown    | Ensure 44x44pt minimum        |
+| Intensity dots | TBD                | Unknown    | 44x44pt minimum + 8pt spacing |
+| Close button   | TBD                | Unknown    | 44x44pt minimum               |
+| Skip button    | TBD                | Unknown    | 44x44pt minimum               |
 
 **Priority**: P0 (Must-fix)
 
@@ -804,11 +841,13 @@ const panGesture = Gesture.Pan()
 **Solution**: Offer "Quick Check-In" mode in settings
 
 **Quick Mode Flow**:
+
 - Single screen: Mood + Intensity combined (matrix layout)
 - Skip notes entirely
 - Immediate success animation
 
 **Access**:
+
 ```
 Settings → Mood Logging → Check-In Mode
 ○ Standard (guided 4-step process)
@@ -859,19 +898,20 @@ Settings → Mood Logging → Check-In Mode
 
 #### 6.1 Haptic Feedback Map
 
-| Interaction | Haptic Type | Rationale |
-|-------------|-------------|-----------|
-| "Log Mood" button tap | **Light** | Signals flow start |
-| Card expansion | **Medium** | Reinforces state change |
-| Mood selection | **Medium** | Confirms choice |
-| Mood → Intensity transition | **Light** | Smooth progression |
-| Intensity slider drag | **Selection** (per step) | Guides discrete steps |
-| Intensity selection | **Medium** | Confirms choice |
-| Submit button tap | **Heavy** | Signals commitment |
-| Success animation | **Success** | Celebration |
-| Error state | **Error** | Alerts to problem |
+| Interaction                 | Haptic Type              | Rationale               |
+| --------------------------- | ------------------------ | ----------------------- |
+| "Log Mood" button tap       | **Light**                | Signals flow start      |
+| Card expansion              | **Medium**               | Reinforces state change |
+| Mood selection              | **Medium**               | Confirms choice         |
+| Mood → Intensity transition | **Light**                | Smooth progression      |
+| Intensity slider drag       | **Selection** (per step) | Guides discrete steps   |
+| Intensity selection         | **Medium**               | Confirms choice         |
+| Submit button tap           | **Heavy**                | Signals commitment      |
+| Success animation           | **Success**              | Celebration             |
+| Error state                 | **Error**                | Alerts to problem       |
 
 **Implementation**:
+
 ```tsx
 import * as Haptics from 'expo-haptics';
 
@@ -895,6 +935,7 @@ Haptics.selectionAsync();
 ```
 
 **Settings Integration**:
+
 - Add "Haptic Feedback" toggle in settings
 - Default: ON
 - Respect system-level haptic preferences
@@ -909,20 +950,22 @@ Haptics.selectionAsync();
 
 **Sounds to Consider**:
 
-| Event | Sound | Rationale |
-|-------|-------|-----------|
-| Mood selection | Subtle "pop" (50ms) | Playful, confirms tap |
-| Intensity slider snap | Gentle "click" (30ms) | Guides to discrete steps |
-| Success | Uplifting "chime" (300ms) | Celebration |
-| Error | Gentle "bonk" (200ms) | Non-alarming alert |
+| Event                 | Sound                     | Rationale                |
+| --------------------- | ------------------------- | ------------------------ |
+| Mood selection        | Subtle "pop" (50ms)       | Playful, confirms tap    |
+| Intensity slider snap | Gentle "click" (30ms)     | Guides to discrete steps |
+| Success               | Uplifting "chime" (300ms) | Celebration              |
+| Error                 | Gentle "bonk" (200ms)     | Non-alarming alert       |
 
 **Critical Considerations**:
+
 - ⚠️ **Most users keep phones on silent** - don't rely on sound for critical feedback
 - 🔇 **Respect system silent mode** - never override
 - 🎵 **Provide settings toggle** - "Sound Effects: ON/OFF"
 - ♿ **Accessibility concern** - Don't use sound as sole indicator
 
 **Implementation**:
+
 ```tsx
 import { Audio } from 'expo-av';
 
@@ -935,10 +978,9 @@ const playSound = async (soundFile: string) => {
   if (isSilent) return;
 
   // Play sound at low volume
-  const { sound } = await Audio.Sound.createAsync(
-    require(`@/assets/sounds/${soundFile}.mp3`),
-    { volume: 0.3 }
-  );
+  const { sound } = await Audio.Sound.createAsync(require(`@/assets/sounds/${soundFile}.mp3`), {
+    volume: 0.3,
+  });
   await sound.playAsync();
 };
 ```
@@ -956,6 +998,7 @@ const playSound = async (soundFile: string) => {
 **Stage: Submit Button**
 
 Before submission:
+
 ```
 ┌─────────────────────────────────┐
 │   [Submit ✓]                    │ ← Enabled, ready to tap
@@ -963,6 +1006,7 @@ Before submission:
 ```
 
 During submission:
+
 ```
 ┌─────────────────────────────────┐
 │   [⟳ Saving...]                 │ ← Spinner + text, disabled
@@ -970,12 +1014,14 @@ During submission:
 ```
 
 **Loading Animation**:
+
 - Spinner rotates smoothly (1s per rotation)
 - Button dims slightly (opacity: 0.7)
 - Button is disabled (prevents double-submission)
 - Subtle pulse animation on button border
 
 **Timeout Handling**:
+
 - After 5 seconds, show "This is taking longer than usual..."
 - After 10 seconds, trigger timeout error state
 
@@ -986,6 +1032,7 @@ During submission:
 **Pattern**: Show success immediately, sync in background
 
 **Implementation**:
+
 ```tsx
 const handleSubmit = async (data: MoodData) => {
   // 1. Immediately show success animation
@@ -1007,12 +1054,14 @@ const handleSubmit = async (data: MoodData) => {
 ```
 
 **Trade-offs**:
+
 - ✅ Instant feedback (no waiting for network)
 - ✅ Higher perceived performance
 - ❌ User may not know if sync failed
 - ❌ Potential data loss if app crashes before sync
 
 **Mitigation**: Show subtle sync indicator on "display" state
+
 ```
 ┌─────────────────────────────────┐
 │  ↻ Syncing...                   │ ← Small indicator
@@ -1032,24 +1081,28 @@ const handleSubmit = async (data: MoodData) => {
 #### 6.5 Dynamic Success Animation
 
 **Tier 1: First Check-In** (Minimal)
+
 - ✓ Checkmark animation
 - ✓ Success haptic
 - ❌ No confetti
 - Message: "Mood logged!"
 
 **Tier 2: Daily Check-In (Days 2-6)** (Standard)
+
 - ✓ Checkmark animation
 - ✓ Success haptic
 - ✓ Subtle particle effect (5-10 particles)
 - Message: "Mood logged! Day 3 streak"
 
 **Tier 3: Week Milestone** (Enhanced)
+
 - ✓ Checkmark animation
 - ✓ Success haptic (heavy)
 - ✓ Confetti burst (20-30 particles)
 - Message: "🎉 7 day streak! You're building a habit!"
 
 **Tier 4: Month Milestone** (Maximum)
+
 - ✓ Checkmark animation
 - ✓ Success haptic (heavy)
 - ✓ Full confetti (50+ particles, multiple colors)
@@ -1057,6 +1110,7 @@ const handleSubmit = async (data: MoodData) => {
 - Message: "🎊 30 day streak! Incredible consistency!"
 
 **Implementation**:
+
 ```tsx
 const getSuccessAnimation = (streak: number) => {
   if (streak === 1) return 'minimal';
@@ -1068,6 +1122,7 @@ const getSuccessAnimation = (streak: number) => {
 ```
 
 **Benefits**:
+
 - Celebrates milestones (reinforces habit formation)
 - Doesn't overwhelm daily users with same celebration
 - Creates anticipation for next milestone
@@ -1087,10 +1142,12 @@ const getSuccessAnimation = (streak: number) => {
 **Recommendation**: ✅ Different entry point, same widget flow
 
 **Scenario 1: No mood logged today**
+
 - Widget shows: "Log Mood" button
 - Flow: Standard 4-stage flow
 
 **Scenario 2: Mood already logged today**
+
 - Widget shows: "Update" button
 - Flow: Same 4-stage flow, but pre-populated with existing data
 
@@ -1128,6 +1185,7 @@ Stage 3 (Notes):
 
 **Confirmation Dialog**:
 When user submits update, show confirmation:
+
 ```
 ┌─────────────────────────────────┐
 │   Update today's mood log?      │
@@ -1146,11 +1204,13 @@ When user submits update, show confirmation:
 **Design Decision**: Should users log multiple moods per day?
 
 **Option A**: One mood per day (current assumption)
+
 - ✅ Simpler data model
 - ✅ Clearer "daily check-in" habit
 - ❌ Doesn't capture mood changes throughout day
 
 **Option B**: Multiple moods per day
+
 - ✅ More accurate mood tracking
 - ✅ Captures morning vs. evening differences
 - ❌ More complex UI (which mood to show?)
@@ -1189,6 +1249,7 @@ const handleLogMood = async () => {
 ```
 
 **Visual Feedback**:
+
 - Button dims (opacity: 0.5) during animation
 - Cursor shows "not-allowed" state (web) or button is non-responsive (mobile)
 - Haptic feedback is only triggered once
@@ -1257,14 +1318,15 @@ const handleLogMood = () => {
 
 **Expected Behavior**:
 
-| Widget State | Back Button Action |
-|--------------|-------------------|
-| Collapsed (display state) | Navigate back in app (default behavior) |
-| Expanded (any stage) | Collapse widget (with confirmation if data entered) |
-| Confirmation dialog open | Close dialog, return to widget |
-| Error state | Close error, return to previous stage or collapse |
+| Widget State              | Back Button Action                                  |
+| ------------------------- | --------------------------------------------------- |
+| Collapsed (display state) | Navigate back in app (default behavior)             |
+| Expanded (any stage)      | Collapse widget (with confirmation if data entered) |
+| Confirmation dialog open  | Close dialog, return to widget                      |
+| Error state               | Close error, return to previous stage or collapse   |
 
 **Implementation**:
+
 ```tsx
 import { BackHandler } from 'react-native';
 
@@ -1277,10 +1339,7 @@ useEffect(() => {
     return false; // Allow default back navigation
   };
 
-  const backHandler = BackHandler.addEventListener(
-    'hardwareBackPress',
-    backAction
-  );
+  const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
   return () => backHandler.remove();
 }, [isExpanded]);
@@ -1291,6 +1350,7 @@ useEffect(() => {
 #### 7.7 iOS Swipe-Back Gesture
 
 **Expected Behavior**:
+
 - iOS users may swipe from left edge to go back
 - If widget is expanded, swipe should collapse widget (not navigate back)
 
@@ -1323,8 +1383,7 @@ const swipeGesture = Gesture.Fling()
 ```tsx
 <KeyboardAvoidingView
   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-  keyboardVerticalOffset={100}
->
+  keyboardVerticalOffset={100}>
   {/* Widget content */}
 </KeyboardAvoidingView>
 ```
@@ -1336,6 +1395,7 @@ const swipeGesture = Gesture.Fling()
 **Recommendation**: Lock widget to portrait on phones, support landscape on tablets
 
 **Implementation**:
+
 ```tsx
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -1358,6 +1418,7 @@ useEffect(() => {
 **Recommendation**: Adapt colors for dark mode
 
 **Implementation**:
+
 - Use `colors.background.card` (already dark mode aware)
 - Ensure slider has sufficient contrast in both modes
 - Test success checkmark color (lime[500] may be too bright in dark mode)
@@ -1370,6 +1431,7 @@ useEffect(() => {
 **Recommendation**: Reduce animation complexity on older devices
 
 **Detection**:
+
 ```tsx
 import { Platform } from 'react-native';
 
@@ -1397,7 +1459,7 @@ const animationConfig = isLowEndDevice()
 analytics.track('MOOD_WIDGET_OPENED', {
   source: 'home_page',
   hasExistingMood: boolean,
-  timestamp: Date.now()
+  timestamp: Date.now(),
 });
 
 // Stage completions
@@ -1409,25 +1471,26 @@ analytics.track('NOTES_SUBMITTED', { hasNotes: true, notesLength: 45, timeSinceO
 analytics.track('MOOD_LOG_COMPLETED', {
   totalTime: 15000, // 15 seconds
   includesNotes: true,
-  streak: 7
+  streak: 7,
 });
 
 // Flow abandoned
 analytics.track('MOOD_WIDGET_ABANDONED', {
   stage: 'intensity',
   timeSinceOpen: 8000,
-  reason: 'user_canceled' | 'tap_outside' | 'back_button'
+  reason: 'user_canceled' | 'tap_outside' | 'back_button',
 });
 
 // Errors
 analytics.track('MOOD_WIDGET_ERROR', {
   error: 'network_timeout',
   stage: 'submit',
-  retryCount: 2
+  retryCount: 2,
 });
 ```
 
 **Use Data To**:
+
 - Identify drop-off points (which stage do users abandon?)
 - Optimize animation timings (are transitions too slow?)
 - A/B test variations (notes required vs. optional)
@@ -1602,6 +1665,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ```
 
 **Benefits**:
+
 - Accessible to all users (no gesture required)
 - Faster selection (one tap vs. drag)
 - Clear discrete steps (no ambiguity)
@@ -1613,48 +1677,48 @@ analytics.track('MOOD_WIDGET_ERROR', {
 
 ### P0: Must-Fix (Critical for Launch)
 
-| Recommendation | Section | Rationale |
-|----------------|---------|-----------|
-| Add close/cancel button | 3.1 | Users must have escape mechanism |
-| Implement tap-outside-to-cancel | 3.2 | Essential for modal-like behavior |
-| Make notes optional | 1.2 | Required for high completion rate |
-| Add intensity scale labels | 1.3 | Prevents user confusion |
-| Alternative to slider gesture | 5.4 | Accessibility requirement |
-| Screen reader announcements | 5.1 | Accessibility requirement |
-| Loading state during submit | 6.3 | Prevents double-submission |
-| Network error handling | 4.1 | Prevents data loss |
-| Back button handling (Android) | 7.6 | Expected platform behavior |
-| Keyboard avoidance | 8.1 | Prevents UI obstruction |
-| Update vs. Log flow | 7.1 | Core functionality gap |
+| Recommendation                  | Section | Rationale                         |
+| ------------------------------- | ------- | --------------------------------- |
+| Add close/cancel button         | 3.1     | Users must have escape mechanism  |
+| Implement tap-outside-to-cancel | 3.2     | Essential for modal-like behavior |
+| Make notes optional             | 1.2     | Required for high completion rate |
+| Add intensity scale labels      | 1.3     | Prevents user confusion           |
+| Alternative to slider gesture   | 5.4     | Accessibility requirement         |
+| Screen reader announcements     | 5.1     | Accessibility requirement         |
+| Loading state during submit     | 6.3     | Prevents double-submission        |
+| Network error handling          | 4.1     | Prevents data loss                |
+| Back button handling (Android)  | 7.6     | Expected platform behavior        |
+| Keyboard avoidance              | 8.1     | Prevents UI obstruction           |
+| Update vs. Log flow             | 7.1     | Core functionality gap            |
 
 ### P1: Should-Fix (High Impact)
 
-| Recommendation | Section | Rationale |
-|----------------|---------|-----------|
-| Progress indicators | 2.2 | Improves flow clarity |
-| Selection history display | 2.4 | Maintains context |
-| Reconsider button morphing | 2.1 | Reduces cognitive load |
-| Offline queue | 4.2 | Improves reliability |
-| Submission timeout | 4.3 | Prevents hang states |
-| Optimistic UI | 6.4 | Improves perceived performance |
-| Haptic feedback | 6.1 | Enhances interaction quality |
-| Debouncing rapid taps | 7.3 | Prevents race conditions |
-| Dark mode support | 8.3 | Visual consistency |
-| Analytics tracking | 8.5 | Enables data-driven iteration |
-| Dual-action notes entry | 1.1 | Respects user intent |
+| Recommendation             | Section | Rationale                      |
+| -------------------------- | ------- | ------------------------------ |
+| Progress indicators        | 2.2     | Improves flow clarity          |
+| Selection history display  | 2.4     | Maintains context              |
+| Reconsider button morphing | 2.1     | Reduces cognitive load         |
+| Offline queue              | 4.2     | Improves reliability           |
+| Submission timeout         | 4.3     | Prevents hang states           |
+| Optimistic UI              | 6.4     | Improves perceived performance |
+| Haptic feedback            | 6.1     | Enhances interaction quality   |
+| Debouncing rapid taps      | 7.3     | Prevents race conditions       |
+| Dark mode support          | 8.3     | Visual consistency             |
+| Analytics tracking         | 8.5     | Enables data-driven iteration  |
+| Dual-action notes entry    | 1.1     | Respects user intent           |
 
 ### P2: Nice-to-Have (Polish)
 
-| Recommendation | Section | Rationale |
-|----------------|---------|-----------|
-| Draft auto-save | 3.3 | Prevents data loss, adds complexity |
-| Tiered success celebration | 6.5 | Enhances delight, requires streak tracking |
-| Sound effects | 6.2 | Low impact (most phones on silent) |
-| Simplified "Quick Mode" | 5.6 | Serves edge case users |
-| Animation timing tweaks | 2.4 | Fine-tuning, not critical |
-| Landscape orientation lock | 8.2 | Edge case (most users portrait) |
-| Low-end device optimization | 8.4 | Perf already optimized with Reanimated |
-| Mood matrix A/B test | 1.2 | Research opportunity |
+| Recommendation              | Section | Rationale                                  |
+| --------------------------- | ------- | ------------------------------------------ |
+| Draft auto-save             | 3.3     | Prevents data loss, adds complexity        |
+| Tiered success celebration  | 6.5     | Enhances delight, requires streak tracking |
+| Sound effects               | 6.2     | Low impact (most phones on silent)         |
+| Simplified "Quick Mode"     | 5.6     | Serves edge case users                     |
+| Animation timing tweaks     | 2.4     | Fine-tuning, not critical                  |
+| Landscape orientation lock  | 8.2     | Edge case (most users portrait)            |
+| Low-end device optimization | 8.4     | Perf already optimized with Reanimated     |
+| Mood matrix A/B test        | 1.2     | Research opportunity                       |
 
 ---
 
@@ -1667,6 +1731,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 **Task**: "You want to log how you're feeling today. Show me how you'd do that."
 
 **Observe**:
+
 1. Do they find the "Log Mood" button immediately?
 2. Do they understand the card expansion animation?
 3. Can they select a mood without hesitation?
@@ -1677,6 +1742,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 8. Do they understand the success animation?
 
 **Post-Task Questions**:
+
 1. "How easy or difficult was that?" (1-5 scale)
 2. "Was anything confusing?"
 3. "What would you change?"
@@ -1685,16 +1751,19 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ### 11.2 A/B Testing Opportunities
 
 **Test 1: Notes Required vs. Optional**
+
 - Variant A: Notes field is optional (can skip)
 - Variant B: Notes field is required
 - Metric: Completion rate, time to complete
 
 **Test 2: Mood + Intensity Combined vs. Separate**
+
 - Variant A: Mood matrix (single screen)
 - Variant B: Separate stages (current design)
 - Metric: Completion rate, error rate, user preference
 
 **Test 3: Success Animation Intensity**
+
 - Variant A: Minimal (checkmark only)
 - Variant B: Standard (checkmark + particles)
 - Variant C: Tiered (based on streak)
@@ -1703,6 +1772,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ### 11.3 Accessibility Audit
 
 **Screen Reader Testing**:
+
 - [ ] Test with iOS VoiceOver
 - [ ] Test with Android TalkBack
 - [ ] Verify all elements are announced
@@ -1710,12 +1780,14 @@ analytics.track('MOOD_WIDGET_ERROR', {
 - [ ] Test focus order through flow
 
 **Motor Accessibility Testing**:
+
 - [ ] Test with voice control (iOS Voice Control, Android Voice Access)
 - [ ] Test with switch control
 - [ ] Verify all touch targets are 44pt minimum
 - [ ] Test slider alternative (button grid)
 
 **Cognitive Accessibility Testing**:
+
 - [ ] Test with users who have attention challenges
 - [ ] Verify flow is not overwhelming
 - [ ] Test language clarity (no jargon)
@@ -1726,13 +1798,13 @@ analytics.track('MOOD_WIDGET_ERROR', {
 
 ### Quantitative KPIs
 
-| Metric | Current (Navigation) | Target (Inline Widget) | How to Measure |
-|--------|---------------------|------------------------|----------------|
-| Completion Rate | ~70% | 90%+ | % of started flows that complete |
-| Time to Complete | ~45s | <25s | Median time from open to submit |
-| Daily Engagement | Baseline | +30% | DAU logging mood |
-| Error Rate | Unknown | <2% | % of submissions that fail |
-| Abandonment Rate | ~30% | <10% | % of started flows that exit mid-way |
+| Metric           | Current (Navigation) | Target (Inline Widget) | How to Measure                       |
+| ---------------- | -------------------- | ---------------------- | ------------------------------------ |
+| Completion Rate  | ~70%                 | 90%+                   | % of started flows that complete     |
+| Time to Complete | ~45s                 | <25s                   | Median time from open to submit      |
+| Daily Engagement | Baseline             | +30%                   | DAU logging mood                     |
+| Error Rate       | Unknown              | <2%                    | % of submissions that fail           |
+| Abandonment Rate | ~30%                 | <10%                   | % of started flows that exit mid-way |
 
 ### Qualitative Indicators
 
@@ -1753,26 +1825,31 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ## 13. Final Recommendations Summary
 
 ### Architecture
+
 ✅ **Keep the 4-stage flow** - it's well-designed and follows progressive disclosure
 ✅ **Add progress indicators** - helps users understand multi-step process
 ✅ **Implement state machine** - roadmap already has this, excellent approach
 
 ### User Control
+
 ⚠️ **Add explicit close button** - critical for user autonomy
 ⚠️ **Implement tap-outside-to-cancel** - expected modal behavior
 ⚠️ **Handle back button properly** - especially critical on Android
 
 ### Accessibility
+
 ⚠️ **Provide slider alternative** - tappable buttons for intensity selection
 ⚠️ **Add screen reader announcements** - ARIA live regions for state changes
 ⚠️ **Ensure 44pt touch targets** - WCAG compliance
 
 ### Error Handling
+
 ⚠️ **Inline error recovery** - don't navigate away on error
 ⚠️ **Offline queue** - prevent data loss
 ⚠️ **Loading states** - prevent double-submission
 
 ### Polish
+
 ✅ **Strategic haptic feedback** - enhances interactions without overwhelming
 ✅ **Tiered success celebrations** - reinforces habit formation
 ✅ **Optimistic UI** - improves perceived performance
@@ -1782,6 +1859,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ## 14. Next Steps
 
 ### Immediate (Before Development Starts)
+
 1. ✅ **Review this document** with product and design team
 2. ⚠️ **Decide on notes optional vs. required** (P0 decision)
 3. ⚠️ **Decide on intensity selector design** (slider + buttons vs. buttons only)
@@ -1789,12 +1867,14 @@ analytics.track('MOOD_WIDGET_ERROR', {
 5. ⚠️ **Plan usability testing** (Section 11.1)
 
 ### During Development
+
 1. Implement P0 recommendations first
 2. Add analytics tracking from day 1
 3. Build error states alongside happy path
 4. Test on low-end devices early
 
 ### Post-Launch
+
 1. Monitor metrics (completion rate, time to complete)
 2. Gather user feedback (in-app survey, app store reviews)
 3. Run A/B tests (notes optional, intensity selector)
@@ -1807,6 +1887,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 The inline mood widget transformation is a **strong UX improvement** that will significantly enhance the mood logging experience. The proposed 4-stage flow is sound, but requires **careful attention to accessibility, error handling, and user control** to succeed.
 
 **Key Success Factors**:
+
 1. ✅ Always provide an escape mechanism (close button, tap-outside)
 2. ✅ Make the flow accessible to all users (slider alternatives, screen readers)
 3. ✅ Handle errors gracefully (inline recovery, offline queue)
@@ -1814,6 +1895,7 @@ The inline mood widget transformation is a **strong UX improvement** that will s
 5. ✅ Measure everything (analytics from day 1)
 
 **Biggest Risks to Mitigate**:
+
 1. ⚠️ Cognitive overload during expansion → Use progress indicators + breadcrumbs
 2. ⚠️ Gesture-only slider excludes users → Add tappable button alternative
 3. ⚠️ Network errors break flow → Implement inline error recovery + offline queue

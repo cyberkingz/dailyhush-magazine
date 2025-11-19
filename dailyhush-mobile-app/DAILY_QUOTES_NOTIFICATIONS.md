@@ -16,6 +16,7 @@ DailyHush now includes a daily quote system that rotates 31 mindful quotes focus
 - Helper functions for random quotes and category filtering
 
 **Components**:
+
 - `QuoteCard` component displays daily quote on home screen
 - Elegant tropical styling with category badges
 - Auto-refreshes based on day
@@ -23,6 +24,7 @@ DailyHush now includes a daily quote system that rotates 31 mindful quotes focus
 ### Display ✅ Complete
 
 Daily quote is shown on the home screen below the TipCard, featuring:
+
 - Quote icon with emerald accent
 - Category badge (color-coded)
 - Italic quote text
@@ -131,7 +133,7 @@ export async function scheduleDailyQuoteNotification() {
       data: {
         type: 'daily-quote',
         quoteId: quote.id,
-        category: quote.category
+        category: quote.category,
       },
       sound: true,
       badge: 1,
@@ -159,7 +161,7 @@ export async function sendInstantQuoteNotification() {
       body: quote.text,
       data: {
         type: 'instant-quote',
-        quoteId: quote.id
+        quoteId: quote.id,
       },
     },
     trigger: null, // Send immediately
@@ -188,7 +190,10 @@ export async function sendEncouragementNotification() {
 In `app/_layout.tsx`, add notification setup:
 
 ```typescript
-import { registerForPushNotifications, scheduleDailyQuoteNotification } from '@/services/notifications';
+import {
+  registerForPushNotifications,
+  scheduleDailyQuoteNotification,
+} from '@/services/notifications';
 
 export default function Layout() {
   useEffect(() => {
@@ -270,7 +275,7 @@ Example Edge Function:
 
 ```typescript
 // supabase/functions/send-daily-quotes/index.ts
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 serve(async (req) => {
   // Get all users with notifications enabled
@@ -285,7 +290,7 @@ serve(async (req) => {
     await sendPushNotification(user.push_token, quote);
   }
 
-  return new Response("Quotes sent", { status: 200 });
+  return new Response('Quotes sent', { status: 200 });
 });
 ```
 

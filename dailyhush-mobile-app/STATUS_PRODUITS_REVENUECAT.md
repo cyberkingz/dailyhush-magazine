@@ -3,11 +3,13 @@
 ## ✅ Vérifications effectuées
 
 ### Clés API RevenueCat
+
 - ✅ **Clé iOS dans `eas.json`** : `appl_URekFOERLWIiXnSYeGkOJWUYKpM`
 - ✅ **Clé iOS dans RevenueCat** : `appl_URekFOERLWIiXnSYeGkOJWUYKpM`
 - ✅ **Les clés correspondent !**
 
 ### Offering "default"
+
 - ✅ **Identifier** : `default`
 - ✅ **Statut** : Marqué comme "Default" (current offering)
 - ✅ **Packages configurés** : 3 packages
@@ -23,10 +25,10 @@
 
 Tous les 3 produits ont le statut **"Missing Metadata"** :
 
-| Produit | Product ID | Statut RevenueCat |
-|---------|------------|-------------------|
-| Noema Premium Monthly | `com.anthony.noema.monthly` | ⚠️ **Missing Metadata** |
-| Noema Premium Annual | `com.anthony.noema.annual` | ⚠️ **Missing Metadata** |
+| Produit                | Product ID                   | Statut RevenueCat       |
+| ---------------------- | ---------------------------- | ----------------------- |
+| Noema Premium Monthly  | `com.anthony.noema.monthly`  | ⚠️ **Missing Metadata** |
+| Noema Premium Annual   | `com.anthony.noema.annual`   | ⚠️ **Missing Metadata** |
 | Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** |
 
 **C'est probablement la cause du problème !**
@@ -62,6 +64,7 @@ Tous les 3 produits ont le statut **"Missing Metadata"** :
 ### 2. Compléter les métadonnées manquantes
 
 Si les produits ont "Missing Metadata" dans App Store Connect :
+
 - Vérifie que tous les champs sont remplis :
   - Display Name
   - Description
@@ -78,6 +81,7 @@ Si les produits ont "Missing Metadata" dans App Store Connect :
 ### 4. Soumettre les produits pour review
 
 Si les produits sont prêts :
+
 1. Dans App Store Connect, sélectionne chaque produit
 2. Clique sur **"Submit for Review"**
 3. Attends l'approbation d'Apple (peut prendre 24-48h)
@@ -88,10 +92,10 @@ Si les produits sont prêts :
 
 **Le problème principal :** Tous les produits App Store ont le statut "Missing Metadata" dans RevenueCat, ce qui empêche probablement l'offering de fonctionner correctement.
 
-**Solution :** 
+**Solution :**
+
 1. Vérifier et compléter les métadonnées dans App Store Connect
 2. Forcer la synchronisation RevenueCat
 3. Soumettre les produits pour review si nécessaire
 
 Une fois que les produits auront un statut "Active" ou "Ready" dans RevenueCat, l'offering devrait fonctionner correctement.
-

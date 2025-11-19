@@ -1,4 +1,5 @@
 # Exercise Persuasion Implementation Guide
+
 ## Tactical React Native Components & Copy
 
 **Author:** Robert Cialdini
@@ -654,9 +655,7 @@ interface ExerciseStats {
 /**
  * Get real-time exercise usage stats for social proof
  */
-export async function getExerciseStats(
-  exerciseId: string
-): Promise<ExerciseStats | null> {
+export async function getExerciseStats(exerciseId: string): Promise<ExerciseStats | null> {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -672,9 +671,7 @@ export async function getExerciseStats(
     const lastHour = new Date();
     lastHour.setHours(lastHour.getHours() - 1);
 
-    const lastHourCompletions = data.filter(
-      (c) => new Date(c.completed_at) > lastHour
-    );
+    const lastHourCompletions = data.filter((c) => new Date(c.completed_at) > lastHour);
 
     const positiveRatings = data.filter(
       (c) => c.rating === 'much_better' || c.rating === 'bit_better'
@@ -930,13 +927,13 @@ Create A/B test variants for key persuasion moments:
 ```typescript
 const researchVariants = {
   control: {
-    text: "In a 2023 Stanford study, this was the most effective breathing technique tested.",
+    text: 'In a 2023 Stanford study, this was the most effective breathing technique tested.',
   },
   authority_emphasis: {
-    text: "Stanford University researchers found this to be the most effective breathing technique across 114 participants.",
+    text: 'Stanford University researchers found this to be the most effective breathing technique across 114 participants.',
   },
   specificity: {
-    text: "In a 2023 Stanford RCT (randomized controlled trial) with 114 participants over 28 days, this technique outperformed all others.",
+    text: 'In a 2023 Stanford RCT (randomized controlled trial) with 114 participants over 28 days, this technique outperformed all others.',
   },
 };
 
@@ -949,13 +946,13 @@ const variant = useFeatureFlag('research_citation_variant') || 'control';
 ```typescript
 const socialProofVariants = {
   control: {
-    text: "10,247 people used this today",
+    text: '10,247 people used this today',
   },
   real_time: {
-    text: "10,247 people are using this right now",
+    text: '10,247 people are using this right now',
   },
   scarcity: {
-    text: "10,247 people used this today. Join them.",
+    text: '10,247 people used this today. Join them.',
   },
 };
 ```
@@ -1028,6 +1025,7 @@ CREATE TABLE bookmarked_exercises (
 If you can only implement one thing at a time, do them in this order:
 
 ### PHASE 1: OPENING SCREENS (Highest ROI)
+
 - [ ] Add research citations with specific numbers
 - [ ] Add Anna testimonials
 - [ ] Add effect metric displays (65% reduction, etc.)
@@ -1037,6 +1035,7 @@ If you can only implement one thing at a time, do them in this order:
 ---
 
 ### PHASE 2: REAL-TIME SOCIAL PROOF
+
 - [ ] Create `exercise_completions` table
 - [ ] Track completions in real-time
 - [ ] Display "X people used this today" with REAL numbers
@@ -1046,6 +1045,7 @@ If you can only implement one thing at a time, do them in this order:
 ---
 
 ### PHASE 3: MICRO-ENCOURAGEMENT
+
 - [ ] Add progress messages during exercises
 - [ ] "Your nervous system is already responding" at key moments
 - [ ] Halfway progress indicators
@@ -1055,6 +1055,7 @@ If you can only implement one thing at a time, do them in this order:
 ---
 
 ### PHASE 4: POST-EXERCISE UNITY
+
 - [ ] "You're part of the X people who..." messaging
 - [ ] Community feed of recent completions
 - [ ] Social proof in completion screens
@@ -1064,6 +1065,7 @@ If you can only implement one thing at a time, do them in this order:
 ---
 
 ### PHASE 5: STREAK TRACKING
+
 - [ ] Daily streak counter
 - [ ] Milestone notifications (7-day, 14-day, 30-day)
 - [ ] Loss aversion messaging ("Don't break your 5-day streak!")
@@ -1073,6 +1075,7 @@ If you can only implement one thing at a time, do them in this order:
 ---
 
 ### PHASE 6: COMMITMENT MECHANISMS
+
 - [ ] Bookmark functionality
 - [ ] Reminder system (8am, 3pm, bedtime)
 - [ ] Future commitment prompts
@@ -1090,41 +1093,42 @@ Here are production-ready copy strings for each exercise:
 ```typescript
 export const cyclicSighCopy = {
   card: {
-    title: "Cyclic Physiological Sigh",
-    subtitle: "Stanford-tested • 30 sec",
-    description: "The fastest way to calm your nervous system",
-    socialProof: "used this today",
-    badge: "⚡ Works in 3 breaths",
+    title: 'Cyclic Physiological Sigh',
+    subtitle: 'Stanford-tested • 30 sec',
+    description: 'The fastest way to calm your nervous system',
+    socialProof: 'used this today',
+    badge: '⚡ Works in 3 breaths',
   },
   opening: {
-    researchCitation: "In a 2023 Stanford study, this was the most effective breathing technique tested across 114 participants.",
+    researchCitation:
+      'In a 2023 Stanford study, this was the most effective breathing technique tested across 114 participants.',
     effectPercentage: 65,
-    effectOutcome: "reduction in anxiety",
-    effectTimeframe: "under 2 minutes",
+    effectOutcome: 'reduction in anxiety',
+    effectTimeframe: 'under 2 minutes',
     annaQuote: "I use this one when I'm spiraling. It works embarrassingly fast.",
   },
   instruction: {
     heading: "Here's how it works:",
     steps: [
-      "Take 2 quick inhales through your nose",
-      "One long exhale through your mouth",
+      'Take 2 quick inhales through your nose',
+      'One long exhale through your mouth',
       "That's it. Repeat 3 times.",
     ],
   },
   during: {
-    round1: "Good. Your nervous system is already responding.",
+    round1: 'Good. Your nervous system is already responding.',
     round2: "You're halfway there. Notice anything shifting?",
     round3: "Final round. You're almost done.",
   },
   completion: {
-    message: "You just calmed your nervous system in 90 seconds.",
+    message: 'You just calmed your nervous system in 90 seconds.',
     socialProof: "That's what 10,000+ people are using DailyHush for.",
-    ratingQuestion: "How do you feel now?",
+    ratingQuestion: 'How do you feel now?',
   },
   postRating: {
     positive: "That's the Stanford protocol working.",
-    neutral: "Sometimes it takes 2-3 rounds to feel the full effect.",
-    negative: "This works best for acute stress. Try Brain Dump for racing thoughts instead.",
+    neutral: 'Sometimes it takes 2-3 rounds to feel the full effect.',
+    negative: 'This works best for acute stress. Try Brain Dump for racing thoughts instead.',
   },
 };
 ```
@@ -1134,43 +1138,45 @@ export const cyclicSighCopy = {
 ```typescript
 export const groundingCopy = {
   card: {
-    title: "5-4-3-2-1 Grounding",
-    subtitle: "Clinical DBT • 3 min",
-    description: "Used by therapists for panic attacks",
-    socialProof: "tried this today",
-    badge: "🎯 97% feel more present after",
+    title: '5-4-3-2-1 Grounding',
+    subtitle: 'Clinical DBT • 3 min',
+    description: 'Used by therapists for panic attacks',
+    socialProof: 'tried this today',
+    badge: '🎯 97% feel more present after',
   },
   opening: {
-    researchCitation: "Developed for Dialectical Behavior Therapy (DBT) by Dr. Marsha Linehan. Used by trauma therapists worldwide for acute anxiety.",
-    annaQuote: "This one saved me during my first panic attack. It works when nothing else does.",
+    researchCitation:
+      'Developed for Dialectical Behavior Therapy (DBT) by Dr. Marsha Linehan. Used by trauma therapists worldwide for acute anxiety.',
+    annaQuote: 'This one saved me during my first panic attack. It works when nothing else does.',
   },
   instruction: {
     heading: "You're going to name things you can sense RIGHT NOW.",
     protocol: "This isn't metaphorical. This is a clinical protocol.",
     steps: [
-      "5 things you can SEE",
-      "4 things you can TOUCH",
-      "3 things you can HEAR",
-      "2 things you can SMELL",
-      "1 thing you can TASTE",
+      '5 things you can SEE',
+      '4 things you can TOUCH',
+      '3 things you can HEAR',
+      '2 things you can SMELL',
+      '1 thing you can TASTE',
     ],
   },
   during: {
     after_see: "Good. You're pulling yourself back to the present.",
-    after_touch: "Keep going. Your brain is re-orienting.",
+    after_touch: 'Keep going. Your brain is re-orienting.',
     after_hear: "You're more grounded now than 2 minutes ago.",
-    after_smell: "Almost there.",
+    after_smell: 'Almost there.',
     after_taste: "You did it. You're back in the present moment.",
   },
   completion: {
-    message: "You just used the same technique therapists teach for panic attacks.",
-    socialProof: "Most people feel more grounded after one round.",
-    ratingQuestion: "How present do you feel right now?",
+    message: 'You just used the same technique therapists teach for panic attacks.',
+    socialProof: 'Most people feel more grounded after one round.',
+    ratingQuestion: 'How present do you feel right now?',
   },
   postRating: {
-    positive: "That's DBT working. You're part of the group that knows how to interrupt panic before it takes over.",
-    neutral: "Sometimes severe dissociation needs multiple rounds.",
-    negative: "This works best for dissociation. Try Cyclic Sigh for anxiety instead.",
+    positive:
+      "That's DBT working. You're part of the group that knows how to interrupt panic before it takes over.",
+    neutral: 'Sometimes severe dissociation needs multiple rounds.',
+    negative: 'This works best for dissociation. Try Cyclic Sigh for anxiety instead.',
   },
 };
 ```
@@ -1180,50 +1186,55 @@ export const groundingCopy = {
 ```typescript
 export const fourSevenEightCopy = {
   card: {
-    title: "4-7-8 Breathing",
-    subtitle: "Navy SEAL protocol • 3 min",
-    description: "Fall asleep in 60 seconds",
-    socialProof: "used this before bed last night",
-    badge: "💤 Works faster than melatonin",
+    title: '4-7-8 Breathing',
+    subtitle: 'Navy SEAL protocol • 3 min',
+    description: 'Fall asleep in 60 seconds',
+    socialProof: 'used this before bed last night',
+    badge: '💤 Works faster than melatonin',
   },
   opening: {
-    researchCitation: "Dr. Andrew Weil (Harvard Med) calls this 'a natural tranquilizer for the nervous system.'",
+    researchCitation:
+      "Dr. Andrew Weil (Harvard Med) calls this 'a natural tranquilizer for the nervous system.'",
     usedBy: [
-      "Navy SEALs (sleep under pressure)",
-      "Insomniacs (fall asleep in under 2 minutes)",
-      "Anxiety sufferers (quiet racing thoughts)",
+      'Navy SEALs (sleep under pressure)',
+      'Insomniacs (fall asleep in under 2 minutes)',
+      'Anxiety sufferers (quiet racing thoughts)',
     ],
     annaQuote: "I do this every night. It's the only thing that turns off my brain.",
   },
   instruction: {
     heading: "Here's the pattern:",
     steps: [
-      "Breathe IN for 4 seconds (through nose)",
-      "HOLD for 7 seconds",
-      "Breathe OUT for 8 seconds (through mouth)",
+      'Breathe IN for 4 seconds (through nose)',
+      'HOLD for 7 seconds',
+      'Breathe OUT for 8 seconds (through mouth)',
     ],
-    mechanism: "The exhale is the key. It signals your nervous system to switch from 'fight or flight' to 'rest and digest.'",
-    reframe: "This is vagal nerve stimulation. Not meditation. Not mindfulness. Neurophysiology.",
+    mechanism:
+      "The exhale is the key. It signals your nervous system to switch from 'fight or flight' to 'rest and digest.'",
+    reframe: 'This is vagal nerve stimulation. Not meditation. Not mindfulness. Neurophysiology.',
   },
   during: {
-    round1: "Your heart rate is slowing down right now.",
+    round1: 'Your heart rate is slowing down right now.',
     round2: "Halfway there. Notice your thoughts? They're quieter.",
     round3: "One more round. You're almost at complete calm.",
   },
   completion: {
-    message: "You just did what Navy SEALs use to sleep in combat zones.",
-    socialProof: "12,683 people did this before bed last night.",
-    ratingQuestion: "How calm do you feel?",
+    message: 'You just did what Navy SEALs use to sleep in combat zones.',
+    socialProof: '12,683 people did this before bed last night.',
+    ratingQuestion: 'How calm do you feel?',
   },
   postRating: {
-    positive: "That's your vagal nerve doing its job. Most people use this 2-3x per day: before bed, mid-afternoon slump, or before stressful meetings.",
-    neutral: "This one takes practice. The 4th or 5th time is when most people feel the full effect.",
-    negative: "4-7-8 works best when you're already winding down, not in peak anxiety. Try Cyclic Physiological Sigh instead.",
+    positive:
+      "That's your vagal nerve doing its job. Most people use this 2-3x per day: before bed, mid-afternoon slump, or before stressful meetings.",
+    neutral:
+      'This one takes practice. The 4th or 5th time is when most people feel the full effect.',
+    negative:
+      "4-7-8 works best when you're already winding down, not in peak anxiety. Try Cyclic Physiological Sigh instead.",
   },
 };
 ```
 
-*(Similar copy structures for Emotion Wheel, Brain Dump, and Mind Clear)*
+_(Similar copy structures for Emotion Wheel, Brain Dump, and Mind Clear)_
 
 ---
 

@@ -142,20 +142,25 @@ export default function InterruptModule() {
   }, [user?.user_id]);
 
   // Create stable debounced save function using ref to avoid dependency issues
-  const debouncedSaveRef = useRef<((screen: Screen, physical: string[], mental: string[]) => void) | null>(null);
+  const debouncedSaveRef = useRef<
+    ((screen: Screen, physical: string[], mental: string[]) => void) | null
+  >(null);
 
   if (!debouncedSaveRef.current) {
-    debouncedSaveRef.current = debounce(async (screen: Screen, physical: string[], mental: string[]) => {
-      if (!user?.user_id) return;
+    debouncedSaveRef.current = debounce(
+      async (screen: Screen, physical: string[], mental: string[]) => {
+        if (!user?.user_id) return;
 
-      await saveModuleProgress(user.user_id, FireModule.INTERRUPT, {
-        currentScreen: screen,
-        interruptData: {
-          selectedPhysicalSigns: physical,
-          selectedMentalCues: mental,
-        },
-      });
-    }, timing.debounce.save);
+        await saveModuleProgress(user.user_id, FireModule.INTERRUPT, {
+          currentScreen: screen,
+          interruptData: {
+            selectedPhysicalSigns: physical,
+            selectedMentalCues: mental,
+          },
+        });
+      },
+      timing.debounce.save
+    );
   }
 
   // Auto-save progress when screen or selections change (debounced)
@@ -437,7 +442,9 @@ They don't respond.
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 ✓ Notice: Stomach drops (physical cue)
                 {'\n\n'}✓ Recognize: "This is my pattern"
                 {'\n\n'}✓ Interrupt: 5 deep breaths
@@ -495,7 +502,9 @@ Everyone hears."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 ✓ Notice: Face hot (physical cue)
                 {'\n\n'}✓ Catch the thought: "Everyone thinks..."
                 {'\n\n'}✓ Interrupt: "That's the pattern"
@@ -541,7 +550,9 @@ That's it. Keep it simple."
               The more you practice, the faster you'll catch it.
             </Text>
 
-            <Text className="text-center text-base font-semibold" style={{ color: colors.text.primary }}>
+            <Text
+              className="text-center text-base font-semibold"
+              style={{ color: colors.text.primary }}>
               Most people go from 2 hours of rumination to 2 minutes in 30 days.
             </Text>
           </View>
@@ -580,7 +591,9 @@ That's it. Keep it simple."
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.button.primaryText }}>
+            <Text
+              className="mr-2 text-lg font-semibold"
+              style={{ color: colors.button.primaryText }}>
               Continue
             </Text>
             <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={2} />

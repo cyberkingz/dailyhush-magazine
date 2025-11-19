@@ -10,21 +10,25 @@
 ### ✅ Entitlement Configuration
 
 **RevenueCat Dashboard:**
+
 - Entitlement ID: `premium`
 - Description: "Premium access to all features"
 - 3 products attached
 
 **App Code (`utils/revenueCat.ts:22`):**
+
 ```typescript
 export const PREMIUM_ENTITLEMENT_ID = 'premium'; ✅ MATCHES
 ```
 
 **Usage in app (`utils/revenueCat.ts:135`):**
+
 ```typescript
 const premiumEntitlement = customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
 ```
 
 **Usage in subscription screen (`app/subscription.tsx:169`):**
+
 ```typescript
 if (customerInfo.entitlements.active['premium']) { ✅ MATCHES
 ```
@@ -35,13 +39,14 @@ if (customerInfo.entitlements.active['premium']) { ✅ MATCHES
 
 **RevenueCat Dashboard - Offering: `default`**
 
-| Package ID | Product | Status |
-|-----------|---------|--------|
-| `$rc_monthly` | `dailyhush_premium_monthly` | ✅ Configured |
-| `$rc_annual` | `dailyhush_premium_annual` | ✅ Configured |
+| Package ID     | Product                      | Status        |
+| -------------- | ---------------------------- | ------------- |
+| `$rc_monthly`  | `dailyhush_premium_monthly`  | ✅ Configured |
+| `$rc_annual`   | `dailyhush_premium_annual`   | ✅ Configured |
 | `$rc_lifetime` | `dailyhush_premium_lifetime` | ✅ Configured |
 
 **App Code (`utils/revenueCat.ts:25-29`):**
+
 ```typescript
 export const PACKAGE_IDS = {
   MONTHLY: '$rc_monthly',     ✅ MATCHES
@@ -51,6 +56,7 @@ export const PACKAGE_IDS = {
 ```
 
 **Usage in subscription screen (`app/subscription.tsx:83-85`):**
+
 ```typescript
 const monthlyPkg = packages.find((p) => p.identifier === PACKAGE_IDS.MONTHLY);   ✅
 const annualPkg = packages.find((p) => p.identifier === PACKAGE_IDS.ANNUAL);     ✅
@@ -63,13 +69,14 @@ const lifetimePkg = packages.find((p) => p.identifier === PACKAGE_IDS.LIFETIME);
 
 **RevenueCat Dashboard - Products:**
 
-| Product ID | Type | Price | App |
-|-----------|------|-------|-----|
-| `dailyhush_premium_monthly` | Subscription | $9.99 | Test Store ✅ |
-| `dailyhush_premium_annual` | Subscription | $59.99 | Test Store ✅ |
+| Product ID                   | Type           | Price   | App           |
+| ---------------------------- | -------------- | ------- | ------------- |
+| `dailyhush_premium_monthly`  | Subscription   | $9.99   | Test Store ✅ |
+| `dailyhush_premium_annual`   | Subscription   | $59.99  | Test Store ✅ |
 | `dailyhush_premium_lifetime` | Non-consumable | $149.99 | Test Store ✅ |
 
 **App Code:**
+
 - Products are fetched dynamically from RevenueCat ✅
 - No hardcoded product IDs needed ✅
 - Pricing loaded automatically ✅
@@ -79,18 +86,21 @@ const lifetimePkg = packages.find((p) => p.identifier === PACKAGE_IDS.LIFETIME);
 ### ✅ API Key Configuration
 
 **Environment Variables (`.env`):**
+
 ```env
 EXPO_PUBLIC_REVENUECAT_IOS_KEY=test_KwZxiLPuioAGRBeGrmnYhpsOzug ✅
 EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=test_KwZxiLPuioAGRBeGrmnYhpsOzug ✅
 ```
 
 **App Code (`utils/revenueCat.ts:18-19`):**
+
 ```typescript
 const REVENUECAT_API_KEY_IOS = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY;     ✅
 const REVENUECAT_API_KEY_ANDROID = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY; ✅
 ```
 
 **Usage (`utils/revenueCat.ts:37`):**
+
 ```typescript
 const apiKey = Platform.OS === 'ios' ? REVENUECAT_API_KEY_IOS : REVENUECAT_API_KEY_ANDROID; ✅
 ```
@@ -100,16 +110,19 @@ const apiKey = Platform.OS === 'ios' ? REVENUECAT_API_KEY_IOS : REVENUECAT_API_K
 ### ✅ Offering Configuration
 
 **RevenueCat Dashboard:**
+
 - Offering ID: `default`
 - Set as current offering: ✅ Yes
 - Contains 3 packages: ✅ Yes
 
 **App Code (`app/subscription.tsx:65`):**
+
 ```typescript
 const offering = await getOfferings(); // Fetches 'default' offering automatically ✅
 ```
 
 **SDK Behavior:**
+
 - `getOfferings()` returns the **current offering**
 - Since `default` is marked as current, it's automatically returned ✅
 - No need to specify offering ID in code ✅
@@ -121,11 +134,13 @@ const offering = await getOfferings(); // Fetches 'default' offering automatical
 **App Implementation:**
 
 1. **Load offerings** (`app/subscription.tsx:65`)
+
    ```typescript
    const offering = await getOfferings();
    ```
 
 2. **Find packages** (`app/subscription.tsx:83-85`)
+
    ```typescript
    const monthlyPkg = packages.find((p) => p.identifier === PACKAGE_IDS.MONTHLY);
    const annualPkg = packages.find((p) => p.identifier === PACKAGE_IDS.ANNUAL);
@@ -133,6 +148,7 @@ const offering = await getOfferings(); // Fetches 'default' offering automatical
    ```
 
 3. **Display to user** (`app/subscription.tsx:98-119`)
+
    ```typescript
    const options = [
      packageToSubscriptionPlan(monthlyPkg),
@@ -142,11 +158,13 @@ const offering = await getOfferings(); // Fetches 'default' offering automatical
    ```
 
 4. **Purchase** (`app/subscription.tsx:161`)
+
    ```typescript
    const { customerInfo, userCancelled } = await purchasePackage(selectedOption.package);
    ```
 
 5. **Verify entitlement** (`app/subscription.tsx:169`)
+
    ```typescript
    if (customerInfo.entitlements.active['premium']) {
      // Premium granted ✅
@@ -155,10 +173,13 @@ const offering = await getOfferings(); // Fetches 'default' offering automatical
 
 6. **Update Supabase** (`app/subscription.tsx:178-184`)
    ```typescript
-   await supabase.from('profiles').update({
-     subscription_status: 'active',
-     subscription_tier: selectedOption.id,
-   }).eq('id', session.user.id);
+   await supabase
+     .from('profiles')
+     .update({
+       subscription_status: 'active',
+       subscription_tier: selectedOption.id,
+     })
+     .eq('id', session.user.id);
    ```
 
 **Status:** ✅ Complete purchase flow implemented
@@ -223,6 +244,7 @@ useEffect(() => {
 ## Complete Configuration Checklist
 
 ### RevenueCat Dashboard ✅
+
 - [x] 3 products created
 - [x] 1 entitlement created (`premium`)
 - [x] 1 offering created (`default`)
@@ -231,12 +253,14 @@ useEffect(() => {
 - [x] Test Store API key obtained
 
 ### Environment Configuration ✅
+
 - [x] Test API key in `.env`
 - [x] iOS key configured
 - [x] Android key configured
 - [x] Variables use `EXPO_PUBLIC_` prefix
 
 ### Code Configuration ✅
+
 - [x] RevenueCat SDK integrated
 - [x] Entitlement ID matches (`premium`)
 - [x] Package IDs match (`$rc_monthly`, `$rc_annual`, `$rc_lifetime`)
@@ -247,6 +271,7 @@ useEffect(() => {
 - [x] Supabase sync after purchase
 
 ### Components ✅
+
 - [x] Subscription screen uses RevenueCat
 - [x] PaywallButton component ready
 - [x] SubscriptionOption component ready
@@ -260,6 +285,7 @@ useEffect(() => {
 ### Expected Flow:
 
 1. **App starts:**
+
    ```
    ✅ RevenueCat initialized (anonymous)
    OR
@@ -267,12 +293,14 @@ useEffect(() => {
    ```
 
 2. **Navigate to subscription screen:**
+
    ```
    ✅ Loading subscription options...
    ✅ RevenueCat: Loaded offerings: default
    ```
 
 3. **Screen displays:**
+
    ```
    ✅ Monthly - $9.99/month
    ✅ Annual - $59.99/year (MOST POPULAR badge)
@@ -280,6 +308,7 @@ useEffect(() => {
    ```
 
 4. **User selects plan and taps "Subscribe Now":**
+
    ```
    ✅ Purchase initiated
    ✅ Test Store: Purchase succeeds immediately
@@ -287,6 +316,7 @@ useEffect(() => {
    ```
 
 5. **Premium granted:**
+
    ```
    ✅ Entitlement 'premium' is now active
    ✅ Supabase profile updated
@@ -325,19 +355,23 @@ When you run the app, verify:
 If you see errors, check:
 
 ### "No offerings available"
+
 - **Fix:** Restart dev server after updating `.env`
 - **Verify:** Test API key is correct in `.env`
 - **Check:** RevenueCat dashboard shows offering is "current"
 
 ### "Product not available"
+
 - **Fix:** Shouldn't happen with Test Store
 - **Verify:** Package IDs match exactly in dashboard and code
 
 ### Console shows "RevenueCat API key not found"
+
 - **Fix:** Check `.env` has `EXPO_PUBLIC_` prefix
 - **Restart:** Development server after changing `.env`
 
 ### Purchase doesn't grant Premium
+
 - **Fix:** Check entitlement ID is exactly `premium`
 - **Verify:** `customerInfo.entitlements.active['premium']` exists
 
@@ -347,17 +381,17 @@ If you see errors, check:
 
 ### ✅ Everything Matches Perfectly
 
-| Component | RevenueCat Dashboard | App Code | Status |
-|-----------|---------------------|----------|--------|
-| **Entitlement** | `premium` | `premium` | ✅ Match |
-| **Monthly Package** | `$rc_monthly` | `$rc_monthly` | ✅ Match |
-| **Annual Package** | `$rc_annual` | `$rc_annual` | ✅ Match |
-| **Lifetime Package** | `$rc_lifetime` | `$rc_lifetime` | ✅ Match |
-| **Monthly Product** | `dailyhush_premium_monthly` | Auto-fetched | ✅ Match |
-| **Annual Product** | `dailyhush_premium_annual` | Auto-fetched | ✅ Match |
-| **Lifetime Product** | `dailyhush_premium_lifetime` | Auto-fetched | ✅ Match |
-| **Offering** | `default` (current) | Auto-fetched | ✅ Match |
-| **API Key** | Test Store | `.env` configured | ✅ Match |
+| Component            | RevenueCat Dashboard         | App Code          | Status   |
+| -------------------- | ---------------------------- | ----------------- | -------- |
+| **Entitlement**      | `premium`                    | `premium`         | ✅ Match |
+| **Monthly Package**  | `$rc_monthly`                | `$rc_monthly`     | ✅ Match |
+| **Annual Package**   | `$rc_annual`                 | `$rc_annual`      | ✅ Match |
+| **Lifetime Package** | `$rc_lifetime`               | `$rc_lifetime`    | ✅ Match |
+| **Monthly Product**  | `dailyhush_premium_monthly`  | Auto-fetched      | ✅ Match |
+| **Annual Product**   | `dailyhush_premium_annual`   | Auto-fetched      | ✅ Match |
+| **Lifetime Product** | `dailyhush_premium_lifetime` | Auto-fetched      | ✅ Match |
+| **Offering**         | `default` (current)          | Auto-fetched      | ✅ Match |
+| **API Key**          | Test Store                   | `.env` configured | ✅ Match |
 
 ### 🚀 Ready to Test
 

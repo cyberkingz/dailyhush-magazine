@@ -43,12 +43,8 @@ export function InstructionsCard({ config, onContinue }: InstructionsCardProps) 
         showsVerticalScrollIndicator={false}>
         {/* Header Section */}
         <View style={styles.header}>
-          <Text style={styles.headline}>
-            {config.copy.headline}
-          </Text>
-          <Text style={styles.subheadline}>
-            {config.copy.subheadline}
-          </Text>
+          <Text style={styles.headline}>{config.copy.headline}</Text>
+          <Text style={styles.subheadline}>{config.copy.subheadline}</Text>
         </View>
 
         {/* Persuasion Hooks - Compact Vertical Stack */}
@@ -61,12 +57,8 @@ export function InstructionsCard({ config, onContinue }: InstructionsCardProps) 
                   <BookOpen size={16} color={mintAccent} />
                 </View>
                 <View style={styles.persuasionCopy}>
-                  <Text style={styles.persuasionLabel}>
-                    AUTHORITY
-                  </Text>
-                  <Text style={styles.persuasionText}>
-                    {config.persuasion.authorityBadge}
-                  </Text>
+                  <Text style={styles.persuasionLabel}>AUTHORITY</Text>
+                  <Text style={styles.persuasionText}>{config.persuasion.authorityBadge}</Text>
                 </View>
               </View>
             )}
@@ -78,12 +70,8 @@ export function InstructionsCard({ config, onContinue }: InstructionsCardProps) 
                   <Clock size={16} color={amberAccent} />
                 </View>
                 <View style={styles.persuasionCopy}>
-                  <Text style={styles.persuasionLabel}>
-                    DURATION
-                  </Text>
-                  <Text style={styles.persuasionText}>
-                    {config.persuasion.preCommitment}
-                  </Text>
+                  <Text style={styles.persuasionLabel}>DURATION</Text>
+                  <Text style={styles.persuasionText}>{config.persuasion.preCommitment}</Text>
                 </View>
               </View>
             )}
@@ -95,12 +83,8 @@ export function InstructionsCard({ config, onContinue }: InstructionsCardProps) 
                   <Users size={16} color={lavenderAccent} />
                 </View>
                 <View style={styles.persuasionCopy}>
-                  <Text style={styles.persuasionLabel}>
-                    COMMUNITY
-                  </Text>
-                  <Text style={styles.persuasionText}>
-                    {config.persuasion.socialProof}
-                  </Text>
+                  <Text style={styles.persuasionLabel}>COMMUNITY</Text>
+                  <Text style={styles.persuasionText}>{config.persuasion.socialProof}</Text>
                 </View>
               </View>
             )}
@@ -116,9 +100,7 @@ export function InstructionsCard({ config, onContinue }: InstructionsCardProps) 
                 <View style={styles.stepAvatar}>
                   <Text style={styles.stepNumber}>{index + 1}</Text>
                 </View>
-                <Text style={styles.instructionCopy}>
-                  {instruction}
-                </Text>
+                <Text style={styles.instructionCopy}>{instruction}</Text>
               </View>
             ))}
           </View>
@@ -146,19 +128,18 @@ export function InstructionsCard({ config, onContinue }: InstructionsCardProps) 
       <LinearGradient
         colors={ctaGradient}
         locations={[0, 0.55, 1]}
-        style={[styles.ctaContainer, { paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) }]}
-      >
+        style={[
+          styles.ctaContainer,
+          { paddingBottom: Math.max(insets.bottom, spacing.safeArea.bottom) },
+        ]}>
         {/* CTA Button */}
         <View style={styles.ctaInner}>
           <TouchableOpacity
             onPress={handleContinue}
             accessibilityLabel={config.copy.ctaStart}
             accessibilityRole="button"
-            style={styles.ctaButton}
-          >
-            <Text style={styles.ctaLabel}>
-              {config.copy.ctaStart}
-            </Text>
+            style={styles.ctaButton}>
+            <Text style={styles.ctaLabel}>{config.copy.ctaStart}</Text>
             <ChevronRight size={20} color={colors.background.primary} strokeWidth={2.5} />
           </TouchableOpacity>
         </View>

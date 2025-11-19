@@ -924,4 +924,5 @@ export const HAPTICS = {
 // ============================================================================
 
 export type BottomSheetHeight = keyof typeof BOTTOM_SHEET_CONFIG.heights;
-export type HapticType = typeof HAPTICS[keyof typeof HAPTICS][keyof typeof HAPTICS[keyof typeof HAPTICS]];
+export type HapticType =
+  (typeof HAPTICS)[keyof typeof HAPTICS][keyof (typeof HAPTICS)[keyof typeof HAPTICS]];

@@ -5,6 +5,7 @@
 The `exercise_logs` system is a comprehensive database schema designed to track exercise completions, pre/post anxiety ratings, trigger patterns, user engagement, and long-term trends for the DailyHush mobile app.
 
 **Key Features:**
+
 - ✅ Privacy-first design (no journal content stored)
 - ✅ Pre/post anxiety rating tracking
 - ✅ Trigger pattern analysis
@@ -55,28 +56,28 @@ The `exercise_logs` system is a comprehensive database schema designed to track 
 
 **Key Columns:**
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `log_id` | UUID | Primary key |
-| `user_id` | UUID | Foreign key to `user_profiles` |
-| `exercise_type` | ENUM | Type of exercise (breathing, etc.) |
-| `exercise_name` | TEXT | Human-readable name |
-| `module_context` | ENUM | Which FIRE module led here |
-| `completion_status` | ENUM | completed, abandoned, skipped |
-| `started_at` | TIMESTAMPTZ | When exercise started |
-| `completed_at` | TIMESTAMPTZ | When exercise completed (NULL if abandoned) |
-| `duration_seconds` | INTEGER | Actual time spent |
-| `pre_anxiety_rating` | INTEGER | Anxiety before (1-10) |
-| `post_anxiety_rating` | INTEGER | Anxiety after (1-10) |
-| `anxiety_reduction` | INTEGER | Auto-calculated (STORED) |
-| `reduction_percentage` | INTEGER | Auto-calculated (STORED) |
-| `trigger_text` | TEXT | Optional user-entered trigger |
-| `trigger_category` | TEXT | Pre-defined trigger category |
-| `abandoned_at_percentage` | INTEGER | If abandoned, at what % mark (0-100) |
-| `skip_reason` | TEXT | If skipped, why? |
-| `exercise_data` | JSONB | Exercise-specific data (flexible) |
-| `is_deleted` | BOOLEAN | Soft delete flag |
-| `deleted_at` | TIMESTAMPTZ | When deleted |
+| Column                    | Type        | Description                                 |
+| ------------------------- | ----------- | ------------------------------------------- |
+| `log_id`                  | UUID        | Primary key                                 |
+| `user_id`                 | UUID        | Foreign key to `user_profiles`              |
+| `exercise_type`           | ENUM        | Type of exercise (breathing, etc.)          |
+| `exercise_name`           | TEXT        | Human-readable name                         |
+| `module_context`          | ENUM        | Which FIRE module led here                  |
+| `completion_status`       | ENUM        | completed, abandoned, skipped               |
+| `started_at`              | TIMESTAMPTZ | When exercise started                       |
+| `completed_at`            | TIMESTAMPTZ | When exercise completed (NULL if abandoned) |
+| `duration_seconds`        | INTEGER     | Actual time spent                           |
+| `pre_anxiety_rating`      | INTEGER     | Anxiety before (1-10)                       |
+| `post_anxiety_rating`     | INTEGER     | Anxiety after (1-10)                        |
+| `anxiety_reduction`       | INTEGER     | Auto-calculated (STORED)                    |
+| `reduction_percentage`    | INTEGER     | Auto-calculated (STORED)                    |
+| `trigger_text`            | TEXT        | Optional user-entered trigger               |
+| `trigger_category`        | TEXT        | Pre-defined trigger category                |
+| `abandoned_at_percentage` | INTEGER     | If abandoned, at what % mark (0-100)        |
+| `skip_reason`             | TEXT        | If skipped, why?                            |
+| `exercise_data`           | JSONB       | Exercise-specific data (flexible)           |
+| `is_deleted`              | BOOLEAN     | Soft delete flag                            |
+| `deleted_at`              | TIMESTAMPTZ | When deleted                                |
 
 **Auto-Calculated Columns:**
 
@@ -89,6 +90,7 @@ reduction_percentage = ((pre - post) / pre) * 100
 ```
 
 **Privacy Features:**
+
 - Journal content from "Brain Dump" exercises is NEVER stored
 - Only word count is tracked
 - Trigger text is optional
@@ -102,16 +104,17 @@ reduction_percentage = ((pre - post) / pre) * 100
 
 **Key Columns:**
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `trigger_id` | UUID | Primary key |
-| `trigger_name` | TEXT | Display name |
-| `trigger_category` | TEXT | Category grouping |
-| `display_order` | INTEGER | Sort order |
-| `loop_type` | TEXT | Which overthinking loop this relates to |
-| `is_active` | BOOLEAN | Active/inactive |
+| Column             | Type    | Description                             |
+| ------------------ | ------- | --------------------------------------- |
+| `trigger_id`       | UUID    | Primary key                             |
+| `trigger_name`     | TEXT    | Display name                            |
+| `trigger_category` | TEXT    | Category grouping                       |
+| `display_order`    | INTEGER | Sort order                              |
+| `loop_type`        | TEXT    | Which overthinking loop this relates to |
+| `is_active`        | BOOLEAN | Active/inactive                         |
 
 **Pre-Seeded Triggers:**
+
 - Work deadline stress
 - Difficult conversation
 - Can't make a decision
@@ -131,25 +134,27 @@ reduction_percentage = ((pre - post) / pre) * 100
 
 **Key Columns:**
 
-| Column | Description |
-|--------|-------------|
-| `user_id` | User ID |
-| `exercise_type` | Exercise type |
-| `total_sessions` | Total attempts |
-| `completed_count` | Completed exercises |
-| `completion_rate` | Percentage completed |
-| `avg_anxiety_reduction` | Average reduction |
-| `avg_reduction_percentage` | Average % reduction |
-| `completions_last_7_days` | Recent activity |
-| `completions_last_30_days` | Monthly activity |
+| Column                     | Description          |
+| -------------------------- | -------------------- |
+| `user_id`                  | User ID              |
+| `exercise_type`            | Exercise type        |
+| `total_sessions`           | Total attempts       |
+| `completed_count`          | Completed exercises  |
+| `completion_rate`          | Percentage completed |
+| `avg_anxiety_reduction`    | Average reduction    |
+| `avg_reduction_percentage` | Average % reduction  |
+| `completions_last_7_days`  | Recent activity      |
+| `completions_last_30_days` | Monthly activity     |
 
 **Usage:**
+
 ```sql
 -- Fast dashboard load
 SELECT * FROM exercise_stats_by_user WHERE user_id = 'xxx';
 ```
 
 **Refresh:**
+
 ```sql
 -- Manual refresh
 SELECT refresh_exercise_stats();
@@ -260,6 +265,7 @@ CREATE INDEX idx_exercise_logs_data
 **Returns:** INTEGER (number of days)
 
 **Example:**
+
 ```sql
 SELECT get_exercise_streak('user-id-here');
 -- Returns: 5 (user has 5-day streak)
@@ -274,6 +280,7 @@ SELECT get_exercise_streak('user-id-here');
 **Returns:** TEXT (exercise_type)
 
 **Example:**
+
 ```sql
 SELECT get_most_effective_exercise('user-id-here');
 -- Returns: 'breathing'
@@ -288,6 +295,7 @@ SELECT get_most_effective_exercise('user-id-here');
 **Returns:** TEXT (trigger_category)
 
 **Example:**
+
 ```sql
 SELECT get_most_common_trigger('user-id-here');
 -- Returns: 'work'
@@ -302,11 +310,13 @@ SELECT get_most_common_trigger('user-id-here');
 **Returns:** VOID
 
 **Example:**
+
 ```sql
 SELECT refresh_exercise_stats();
 ```
 
 **Scheduled Refresh:**
+
 ```sql
 -- Runs every 6 hours via pg_cron
 SELECT cron.schedule(
@@ -327,6 +337,7 @@ SELECT cron.schedule(
 **Policies:**
 
 1. **SELECT** - Users can view their own logs
+
 ```sql
 CREATE POLICY "Users can view their own exercise logs"
   ON exercise_logs FOR SELECT
@@ -334,6 +345,7 @@ CREATE POLICY "Users can view their own exercise logs"
 ```
 
 2. **INSERT** - Users can create their own logs
+
 ```sql
 CREATE POLICY "Users can insert their own exercise logs"
   ON exercise_logs FOR INSERT
@@ -341,6 +353,7 @@ CREATE POLICY "Users can insert their own exercise logs"
 ```
 
 3. **UPDATE** - Users can update their own logs
+
 ```sql
 CREATE POLICY "Users can update their own exercise logs"
   ON exercise_logs FOR UPDATE
@@ -349,6 +362,7 @@ CREATE POLICY "Users can update their own exercise logs"
 ```
 
 4. **SOFT DELETE** - Users can soft-delete their own logs
+
 ```sql
 CREATE POLICY "Users can soft-delete their own exercise logs"
   ON exercise_logs FOR UPDATE
@@ -369,6 +383,7 @@ CREATE POLICY "Users can soft-delete their own exercise logs"
 **Policies:**
 
 1. **SELECT** - Anyone can read active triggers
+
 ```sql
 CREATE POLICY "Anyone can read exercise triggers"
   ON exercise_triggers FOR SELECT
@@ -376,6 +391,7 @@ CREATE POLICY "Anyone can read exercise triggers"
 ```
 
 2. **ALL** - Admins can manage triggers
+
 ```sql
 CREATE POLICY "Admins can manage exercise triggers"
   ON exercise_triggers FOR ALL
@@ -622,6 +638,7 @@ const getDashboardStats = async () => {
 ### For 100k+ Users
 
 1. **Use Materialized Views** - For dashboard queries
+
    ```sql
    -- Fast (uses materialized view)
    SELECT * FROM exercise_stats_by_user WHERE user_id = 'xxx';
@@ -636,23 +653,21 @@ const getDashboardStats = async () => {
    - Analytics: `idx_exercise_logs_type_completed`
 
 3. **Connection Pooling** - Use Supabase's built-in pooler
+
    ```typescript
    // Use connection pooler in production
-   const supabase = createClient(
-     process.env.SUPABASE_URL!,
-     process.env.SUPABASE_ANON_KEY!,
-     {
-       db: {
-         schema: 'public',
-       },
-       global: {
-         headers: { 'x-my-custom-header': 'my-app' },
-       },
-     }
-   );
+   const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+     db: {
+       schema: 'public',
+     },
+     global: {
+       headers: { 'x-my-custom-header': 'my-app' },
+     },
+   });
    ```
 
 4. **Batch Inserts** - If importing historical data
+
    ```typescript
    // Good: Batch insert
    await supabase.from('exercise_logs').insert(logsArray);
@@ -681,6 +696,7 @@ The `spiral_logs` table already exists and tracks anxiety spiral interruptions. 
 - **`exercise_logs`**: New table for all 6 exercises
 
 **Benefits:**
+
 - No data migration needed
 - No breaking changes
 - Both systems coexist
@@ -733,6 +749,7 @@ WHERE user_id = 'USER_ID'; -- Migrate per user
 **1. RLS Policy Errors**
 
 If users can't see their logs:
+
 ```sql
 -- Check RLS is enabled
 SELECT tablename, rowsecurity FROM pg_tables WHERE tablename = 'exercise_logs';
@@ -778,12 +795,12 @@ SELECT * FROM exercise_logs WHERE user_id = 'xxx' AND is_deleted = FALSE;
 
 ## Files Reference
 
-| File | Description |
-|------|-------------|
-| `/supabase/migrations/20250104000000_create_exercise_logs.sql` | Complete migration file |
-| `/types/exercise-logs.ts` | TypeScript type definitions |
-| `/utils/supabase/exercise-logs.ts` | Supabase client helpers |
-| `/supabase/queries/exercise-logs-examples.sql` | Common query examples |
+| File                                                           | Description                 |
+| -------------------------------------------------------------- | --------------------------- |
+| `/supabase/migrations/20250104000000_create_exercise_logs.sql` | Complete migration file     |
+| `/types/exercise-logs.ts`                                      | TypeScript type definitions |
+| `/utils/supabase/exercise-logs.ts`                             | Supabase client helpers     |
+| `/supabase/queries/exercise-logs-examples.sql`                 | Common query examples       |
 
 ---
 

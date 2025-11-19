@@ -25,9 +25,11 @@ This third audit used Supabase MCP to verify database schema, traced all user jo
 ## 🔴 CRITICAL ISSUE #1: TypeScript Compilation Failure
 
 ### **Problem:**
+
 TypeScript compilation is **COMPLETELY BROKEN** due to syntax error in `app/onboarding/quiz/results.tsx`
 
 ### **Error Output:**
+
 ```
 app/onboarding/quiz/results.tsx(157,36): error TS1003: Identifier expected.
 app/onboarding/quiz/results.tsx(159,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
@@ -37,9 +39,11 @@ app/onboarding/quiz/results.tsx(394,9): error TS17015: Expected corresponding cl
 ```
 
 ### **Root Cause:**
+
 Line 157 has an extra `}` after the string value:
 
 **Current (BROKEN):**
+
 ```tsx
 <ScrollFadeView
   fadeVisibility="always"}  // ❌ Extra } breaks JSX parsing
@@ -48,6 +52,7 @@ Line 157 has an extra `}` after the string value:
 ```
 
 **Should be:**
+
 ```tsx
 <ScrollFadeView
   fadeVisibility="always"  // ✅ Correct
@@ -56,12 +61,14 @@ Line 157 has an extra `}` after the string value:
 ```
 
 ### **Impact:**
+
 - 🔴 App cannot be built for production
 - 🔴 TypeScript tooling broken (no autocomplete, no type checking)
 - 🔴 Cannot deploy to TestFlight or App Store
 - 🔴 All downstream JSX parsing errors cascade from this one typo
 
 ### **Fix Required:**
+
 ```tsx
 // File: app/onboarding/quiz/results.tsx
 // Line 157
@@ -81,19 +88,22 @@ fadeVisibility="always"
 ## 🔴 CRITICAL ISSUE #2: Quiz Answers Not Saved to Database
 
 ### **Problem:**
+
 Mobile app saves `quiz_submissions` but does NOT save individual answers to `quiz_answers` table. Web version DOES save individual answers.
 
 ### **Evidence:**
 
 **Web implementation** (`src/lib/services/quiz.ts` lines 142-144):
+
 ```typescript
 // Insert all answers
 const { error: answersError } = await supabase
-  .from('quiz_answers')  // ✅ Saves individual answers
-  .insert(answersData)
+  .from('quiz_answers') // ✅ Saves individual answers
+  .insert(answersData);
 ```
 
 **Mobile implementation** (`utils/quizScoring.ts`):
+
 ```typescript
 export async function submitQuizToSupabase(...) {
   const { data: submission, error } = await supabase
@@ -109,7 +119,9 @@ export async function submitQuizToSupabase(...) {
 ```
 
 ### **Database Schema Verified:**
+
 Via Supabase MCP, `quiz_answers` table exists with structure:
+
 - `id` (uuid)
 - `submission_id` (uuid) - foreign key to quiz_submissions
 - `question_id` (varchar)
@@ -124,12 +136,14 @@ Via Supabase MCP, `quiz_answers` table exists with structure:
 - `created_at` (timestamp)
 
 ### **Impact:**
+
 - 🔴 **Lost analytics** - Cannot analyze which specific questions users struggle with
 - 🔴 **Data inconsistency** - Web quiz has granular data, mobile doesn't
 - 🔴 **Future features blocked** - Cannot build answer-level insights for mobile users
 - 🔴 **A/B testing impossible** - Cannot compare question performance across platforms
 
 ### **Fix Required:**
+
 Update `utils/quizScoring.ts` to mirror web implementation:
 
 ```typescript
@@ -158,9 +172,7 @@ export async function submitQuizToSupabase(
     }));
 
     // NEW: Insert all answers
-    const { error: answersError } = await supabase
-      .from('quiz_answers')
-      .insert(answersData);
+    const { error: answersError } = await supabase.from('quiz_answers').insert(answersData);
 
     if (answersError) {
       console.error('Error saving quiz answers:', answersError);
@@ -183,9 +195,11 @@ export async function submitQuizToSupabase(
 ## 🔴 CRITICAL ISSUE #3: RLS Security Vulnerabilities
 
 ### **Problem:**
+
 Supabase security advisors found **28 ERROR-level security issues** with Row Level Security (RLS):
 
 ### **Issue 3A: RLS Policies Defined But Not Enabled**
+
 Via Supabase MCP `get_advisors` (type: "security"):
 
 ```json
@@ -203,6 +217,7 @@ Via Supabase MCP `get_advisors` (type: "security"):
 **Translation:** The tables have security policies defined, but they're not being enforced because RLS is disabled.
 
 ### **Issue 3B: Multiple Public Tables with RLS Disabled**
+
 ```json
 {
   "level": "ERROR",
@@ -222,6 +237,7 @@ Via Supabase MCP `get_advisors` (type: "security"):
 ```
 
 ### **Issue 3C: SECURITY DEFINER Views**
+
 ```json
 {
   "level": "ERROR",
@@ -232,6 +248,7 @@ Via Supabase MCP `get_advisors` (type: "security"):
 ```
 
 ### **Issue 3D: Anonymous User Access**
+
 ```json
 {
   "level": "WARN",
@@ -241,6 +258,7 @@ Via Supabase MCP `get_advisors` (type: "security"):
 ```
 
 ### **Issue 3E: Database Version Security**
+
 ```json
 {
   "level": "WARN",
@@ -250,13 +268,16 @@ Via Supabase MCP `get_advisors` (type: "security"):
 ```
 
 ### **Impact:**
+
 - 🔴 **Unauthorized data access** - Users can read/write quiz data they shouldn't access
 - 🔴 **Privacy violation** - Email addresses and quiz results exposed
 - 🔴 **Compliance risk** - GDPR/CCPA violations possible
 - 🔴 **Privilege escalation** - SECURITY DEFINER views allow elevated access
 
 ### **Fix Required:**
+
 1. Enable RLS on all tables:
+
 ```sql
 -- Run in Supabase SQL editor
 ALTER TABLE quiz_submissions ENABLE ROW LEVEL SECURITY;
@@ -281,14 +302,17 @@ ALTER TABLE revenue_events ENABLE ROW LEVEL SECURITY;
 ## 🟡 HIGH PRIORITY ISSUE #4: Orphaned Backup File
 
 ### **Problem:**
+
 File `app/index-old-backup.tsx` exists in codebase
 
 ### **Impact:**
+
 - 🟡 Increases bundle size unnecessarily
 - 🟡 Confuses developers about which file is active
 - 🟡 Git history cluttered
 
 ### **Fix Required:**
+
 ```bash
 rm app/index-old-backup.tsx
 ```
@@ -301,9 +325,11 @@ rm app/index-old-backup.tsx
 ## 🟡 HIGH PRIORITY ISSUE #5: No Quiz Submission Retry Logic
 
 ### **Problem:**
+
 Mobile quiz submission has NO retry logic for network failures. User loses all answers if network fails on submit.
 
 ### **Current Code** (`app/onboarding/quiz/results.tsx`):
+
 ```typescript
 const { success, submissionId, error } = await submitQuizToSupabase(
   email.trim().toLowerCase(),
@@ -316,16 +342,18 @@ if (!success || !submissionId) {
   setErrorMessage(error || 'Failed to save quiz results. Please try again.');
   await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
   setIsSubmitting(false);
-  return;  // ❌ No retry - user must manually retry
+  return; // ❌ No retry - user must manually retry
 }
 ```
 
 ### **Impact:**
+
 - 🟡 Poor UX on spotty mobile networks
 - 🟡 Lost quiz completions if network drops at critical moment
 - 🟡 Users must re-enter email and retry (frustrating)
 
 ### **Fix Required:**
+
 Add retry button in error state + automatic retry with exponential backoff:
 
 ```typescript
@@ -363,14 +391,16 @@ const submitWithRetry = async (attempt = 1) => {
 ## 🟡 HIGH PRIORITY ISSUE #6: Weak Password Validation
 
 ### **Problem:**
+
 Password validation only checks 8+ characters. No strength requirements.
 
 ### **Current Code** (`app/onboarding/password-setup.tsx` line 42):
+
 ```typescript
 const validatePassword = (): boolean => {
   if (!password || password.length < 8) {
     setErrorMessage('Password must be at least 8 characters');
-    return false;  // ❌ Only checks length
+    return false; // ❌ Only checks length
   }
 
   if (password !== confirmPassword) {
@@ -383,11 +413,13 @@ const validatePassword = (): boolean => {
 ```
 
 ### **Impact:**
+
 - 🟡 Weak passwords allowed (e.g., "12345678")
 - 🟡 Account security compromised
 - 🟡 Higher risk of brute force attacks
 
 ### **Fix Required:**
+
 Add password strength validation:
 
 ```typescript
@@ -424,6 +456,7 @@ const validatePassword = (): boolean => {
 ## ✅ VERIFIED WORKING: User Journey Paths
 
 ### **Path A: User Who Took Website Quiz**
+
 1. ✅ quiz-recognition.tsx → "Yes, I took the quiz" → /onboarding/email-lookup
 2. ✅ email-lookup.tsx → Supabase query for quiz_submissions (handles duplicates with `data[0]`)
 3. ✅ If found → /onboarding/password-setup with quiz data
@@ -433,6 +466,7 @@ const validatePassword = (): boolean => {
 **Verified routing:** All paths connected correctly ✅
 
 ### **Path B: User Who Didn't Take Website Quiz**
+
 1. ✅ quiz-recognition.tsx → "No, I'm new here" → /onboarding/quiz
 2. ✅ quiz/index.tsx → 16 questions with AsyncStorage persistence
 3. ✅ quiz/results.tsx → Collects email, submits to Supabase
@@ -443,6 +477,7 @@ const validatePassword = (): boolean => {
 **Verified routing:** All paths connected correctly ✅
 
 ### **Path C: User Not Sure About Quiz**
+
 1. ✅ quiz-recognition.tsx → "I'm not sure" → /onboarding/quiz
 2. ✅ (Same as Path B)
 
@@ -453,6 +488,7 @@ const validatePassword = (): boolean => {
 ## ✅ VERIFIED WORKING: Password Setup Implementation
 
 ### **Verified** (`app/onboarding/password-setup.tsx`):
+
 ```typescript
 // Step 1: Create Supabase auth account
 const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -495,6 +531,7 @@ router.replace('/');  // ✅ Correct
 ## ✅ VERIFIED WORKING: AsyncStorage Implementation
 
 ### **Verified Usage:**
+
 1. ✅ `quiz/index.tsx` line 42: `AsyncStorage.getItem('quiz_progress')` - Restore on mount
 2. ✅ `quiz/index.tsx` line 57: `AsyncStorage.removeItem('quiz_progress')` - Clear stale (>24h)
 3. ✅ `quiz/index.tsx` line 78: `AsyncStorage.setItem('quiz_progress', ...)` - Save after each answer
@@ -507,6 +544,7 @@ router.replace('/');  // ✅ Correct
 ## ✅ VERIFIED WORKING: TypeScript Type Safety (After Fix #1)
 
 ### **Verified** (`types/index.ts`):
+
 ```typescript
 export interface UserProfile {
   user_id: string;
@@ -533,12 +571,14 @@ export interface UserProfile {
 ```
 
 **Verified via Supabase MCP:**
+
 ```sql
 SELECT column_name, data_type FROM information_schema.columns
 WHERE table_name = 'user_profiles' AND table_schema = 'public';
 ```
 
 **Result:**
+
 - `quiz_email` → text (nullable) ✅
 - `quiz_connected` → boolean (nullable) ✅
 - `quiz_submission_id` → uuid (nullable) ✅
@@ -575,14 +615,17 @@ WHERE table_name = 'user_profiles' AND table_schema = 'public';
 ### **Verified via Supabase MCP:**
 
 **user_profiles** (18 columns) - ✅ Complete
+
 - All 5 quiz fields present and match TypeScript types
 - RLS needs to be enabled
 
 **quiz_submissions** (21 columns) - ✅ Complete
+
 - All fields used by mobile app present
 - RLS exists but not enabled
 
 **quiz_answers** (12 columns) - ⚠️ Exists but unused by mobile
+
 - Table ready for mobile quiz answers
 - Currently only web version uses this
 
@@ -591,18 +634,22 @@ WHERE table_name = 'user_profiles' AND table_schema = 'public';
 ## 🎯 Priority Ranking for Fixes
 
 ### **BLOCKER (Must Fix Before ANY Deployment):**
+
 1. 🔴 Fix TypeScript syntax error in results.tsx (30 seconds)
 
 ### **CRITICAL (Must Fix Before Beta Launch):**
+
 2. 🔴 Add quiz_answers saving to mobile app (15 minutes)
 3. 🔴 Enable RLS on all quiz tables (2 hours)
 
 ### **HIGH (Should Fix Before Beta Launch):**
+
 4. 🟡 Delete index-old-backup.tsx (30 seconds)
 5. 🟡 Add retry logic for quiz submission (30 minutes)
 6. 🟡 Add password strength validation (15 minutes)
 
 ### **MEDIUM (Can Address After Launch):**
+
 7. 🟡 Review SECURITY DEFINER views
 8. 🟡 Audit anonymous user policies
 9. 🟡 Upgrade Postgres version
@@ -639,6 +686,7 @@ WHERE table_name = 'user_profiles' AND table_schema = 'public';
 ### **Current Status:** 🔴 **NOT READY**
 
 **Blockers:**
+
 - TypeScript compilation failing
 - Quiz answers not being saved
 - RLS security vulnerabilities
@@ -646,6 +694,7 @@ WHERE table_name = 'user_profiles' AND table_schema = 'public';
 ### **After Fixing BLOCKER + CRITICAL Issues:** 🟡 **BETA READY**
 
 **Remaining for production:**
+
 - Password strength validation
 - Retry logic for submissions
 - Security hardening (RLS, views, policies)
@@ -657,6 +706,7 @@ WHERE table_name = 'user_profiles' AND table_schema = 'public';
 After implementing fixes, test:
 
 1. **TypeScript Compilation:**
+
    ```bash
    npx tsc --noEmit
    # Should return 0 errors
@@ -669,6 +719,7 @@ After implementing fixes, test:
      - ✅ 16 records in `quiz_answers` with correct `submission_id`
 
 3. **RLS Verification:**
+
    ```sql
    -- Should return true for all quiz tables
    SELECT tablename, rowsecurity
@@ -690,12 +741,14 @@ After implementing fixes, test:
 **8 issues found, ranging from BLOCKER to MEDIUM priority.**
 
 **Good news:**
+
 - User journeys work correctly
 - Database schema is complete
 - Most TypeScript types are correct
 - AsyncStorage implementation is solid
 
 **Critical work needed:**
+
 1. Fix syntax error (30 seconds)
 2. Save quiz answers to database (15 min)
 3. Enable RLS for security (2 hours)

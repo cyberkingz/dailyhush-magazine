@@ -61,7 +61,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     id: 'reflection-time',
     title: 'Quiet Reflection',
     description:
-      'When we feel calm, it\'s a perfect time to reflect on what\'s working well in our lives and appreciate the present moment.',
+      "When we feel calm, it's a perfect time to reflect on what's working well in our lives and appreciate the present moment.",
     steps: [
       'Find a comfortable, quiet spot',
       'Close your eyes and take three deep breaths',
@@ -82,7 +82,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
       'A gentle walk paired with gratitude can deepen feelings of contentment and connection to the world around us.',
     steps: [
       'Step outside for a slow, mindful walk',
-      'As you walk, notice three things you\'re grateful for',
+      "As you walk, notice three things you're grateful for",
       'They can be big or small - a warm breeze, a kind neighbor, your health',
       'Take your time and walk at whatever pace feels right',
     ],
@@ -135,7 +135,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     id: 'breathing-exercise',
     title: 'Deep Breathing Practice',
     description:
-      'Focused breathing activates your body\'s natural calming response, helping ease anxious feelings.',
+      "Focused breathing activates your body's natural calming response, helping ease anxious feelings.",
     steps: [
       'Find a comfortable seated position',
       'Place one hand on your heart, one on your belly',
@@ -195,12 +195,12 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     id: 'gratitude-practice',
     title: 'Three Good Things',
     description:
-      'Reflecting on positive moments can help lift our mood and remind us of life\'s small joys, even on difficult days.',
+      "Reflecting on positive moments can help lift our mood and remind us of life's small joys, even on difficult days.",
     steps: [
       'Think of three good things from today',
       'They can be big or small moments',
       'For each one, pause and remember how it made you feel',
-      'Write them down if you\'d like',
+      "Write them down if you'd like",
       'End by placing your hand on your heart and taking a deep breath',
     ],
     duration: '5-8 minutes',
@@ -213,7 +213,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     id: 'comfort-activity',
     title: 'Gentle Self-Care',
     description:
-      'When we\'re feeling down, small acts of self-care can help us feel nurtured and cared for.',
+      "When we're feeling down, small acts of self-care can help us feel nurtured and cared for.",
     steps: [
       'Choose something that brings you comfort: a warm drink, soft music, a cozy blanket',
       'Give yourself permission to rest',
@@ -234,8 +234,8 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     steps: [
       'Think of someone who makes you feel safe and cared for',
       'Send a brief message or give them a call',
-      'You don\'t have to explain everything - just say hello',
-      'If you\'re not ready to reach out, that\'s okay too',
+      "You don't have to explain everything - just say hello",
+      "If you're not ready to reach out, that's okay too",
     ],
     duration: '5-15 minutes',
     icon: 'message-circle',
@@ -269,7 +269,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     id: 'physical-release',
     title: 'Safe Movement',
     description:
-      'When we\'re frustrated, our bodies hold tension. Safe, intentional movement can help release that energy.',
+      "When we're frustrated, our bodies hold tension. Safe, intentional movement can help release that energy.",
     steps: [
       'Find a private space where you feel comfortable',
       'Try these gentle releases: stretch your arms wide, roll your shoulders, squeeze and release your fists',
@@ -291,7 +291,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
       'Get paper and pen (or open a notes app)',
       'Set a timer for 5 minutes',
       'Write whatever comes to mind without stopping',
-      'Don\'t worry about grammar or making sense',
+      "Don't worry about grammar or making sense",
       'When done, you can keep it or tear it up - your choice',
     ],
     duration: '5-10 minutes',
@@ -306,8 +306,8 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     description:
       'When frustration builds, changing your environment - even slightly - can shift your emotional state.',
     steps: [
-      'If you\'re inside, step outside for a few minutes',
-      'If you\'re sitting, stand and stretch',
+      "If you're inside, step outside for a few minutes",
+      "If you're sitting, stand and stretch",
       'Open a window for fresh air',
       'Move to a different room',
       'Notice how the change affects your mood',
@@ -367,7 +367,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
       'Complete these sentences: "I feel ___ and I also feel ___"',
       'Example: "I feel scared and I also feel hopeful"',
       'Notice that both can be true at the same time',
-      'You don\'t have to choose one over the other',
+      "You don't have to choose one over the other",
     ],
     duration: '3-5 minutes',
     icon: 'split',
@@ -381,7 +381,7 @@ export const SUGGESTION_TEMPLATES: readonly SuggestionTemplate[] = [
     description:
       'Sometimes saying our mixed feelings out loud (even to ourselves) can help untangle them.',
     steps: [
-      'Find a private space where you won\'t be interrupted',
+      "Find a private space where you won't be interrupted",
       'Speak out loud: "Right now, I\'m feeling..."',
       'Name each emotion without judging it',
       'You can talk to yourself, a pet, or even record yourself',
@@ -454,9 +454,7 @@ export function getSuggestionForMood(
 
   // Further filter by intensity range
   const intensityMatches = moodMatches.filter(
-    (template) =>
-      intensity >= template.intensityRange[0] &&
-      intensity <= template.intensityRange[1]
+    (template) => intensity >= template.intensityRange[0] && intensity <= template.intensityRange[1]
   );
 
   // If we have intensity-specific matches, use those
@@ -478,9 +476,7 @@ export function getSuggestionForMood(
   );
 
   // Ultimate fallback
-  return (
-    universal[0] ?? SUGGESTION_TEMPLATES.find((t) => t.id === 'hand-on-heart')!
-  );
+  return universal[0] ?? SUGGESTION_TEMPLATES.find((t) => t.id === 'hand-on-heart')!;
 }
 
 /**
@@ -507,9 +503,7 @@ export function getSuggestionsForMood(
 /**
  * Get suggestion by ID
  */
-export function getSuggestionById(
-  id: string
-): SuggestionTemplate | undefined {
+export function getSuggestionById(id: string): SuggestionTemplate | undefined {
   return SUGGESTION_TEMPLATES.find((template) => template.id === id);
 }
 
@@ -519,13 +513,11 @@ export function getSuggestionById(
 export function getSuggestionsByCategory(
   category: SuggestionCategory
 ): readonly SuggestionTemplate[] {
-  return SUGGESTION_TEMPLATES.filter(
-    (template) => template.category === category
-  );
+  return SUGGESTION_TEMPLATES.filter((template) => template.category === category);
 }
 
 // ============================================================================
 // TYPE EXPORTS
 // ============================================================================
 
-export type SuggestionId = typeof SUGGESTION_TEMPLATES[number]['id'];
+export type SuggestionId = (typeof SUGGESTION_TEMPLATES)[number]['id'];

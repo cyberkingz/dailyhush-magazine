@@ -8,6 +8,7 @@
 ## 📊 RÉSUMÉ EXÉCUTIF
 
 ### ✅ COMPLÉTÉ (Excellent travail !)
+
 - ✅ Métadonnées texte (Name, Subtitle, Description, Keywords)
 - ✅ App Information (Bundle ID, Categories, Content Rights)
 - ✅ Pricing & Availability (Gratuit, 175 pays)
@@ -17,9 +18,11 @@
 - ✅ 5 screenshots iPhone
 
 ### 🔴 BLOQUANTS (1 élément critique)
+
 1. ❌ **BUILD NON UPLOADÉ** - PRIORITÉ #1
 
 ### 🟡 RECOMMANDÉ (Optimisation)
+
 - ⚠️ 5 screenshots iPhone supplémentaires (5/10 actuellement)
 - ⚠️ 1-3 App Preview vidéos
 - ⚠️ Optimiser keywords (6/100 caractères utilisés)
@@ -34,6 +37,7 @@
 **Impact:** 🚫 **BLOQUANT TOTAL** - Impossible de soumettre sans build
 
 **Actions requises:**
+
 1. Uploader le fichier .ipa via **Xcode** (Product > Archive > Distribute App)
 2. OU utiliser **Transporter** (app Mac officielle Apple)
 3. Le build doit être signé avec le certificat de distribution
@@ -52,6 +56,7 @@
 **Date de complétion:** 2025-01-16
 
 **Configuration finale:**
+
 - ✅ 3 types de données déclarés et configurés
 - ✅ Usage spécifié pour chaque type
 - ✅ Lien utilisateur confirmé
@@ -60,16 +65,19 @@
 **Détails des types de données configurés:**
 
 **A. User ID (Identifiers)**
+
 - ✅ Usage: Product Personalization, App Functionality, Analytics
 - ✅ Lié à l'identité utilisateur: Oui
 - ✅ Tracking: Non
 
 **B. Purchase History (Purchases)**
+
 - ✅ Usage: App Functionality, Analytics
 - ✅ Lié à l'identité utilisateur: Oui
 - ✅ Tracking: Non
 
 **C. Product Interaction (Usage Data)**
+
 - ✅ Usage: Analytics, Product Personalization, App Functionality
 - ✅ Lié à l'identité utilisateur: Oui
 - ✅ Tracking: Non
@@ -83,10 +91,12 @@
 ### 3. 📱 SCREENSHOTS INCOMPLETS
 
 #### iPhone 6.5" Display
+
 - ✅ **5 screenshots sur 10** uploadés
 - ❌ **0 App Preview vidéos sur 3**
 
 **Recommandations:**
+
 - Ajouter 5 screenshots supplémentaires pour avoir 10/10
 - Ajouter 1-3 vidéos (15-30 sec) montrant l'app en action
   - Vidéo 1: Onboarding + choix de technique
@@ -105,9 +115,11 @@
 **Disponible:** 100 caractères
 
 **Suggestion d'optimisation:**
+
 ```
 anxiety, overthinking, mental health, meditation, mindfulness, stress relief, calm, rumination, insomnia, sleep, therapy, CBT, breathing, relax, peace, wellness
 ```
+
 (= 94 caractères)
 
 **Temps estimé:** 10 min
@@ -118,52 +130,52 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 
 ### 5. ✅ MÉTADONNÉES (Excellent !)
 
-| Élément | Statut | Contenu |
-|---------|--------|---------|
-| **Name** | ✅ | Nœma |
-| **Subtitle** | ✅ | Science-backed relief |
-| **Promotional Text** | ✅ | 26 caractères - Bien optimisé |
-| **Description** | ✅ | 139 caractères - **EXCELLENTE** qualité |
-| **Keywords** | ✅ | 6 mots-clés (peut être optimisé) |
-| **Support URL** | ✅ | https://trynoema.com/support |
-| **Marketing URL** | ✅ | https://trynoema.com/ |
-| **Version** | ✅ | 1.0 |
-| **Copyright** | ✅ | anthony arive |
+| Élément              | Statut | Contenu                                 |
+| -------------------- | ------ | --------------------------------------- |
+| **Name**             | ✅     | Nœma                                    |
+| **Subtitle**         | ✅     | Science-backed relief                   |
+| **Promotional Text** | ✅     | 26 caractères - Bien optimisé           |
+| **Description**      | ✅     | 139 caractères - **EXCELLENTE** qualité |
+| **Keywords**         | ✅     | 6 mots-clés (peut être optimisé)        |
+| **Support URL**      | ✅     | https://trynoema.com/support            |
+| **Marketing URL**    | ✅     | https://trynoema.com/                   |
+| **Version**          | ✅     | 1.0                                     |
+| **Copyright**        | ✅     | anthony arive                           |
 
 ---
 
 ### 6. ✅ APP INFORMATION
 
-| Élément | Statut |
-|---------|--------|
-| **Bundle ID** | ✅ com.anthony.noema |
-| **SKU** | ✅ NOEMA001 |
-| **Primary Language** | ✅ English (U.S.) |
-| **Primary Category** | ✅ Health & Fitness |
+| Élément                | Statut                   |
+| ---------------------- | ------------------------ |
+| **Bundle ID**          | ✅ com.anthony.noema     |
+| **SKU**                | ✅ NOEMA001              |
+| **Primary Language**   | ✅ English (U.S.)        |
+| **Primary Category**   | ✅ Health & Fitness      |
 | **Secondary Category** | ⚠️ À vérifier/configurer |
-| **Content Rights** | ✅ Configuré |
-| **Age Ratings** | ✅ 9+ (173 countries) |
+| **Content Rights**     | ✅ Configuré             |
+| **Age Ratings**        | ✅ 9+ (173 countries)    |
 
 ---
 
 ### 7. ✅ PRICING & AVAILABILITY
 
-| Élément | Statut |
-|---------|--------|
-| **Prix** | ✅ Gratuit ($0.00) |
-| **Disponibilité** | ✅ 175 pays |
-| **Base Country** | ✅ United States (USD) |
+| Élément           | Statut                 |
+| ----------------- | ---------------------- |
+| **Prix**          | ✅ Gratuit ($0.00)     |
+| **Disponibilité** | ✅ 175 pays            |
+| **Base Country**  | ✅ United States (USD) |
 
 ---
 
 ### 8. ✅ APP REVIEW INFORMATION
 
-| Élément | Statut |
-|---------|--------|
-| **Sign-in required** | ✅ Oui |
-| **Test account** | ✅ review@trynoema.com / HeyReviewerNoema! |
-| **Contact** | ✅ Review User / +12013670512 / review@trynoema.com |
-| **Notes** | ✅ Complet avec infos sur subscriptions et trials |
+| Élément              | Statut                                              |
+| -------------------- | --------------------------------------------------- |
+| **Sign-in required** | ✅ Oui                                              |
+| **Test account**     | ✅ review@trynoema.com / HeyReviewerNoema!          |
+| **Contact**          | ✅ Review User / +12013670512 / review@trynoema.com |
+| **Notes**            | ✅ Complet avec infos sur subscriptions et trials   |
 
 ---
 
@@ -176,6 +188,7 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 ## 📋 CHECKLIST FINALE AVANT SOUMISSION
 
 ### ✅ DÉJÀ FAIT
+
 - [x] Nom & Subtitle
 - [x] Description complète & optimisée
 - [x] Keywords (basique)
@@ -189,10 +202,12 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 - [x] Release settings (auto)
 
 ### ❌ À FAIRE ABSOLUMENT
+
 - [ ] 🔴 **UPLOADER LE BUILD** (bloquant #1)
 - [x] ✅ **APP PRIVACY** - Complété (2025-01-16)
 
 ### 🟡 RECOMMANDÉ AVANT SOUMISSION
+
 - [ ] Ajouter 5 screenshots iPhone supplémentaires (pour 10/10)
 - [ ] Ajouter 1-3 App Preview vidéos
 - [ ] Optimiser keywords (utiliser les 100 caractères)
@@ -202,14 +217,14 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 
 ## ⏱️ ESTIMATION TEMPS DE COMPLÉTION
 
-| Tâche | Temps estimé | Priorité |
-|-------|--------------|----------|
-| **Upload build** | 30-60 min | 🔴 CRITIQUE |
-| **App Privacy** | ✅ COMPLÉTÉ | ✅ TERMINÉ |
-| **5 screenshots supplémentaires** | 1-2h | 🟡 Recommandé |
-| **App Preview vidéos (3x)** | 3-4h | 🟡 Recommandé |
-| **Optimiser keywords** | 10 min | 🟡 Recommandé |
-| **Catégorie secondaire** | 2 min | 🟡 Recommandé |
+| Tâche                             | Temps estimé | Priorité      |
+| --------------------------------- | ------------ | ------------- |
+| **Upload build**                  | 30-60 min    | 🔴 CRITIQUE   |
+| **App Privacy**                   | ✅ COMPLÉTÉ  | ✅ TERMINÉ    |
+| **5 screenshots supplémentaires** | 1-2h         | 🟡 Recommandé |
+| **App Preview vidéos (3x)**       | 3-4h         | 🟡 Recommandé |
+| **Optimiser keywords**            | 10 min       | 🟡 Recommandé |
+| **Catégorie secondaire**          | 2 min        | 🟡 Recommandé |
 
 **Total minimum:** ~30-60 min pour pouvoir soumettre (build uniquement)  
 **Total recommandé:** ~6h pour une fiche optimale
@@ -219,6 +234,7 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 ## 🚀 PROCHAINES ÉTAPES (ORDRE D'EXÉCUTION)
 
 ### **PHASE 1 : DÉBLOCAGE** (OBLIGATOIRE)
+
 1. ✅ **Uploader Build via Xcode/Transporter**
    - Archive l'app
    - Upload vers App Store Connect
@@ -231,12 +247,14 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
    - ✅ Sauvegardé et publiable
 
 ### **PHASE 2 : OPTIMISATION** (RECOMMANDÉ)
+
 3. 🟡 Ajouter 5 screenshots iPhone
 4. 🟡 Créer 1-3 vidéos preview
 5. 🟡 Optimiser les keywords
 6. 🟡 Configurer catégorie secondaire
 
 ### **PHASE 3 : SOUMISSION**
+
 7. ✅ Review finale de tous les champs
 8. ✅ Click **"Add for Review"**
 9. ⏳ Attendre 24-72h pour la review Apple
@@ -245,13 +263,13 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 
 ## 📊 SCORE QUALITÉ ACTUEL
 
-| Critère | Score | Commentaire |
-|---------|-------|-------------|
-| **Métadonnées texte** | ⭐⭐⭐⭐⭐ 5/5 | Excellente qualité de copywriting |
-| **Visuels (screenshots)** | ⭐⭐⭐ 3/5 | 5/10 iPhone, 0 vidéos |
-| **Configuration technique** | ⭐⭐⭐⭐ 4/5 | Manque build uniquement |
-| **Catégorisation** | ⭐⭐⭐⭐ 4/5 | Primary OK, Secondary à ajouter |
-| **App Review Info** | ⭐⭐⭐⭐⭐ 5/5 | Compte test bien documenté |
+| Critère                     | Score          | Commentaire                       |
+| --------------------------- | -------------- | --------------------------------- |
+| **Métadonnées texte**       | ⭐⭐⭐⭐⭐ 5/5 | Excellente qualité de copywriting |
+| **Visuels (screenshots)**   | ⭐⭐⭐ 3/5     | 5/10 iPhone, 0 vidéos             |
+| **Configuration technique** | ⭐⭐⭐⭐ 4/5   | Manque build uniquement           |
+| **Catégorisation**          | ⭐⭐⭐⭐ 4/5   | Primary OK, Secondary à ajouter   |
+| **App Review Info**         | ⭐⭐⭐⭐⭐ 5/5 | Compte test bien documenté        |
 
 **SCORE GLOBAL:** ⭐⭐⭐⭐ **4/5** - Très bonne préparation !
 
@@ -281,4 +299,3 @@ anxiety, overthinking, mental health, meditation, mindfulness, stress relief, ca
 ---
 
 **Bonne chance pour le lancement de Nœma ! 🎉**
-

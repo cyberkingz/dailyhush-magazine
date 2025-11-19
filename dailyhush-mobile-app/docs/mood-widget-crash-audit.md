@@ -9,6 +9,7 @@
 ## Executive Summary
 
 The app crashes when submitting a mood log with the error:
+
 ```
 [TypeError: Cannot create property 'value' on boolean 'false']
 Code: useSuccessAnimation.ts:139 - isPlaying.value = true
@@ -23,11 +24,13 @@ Code: useSuccessAnimation.ts:139 - isPlaying.value = true
 ## Deep Dive: Submission Flow Analysis
 
 ### 1. User Flow
+
 ```
 User fills mood → User fills intensity → User fills notes → Submits
 ```
 
 ### 2. State Machine Flow
+
 ```typescript
 // useWidgetStateMachine.ts
 empty → mood → intensity → notes → success → display
@@ -36,39 +39,49 @@ empty → mood → intensity → notes → success → display
 ### 3. Detailed Execution Path
 
 #### Step 1: User submits notes
+
 - Location: `QuickNotesInput.tsx:124-127`
 - Handler: `onSubmit()` is called
 - Action: Keyboard dismissed, calls parent callback
 
 #### Step 2: Widget receives submission
+
 - Location: `EmotionalWeatherWidget.tsx:388-392`
 - Handler: `submitNotes(data.notes)` is called
 - State: Currently in 'notes' state
 
 #### Step 3: State machine processes submission
+
 - Location: `useWidgetStateMachine.ts:248-257`
+
 ```typescript
-const submitNotes = useCallback(async (notes?: string) => {
-  const finalData = { ...data, notes };
-  setData(finalData);
+const submitNotes = useCallback(
+  async (notes?: string) => {
+    const finalData = { ...data, notes };
+    setData(finalData);
 
-  // ⚠️ CRITICAL: State transitions to 'success' IMMEDIATELY
-  setState('success');
+    // ⚠️ CRITICAL: State transitions to 'success' IMMEDIATELY
+    setState('success');
 
-  // API call happens in background (async)
-  await submitMoodData(finalData);
-}, [data, submitMoodData]);
+    // API call happens in background (async)
+    await submitMoodData(finalData);
+  },
+  [data, submitMoodData]
+);
 ```
 
 **Key Observation**: State changes to 'success' BEFORE API call completes. This is intentional for optimistic UI.
 
 #### Step 4: Success animation renders
+
 - Location: `EmotionalWeatherWidget.tsx:400-406`
 - Component: `<SuccessCheckmark>` renders when state === 'success'
 - Trigger: `useSuccessAnimation` hook initializes
 
 #### Step 5: Animation hook triggers
+
 - Location: `useSuccessAnimation.ts:136-199`
+
 ```typescript
 const trigger = useCallback(() => {
   setIsPlaying(true);  // ✅ CORRECT (React state)
@@ -88,16 +101,19 @@ const trigger = useCallback(() => {
 **✅ NEW CODE (fixed)**: `setIsPlaying(true)` - correct React state update
 
 #### Step 6: API submission completes
+
 - Location: `useWidgetStateMachine.ts:190-242`
 - Service: `useMoodLogging.submitMood()`
 - Flow: Checks network → Saves to Supabase OR queues offline → Calls onSuccess callback
 
 #### Step 7: Home screen updates
+
 - Location: `app/index.tsx:63-109`
 - Handler: `handleMoodSubmit()` receives callback
 - Updates: Optimistically updates local state, then refreshes from server
 
 #### Step 8: Animation completes
+
 - Location: `EmotionalWeatherWidget.tsx:207-218`
 - Handler: `handleCompleteSuccess()`
 - Flow:
@@ -115,6 +131,7 @@ const trigger = useCallback(() => {
 The code was refactored to fix Reanimated warnings about reading `.value` during component render:
 
 **Before** (incorrect):
+
 ```typescript
 const isPlaying = useSharedValue(false);
 
@@ -124,6 +141,7 @@ return {
 ```
 
 **After** (correct):
+
 ```typescript
 const [isPlaying, setIsPlaying] = useState(false);
 
@@ -133,17 +151,18 @@ return {
 ```
 
 However, the `trigger` function still had old code cached by Metro:
+
 ```typescript
 // ❌ OLD CACHED CODE:
 const trigger = useCallback(() => {
   'worklet';
-  isPlaying.value = true;  // Crashes - isPlaying is now boolean, not SharedValue
+  isPlaying.value = true; // Crashes - isPlaying is now boolean, not SharedValue
   // ...
 });
 
 // ✅ NEW FIXED CODE:
 const trigger = useCallback(() => {
-  setIsPlaying(true);  // Correct - updates React state
+  setIsPlaying(true); // Correct - updates React state
   // ...
 });
 ```
@@ -151,11 +170,13 @@ const trigger = useCallback(() => {
 ### Why Metro Cache Persists
 
 Metro bundler caches transformed JavaScript modules. When code changes:
+
 1. File is re-transformed
 2. Cache is updated
 3. **BUT** if app reloads before cache completes, old code runs
 
 This is especially common with:
+
 - Fast successive reloads
 - Babel config changes
 - Worklet transformations (Reanimated/Worklets plugins)
@@ -167,18 +188,22 @@ This is especially common with:
 ### Potential Race Conditions ✅ NONE FOUND
 
 **Scenario 1: State transitions during animation**
+
 - ✅ Safe: State machine uses sequential transitions
 - ✅ Safe: Success animation completes before state changes to display
 
 **Scenario 2: Multiple submissions**
+
 - ✅ Safe: `isSubmitting` flag prevents concurrent submissions
 - ✅ Safe: Buttons disabled during submission
 
 **Scenario 3: Network failures during animation**
+
 - ✅ Safe: Animation plays optimistically
 - ✅ Safe: Errors are caught and displayed, state machine handles gracefully
 
 **Scenario 4: Component unmount during submission**
+
 - ✅ Safe: `isMounted` ref prevents state updates after unmount
 - ✅ Safe: Animations are cancelled on cleanup
 
@@ -188,18 +213,18 @@ This is especially common with:
 
 ### All `.value` Accesses (18 instances checked)
 
-| Location | Context | Status |
-|----------|---------|--------|
-| `useSuccessAnimation.ts:213` | Inside `useAnimatedProps` worklet | ✅ Safe |
-| `useSuccessAnimation.ts:230-231` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `useSuccessAnimation.ts:235` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `useCardExpansion.ts:162` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `useCardExpansion.ts:166-167` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `useCardExpansion.ts:170` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `useIntensitySlider.ts:228,235,238,244` | Inside gesture handlers | ✅ Safe |
-| `useIntensitySlider.ts:275,286` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `SuccessCheckmark.tsx:50` | Inside `useAnimatedStyle` worklet | ✅ Safe |
-| `MoodSelector.tsx:47,51` | Object property (not Reanimated) | ✅ Safe |
+| Location                                | Context                           | Status  |
+| --------------------------------------- | --------------------------------- | ------- |
+| `useSuccessAnimation.ts:213`            | Inside `useAnimatedProps` worklet | ✅ Safe |
+| `useSuccessAnimation.ts:230-231`        | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `useSuccessAnimation.ts:235`            | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `useCardExpansion.ts:162`               | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `useCardExpansion.ts:166-167`           | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `useCardExpansion.ts:170`               | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `useIntensitySlider.ts:228,235,238,244` | Inside gesture handlers           | ✅ Safe |
+| `useIntensitySlider.ts:275,286`         | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `SuccessCheckmark.tsx:50`               | Inside `useAnimatedStyle` worklet | ✅ Safe |
+| `MoodSelector.tsx:47,51`                | Object property (not Reanimated)  | ✅ Safe |
 
 **Conclusion**: All shared value accesses are correctly placed inside worklets or gesture handlers. No renders reading `.value` detected.
 
@@ -259,6 +284,7 @@ $ grep -r "\.value" hooks/widget/ components/mood-widget/ | grep -v "\.value ="
 **Current Status**: Changes saved, but Metro serving cached code
 
 **Required Action**:
+
 ```bash
 # Stop Metro
 Ctrl+C
@@ -295,12 +321,12 @@ After cache clear, verify:
 
 ### Animation Timing (Optimized)
 
-| Phase | Duration | Notes |
-|-------|----------|-------|
-| Expansion | 300ms | Down from 400ms (25% faster) |
-| Success display | 400ms | Down from 800ms (50% faster) |
-| Collapse | 300ms | Down from 400ms (25% faster) |
-| **Total** | **1000ms** | Down from 1600ms (40% faster) |
+| Phase           | Duration   | Notes                         |
+| --------------- | ---------- | ----------------------------- |
+| Expansion       | 300ms      | Down from 400ms (25% faster)  |
+| Success display | 400ms      | Down from 800ms (50% faster)  |
+| Collapse        | 300ms      | Down from 400ms (25% faster)  |
+| **Total**       | **1000ms** | Down from 1600ms (40% faster) |
 
 ### Animation Subtlety (Improved)
 
@@ -363,6 +389,7 @@ Call Stack:
 ```
 
 **Analysis**:
+
 - Line 139 in cached code tries to set `.value` property
 - `isPlaying` is now a boolean (React state), not a SharedValue
 - Booleans are primitive types and cannot have properties added

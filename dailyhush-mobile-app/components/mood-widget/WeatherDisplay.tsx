@@ -30,7 +30,9 @@ export function WeatherDisplay({
   visible,
 }: WeatherDisplayProps) {
   // Get weather config for icon display
-  const weatherConfig = emotionalWeatherColors[weather as keyof typeof emotionalWeatherColors] || emotionalWeatherColors.cloudy;
+  const weatherConfig =
+    emotionalWeatherColors[weather as keyof typeof emotionalWeatherColors] ||
+    emotionalWeatherColors.cloudy;
 
   // Format timestamp for display
   const formatTimestamp = (timestamp?: string) => {
@@ -43,7 +45,7 @@ export function WeatherDisplay({
     const timeString = date.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
-      hour12: true
+      hour12: true,
     });
 
     if (isToday) {
@@ -55,14 +57,15 @@ export function WeatherDisplay({
       day: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
-      hour12: true
+      hour12: true,
     });
   };
 
   // Determine which timestamp to show
-  const displayTimestamp = updatedAt && updatedAt !== createdAt
-    ? `Updated ${formatTimestamp(updatedAt)}`
-    : `Logged ${formatTimestamp(createdAt)}`;
+  const displayTimestamp =
+    updatedAt && updatedAt !== createdAt
+      ? `Updated ${formatTimestamp(updatedAt)}`
+      : `Logged ${formatTimestamp(createdAt)}`;
 
   if (!visible) {
     return null;
@@ -76,8 +79,7 @@ export function WeatherDisplay({
         type: 'timing',
         duration: 400,
       }}
-      style={styles.container}
-    >
+      style={styles.container}>
       {/* Weather icon */}
       <Text style={styles.weatherIcon} accessible={false}>
         {weatherConfig.icon}
@@ -85,10 +87,7 @@ export function WeatherDisplay({
 
       {/* Weather description */}
       <View style={styles.textContent}>
-        <Text
-          style={styles.weatherTitle}
-          accessibilityRole="header"
-        >
+        <Text style={styles.weatherTitle} accessibilityRole="header">
           {weatherConfig.name}
         </Text>
 
@@ -98,8 +97,7 @@ export function WeatherDisplay({
             style={styles.moodRating}
             accessible={true}
             accessibilityLabel={`Mood rating: ${moodRating} out of 5`}
-            accessibilityRole="text"
-          >
+            accessibilityRole="text">
             {[...Array(5)].map((_, i) => (
               <Text
                 key={i}
@@ -107,8 +105,7 @@ export function WeatherDisplay({
                   styles.moodDot,
                   i < moodRating ? styles.moodDotFilled : styles.moodDotEmpty,
                 ]}
-                accessible={false}
-              >
+                accessible={false}>
                 {i < moodRating ? '●' : '○'}
               </Text>
             ))}
@@ -121,24 +118,17 @@ export function WeatherDisplay({
             style={styles.notes}
             numberOfLines={2}
             accessible={true}
-            accessibilityLabel={`Your notes: ${notes}`}
-          >
+            accessibilityLabel={`Your notes: ${notes}`}>
             "{notes}"
           </Text>
         )}
 
         {/* Today label */}
-        <Text style={styles.todayLabel}>
-          Today's Check-In
-        </Text>
+        <Text style={styles.todayLabel}>Today's Check-In</Text>
 
         {/* Timestamp */}
         {displayTimestamp && (
-          <Text
-            style={styles.timestamp}
-            accessible={true}
-            accessibilityLabel={displayTimestamp}
-          >
+          <Text style={styles.timestamp} accessible={true} accessibilityLabel={displayTimestamp}>
             {displayTimestamp}
           </Text>
         )}
@@ -153,8 +143,7 @@ export function WeatherDisplay({
         }}
         accessibilityLabel={ACCESSIBILITY_LABELS.weatherDisplay.updateButton}
         accessibilityHint={ACCESSIBILITY_LABELS.weatherDisplay.updateHint}
-        accessibilityRole="button"
-      >
+        accessibilityRole="button">
         <Text style={styles.updateButtonText}>Update</Text>
       </TouchableOpacity>
     </MotiView>

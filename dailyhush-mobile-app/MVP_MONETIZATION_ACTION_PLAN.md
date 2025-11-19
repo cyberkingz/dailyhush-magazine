@@ -1,4 +1,5 @@
 # DailyHush MVP - Monetization Action Plan
+
 ## Remove Subscription for FREE Launch
 
 **Decision:** Remove all subscription/payment UI for MVP launch
@@ -21,6 +22,7 @@ rm utils/stripe.ts
 **File:** `app/settings.tsx`
 
 **Remove lines 127-136:**
+
 ```typescript
 // DELETE THIS BLOCK:
 <SettingRow
@@ -36,6 +38,7 @@ rm utils/stripe.ts
 ```
 
 **Also remove the import:**
+
 ```typescript
 // Remove CreditCard from the import list (line 13)
 import {
@@ -49,7 +52,7 @@ import {
   HelpCircle,
   Mail,
   Shield,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react-native';
 ```
 
@@ -58,6 +61,7 @@ import {
 **File:** `app/insights.tsx`
 
 **Remove lines 137-148:**
+
 ```typescript
 // DELETE THIS BLOCK:
 {/* Premium Upsell */}
@@ -79,15 +83,19 @@ import {
 **File:** `README.md`
 
 **Change this section:**
+
 ```markdown
 # BEFORE:
+
 - **Free → Paid Conversion** | 10% |
 
 # AFTER:
+
 **MVP is 100% FREE** - All features available to all users during initial launch phase
 ```
 
 **Add this notice at the top:**
+
 ```markdown
 ## 🎉 FREE MVP Launch
 
@@ -103,6 +111,7 @@ Premium features and subscriptions will be introduced after MVP validation (est.
 **File:** `types/index.ts`
 
 **No changes needed** - Keep the Subscription types for future use:
+
 ```typescript
 // Keep these for future premium tier implementation
 export enum SubscriptionTier {
@@ -121,6 +130,7 @@ export interface Subscription {
 **File:** `store/useStore.ts`
 
 **No changes needed** - Keep subscription state management:
+
 ```typescript
 // Keep these for future use
 subscription: null,
@@ -143,6 +153,7 @@ After making changes, verify:
 - [ ] Linting passes: `npm run lint`
 
 **Test Navigation:**
+
 ```
 Home → Settings → (No subscription option visible) ✓
 Home → Insights → (No premium upsell visible) ✓
@@ -176,6 +187,7 @@ Home → Training → Works ✓
 ## FUTURE: When to Add Premium (3-6 Months)
 
 **Trigger Conditions:**
+
 - ✅ 5,000+ active users
 - ✅ 40%+ 7-day retention rate
 - ✅ 3+ spiral interrupts per user per day
@@ -183,6 +195,7 @@ Home → Training → Works ✓
 - ✅ User feedback requests premium features
 
 **What to Build Then:**
+
 1. Set up Stripe account (start with test mode)
 2. Create Supabase Edge Functions for API endpoints
 3. Build new subscription.tsx with real Stripe integration
@@ -199,6 +212,7 @@ Home → Training → Works ✓
 ## SUMMARY
 
 **What Changed:**
+
 - ❌ Removed `/app/subscription.tsx` (449 lines)
 - ❌ Removed `/utils/stripe.ts` (217 lines)
 - ❌ Removed subscription link from settings
@@ -206,12 +220,14 @@ Home → Training → Works ✓
 - ✅ App is now 100% FREE with no payment UI
 
 **What Stayed:**
+
 - ✅ Subscription types (ready for future)
 - ✅ Store subscription state (not being used)
 - ✅ Core features (spiral, F.I.R.E., insights, Shift)
 - ✅ All user data structures
 
 **Impact:**
+
 - 🚀 Faster launch (no Stripe setup needed)
 - 💰 Zero payment processing costs
 - 📊 Clean analytics (no payment bias)
@@ -219,6 +235,7 @@ Home → Training → Works ✓
 - 😊 No user confusion about payment
 
 **Timeline Saved:**
+
 - Setup Stripe account: ~2 days
 - Build backend API: ~3 days
 - Integrate Stripe SDK: ~2 days

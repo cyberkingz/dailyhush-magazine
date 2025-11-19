@@ -184,7 +184,7 @@ async function isOnline(): Promise<boolean> {
   try {
     const networkState = await Network.getNetworkStateAsync();
     return networkState.isConnected === true && networkState.isInternetReachable === true;
-  } catch (error) {
+  } catch {
     // Assume online if we can't check
     return true;
   }
@@ -353,81 +353,74 @@ export function useMoodLogging(): UseMoodLoggingReturn {
   // SUBMIT MOOD
   // ========================================================================
 
-  const submitMood = useCallback(
-    async (data: MoodSubmitData): Promise<MoodLog | null> => {
-      if (!isMounted.current) return null;
+  const submitMood = useCallback(async (data: MoodSubmitData): Promise<MoodLog | null> => {
+    if (!isMounted.current) return null;
 
-      setIsSubmitting(true);
-      setError(null);
+    setIsSubmitting(true);
+    setError(null);
 
-      try {
-        // Check if online
-        const online = await isOnline();
+    try {
+      // Check if online
+      const online = await isOnline();
 
-        if (!online) {
-          // Queue for offline sync
-          await addToOfflineQueue(data);
-
-          if (isMounted.current) {
-            setPendingCount((prev) => prev + 1);
-            setIsSubmitting(false);
-
-            // Create optimistic result
-            const optimisticLog: MoodLog = {
-              id: 'temp-' + uuidv4(),
-              user_id: data.userId || 'current-user',
-              mood: data.mood,
-              mood_emoji: '😊', // Will be set correctly when synced
-              intensity: data.intensity,
-              notes: data.notes || null,
-              log_date: new Date().toISOString().split('T')[0],
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            };
-
-            setTodayMood(optimisticLog);
-            await saveTodayMoodCache(optimisticLog);
-          }
-
-          return null;
-        }
-
-        // Online - save to Supabase
-        const savedLog = await saveMoodLogService(data);
+      if (!online) {
+        // Queue for offline sync
+        await addToOfflineQueue(data);
 
         if (isMounted.current) {
-          setTodayMood(savedLog);
-          await saveTodayMoodCache(savedLog);
-          setIsSubmitting(false);
-        }
-
-        return savedLog;
-      } catch (err) {
-        const moodError =
-          err instanceof MoodLoggingErrorClass
-            ? err
-            : new MoodLoggingErrorClass(
-                'UNKNOWN_ERROR' as any,
-                'Failed to save mood log',
-                err
-              );
-
-        if (isMounted.current) {
-          setError(moodError);
+          setPendingCount((prev) => prev + 1);
           setIsSubmitting(false);
 
-          // If it's a network error, queue for offline sync
-          if (moodError.isRetryable()) {
-            await addToOfflineQueue(data);
-            setPendingCount((prev) => prev + 1);
-          }
+          // Create optimistic result
+          const optimisticLog: MoodLog = {
+            id: 'temp-' + uuidv4(),
+            user_id: data.userId || 'current-user',
+            mood: data.mood,
+            mood_emoji: '😊', // Will be set correctly when synced
+            intensity: data.intensity,
+            notes: data.notes || null,
+            log_date: new Date().toISOString().split('T')[0],
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          };
+
+          setTodayMood(optimisticLog);
+          await saveTodayMoodCache(optimisticLog);
         }
 
         return null;
       }
-    },
-    []
-  );
+
+      // Online - save to Supabase
+      const savedLog = await saveMoodLogService(data);
+
+      if (isMounted.current) {
+        setTodayMood(savedLog);
+        await saveTodayMoodCache(savedLog);
+        setIsSubmitting(false);
+      }
+
+      return savedLog;
+    } catch (err) {
+      const moodError =
+        err instanceof MoodLoggingErrorClass
+          ? err
+          : new MoodLoggingErrorClass('UNKNOWN_ERROR' as any, 'Failed to save mood log', err);
+
+      if (isMounted.current) {
+        setError(moodError);
+        setIsSubmitting(false);
+
+        // If it's a network error, queue for offline sync
+        if (moodError.isRetryable()) {
+          await addToOfflineQueue(data);
+          setPendingCount((prev) => prev + 1);
+        }
+      }
+
+      return null;
+    }
+  }, []);
 
   // ========================================================================
   // GET TODAY'S MOOD
@@ -471,11 +464,7 @@ export function useMoodLogging(): UseMoodLoggingReturn {
         const moodError =
           err instanceof MoodLoggingErrorClass
             ? err
-            : new MoodLoggingErrorClass(
-                'UNKNOWN_ERROR' as any,
-                'Failed to fetch mood log',
-                err
-              );
+            : new MoodLoggingErrorClass('UNKNOWN_ERROR' as any, 'Failed to fetch mood log', err);
 
         if (isMounted.current) {
           setError(moodError);
@@ -516,11 +505,7 @@ export function useMoodLogging(): UseMoodLoggingReturn {
         const moodError =
           err instanceof MoodLoggingErrorClass
             ? err
-            : new MoodLoggingErrorClass(
-                'UNKNOWN_ERROR' as any,
-                'Failed to update mood log',
-                err
-              );
+            : new MoodLoggingErrorClass('UNKNOWN_ERROR' as any, 'Failed to update mood log', err);
 
         if (isMounted.current) {
           setError(moodError);
@@ -561,11 +546,7 @@ export function useMoodLogging(): UseMoodLoggingReturn {
         const moodError =
           err instanceof MoodLoggingErrorClass
             ? err
-            : new MoodLoggingErrorClass(
-                'UNKNOWN_ERROR' as any,
-                'Failed to delete mood log',
-                err
-              );
+            : new MoodLoggingErrorClass('UNKNOWN_ERROR' as any, 'Failed to delete mood log', err);
 
         if (isMounted.current) {
           setError(moodError);

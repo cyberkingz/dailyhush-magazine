@@ -240,12 +240,12 @@ export interface BreathingData {
     exhale: number; // seconds
     rest?: number; // seconds (optional between cycles)
   };
-  cycleHistory: Array<{
+  cycleHistory: {
     cycleNumber: number;
     startedAt: string;
     completedAt: string;
     durationSeconds: number;
-  }>;
+  }[];
 }
 
 /**
@@ -290,13 +290,13 @@ export interface GroundingData {
  */
 export interface EmotionWheelData {
   type: 'emotion';
-  selectedEmotions: Array<{
+  selectedEmotions: {
     primary: string; // e.g., "Anger"
     secondary: string; // e.g., "Frustration"
     tertiary?: string; // e.g., "Annoyed"
     intensity: number; // 1-10
     timestamp: string;
-  }>;
+  }[];
   dominantEmotion?: string;
   emotionFamily?: string; // "Fear", "Anger", "Sadness", etc.
   notes?: string; // Optional reflection
@@ -321,11 +321,11 @@ export interface BrainDumpData {
  */
 export interface MindClearData {
   type: 'mind_clear';
-  thoughtCategories: Array<{
+  thoughtCategories: {
     category: 'worry' | 'task' | 'memory' | 'decision' | 'other';
     count: number;
     cleared: boolean;
-  }>;
+  }[];
   totalThoughts: number;
   clearedThoughts: number;
   focusScore: number; // 1-10, self-reported after

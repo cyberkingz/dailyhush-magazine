@@ -10,7 +10,6 @@ import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MoodSelector } from '@/components/moodCapture/steps/MoodSelector';
-import { ProgressIndicator } from '@/components/moodCapture/ProgressIndicator';
 import type { MoodOption } from '@/constants/moodOptions';
 import { useAnalytics } from '@/utils/analytics';
 
@@ -29,7 +28,7 @@ export default function MoodScreen() {
     router.push({
       pathname: '/mood-capture/intensity',
       params: {
-        mood: mood.id,
+        mood: mood.id as string,
         moodLabel: mood.label,
         moodEmoji: mood.emoji,
       },

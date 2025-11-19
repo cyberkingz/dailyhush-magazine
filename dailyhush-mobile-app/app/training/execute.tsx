@@ -138,20 +138,25 @@ export default function ExecuteModule() {
   }, [user?.user_id]);
 
   // Create stable debounced save function using ref to avoid dependency issues
-  const debouncedSaveRef = useRef<((screen: Screen, routines: string[], environment: string[]) => void) | null>(null);
+  const debouncedSaveRef = useRef<
+    ((screen: Screen, routines: string[], environment: string[]) => void) | null
+  >(null);
 
   if (!debouncedSaveRef.current) {
-    debouncedSaveRef.current = debounce(async (screen: Screen, routines: string[], environment: string[]) => {
-      if (!user?.user_id) return;
+    debouncedSaveRef.current = debounce(
+      async (screen: Screen, routines: string[], environment: string[]) => {
+        if (!user?.user_id) return;
 
-      await saveModuleProgress(user.user_id, FireModule.EXECUTE, {
-        currentScreen: screen,
-        executeData: {
-          selectedRoutines: routines,
-          selectedEnvironment: environment,
-        },
-      });
-    }, timing.debounce.save);
+        await saveModuleProgress(user.user_id, FireModule.EXECUTE, {
+          currentScreen: screen,
+          executeData: {
+            selectedRoutines: routines,
+            selectedEnvironment: environment,
+          },
+        });
+      },
+      timing.debounce.save
+    );
   }
 
   // Auto-save progress when screen or selections change (debounced)
@@ -258,10 +263,14 @@ After I close my laptop (evening), I will do 5 deep breaths."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-3 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 Why This Works:
               </Text>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 Your brain already has grooves for existing habits.
                 {'\n\n'}
                 By stacking new habits on top, you use those existing grooves.
@@ -428,10 +437,14 @@ Because having a witness makes the goal real."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-3 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 Choose Your System:
               </Text>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 Option 1: DailyHush streak tracking (built-in)
                 {'\n\n'}
                 Option 2: Weekly check-ins with a friend
@@ -474,10 +487,14 @@ That's all. Just 30 days."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-3 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 What Success Looks Like:
               </Text>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 Week 1: You're noticing spirals (awareness)
                 {'\n\n'}
                 Week 2: You're catching 30-40% of them
@@ -556,7 +573,9 @@ Small, consistent action beats big plans you never execute.
 30 days. That's all."
             />
 
-            <Text className="text-center text-base font-semibold" style={{ color: colors.text.primary }}>
+            <Text
+              className="text-center text-base font-semibold"
+              style={{ color: colors.text.primary }}>
               You've got this.
             </Text>
           </View>
@@ -595,7 +614,9 @@ Small, consistent action beats big plans you never execute.
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.button.primaryText }}>
+            <Text
+              className="mr-2 text-lg font-semibold"
+              style={{ color: colors.button.primaryText }}>
               Continue
             </Text>
             <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={2} />

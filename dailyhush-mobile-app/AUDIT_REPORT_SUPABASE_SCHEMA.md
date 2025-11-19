@@ -13,6 +13,7 @@
 ⚠️ **35 total issues identified** across onboarding flow
 
 ### Severity Breakdown
+
 - 🔴 **8 CRITICAL** - Will cause failures or data loss
 - 🟠 **15 HIGH** - Affects UX significantly
 - 🟡 **12 MEDIUM** - Should be improved
@@ -22,9 +23,11 @@
 ## CRITICAL FINDING: TypeScript Type Mismatch
 
 ### Issue
+
 The `UserProfile` interface in `types/index.ts` is missing 5 quiz connection fields that **DO exist** in the actual Supabase `user_profiles` table.
 
 ### Database Schema (Verified via Supabase MCP)
+
 ```sql
 -- user_profiles table (public schema)
 CREATE TABLE user_profiles (
@@ -52,6 +55,7 @@ CREATE TABLE user_profiles (
 ```
 
 ### TypeScript Type (Current - INCOMPLETE)
+
 ```typescript
 // types/index.ts:10-29
 export interface UserProfile {
@@ -78,9 +82,11 @@ export interface UserProfile {
 ```
 
 ### Impact
+
 **File:** `app/onboarding/password-setup.tsx:98-119`
 
 The password setup screen attempts to insert quiz connection data:
+
 ```typescript
 const { data: profile, error: profileError } = await supabase
   .from('user_profiles')
@@ -102,12 +108,14 @@ const { data: profile, error: profileError } = await supabase
 ```
 
 ### Consequences
+
 1. **Type safety bypassed** - Supabase client won't validate these fields
 2. **No autocomplete** - Developers won't know these fields exist
 3. **Potential typos** - Field names could be misspelled without detection
 4. **Schema drift risk** - Types don't reflect actual database
 
 ### Fix Required
+
 Update `types/index.ts` UserProfile interface:
 
 ```typescript
@@ -147,6 +155,7 @@ export interface UserProfile {
 ### ✅ `quiz_submissions` Table - VERIFIED CORRECT
 
 **Actual Schema:**
+
 ```sql
 CREATE TABLE quiz_submissions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -176,6 +185,7 @@ CREATE TABLE quiz_submissions (
 **Compatibility with Mobile App:** ✅ PERFECT
 
 Mobile quiz submissions use:
+
 - `source_page: 'mobile-app'` (distinguishes from web `'quiz'`)
 - `source_url: 'dailyhush://app/quiz'` (custom URI scheme)
 - `device_type: 'mobile'`
@@ -191,6 +201,7 @@ See CRITICAL FINDING above.
 ## All 8 CRITICAL Issues
 
 ### CRITICAL-1: TypeScript Type Mismatch ⭐ DETAILED ABOVE
+
 **Location:** `types/index.ts:10-29`
 **Issue:** Missing 5 quiz connection fields that exist in database
 **Fix:** Add quiz_email, quiz_connected, quiz_submission_id, quiz_overthinker_type, quiz_connected_at
@@ -198,9 +209,11 @@ See CRITICAL FINDING above.
 ---
 
 ### CRITICAL-2: Orphaned Demo Screen
+
 **Location:** `app/onboarding/demo.tsx`
 **Issue:** File exists but is NEVER reached in any flow
 **Evidence:**
+
 - Created when "No" button routed to `/onboarding/demo`
 - Later changed to route to `/onboarding/quiz`
 - File now orphaned, dead code
@@ -210,6 +223,7 @@ See CRITICAL FINDING above.
 ---
 
 ### CRITICAL-3: Missing Source Tracking in Anonymous Flow
+
 **Location:** `utils/quizScoring.ts:80-120`
 **Issue:** If user creates account without quiz, no source tracking
 **Current:** Only quiz flow sets `source_page: 'mobile-app'`
@@ -220,8 +234,10 @@ See CRITICAL FINDING above.
 ---
 
 ### CRITICAL-4: No Quiz Progress Persistence
+
 **Location:** `app/onboarding/quiz/index.tsx:28`
 **Issue:** Quiz answers stored in React state only
+
 ```typescript
 const [answers, setAnswers] = useState<Map<string, QuizAnswer>>(new Map());
 ```
@@ -229,6 +245,7 @@ const [answers, setAnswers] = useState<Map<string, QuizAnswer>>(new Map());
 **Problem:** If app closes/crashes during quiz, all progress lost
 
 **Fix:** Save to AsyncStorage after each answer:
+
 ```typescript
 const handleSelectAnswer = async (optionId: string, value: number) => {
   const newAnswers = new Map(answers);
@@ -236,16 +253,14 @@ const handleSelectAnswer = async (optionId: string, value: number) => {
   setAnswers(newAnswers);
 
   // ✅ Persist to AsyncStorage
-  await AsyncStorage.setItem(
-    'quiz_progress',
-    JSON.stringify(Array.from(newAnswers.entries()))
-  );
+  await AsyncStorage.setItem('quiz_progress', JSON.stringify(Array.from(newAnswers.entries())));
 };
 ```
 
 ---
 
 ### CRITICAL-5: Email Lookup Duplicate Handling
+
 **Location:** `app/onboarding/email-lookup.tsx:55-61`
 **Issue:** Query uses `.single()` which throws error if user took quiz multiple times
 
@@ -262,6 +277,7 @@ const { data, error } = await supabase
 **Problem:** `.single()` expects EXACTLY one row, fails on duplicates
 
 **Fix:** Remove `.single()`, use array access:
+
 ```typescript
 const { data, error } = await supabase
   .from('quiz_submissions')
@@ -270,8 +286,12 @@ const { data, error } = await supabase
   .order('created_at', { ascending: false })
   .limit(1); // Returns array
 
-if (error) { /* handle */ }
-if (!data || data.length === 0) { /* not found */ }
+if (error) {
+  /* handle */
+}
+if (!data || data.length === 0) {
+  /* not found */
+}
 
 const submission = data[0]; // Get most recent
 ```
@@ -279,10 +299,12 @@ const submission = data[0]; // Get most recent
 ---
 
 ### CRITICAL-6: Password Setup Session Verification
+
 **Location:** `app/onboarding/password-setup.tsx:68-95`
 **Issue:** No verification that user email matches session email
 
 **Scenario:**
+
 1. User A starts onboarding with email A
 2. User A switches to different device
 3. User B logs in on same device
@@ -293,6 +315,7 @@ const submission = data[0]; // Get most recent
 ---
 
 ### CRITICAL-7: No Back Button on Quiz Results
+
 **Location:** `app/onboarding/quiz/results.tsx:126`
 **Issue:** `headerBackVisible: false` prevents going back
 
@@ -311,6 +334,7 @@ const submission = data[0]; // Get most recent
 ---
 
 ### CRITICAL-8: No Retry Logic for Quiz Submission
+
 **Location:** `app/onboarding/quiz/results.tsx:80-92`
 **Issue:** If Supabase insert fails, no retry option
 
@@ -333,19 +357,23 @@ if (!success || !submissionId) {
 ## HIGH Priority Issues (15 total)
 
 ### HIGH-1: No Progress Indicators on All Screens
+
 **Affected:** All onboarding screens
 **Issue:** Users don't know how many steps remain
 **Fix:** Add "Step X of Y" indicator at top
 
 ### HIGH-2: Quiz Length Not Disclosed
+
 **Location:** `app/onboarding/quiz-recognition.tsx`
 **Issue:** Users don't know quiz is 16 questions before starting
 **Fix:** Add "16 questions, ~3 minutes" to quiz recognition screen
 
 ### HIGH-3: Touch Targets Below WCAG AAA
+
 **Location:** Multiple components
 **Issue:** Some buttons are 48px instead of 56px minimum for 55-70 demographic
 **Examples:**
+
 - `app/onboarding/quiz/index.tsx:211` - 56px ✅
 - `components/quiz/QuizQuestion.tsx:64` - 64px ✅
 - But some custom pressables are 48px
@@ -353,13 +381,16 @@ if (!success || !submissionId) {
 **Fix:** Audit all `<Pressable>` for `minHeight: 56` (WCAG AAA)
 
 ### HIGH-4: Missing Loading States on Navigation
+
 **Issue:** Router.push() has no loading indicator
 **Fix:** Add loading state during navigation transitions
 
 ### HIGH-5: Weak Password Validation
+
 **Location:** `app/onboarding/password-setup.tsx:56`
 **Issue:** Only checks 8+ characters and match
 **Missing:**
+
 - No check for common passwords
 - No check for email in password
 - No strength meter
@@ -367,25 +398,29 @@ if (!success || !submissionId) {
 **Fix:** Add `zxcvbn` library for password strength
 
 ### HIGH-6: No Email Validation on Quiz Results
+
 **Location:** `app/onboarding/quiz/results.tsx:42-44`
 **Issue:** Basic regex only, doesn't catch typos like `user@gmial.com`
 
 **Fix:** Add email verification step or use `email-validator` library
 
 ### HIGH-7: No Duplicate Account Prevention
+
 **Location:** `app/onboarding/password-setup.tsx:68-95`
 **Issue:** Doesn't check if email already exists before creating account
 
 **Fix:** Query `auth.users` first:
+
 ```typescript
 const { data: existingUser } = await supabase.auth.admin.listUsers();
-if (existingUser.find(u => u.email === email)) {
+if (existingUser.find((u) => u.email === email)) {
   setErrorMessage('Account already exists. Please sign in instead.');
   return;
 }
 ```
 
 ### HIGH-8: Quiz Score Type Mismatch
+
 **Location:** `types/index.ts:15` + `quiz_submissions` schema
 **TypeScript:** `quiz_score?: number; // 1-10 from Overthinking Quiz`
 **Database:** `score integer` (stores raw score 16-80, not 1-10)
@@ -394,6 +429,7 @@ if (existingUser.find(u => u.email === email)) {
 **Confusion:** Two different scores with unclear relationship
 
 **Fix:** Document the difference:
+
 - `user_profiles.quiz_score` = normalized 1-10 score (for display)
 - `quiz_submissions.score` = raw 16-80 score (for analytics)
 
@@ -404,16 +440,20 @@ if (existingUser.find(u => u.email === email)) {
 ## Medium Priority Issues (12 total)
 
 ### MEDIUM-1: No Accessibility Labels
+
 **Issue:** Missing `accessibilityLabel` on many interactive elements
 **WCAG:** AA requirement for screen readers
 
 ### MEDIUM-2: No Haptic Feedback on Errors
+
 **Issue:** Only visual error messages, no haptic warning
 **Fix:** Add `Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error)`
 
 ### MEDIUM-3: No Analytics Tracking
+
 **Issue:** No event tracking for onboarding funnel
 **Fix:** Add PostHog/Mixpanel events:
+
 - `onboarding_started`
 - `quiz_recognition_selected`
 - `email_lookup_success`
@@ -428,6 +468,7 @@ if (existingUser.find(u => u.email === email)) {
 ## Source Tracking Analysis
 
 ### Mobile Quiz Submission Example
+
 ```json
 {
   "email": "user@example.com",
@@ -445,6 +486,7 @@ if (existingUser.find(u => u.email === email)) {
 ```
 
 ### Web Quiz Submission Example (for comparison)
+
 ```json
 {
   "email": "user@example.com",
@@ -458,6 +500,7 @@ if (existingUser.find(u => u.email === email)) {
 ```
 
 ### Analytics Queries
+
 ```sql
 -- Mobile quiz takers only
 SELECT * FROM quiz_submissions
@@ -483,6 +526,7 @@ GROUP BY source_page;
 ## Recommendations
 
 ### Immediate (Fix Before Launch)
+
 1. ✅ Fix TypeScript type mismatch (add 5 quiz fields)
 2. ✅ Delete orphaned demo.tsx
 3. ✅ Fix email lookup duplicate handling
@@ -490,6 +534,7 @@ GROUP BY source_page;
 5. ✅ Add back button on quiz results
 
 ### High Priority (Fix This Week)
+
 1. Add progress indicators to all onboarding screens
 2. Add retry logic for quiz submission
 3. Implement password strength validation
@@ -497,6 +542,7 @@ GROUP BY source_page;
 5. Audit all touch targets for WCAG AAA compliance
 
 ### Medium Priority (Fix Before 1.0)
+
 1. Add analytics event tracking
 2. Add accessibility labels
 3. Implement email verification
@@ -519,18 +565,21 @@ GROUP BY source_page;
 The onboarding flow is **functional but needs critical fixes** before production:
 
 ✅ **What's Working:**
+
 - Database schema is correct
 - Quiz questions match web version
 - Source tracking properly distinguishes mobile vs web
 - All user paths are documented
 
 ❌ **What's Broken:**
+
 - TypeScript types missing 5 critical fields
 - No quiz progress persistence (data loss risk)
 - Email lookup fails on duplicate submissions
 - Orphaned demo screen (dead code)
 
 ⚠️ **What Needs Improvement:**
+
 - No progress indicators
 - Weak password validation
 - No retry logic on failures

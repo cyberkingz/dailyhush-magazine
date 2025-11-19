@@ -1,4 +1,5 @@
 # DailyHush Profile Page - Vision & Brainstorm
+
 **Created:** January 1, 2025
 **Status:** Design & Planning Phase
 
@@ -17,12 +18,14 @@
 ### 1.1 Core Philosophy
 
 **What This Page IS:**
+
 - A gentle, visual reflection of emotional patterns
 - A safe space to observe growth without judgment
 - A calming ritual to check in with yourself
 - A personalized wellness sanctuary
 
 **What This Page IS NOT:**
+
 - A productivity tracker with harsh metrics
 - A social comparison tool
 - A gamified system with scores/badges
@@ -45,7 +48,9 @@
 ### 1.3 Information Hierarchy
 
 #### 🏔️ Peak of the Mountain (Top - Always Visible)
+
 **Hero Section: "Your Loop Type"**
+
 - Large, beautiful visualization of their loop type (sleep-loop, decision-loop, social-loop, perfectionism-loop)
 - Soft gradient background specific to loop type
 - Calming icon or abstract illustration
@@ -55,12 +60,14 @@
 #### 🌊 The Flow (Middle - Scrollable Insights)
 
 **Section 2: Emotional Weather**
+
 - Visual metaphor for current state (sunny, cloudy, rainy, foggy)
 - Based on recent newsletter engagement or self-reported check-ins
 - Soft, pastel weather illustrations
 - "Today you feel..." with calming color coding
 
 **Section 3: Your Journey**
+
 - Timeline visualization (NOT a harsh line chart)
 - Organic, flowing shapes showing patterns over time
 - Gentle peaks and valleys
@@ -68,6 +75,7 @@
 - "Look how far you've come" messaging
 
 **Section 4: Patterns & Insights**
+
 - 2-3 cards with gentle observations
 - "We've noticed..." language (warm, not algorithmic)
 - Examples:
@@ -76,6 +84,7 @@
   - "You've opened 12 newsletters this month. That's self-care."
 
 **Section 5: What Brings You Peace**
+
 - User-selected or AI-inferred calming activities
 - Beautiful iconography
 - Examples: "Morning walks 🌅", "Journaling 📖", "Deep breaths 🌬️"
@@ -84,12 +93,14 @@
 #### 🌱 The Garden (Bottom - Growth & Resources)
 
 **Section 6: Your Growth Garden**
+
 - Plant/nature metaphor for progress
 - Visual representation of consistency (seeds → sprouts → flowers)
 - "You've watered your garden 7 days this week" (newsletter opens)
 - Soft, non-judgmental
 
 **Section 7: Resources for Your Loop**
+
 - Curated content specific to their loop type
 - Articles, exercises, meditations
 - "Recommended for Decision Loop navigators"
@@ -113,6 +124,7 @@ Exit Points:
 ### 1.5 Accessibility & Safety Considerations
 
 **Accessibility:**
+
 - VoiceOver: Clear labels for all visualizations
 - Color contrast: 4.5:1 minimum for text
 - Tap targets: 44x44pt minimum
@@ -120,6 +132,7 @@ Exit Points:
 - Option to hide sensitive data quickly (privacy gesture)
 
 **Emotional Safety:**
+
 - No harsh language ("struggling", "failing", "behind")
 - Always affirming, never shaming
 - Trigger warnings for heavy topics
@@ -133,6 +146,7 @@ Exit Points:
 ### 2.1 Design Inspiration
 
 **Mood Board References:**
+
 - **Calm App:** Soft gradients, nature imagery, breathing room
 - **Headspace:** Playful illustrations, warm colors, approachable
 - **Finch:** Character-based growth, gentle gamification
@@ -142,6 +156,7 @@ Exit Points:
 ### 2.2 Color Palette Evolution
 
 **Current Brand Colors:**
+
 - Primary: Emerald #10b981, #059669
 - Background: #0a0a0a (dark mode)
 - Card: #121212
@@ -175,6 +190,7 @@ Exit Points:
    - Icons: 🌱 Seedling, 🎯 Target, ✨ Sparkle
 
 **Neutral/Supporting Colors:**
+
 - Soft white: #F9FAFB (text on dark gradients)
 - Warm gray: #D1D5DB (secondary text)
 - Deep charcoal: #1F2937 (cards on gradients)
@@ -184,6 +200,7 @@ Exit Points:
 **Font Stack:** SF Pro Display (iOS), Inter (Android)
 
 **Type Scale:**
+
 - Hero Greeting: 32px, Bold, Line height 1.2
 - Loop Type Name: 28px, Semibold
 - Section Headers: 20px, Semibold, Letter spacing +0.5px
@@ -192,6 +209,7 @@ Exit Points:
 - Metadata: 13px, Regular, Opacity 0.7
 
 **Voice & Tone in Copy:**
+
 - Warm, affirming, non-clinical
 - "You're navigating..." not "You suffer from..."
 - "Your mind tends to..." not "You overthink..."
@@ -200,6 +218,7 @@ Exit Points:
 ### 2.4 Visual Components
 
 #### Component 1: **Loop Type Hero Card**
+
 ```
 ┌─────────────────────────────────────┐
 │  ╭─────────────────────────────────╮ │
@@ -220,6 +239,7 @@ Exit Points:
 ```
 
 **Visual Spec:**
+
 - Full-width card, 280px height
 - Gradient overlay (loop-specific)
 - Frosted glass effect (backdrop blur)
@@ -229,6 +249,7 @@ Exit Points:
 - Subtle parallax animation on scroll
 
 #### Component 2: **Emotional Weather Widget**
+
 ```
 ┌─────────────────────────────────────┐
 │  Today's Emotional Weather          │
@@ -246,12 +267,14 @@ Exit Points:
 ```
 
 **Visual Spec:**
+
 - Weather icons: Large (80px), animated
 - Background: Subtle gradient matching weather
 - Text: Poetic, metaphorical language
 - Updates based on newsletter engagement
 
 #### Component 3: **Journey Timeline (Organic Flow)**
+
 ```
 ┌─────────────────────────────────────┐
 │  Your Journey This Month            │
@@ -270,6 +293,7 @@ Exit Points:
 ```
 
 **Visual Spec:**
+
 - Smooth bezier curves (NOT sharp line charts)
 - Soft gradient fills under curve
 - Gentle animations on load
@@ -277,6 +301,7 @@ Exit Points:
 - Color: Loop-specific gradient
 
 #### Component 4: **Pattern Insight Cards**
+
 ```
 ┌──────────────────────┐ ┌──────────────────────┐
 │  🌙                  │ │  📖                  │
@@ -292,6 +317,7 @@ Exit Points:
 ```
 
 **Visual Spec:**
+
 - Card grid: 2 columns on mobile
 - Glassmorphism: Frosted background
 - Icon: 32px, loop-specific color
@@ -300,6 +326,7 @@ Exit Points:
 - Subtle shadow: 0 4px 12px rgba(0,0,0,0.1)
 
 #### Component 5: **Growth Garden**
+
 ```
 ┌─────────────────────────────────────┐
 │  Your Growth Garden                 │
@@ -316,6 +343,7 @@ Exit Points:
 ```
 
 **Visual Spec:**
+
 - Plant metaphor for streak/consistency
 - Animated growth on achievements
 - Never shows "dead" plants (always encouraging)
@@ -324,22 +352,26 @@ Exit Points:
 ### 2.5 Animation & Micro-Interactions
 
 **Loading State:**
+
 - Gentle fade-in (500ms ease-out)
 - Hero card: Slide up with opacity
 - Insights: Stagger load (100ms delay each)
 
 **Scroll Behavior:**
+
 - Parallax on hero card (slower than scroll)
 - Fade-in cards as they enter viewport
 - Smooth momentum scrolling
 
 **Tap Interactions:**
+
 - Subtle scale (0.98) on press
 - Haptic feedback (Light impact)
 - Color shift on active state
 - Ripple effect on cards
 
 **Pull-to-Refresh:**
+
 - Custom animation: Breathing circle
 - "Taking a deep breath..." loading text
 - Calming animation during refresh
@@ -347,6 +379,7 @@ Exit Points:
 ### 2.6 Dark Mode (Primary) Design
 
 **Background Strategy:**
+
 - Base: #0A0A0A (true black)
 - Cards: #1A1A1A (slightly lifted)
 - Gradients: 80% opacity on dark backgrounds
@@ -354,6 +387,7 @@ Exit Points:
 - Secondary: #9CA3AF (warm gray)
 
 **Light Mode (Optional Future):**
+
 - Base: #F9FAFB
 - Cards: #FFFFFF
 - Gradients: 60% opacity
@@ -366,17 +400,20 @@ Exit Points:
 ### 3.1 Engagement Hooks (Non-Manipulative)
 
 **Daily Check-In Ritual:**
+
 - Morning: "How did you sleep?" (Sleep Loop users)
 - Afternoon: "How's your clarity today?" (Decision Loop)
 - Evening: "How did your interactions feel?" (Social Loop)
 - Anytime: "What brought you peace today?"
 
 **Why It Works:**
+
 - Builds habit through gentle routine
 - Provides data for insights
 - Feels like self-care, not homework
 
 **Weekly Reflection:**
+
 - Sunday evening: "Take 2 minutes to reflect on your week"
 - 3 simple prompts:
   1. "What made you smile?"
@@ -385,6 +422,7 @@ Exit Points:
 - Saves to private journal (never public)
 
 **Monthly Milestone:**
+
 - Beautiful summary card
 - "Your September Journey" with key insights
 - Screenshot-worthy design
@@ -395,12 +433,14 @@ Exit Points:
 **Progressive Value Unlock:**
 
 **Free Tier:**
+
 - Loop type hero card
 - Current week insights
 - Basic journey visualization
 - 3 recent pattern cards
 
 **Premium Tier (After Trial):**
+
 - Full historical timeline (all-time)
 - Advanced pattern detection (AI-powered)
 - Personalized recommendations
@@ -409,6 +449,7 @@ Exit Points:
 - Meditation/exercise library for your loop
 
 **Why It Works:**
+
 - Free tier provides real value (not frustrating)
 - Premium unlocks feel like upgrades, not locked features
 - Historical data = more invested over time
@@ -434,6 +475,7 @@ Exit Points:
    - Emotional appeal, not feature list
 
 **Anti-Patterns (What NOT to Do):**
+
 - ❌ Aggressive pop-ups
 - ❌ "You're missing out!" FOMO language
 - ❌ Fake scarcity ("Only 3 spots left!")
@@ -445,18 +487,21 @@ Exit Points:
 **What We Track:**
 
 ✅ **Emotional Wellness Indicators:**
+
 - Self-reported mood trends (improving?)
 - Check-in consistency (without shaming gaps)
 - Reflection depth (thoughtful vs. rushed)
 - Peak engagement times (when do they feel best?)
 
 ✅ **Engagement Quality:**
+
 - Newsletter read time (not just opens)
 - Insight card views (what resonates?)
 - Profile revisit frequency (is it valuable?)
 - Journaling depth (word count, sentiment)
 
 ❌ **What We DON'T Track:**
+
 - "Streak" counts (creates anxiety)
 - Comparison to other users
 - "You're falling behind" messaging
@@ -468,6 +513,7 @@ Exit Points:
 **Share-Worthy Moments:**
 
 **Loop Type Card:**
+
 - Beautiful, minimal design
 - "I'm navigating the Sleep Loop 🌙"
 - No data, just aesthetic + type
@@ -475,6 +521,7 @@ Exit Points:
 - Instagram story-optimized (1080x1920)
 
 **Monthly Summary Card:**
+
 - "My September Journey with DailyHush"
 - Soft gradient background
 - Key insight (user-selected)
@@ -482,6 +529,7 @@ Exit Points:
 - Opt-in only (never auto-share)
 
 **Privacy Controls:**
+
 - "Share anonymously" option
 - "Share without my name"
 - "Share only the design, not my data"
@@ -494,6 +542,7 @@ Exit Points:
 ### 4.1 Existing Data (Already in DB)
 
 From `user_profiles` table:
+
 - `user_id` (UUID)
 - `email` (string)
 - `name` (string, nullable)
@@ -505,6 +554,7 @@ From `user_profiles` table:
 - `updated_at` (timestamp)
 
 From `quiz_submissions` table:
+
 - Raw quiz answers
 - Overthinker type
 - Score (normalized 1-10)
@@ -513,6 +563,7 @@ From `quiz_submissions` table:
 ### 4.2 New Data Requirements
 
 **1. Daily Check-Ins Table**
+
 ```sql
 CREATE TABLE user_check_ins (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -526,6 +577,7 @@ CREATE TABLE user_check_ins (
 ```
 
 **2. Newsletter Engagement Table**
+
 ```sql
 CREATE TABLE newsletter_engagement (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -539,6 +591,7 @@ CREATE TABLE newsletter_engagement (
 ```
 
 **3. Pattern Insights Table (AI-Generated)**
+
 ```sql
 CREATE TABLE user_insights (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -556,6 +609,7 @@ CREATE TABLE user_insights (
 ```
 
 **4. Growth Garden Table**
+
 ```sql
 CREATE TABLE growth_garden (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -570,6 +624,7 @@ CREATE TABLE growth_garden (
 ```
 
 **5. Private Journal Table (Premium)**
+
 ```sql
 CREATE TABLE user_journal (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -584,22 +639,27 @@ CREATE TABLE user_journal (
 ### 4.3 API Endpoints Needed
 
 **GET /api/profile/summary**
+
 - Returns all data for profile page
 - Loop type, insights, journey data, garden status
 
 **POST /api/profile/check-in**
+
 - Save daily check-in
 - Returns updated emotional weather
 
 **GET /api/profile/timeline**
+
 - Returns journey data for timeline visualization
 - Optional: `range=week|month|all`
 
 **GET /api/profile/insights**
+
 - Returns personalized pattern insights
 - Filtered by free vs. premium
 
 **POST /api/profile/journal** (Premium)
+
 - Save journal entry
 - Returns sentiment analysis
 
@@ -633,6 +693,7 @@ components/
 ### 5.2 Component Breakdown
 
 **1. LoopTypeHero.tsx**
+
 ```typescript
 interface LoopTypeHeroProps {
   loopType: 'sleep-loop' | 'decision-loop' | 'social-loop' | 'perfectionism-loop';
@@ -643,6 +704,7 @@ interface LoopTypeHeroProps {
 ```
 
 **2. EmotionalWeather.tsx**
+
 ```typescript
 interface EmotionalWeatherProps {
   weather: 'sunny' | 'cloudy' | 'rainy' | 'stormy' | 'foggy';
@@ -652,6 +714,7 @@ interface EmotionalWeatherProps {
 ```
 
 **3. JourneyTimeline.tsx**
+
 ```typescript
 interface JourneyTimelineProps {
   dataPoints: {
@@ -665,6 +728,7 @@ interface JourneyTimelineProps {
 ```
 
 **4. PatternInsightCard.tsx**
+
 ```typescript
 interface PatternInsightCardProps {
   iconEmoji: string;
@@ -676,6 +740,7 @@ interface PatternInsightCardProps {
 ```
 
 **5. GrowthGarden.tsx**
+
 ```typescript
 interface GrowthGardenProps {
   stage: 'seed' | 'sprout' | 'bloom' | 'flourish';
@@ -693,6 +758,7 @@ interface GrowthGardenProps {
 ## 6. IMPLEMENTATION ROADMAP
 
 ### Phase 1: Foundation (Week 1)
+
 - [ ] Create database migrations for new tables
 - [ ] Build API endpoints for profile summary
 - [ ] Implement basic screen structure
@@ -700,6 +766,7 @@ interface GrowthGardenProps {
 - [ ] Add navigation from bottom tab
 
 ### Phase 2: Core Insights (Week 2)
+
 - [ ] Build EmotionalWeather widget
 - [ ] Implement JourneyTimeline visualization
 - [ ] Create PatternInsightCard grid
@@ -707,6 +774,7 @@ interface GrowthGardenProps {
 - [ ] Add haptic feedback and animations
 
 ### Phase 3: Engagement Features (Week 3)
+
 - [ ] Daily check-in modal
 - [ ] GrowthGarden component
 - [ ] Newsletter engagement tracking
@@ -714,6 +782,7 @@ interface GrowthGardenProps {
 - [ ] Weekly reflection prompt
 
 ### Phase 4: Premium Features (Week 4)
+
 - [ ] Historical timeline (all-time)
 - [ ] Private journaling
 - [ ] Advanced AI insights
@@ -721,6 +790,7 @@ interface GrowthGardenProps {
 - [ ] Premium upgrade CTAs
 
 ### Phase 5: Polish & Launch (Week 5)
+
 - [ ] Accessibility audit
 - [ ] Animation refinements
 - [ ] Share functionality
@@ -732,16 +802,19 @@ interface GrowthGardenProps {
 ## 7. SUCCESS METRICS
 
 **Engagement:**
+
 - Profile page visits: 3+ per week (healthy check-in habit)
 - Time spent on profile: 2-3 minutes average (meaningful, not addictive)
 - Check-in completion rate: 40%+ (gentle consistency)
 
 **Conversion:**
+
 - Free → Premium after seeing timeline: 15%
 - Trial users who view profile daily: 60%+ retention
 - Profile viewers → subscribers: 25%
 
 **Emotional Wellness:**
+
 - Self-reported mood improvement: Trending up over 30 days
 - Positive sentiment in journal entries: 60%+
 - User feedback: "This makes me feel understood"
@@ -774,6 +847,7 @@ interface GrowthGardenProps {
 ## 9. INSPIRATIONAL REFERENCES
 
 **Apps to Study:**
+
 - Calm: Hero imagery, breathing room
 - Headspace: Illustration style, warm copy
 - Finch: Character-based growth, gentle gamification
@@ -781,6 +855,7 @@ interface GrowthGardenProps {
 - Notion: Flexible, personalized workspaces
 
 **Design Patterns:**
+
 - Glassmorphism for cards
 - Organic shapes for timelines
 - Plant/nature metaphors for growth
@@ -788,6 +863,7 @@ interface GrowthGardenProps {
 - Gradient overlays for emotional states
 
 **Copy Tone:**
+
 - "You're navigating..." (agency)
 - "Your mind tends to..." (observation)
 - "That's natural" (normalization)
@@ -800,6 +876,7 @@ interface GrowthGardenProps {
 This profile page should be the **heart of DailyHush** - the place users return to feel seen, understood, and gently guided. It's not about metrics or productivity. It's about creating a sacred digital space for emotional wellness.
 
 **Core Principle:**
+
 > "Every element should make the user feel better about themselves, not worse. If a feature creates anxiety, shame, or comparison - it doesn't belong here."
 
 Let's build something that feels like a warm hug from a therapist, not a report card from a boss. 🌱

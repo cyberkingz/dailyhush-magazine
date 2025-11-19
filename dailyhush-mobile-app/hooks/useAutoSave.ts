@@ -91,16 +91,8 @@ export interface UseAutoSaveReturn {
  * {autoSave.status === 'saved' && <Text>✓ Saved</Text>}
  * ```
  */
-export function useAutoSave<T>(
-  data: T,
-  options: UseAutoSaveOptions<T>
-): UseAutoSaveReturn {
-  const {
-    onSave,
-    debounceMs = 3000,
-    savedIndicatorDuration = 2000,
-    enabled = true,
-  } = options;
+export function useAutoSave<T>(data: T, options: UseAutoSaveOptions<T>): UseAutoSaveReturn {
+  const { onSave, debounceMs = 3000, savedIndicatorDuration = 2000, enabled = true } = options;
 
   // State
   const [status, setStatus] = useState<AutoSaveStatus>('idle');
@@ -145,9 +137,7 @@ export function useAutoSave<T>(
       if (!isMountedRef.current) return;
 
       setStatus('error');
-      setError(
-        err instanceof Error ? err.message : 'Failed to save. Please try again.'
-      );
+      setError(err instanceof Error ? err.message : 'Failed to save. Please try again.');
       console.error('Auto-save error:', err);
     }
   }, [onSave, enabled, savedIndicatorDuration]);

@@ -67,6 +67,7 @@ async function createMoodEntry(userId: string) {
 ```
 
 **Response**:
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -152,9 +153,8 @@ async function completeMoodEntry(
       completed_at: new Date().toISOString(),
       time_spent_seconds: timeSpentSeconds,
       suggestion_accepted: suggestionAccepted,
-      suggestion_responded_at: suggestionAccepted !== undefined
-        ? new Date().toISOString()
-        : undefined,
+      suggestion_responded_at:
+        suggestionAccepted !== undefined ? new Date().toISOString() : undefined,
     })
     .eq('id', entryId)
     .select()
@@ -185,10 +185,7 @@ async function getMoodEntry(entryId: string) {
 
   // Decrypt journal text if exists
   if (data.journal_text_encrypted && data.journal_text_nonce) {
-    data.journal_text = await decryptText(
-      data.journal_text_encrypted,
-      data.journal_text_nonce
-    );
+    data.journal_text = await decryptText(data.journal_text_encrypted, data.journal_text_nonce);
   }
 
   // Decrypt voice transcription if exists
@@ -212,6 +209,7 @@ async function getMoodEntry(entryId: string) {
 **Description**: Lists user's mood entries with pagination
 
 #### Option A: Direct SELECT
+
 ```typescript
 async function listMoodEntries(
   userId: string,
@@ -223,7 +221,9 @@ async function listMoodEntries(
 ) {
   let query = supabase
     .from('mood_entries')
-    .select('id, mood_type, mood_emoji, intensity_rating, journal_word_count, status, completed_at, created_at, time_spent_seconds')
+    .select(
+      'id, mood_type, mood_emoji, intensity_rating, journal_word_count, status, completed_at, created_at, time_spent_seconds'
+    )
     .eq('user_id', userId)
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
@@ -248,6 +248,7 @@ async function listMoodEntries(
 ```
 
 #### Option B: Using RPC Function (Better Performance)
+
 ```typescript
 async function listMoodEntriesRPC(
   userId: string,
@@ -374,6 +375,7 @@ async function getMoodPatterns(userId: string, days: number = 30) {
 ```
 
 **Response**:
+
 ```json
 {
   "total_entries": 42,
@@ -399,11 +401,7 @@ async function getMoodPatterns(userId: string, days: number = 30) {
 **Description**: Uploads voice recording to Supabase Storage
 
 ```typescript
-async function uploadVoiceRecording(
-  userId: string,
-  entryId: string,
-  audioFile: File | Blob
-) {
+async function uploadVoiceRecording(userId: string, entryId: string, audioFile: File | Blob) {
   const fileName = `${userId}/${entryId}-${Date.now()}.m4a`;
 
   // Upload to storage
@@ -481,13 +479,10 @@ async function deriveKey(password: string, salt: string): Promise<CryptoKey> {
   const passwordBuffer = new TextEncoder().encode(password);
   const saltBuffer = new TextEncoder().encode(salt);
 
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    passwordBuffer,
-    'PBKDF2',
-    false,
-    ['deriveBits', 'deriveKey']
-  );
+  const keyMaterial = await crypto.subtle.importKey('raw', passwordBuffer, 'PBKDF2', false, [
+    'deriveBits',
+    'deriveKey',
+  ]);
 
   return crypto.subtle.deriveKey(
     {
@@ -528,12 +523,9 @@ async function encryptText(plaintext: string): Promise<{
 }
 
 // Decrypt text
-async function decryptText(
-  ciphertext: Uint8Array,
-  nonceBase64: string
-): Promise<string> {
+async function decryptText(ciphertext: Uint8Array, nonceBase64: string): Promise<string> {
   const key = await getUserEncryptionKey();
-  const nonce = Uint8Array.from(atob(nonceBase64), c => c.charCodeAt(0));
+  const nonce = Uint8Array.from(atob(nonceBase64), (c) => c.charCodeAt(0));
 
   const plaintext = await crypto.subtle.decrypt(
     {
@@ -628,9 +620,7 @@ class MoodEntryAPIError extends Error {
 }
 
 // Error handling wrapper
-async function withErrorHandling<T>(
-  operation: () => Promise<T>
-): Promise<T> {
+async function withErrorHandling<T>(operation: () => Promise<T>): Promise<T> {
   try {
     return await operation();
   } catch (error: any) {
@@ -643,26 +633,14 @@ async function withErrorHandling<T>(
     }
 
     if (error.code === '23505') {
-      throw new MoodEntryAPIError(
-        'VALIDATION_ERROR',
-        'Entry already exists',
-        error
-      );
+      throw new MoodEntryAPIError('VALIDATION_ERROR', 'Entry already exists', error);
     }
 
     if (error.message?.includes('encryption')) {
-      throw new MoodEntryAPIError(
-        'ENCRYPTION_FAILED',
-        'Failed to encrypt/decrypt data',
-        error
-      );
+      throw new MoodEntryAPIError('ENCRYPTION_FAILED', 'Failed to encrypt/decrypt data', error);
     }
 
-    throw new MoodEntryAPIError(
-      'NETWORK_ERROR',
-      'An unexpected error occurred',
-      error
-    );
+    throw new MoodEntryAPIError('NETWORK_ERROR', 'An unexpected error occurred', error);
   }
 }
 
@@ -679,11 +657,7 @@ const entry = await withErrorHandling(() => createMoodEntry(userId));
 ```typescript
 import { useEffect, useRef } from 'react';
 
-function useAutoSave(
-  entryId: string,
-  journalText: string,
-  intervalMs: number = 3000
-) {
+function useAutoSave(entryId: string, journalText: string, intervalMs: number = 3000) {
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
@@ -721,10 +695,7 @@ function useMoodEntryMutation() {
       await queryClient.cancelQueries(['mood-entries', variables.entryId]);
 
       // Snapshot previous value
-      const previousEntry = queryClient.getQueryData([
-        'mood-entries',
-        variables.entryId,
-      ]);
+      const previousEntry = queryClient.getQueryData(['mood-entries', variables.entryId]);
 
       // Optimistically update
       queryClient.setQueryData(['mood-entries', variables.entryId], (old: any) => ({
@@ -737,10 +708,7 @@ function useMoodEntryMutation() {
     onError: (err, variables, context) => {
       // Rollback on error
       if (context?.previousEntry) {
-        queryClient.setQueryData(
-          ['mood-entries', variables.entryId],
-          context.previousEntry
-        );
+        queryClient.setQueryData(['mood-entries', variables.entryId], context.previousEntry);
       }
     },
     onSettled: (data, error, variables) => {

@@ -1,6 +1,7 @@
 # Profile Screen UI Improvements - Detailed Analysis
 
 ## Executive Summary
+
 The profile screen (`app/profile.tsx`) has significant inconsistencies with the established design system used in auth screens. This document provides specific, line-by-line improvements to enhance accessibility, consistency, and user experience for the 55-70 demographic.
 
 ---
@@ -8,36 +9,43 @@ The profile screen (`app/profile.tsx`) has significant inconsistencies with the 
 ## Critical Issues Identified
 
 ### 1. **Inconsistent Input Component Usage**
+
 **Current State:** Custom TextInput with inline styling (lines 185-219)
 **Issue:** Doesn't match the AuthTextInput component pattern used in auth screens
 **Impact:** Inconsistent UX, missing accessibility features, no validation states
 
 ### 2. **Touch Target Size Violations**
+
 **Current State:** Save button is ~36px height (line 130)
 **Target Standard:** 56px minimum for 55-70 demographic
 **Impact:** Difficult to tap accurately, frustrating user experience
 
 ### 3. **Typography Scale Inconsistency**
+
 **Current State:** Mixed text sizes that don't match authTypography scale
 **Issue:** Labels at 14px (line 169), body at 16px (line 171)
 **Standard:** Labels should be 16px, body 17px per authTypography
 
 ### 4. **Weak Visual Hierarchy**
+
 **Current State:** Section headers barely distinguishable from content
 **Issue:** 12px uppercase labels (line 165) with low contrast
 **Impact:** Difficult for users to scan and understand content structure
 
 ### 5. **Poor Success Message Design**
+
 **Current State:** Simple background with center text (lines 155-160)
 **Issue:** Doesn't use ErrorAlert component with animation and proper iconography
 **Impact:** Less noticeable, no haptic reinforcement pattern
 
 ### 6. **Missing Error States**
+
 **Current State:** No visible error handling for failed saves
 **Issue:** Console.error only (line 62), no user feedback
 **Impact:** Users don't know when something went wrong
 
 ### 7. **Insufficient Spacing**
+
 **Current State:** Inconsistent margins between elements
 **Issue:** Section spacing of 8px (line 164) vs standard 24px
 **Impact:** Cramped appearance, poor readability
@@ -51,6 +59,7 @@ The profile screen (`app/profile.tsx`) has significant inconsistencies with the 
 **Location:** Create new file `/components/profile/ProfileTextInput.tsx`
 
 **Rationale:**
+
 - Matches AuthTextInput pattern for consistency
 - Adds proper focus states and accessibility
 - Enables field-level error handling
@@ -65,18 +74,9 @@ The profile screen (`app/profile.tsx`) has significant inconsistencies with the 
  */
 
 import React, { useState } from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  TextInputProps,
-} from 'react-native';
+import { View, TextInput, Text, StyleSheet, TextInputProps } from 'react-native';
 import { AlertCircle } from 'lucide-react-native';
-import {
-  inputFieldStyles,
-  inputColors,
-} from '@/constants/authStyles';
+import { inputFieldStyles, inputColors } from '@/constants/authStyles';
 
 interface ProfileTextInputProps extends Omit<TextInputProps, 'style'> {
   label: string;
@@ -183,24 +183,23 @@ const styles = StyleSheet.create({
 **Location:** Lines 123-137 in `app/profile.tsx`
 
 **Current Issue:**
+
 ```tsx
 // BEFORE: Custom button with small touch target
 <Pressable
   onPress={handleSave}
   disabled={isSaving}
   className="active:opacity-70"
-  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
->
-  <View className="flex-row items-center bg-[#40916C] px-4 py-2 rounded-xl">
+  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
+  <View className="flex-row items-center rounded-xl bg-[#40916C] px-4 py-2">
     <Save size={16} color="#FFFFFF" strokeWidth={2} />
-    <Text className="text-white text-sm font-semibold ml-2">
-      {isSaving ? 'Saving...' : 'Save'}
-    </Text>
+    <Text className="ml-2 text-sm font-semibold text-white">{isSaving ? 'Saving...' : 'Save'}</Text>
   </View>
 </Pressable>
 ```
 
 **Problems:**
+
 - py-2 = ~32px height (too small)
 - px-4 = 16px horizontal padding (cramped)
 - text-sm = 14px (too small for demographic)
@@ -216,32 +215,32 @@ import { AuthButton } from '@/components/auth/AuthButton';
 // Remove save button from header (lines 123-137)
 // Keep only back button in header:
 
-{/* Header - Back button only */}
+{
+  /* Header - Back button only */
+}
 <View
-  className="bg-[#0A1612] border-b border-[#1A4D3C]/30"
+  className="border-b border-[#1A4D3C]/30 bg-[#0A1612]"
   style={{
     paddingTop: insets.top + 12,
     paddingBottom: 12,
     paddingHorizontal: 20,
-  }}
->
+  }}>
   <Pressable
     onPress={handleBack}
     hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-    className="active:opacity-70"
-  >
+    className="active:opacity-70">
     <View className="flex-row items-center">
       <ArrowLeft size={24} color="#52B788" strokeWidth={2} />
-      <Text className="text-[#E8F4F0] text-lg font-semibold ml-3">
-        Edit Profile
-      </Text>
+      <Text className="ml-3 text-lg font-semibold text-[#E8F4F0]">Edit Profile</Text>
     </View>
   </Pressable>
-</View>
+</View>;
 
 // Add at bottom of form (after line 227, before closing ScrollView):
 
-{/* Save Button - Bottom of form */}
+{
+  /* Save Button - Bottom of form */
+}
 <View style={{ marginTop: 36 }}>
   <AuthButton
     title="Save Changes"
@@ -251,10 +250,11 @@ import { AuthButton } from '@/components/auth/AuthButton';
     loading={isSaving}
     testID="save-profile-button"
   />
-</View>
+</View>;
 ```
 
 **Benefits:**
+
 - 56px touch target (standard)
 - Consistent with auth flow
 - Better loading state
@@ -268,18 +268,20 @@ import { AuthButton } from '@/components/auth/AuthButton';
 **Location:** Lines 154-161 in `app/profile.tsx`
 
 **Current Issue:**
+
 ```tsx
 // BEFORE: Basic success message
-{successMessage && (
-  <View className="bg-[#40916C]/20 border border-[#40916C] rounded-xl p-4 mb-6">
-    <Text className="text-[#B7E4C7] text-sm text-center font-medium">
-      {successMessage}
-    </Text>
-  </View>
-)}
+{
+  successMessage && (
+    <View className="mb-6 rounded-xl border border-[#40916C] bg-[#40916C]/20 p-4">
+      <Text className="text-center text-sm font-medium text-[#B7E4C7]">{successMessage}</Text>
+    </View>
+  );
+}
 ```
 
 **Problems:**
+
 - No icon for quick recognition
 - text-sm = 14px (too small)
 - No animation (appears abruptly)
@@ -296,22 +298,16 @@ const [error, setError] = useState<string | null>(null);
 
 // Replace lines 154-161 with:
 
-{/* Success/Error Messages */}
-{successMessage && (
-  <ErrorAlert
-    message={successMessage}
-    type="success"
-    dismissible={false}
-  />
-)}
+{
+  /* Success/Error Messages */
+}
+{
+  successMessage && <ErrorAlert message={successMessage} type="success" dismissible={false} />;
+}
 
-{error && (
-  <ErrorAlert
-    message={error}
-    type="error"
-    onDismiss={() => setError(null)}
-  />
-)}
+{
+  error && <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />;
+}
 ```
 
 **Update handleSave function (lines 61-66):**
@@ -336,6 +332,7 @@ if (error) {
 ```
 
 **Benefits:**
+
 - Consistent visual language
 - Animated entrance (300ms fade + slide)
 - Proper iconography (CheckCircle/AlertCircle)
@@ -349,14 +346,14 @@ if (error) {
 **Location:** Lines 164-167 and 177-180 in `app/profile.tsx`
 
 **Current Issue:**
+
 ```tsx
 // BEFORE: Small, uppercase section headers
-<Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3">
-  Account
-</Text>
+<Text className="mb-3 text-xs font-semibold uppercase text-[#95B8A8]">Account</Text>
 ```
 
 **Problems:**
+
 - text-xs = 12px (too small)
 - All uppercase (harder to read for older users)
 - mb-3 = 12px (inconsistent spacing)
@@ -369,7 +366,9 @@ if (error) {
 
 // Replace lines 164-167 and 177-180 with:
 
-{/* Account Section */}
+{
+  /* Account Section */
+}
 <View className="mb-6">
   <Text
     style={{
@@ -379,11 +378,10 @@ if (error) {
       letterSpacing: 1.2,
       textTransform: 'uppercase',
       marginBottom: 16,
-    }}
-  >
+    }}>
     Account Information
   </Text>
-  <View className="bg-[#1A4D3C] rounded-2xl p-4">
+  <View className="rounded-2xl bg-[#1A4D3C] p-4">
     <Text style={{ fontSize: 15, fontWeight: '600', color: '#95B8A8', marginBottom: 8 }}>
       Email
     </Text>
@@ -391,9 +389,11 @@ if (error) {
       {user?.email || 'Not set'}
     </Text>
   </View>
-</View>
+</View>;
 
-{/* Personal Information Section */}
+{
+  /* Personal Information Section */
+}
 <View className="mb-6">
   <Text
     style={{
@@ -403,16 +403,16 @@ if (error) {
       letterSpacing: 1.2,
       textTransform: 'uppercase',
       marginBottom: 16,
-    }}
-  >
+    }}>
     Personal Details
   </Text>
 
   {/* Use ProfileTextInput components here */}
-</View>
+</View>;
 ```
 
 **Benefits:**
+
 - 14px with bold weight (better visibility)
 - Proper letter-spacing for uppercase
 - 16px bottom margin (clearer separation)
@@ -432,7 +432,9 @@ if (error) {
 ```tsx
 // Replace lines 182-219 with:
 
-{/* Personal Information Section */}
+{
+  /* Personal Information Section */
+}
 <View className="mb-6">
   <Text
     style={{
@@ -442,8 +444,7 @@ if (error) {
       letterSpacing: 1.2,
       textTransform: 'uppercase',
       marginBottom: 16,
-    }}
-  >
+    }}>
     Personal Details
   </Text>
 
@@ -474,10 +475,11 @@ if (error) {
     maxLength={3}
     testID="age-input"
   />
-</View>
+</View>;
 ```
 
 **Benefits:**
+
 - 56px input height (proper touch target)
 - 17px text size (readable)
 - Consistent focus states
@@ -491,16 +493,18 @@ if (error) {
 **Location:** Lines 222-227 in `app/profile.tsx`
 
 **Current Issue:**
+
 ```tsx
 // BEFORE: Low-contrast help text
-<View className="bg-[#1A4D3C]/50 rounded-xl p-4 mt-4">
-  <Text className="text-[#95B8A8] text-sm leading-relaxed">
+<View className="mt-4 rounded-xl bg-[#1A4D3C]/50 p-4">
+  <Text className="text-sm leading-relaxed text-[#95B8A8]">
     Your personal information is private and secure...
   </Text>
 </View>
 ```
 
 **Problems:**
+
 - text-sm = 14px (too small)
 - Low contrast on semi-transparent background
 - mt-4 = 16px (inconsistent spacing)
@@ -510,7 +514,9 @@ if (error) {
 ```tsx
 // Replace lines 222-227 with:
 
-{/* Privacy Notice */}
+{
+  /* Privacy Notice */
+}
 <View
   style={{
     backgroundColor: 'rgba(26, 77, 60, 0.4)',
@@ -519,22 +525,22 @@ if (error) {
     marginTop: 24,
     borderWidth: 1,
     borderColor: 'rgba(82, 183, 136, 0.2)',
-  }}
->
+  }}>
   <Text
     style={{
       fontSize: 15,
       lineHeight: 24,
       color: '#B7E4C7',
       fontWeight: '400',
-    }}
-  >
-    Your personal information is private and secure. We use this to personalize your DailyHush experience and provide age-appropriate content recommendations.
+    }}>
+    Your personal information is private and secure. We use this to personalize your DailyHush
+    experience and provide age-appropriate content recommendations.
   </Text>
-</View>
+</View>;
 ```
 
 **Benefits:**
+
 - 15px text (more readable)
 - 24px line height (better readability)
 - Stronger border for definition
@@ -562,32 +568,26 @@ if (error) {
     paddingBottom: 40 + insets.bottom,
   }}
   showsVerticalScrollIndicator={false}
-  keyboardShouldPersistTaps="handled"
->
+  keyboardShouldPersistTaps="handled">
   {/* Add form wrapper for max-width constraint */}
   <View style={{ maxWidth: 420, width: '100%', alignSelf: 'center' }}>
-
     {/* All content goes inside this wrapper */}
     {/* Success/Error Messages */}
     ...
-
     {/* Account Section */}
     ...
-
     {/* Personal Information */}
     ...
-
     {/* Privacy Notice */}
     ...
-
     {/* Save Button */}
     ...
-
   </View>
 </ScrollView>
 ```
 
 **Benefits:**
+
 - Consistent with auth screens
 - Better layout on tablets
 - Proper content centering
@@ -726,33 +726,28 @@ export default function Profile() {
 
       {/* Header - Back button only */}
       <View
-        className="bg-[#0A1612] border-b border-[#1A4D3C]/30"
+        className="border-b border-[#1A4D3C]/30 bg-[#0A1612]"
         style={{
           paddingTop: insets.top + 12,
           paddingBottom: 12,
           paddingHorizontal: 20,
-        }}
-      >
+        }}>
         <Pressable
           onPress={handleBack}
           hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           className="active:opacity-70"
           accessibilityRole="button"
-          accessibilityLabel="Go back"
-        >
+          accessibilityLabel="Go back">
           <View className="flex-row items-center">
             <ArrowLeft size={24} color="#52B788" strokeWidth={2} />
-            <Text className="text-[#E8F4F0] text-lg font-semibold ml-3">
-              Edit Profile
-            </Text>
+            <Text className="ml-3 text-lg font-semibold text-[#E8F4F0]">Edit Profile</Text>
           </View>
         </Pressable>
       </View>
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView
           className="flex-1"
           contentContainerStyle={{
@@ -761,27 +756,15 @@ export default function Profile() {
             paddingBottom: 40 + insets.bottom,
           }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           {/* Form wrapper for max-width */}
           <View style={{ maxWidth: 420, width: '100%', alignSelf: 'center' }}>
-
             {/* Success/Error Messages */}
             {successMessage && (
-              <ErrorAlert
-                message={successMessage}
-                type="success"
-                dismissible={false}
-              />
+              <ErrorAlert message={successMessage} type="success" dismissible={false} />
             )}
 
-            {error && (
-              <ErrorAlert
-                message={error}
-                type="error"
-                onDismiss={() => setError(null)}
-              />
-            )}
+            {error && <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />}
 
             {/* Account Section */}
             <View className="mb-8">
@@ -793,12 +776,12 @@ export default function Profile() {
                   letterSpacing: 1.2,
                   textTransform: 'uppercase',
                   marginBottom: 16,
-                }}
-              >
+                }}>
                 Account Information
               </Text>
-              <View className="bg-[#1A4D3C] rounded-2xl p-4">
-                <Text style={{ fontSize: 15, fontWeight: '600', color: '#95B8A8', marginBottom: 8 }}>
+              <View className="rounded-2xl bg-[#1A4D3C] p-4">
+                <Text
+                  style={{ fontSize: 15, fontWeight: '600', color: '#95B8A8', marginBottom: 8 }}>
                   Email
                 </Text>
                 <Text style={{ fontSize: 17, fontWeight: '400', color: '#E8F4F0' }}>
@@ -817,8 +800,7 @@ export default function Profile() {
                   letterSpacing: 1.2,
                   textTransform: 'uppercase',
                   marginBottom: 16,
-                }}
-              >
+                }}>
                 Personal Details
               </Text>
 
@@ -862,17 +844,16 @@ export default function Profile() {
                 marginTop: 24,
                 borderWidth: 1,
                 borderColor: 'rgba(82, 183, 136, 0.2)',
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: 15,
                   lineHeight: 24,
                   color: '#B7E4C7',
                   fontWeight: '400',
-                }}
-              >
-                Your personal information is private and secure. We use this to personalize your DailyHush experience and provide age-appropriate content recommendations.
+                }}>
+                Your personal information is private and secure. We use this to personalize your
+                DailyHush experience and provide age-appropriate content recommendations.
               </Text>
             </View>
 
@@ -887,7 +868,6 @@ export default function Profile() {
                 testID="save-profile-button"
               />
             </View>
-
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -901,18 +881,21 @@ export default function Profile() {
 ## Summary of Improvements
 
 ### Visual Hierarchy ✓
+
 - **Section headers:** 14px bold uppercase with proper letter-spacing
 - **Labels:** 16px semibold (up from 14px)
 - **Body text:** 17px regular (up from 16px)
 - **Consistent spacing:** 24px between sections (up from 8-12px)
 
 ### Touch Target Sizes ✓
+
 - **Input fields:** 56px height (up from ~48px)
 - **Save button:** 56px height (up from ~32px)
 - **Back button:** Proper hitSlop maintained
 - **All interactive elements:** Minimum 44px touch area
 
 ### Typography Scale ✓
+
 - **Matches authTypography system throughout**
 - **Headline:** 28px bold
 - **Labels:** 16px semibold
@@ -921,30 +904,35 @@ export default function Profile() {
 - **Error text:** 15px medium
 
 ### Color Contrast ✓
+
 - **Primary text:** #E8F4F0 (4.5:1 ratio minimum)
 - **Labels:** #A8CFC0 (better visibility)
 - **Helper text:** #95B8A8 (sufficient contrast)
 - **Error text:** #FF8787 (high visibility)
 
 ### Component Consistency ✓
+
 - **ProfileTextInput:** Matches AuthTextInput pattern
 - **AuthButton:** Reused from auth screens
 - **ErrorAlert:** Consistent success/error messaging
 - **Form wrapper:** Matches auth screen layout
 
 ### Success/Error States ✓
+
 - **ErrorAlert component:** Animated entrance with icons
 - **Proper error handling:** User-friendly messages
 - **Loading states:** Clear button loading indicator
 - **Validation:** Age range validation added
 
 ### Mobile Considerations ✓
+
 - **KeyboardAvoidingView:** Proper iOS/Android handling
 - **Safe area insets:** Header and bottom padding
 - **ScrollView:** Keyboard persistence and scroll behavior
 - **Form wrapper:** Max-width for tablets
 
 ### Accessibility Enhancements ✓
+
 - **Larger text:** 17px minimum for body text
 - **Proper labels:** Descriptive accessible labels
 - **Focus states:** Clear visual feedback
@@ -969,38 +957,50 @@ export default function Profile() {
 ## Before/After Visual Comparison
 
 ### Input Fields
+
 **Before:**
+
 - Custom TextInput: ~48px height, 16px text, no focus state
 - Touch target: Insufficient for demographic
 
 **After:**
+
 - ProfileTextInput: 56px height, 17px text, clear focus border
 - Touch target: Meets 55-70 demographic needs
 
 ### Save Button
+
 **Before:**
+
 - Header button: ~32px height, 14px text
 - Location: Top-right corner (hard to reach)
 
 **After:**
+
 - AuthButton: 56px height, 18px text
 - Location: Bottom of form (thumb-friendly)
 
 ### Success Messages
+
 **Before:**
+
 - Simple background: No animation, 14px text
 - No icon: Less recognizable
 
 **After:**
+
 - ErrorAlert: Animated entrance, 17px text
 - CheckCircle icon: Immediate recognition
 
 ### Section Headers
+
 **Before:**
+
 - 12px uppercase: Too small, weak contrast
 - 12px margin: Insufficient separation
 
 **After:**
+
 - 14px uppercase bold: Better visibility
 - 16px margin: Clear hierarchy
 
@@ -1009,6 +1009,7 @@ export default function Profile() {
 ## Accessibility Audit Results
 
 ### WCAG 2.1 Compliance
+
 - **Text Contrast:** AA compliant (4.5:1 minimum)
 - **Touch Targets:** 56px meets enhanced guideline
 - **Focus Indicators:** Clear 2px borders on focus
@@ -1016,12 +1017,14 @@ export default function Profile() {
 - **Label Association:** Proper label/input pairing
 
 ### Screen Reader Support
+
 - **Semantic labels:** All inputs properly labeled
 - **Button roles:** Explicit accessibilityRole
 - **State announcements:** Loading/disabled states communicated
 - **Error announcements:** ErrorAlert provides context
 
 ### Keyboard Navigation
+
 - **Tab order:** Logical top-to-bottom flow
 - **Return key:** Proper navigation between fields
 - **Submit action:** Enter key on last field
@@ -1032,12 +1035,14 @@ export default function Profile() {
 ## Performance Considerations
 
 ### Optimizations Maintained
+
 - **Haptic feedback:** Light impact on interactions
 - **Debounced updates:** State changes controlled
 - **Lazy imports:** ErrorAlert component lazy-loaded
 - **Native components:** TextInput uses native rendering
 
 ### Bundle Size Impact
+
 - **ProfileTextInput:** +2KB (reusable component)
 - **Removed inline styles:** -1KB
 - **Net change:** +1KB (negligible)
@@ -1047,12 +1052,14 @@ export default function Profile() {
 ## Testing Recommendations
 
 ### Device Testing
+
 1. **iPhone SE (small screen):** Verify button placement
 2. **iPhone Pro Max (large screen):** Check max-width wrapper
 3. **iPad (tablet):** Confirm centered layout
 4. **Android (various):** Test keyboard behavior
 
 ### User Testing Scenarios
+
 1. **Update name only:** Verify save works
 2. **Update age only:** Test number validation
 3. **Clear both fields:** Confirm optional handling
@@ -1061,6 +1068,7 @@ export default function Profile() {
 6. **Rapid saves:** Test debouncing
 
 ### Accessibility Testing
+
 1. **VoiceOver (iOS):** Navigate entire form
 2. **TalkBack (Android):** Verify all labels
 3. **Large text:** Test with 200% text size
@@ -1072,6 +1080,7 @@ export default function Profile() {
 ## Future Enhancements
 
 ### Phase 2 Improvements
+
 1. **Profile photo upload:** Avatar management
 2. **Additional fields:** Preferences, interests
 3. **Password change:** Secure password update
@@ -1079,6 +1088,7 @@ export default function Profile() {
 5. **Export data:** Privacy compliance
 
 ### Advanced Features
+
 1. **Auto-save:** Save changes automatically
 2. **Undo/redo:** Change history
 3. **Field validation:** Real-time feedback

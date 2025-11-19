@@ -5,6 +5,7 @@
 The quiz reveal flow ensures **ALL new users discover their overthinking type** through a carefully designed investment ladder:
 
 **Universal Flow for New Users:**
+
 1. **Quiz** - Discover your overthinking type (10 questions)
 2. **Profile Setup** - Share basic info (name, age, rumination frequency)
 3. **Signup** - Create account to unlock results (email + password)
@@ -12,6 +13,7 @@ The quiz reveal flow ensures **ALL new users discover their overthinking type** 
 5. **Home** - Start using the app
 
 **Why This Order Works:**
+
 - ✅ Maximizes psychological investment before asking for credentials
 - ✅ User has already invested ~5-10 minutes before seeing signup form
 - ✅ Profile info is non-threatening (gathered before email/password)
@@ -120,6 +122,7 @@ The quiz reveal flow ensures **ALL new users discover their overthinking type** 
 ## Key Files
 
 ### `/constants/quiz.ts`
+
 Centralized configuration following iOS best practices:
 
 ```typescript
@@ -136,21 +139,24 @@ export const QUIZ_STORAGE_KEYS = {
   PROGRESS: 'quiz_progress',
   PENDING_RESULTS: 'quiz_pending_results',
   FLOW_STAGE: 'quiz_flow_stage',
-}
+};
 
 // Reveal configuration
 export const QUIZ_REVEAL_CONFIG = {
-  REVEAL_DELAY: 800,              // Delay before showing results
-  ANIMATION_DURATION: 600,         // Duration of reveal animation
+  REVEAL_DELAY: 800, // Delay before showing results
+  ANIMATION_DURATION: 600, // Duration of reveal animation
   TEASER_TITLE: 'Your Results Are Ready! 🎉',
-  TEASER_DESCRIPTION: 'Create your account to discover your unique overthinking type and unlock personalized strategies.',
-}
+  TEASER_DESCRIPTION:
+    'Create your account to discover your unique overthinking type and unlock personalized strategies.',
+};
 ```
 
 ### `/app/onboarding/quiz/index.tsx`
+
 Main quiz screen - STEP 1 of the onboarding flow:
 
 **Key Changes:**
+
 - After completing all questions, saves results to AsyncStorage
 - **Always routes to profile setup** - no authentication check needed
 - Simple linear flow - all users follow same path
@@ -185,9 +191,11 @@ router.push({
 ```
 
 ### `/app/onboarding/profile-setup.tsx`
+
 Profile setup screen - STEP 2 of the onboarding flow (NEW BEHAVIOR):
 
 **Key Changes:**
+
 - **No longer requires authentication** - works before account creation
 - Accepts quiz params from previous screen
 - Collects name, age, rumination frequency
@@ -213,11 +221,13 @@ const handleContinue = async () => {
 ```
 
 ### `/app/onboarding/quiz/signup.tsx`
+
 Signup screen - STEP 3 of the onboarding flow (ENHANCED):
 
 **Purpose:** Create account after maximum psychological investment
 
 **Features:**
+
 - Teaser messaging: "Your Results Are Ready! 🎉"
 - Email and password inputs
 - Account existence checking
@@ -226,11 +236,13 @@ Signup screen - STEP 3 of the onboarding flow (ENHANCED):
 - Routes to results with `reveal: 'true'` flag
 
 **Key Changes:**
+
 - Now accepts profile data from params (profileName, profileAge, profileRuminationFrequency)
 - Saves ALL collected data in single database operation
 - User profile includes quiz data reference + profile data
 
 **Flow:**
+
 1. Collect email and password (quiz + profile data already in params)
 2. Validate inputs
 3. Check if account exists
@@ -280,9 +292,11 @@ const handleCreateAccount = async () => {
 ```
 
 ### `/app/onboarding/quiz/results.tsx`
+
 Results screen - STEP 4 of the onboarding flow (UPDATED):
 
 **Key Changes:**
+
 - Removed email input (user already authenticated)
 - Added reveal animation detection
 - **Routes to home, not profile setup** (profile already collected)
@@ -291,6 +305,7 @@ Results screen - STEP 4 of the onboarding flow (UPDATED):
 - Button text: "Get Started" (not "Continue to Profile Setup")
 
 **Reveal Detection:**
+
 ```typescript
 const isReveal = params.reveal === 'true';
 
@@ -305,10 +320,13 @@ useEffect(() => {
 ```
 
 **Results Submission:**
+
 ```typescript
 const handleContinue = async () => {
   // Get authenticated user
-  const { data: { session } } = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   // Submit quiz to database
   const { success, submissionId } = await submitQuizToSupabase(
@@ -319,14 +337,17 @@ const handleContinue = async () => {
   );
 
   // Update user profile with quiz data and mark onboarding complete
-  await supabase.from('user_profiles').update({
-    quiz_email: session.user.email,
-    quiz_connected: true,
-    quiz_submission_id: submissionId,
-    quiz_overthinker_type: params.type,
-    quiz_connected_at: new Date().toISOString(),
-    onboarding_completed: true, // Profile already collected, quiz now linked
-  }).eq('user_id', session.user.id);
+  await supabase
+    .from('user_profiles')
+    .update({
+      quiz_email: session.user.email,
+      quiz_connected: true,
+      quiz_submission_id: submissionId,
+      quiz_overthinker_type: params.type,
+      quiz_connected_at: new Date().toISOString(),
+      onboarding_completed: true, // Profile already collected, quiz now linked
+    })
+    .eq('user_id', session.user.id);
 
   // Route to home - onboarding complete!
   router.replace('/');
@@ -340,16 +361,19 @@ const handleContinue = async () => {
 **For Users Who Take Quiz First (Not Authenticated):**
 
 **The "Zeigarnik Effect"**
+
 - People remember uncompleted tasks better than completed ones
 - Completing the quiz but not seeing results creates tension
 - This tension motivates users to complete the signup
 
 **Investment Escalation**
+
 - User has already invested time in taking the quiz
 - They want to see the "payoff" (results)
 - Creating an account feels like a small step to complete their investment
 
 **Curiosity Gap**
+
 - Teaser messaging: "Your Results Are Ready!"
 - Creates strong desire to see what they got
 - Signup becomes the "unlock" mechanism
@@ -357,12 +381,14 @@ const handleContinue = async () => {
 **For Users Who Create Account First (Authenticated):**
 
 **Immediate Value Delivery**
+
 - User has shown commitment by creating account
 - Seeing results immediately rewards this commitment
 - Personalizes the experience from the start
 - Creates positive first impression of the app's insights
 
 **Universal Benefit:**
+
 - ALL users get their overthinker type
 - Consistent experience across all entry points
 - Quiz becomes core value proposition, not optional
@@ -371,6 +397,7 @@ const handleContinue = async () => {
 ## Data Flow
 
 ### AsyncStorage
+
 ```typescript
 // Quiz in progress
 'quiz_progress' → {
@@ -390,6 +417,7 @@ const handleContinue = async () => {
 ### Supabase Database
 
 **During Signup:**
+
 ```sql
 -- Create auth user
 INSERT INTO auth.users (email, encrypted_password)
@@ -401,6 +429,7 @@ VALUES ('uuid', 'user@example.com', false);
 ```
 
 **After Results Reveal:**
+
 ```sql
 -- Submit quiz results
 INSERT INTO quiz_submissions (user_email, answers, result)
@@ -441,6 +470,7 @@ WHERE user_id = 'uuid';
 ## Testing Checklist
 
 ### Path A: Direct Signup First
+
 - [ ] Create account via `/auth/signup`
 - [ ] Verify routing to `/onboarding/quiz`
 - [ ] Complete quiz while authenticated
@@ -451,6 +481,7 @@ WHERE user_id = 'uuid';
 - [ ] Complete profile and reach home
 
 ### Path B: Quiz First (No Account)
+
 - [ ] Start quiz without account
 - [ ] Complete all 10 questions
 - [ ] Verify results saved to AsyncStorage
@@ -466,12 +497,14 @@ WHERE user_id = 'uuid';
 - [ ] Complete profile and reach home
 
 ### Path C: Website Quiz
+
 - [ ] Enter email that has existing quiz
 - [ ] Complete password setup
 - [ ] Verify routing to profile-setup (skips quiz)
 - [ ] Complete profile and reach home
 
 ### Cross-Path Testing
+
 - [ ] Test network error during quiz
 - [ ] Test account already exists error
 - [ ] Verify AsyncStorage cleanup on success
@@ -482,16 +515,19 @@ WHERE user_id = 'uuid';
 ## Error Scenarios
 
 ### Network Error During Signup
+
 - Show error message
 - Allow retry
 - Don't lose quiz data
 
 ### Account Already Exists
+
 - Show clear error: "This email already has an account"
 - Suggest signing in instead
 - Quiz data preserved for retry
 
 ### Database Error During Profile Creation
+
 - Show error with contact support message
 - Log error for debugging
 - Auth account created but profile failed
@@ -503,18 +539,21 @@ The quiz reveal flow has been implemented as a **linear investment ladder** that
 ### The Universal 5-Step Flow
 
 **STEP 1: Quiz** (`/onboarding/quiz`)
+
 - User answers 10 questions
 - No account required - zero friction
 - Results calculated and saved to AsyncStorage
 - Routes to profile setup with quiz params
 
 **STEP 2: Profile Setup** (`/onboarding/profile-setup`)
+
 - Collects name (optional), age (optional), rumination frequency (required)
 - Still no authentication required - building investment
 - Data passed via URL params to next screen (not stored in database yet)
 - Routes to signup with both quiz + profile params
 
 **STEP 3: Signup** (`/onboarding/quiz/signup`)
+
 - NOW we ask for email and password (after 5-10 min investment)
 - Teaser: "Your Results Are Ready! 🎉"
 - Creates Supabase auth account
@@ -522,6 +561,7 @@ The quiz reveal flow has been implemented as a **linear investment ladder** that
 - Routes to results with reveal flag
 
 **STEP 4: Results Reveal** (`/onboarding/quiz/results`)
+
 - Shows quiz results with animation
 - Submits quiz to database
 - Links quiz to user profile
@@ -529,12 +569,14 @@ The quiz reveal flow has been implemented as a **linear investment ladder** that
 - Routes to home
 
 **STEP 5: Home**
+
 - User starts using the app
 - Full onboarding complete
 
 ### Alternative Flow: Website Quiz Users
 
 For users who took quiz on website ("Yes, I took quiz"):
+
 1. Email lookup → finds existing quiz
 2. Password setup → links quiz to new account
 3. Home → quiz already in database
@@ -560,6 +602,7 @@ For users who took quiz on website ("Yes, I took quiz"):
 ## Future Enhancements
 
 ### Potential Improvements
+
 - Add reveal animation with fade/slide effects
 - Implement progress saving across app restarts
 - Add email verification flow

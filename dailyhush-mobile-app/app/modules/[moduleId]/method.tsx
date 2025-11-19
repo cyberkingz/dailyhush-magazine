@@ -45,7 +45,11 @@ type PersuasionMeta = {
   commitment?: string;
 };
 
-const BACKGROUND_GRADIENT = [colors.background.primary, '#091c16', colors.background.primary] as const;
+const BACKGROUND_GRADIENT = [
+  colors.background.primary,
+  '#091c16',
+  colors.background.primary,
+] as const;
 const CARD_BORDER_GRADIENT = ['rgba(122, 248, 89, 0.28)', 'rgba(16, 185, 129, 0.08)'] as const;
 
 const EXERCISE_ROUTE_CONFIG: Partial<Record<string, ExerciseConfig>> = {
@@ -243,7 +247,11 @@ export default function MethodSelectionScreen() {
                         <View style={styles.badgeStack}>
                           {method.isRecommended && (
                             <View style={styles.recommendedBadge}>
-                              <Sparkles size={14} color={colors.background.primary} strokeWidth={3} />
+                              <Sparkles
+                                size={14}
+                                color={colors.background.primary}
+                                strokeWidth={3}
+                              />
                               <Text style={styles.recommendedText}>Recommended</Text>
                             </View>
                           )}

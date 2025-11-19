@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
-import { Clock, Sparkles, Check, ArrowRight, Lock } from 'lucide-react-native';
+import { ArrowRight, Check, Lock, Clock } from 'lucide-react-native';
 
 import { Text } from '@/components/ui/text';
 import { TopBar } from '@/components/TopBar';
@@ -231,7 +231,7 @@ export default function Onboarding() {
         age: assessmentData.age,
         quiz_score: assessmentData.quizScore,
         has_shift_necklace: assessmentData.hasShiftNecklace || false,
-        shift_paired: false,
+
         onboarding_completed: true,
         fire_progress: {
           focus: false,
@@ -626,7 +626,8 @@ export default function Onboarding() {
                 <Text
                   className="text-lg font-bold"
                   style={{
-                    color: selectedQuizAnswer === num ? colors.button.primaryText : colors.text.primary,
+                    color:
+                      selectedQuizAnswer === num ? colors.button.primaryText : colors.text.primary,
                   }}>
                   {num}
                 </Text>

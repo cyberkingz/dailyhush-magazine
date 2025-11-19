@@ -11,19 +11,20 @@ import {
   useExerciseHistory,
   useExerciseStats,
   useExerciseTriggers,
+  useExerciseSubscription,
 } from '@/hooks/useExerciseTracking';
-import type { ExerciseType, FireModule } from '@/types/exercise-logs';
+import { useUser } from '@/store/useStore';
+import type { ExerciseType } from '@/types/exercise-logs';
 
 // ============================================================================
 // EXAMPLE 1: Complete Exercise Flow
 // ============================================================================
 
 export function BreathingExerciseExample() {
-  const { startExercise, completeExercise, currentExercise, isLoading } =
-    useExerciseTracking();
+  const { startExercise, completeExercise, currentExercise, isLoading } = useExerciseTracking();
 
-  const [preRating, setPreRating] = useState<number>(7);
-  const [postRating, setPostRating] = useState<number>(3);
+  const [preRating] = useState<number>(7);
+  const [postRating] = useState<number>(3);
   const [startTime, setStartTime] = useState<number | null>(null);
 
   // Start exercise
@@ -68,26 +69,16 @@ export function BreathingExerciseExample() {
           <Text>How anxious do you feel right now? (1-10)</Text>
           <Text style={styles.rating}>{preRating}</Text>
 
-          <Button
-            title="Start Exercise"
-            onPress={handleStart}
-            disabled={isLoading}
-          />
+          <Button title="Start Exercise" onPress={handleStart} disabled={isLoading} />
         </>
       ) : (
         <>
-          <Text style={styles.instruction}>
-            Breathe in for 4, hold for 7, out for 8...
-          </Text>
+          <Text style={styles.instruction}>Breathe in for 4, hold for 7, out for 8...</Text>
 
           <Text>How do you feel now? (1-10)</Text>
           <Text style={styles.rating}>{postRating}</Text>
 
-          <Button
-            title="Complete Exercise"
-            onPress={handleComplete}
-            disabled={isLoading}
-          />
+          <Button title="Complete Exercise" onPress={handleComplete} disabled={isLoading} />
         </>
       )}
     </View>
@@ -116,16 +107,11 @@ export function ExerciseHistoryExample() {
       {history.map((item) => (
         <View key={item.log_id} style={styles.historyItem}>
           <Text style={styles.exerciseName}>{item.exercise_name}</Text>
-          <Text style={styles.date}>
-            {new Date(item.completed_at).toLocaleDateString()}
-          </Text>
+          <Text style={styles.date}>{new Date(item.completed_at).toLocaleDateString()}</Text>
           <Text style={styles.reduction}>
-            Anxiety reduced by {item.anxiety_reduction} points (
-            {item.reduction_percentage}%)
+            Anxiety reduced by {item.anxiety_reduction} points ({item.reduction_percentage}%)
           </Text>
-          <Text style={styles.duration}>
-            Duration: {item.duration_minutes} minutes
-          </Text>
+          <Text style={styles.duration}>Duration: {item.duration_minutes} minutes</Text>
         </View>
       ))}
 
@@ -218,10 +204,10 @@ export function ExerciseDashboardExample() {
 // ============================================================================
 
 export function TriggerSelectionExample() {
-  const { user } = useUserStore();
+  const user = useUser();
   const loopType = user?.loop_type; // e.g., "sleep-loop"
 
-  const { triggers, isLoading, error } = useExerciseTriggers(loopType);
+  const { triggers, isLoading, error } = useExerciseTriggers(loopType || undefined);
   const [selectedTrigger, setSelectedTrigger] = useState<string | null>(null);
 
   if (isLoading) {
@@ -241,17 +227,11 @@ export function TriggerSelectionExample() {
           key={trigger.trigger_id}
           title={trigger.trigger_name}
           onPress={() => setSelectedTrigger(trigger.trigger_category)}
-          color={
-            selectedTrigger === trigger.trigger_category ? 'blue' : 'gray'
-          }
+          color={selectedTrigger === trigger.trigger_category ? 'blue' : 'gray'}
         />
       ))}
 
-      {selectedTrigger && (
-        <Text style={styles.selectedTrigger}>
-          Selected: {selectedTrigger}
-        </Text>
-      )}
+      {selectedTrigger && <Text style={styles.selectedTrigger}>Selected: {selectedTrigger}</Text>}
     </View>
   );
 }
@@ -261,8 +241,7 @@ export function TriggerSelectionExample() {
 // ============================================================================
 
 export function ExerciseWithAbandonmentExample() {
-  const { startExercise, abandonExercise, currentExercise } =
-    useExerciseTracking();
+  const { startExercise, abandonExercise, currentExercise } = useExerciseTracking();
 
   const [progress, setProgress] = useState<number>(0);
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -332,7 +311,7 @@ export function RealTimeExerciseUpdates() {
   const [recentUpdate, setRecentUpdate] = useState<string | null>(null);
 
   // Subscribe to real-time updates
-  useExerciseSubscription((payload) => {
+  useExerciseSubscription((payload: any) => {
     console.log('Exercise update received:', payload);
 
     if (payload.eventType === 'INSERT') {
@@ -364,26 +343,17 @@ export function RealTimeExerciseUpdates() {
 // ============================================================================
 
 export function CompleteExerciseFlowExample() {
-  const {
-    startExercise,
-    completeExercise,
-    abandonExercise,
-    skipExercise,
-    currentExercise,
-    isLoading,
-  } = useExerciseTracking();
+  const { startExercise, completeExercise, currentExercise, isLoading } = useExerciseTracking();
 
   const { triggers } = useExerciseTriggers();
-  const { history, refetch: refetchHistory } = useExerciseHistory();
+  const { refetch: refetchHistory } = useExerciseHistory();
   const { streak, refetch: refetchStats } = useExerciseStats();
 
   // Exercise flow state
-  const [step, setStep] = useState<'select' | 'rating' | 'exercise' | 'done'>(
-    'select'
-  );
+  const [step, setStep] = useState<'select' | 'rating' | 'exercise' | 'done'>('select');
   const [exerciseType, setExerciseType] = useState<ExerciseType>('breathing');
-  const [preRating, setPreRating] = useState<number>(5);
-  const [postRating, setPostRating] = useState<number>(3);
+  const [preRating] = useState<number>(5);
+  const [postRating] = useState<number>(3);
   const [selectedTrigger, setSelectedTrigger] = useState<string | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
 
@@ -415,11 +385,7 @@ export function CompleteExerciseFlowExample() {
 
     const durationSeconds = Math.floor((Date.now() - startTime) / 1000);
 
-    await completeExercise(
-      currentExercise.log_id,
-      postRating,
-      durationSeconds
-    );
+    await completeExercise(currentExercise.log_id, postRating, durationSeconds);
 
     // Refresh stats and history
     await Promise.all([refetchStats(), refetchHistory()]);
@@ -435,27 +401,16 @@ export function CompleteExerciseFlowExample() {
         return (
           <View>
             <Text style={styles.title}>Choose an exercise</Text>
-            <Button
-              title="Breathing Exercise"
-              onPress={() => handleSelectExercise('breathing')}
-            />
-            <Button
-              title="Brain Dump"
-              onPress={() => handleSelectExercise('brain_dump')}
-            />
-            <Button
-              title="Grounding"
-              onPress={() => handleSelectExercise('grounding')}
-            />
+            <Button title="Breathing Exercise" onPress={() => handleSelectExercise('breathing')} />
+            <Button title="Brain Dump" onPress={() => handleSelectExercise('brain_dump')} />
+            <Button title="Grounding" onPress={() => handleSelectExercise('grounding')} />
           </View>
         );
 
       case 'rating':
         return (
           <View>
-            <Text style={styles.title}>
-              How anxious do you feel? (1-10)
-            </Text>
+            <Text style={styles.title}>How anxious do you feel? (1-10)</Text>
             <Text style={styles.rating}>{preRating}</Text>
 
             <Text style={styles.subtitle}>What triggered this?</Text>
@@ -467,32 +422,20 @@ export function CompleteExerciseFlowExample() {
               />
             ))}
 
-            <Button
-              title="Start Exercise"
-              onPress={handleStartExercise}
-              disabled={isLoading}
-            />
+            <Button title="Start Exercise" onPress={handleStartExercise} disabled={isLoading} />
           </View>
         );
 
       case 'exercise':
         return (
           <View>
-            <Text style={styles.title}>
-              {getExerciseName(exerciseType)}
-            </Text>
-            <Text style={styles.instruction}>
-              Follow the instructions...
-            </Text>
+            <Text style={styles.title}>{getExerciseName(exerciseType)}</Text>
+            <Text style={styles.instruction}>Follow the instructions...</Text>
 
             <Text style={styles.subtitle}>How do you feel now? (1-10)</Text>
             <Text style={styles.rating}>{postRating}</Text>
 
-            <Button
-              title="Complete"
-              onPress={handleCompleteExercise}
-              disabled={isLoading}
-            />
+            <Button title="Complete" onPress={handleCompleteExercise} disabled={isLoading} />
           </View>
         );
 
@@ -501,17 +444,13 @@ export function CompleteExerciseFlowExample() {
           <View>
             <Text style={styles.title}>Great work! 🎉</Text>
             <Text style={styles.result}>
-              You reduced your anxiety by{' '}
-              {preRating - postRating} points (
+              You reduced your anxiety by {preRating - postRating} points (
               {Math.round(((preRating - postRating) / preRating) * 100)}%)
             </Text>
 
             <Text style={styles.streak}>Current streak: {streak} days</Text>
 
-            <Button
-              title="Do Another Exercise"
-              onPress={() => setStep('select')}
-            />
+            <Button title="Do Another Exercise" onPress={() => setStep('select')} />
           </View>
         );
     }

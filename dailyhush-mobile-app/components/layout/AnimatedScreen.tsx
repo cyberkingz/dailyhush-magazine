@@ -26,12 +26,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {
-  SPACING,
-  COLORS,
-  ANIMATIONS,
-  LAYOUT,
-} from '@/constants/design-tokens';
+import { COLORS, ANIMATIONS, LAYOUT } from '@/constants/design-tokens';
 
 // ============================================================================
 // TYPES
@@ -202,11 +197,7 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
 
     const renderBackground = () => {
       if (!showGradient) {
-        return (
-          <View
-            style={[styles.background, { backgroundColor }]}
-          />
-        );
+        return <View style={[styles.background, { backgroundColor }]} />;
       }
 
       return (
@@ -220,19 +211,13 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
     };
 
     const renderContent = () => {
-      const paddingHorizontal =
-        contentPadding?.horizontal ?? LAYOUT.screenPadding.horizontal;
-      const paddingVertical =
-        contentPadding?.vertical ?? LAYOUT.screenPadding.vertical;
+      const paddingHorizontal = contentPadding?.horizontal ?? LAYOUT.screenPadding.horizontal;
+      const paddingVertical = contentPadding?.vertical ?? LAYOUT.screenPadding.vertical;
 
       const contentStyle: ViewStyle = {
         paddingHorizontal,
-        paddingTop: useSafeArea
-          ? Math.max(insets.top, paddingVertical)
-          : paddingVertical,
-        paddingBottom: useSafeArea
-          ? Math.max(insets.bottom, paddingVertical)
-          : paddingVertical,
+        paddingTop: useSafeArea ? Math.max(insets.top, paddingVertical) : paddingVertical,
+        paddingBottom: useSafeArea ? Math.max(insets.bottom, paddingVertical) : paddingVertical,
       };
 
       if (scrollable) {
@@ -247,8 +232,7 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
             bounces={true}
-            testID={`${testID}-scroll-view`}
-          >
+            testID={`${testID}-scroll-view`}>
             {children}
           </ScrollView>
         );
@@ -261,8 +245,7 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
             contentStyle,
             centerContent && styles.centerContent,
             contentContainerStyle,
-          ]}
-        >
+          ]}>
           {children}
         </View>
       );
@@ -278,8 +261,7 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
           style={styles.keyboardAvoidingView}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={keyboardVerticalOffset}
-          enabled={keyboardAvoiding}
-        >
+          enabled={keyboardAvoiding}>
           {content}
         </KeyboardAvoidingView>
       );
@@ -295,8 +277,7 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
         entering={getEnteringAnimation()}
         exiting={getExitingAnimation()}
         testID={testID || 'animated-screen'}
-        accessibilityLabel={accessibilityLabel}
-      >
+        accessibilityLabel={accessibilityLabel}>
         {/* Status bar */}
         <StatusBar style="light" />
 
@@ -307,7 +288,7 @@ export const AnimatedScreen = memo<AnimatedScreenProps>(
         {renderWithKeyboardAvoidance(renderContent())}
       </Animated.View>
     );
-  },
+  }
 );
 
 AnimatedScreen.displayName = 'AnimatedScreen';

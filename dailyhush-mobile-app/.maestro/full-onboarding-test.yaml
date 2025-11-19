@@ -16,7 +16,7 @@ appId: host.exp.Exponent
 # ============================================
 # STEP 1: Welcome Screen → Start Onboarding
 # ============================================
-- tapOn: "Try It Now"
+- tapOn: 'Try It Now'
 - waitForAnimationToEnd
 
 # ============================================
@@ -40,82 +40,82 @@ appId: host.exp.Exponent
 
 # Question 1
 - tapOn: "Almost always — I can't stop replaying"
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 2
 - tapOn: "Research until I'm mentally exhausted"
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 3
-- tapOn: "Constantly"
-- tapOn: "Next"
+- tapOn: 'Constantly'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 4
 - tapOn: '"They must think I''m stupid."'
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 5
 - tapOn: "Fear of judgment — don't want to disappoint"
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 6
 - tapOn: '"If I fail, it proves I''m not good enough."'
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 7
-- tapOn: "Every time"
-- tapOn: "Next"
+- tapOn: 'Every time'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 8
-- tapOn: "Way too long — I second-guess everything"
-- tapOn: "Next"
+- tapOn: 'Way too long — I second-guess everything'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 9
-- tapOn: "Very uncomfortable — I need certainty"
-- tapOn: "Next"
+- tapOn: 'Very uncomfortable — I need certainty'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 10
-- tapOn: "Often — I need validation first"
-- tapOn: "Next"
+- tapOn: 'Often — I need validation first'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 11
 - tapOn: '"Why can''t I be like that?"'
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 12
 - tapOn: '"I always mess things up."'
-- tapOn: "Next"
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 13
-- tapOn: "Daily"
-- tapOn: "Next"
+- tapOn: 'Daily'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 14
-- tapOn: "My brain starts racing; I replay the day or plan tomorrow"
-- tapOn: "Next"
+- tapOn: 'My brain starts racing; I replay the day or plan tomorrow'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 15
-- tapOn: "30+ minutes / I check the clock"
-- tapOn: "Next"
+- tapOn: '30+ minutes / I check the clock'
+- tapOn: 'Next'
 - waitForAnimationToEnd
 
 # Question 16 (Last question - has "Continue" button)
-- tapOn: "Replay convos / imagine worst-cases / redo decisions"
-- tapOn: "Continue"
+- tapOn: 'Replay convos / imagine worst-cases / redo decisions'
+- tapOn: 'Continue'
 - waitForAnimationToEnd
 
 # Wait for quiz to calculate results and navigate to profile screen
@@ -126,49 +126,49 @@ appId: host.exp.Exponent
 # STEP 4: Profile Setup
 # ============================================
 # Verify we're on profile setup screen
-- assertVisible: "Complete Your Profile"
+- assertVisible: 'Complete Your Profile'
 
 # Enter name
-- tapOn: "Your name"
-- inputText: "Maestro Test User"
+- tapOn: 'Your name'
+- inputText: 'Maestro Test User'
 
 # Enter age
-- tapOn: "Your age"
-- inputText: "42"
+- tapOn: 'Your age'
+- inputText: '42'
 
 # Dismiss keyboard
-- tapOn: "Done"
+- tapOn: 'Done'
 - waitForAnimationToEnd
 
 # Scroll down to see rumination frequency options
 - scroll
 
 # Select rumination frequency (required field)
-- tapOn: "Often (Daily)"
+- tapOn: 'Often (Daily)'
 - waitForAnimationToEnd
 
 # Scroll down to see Complete Setup button
 - scroll
 
 # Continue to signup
-- tapOn: "Complete Setup"
+- tapOn: 'Complete Setup'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 5: Signup - Email & Password
 # ============================================
 # Enter email (use ${random} for unique email each run)
-- tapOn: "your.email@example.com"
-- inputText: "test${random}@dailyhush.app"
+- tapOn: 'your.email@example.com'
+- inputText: 'test${random}@dailyhush.app'
 - hideKeyboard
 
 # Enter password
-- tapOn: "8+ characters"
-- inputText: "TestPassword123!"
+- tapOn: '8+ characters'
+- inputText: 'TestPassword123!'
 - hideKeyboard
 
 # Create account
-- tapOn: "Unlock My Results"
+- tapOn: 'Unlock My Results'
 - waitForAnimationToEnd
 
 # Wait for account creation (may take a moment)
@@ -179,18 +179,17 @@ appId: host.exp.Exponent
 # STEP 6: Results Screen
 # ============================================
 # Should see results now
-- assertVisible: "Your Results"
+- assertVisible: 'Your Results'
 
 # Continue to home
-- tapOn: "Get Started"
+- tapOn: 'Get Started'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 7: Home Screen - SUCCESS! 🎉
 # ============================================
 # Verify we landed on home screen
-- assertVisible: "Good"
-- assertVisible: "Maestro Test User"
+- assertVisible: 'Good'
+- assertVisible: 'Maestro Test User'
 - assertVisible: "I'M SPIRALING"
-
 # SUCCESS! Complete onboarding flow executed! 🎉

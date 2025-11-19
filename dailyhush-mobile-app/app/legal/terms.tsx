@@ -105,9 +105,9 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            By accessing or using Nœma (the &quot;App&quot;), you agree to be bound by these
-            Terms of Service (&quot;Terms&quot;). If you disagree with any part of these terms, you
-            may not use our App.
+            By accessing or using Nœma (the &quot;App&quot;), you agree to be bound by these Terms
+            of Service (&quot;Terms&quot;). If you disagree with any part of these terms, you may
+            not use our App.
           </Text>
         </View>
 
@@ -160,8 +160,7 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               marginBottom: spacing.md,
             }}>
-            Nœma is a wellness tool designed to help you interrupt overthinking spirals. It is
-            NOT:
+            Nœma is a wellness tool designed to help you interrupt overthinking spirals. It is NOT:
           </Text>
           <Text
             style={{
@@ -377,8 +376,8 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            You retain all rights to the content you create in Nœma (spiral logs, notes,
-            journal entries). We never claim ownership of your personal data.
+            You retain all rights to the content you create in Nœma (spiral logs, notes, journal
+            entries). We never claim ownership of your personal data.
           </Text>
 
           <Text
@@ -421,8 +420,8 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               marginBottom: spacing.md,
             }}>
-            Nœma is currently free to use. If we introduce paid features or subscriptions in
-            the future:
+            Nœma is currently free to use. If we introduce paid features or subscriptions in the
+            future:
           </Text>
           <Text
             style={{
@@ -477,8 +476,8 @@ export default function TermsOfService() {
               marginBottom: spacing.md,
             }}>
             The App and its original content (excluding your personal data), features, and
-            functionality are owned by Nœma and are protected by international copyright,
-            trademark, patent, trade secret, and other intellectual property laws.
+            functionality are owned by Nœma and are protected by international copyright, trademark,
+            patent, trade secret, and other intellectual property laws.
           </Text>
           <Text
             style={{
@@ -743,8 +742,8 @@ export default function TermsOfService() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            Your continued use of Nœma after changes become effective means you accept the
-            updated Terms.
+            Your continued use of Nœma after changes become effective means you accept the updated
+            Terms.
           </Text>
         </View>
 
@@ -796,8 +795,8 @@ export default function TermsOfService() {
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
               textAlign: 'center',
             }}>
-            By using Nœma, you acknowledge that you have read, understood, and agree to be
-            bound by these Terms of Service.
+            By using Nœma, you acknowledge that you have read, understood, and agree to be bound by
+            these Terms of Service.
           </Text>
         </View>
       </ScrollFadeView>

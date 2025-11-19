@@ -2,18 +2,18 @@
 
 ## Quick Reference: All 5 Exercises at a Glance
 
-| Aspect | Stop Spiraling | Calm Anxiety | Process Emotions | Better Sleep | Gain Focus |
-|--------|----------------|--------------|------------------|--------------|------------|
-| **Urgency** | CRITICAL | Medium | Low | Time-specific | Low |
-| **User State** | Active distress | Building anxiety | Reflective | Bedtime/night | Needs clarity |
-| **Duration** | 90 seconds | 2-5 minutes | 5-10 minutes | 3-15 minutes | 10-20 minutes |
-| **Cognitive Load** | MINIMAL | Low-Medium | Medium | Minimal-Low | HIGH |
-| **Auto-Advance** | Yes | Partial | No | Yes (night) | No |
-| **Text Input** | Optional (post) | No | Optional | No | Required |
-| **Voice Input** | No | No | Recommended | No | HIGHLY recommended |
-| **Interruptions** | Allow anytime | Allow anytime | Encouraged | Natural exit | Save progress |
-| **Progress Shown** | Yes (ring) | Optional | No | Minimal | Yes (steps) |
-| **Time Display** | Countdown | Optional | Hidden | Hidden | Optional |
+| Aspect             | Stop Spiraling  | Calm Anxiety     | Process Emotions | Better Sleep  | Gain Focus         |
+| ------------------ | --------------- | ---------------- | ---------------- | ------------- | ------------------ |
+| **Urgency**        | CRITICAL        | Medium           | Low              | Time-specific | Low                |
+| **User State**     | Active distress | Building anxiety | Reflective       | Bedtime/night | Needs clarity      |
+| **Duration**       | 90 seconds      | 2-5 minutes      | 5-10 minutes     | 3-15 minutes  | 10-20 minutes      |
+| **Cognitive Load** | MINIMAL         | Low-Medium       | Medium           | Minimal-Low   | HIGH               |
+| **Auto-Advance**   | Yes             | Partial          | No               | Yes (night)   | No                 |
+| **Text Input**     | Optional (post) | No               | Optional         | No            | Required           |
+| **Voice Input**    | No              | No               | Recommended      | No            | HIGHLY recommended |
+| **Interruptions**  | Allow anytime   | Allow anytime    | Encouraged       | Natural exit  | Save progress      |
+| **Progress Shown** | Yes (ring)      | Optional         | No               | Minimal       | Yes (steps)        |
+| **Time Display**   | Countdown       | Optional         | Hidden           | Hidden        | Optional           |
 
 ## Color Psychology by Exercise
 
@@ -98,13 +98,13 @@ GAIN FOCUS
 
 ## Typography Requirements
 
-| Exercise | Minimum Size | Recommended | Max Lines/Screen | Reasoning |
-|----------|--------------|-------------|------------------|-----------|
-| Stop Spiraling | 20pt | 20-24pt | 3-5 lines | Distressed state, arms-length reading |
-| Calm Anxiety | 18pt | 18-20pt | 5-8 lines | Moderate attention capacity |
-| Process Emotions | 18pt | 18pt | 8-10 lines | Reflective reading, longer form |
-| Better Sleep | 18pt | 20pt (night) | 2-4 lines | Drowsy state, minimal text |
-| Gain Focus | 18pt | 18pt | 10-15 lines | Clear thinking, detail-oriented |
+| Exercise         | Minimum Size | Recommended  | Max Lines/Screen | Reasoning                             |
+| ---------------- | ------------ | ------------ | ---------------- | ------------------------------------- |
+| Stop Spiraling   | 20pt         | 20-24pt      | 3-5 lines        | Distressed state, arms-length reading |
+| Calm Anxiety     | 18pt         | 18-20pt      | 5-8 lines        | Moderate attention capacity           |
+| Process Emotions | 18pt         | 18pt         | 8-10 lines       | Reflective reading, longer form       |
+| Better Sleep     | 18pt         | 20pt (night) | 2-4 lines        | Drowsy state, minimal text            |
+| Gain Focus       | 18pt         | 18pt         | 10-15 lines      | Clear thinking, detail-oriented       |
 
 ## Accessibility Priority Matrix
 
@@ -187,15 +187,15 @@ Haptics Util             ✓      ✓       ✓       ✓      ✓
 
 ### When User Should Use Each Exercise
 
-| Time of Day | Emotional State | Cognitive Capacity | Best Exercise |
-|-------------|-----------------|-------------------|---------------|
-| Anytime | Spiraling NOW | 30% | **Stop Spiraling** |
-| Morning | Anxious about day | 70% | Calm Anxiety |
-| Afternoon | Confused feelings | 80% | Process Emotions |
-| Evening (8-10pm) | Can't wind down | 60% | Better Sleep (prep) |
-| Night (2am) | Ruminating in bed | 40% | Better Sleep (night) |
-| Workday | Mental clutter | 90% | Gain Focus |
-| Pre-task | Procrastinating | 85% | Gain Focus |
+| Time of Day      | Emotional State   | Cognitive Capacity | Best Exercise        |
+| ---------------- | ----------------- | ------------------ | -------------------- |
+| Anytime          | Spiraling NOW     | 30%                | **Stop Spiraling**   |
+| Morning          | Anxious about day | 70%                | Calm Anxiety         |
+| Afternoon        | Confused feelings | 80%                | Process Emotions     |
+| Evening (8-10pm) | Can't wind down   | 60%                | Better Sleep (prep)  |
+| Night (2am)      | Ruminating in bed | 40%                | Better Sleep (night) |
+| Workday          | Mental clutter    | 90%                | Gain Focus           |
+| Pre-task         | Procrastinating   | 85%                | Gain Focus           |
 
 ### User Journey Examples
 
@@ -228,13 +228,13 @@ Why: Clarity needed, can think clearly enough to write
 
 ## Performance Optimization Priority
 
-| Exercise | Bundle Priority | Lazy Load | Preload Audio | Cache Images |
-|----------|-----------------|-----------|---------------|--------------|
-| Stop Spiraling | HIGH | No | Yes (critical) | Yes |
-| Calm Anxiety | MEDIUM | Yes | Yes | Yes |
-| Process Emotions | LOW | Yes | No | Yes |
-| Better Sleep | MEDIUM | Yes | Yes | Yes |
-| Gain Focus | LOW | Yes | No | Minimal |
+| Exercise         | Bundle Priority | Lazy Load | Preload Audio  | Cache Images |
+| ---------------- | --------------- | --------- | -------------- | ------------ |
+| Stop Spiraling   | HIGH            | No        | Yes (critical) | Yes          |
+| Calm Anxiety     | MEDIUM          | Yes       | Yes            | Yes          |
+| Process Emotions | LOW             | Yes       | No             | Yes          |
+| Better Sleep     | MEDIUM          | Yes       | Yes            | Yes          |
+| Gain Focus       | LOW             | Yes       | No             | Minimal      |
 
 **Reasoning**: Stop Spiraling is emergency intervention, must load instantly.
 
@@ -265,13 +265,13 @@ No CDN dependencies:        ✓
 
 ## Success Metrics by Exercise
 
-| Exercise | Primary Metric | Target | Secondary Metric | Target |
-|----------|----------------|--------|------------------|--------|
-| Stop Spiraling | Feeling reduction | >3 points | Completion rate | >60% |
-| Calm Anxiety | Anxiety reduction | >2 points | Return usage | >40% |
-| Process Emotions | Pattern detection | 3+ entries | Journal adoption | >30% |
-| Better Sleep | Time to sleep | <15 min | Night wake reduction | >50% |
-| Gain Focus | Task completion | >70% | Focus duration | >20 min |
+| Exercise         | Primary Metric    | Target     | Secondary Metric     | Target  |
+| ---------------- | ----------------- | ---------- | -------------------- | ------- |
+| Stop Spiraling   | Feeling reduction | >3 points  | Completion rate      | >60%    |
+| Calm Anxiety     | Anxiety reduction | >2 points  | Return usage         | >40%    |
+| Process Emotions | Pattern detection | 3+ entries | Journal adoption     | >30%    |
+| Better Sleep     | Time to sleep     | <15 min    | Night wake reduction | >50%    |
+| Gain Focus       | Task completion   | >70%       | Focus duration       | >20 min |
 
 ## Implementation Effort Estimate
 

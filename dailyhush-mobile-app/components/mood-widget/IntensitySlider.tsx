@@ -56,12 +56,9 @@ export function IntensitySlider({
       accessibilityRole="adjustable"
       accessibilityLabel={ACCESSIBILITY_LABELS.intensitySlider.slider}
       accessibilityHint={ACCESSIBILITY_LABELS.intensitySlider.sliderHint}
-      accessibilityValue={{ min, max, now: currentValue }}
-    >
+      accessibilityValue={{ min, max, now: currentValue }}>
       {/* Title */}
-      <Text style={styles.title}>
-        Rate your intensity
-      </Text>
+      <Text style={styles.title}>Rate your intensity</Text>
 
       {/* Scale labels (UX P0 fix #4) */}
       {config.showScaleLabels && (
@@ -88,10 +85,7 @@ export function IntensitySlider({
                 {steps.map((step) => (
                   <View
                     key={step}
-                    style={[
-                      styles.dot,
-                      currentValue >= step && styles.dotActive,
-                    ]}
+                    style={[styles.dot, currentValue >= step && styles.dotActive]}
                     accessible={false}
                   />
                 ))}
@@ -122,14 +116,9 @@ export function IntensitySlider({
             ]}
             accessibilityRole="button"
             accessibilityLabel={ACCESSIBILITY_LABELS.intensitySlider.stepButton(step)}
-            accessibilityState={{ selected: currentValue === step }}
-          >
+            accessibilityState={{ selected: currentValue === step }}>
             <Text
-              style={[
-                styles.tapButtonText,
-                currentValue === step && styles.tapButtonTextActive,
-              ]}
-            >
+              style={[styles.tapButtonText, currentValue === step && styles.tapButtonTextActive]}>
               {step}
             </Text>
           </Pressable>

@@ -10,12 +10,12 @@ import { Platform, ViewStyle, TextStyle } from 'react-native';
 // SPACING SYSTEM (8px grid)
 // ============================================================================
 export const SPACING = {
-  xs: 4,    // Micro spacing
-  sm: 8,    // Small gaps
-  md: 12,   // Default spacing
-  lg: 16,   // Large spacing
-  xl: 20,   // Extra large
-  xxl: 24,  // Section spacing
+  xs: 4, // Micro spacing
+  sm: 8, // Small gaps
+  md: 12, // Default spacing
+  lg: 16, // Large spacing
+  xl: 20, // Extra large
+  xxl: 24, // Section spacing
   xxxl: 32, // Major sections
 } as const;
 
@@ -25,9 +25,9 @@ export const SPACING = {
 export const COLORS = {
   // Backgrounds
   background: {
-    primary: '#0A1612',      // Main dark background
-    secondary: '#0F1F1A',    // Card backgrounds
-    tertiary: '#1A4D3C',     // Elevated elements
+    primary: '#0A1612', // Main dark background
+    secondary: '#0F1F1A', // Card backgrounds
+    tertiary: '#1A4D3C', // Elevated elements
     overlay: 'rgba(10, 22, 18, 0.92)',
   },
 
@@ -38,7 +38,7 @@ export const COLORS = {
     200: '#95B8A8',
     300: '#7dd3c0',
     400: '#52B788',
-    500: '#40916C',  // Main brand color
+    500: '#40916C', // Main brand color
     600: '#2D6A4F',
     700: '#1A4D3C',
     800: '#0F1F1A',
@@ -47,10 +47,10 @@ export const COLORS = {
 
   // Text colors
   text: {
-    primary: '#E8F4F0',      // Main text
-    secondary: '#95B8A8',    // Secondary text
-    tertiary: '#6B8376',     // Muted text
-    inverted: '#0A1612',     // Text on light bg
+    primary: '#E8F4F0', // Main text
+    secondary: '#95B8A8', // Secondary text
+    tertiary: '#6B8376', // Muted text
+    inverted: '#0A1612', // Text on light bg
     disabled: 'rgba(149, 184, 168, 0.4)',
   },
 
@@ -65,18 +65,18 @@ export const COLORS = {
   // Anxiety rating colors (low/medium/high intensity)
   anxiety: {
     low: {
-      primary: '#10B981',      // green-500
-      shadow: '#059669',       // green-600
+      primary: '#10B981', // green-500
+      shadow: '#059669', // green-600
       border: 'rgba(16, 185, 129, 0.3)',
     },
     medium: {
-      primary: '#F59E0B',      // yellow-500
-      shadow: '#D97706',       // yellow-600
+      primary: '#F59E0B', // yellow-500
+      shadow: '#D97706', // yellow-600
       border: 'rgba(245, 158, 11, 0.3)',
     },
     high: {
-      primary: '#EF4444',      // red-500
-      shadow: '#DC2626',       // red-600
+      primary: '#EF4444', // red-500
+      shadow: '#DC2626', // red-600
       border: 'rgba(239, 68, 68, 0.3)',
     },
   },
@@ -84,27 +84,27 @@ export const COLORS = {
   // Outcome-based colors for rating comparisons
   outcome: {
     improved: {
-      background: '#E8F5E9',      // Light green background
-      backgroundDark: '#0D3818',  // Dark theme version
-      text: '#2E7D32',            // Dark green text
-      textDark: '#4CAF50',        // Light green text for dark theme
-      icon: '#4CAF50',            // Green-500
+      background: '#E8F5E9', // Light green background
+      backgroundDark: '#0D3818', // Dark theme version
+      text: '#2E7D32', // Dark green text
+      textDark: '#4CAF50', // Light green text for dark theme
+      icon: '#4CAF50', // Green-500
       border: 'rgba(76, 175, 80, 0.3)',
     },
     worsened: {
-      background: '#FFEBEE',      // Light red background
-      backgroundDark: '#3D1415',  // Dark theme version
-      text: '#C62828',            // Dark red text
-      textDark: '#EF4444',        // Light red text for dark theme
-      icon: '#EF4444',            // Red-500
+      background: '#FFEBEE', // Light red background
+      backgroundDark: '#3D1415', // Dark theme version
+      text: '#C62828', // Dark red text
+      textDark: '#EF4444', // Light red text for dark theme
+      icon: '#EF4444', // Red-500
       border: 'rgba(239, 68, 68, 0.3)',
     },
     noChange: {
-      background: '#E3F2FD',      // Light blue background
-      backgroundDark: '#0F2537',  // Dark theme version
-      text: '#1565C0',            // Dark blue text
-      textDark: '#2196F3',        // Light blue text for dark theme
-      icon: '#2196F3',            // Blue-500
+      background: '#E3F2FD', // Light blue background
+      backgroundDark: '#0F2537', // Dark theme version
+      text: '#1565C0', // Dark blue text
+      textDark: '#2196F3', // Light blue text for dark theme
+      icon: '#2196F3', // Blue-500
       border: 'rgba(33, 150, 243, 0.3)',
     },
   },

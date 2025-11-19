@@ -11,11 +11,11 @@
 
 D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 
-| Produit | Product ID | Type | Prix | Trial |
-|---------|-----------|------|------|-------|
-| **Monthly** | `com.anthony.noema.monthly` | Auto-renewable subscription | $9.99 | 7 jours |
-| **Annual** | `com.anthony.noema.annual` | Auto-renewable subscription | $59.99 | 7 jours |
-| **Lifetime** | `com.anthony.noema.lifetime` | Non-consumable | $149.99 | N/A |
+| Produit      | Product ID                   | Type                        | Prix    | Trial   |
+| ------------ | ---------------------------- | --------------------------- | ------- | ------- |
+| **Monthly**  | `com.anthony.noema.monthly`  | Auto-renewable subscription | $9.99   | 7 jours |
+| **Annual**   | `com.anthony.noema.annual`   | Auto-renewable subscription | $59.99  | 7 jours |
+| **Lifetime** | `com.anthony.noema.lifetime` | Non-consumable              | $149.99 | N/A     |
 
 **Bundle ID:** `com.anthony.noema`
 
@@ -24,16 +24,19 @@ D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 ## 🍎 APP STORE CONNECT - VÉRIFICATIONS
 
 ### 1. Accéder à App Store Connect
+
 - URL: https://appstoreconnect.apple.com
 - Se connecter avec votre compte Apple Developer
 
 ### 2. Naviguer vers votre app
+
 - **My Apps** → Sélectionner **Nœma** (ou votre app)
 - **Monetization** → **In-App Purchases**
 
 ### 3. Vérifier les produits créés
 
 #### ✅ Product 1: Monthly
+
 - [ ] **Product ID:** `com.anthony.noema.monthly`
 - [ ] **Type:** Auto-Renewable Subscription
 - [ ] **Subscription Group:** "Noema Premium" (ou similaire)
@@ -43,6 +46,7 @@ D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 - [ ] **Status:** Ready to Submit ou Approved
 
 #### ✅ Product 2: Annual
+
 - [ ] **Product ID:** `com.anthony.noema.annual`
 - [ ] **Type:** Auto-Renewable Subscription
 - [ ] **Subscription Group:** Même groupe que Monthly
@@ -53,12 +57,14 @@ D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 - [ ] **Status:** Ready to Submit ou Approved
 
 #### ✅ Product 3: Lifetime
+
 - [ ] **Product ID:** `com.anthony.noema.lifetime`
 - [ ] **Type:** Non-Consumable
 - [ ] **Price:** $149.99 USD (Tier 150)
 - [ ] **Status:** Ready to Submit ou Approved
 
 ### 4. Vérifier le Subscription Group
+
 - [ ] **Group Name:** "Noema Premium" (ou similaire)
 - [ ] **Ranking:**
   - Annual = Rank 1 (highest)
@@ -66,11 +72,13 @@ D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 - [ ] Les deux produits sont dans le même groupe
 
 ### 5. Vérifier les localisations
+
 - [ ] **English (U.S.)** configuré pour tous les produits
 - [ ] **Subscription Display Name** rempli
 - [ ] **Description** remplie
 
 ### 6. Vérifier les Review Information
+
 - [ ] Screenshot uploadé pour chaque produit
 - [ ] Review Notes remplis
 
@@ -79,10 +87,12 @@ D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 ## 💰 REVENUECAT - VÉRIFICATIONS
 
 ### 1. Accéder à RevenueCat Dashboard
+
 - URL: https://app.revenuecat.com
 - Se connecter avec votre compte RevenueCat
 
 ### 2. Sélectionner le projet
+
 - Sélectionner le projet **Nœma** (ou DailyHush si pas encore renommé)
 
 ### 3. Vérifier les Products
@@ -90,6 +100,7 @@ D'après `SUBSCRIPTION_PRODUCTS_SUMMARY.md`, les produits doivent être :
 Allez dans **Products** et vérifiez que ces 3 produits existent :
 
 #### ✅ Product 1: Monthly
+
 - [ ] **Identifier:** `com.anthony.noema.monthly`
 - [ ] **Type:** Auto-renewable subscription
 - [ ] **Store:** Apple App Store
@@ -97,6 +108,7 @@ Allez dans **Products** et vérifiez que ces 3 produits existent :
 - [ ] **Status:** ✅ Active (icône verte)
 
 #### ✅ Product 2: Annual
+
 - [ ] **Identifier:** `com.anthony.noema.annual`
 - [ ] **Type:** Auto-renewable subscription
 - [ ] **Store:** Apple App Store
@@ -104,6 +116,7 @@ Allez dans **Products** et vérifiez que ces 3 produits existent :
 - [ ] **Status:** ✅ Active (icône verte)
 
 #### ✅ Product 3: Lifetime
+
 - [ ] **Identifier:** `com.anthony.noema.lifetime`
 - [ ] **Type:** Non-consumable
 - [ ] **Store:** Apple App Store
@@ -130,17 +143,20 @@ Allez dans **Offerings** :
 - [ ] **3 Packages** configurés :
 
 #### Package 1: Monthly
+
 - [ ] **Package ID:** `$rc_monthly`
 - [ ] **Product:** `com.anthony.noema.monthly`
 - [ ] **Type:** Monthly
 
 #### Package 2: Annual
+
 - [ ] **Package ID:** `$rc_annual`
 - [ ] **Product:** `com.anthony.noema.annual`
 - [ ] **Type:** Annual
 - [ ] ⭐ **Set as Default** (optionnel mais recommandé)
 
 #### Package 3: Lifetime
+
 - [ ] **Package ID:** `$rc_lifetime`
 - [ ] **Product:** `com.anthony.noema.lifetime`
 - [ ] **Type:** Lifetime
@@ -192,6 +208,7 @@ Il y a une incohérence dans la documentation :
 ## ✅ CHECKLIST RÉSUMÉ
 
 ### App Store Connect
+
 - [ ] 3 produits créés avec les bons Product IDs
 - [ ] Subscription Group configuré correctement
 - [ ] 7-day free trial activé pour Monthly et Annual
@@ -200,6 +217,7 @@ Il y a une incohérence dans la documentation :
 - [ ] Review Information complété
 
 ### RevenueCat
+
 - [ ] 3 produits créés avec les mêmes Product IDs qu'App Store Connect
 - [ ] Entitlement `premium` créé avec les 3 produits attachés
 - [ ] Offering `default` créé et marqué comme "current"
@@ -209,6 +227,7 @@ Il y a une incohérence dans la documentation :
 - [ ] API Keys disponibles et dans `.env`
 
 ### Code
+
 - [ ] `.env` contient les bonnes clés RevenueCat
 - [ ] `utils/revenueCat.ts` utilise les bons Package IDs
 - [ ] Entitlement ID = `premium` dans le code
@@ -218,11 +237,13 @@ Il y a une incohérence dans la documentation :
 ## 🔍 COMMENT VÉRIFIER RAPIDEMENT
 
 ### Dans App Store Connect:
+
 1. **My Apps** → Votre app → **Monetization** → **In-App Purchases**
 2. Vérifiez que vous voyez 3 produits
 3. Cliquez sur chaque produit pour vérifier les détails
 
 ### Dans RevenueCat:
+
 1. **Products** → Vérifiez 3 produits avec status ✅
 2. **Entitlements** → Vérifiez `premium` avec 3 produits
 3. **Offerings** → Vérifiez `default` avec 3 packages
@@ -241,4 +262,3 @@ Il y a une incohérence dans la documentation :
 ---
 
 **Prochaine étape:** Une fois toutes les vérifications faites, tester l'achat dans l'app avec un compte Sandbox Tester.
-

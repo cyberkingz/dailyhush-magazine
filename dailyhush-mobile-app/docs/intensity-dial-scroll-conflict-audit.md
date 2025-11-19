@@ -9,6 +9,7 @@
 ## Problem Statement
 
 When dragging the intensity dial (Step 2 of mood widget), the parent ScrollView scrolls instead of or in addition to the dial rotation. This creates a poor UX where:
+
 - User intends to rotate dial
 - Page scrolls unexpectedly
 - Dial interaction is interrupted
@@ -19,6 +20,7 @@ When dragging the intensity dial (Step 2 of mood widget), the parent ScrollView 
 ## Architecture Analysis
 
 ### Component Hierarchy
+
 ```
 HomeModern (app/index.tsx)
   └─ ScrollFadeView (components/ScrollFadeView.tsx)
@@ -33,11 +35,12 @@ HomeModern (app/index.tsx)
 **File**: `components/mood-widget/IntensityCircular.tsx`
 
 #### PanResponder Configuration (Lines 162-227)
+
 ```typescript
 const panResponder = useRef(
   PanResponder.create({
     onStartShouldSetPanResponder: () => true, // ✅ Claims gesture
-    onMoveShouldSetPanResponder: () => true,  // ✅ Claims gesture
+    onMoveShouldSetPanResponder: () => true, // ✅ Claims gesture
     onPanResponderTerminationRequest: () => false, // ✅ Prevents parent stealing
 
     onPanResponderGrant: () => {
@@ -56,6 +59,7 @@ const panResponder = useRef(
 ```
 
 **Analysis**:
+
 - ✅ `onPanResponderTerminationRequest: false` - Prevents gesture stealing
 - ✅ `onStartShouldSetPanResponder: true` - Claims gesture immediately
 - ❌ **ISSUE**: ScrollView doesn't know to stop scrolling
@@ -79,7 +83,7 @@ The PanResponder correctly prevents its gesture from being terminated, but the S
 ### Why Current Solution Doesn't Work
 
 ```typescript
-onPanResponderTerminationRequest: () => false
+onPanResponderTerminationRequest: () => false;
 ```
 
 This only prevents the gesture from being **stolen** after it's been claimed. It doesn't prevent the ScrollView from **starting its own gesture** before the dial claims it.
@@ -93,22 +97,26 @@ This only prevents the gesture from being **stolen** after it's been claimed. It
 **Approach**: Pass scroll control from IntensityCircular to ScrollView
 
 **Implementation**:
+
 1. Add `scrollEnabled` prop to ScrollFadeView
 2. Create context/callback to disable scroll from IntensityCircular
 3. Disable scroll on `onPanResponderGrant`
 4. Re-enable scroll on `onPanResponderRelease/Terminate`
 
 **Pros**:
+
 - ✅ Clean separation of concerns
 - ✅ Works reliably across all devices
 - ✅ No impact on other gestures
 - ✅ Standard React Native pattern
 
 **Cons**:
+
 - ❌ Requires prop drilling or context
 - ❌ Adds slight complexity
 
 **Code Changes**:
+
 ```typescript
 // 1. Create scroll control context
 const ScrollControlContext = createContext({
@@ -140,6 +148,7 @@ onPanResponderRelease: () => {
 **Approach**: Replace PanResponder with GestureHandler's Pan + ScrollView integration
 
 **Implementation**:
+
 ```typescript
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 
@@ -157,12 +166,14 @@ const panGesture = Gesture.Pan()
 ```
 
 **Pros**:
+
 - ✅ Better gesture coordination
 - ✅ Built-in ScrollView integration
 - ✅ Better performance (runs on UI thread)
 - ✅ More reliable gesture handling
 
 **Cons**:
+
 - ❌ Requires adding/configuring gesture-handler
 - ❌ Need to wrap app in GestureHandlerRootView
 - ❌ Potential breaking changes to existing gestures
@@ -175,6 +186,7 @@ const panGesture = Gesture.Pan()
 **Approach**: Use `onStartShouldSetResponderCapture` to block ScrollView
 
 **Implementation**:
+
 ```typescript
 <View
   onStartShouldSetResponderCapture={() => true} // Captures before children
@@ -188,11 +200,13 @@ const panGesture = Gesture.Pan()
 ```
 
 **Pros**:
+
 - ✅ Simple one-line change
 - ✅ No prop drilling
 - ✅ Works immediately
 
 **Cons**:
+
 - ❌ Blocks ALL touch events in area (including taps on markers)
 - ❌ Less fine-grained control
 - ❌ Can interfere with tap gestures
@@ -204,6 +218,7 @@ const panGesture = Gesture.Pan()
 **Approach**: Add a View that blocks scroll propagation
 
 **Implementation**:
+
 ```typescript
 <View
   style={styles.dialContainer}
@@ -214,11 +229,13 @@ const panGesture = Gesture.Pan()
 ```
 
 **Pros**:
+
 - ✅ Very simple
 - ✅ No changes to IntensityCircular
 - ✅ Isolated to widget only
 
 **Cons**:
+
 - ❌ May not work reliably on all platforms
 - ❌ Blocks scroll even when not dragging dial
 - ❌ User can't scroll past dial area
@@ -230,6 +247,7 @@ const panGesture = Gesture.Pan()
 **Choice**: **Option 1** - Disable ScrollView During Drag
 
 **Reasoning**:
+
 1. Most reliable across platforms
 2. Standard React Native pattern
 3. Fine-grained control (only disables during actual drag)
@@ -241,6 +259,7 @@ const panGesture = Gesture.Pan()
 ## Implementation Plan
 
 ### Step 1: Create Scroll Control Context
+
 **File**: `components/mood-widget/ScrollControlContext.tsx` (new)
 
 ```typescript
@@ -270,6 +289,7 @@ export const useScrollControl = () => useContext(ScrollControlContext);
 ```
 
 ### Step 2: Update ScrollFadeView
+
 **File**: `components/ScrollFadeView.tsx`
 
 ```typescript
@@ -291,6 +311,7 @@ export const ScrollFadeView: React.FC<ScrollFadeViewProps> = ({ ... }) => {
 ```
 
 ### Step 3: Update Home Screen
+
 **File**: `app/index.tsx`
 
 ```typescript
@@ -310,6 +331,7 @@ export default function HomeModern() {
 ```
 
 ### Step 4: Update IntensityCircular
+
 **File**: `components/mood-widget/IntensityCircular.tsx`
 
 ```typescript
@@ -385,15 +407,18 @@ If full context implementation is too complex, use this quick fix:
 ## Performance Considerations
 
 ### Memory
+
 - Context adds negligible memory overhead
 - No additional renders (boolean state only changes on drag start/end)
 
 ### Rendering
+
 - ScrollView prop change is instant
 - No visual flicker
 - No layout shifts
 
 ### Gesture Performance
+
 - No impact on gesture recognition speed
 - No additional gesture processing overhead
 
@@ -420,6 +445,7 @@ If full context implementation is too complex, use this quick fix:
 **Recommended**: Implement Option 1 (Scroll Control Context)
 
 **Rationale**:
+
 - Most reliable solution
 - Standard React Native pattern
 - No impact on other interactions

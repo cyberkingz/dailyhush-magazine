@@ -34,6 +34,7 @@ DROP CONSTRAINT user_profiles_user_id_fkey;
 ```
 
 Now when auth is deleted:
+
 1. ✅ Auth account deleted
 2. ✅ user_profiles RETAINED (no cascade)
 3. ✅ All child tables RETAINED (they reference user_profiles, which still exists)
@@ -41,11 +42,13 @@ Now when auth is deleted:
 ## Why Not Use ON DELETE SET NULL?
 
 You might think we could use:
+
 ```sql
 REFERENCES auth.users(id) ON DELETE SET NULL
 ```
 
 But this won't work because:
+
 - It would set `user_id` to NULL when auth is deleted
 - RLS policies check `auth.uid() = user_id`
 - NULL values break queries and relationships to child tables
@@ -53,6 +56,7 @@ But this won't work because:
 ## Result
 
 After this migration:
+
 - `user_profiles.user_id` will be an "orphaned" UUID (no matching auth account)
 - All user data persists for analytics and product improvement
 - User cannot sign in (auth account is gone)
@@ -61,6 +65,7 @@ After this migration:
 ## How to Apply This Migration
 
 ### For Existing Production Database:
+
 ```bash
 # Connect to your Supabase project
 supabase login
@@ -76,6 +81,7 @@ supabase db push
 ```
 
 ### For New Database Setup:
+
 The main `schema.sql` has been updated to reflect this change, so new database setups will automatically have the correct structure.
 
 ## Verification

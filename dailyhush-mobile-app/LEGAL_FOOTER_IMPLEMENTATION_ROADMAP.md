@@ -8,6 +8,7 @@
 ---
 
 ## Table of Contents
+
 1. [Overview](#overview)
 2. [Available Agents](#available-agents)
 3. [Task Breakdown](#task-breakdown)
@@ -23,12 +24,14 @@
 **Goal:** Enhance App Store compliance and user trust by adding legal footer links to all subscription/paywall screens and account deletion disclosure.
 
 **Scope:**
+
 - Create reusable `LegalFooter` component
 - Integrate footer into 3 paywall screens
 - Add Privacy Policy disclosure to account deletion screen
 - Follow senior developer best practices
 
 **Success Criteria:**
+
 - ✅ Zero hardcoded values
 - ✅ Fully reusable components
 - ✅ Props-based data flow
@@ -41,14 +44,17 @@
 ## Available Agents
 
 ### Design & UX Agents
+
 1. **ui-design-expert** - UI design, component architecture, design systems
 2. **ux-expert** - User experience, usability, interaction design
 
 ### Development Agents
+
 3. **general-purpose** - Multi-step implementation tasks
 4. **Explore** - Codebase exploration and pattern analysis
 
 ### Specialized Agents (Not needed for this task)
+
 - stripe-expert, supabase-expert, notion-specialist, copywriters, etc.
 
 ---
@@ -56,13 +62,16 @@
 ## Task Breakdown
 
 ### Phase 1: Design & Planning (1 hour)
+
 **Agent:** ui-design-expert + ux-expert
 
 #### Task 1.1: Component Design Specification
+
 **Estimated Time:** 30 minutes
 **Assignee:** ui-design-expert
 
 **Deliverables:**
+
 - Visual specifications for `LegalFooter` component
 - Typography specifications (font size, weight, color)
 - Spacing specifications (padding, margins)
@@ -71,12 +80,14 @@
 - Tap target specifications (iOS 44x44pt minimum)
 
 **Requirements:**
+
 - Match existing DailyHush design system (`constants/colors.ts`, `constants/typography.ts`)
 - Use emerald green accent color for links
 - Ensure WCAG 2.1 AA contrast ratio (4.5:1 minimum)
 - Subtle, non-intrusive design
 
 **Output Format:**
+
 ```typescript
 // Design tokens
 fontSize: 11-12px
@@ -87,10 +98,12 @@ padding: { horizontal: 16px, vertical: 12px }
 ```
 
 #### Task 1.2: UX Pattern Review
+
 **Estimated Time:** 30 minutes
 **Assignee:** ux-expert
 
 **Deliverables:**
+
 - Review existing legal link patterns in app
 - Ensure consistent navigation behavior
 - Validate accessibility (VoiceOver support)
@@ -98,6 +111,7 @@ padding: { horizontal: 16px, vertical: 12px }
 - Recommend optimal placement (above/below CTA buttons)
 
 **Requirements:**
+
 - Footer should NOT distract from primary CTA
 - Links should be discoverable but subtle
 - Consistent behavior across all screens
@@ -105,6 +119,7 @@ padding: { horizontal: 16px, vertical: 12px }
 - Loading states for navigation
 
 **Output Format:**
+
 ```
 Placement: Below primary CTA, above safe area
 Behavior: Router.push() navigation
@@ -115,15 +130,19 @@ Accessibility: aria-label for each link
 ---
 
 ### Phase 2: Component Development (2 hours)
+
 **Agent:** general-purpose
 
 #### Task 2.1: Create Reusable LegalFooter Component
+
 **Estimated Time:** 45 minutes
 **Assignee:** general-purpose
 **File:** `components/legal/LegalFooter.tsx`
 
 **Requirements:**
+
 1. **TypeScript Interface:**
+
 ```typescript
 interface LegalFooterProps {
   variant?: 'default' | 'compact'; // Optional size variant
@@ -135,6 +154,7 @@ interface LegalFooterProps {
 ```
 
 2. **Component Features:**
+
 - Props-based configuration (NO hardcoded values)
 - Configurable visibility of restore purchases link
 - Reusable across all screens
@@ -145,11 +165,13 @@ interface LegalFooterProps {
 - Accessible (screen reader support)
 
 3. **Navigation Logic:**
+
 - Privacy Policy → `router.push('/legal/privacy')`
 - Terms of Service → `router.push('/legal/terms')`
 - Restore Purchases → Call `onRestorePurchases` prop or RevenueCat's `restorePurchases()`
 
 4. **Visual Specifications:**
+
 ```typescript
 // Use design tokens from constants
 import { colors } from '@/constants/colors';
@@ -174,6 +196,7 @@ pressedOpacity: 0.7
 ```
 
 5. **Accessibility:**
+
 ```typescript
 <Pressable
   accessible={true}
@@ -184,6 +207,7 @@ pressedOpacity: 0.7
 ```
 
 6. **File Structure:**
+
 ```
 components/
   legal/
@@ -192,6 +216,7 @@ components/
 ```
 
 7. **Example Usage:**
+
 ```typescript
 // Basic usage
 <LegalFooter />
@@ -215,6 +240,7 @@ components/
 ```
 
 **Testing Requirements:**
+
 - Test navigation to Privacy Policy
 - Test navigation to Terms of Service
 - Test restore purchases callback
@@ -225,12 +251,15 @@ components/
 ---
 
 #### Task 2.2: Create Account Deletion Privacy Disclosure Component
+
 **Estimated Time:** 30 minutes
 **Assignee:** general-purpose
 **File:** `components/legal/PrivacyDisclosure.tsx`
 
 **Requirements:**
+
 1. **TypeScript Interface:**
+
 ```typescript
 interface PrivacyDisclosureProps {
   type: 'account-deletion' | 'data-retention' | 'generic';
@@ -240,6 +269,7 @@ interface PrivacyDisclosureProps {
 ```
 
 2. **Component Features:**
+
 - Reusable for different disclosure contexts
 - Warning icon (optional)
 - Link to Privacy Policy
@@ -247,50 +277,54 @@ interface PrivacyDisclosureProps {
 - Props-based configuration
 
 3. **Visual Specifications:**
+
 ```typescript
 // Container
-backgroundColor: colors.background.card
-borderRadius: 12
-padding: spacing.md
-borderWidth: 1
-borderColor: colors.orange[700] + '40' // Warning color
-marginBottom: spacing.lg
+backgroundColor: colors.background.card;
+borderRadius: 12;
+padding: spacing.md;
+borderWidth: 1;
+borderColor: colors.orange[700] + '40'; // Warning color
+marginBottom: spacing.lg;
 
 // Icon
-size: 20
-color: colors.orange[500]
+size: 20;
+color: colors.orange[500];
 
 // Text
-fontSize: 14
-color: colors.text.secondary
-lineHeight: 22
+fontSize: 14;
+color: colors.text.secondary;
+lineHeight: 22;
 
 // Link
-fontSize: 14
-color: colors.emerald[400]
-fontWeight: '600'
+fontSize: 14;
+color: colors.emerald[400];
+fontWeight: '600';
 ```
 
 4. **Content (Props-based):**
+
 ```typescript
 const DISCLOSURE_CONTENT = {
   'account-deletion': {
     icon: AlertCircle,
     title: 'Important: Data Retention',
-    message: 'Deleting your account will remove your login credentials, but some data will be retained for legal and analytics purposes.',
+    message:
+      'Deleting your account will remove your login credentials, but some data will be retained for legal and analytics purposes.',
     linkText: 'Review our Privacy Policy',
-    linkSection: '#data-retention' // Optional anchor
+    linkSection: '#data-retention', // Optional anchor
   },
   'data-retention': {
     // ...
   },
-  'generic': {
+  generic: {
     // ...
-  }
+  },
 };
 ```
 
 5. **File Structure:**
+
 ```
 components/
   legal/
@@ -300,6 +334,7 @@ components/
 ```
 
 6. **Example Usage:**
+
 ```typescript
 <PrivacyDisclosure
   type="account-deletion"
@@ -310,19 +345,23 @@ components/
 ---
 
 ### Phase 3: Integration (1.5 hours)
+
 **Agent:** general-purpose
 
 #### Task 3.1: Integrate LegalFooter into Subscription Screen
+
 **Estimated Time:** 20 minutes
 **File:** `app/subscription.tsx`
 
 **Requirements:**
+
 1. Import LegalFooter component
 2. Add after ScrollView content, before purchase button
 3. Include "Restore Purchases" link
 4. Wire up restore purchases handler
 
 **Implementation:**
+
 ```typescript
 // Import
 import { LegalFooter } from '@/components/legal';
@@ -343,6 +382,7 @@ import { LegalFooter } from '@/components/legal';
 ```
 
 **Restore Purchases Handler:**
+
 ```typescript
 const handleRestore = async () => {
   try {
@@ -361,16 +401,19 @@ const handleRestore = async () => {
 ---
 
 #### Task 3.2: Integrate LegalFooter into Onboarding Paywall
+
 **Estimated Time:** 20 minutes
 **File:** `app/onboarding/quiz/paywall.tsx`
 
 **Requirements:**
+
 1. Import LegalFooter component
 2. Add after PricingPreview, before bottom safe area
 3. Include "Restore Purchases" link (for users who already purchased)
 4. Wire up restore purchases handler
 
 **Implementation:**
+
 ```typescript
 // Import
 import { LegalFooter } from '@/components/legal';
@@ -391,6 +434,7 @@ import { LegalFooter } from '@/components/legal';
 ```
 
 **Restore Purchases Handler:**
+
 - Check if user already has Premium access
 - If yes, navigate to home screen
 - If no, show "No purchases found" message
@@ -398,10 +442,12 @@ import { LegalFooter } from '@/components/legal';
 ---
 
 #### Task 3.3: Integrate LegalFooter into Trial Expired Screen
+
 **Estimated Time:** 20 minutes
 **File:** `app/trial-expired.tsx`
 
 **Requirements:**
+
 1. Import LegalFooter component
 2. Add inside TrialExpiredPaywall component
 3. Pass through to TrialExpiredPaywall as optional prop
@@ -410,6 +456,7 @@ import { LegalFooter } from '@/components/legal';
 **Implementation:**
 
 **Option A: Modify TrialExpiredPaywall component**
+
 ```typescript
 // File: components/TrialExpiredPaywall.tsx
 interface TrialExpiredPaywallProps {
@@ -428,6 +475,7 @@ interface TrialExpiredPaywallProps {
 ```
 
 **Option B: Add directly in trial-expired.tsx**
+
 ```typescript
 // Import
 import { LegalFooter } from '@/components/legal';
@@ -445,16 +493,19 @@ import { LegalFooter } from '@/components/legal';
 ---
 
 #### Task 3.4: Add Privacy Disclosure to Account Deletion Screen
+
 **Estimated Time:** 30 minutes
 **File:** `app/settings/delete-account.tsx`
 
 **Requirements:**
+
 1. Import PrivacyDisclosure component
 2. Add ABOVE the password input field (so users see it first)
 3. Link should open Privacy Policy
 4. Show warning icon
 
 **Implementation:**
+
 ```typescript
 // Import
 import { PrivacyDisclosure } from '@/components/legal';
@@ -479,6 +530,7 @@ import { PrivacyDisclosure } from '@/components/legal';
 ```
 
 **Visual Flow:**
+
 1. User sees warning banner (red)
 2. User sees privacy disclosure (orange - less alarming)
 3. User can review Privacy Policy
@@ -487,12 +539,15 @@ import { PrivacyDisclosure } from '@/components/legal';
 ---
 
 ### Phase 4: Testing & QA (1 hour)
+
 **Agent:** general-purpose
 
 #### Task 4.1: Component Testing
+
 **Estimated Time:** 20 minutes
 
 **Test Cases:**
+
 1. **LegalFooter Component:**
    - [ ] Renders correctly with default props
    - [ ] Renders correctly with `showRestore={true}`
@@ -516,9 +571,11 @@ import { PrivacyDisclosure } from '@/components/legal';
 ---
 
 #### Task 4.2: Integration Testing
+
 **Estimated Time:** 20 minutes
 
 **Test Screens:**
+
 1. **Subscription Screen (`/subscription`):**
    - [ ] Legal footer appears at bottom of scroll view
    - [ ] Restore Purchases works correctly
@@ -546,9 +603,11 @@ import { PrivacyDisclosure } from '@/components/legal';
 ---
 
 #### Task 4.3: User Flow Testing
+
 **Estimated Time:** 20 minutes
 
 **Scenarios:**
+
 1. **New User Trial Signup:**
    - User completes quiz → sees paywall
    - User sees legal footer
@@ -571,17 +630,21 @@ import { PrivacyDisclosure } from '@/components/legal';
 ---
 
 ### Phase 5: Documentation (30 minutes)
+
 **Agent:** general-purpose
 
 #### Task 5.1: Update Component Documentation
+
 **Estimated Time:** 15 minutes
 
 **Files to Create/Update:**
+
 1. `components/legal/README.md` - Component usage guide
 2. Update `APP_STORE_COMPLIANCE.md` - Mark items as complete
 3. Update `LEGAL_PLACEMENT_COMPLIANCE_RESEARCH.md` - Add implementation notes
 
 **Documentation Content:**
+
 ```markdown
 # Legal Components
 
@@ -590,6 +653,7 @@ import { PrivacyDisclosure } from '@/components/legal';
 Reusable footer component for subscription/paywall screens.
 
 ### Usage
+
 \`\`\`typescript
 import { LegalFooter } from '@/components/legal';
 
@@ -600,6 +664,7 @@ import { LegalFooter } from '@/components/legal';
 \`\`\`
 
 ### Props
+
 - `variant` - 'default' | 'compact'
 - `showRestore` - boolean
 - `textAlign` - 'center' | 'left' | 'right'
@@ -607,24 +672,29 @@ import { LegalFooter } from '@/components/legal';
 - `onRestorePurchases` - () => void
 
 ### Examples
+
 See `/app/subscription.tsx` for implementation example.
 ```
 
 ---
 
 #### Task 5.2: Update Implementation Checklist
+
 **Estimated Time:** 15 minutes
 
 **Update APP_STORE_COMPLIANCE.md:**
+
 ```markdown
 ## Legal Document Placement
 
 ### Required (Mandatory)
+
 - [x] Settings → Legal → Privacy Policy
 - [x] Settings → Legal → Terms of Service
 - [x] Signup screen checkboxes
 
 ### Recommended (Best Practice)
+
 - [x] Subscription screen footer (app/subscription.tsx)
 - [x] Onboarding paywall footer (app/onboarding/quiz/paywall.tsx)
 - [x] Trial expired footer (app/trial-expired.tsx)
@@ -640,6 +710,7 @@ See `/app/subscription.tsx` for implementation example.
 ### Design System Integration
 
 **Colors (from `constants/colors.ts`):**
+
 ```typescript
 text: {
   primary: '#FFFFFF',     // Main text
@@ -659,6 +730,7 @@ orange: {
 ```
 
 **Spacing (from `constants/spacing.ts`):**
+
 ```typescript
 xs: 4,
 sm: 8,
@@ -674,6 +746,7 @@ safeArea: {
 ```
 
 **Typography:**
+
 ```typescript
 fontSize: {
   caption: 11,     // Compact footer
@@ -749,10 +822,12 @@ Navigation
 ### Phase 1: Design & Planning
 
 **Task 1.1: Component Design Specification**
+
 - **Agent:** ui-design-expert
 - **Duration:** 30 minutes
 - **Deliverable:** Design specifications document
 - **Command:**
+
 ```
 Create visual and interaction design specifications for a LegalFooter component for the DailyHush mobile app. The component must:
 - Match existing design system (emerald green theme, dark mode)
@@ -777,10 +852,12 @@ Output detailed specifications including:
 ```
 
 **Task 1.2: UX Pattern Review**
+
 - **Agent:** ux-expert
 - **Duration:** 30 minutes
 - **Deliverable:** UX recommendations document
 - **Command:**
+
 ```
 Review UX patterns for legal footer placement in subscription/paywall screens for the DailyHush mobile app. Research:
 
@@ -812,10 +889,12 @@ Output UX recommendations including:
 ### Phase 2: Component Development
 
 **Task 2.1: Create LegalFooter Component**
+
 - **Agent:** general-purpose
 - **Duration:** 45 minutes
 - **Deliverable:** `components/legal/LegalFooter.tsx` + tests
 - **Command:**
+
 ```
 Create a reusable LegalFooter component for the DailyHush mobile app following senior developer best practices:
 
@@ -870,10 +949,12 @@ Also create:
 ```
 
 **Task 2.2: Create PrivacyDisclosure Component**
+
 - **Agent:** general-purpose
 - **Duration:** 30 minutes
 - **Deliverable:** `components/legal/PrivacyDisclosure.tsx`
 - **Command:**
+
 ```
 Create a reusable PrivacyDisclosure component for the DailyHush mobile app:
 
@@ -924,10 +1005,12 @@ Update components/legal/index.ts to export this component.
 ### Phase 3: Integration
 
 **Task 3.1-3.4: Integrate Components into All Screens**
+
 - **Agent:** general-purpose
 - **Duration:** 1.5 hours total (20-30 min each)
 - **Deliverable:** Updated screens with legal components
 - **Command:**
+
 ```
 Integrate the LegalFooter and PrivacyDisclosure components into the DailyHush app following these requirements:
 
@@ -977,10 +1060,12 @@ For each integration:
 ### Phase 4: Testing & QA
 
 **Task 4.1-4.3: Comprehensive Testing**
+
 - **Agent:** general-purpose
 - **Duration:** 1 hour
 - **Deliverable:** Test report with all checks completed
 - **Command:**
+
 ```
 Perform comprehensive testing of the legal footer implementation:
 
@@ -1028,10 +1113,12 @@ If any tests fail, fix the issues and re-test.
 ### Phase 5: Documentation
 
 **Task 5.1-5.2: Create Documentation**
+
 - **Agent:** general-purpose
 - **Duration:** 30 minutes
 - **Deliverable:** Updated documentation files
 - **Command:**
+
 ```
 Update all documentation to reflect the legal footer implementation:
 
@@ -1085,18 +1172,21 @@ Ensure all documentation is:
 ## Implementation Checklist
 
 ### Pre-Implementation
+
 - [ ] Review LEGAL_PLACEMENT_COMPLIANCE_RESEARCH.md
 - [ ] Understand App Store requirements
 - [ ] Review existing design system
 - [ ] Review existing legal pages (/legal/privacy, /legal/terms)
 
 ### Phase 1: Design (1 hour)
+
 - [ ] **Task 1.1:** Component design specifications (ui-design-expert)
 - [ ] **Task 1.2:** UX pattern review (ux-expert)
 - [ ] Review and approve design specs
 - [ ] Review and approve UX recommendations
 
 ### Phase 2: Development (2 hours)
+
 - [ ] **Task 2.1:** Create LegalFooter component
   - [ ] Create component file
   - [ ] Implement props interface
@@ -1114,6 +1204,7 @@ Ensure all documentation is:
   - [ ] Add inline documentation
 
 ### Phase 3: Integration (1.5 hours)
+
 - [ ] **Task 3.1:** Integrate into app/subscription.tsx
   - [ ] Import component
   - [ ] Add to layout
@@ -1137,6 +1228,7 @@ Ensure all documentation is:
   - [ ] Verify layout
 
 ### Phase 4: Testing (1 hour)
+
 - [ ] **Task 4.1:** Component testing
   - [ ] LegalFooter unit tests
   - [ ] PrivacyDisclosure unit tests
@@ -1154,6 +1246,7 @@ Ensure all documentation is:
   - [ ] Edge cases
 
 ### Phase 5: Documentation (30 minutes)
+
 - [ ] **Task 5.1:** Component documentation
   - [ ] Create components/legal/README.md
   - [ ] Add usage examples
@@ -1165,6 +1258,7 @@ Ensure all documentation is:
   - [ ] Create IMPLEMENTATION_SUMMARY.md
 
 ### Post-Implementation
+
 - [ ] Run `npm run lint` (ensure no errors)
 - [ ] Run `npm run type-check` (ensure no TypeScript errors)
 - [ ] Test on physical device (if available)
@@ -1177,36 +1271,42 @@ Ensure all documentation is:
 ## Best Practices Enforced
 
 ### 1. Component Architecture
+
 ✅ **Single Responsibility:** Each component has one clear purpose
 ✅ **Composition:** Components are composable and reusable
 ✅ **Props Over Configuration:** All configuration via props, no hardcoded values
 ✅ **Type Safety:** Full TypeScript type coverage
 
 ### 2. Code Quality
+
 ✅ **DRY Principle:** No repeated code, shared logic extracted
 ✅ **Naming Conventions:** Clear, descriptive names (LegalFooter, PrivacyDisclosure)
 ✅ **Modularity:** Components are independent and portable
 ✅ **Testability:** Easy to test in isolation
 
 ### 3. Design System Consistency
+
 ✅ **Colors:** Use constants/colors.ts exclusively
 ✅ **Spacing:** Use constants/spacing.ts exclusively
 ✅ **Typography:** Use constants/typography.ts exclusively
 ✅ **Icons:** Use lucide-react-native consistently
 
 ### 4. Accessibility
+
 ✅ **Screen Reader Support:** Proper aria labels
 ✅ **Tap Targets:** Minimum 44x44pt (iOS standard)
 ✅ **Contrast:** WCAG 2.1 AA compliant (4.5:1)
 ✅ **Focus Order:** Logical and intuitive
 
 ### 5. User Experience
+
 ✅ **Haptic Feedback:** Light haptics on interactions
 ✅ **Visual Feedback:** Color change on press
 ✅ **Loading States:** Indicate async operations
 ✅ **Error Handling:** Graceful error messages
 
 ### 6. Performance
+
 ✅ **Lazy Loading:** Components loaded only when needed
 ✅ **Memoization:** Use React.memo if needed
 ✅ **Optimization:** No unnecessary re-renders
@@ -1217,24 +1317,28 @@ Ensure all documentation is:
 ## Success Metrics
 
 **Code Quality:**
+
 - [ ] 0 ESLint errors
 - [ ] 0 TypeScript errors
 - [ ] 0 hardcoded values
 - [ ] 100% type coverage
 
 **Functionality:**
+
 - [ ] All links navigate correctly
 - [ ] Restore purchases works
 - [ ] Haptic feedback works
 - [ ] Accessibility works
 
 **Design:**
+
 - [ ] Matches design system
 - [ ] Responsive on all screen sizes
 - [ ] Dark mode compatible
 - [ ] Visually consistent
 
 **Compliance:**
+
 - [ ] Meets Apple App Store requirements
 - [ ] Meets Google Play Store requirements
 - [ ] Follows industry best practices
@@ -1246,21 +1350,21 @@ Ensure all documentation is:
 
 **Total Estimated Time:** 4-5 hours
 
-| Phase | Duration | Agent | Deliverable |
-|-------|----------|-------|-------------|
-| 1.1 Design Specs | 30 min | ui-design-expert | Design specifications |
-| 1.2 UX Review | 30 min | ux-expert | UX recommendations |
-| 2.1 LegalFooter | 45 min | general-purpose | LegalFooter component |
-| 2.2 PrivacyDisclosure | 30 min | general-purpose | PrivacyDisclosure component |
-| 3.1 Subscription | 20 min | general-purpose | Updated subscription.tsx |
-| 3.2 Onboarding | 20 min | general-purpose | Updated paywall.tsx |
-| 3.3 Trial Expired | 20 min | general-purpose | Updated trial-expired.tsx |
-| 3.4 Delete Account | 30 min | general-purpose | Updated delete-account.tsx |
-| 4.1 Component Tests | 20 min | general-purpose | Test report |
-| 4.2 Integration Tests | 20 min | general-purpose | Test report |
-| 4.3 Flow Tests | 20 min | general-purpose | Test report |
-| 5.1 Component Docs | 15 min | general-purpose | README.md |
-| 5.2 Compliance Docs | 15 min | general-purpose | Updated compliance docs |
+| Phase                 | Duration | Agent            | Deliverable                 |
+| --------------------- | -------- | ---------------- | --------------------------- |
+| 1.1 Design Specs      | 30 min   | ui-design-expert | Design specifications       |
+| 1.2 UX Review         | 30 min   | ux-expert        | UX recommendations          |
+| 2.1 LegalFooter       | 45 min   | general-purpose  | LegalFooter component       |
+| 2.2 PrivacyDisclosure | 30 min   | general-purpose  | PrivacyDisclosure component |
+| 3.1 Subscription      | 20 min   | general-purpose  | Updated subscription.tsx    |
+| 3.2 Onboarding        | 20 min   | general-purpose  | Updated paywall.tsx         |
+| 3.3 Trial Expired     | 20 min   | general-purpose  | Updated trial-expired.tsx   |
+| 3.4 Delete Account    | 30 min   | general-purpose  | Updated delete-account.tsx  |
+| 4.1 Component Tests   | 20 min   | general-purpose  | Test report                 |
+| 4.2 Integration Tests | 20 min   | general-purpose  | Test report                 |
+| 4.3 Flow Tests        | 20 min   | general-purpose  | Test report                 |
+| 5.1 Component Docs    | 15 min   | general-purpose  | README.md                   |
+| 5.2 Compliance Docs   | 15 min   | general-purpose  | Updated compliance docs     |
 
 **Total:** ~5 hours (allowing buffer for iterations)
 

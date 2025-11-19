@@ -24,7 +24,7 @@ export const PREMIUM_ENTITLEMENT_ID = 'premium';
 export const PACKAGE_IDS = {
   MONTHLY: '$rc_monthly',
   ANNUAL: '$rc_annual',
-  LIFETIME: '$rc_lifetime', // RevenueCat default lifetime identifier
+  // Lifetime removed - only offering monthly and annual
 } as const;
 
 // Track if RevenueCat has been initialized
@@ -171,10 +171,8 @@ export async function checkPremiumStatus(): Promise<{
       } else if (productIdentifier?.includes('annual') || productIdentifier?.includes('year')) {
         planIdentifier = PACKAGE_IDS.ANNUAL;
         period = '/year';
-      } else if (productIdentifier?.includes('lifetime')) {
-        planIdentifier = PACKAGE_IDS.LIFETIME;
-        period = 'one-time';
       }
+      // Lifetime removed - only supporting monthly and annual
 
       return {
         isPremium: true,
@@ -288,11 +286,8 @@ export function packageToSubscriptionPlan(
     displayPrice = `${currencySymbol}${monthlyEquivalent.toFixed(2)}`;
     period = '/month';
     description = `Billed ${product.priceString} annually`;
-  } else if (pkg.identifier === PACKAGE_IDS.LIFETIME) {
-    title = 'Lifetime';
-    period = 'one-time';
-    description = 'Never pay again';
   }
+  // Lifetime removed - only supporting monthly and annual
 
   return {
     id: pkg.identifier,
@@ -315,13 +310,12 @@ export function getRecommendedPackages(packages: PurchasesPackage[]): {
   mostPopular: string | null;
   bestValue: string | null;
 } {
-  // Find annual and lifetime packages
+  // Find annual package (most popular)
   const annual = packages.find((p) => p.identifier === PACKAGE_IDS.ANNUAL);
-  const lifetime = packages.find((p) => p.identifier === PACKAGE_IDS.LIFETIME);
 
   return {
     mostPopular: annual ? annual.identifier : null,
-    bestValue: lifetime ? lifetime.identifier : null,
+    bestValue: annual ? annual.identifier : null, // Annual is now best value too
   };
 }
 

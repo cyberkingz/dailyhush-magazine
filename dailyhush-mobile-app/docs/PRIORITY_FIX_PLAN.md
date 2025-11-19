@@ -9,9 +9,11 @@
 ## Phase 1: Critical Fixes (6 hours) - MUST DO BEFORE PRODUCTION
 
 ### 1.1 Accessibility Labels (2 hours)
+
 **Priority:** 🔴 CRITICAL
 
 Add to **PaywallButton.tsx**:
+
 ```typescript
 <Pressable
   onPress={onPress}
@@ -25,6 +27,7 @@ Add to **PaywallButton.tsx**:
 ```
 
 Add to **SubscriptionOption.tsx**:
+
 ```typescript
 <Pressable
   onPress={() => onSelect(plan.id)}
@@ -37,6 +40,7 @@ Add to **SubscriptionOption.tsx**:
 ```
 
 Add to **PaywallCloseButton.tsx**:
+
 ```typescript
 <Pressable
   onPress={onClose}
@@ -47,6 +51,7 @@ Add to **PaywallCloseButton.tsx**:
 ```
 
 Add to **FeaturesList.tsx** (each feature item):
+
 ```typescript
 <View
   key={feature}
@@ -56,11 +61,13 @@ Add to **FeaturesList.tsx** (each feature item):
 ```
 
 ### 1.2 Fix PaywallHeader Fragment (30 min)
+
 **Priority:** 🔴 CRITICAL
 
 **File:** `components/paywall/PaywallHeader.tsx`
 
 **Change from:**
+
 ```typescript
 export function PaywallHeader({ icon: Icon, title, subtitle, emoji }: PaywallHeaderProps) {
   return (
@@ -70,6 +77,7 @@ export function PaywallHeader({ icon: Icon, title, subtitle, emoji }: PaywallHea
 ```
 
 **Change to:**
+
 ```typescript
 export function PaywallHeader({ icon: Icon, title, subtitle, emoji }: PaywallHeaderProps) {
   return (
@@ -79,28 +87,33 @@ export function PaywallHeader({ icon: Icon, title, subtitle, emoji }: PaywallHea
 ```
 
 ### 1.3 Fix Array Index Keys (15 min)
+
 **Priority:** 🔴 CRITICAL
 
 **File:** `components/paywall/FeaturesList.tsx:46`
 
 **Change from:**
+
 ```typescript
 {features.map((feature, index) => (
   <View key={index} style={{...}}>
 ```
 
 **Change to:**
+
 ```typescript
 {features.map((feature) => (
   <View key={feature} style={{...}}>
 ```
 
 ### 1.4 Add Null Checks for Loop Types (30 min)
+
 **Priority:** 🔴 CRITICAL
 
 **File:** `components/LoopSpecificPaywall.tsx`
 
 **Add before using config:**
+
 ```typescript
 export function LoopSpecificPaywall({ loopType, ... }: LoopSpecificPaywallProps) {
   const config = LOOP_PAYWALL_CONFIG[loopType];
@@ -123,55 +136,61 @@ export function LoopSpecificPaywall({ loopType, ... }: LoopSpecificPaywallProps)
 ```
 
 ### 1.5 Prepare for Internationalization (2 hours)
+
 **Priority:** 🔴 CRITICAL (for global launch)
 
 **Step 1:** Install i18n library
+
 ```bash
 npm install i18next react-i18next
 ```
 
 **Step 2:** Create i18n config file `/i18n/config.ts`:
+
 ```typescript
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: {
-        translation: {
-          paywall: {
-            button: {
-              loading: 'Loading...',
-              startTrial: 'Try FREE for 7 Days',
-              subscribe: 'Subscribe to Premium',
-            },
-            features: {
-              premium: [
-                'Personalized loop-breaking exercises',
-                'Advanced rumination interrupt techniques',
-                // ... etc
-              ],
-            },
+i18n.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: {
+        paywall: {
+          button: {
+            loading: 'Loading...',
+            startTrial: 'Try FREE for 7 Days',
+            subscribe: 'Subscribe to Premium',
+          },
+          features: {
+            premium: [
+              'Personalized loop-breaking exercises',
+              'Advanced rumination interrupt techniques',
+              // ... etc
+            ],
           },
         },
       },
     },
-    lng: 'en',
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+  },
+  lng: 'en',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;
 ```
 
 **Step 3:** Extract currency formatting:
+
 ```typescript
 // utils/currency.ts
-export function formatCurrency(amount: number, locale: string = 'en-US', currency: string = 'USD'): string {
+export function formatCurrency(
+  amount: number,
+  locale: string = 'en-US',
+  currency: string = 'USD'
+): string {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
@@ -198,9 +217,11 @@ export const SUBSCRIPTION_PRICING = {
 ```
 
 ### 1.6 Add Test IDs (1 hour)
+
 **Priority:** 🔴 CRITICAL (for E2E testing)
 
 Add to **all interactive components**:
+
 ```typescript
 // PaywallButton
 <Pressable
@@ -223,17 +244,19 @@ Add to **all interactive components**:
 ## Phase 2: Major Fixes (8 hours) - SHOULD DO SOON
 
 ### 2.1 Fix Type Mismatch (15 min)
+
 **Priority:** 🟡 MAJOR
 
 **File:** `components/subscription/SubscriptionOption.tsx`
 
 **Add missing field:**
+
 ```typescript
 export interface SubscriptionPlan {
   id: string;
   title: string;
   price: string;
-  priceValue: number;  // ✅ ADD THIS
+  priceValue: number; // ✅ ADD THIS
   period: string;
   badge?: string;
   savings?: string;
@@ -242,21 +265,25 @@ export interface SubscriptionPlan {
 ```
 
 ### 2.2 Export TypeScript Types (15 min)
+
 **Priority:** 🟡 MAJOR
 
 **File:** `constants/subscription.ts`
 
 **Add at end of file:**
+
 ```typescript
 export type SubscriptionPricingConfig = typeof SUBSCRIPTION_PRICING;
 export type SubscriptionTier = keyof typeof SUBSCRIPTION_PRICING;
-export type PremiumFeature = typeof PREMIUM_FEATURES[number];
+export type PremiumFeature = (typeof PREMIUM_FEATURES)[number];
 ```
 
 ### 2.3 Add Error Boundaries (1 hour)
+
 **Priority:** 🟡 MAJOR
 
 **Create:** `components/ErrorBoundary.tsx`
+
 ```typescript
 import React, { Component, ReactNode } from 'react';
 import { View, Text } from 'react-native';
@@ -306,6 +333,7 @@ export class ErrorBoundary extends Component<Props, State> {
 ```
 
 **Wrap paywalls:**
+
 ```typescript
 // app/trial-expired.tsx
 <ErrorBoundary>
@@ -314,6 +342,7 @@ export class ErrorBoundary extends Component<Props, State> {
 ```
 
 ### 2.4 Platform-Specific Shadows (30 min)
+
 **Priority:** 🟡 MAJOR
 
 **File:** `components/paywall/PaywallButton.tsx`
@@ -348,9 +377,11 @@ style={[
 ```
 
 ### 2.5 Add Memoization (2 hours)
+
 **Priority:** 🟡 MAJOR
 
 **All component files:**
+
 ```typescript
 import { memo } from 'react';
 
@@ -370,6 +401,7 @@ export const SubscriptionOption = memo(function SubscriptionOption({ ... }: Subs
 ```
 
 ### 2.6 Add Haptic Feedback (30 min)
+
 **Priority:** 🟡 MAJOR
 
 **File:** `components/subscription/SubscriptionOption.tsx`
@@ -390,9 +422,11 @@ export const SubscriptionOption = memo(function SubscriptionOption({ ... }: Subs
 ```
 
 ### 2.7 Use StyleSheet.create (2 hours)
+
 **Priority:** 🟡 MAJOR
 
 **Example for PaywallButton:**
+
 ```typescript
 import { StyleSheet } from 'react-native';
 
@@ -430,6 +464,7 @@ const styles = StyleSheet.create({
 ```
 
 ### 2.8 Make Arrays Readonly (15 min)
+
 **Priority:** 🟡 MAJOR
 
 **File:** `constants/loopPaywalls.ts`
@@ -440,7 +475,7 @@ export interface LoopPaywallConfig {
   emoji: string;
   title: string;
   subtitle: string;
-  features: readonly string[];  // ✅ Add readonly
+  features: readonly string[]; // ✅ Add readonly
   urgency: string;
 }
 ```
@@ -450,6 +485,7 @@ export interface LoopPaywallConfig {
 ## Phase 3: Testing & Validation (4 hours)
 
 ### 3.1 Manual Testing Checklist
+
 - [ ] Test all paywalls on iOS device with VoiceOver enabled
 - [ ] Test all paywalls on Android device with TalkBack enabled
 - [ ] Test subscription selection on both platforms
@@ -460,6 +496,7 @@ export interface LoopPaywallConfig {
 - [ ] Test with different text sizes (Accessibility settings)
 
 ### 3.2 Automated Testing Setup
+
 - [ ] Install testing dependencies
 - [ ] Write unit tests for components
 - [ ] Write E2E tests for paywall flows
@@ -470,18 +507,23 @@ export interface LoopPaywallConfig {
 ## Phase 4: Nice-to-Haves (6-8 hours) - FUTURE
 
 ### 4.1 JSDoc Comments
+
 Add comprehensive documentation to all components
 
 ### 4.2 Usage Examples
+
 Add examples to component files
 
 ### 4.3 Performance Monitoring
+
 Integrate React Profiler
 
 ### 4.4 Analytics
+
 Add tracking for paywall interactions
 
 ### 4.5 A/B Testing
+
 Make pricing/copy configurable for experiments
 
 ---
@@ -489,6 +531,7 @@ Make pricing/copy configurable for experiments
 ## Quick Reference: Files to Update
 
 ### Critical Fixes
+
 - [ ] `components/paywall/PaywallHeader.tsx` - Fix fragment, add a11y
 - [ ] `components/paywall/FeaturesList.tsx` - Fix keys, add a11y
 - [ ] `components/paywall/PaywallButton.tsx` - Add a11y, testID
@@ -500,6 +543,7 @@ Make pricing/copy configurable for experiments
 - [ ] `utils/currency.ts` - CREATE NEW
 
 ### Major Fixes
+
 - [ ] All component files - Add memoization, StyleSheet
 - [ ] `components/ErrorBoundary.tsx` - CREATE NEW
 - [ ] `constants/loopPaywalls.ts` - Make arrays readonly
@@ -525,11 +569,11 @@ Before marking as "Production Ready":
 
 ## Estimated Timeline
 
-| Phase | Time | When |
-|-------|------|------|
-| Phase 1: Critical | 6 hours | **This Week** |
-| Phase 2: Major | 8 hours | **Next Week** |
-| Phase 3: Testing | 4 hours | **Next Week** |
+| Phase                 | Time      | When            |
+| --------------------- | --------- | --------------- |
+| Phase 1: Critical     | 6 hours   | **This Week**   |
+| Phase 2: Major        | 8 hours   | **Next Week**   |
+| Phase 3: Testing      | 4 hours   | **Next Week**   |
 | Phase 4: Nice-to-Have | 6-8 hours | **Next Sprint** |
 
 **Total Minimum:** 18 hours
@@ -540,6 +584,7 @@ Before marking as "Production Ready":
 ## Contact for Questions
 
 Refer to:
+
 - `DEEP_AUDIT_REPORT.md` - Full audit details
 - `REFACTORING_SUMMARY.md` - Original refactoring documentation
 - `TRIAL_SYSTEM.md` - Trial system architecture

@@ -183,16 +183,19 @@ CREATE POLICY "Users can delete own mood logs"
 ### Helper Functions
 
 **get_today_mood_log(user_id)** - Get today's mood log
+
 ```sql
 SELECT * FROM get_today_mood_log(auth.uid());
 ```
 
 **get_mood_log_history(user_id, start_date, end_date, limit)** - Get history
+
 ```sql
 SELECT * FROM get_mood_log_history(auth.uid(), '2025-10-01', '2025-11-01', 100);
 ```
 
 **get_mood_stats(user_id, days)** - Get statistics
+
 ```sql
 SELECT * FROM get_mood_stats(auth.uid(), 30);
 ```
@@ -204,19 +207,21 @@ SELECT * FROM get_mood_stats(auth.uid(), 30);
 ### Core Types
 
 #### `MoodSubmitData`
+
 Data structure for submitting a mood log:
 
 ```typescript
 interface MoodSubmitData {
-  mood: MoodChoice;        // 'calm' | 'anxious' | 'sad' | 'frustrated' | 'mixed'
+  mood: MoodChoice; // 'calm' | 'anxious' | 'sad' | 'frustrated' | 'mixed'
   intensity: MoodIntensity; // 1 | 2 | 3 | 4 | 5 | 6 | 7
-  notes?: string;          // Optional quick notes
-  timestamp?: Date;        // Defaults to now
-  userId?: string;         // Auto-populated from auth
+  notes?: string; // Optional quick notes
+  timestamp?: Date; // Defaults to now
+  userId?: string; // Auto-populated from auth
 }
 ```
 
 #### `MoodLog`
+
 Complete mood log record from database:
 
 ```typescript
@@ -229,13 +234,14 @@ interface MoodLog {
   notes: string | null;
   created_at: string;
   updated_at: string;
-  log_date: string;  // YYYY-MM-DD
+  log_date: string; // YYYY-MM-DD
 }
 ```
 
 ### Error Types
 
 #### `MoodLoggingError`
+
 Custom error class with user-friendly messages:
 
 ```typescript
@@ -250,18 +256,19 @@ class MoodLoggingError extends Error {
 ```
 
 #### `MoodLoggingErrorCode`
+
 Error codes:
 
 ```typescript
 enum MoodLoggingErrorCode {
-  NETWORK_ERROR = 'NETWORK_ERROR',       // Network failed (retryable)
-  TIMEOUT_ERROR = 'TIMEOUT_ERROR',       // Request timeout (retryable)
-  UNAUTHORIZED = 'UNAUTHORIZED',         // Not logged in
+  NETWORK_ERROR = 'NETWORK_ERROR', // Network failed (retryable)
+  TIMEOUT_ERROR = 'TIMEOUT_ERROR', // Request timeout (retryable)
+  UNAUTHORIZED = 'UNAUTHORIZED', // Not logged in
   VALIDATION_ERROR = 'VALIDATION_ERROR', // Invalid input
   CONSTRAINT_ERROR = 'CONSTRAINT_ERROR', // DB constraint violation
   PERMISSION_DENIED = 'PERMISSION_DENIED', // RLS violation
-  UNKNOWN_ERROR = 'UNKNOWN_ERROR',       // Unknown error
-  OFFLINE = 'OFFLINE',                   // Device offline
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR', // Unknown error
+  OFFLINE = 'OFFLINE', // Device offline
 }
 ```
 
@@ -274,13 +281,11 @@ enum MoodLoggingErrorCode {
 Save a new mood log or update today's existing log.
 
 ```typescript
-async function saveMoodLog(
-  data: MoodSubmitData,
-  options?: SaveMoodLogOptions
-): Promise<MoodLog>
+async function saveMoodLog(data: MoodSubmitData, options?: SaveMoodLogOptions): Promise<MoodLog>;
 ```
 
 **Parameters:**
+
 - `data: MoodSubmitData` - Mood log data (mood, intensity, notes)
 - `options?: SaveMoodLogOptions` - Optional configuration
   - `merge?: boolean` - Merge with existing entry (default: false)
@@ -292,6 +297,7 @@ async function saveMoodLog(
 **Throws:** `MoodLoggingError` if save fails
 
 **Example:**
+
 ```typescript
 import { saveMoodLog } from '@/services/moodLogging';
 
@@ -299,7 +305,7 @@ try {
   const moodLog = await saveMoodLog({
     mood: 'calm',
     intensity: 4,
-    notes: 'Feeling peaceful after meditation'
+    notes: 'Feeling peaceful after meditation',
   });
   console.log('Saved:', moodLog.id);
 } catch (error) {
@@ -319,10 +325,11 @@ Get today's mood log for current user.
 async function getTodayMoodLog(
   userId?: string,
   options?: GetTodayMoodLogOptions
-): Promise<MoodLog | null>
+): Promise<MoodLog | null>;
 ```
 
 **Parameters:**
+
 - `userId?: string` - User ID (defaults to current user)
 - `options?: GetTodayMoodLogOptions` - Optional configuration
   - `forceFetch?: boolean` - Bypass cache (default: false)
@@ -333,6 +340,7 @@ async function getTodayMoodLog(
 **Throws:** `MoodLoggingError` if fetch fails
 
 **Example:**
+
 ```typescript
 import { getTodayMoodLog } from '@/services/moodLogging';
 
@@ -351,13 +359,11 @@ if (todayLog) {
 Update an existing mood log.
 
 ```typescript
-async function updateMoodLog(
-  id: string,
-  data: MoodLogUpdate
-): Promise<MoodLog>
+async function updateMoodLog(id: string, data: MoodLogUpdate): Promise<MoodLog>;
 ```
 
 **Parameters:**
+
 - `id: string` - Mood log ID to update
 - `data: MoodLogUpdate` - Fields to update (partial)
 
@@ -366,12 +372,13 @@ async function updateMoodLog(
 **Throws:** `MoodLoggingError` if update fails
 
 **Example:**
+
 ```typescript
 import { updateMoodLog } from '@/services/moodLogging';
 
 const updated = await updateMoodLog('log-id-123', {
   intensity: 5,
-  notes: 'Feeling better now'
+  notes: 'Feeling better now',
 });
 ```
 
@@ -382,10 +389,11 @@ const updated = await updateMoodLog('log-id-123', {
 Delete (soft delete) a mood log.
 
 ```typescript
-async function deleteMoodLog(id: string): Promise<void>
+async function deleteMoodLog(id: string): Promise<void>;
 ```
 
 **Parameters:**
+
 - `id: string` - Mood log ID to delete
 
 **Returns:** `Promise<void>`
@@ -393,6 +401,7 @@ async function deleteMoodLog(id: string): Promise<void>
 **Throws:** `MoodLoggingError` if delete fails
 
 **Example:**
+
 ```typescript
 import { deleteMoodLog } from '@/services/moodLogging';
 
@@ -411,10 +420,11 @@ async function getMoodHistory(
   startDate?: Date,
   endDate?: Date,
   userId?: string
-): Promise<MoodLog[]>
+): Promise<MoodLog[]>;
 ```
 
 **Parameters:**
+
 - `startDate?: Date` - Start date (default: 30 days ago)
 - `endDate?: Date` - End date (default: today)
 - `userId?: string` - User ID (default: current user)
@@ -424,6 +434,7 @@ async function getMoodHistory(
 **Throws:** `MoodLoggingError` if fetch fails
 
 **Example:**
+
 ```typescript
 import { getMoodHistory } from '@/services/moodLogging';
 
@@ -441,19 +452,18 @@ console.log(`Found ${last30Days.length} mood logs`);
 Get mood statistics for analytics.
 
 ```typescript
-async function getMoodStats(
-  days?: number,
-  userId?: string
-): Promise<MoodStats>
+async function getMoodStats(days?: number, userId?: string): Promise<MoodStats>;
 ```
 
 **Parameters:**
+
 - `days?: number` - Number of days to analyze (default: 30)
 - `userId?: string` - User ID (default: current user)
 
 **Returns:** `Promise<MoodStats>` - Mood statistics
 
 **Example:**
+
 ```typescript
 import { getMoodStats } from '@/services/moodLogging';
 
@@ -470,14 +480,13 @@ console.log('Current streak:', stats.streak_days);
 Validate mood submit data (used internally).
 
 ```typescript
-function validateMoodData(
-  data: Partial<MoodSubmitData>
-): ValidationResult
+function validateMoodData(data: Partial<MoodSubmitData>): ValidationResult;
 ```
 
 **Returns:** `ValidationResult` with validation errors by field
 
 **Example:**
+
 ```typescript
 import { validateMoodData } from '@/services/moodLogging';
 
@@ -496,7 +505,7 @@ if (!result.valid) {
 React hook for mood logging with offline support and state management.
 
 ```typescript
-function useMoodLogging(): UseMoodLoggingReturn
+function useMoodLogging(): UseMoodLoggingReturn;
 ```
 
 **Returns:**
@@ -504,12 +513,12 @@ function useMoodLogging(): UseMoodLoggingReturn
 ```typescript
 interface UseMoodLoggingReturn {
   // State
-  isSubmitting: boolean;      // Currently submitting
-  isFetching: boolean;        // Currently fetching
-  isSyncing: boolean;         // Syncing offline queue
-  error: MoodLoggingError | null;  // Current error
-  todayMood: MoodLog | null;  // Today's mood (cached)
-  pendingCount: number;       // Offline queue count
+  isSubmitting: boolean; // Currently submitting
+  isFetching: boolean; // Currently fetching
+  isSyncing: boolean; // Syncing offline queue
+  error: MoodLoggingError | null; // Current error
+  todayMood: MoodLog | null; // Today's mood (cached)
+  pendingCount: number; // Offline queue count
 
   // Actions
   submitMood: (data: MoodSubmitData) => Promise<MoodLog | null>;
@@ -636,26 +645,28 @@ function OfflineStatus() {
 
 All errors are instances of `MoodLoggingError` with specific codes:
 
-| Code | Description | User Message | Retryable |
-|------|-------------|--------------|-----------|
-| `NETWORK_ERROR` | Network connection failed | "Unable to connect. Please check your internet connection." | Yes |
-| `TIMEOUT_ERROR` | Request timed out | "Request timed out. Please try again." | Yes |
-| `UNAUTHORIZED` | User not logged in | "You must be logged in to save mood logs." | No |
-| `VALIDATION_ERROR` | Invalid input data | Specific field error (e.g., "Mood is required") | No |
-| `CONSTRAINT_ERROR` | Database constraint violation | "Invalid data. Please check your input." | No |
-| `PERMISSION_DENIED` | RLS policy violation | "You do not have permission to access this data." | No |
-| `UNKNOWN_ERROR` | Unknown error | "An unexpected error occurred. Please try again." | No |
-| `OFFLINE` | Device offline | User not shown (queued automatically) | N/A |
+| Code                | Description                   | User Message                                                | Retryable |
+| ------------------- | ----------------------------- | ----------------------------------------------------------- | --------- |
+| `NETWORK_ERROR`     | Network connection failed     | "Unable to connect. Please check your internet connection." | Yes       |
+| `TIMEOUT_ERROR`     | Request timed out             | "Request timed out. Please try again."                      | Yes       |
+| `UNAUTHORIZED`      | User not logged in            | "You must be logged in to save mood logs."                  | No        |
+| `VALIDATION_ERROR`  | Invalid input data            | Specific field error (e.g., "Mood is required")             | No        |
+| `CONSTRAINT_ERROR`  | Database constraint violation | "Invalid data. Please check your input."                    | No        |
+| `PERMISSION_DENIED` | RLS policy violation          | "You do not have permission to access this data."           | No        |
+| `UNKNOWN_ERROR`     | Unknown error                 | "An unexpected error occurred. Please try again."           | No        |
+| `OFFLINE`           | Device offline                | User not shown (queued automatically)                       | N/A       |
 
 ### Retry Logic
 
 **Retryable Errors** (NETWORK_ERROR, TIMEOUT_ERROR):
+
 - Automatic retry with exponential backoff
 - 3 attempts: 1s → 2s → 4s
 - Max delay: 10 seconds
 - Queued offline if all retries fail
 
 **Non-Retryable Errors** (VALIDATION_ERROR, UNAUTHORIZED, etc.):
+
 - No retry
 - Immediate error shown to user
 - User must fix issue
@@ -702,13 +713,13 @@ function ErrorDisplay({ error }: { error: MoodLoggingError | null }) {
 
 ```typescript
 interface OfflineMoodLog {
-  tempId: string;              // Temporary UUID
-  data: MoodSubmitData;        // Mood log data
-  queuedAt: string;            // ISO timestamp
-  status: OfflineQueueStatus;  // 'pending' | 'syncing' | 'synced' | 'failed'
-  retryCount: number;          // Number of sync attempts
-  lastAttempt?: string;        // Last sync attempt timestamp
-  lastError?: string;          // Last error message
+  tempId: string; // Temporary UUID
+  data: MoodSubmitData; // Mood log data
+  queuedAt: string; // ISO timestamp
+  status: OfflineQueueStatus; // 'pending' | 'syncing' | 'synced' | 'failed'
+  retryCount: number; // Number of sync attempts
+  lastAttempt?: string; // Last sync attempt timestamp
+  lastError?: string; // Last error message
 }
 ```
 
@@ -743,7 +754,10 @@ function SyncButton() {
 All operations require authentication:
 
 ```typescript
-const { data: { user }, error } = await supabase.auth.getUser();
+const {
+  data: { user },
+  error,
+} = await supabase.auth.getUser();
 if (!user) {
   throw new MoodLoggingError('UNAUTHORIZED', 'Must be logged in');
 }
@@ -778,7 +792,7 @@ describe('saveMoodLog', () => {
     const data: MoodSubmitData = {
       mood: 'calm',
       intensity: 4,
-      notes: 'Test note'
+      notes: 'Test note',
     };
 
     const result = await saveMoodLog(data);
@@ -809,7 +823,7 @@ describe('useMoodLogging', () => {
     await act(async () => {
       await result.current.submitMood({
         mood: 'calm',
-        intensity: 4
+        intensity: 4,
       });
     });
 
@@ -839,22 +853,18 @@ export function createMockMoodLog(): MoodLog {
 
 // Clear today's mood for tests
 export async function clearTodayMoodLog() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return;
 
   const today = new Date().toISOString().split('T')[0];
-  await supabase
-    .from('mood_logs')
-    .delete()
-    .eq('user_id', user.id)
-    .eq('log_date', today);
+  await supabase.from('mood_logs').delete().eq('user_id', user.id).eq('log_date', today);
 }
 
 // Simulate network error
 export async function simulateNetworkError() {
-  jest.spyOn(global, 'fetch').mockRejectedValue(
-    new Error('Network request failed')
-  );
+  jest.spyOn(global, 'fetch').mockRejectedValue(new Error('Network request failed'));
 }
 ```
 
@@ -1006,10 +1016,13 @@ export function MoodWidget() {
 **Cause**: User is not authenticated
 
 **Solution**:
+
 ```typescript
 import { supabase } from '@/utils/supabase';
 
-const { data: { user } } = await supabase.auth.getUser();
+const {
+  data: { user },
+} = await supabase.auth.getUser();
 if (!user) {
   // Redirect to login
   router.push('/login');
@@ -1021,11 +1034,13 @@ if (!user) {
 ### Issue: Mood log not saving
 
 **Possible Causes**:
+
 1. Validation error (intensity > 7)
 2. Network error
 3. RLS policy issue
 
 **Debug**:
+
 ```typescript
 try {
   await saveMoodLog(data);
@@ -1043,11 +1058,13 @@ try {
 ### Issue: Offline queue not syncing
 
 **Possible Causes**:
+
 1. Network still offline
 2. Max retries reached (3)
 3. Authentication expired
 
 **Solution**:
+
 ```typescript
 const { syncOfflineQueue, pendingCount } = useMoodLogging();
 
@@ -1070,6 +1087,7 @@ console.log('Queue items:', queue);
 **Cause**: Cache not refreshed
 
 **Solution**:
+
 ```typescript
 const { refreshTodayMood } = useMoodLogging();
 
@@ -1084,6 +1102,7 @@ await refreshTodayMood();
 **Cause**: Trying to access another user's data
 
 **Debug**:
+
 ```sql
 -- Check RLS policies
 SELECT * FROM pg_policies WHERE tablename = 'mood_logs';
@@ -1142,14 +1161,14 @@ await supabase.from('mood_entries').insert({
   user_id: userId,
   mood_type: 'calm',
   intensity_rating: 4,
-  journal_text_encrypted: encrypted
+  journal_text_encrypted: encrypted,
 });
 
 // New (mood_logs)
 await saveMoodLog({
   mood: 'calm',
   intensity: 4,
-  notes: 'Quick note'
+  notes: 'Quick note',
 });
 ```
 
@@ -1159,27 +1178,27 @@ await saveMoodLog({
 
 ### Service Functions
 
-| Function | Parameters | Returns | Throws |
-|----------|-----------|---------|--------|
-| `saveMoodLog` | `data, options?` | `Promise<MoodLog>` | `MoodLoggingError` |
-| `getTodayMoodLog` | `userId?, options?` | `Promise<MoodLog \| null>` | `MoodLoggingError` |
-| `updateMoodLog` | `id, data` | `Promise<MoodLog>` | `MoodLoggingError` |
-| `deleteMoodLog` | `id` | `Promise<void>` | `MoodLoggingError` |
-| `getMoodHistory` | `start?, end?, userId?` | `Promise<MoodLog[]>` | `MoodLoggingError` |
-| `getMoodStats` | `days?, userId?` | `Promise<MoodStats>` | `MoodLoggingError` |
-| `validateMoodData` | `data` | `ValidationResult` | - |
+| Function           | Parameters              | Returns                    | Throws             |
+| ------------------ | ----------------------- | -------------------------- | ------------------ |
+| `saveMoodLog`      | `data, options?`        | `Promise<MoodLog>`         | `MoodLoggingError` |
+| `getTodayMoodLog`  | `userId?, options?`     | `Promise<MoodLog \| null>` | `MoodLoggingError` |
+| `updateMoodLog`    | `id, data`              | `Promise<MoodLog>`         | `MoodLoggingError` |
+| `deleteMoodLog`    | `id`                    | `Promise<void>`            | `MoodLoggingError` |
+| `getMoodHistory`   | `start?, end?, userId?` | `Promise<MoodLog[]>`       | `MoodLoggingError` |
+| `getMoodStats`     | `days?, userId?`        | `Promise<MoodStats>`       | `MoodLoggingError` |
+| `validateMoodData` | `data`                  | `ValidationResult`         | -                  |
 
 ### Hook Methods
 
-| Method | Parameters | Returns | Description |
-|--------|-----------|---------|-------------|
-| `submitMood` | `data` | `Promise<MoodLog \| null>` | Submit new mood log |
-| `getTodayMood` | `forceFetch?` | `Promise<MoodLog \| null>` | Get today's mood |
-| `updateMood` | `id, data` | `Promise<MoodLog \| null>` | Update existing log |
-| `deleteMood` | `id` | `Promise<boolean>` | Delete mood log |
-| `syncOfflineQueue` | - | `Promise<void>` | Sync offline queue |
-| `clearError` | - | `void` | Clear error state |
-| `refreshTodayMood` | - | `Promise<void>` | Refresh cached mood |
+| Method             | Parameters    | Returns                    | Description         |
+| ------------------ | ------------- | -------------------------- | ------------------- |
+| `submitMood`       | `data`        | `Promise<MoodLog \| null>` | Submit new mood log |
+| `getTodayMood`     | `forceFetch?` | `Promise<MoodLog \| null>` | Get today's mood    |
+| `updateMood`       | `id, data`    | `Promise<MoodLog \| null>` | Update existing log |
+| `deleteMood`       | `id`          | `Promise<boolean>`         | Delete mood log     |
+| `syncOfflineQueue` | -             | `Promise<void>`            | Sync offline queue  |
+| `clearError`       | -             | `void`                     | Clear error state   |
+| `refreshTodayMood` | -             | `Promise<void>`            | Refresh cached mood |
 
 ---
 

@@ -7,6 +7,7 @@
 Welcome to Nœma, a mobile application operated by Red Impact LLC. These Terms of Service ("Terms") govern your access to and use of the Nœma mobile application and services.
 
 **Company Information:**
+
 - **Company Name:** Red Impact LLC DBA Nœma
 - **Address:** 30 N Gould St Ste R, Sheridan, Wyoming, 82801
 - **Email:** hello@trynoema.com
@@ -20,6 +21,7 @@ Welcome to Nœma, a mobile application operated by Red Impact LLC. These Terms o
 ### 1.1 What Nœma Provides
 
 Nœma is a mobile application designed to help users interrupt and manage rumination spirals through:
+
 - **Overthinking Quiz** - Assess your rumination patterns
 - **F.I.R.E. Framework Training** - Focus, Interrupt, Reframe, Execute modules
 - **Spiral Intervention Tools** - Breathing exercises, grounding techniques, mindfulness protocols
@@ -32,12 +34,14 @@ Nœma is a mobile application designed to help users interrupt and manage rumina
 ### 1.2 What Nœma Is NOT
 
 Nœma is **NOT**:
+
 - A substitute for professional mental health treatment
 - Medical or therapeutic advice
 - Crisis intervention or emergency service
 - A diagnosis tool for mental health conditions
 
 **If you are experiencing a mental health crisis, please contact:**
+
 - **National Suicide Prevention Lifeline:** 988 (US)
 - **Crisis Text Line:** Text HOME to 741741 (US)
 - **Emergency Services:** 911 (US) or your local emergency number
@@ -47,6 +51,7 @@ Nœma is **NOT**:
 ### 2.1 Account Creation
 
 To use Nœma, you must:
+
 - Be at least 13 years of age
 - Provide accurate, current information
 - Create a secure password
@@ -57,6 +62,7 @@ To use Nœma, you must:
 ### 2.2 Account Security
 
 You are responsible for:
+
 - Maintaining the confidentiality of your password
 - All activities that occur under your account
 - Notifying us immediately of any unauthorized use
@@ -66,6 +72,7 @@ You are responsible for:
 ### 2.3 Account Termination
 
 **You may terminate your account at any time by:**
+
 1. Opening the Nœma app
 2. Going to Settings → Account → Delete Account
 3. Confirming deletion
@@ -73,12 +80,14 @@ You are responsible for:
 OR emailing hello@trynoema.com with subject "Delete My Account"
 
 **We may terminate or suspend your account if you:**
+
 - Violate these Terms
 - Engage in fraudulent or illegal activity
 - Abuse the service or harm other users
 - Remain inactive for more than 2 years
 
 **Upon termination:**
+
 - Your account data will be deleted within 30 days
 - You will lose access to all premium features
 - Subscription charges (if applicable) will cease
@@ -88,6 +97,7 @@ OR emailing hello@trynoema.com with subject "Delete My Account"
 ### 3.1 Free Features
 
 Nœma offers free features including:
+
 - Overthinking Quiz
 - Basic spiral logging
 - Limited F.I.R.E. framework modules
@@ -96,6 +106,7 @@ Nœma offers free features including:
 ### 3.2 Premium Subscription
 
 Premium features include:
+
 - Full F.I.R.E. framework training (all 4 modules)
 - Unlimited spiral logging and pattern analytics
 - Unlimited daily quotes
@@ -105,6 +116,7 @@ Premium features include:
 - Priority customer support
 
 **Subscription Tiers:**
+
 - **Monthly:** $7.99/month
 - **Annual:** $69.99/year (save 26%)
 
@@ -121,6 +133,7 @@ Prices are in USD and subject to change with 30 days notice.
 ### 3.4 Refunds
 
 Refunds are handled by Apple or Google according to their refund policies:
+
 - **Apple App Store:** [https://support.apple.com/en-us/HT204084](https://support.apple.com/en-us/HT204084)
 - **Google Play:** [https://support.google.com/googleplay/answer/2479637](https://support.google.com/googleplay/answer/2479637)
 
@@ -137,6 +150,7 @@ The Shift necklace is sold separately and is not included in app subscriptions. 
 You agree to use Nœma only for lawful purposes and in accordance with these Terms. You agree NOT to:
 
 **Prohibited Activities:**
+
 - Violate any local, state, national, or international law
 - Harass, abuse, or harm other users
 - Impersonate any person or entity
@@ -151,6 +165,7 @@ You agree to use Nœma only for lawful purposes and in accordance with these Ter
 ### 4.2 Voice Journal Content
 
 When using the 3AM Mode voice journal feature:
+
 - Voice recordings are for your personal use only
 - Do not record content that is illegal, defamatory, or violates others' rights
 - We reserve the right to disable the voice journal feature if we suspect misuse
@@ -159,6 +174,7 @@ When using the 3AM Mode voice journal feature:
 ### 4.3 Consequences of Violation
 
 Violation of these terms may result in:
+
 - Warning and request to cease prohibited activity
 - Temporary suspension of your account
 - Permanent termination of your account
@@ -169,12 +185,14 @@ Violation of these terms may result in:
 ### 5.1 Nœma Ownership
 
 All content, features, and functionality of the Nœma app are owned by Red Impact LLC and are protected by:
+
 - Copyright laws
 - Trademark laws
 - Trade secret laws
 - Other intellectual property laws
 
 **This includes:**
+
 - The Nœma name and logo
 - The F.I.R.E. framework and training materials
 - Daily quotes and inspirational content
@@ -185,10 +203,12 @@ All content, features, and functionality of the Nœma app are owned by Red Impac
 ### 5.2 Limited License
 
 We grant you a limited, non-exclusive, non-transferable, revocable license to:
+
 - Download and install the app on your personal device(s)
 - Use the app for your personal, non-commercial purposes
 
 **You may NOT:**
+
 - Copy, modify, or create derivative works
 - Sell, rent, lease, or sublicense the app
 - Remove copyright or proprietary notices
@@ -197,6 +217,7 @@ We grant you a limited, non-exclusive, non-transferable, revocable license to:
 ### 5.3 User Content
 
 You retain ownership of any content you create in the app (spiral logs, journal entries, personal notes). By using Nœma, you grant us a limited license to use this content solely to:
+
 - Provide the services to you
 - Generate anonymized, aggregated analytics
 - Improve the app and develop new features
@@ -222,6 +243,7 @@ We will never share your personal content with third parties or use it for marke
 Nœma is provided "AS IS" and "AS AVAILABLE" without any warranties of any kind.
 
 **We do not guarantee:**
+
 - Uninterrupted or error-free service
 - That defects will be corrected
 - That the app is free from viruses or harmful components
@@ -229,6 +251,7 @@ Nœma is provided "AS IS" and "AS AVAILABLE" without any warranties of any kind.
 - That data will not be lost
 
 **We may:**
+
 - Modify or discontinue features at any time
 - Perform scheduled maintenance that temporarily interrupts service
 - Experience unexpected downtime
@@ -238,6 +261,7 @@ Nœma is provided "AS IS" and "AS AVAILABLE" without any warranties of any kind.
 **TO THE MAXIMUM EXTENT PERMITTED BY LAW:**
 
 Red Impact LLC (Nœma) shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:
+
 - Loss of profits
 - Loss of data
 - Loss of use
@@ -251,6 +275,7 @@ Red Impact LLC (Nœma) shall not be liable for any indirect, incidental, special
 ### 6.4 User Responsibility
 
 You acknowledge and agree that:
+
 - You use Nœma at your own risk
 - You are solely responsible for your own mental health and well-being
 - Nœma is a self-help tool and not a replacement for therapy
@@ -261,6 +286,7 @@ You acknowledge and agree that:
 ### 7.1 Third-Party Integrations
 
 Nœma may integrate with third-party services such as:
+
 - Apple Health / Google Fit (optional health data integration)
 - Cloud storage services (for backup)
 - Analytics platforms (for app improvement)
@@ -270,6 +296,7 @@ Nœma may integrate with third-party services such as:
 ### 7.2 Third-Party Content
 
 The app may include content from third parties, including:
+
 - Inspirational quotes
 - Educational materials
 - Research citations
@@ -279,6 +306,7 @@ We make efforts to credit original sources, but we are not responsible for the a
 ## 8. Modifications to Terms
 
 We may modify these Terms at any time. When we make changes, we will:
+
 - Update the "Last Updated" date
 - Notify you via email (for material changes)
 - Display an in-app notification
@@ -291,6 +319,7 @@ If you do not agree to the modified Terms, you must stop using the app and may d
 ## 9. Modifications to the App
 
 We reserve the right to:
+
 - Modify or discontinue any feature of the app
 - Change subscription pricing with 30 days notice
 - Add or remove content
@@ -317,6 +346,7 @@ Any legal action or proceeding arising out of or relating to these Terms or your
 ### 11.3 Dispute Resolution
 
 **Before filing any legal claim, you agree to:**
+
 1. Contact us at hello@trynoema.com to attempt to resolve the dispute informally
 2. Wait 30 days to allow us to investigate and respond
 3. Engage in good faith negotiations to reach a resolution
@@ -334,6 +364,7 @@ You agree that any claim arising out of or related to these Terms or your use of
 ## 12. Indemnification
 
 You agree to indemnify, defend, and hold harmless Red Impact LLC, its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses (including attorney fees) arising out of or in any way connected with:
+
 - Your use of Nœma
 - Your violation of these Terms
 - Your violation of any rights of another person or entity
@@ -360,6 +391,7 @@ We may assign our rights and obligations under these Terms without restriction.
 ## 17. Force Majeure
 
 We shall not be liable for any failure or delay in performing our obligations due to circumstances beyond our reasonable control, including but not limited to:
+
 - Natural disasters
 - War or terrorism
 - Government actions
@@ -370,6 +402,7 @@ We shall not be liable for any failure or delay in performing our obligations du
 ## 18. Survival
 
 The following provisions shall survive termination of these Terms:
+
 - Intellectual Property Rights
 - Disclaimers and Limitations of Liability
 - Indemnification

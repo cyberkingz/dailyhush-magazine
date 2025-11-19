@@ -138,7 +138,6 @@ export function BreathingAnimation({
     }
   };
 
-
   /**
    * Advance to next phase
    */
@@ -207,7 +206,6 @@ export function BreathingAnimation({
     };
   }, [currentPhase, isPaused]);
 
-
   return (
     <ImageBackground
       source={require('@/assets/img/forest.png')}
@@ -256,10 +254,10 @@ export function BreathingAnimation({
               {protocol === 'cyclic-sigh'
                 ? 'CYCLIC SIGH'
                 : protocol === '4-7-8'
-                ? '4-7-8 BREATHING'
-                : protocol === 'box'
-                ? 'BOX BREATHING'
-                : 'COHERENT BREATHING'}
+                  ? '4-7-8 BREATHING'
+                  : protocol === 'box'
+                    ? 'BOX BREATHING'
+                    : 'COHERENT BREATHING'}
             </Text>
           </View>
         </View>
@@ -382,4 +380,3 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
 });
-

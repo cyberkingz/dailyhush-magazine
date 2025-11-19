@@ -11,12 +11,12 @@ import { Check, Lock } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
 import { Text } from '@/components/ui/text';
-import { PageHeader } from '@/components/PageHeader';
 import { useUser } from '@/store/useStore';
 import { FireModule } from '@/types';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 import { brandFonts } from '@/constants/profileTypography';
+import { FIRE_MODULES } from '@/constants/trainingContent';
 
 interface ModuleCardProps {
   module: FireModule;
@@ -169,48 +169,22 @@ export default function Training() {
     execute: false,
   };
 
-  const modules = [
-    {
-      module: FireModule.FOCUS,
-      title: 'Focus',
-      subtitle: 'Understanding Your Pattern',
-      description:
-        'Learn what rumination is and identify your unique triggers. Map the patterns that keep you stuck.',
-      duration: '15 min',
-      completed: fireProgress.focus,
-      locked: false,
-    },
-    {
-      module: FireModule.INTERRUPT,
-      title: 'Interrupt',
-      subtitle: 'Stop the Loop',
-      description:
-        'Master the 10-second window. Practice techniques to catch and interrupt spirals before they lock in.',
-      duration: '20 min',
-      completed: fireProgress.interrupt,
-      locked: !fireProgress.focus,
-    },
-    {
-      module: FireModule.REFRAME,
-      title: 'Reframe',
-      subtitle: 'Change the Narrative',
-      description:
-        'Transform shame-based thinking. Learn to challenge cognitive distortions and build healthier thought patterns.',
-      duration: '20 min',
-      completed: fireProgress.reframe,
-      locked: !fireProgress.interrupt,
-    },
-    {
-      module: FireModule.EXECUTE,
-      title: 'Execute',
-      subtitle: 'Build New Patterns',
-      description:
-        'Create your personalized 30-day plan. Practice daily techniques that rewire your brain for lasting change.',
-      duration: '25 min',
-      completed: fireProgress.execute,
-      locked: !fireProgress.reframe,
-    },
-  ];
+  const modules = FIRE_MODULES.map((m) => ({
+    module: m.id as FireModule,
+    title: m.title,
+    subtitle: m.subtitle,
+    description: m.description,
+    duration: m.duration,
+    completed: fireProgress[m.id as keyof typeof fireProgress],
+    locked:
+      m.id === 'focus'
+        ? false
+        : m.id === 'interrupt'
+          ? !fireProgress.focus
+          : m.id === 'reframe'
+            ? !fireProgress.interrupt
+            : !fireProgress.reframe,
+  }));
 
   const handleModulePress = (module: FireModule, locked: boolean) => {
     if (locked) return;

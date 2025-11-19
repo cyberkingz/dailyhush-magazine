@@ -8,7 +8,14 @@
  */
 
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, ScrollView, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ExerciseContainer } from '@/components/exercises/ExerciseContainer';
 import { PrePostRatingCard } from '@/components/exercises/PrePostRatingCard';
@@ -22,11 +29,41 @@ import type { TriggerOption, GroundingData } from '@/types/exercises';
 
 // Mock trigger data
 const MOCK_TRIGGERS: TriggerOption[] = [
-  { trigger_id: '1', trigger_name: 'Work stress', trigger_category: 'work', display_order: 1, loop_type: 'all' },
-  { trigger_id: '2', trigger_name: 'Social situation', trigger_category: 'social', display_order: 2, loop_type: 'all' },
-  { trigger_id: '3', trigger_name: 'Health worry', trigger_category: 'health', display_order: 3, loop_type: 'all' },
-  { trigger_id: '4', trigger_name: 'Relationship', trigger_category: 'relationship', display_order: 4, loop_type: 'all' },
-  { trigger_id: '5', trigger_name: 'Financial concern', trigger_category: 'financial', display_order: 5, loop_type: 'all' },
+  {
+    trigger_id: '1',
+    trigger_name: 'Work stress',
+    trigger_category: 'work',
+    display_order: 1,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '2',
+    trigger_name: 'Social situation',
+    trigger_category: 'social',
+    display_order: 2,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '3',
+    trigger_name: 'Health worry',
+    trigger_category: 'health',
+    display_order: 3,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '4',
+    trigger_name: 'Relationship',
+    trigger_category: 'relationship',
+    display_order: 4,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '5',
+    trigger_name: 'Financial concern',
+    trigger_category: 'financial',
+    display_order: 5,
+    loop_type: 'all',
+  },
 ];
 
 const SENSE_CONFIG = {
@@ -67,16 +104,6 @@ export default function GroundingExercise() {
     onAbandon: () => router.back(),
   });
 
-  const handlePreRating = async (rating: number) => {
-    await setPreRating(rating);
-    await goToNextStage();
-  };
-
-  const handlePostRating = async (rating: number) => {
-    await setPostRating(rating);
-    await goToNextStage();
-  };
-
   const handleTriggerLog = async () => {
     if (selectedTrigger) {
       await logTrigger({
@@ -94,21 +121,23 @@ export default function GroundingExercise() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center">
+      <View className="bg-forest-900 flex-1 items-center justify-center">
         <ActivityIndicator size="large" color="#4FD1C5" />
-        <Text className="text-sage-300 font-inter-medium text-base mt-4">Loading exercise...</Text>
+        <Text className="font-inter-medium mt-4 text-base text-sage-300">Loading exercise...</Text>
       </View>
     );
   }
 
   if (error || !session) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center px-6">
-        <Text className="text-red-400 font-poppins-semibold text-xl mb-2">Error</Text>
-        <Text className="text-sage-300 font-inter-regular text-base text-center mb-6">
+      <View className="bg-forest-900 flex-1 items-center justify-center px-6">
+        <Text className="font-poppins-semibold mb-2 text-xl text-red-400">Error</Text>
+        <Text className="font-inter-regular mb-6 text-center text-base text-sage-300">
           {error || 'Failed to start exercise'}
         </Text>
-        <TouchableOpacity onPress={() => router.back()} className="bg-mindful-teal rounded-xl px-6 py-3">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="bg-mindful-teal rounded-xl px-6 py-3">
           <Text className="text-forest-900 font-poppins-semibold text-base">Go Back</Text>
         </TouchableOpacity>
       </View>
@@ -165,10 +194,12 @@ export default function GroundingExercise() {
         );
 
       case 'complete':
-        const reduction = session.preRating && session.postRating ? session.preRating - session.postRating : 0;
-        const reductionPercentage = session.preRating && session.preRating > 0
-          ? Math.round((reduction / session.preRating) * 100)
-          : 0;
+        const reduction =
+          session.preRating && session.postRating ? session.preRating - session.postRating : 0;
+        const reductionPercentage =
+          session.preRating && session.preRating > 0
+            ? Math.round((reduction / session.preRating) * 100)
+            : 0;
 
         return (
           <CompletionScreen
@@ -197,8 +228,7 @@ export default function GroundingExercise() {
       session={session}
       onPause={pause}
       onResume={resume}
-      onAbandon={abandon}
-    >
+      onAbandon={abandon}>
       {renderStage()}
     </ExerciseContainer>
   );
@@ -215,7 +245,7 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
           <Text className="text-sage-50 font-poppins-bold text-3xl leading-tight">
             {GROUNDING_5_4_3_2_1_CONFIG.copy.headline}
           </Text>
-          <Text className="text-sage-300 font-inter-regular text-lg leading-relaxed">
+          <Text className="font-inter-regular text-lg leading-relaxed text-sage-300">
             {GROUNDING_5_4_3_2_1_CONFIG.copy.subheadline}
           </Text>
         </View>
@@ -225,10 +255,10 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
           <Text className="text-sage-50 font-poppins-semibold text-xl">How it works:</Text>
           {GROUNDING_5_4_3_2_1_CONFIG.instructions.map((instruction, index) => (
             <View key={index} className="flex-row gap-3">
-              <View className="w-8 h-8 bg-mindful-teal/20 rounded-full items-center justify-center">
+              <View className="bg-mindful-teal/20 h-8 w-8 items-center justify-center rounded-full">
                 <Text className="text-mindful-teal font-poppins-bold text-sm">{index + 1}</Text>
               </View>
-              <Text className="flex-1 text-sage-300 font-inter-regular text-base leading-relaxed pt-1">
+              <Text className="font-inter-regular flex-1 pt-1 text-base leading-relaxed text-sage-300">
                 {instruction}
               </Text>
             </View>
@@ -236,9 +266,11 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
         </View>
 
         <TouchableOpacity
-          onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); onContinue(); }}
-          className="bg-mindful-teal rounded-xl py-4 flex-row items-center justify-center gap-2 shadow-lg mt-2"
-        >
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onContinue();
+          }}
+          className="bg-mindful-teal mt-2 flex-row items-center justify-center gap-2 rounded-xl py-4 shadow-lg">
           <Text className="text-forest-900 font-poppins-semibold text-lg">
             {GROUNDING_5_4_3_2_1_CONFIG.copy.ctaStart}
           </Text>
@@ -293,13 +325,18 @@ function GroundingExerciseStage({
     // Check if sense is complete
     if (senseData.identified + 1 >= senseData.target) {
       // Move to next sense or complete
-      const senseOrder: Array<keyof typeof SENSE_CONFIG> = ['see', 'touch', 'hear', 'smell', 'taste'];
+      const senseOrder: (keyof typeof SENSE_CONFIG)[] = ['see', 'touch', 'hear', 'smell', 'taste'];
       const currentIndex = senseOrder.indexOf(currentSense);
 
       if (currentIndex < senseOrder.length - 1) {
         // Move to next sense
         const nextSense = senseOrder[currentIndex + 1];
-        updateExerciseData({ ...groundingData, senses: updatedSenses, totalIdentified: newTotalIdentified, currentSense: nextSense });
+        updateExerciseData({
+          ...groundingData,
+          senses: updatedSenses,
+          totalIdentified: newTotalIdentified,
+          currentSense: nextSense,
+        });
       } else {
         // Exercise complete
         goToNextStage();
@@ -313,31 +350,32 @@ function GroundingExerciseStage({
         {/* Sense Header */}
         <View className="items-center">
           <View
-            className="w-20 h-20 rounded-full items-center justify-center mb-4"
-            style={{ backgroundColor: `${config.color}20` }}
-          >
+            className="mb-4 h-20 w-20 items-center justify-center rounded-full"
+            style={{ backgroundColor: `${config.color}20` }}>
             <Icon size={40} color={config.color} />
           </View>
-          <Text className="text-sage-50 font-poppins-bold text-2xl text-center mb-2">
+          <Text className="text-sage-50 font-poppins-bold mb-2 text-center text-2xl">
             {config.label}
           </Text>
-          <Text className="text-sage-300 font-inter-regular text-base text-center">
+          <Text className="font-inter-regular text-center text-base text-sage-300">
             Identify {senseData.target - senseData.identified} more
           </Text>
         </View>
 
         {/* Progress */}
-        <View className="bg-forest-800/50 rounded-xl p-4 border border-forest-700/30">
-          <View className="flex-row justify-between mb-2">
-            <Text className="text-sage-300 font-inter-medium text-sm">Progress</Text>
+        <View className="bg-forest-800/50 border-forest-700/30 rounded-xl border p-4">
+          <View className="mb-2 flex-row justify-between">
+            <Text className="font-inter-medium text-sm text-sage-300">Progress</Text>
             <Text className="text-sage-50 font-poppins-semibold text-sm">
               {groundingData.totalIdentified}/{groundingData.totalTarget}
             </Text>
           </View>
-          <View className="h-2 bg-forest-900 rounded-full overflow-hidden">
+          <View className="bg-forest-900 h-2 overflow-hidden rounded-full">
             <View
-              className="h-full bg-mindful-teal"
-              style={{ width: `${(groundingData.totalIdentified / groundingData.totalTarget) * 100}%` }}
+              className="bg-mindful-teal h-full"
+              style={{
+                width: `${(groundingData.totalIdentified / groundingData.totalTarget) * 100}%`,
+              }}
             />
           </View>
         </View>
@@ -349,7 +387,7 @@ function GroundingExerciseStage({
             onChangeText={setCurrentInput}
             placeholder={`E.g., ${currentSense === 'see' ? 'blue lamp on desk' : currentSense === 'touch' ? 'soft fabric of chair' : currentSense === 'hear' ? 'humming of refrigerator' : currentSense === 'smell' ? 'coffee brewing' : 'mint from gum'}`}
             placeholderTextColor="#64748B"
-            className="bg-forest-800 border border-forest-700 rounded-xl p-4 text-sage-50 font-inter-regular text-base"
+            className="bg-forest-800 border-forest-700 text-sage-50 font-inter-regular rounded-xl border p-4 text-base"
             autoCapitalize="none"
             returnKeyType="done"
             onSubmitEditing={handleAddItem}
@@ -357,9 +395,9 @@ function GroundingExerciseStage({
           <TouchableOpacity
             onPress={handleAddItem}
             disabled={!currentInput.trim()}
-            className={`rounded-xl py-4 ${currentInput.trim() ? 'bg-mindful-teal' : 'bg-forest-800'}`}
-          >
-            <Text className={`text-center font-poppins-semibold text-base ${currentInput.trim() ? 'text-forest-900' : 'text-sage-600'}`}>
+            className={`rounded-xl py-4 ${currentInput.trim() ? 'bg-mindful-teal' : 'bg-forest-800'}`}>
+            <Text
+              className={`font-poppins-semibold text-center text-base ${currentInput.trim() ? 'text-forest-900' : 'text-sage-600'}`}>
               Add Item
             </Text>
           </TouchableOpacity>
@@ -368,13 +406,15 @@ function GroundingExerciseStage({
         {/* Items List */}
         {senseData.items.length > 0 && (
           <View className="space-y-2">
-            <Text className="text-sage-300 font-inter-semibold text-sm">Identified:</Text>
+            <Text className="font-inter-semibold text-sm text-sage-300">Identified:</Text>
             {senseData.items.map((item, index) => (
-              <View key={index} className="flex-row items-center gap-3 bg-forest-800/50 rounded-lg p-3 border border-forest-700/30">
-                <View className="w-6 h-6 bg-mindful-teal/20 rounded-full items-center justify-center">
+              <View
+                key={index}
+                className="bg-forest-800/50 border-forest-700/30 flex-row items-center gap-3 rounded-lg border p-3">
+                <View className="bg-mindful-teal/20 h-6 w-6 items-center justify-center rounded-full">
                   <Check size={14} color="#4FD1C5" />
                 </View>
-                <Text className="flex-1 text-sage-300 font-inter-regular text-base">{item}</Text>
+                <Text className="font-inter-regular flex-1 text-base text-sage-300">{item}</Text>
               </View>
             ))}
           </View>

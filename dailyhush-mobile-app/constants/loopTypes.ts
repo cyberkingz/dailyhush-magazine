@@ -8,8 +8,6 @@
  * entire profile experience.
  */
 
-import { Enums } from '@/types/supabase';
-
 export type LoopType = 'sleep-loop' | 'decision-loop' | 'social-loop' | 'perfectionism-loop';
 
 // Icon names from lucide-react-native
@@ -64,7 +62,7 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
       'Turning off the lights',
       'Quiet, unstructured time',
       'End-of-day reflection',
-      'Tomorrow\'s uncertainties',
+      "Tomorrow's uncertainties",
     ],
     patterns: [
       'Thoughts intensify as the day ends',
@@ -84,13 +82,13 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
       'Learn to recognize rumination vs. productive thinking',
       'Develop a consistent wind-down ritual',
       'Practice thought-observation without engagement',
-      'Build trust in tomorrow\'s perspective',
+      "Build trust in tomorrow's perspective",
       'Separate rest from problem-solving',
     ],
     recommendedActions: [
       {
         title: 'Bedtime Brain Dump',
-        description: 'Write down tomorrow\'s worries 30 minutes before bed to clear your mind',
+        description: "Write down tomorrow's worries 30 minutes before bed to clear your mind",
         frequency: 'daily',
       },
       {
@@ -128,7 +126,7 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
       'Multiple viable options',
       'High-stakes decisions',
       'Uncertainty about outcomes',
-      'Others\' opinions and advice',
+      "Others' opinions and advice",
       'Past mistakes replaying',
     ],
     patterns: [
@@ -177,7 +175,7 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
     name: 'Social Loop',
     tagline: 'You feel every nuance, every shift, every unspoken word',
     description:
-      'Your overthinking focuses on relationships and social interactions. You replay conversations, analyze how you came across, and worry about others\' perceptions. Social situations drain you not from interaction, but from the mental aftermath.',
+      "Your overthinking focuses on relationships and social interactions. You replay conversations, analyze how you came across, and worry about others' perceptions. Social situations drain you not from interaction, but from the mental aftermath.",
     iconEmoji: '💭',
     iconName: 'MessageCircle',
     gradient: ['#F97316', '#FED7AA'], // Vibrant coral to warm peach
@@ -185,7 +183,7 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
     characteristics: [
       'Replay social interactions constantly',
       'Analyze what you said and how you said it',
-      'Worry about others\' perceptions',
+      "Worry about others' perceptions",
       'Feel drained after social events',
       'Seek reassurance about how you came across',
     ],
@@ -211,11 +209,11 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
       'Strong emotional awareness',
     ],
     growthPath: [
-      'Learn that most people aren\'t analyzing you',
+      "Learn that most people aren't analyzing you",
       'Practice self-compassion for "imperfect" moments',
       'Trust that relationships survive awkwardness',
       'Develop post-social recovery rituals',
-      'Separate your worth from others\' opinions',
+      "Separate your worth from others' opinions",
     ],
     recommendedActions: [
       {
@@ -242,21 +240,21 @@ export const LOOP_TYPE_CONFIGS: Record<LoopType, LoopTypeConfig> = {
     name: 'Perfectionism Loop',
     tagline: 'You hold yourself to impossible standards, then punish yourself for being human',
     description:
-      'Your overthinking is driven by perfectionism. You focus on what wasn\'t perfect, replay mistakes endlessly, and struggle to celebrate achievements because you only see what could\'ve been better.',
+      "Your overthinking is driven by perfectionism. You focus on what wasn't perfect, replay mistakes endlessly, and struggle to celebrate achievements because you only see what could've been better.",
     iconEmoji: '✨',
     iconName: 'Sparkles',
     gradient: ['#10B981', '#D1FAE5'], // Emerald green to soft mint
     accentColor: '#6EE7B7',
     characteristics: [
       'Focus on flaws over successes',
-      'Can\'t celebrate achievements fully',
+      "Can't celebrate achievements fully",
       'Harsh self-criticism for mistakes',
       'Rewrite messages multiple times',
       'Feel like you\'re never "good enough"',
     ],
     triggers: [
       'Any perceived mistake or flaw',
-      'Comparison to others\' work',
+      "Comparison to others' work",
       'Receiving constructive feedback',
       'Projects that "should" be flawless',
       'Your own high standards',

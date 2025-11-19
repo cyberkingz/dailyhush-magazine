@@ -1,4 +1,5 @@
 # Paywall Screen UX Audit
+
 ## DailyHush Quiz Paywall - Conversion & Usability Analysis
 
 **Date:** 2025-11-02
@@ -14,6 +15,7 @@
 **Conversion Risk Score:** 6.5/10 (Medium-High Risk)
 
 **Top 3 Critical Issues:**
+
 1. **Cognitive overload** - Too much information competing for attention
 2. **Missing social proof** - No user testimonials, ratings, or trust indicators
 3. **Unclear value hierarchy** - Features compete with pricing for visual priority
@@ -25,6 +27,7 @@
 ## 1. Information Architecture (5/10)
 
 ### Current Structure:
+
 ```
 Header (Back button) → "Choose Your Plan"
 ├── Loop Emoji (🌙/🧠/💬/🎯)
@@ -47,22 +50,26 @@ Header (Back button) → "Choose Your Plan"
 ### Problems:
 
 **❌ Inverted Pyramid Issue**
+
 - Value proposition comes BEFORE pricing
 - Users see benefits, then get sticker shock
 - Classic conversion killer pattern
 
 **❌ Competing Visual Hierarchy**
+
 - Features box (emerald background) competes with subscription cards
 - Two separate colored boxes create visual confusion
 - Eye tracking would show scattered focus
 
 **❌ Redundant Heading**
+
 - "Choose Your Plan" appears twice (header + inline)
 - Wastes precious above-the-fold real estate
 
 ### Recommendations:
 
 **✅ Reorder for Conversion:**
+
 ```
 1. Personalized Hook (emoji + title)
 2. SOCIAL PROOF (missing!)
@@ -74,11 +81,13 @@ Header (Back button) → "Choose Your Plan"
 ```
 
 **✅ Visual Hierarchy Fix:**
+
 - Remove redundant "Choose Your Plan" heading
 - Make subscription cards the star (current features box steals focus)
 - Single colored callout only (trial info OR urgency, not both)
 
 **✅ Progressive Disclosure:**
+
 - Show 2 plans initially (Monthly/Annual) with lifetime as expandable option
 - Reduces decision paralysis for 90% of users who won't buy lifetime anyway
 
@@ -91,6 +100,7 @@ Header (Back button) → "Choose Your Plan"
 **Information Density Score:** 8.2/10 (Very High)
 
 **Elements Competing for Attention:**
+
 1. Loop emoji + glow effect
 2. Personalized title (28px bold)
 3. Subtitle (17px)
@@ -107,6 +117,7 @@ Header (Back button) → "Choose Your Plan"
 ### Problems:
 
 **❌ Analysis Paralysis**
+
 - 3 plans + 4 pricing variables = 12 data points to process
 - Monthly: price + period
 - Annual: price + period + savings + badge
@@ -114,6 +125,7 @@ Header (Back button) → "Choose Your Plan"
 - No clear recommendation despite badges
 
 **❌ Color Overload**
+
 ```
 - Emerald glow (behind emoji)
 - Emerald features box
@@ -123,14 +135,17 @@ Header (Back button) → "Choose Your Plan"
 - Orange urgency box
 - Emerald CTA button
 ```
+
 7 emerald elements = brand dilution
 
 **❌ Text Scanning Difficulty**
+
 - 4 different font sizes in hero area
 - No clear reading order
 - Features buried in middle despite being value prop
 
 **❌ Missing Anchoring**
+
 - No "Most Popular" default pre-selected
 - User must make cold decision
 - Research shows 30% conversion drop without anchoring
@@ -138,6 +153,7 @@ Header (Back button) → "Choose Your Plan"
 ### Recommendations:
 
 **✅ Reduce to 6 Visual Zones:**
+
 1. Personalized hook
 2. Social proof
 3. Plan comparison (simplified)
@@ -146,17 +162,21 @@ Header (Back button) → "Choose Your Plan"
 6. Footer
 
 **✅ Pre-select Annual Plan:**
+
 ```tsx
 setSelectedPlan(annualPkg.identifier); // Default to best value
 ```
+
 Currently defaults to Monthly (lowest LTV option)
 
 **✅ Consolidate Color Usage:**
+
 - ONE colored callout box maximum
 - Remove background from features (use simple list)
 - Keep badges but unify colors (both emerald)
 
 **✅ Simplify Pricing Display:**
+
 ```
 BEFORE: "$9.99 / month" + "Save 58%" + "MOST POPULAR"
 AFTER:  "$4.99/mo" + "MOST POPULAR" (move savings inside card)
@@ -169,6 +189,7 @@ AFTER:  "$4.99/mo" + "MOST POPULAR" (move savings inside card)
 ### Current Flow Analysis:
 
 **Steps to Purchase:**
+
 1. Scroll to see all content (75% users will scroll)
 2. Read personalized protocol (15-20 seconds)
 3. Comprehend 3 pricing options (20-30 seconds)
@@ -184,24 +205,29 @@ AFTER:  "$4.99/mo" + "MOST POPULAR" (move savings inside card)
 ### Problems:
 
 **❌ Scroll Friction**
+
 - CTA requires scroll on all device sizes
 - Fixed bottom bar helps but content padding is excessive (100px)
 - Users must scroll away from cards to reach CTA
 
 **❌ Plan Comparison Difficulty**
+
 ```
 Monthly: $9.99 / Simple but expensive
 Annual: $4.99 + "Save 58%" = REQUIRES MATH
 Lifetime: $99.99 + "Pay once, keep forever" = VALUE UNCLEAR
 ```
+
 No side-by-side comparison table for analytical users
 
 **❌ Missing Comparison Affordances**
+
 - No "See all features" link
 - No "Why Annual?" tooltip
 - No price breakdown for lifetime (how many months = break even?)
 
 **❌ Badge Confusion**
+
 - "MOST POPULAR" (Annual) vs "BEST VALUE" (Lifetime)
 - Which is the recommendation? Both seem important
 - Creates decision paralysis
@@ -209,33 +235,41 @@ No side-by-side comparison table for analytical users
 ### Recommendations:
 
 **✅ Reduce Vertical Scroll:**
+
 ```tsx
 paddingBottom: spacing.safeArea.bottom + insets.bottom + 80, // Was 100
 ```
+
 Reduce by 20px
 
 **✅ Add Comparison Mode:**
+
 ```tsx
 <Pressable onPress={() => setShowComparison(true)}>
   <Text>Compare all plans →</Text>
 </Pressable>
 ```
+
 Modal overlay with table view
 
 **✅ Simplify Badge Strategy:**
+
 ```
 RECOMMENDED: Annual (only one badge)
 Other plans: No badges, just clean pricing
 ```
+
 Single recommendation = 23% higher conversion
 
 **✅ Add Price Anchoring:**
+
 ```tsx
 Annual Card:
   $9.99 [crossed out]
   $4.99/mo (billed annually)
   "Save $60/year"
 ```
+
 Show concrete dollar savings, not percentages
 
 ---
@@ -243,6 +277,7 @@ Show concrete dollar savings, not percentages
 ## 4. Trust Signals (3/10)
 
 ### Current Trust Elements:
+
 - ✅ 7-day free trial
 - ✅ "Cancel anytime" messaging
 - ✅ Privacy Policy & Terms links
@@ -251,6 +286,7 @@ Show concrete dollar savings, not percentages
 ### Missing Critical Trust Signals:
 
 **❌ No Social Proof**
+
 ```
 Missing:
 - User testimonials ("This helped me sleep!" - Sarah, 29)
@@ -258,9 +294,11 @@ Missing:
 - Download count (Join 50,000+ overthinkers)
 - Press mentions (Featured in Forbes, TechCrunch)
 ```
+
 Social proof increases conversion by 15-30% (industry standard)
 
 **❌ No Security Indicators**
+
 ```
 Missing:
 - "Secure payment" badge near CTA
@@ -269,6 +307,7 @@ Missing:
 ```
 
 **❌ No Value Reinforcement**
+
 ```
 Missing:
 - Money-back guarantee (even if just trial)
@@ -277,6 +316,7 @@ Missing:
 ```
 
 **❌ No Authority Signals**
+
 ```
 Missing:
 - "Created by therapists" or professional credentials
@@ -285,6 +325,7 @@ Missing:
 ```
 
 **❌ Weak Trial Messaging**
+
 - "Start your 7-day FREE trial" is buried in separate box
 - Should be integrated with CTA
 - "FREE" should be more prominent
@@ -292,6 +333,7 @@ Missing:
 ### Recommendations:
 
 **✅ Add Social Proof Section (HIGH PRIORITY):**
+
 ```tsx
 <View style={styles.socialProof}>
   <View style={styles.rating}>
@@ -299,40 +341,40 @@ Missing:
     <Text>4.8 from 2,431 users</Text>
   </View>
 
-  <Text style={styles.testimonial}>
-    "Finally sleeping through the night!" - Sarah M.
-  </Text>
+  <Text style={styles.testimonial}>"Finally sleeping through the night!" - Sarah M.</Text>
 
-  <Text style={styles.userCount}>
-    Join 50,000+ overthinkers finding peace
-  </Text>
+  <Text style={styles.userCount}>Join 50,000+ overthinkers finding peace</Text>
 </View>
 ```
+
 Place AFTER personalized title, BEFORE plans
 
 **✅ Enhance Trial Messaging:**
+
 ```tsx
 // CTA Button
-"Start 7-Day FREE Trial"
+'Start 7-Day FREE Trial';
 // Subtitle below button
-"No charge until [date]. Cancel anytime."
+'No charge until [date]. Cancel anytime.';
 ```
 
 **✅ Add Security Badge:**
+
 ```tsx
 <View style={styles.securityBadge}>
   <Lock size={14} />
   <Text>Secure payment • Cancel anytime</Text>
 </View>
 ```
+
 Place above CTA button
 
 **✅ Add Guarantee:**
+
 ```tsx
 <Text style={styles.guarantee}>
-  ✓ Full access during trial
-  ✓ Cancel in 1 tap if not satisfied
-  ✓ All cards accepted • Apple Pay supported
+  ✓ Full access during trial ✓ Cancel in 1 tap if not satisfied ✓ All cards accepted • Apple Pay
+  supported
 </Text>
 ```
 
@@ -343,24 +385,28 @@ Place above CTA button
 ### Current Friction Map:
 
 #### Entry Friction (Medium):
+
 - ✅ User is authenticated (good)
 - ✅ Onboarding marked complete (good)
 - ❌ No loading skeleton (jarring appearance)
 - ❌ No plan pre-selection (cold start)
 
 #### Decision Friction (High):
+
 - ❌ Too much scrolling required
 - ❌ No default recommendation
 - ❌ Competing visual priorities
 - ❌ Math required for savings calculation
 
 #### Payment Friction (Low):
+
 - ✅ Haptic feedback on selection
 - ✅ Clear CTA button
 - ✅ Loading state with spinner
 - ⚠️ Error handling could be better
 
 #### Exit Friction (Medium):
+
 - ❌ Header back button says "Choose Your Plan" (confusing)
 - ❌ No "Skip for now" option (forces decision)
 - ⚠️ Back button exits onboarding (unintended?)
@@ -368,6 +414,7 @@ Place above CTA button
 ### Specific Friction Points:
 
 **🔴 Critical: Plan Selection Not Obvious**
+
 ```tsx
 // Current: User must discover cards are tappable
 // No visual affordance until tapped
@@ -379,6 +426,7 @@ Place above CTA button
 ```
 
 **🔴 Critical: Loading State Jarring**
+
 ```tsx
 // Current: White screen → Content appears
 // Users see "Loading subscription options..." with no context
@@ -390,6 +438,7 @@ Place above CTA button
 ```
 
 **🟡 Moderate: Trial Terms Hidden**
+
 ```tsx
 // Current: Trial info in separate box, easy to miss
 // Studies show 40% of users don't read trial boxes
@@ -401,6 +450,7 @@ Place above CTA button
 ```
 
 **🟡 Moderate: Error Recovery Poor**
+
 ```tsx
 // Current: Generic "Error" alerts
 Alert.alert('Error', 'Unable to load subscription options. Please try again.');
@@ -415,36 +465,38 @@ Alert.alert('Error', 'Unable to load subscription options. Please try again.');
 ### Recommendations:
 
 **✅ Add Selection Hints:**
+
 ```tsx
-{!selectedPlan && (
-  <Text style={styles.hint}>
-    👆 Tap a plan to continue
-  </Text>
-)}
+{
+  !selectedPlan && <Text style={styles.hint}>👆 Tap a plan to continue</Text>;
+}
 ```
 
 **✅ Implement Loading Skeleton:**
+
 ```tsx
-{isLoadingOfferings && (
-  <View style={styles.skeletonContainer}>
-    {[1, 2, 3].map((i) => (
-      <View key={i} style={styles.skeletonCard} />
-    ))}
-  </View>
-)}
+{
+  isLoadingOfferings && (
+    <View style={styles.skeletonContainer}>
+      {[1, 2, 3].map((i) => (
+        <View key={i} style={styles.skeletonCard} />
+      ))}
+    </View>
+  );
+}
 ```
 
 **✅ Add Skip Option (Controversial but Reduces Anger):**
+
 ```tsx
 <Pressable onPress={handleSkipForNow}>
-  <Text style={styles.skipText}>
-    Maybe later
-  </Text>
+  <Text style={styles.skipText}>Maybe later</Text>
 </Pressable>
 // Redirect to limited free tier
 ```
 
 **✅ Better Error States:**
+
 ```tsx
 if (!offering) {
   return (
@@ -452,8 +504,8 @@ if (!offering) {
       title="Connection Issue"
       message="We're having trouble loading plans."
       actions={[
-        { label: "Try Again", onPress: loadSubscriptionOptions },
-        { label: "Contact Support", onPress: openSupport }
+        { label: 'Try Again', onPress: loadSubscriptionOptions },
+        { label: 'Contact Support', onPress: openSupport },
       ]}
     />
   );
@@ -485,11 +537,13 @@ Impossible Zone (Red):
 ### Current Thumb Zone Mapping:
 
 **✅ Good:**
+
 - Fixed CTA in natural zone (bottom)
 - Subscription cards in comfortable scroll area
 - Large tap targets (cards are 100% width)
 
 **❌ Problems:**
+
 - Back button in red zone (top-left)
 - Legal links require precision taps (small hit area)
 - No gesture support (swipe between plans)
@@ -497,6 +551,7 @@ Impossible Zone (Red):
 ### Touch Target Analysis:
 
 **Measured Tap Targets:**
+
 ```
 ✅ CTA Button: 327px × 60px (excellent)
 ✅ Subscription Cards: 327px × ~100px (excellent)
@@ -509,18 +564,21 @@ Impossible Zone (Red):
 ### Scrolling Behavior:
 
 **✅ Good:**
+
 - ScrollView with `showsVerticalScrollIndicator={false}` (clean)
 - Proper safe area insets
 - Fixed CTA doesn't scroll away
 
 **❌ Problems:**
+
 ```tsx
-paddingBottom: spacing.safeArea.bottom + insets.bottom + 100
+paddingBottom: spacing.safeArea.bottom + insets.bottom + 100;
 // 100px is excessive, creates dead space
 // Users think content continues but it doesn't
 ```
 
 **❌ No Scroll Indicators:**
+
 - No subtle bounce effect showing "scroll down"
 - Users might miss urgency box at bottom
 - No scroll progress indicator
@@ -528,6 +586,7 @@ paddingBottom: spacing.safeArea.bottom + insets.bottom + 100
 ### Landscape Mode:
 
 **⚠️ Not Tested in Code**
+
 - No landscape-specific layouts
 - Could break on iPad or rotated phones
 - Subscription cards might be too wide
@@ -535,6 +594,7 @@ paddingBottom: spacing.safeArea.bottom + insets.bottom + 100
 ### Recommendations:
 
 **✅ Add Swipe Gestures:**
+
 ```tsx
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 
@@ -546,11 +606,13 @@ const swipe = Gesture.Fling()
 ```
 
 **✅ Reduce Bottom Padding:**
+
 ```tsx
 paddingBottom: spacing.safeArea.bottom + insets.bottom + 80, // Was 100
 ```
 
 **✅ Add Scroll Hint:**
+
 ```tsx
 <Animated.View style={[styles.scrollHint, fadeOut]}>
   <ChevronDown color={colors.text.muted} />
@@ -558,19 +620,18 @@ paddingBottom: spacing.safeArea.bottom + insets.bottom + 80, // Was 100
 ```
 
 **✅ Improve Back Button:**
+
 ```tsx
 // Instead of default header back
 headerLeft: () => (
-  <Pressable
-    onPress={handleBack}
-    hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-  >
+  <Pressable onPress={handleBack} hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
     <X size={24} color={colors.text.primary} />
   </Pressable>
-)
+);
 ```
 
 **✅ Lock to Portrait:**
+
 ```tsx
 // In app.json
 "orientation": "portrait"
@@ -584,6 +645,7 @@ headerLeft: () => (
 ### Current Accessibility Features:
 
 **✅ Implemented:**
+
 - `accessible={true}` on subscription cards
 - `accessibilityRole="radio"` (correct for plan selection)
 - `accessibilityLabel` with price/period
@@ -593,6 +655,7 @@ headerLeft: () => (
 - Legal footer has `accessibilityRole="group"`
 
 **✅ Good Practices:**
+
 - Font sizes are readable (12px minimum)
 - Color contrast is good (emerald on dark)
 - Haptic feedback for actions
@@ -600,6 +663,7 @@ headerLeft: () => (
 ### Problems:
 
 **❌ Screen Reader Navigation Issues**
+
 ```tsx
 // Current structure:
 <ScrollView>
@@ -616,6 +680,7 @@ headerLeft: () => (
 ```
 
 **Issues:**
+
 1. No `accessibilityLabel` on features box (screen reader says "View")
 2. No semantic headings (VoiceOver can't navigate by heading)
 3. Trial info box not marked as important
@@ -623,6 +688,7 @@ headerLeft: () => (
 5. No focus order management
 
 **❌ Missing Accessibility Labels:**
+
 ```tsx
 // Features Box
 <View> {/* Should have accessibilityLabel="Your Personalized Protocol" */}
@@ -635,6 +701,7 @@ headerLeft: () => (
 ```
 
 **❌ Color-Only Indicators:**
+
 ```
 - Selected plan shown ONLY by emerald border
 - No text like "Selected" for screen reader users
@@ -642,12 +709,14 @@ headerLeft: () => (
 ```
 
 **❌ No Dynamic Type Support:**
+
 ```tsx
 fontSize: 28, // Fixed, doesn't scale with user's font settings
 allowFontScaling={false} // Actually DISABLED on title!
 ```
 
 **❌ No Reduce Motion Support:**
+
 ```tsx
 // No checks for:
 - Haptic feedback (should respect settings)
@@ -658,6 +727,7 @@ allowFontScaling={false} // Actually DISABLED on title!
 ### WCAG 2.1 Compliance Check:
 
 **Level A (Minimum):**
+
 - ✅ 1.1.1 Non-text Content: Emoji has context from surrounding text
 - ⚠️ 1.3.1 Info and Relationships: Missing semantic headings
 - ✅ 1.3.2 Meaningful Sequence: Logical reading order
@@ -667,6 +737,7 @@ allowFontScaling={false} // Actually DISABLED on title!
 - ✅ 2.4.2 Page Titled: Screen has header title
 
 **Level AA (Target):**
+
 - ⚠️ 1.4.10 Reflow: Not tested on larger text sizes
 - ❌ 1.4.12 Text Spacing: Fixed font sizes
 - ⚠️ 2.4.6 Headings and Labels: No semantic headings
@@ -677,6 +748,7 @@ allowFontScaling={false} // Actually DISABLED on title!
 ### Recommendations:
 
 **✅ Add Semantic Structure:**
+
 ```tsx
 <View
   accessible={true}
@@ -696,13 +768,11 @@ allowFontScaling={false} // Actually DISABLED on title!
 ```
 
 **✅ Fix Color-Only Indicators:**
+
 ```tsx
 <View>
   {isSelected && (
-    <Text
-      accessibilityLabel="This plan is selected"
-      style={styles.selectedText}
-    >
+    <Text accessibilityLabel="This plan is selected" style={styles.selectedText}>
       ✓ Selected
     </Text>
   )}
@@ -710,28 +780,28 @@ allowFontScaling={false} // Actually DISABLED on title!
 ```
 
 **✅ Add Accessibility Labels:**
+
 ```tsx
 <View
   accessible={true}
   accessibilityRole="text"
-  accessibilityLabel={`Your Personalized Protocol includes: ${config.features.join(', ')}`}
->
+  accessibilityLabel={`Your Personalized Protocol includes: ${config.features.join(', ')}`}>
   {/* Features content */}
 </View>
 ```
 
 **✅ Support Dynamic Type:**
+
 ```tsx
 import { useAccessibility } from '@/hooks/useAccessibility';
 
 const { fontScale } = useAccessibility();
 
-<Text style={{ fontSize: 28 * Math.min(fontScale, 1.3) }}>
-  {config.title}
-</Text>
+<Text style={{ fontSize: 28 * Math.min(fontScale, 1.3) }}>{config.title}</Text>;
 ```
 
 **✅ Respect Reduce Motion:**
+
 ```tsx
 import { useReducedMotion } from 'react-native-reanimated';
 
@@ -746,6 +816,7 @@ const handleSelect = (id) => {
 ```
 
 **✅ Add Focus Management:**
+
 ```tsx
 import { useRef, useEffect } from 'react';
 import { AccessibilityInfo } from 'react-native';
@@ -766,6 +837,7 @@ useEffect(() => {
 ### Current CTA Analysis:
 
 **Button Properties:**
+
 - Text: "Start My Free Trial"
 - Position: Fixed bottom
 - Color: Emerald (brand)
@@ -774,6 +846,7 @@ useEffect(() => {
 - States: Default, Loading, Disabled
 
 **✅ Strengths:**
+
 1. **Fixed positioning** - Always visible, no scroll required
 2. **Clear value** - "FREE" in text
 3. **Visual priority** - Emerald with shadow stands out
@@ -784,6 +857,7 @@ useEffect(() => {
 ### Problems:
 
 **❌ Weak Copy**
+
 ```
 Current: "Start My Free Trial"
 Issues:
@@ -798,11 +872,13 @@ Better Options:
 ```
 
 **❌ No Trial Duration in Button**
+
 - "7-day" is buried in separate box above
 - Users miss the duration
 - Conversion studies show 18% lift when duration is in CTA
 
 **❌ Competing CTAs**
+
 ```
 Primary: "Start My Free Trial" (bottom)
 Secondary: "Restore Purchases" (footer)
@@ -812,6 +888,7 @@ Issue: Users might think tapping card starts purchase
 ```
 
 **❌ No Billing Preview**
+
 ```tsx
 // After user taps CTA, iOS payment sheet appears
 // User sees full price immediately
@@ -821,11 +898,13 @@ Issue: Users might think tapping card starts purchase
 ```
 
 **❌ Sparkles Icon Ambiguous**
+
 - Doesn't convey "trial" or "start"
 - Could mean "premium" or "special"
 - Better: Play icon ▶ or Unlock icon 🔓
 
 **❌ Button Doesn't Update After Selection**
+
 ```tsx
 // Current: Same text regardless of plan
 // Better: "Start Annual Trial" or "Try Monthly FREE"
@@ -837,34 +916,39 @@ Issue: Users might think tapping card starts purchase
 **✅ Improve CTA Copy (A/B Test These):**
 
 **Option A: Duration Emphasis**
+
 ```tsx
-"Start 7-Day FREE Trial"
+'Start 7-Day FREE Trial';
 // Subtitle: "Then $4.99/mo"
 ```
 
 **Option B: Value Emphasis**
+
 ```tsx
-"Unlock My Sleep Protocol"
+'Unlock My Sleep Protocol';
 // Subtitle: "FREE for 7 days"
 ```
 
 **Option C: Action Emphasis**
+
 ```tsx
-"Try FREE - Cancel Anytime"
+'Try FREE - Cancel Anytime';
 // Subtitle: "7 days on us"
 ```
 
 **✅ Add Dynamic CTA Text:**
+
 ```tsx
 const getCtaText = () => {
-  if (!selectedPlan) return "Select a Plan to Continue";
+  if (!selectedPlan) return 'Select a Plan to Continue';
 
-  const plan = subscriptionOptions.find(p => p.id === selectedPlan);
+  const plan = subscriptionOptions.find((p) => p.id === selectedPlan);
   return `Start ${plan.title} Trial FREE`;
 };
 ```
 
 **✅ Add Billing Preview Above Button:**
+
 ```tsx
 <View style={styles.billingPreview}>
   <Text style={styles.trialInfo}>
@@ -879,6 +963,7 @@ const getCtaText = () => {
 ```
 
 **✅ Improve Button Icon:**
+
 ```tsx
 import { Unlock, PlayCircle } from 'lucide-react-native';
 
@@ -890,16 +975,15 @@ import { Unlock, PlayCircle } from 'lucide-react-native';
 ```
 
 **✅ Add Secondary CTA (Risky but Honest):**
+
 ```tsx
-<Pressable
-  onPress={handleContinueFree}
-  style={styles.secondaryCta}
->
+<Pressable onPress={handleContinueFree} style={styles.secondaryCta}>
   <Text>Continue with Limited Access</Text>
 </Pressable>
 ```
 
 **✅ Add Progress Indicator:**
+
 ```tsx
 <View style={styles.progressIndicator}>
   <Text>Step 4 of 4</Text>
@@ -916,6 +1000,7 @@ import { Unlock, PlayCircle } from 'lucide-react-native';
 ### Current Error Handling:
 
 **Implemented Error States:**
+
 1. ✅ No session → Alert → Redirect to signup
 2. ✅ Session expired → Refresh attempt → Alert if fails
 3. ✅ No offerings → Alert with generic message
@@ -925,6 +1010,7 @@ import { Unlock, PlayCircle } from 'lucide-react-native';
 7. ✅ Restore failed → Alert
 
 **Error Handling Quality:**
+
 ```tsx
 // Example: Generic error
 Alert.alert(
@@ -943,6 +1029,7 @@ Alert.alert(
 ### Missing Error States:
 
 **❌ Network Issues**
+
 ```tsx
 // Current: Generic "Error" alert
 // No offline detection
@@ -956,6 +1043,7 @@ if (!isConnected) {
 ```
 
 **❌ RevenueCat Configuration Errors**
+
 ```tsx
 // Current: Shows generic alert
 // Users see: "Subscription options are not configured yet"
@@ -963,32 +1051,30 @@ if (!isConnected) {
 
 // Needed:
 if (__DEV__ && !offering) {
-  return <DevErrorView
-    message="RevenueCat not configured"
-    docs="https://docs.revenuecat.com/setup"
-  />;
+  return (
+    <DevErrorView message="RevenueCat not configured" docs="https://docs.revenuecat.com/setup" />
+  );
 }
 
 // For production:
-return <SupportView
-  message="We're fixing a technical issue"
-  action="Contact Support"
-/>;
+return <SupportView message="We're fixing a technical issue" action="Contact Support" />;
 ```
 
 **❌ Price Loading Failures**
+
 ```tsx
 // Current: Shows price as undefined or "N/A"
 // No graceful degradation
 
 // Needed:
-{plan.price || 'Price unavailable'}
-<Text style={styles.error}>
-  Unable to load pricing. Please contact support.
-</Text>
+{
+  plan.price || 'Price unavailable';
+}
+<Text style={styles.error}>Unable to load pricing. Please contact support.</Text>;
 ```
 
 **❌ Trial Eligibility Issues**
+
 ```tsx
 // Current: No check if user already had trial
 // RevenueCat handles this but UI doesn't show it
@@ -1005,6 +1091,7 @@ if (hasUsedTrial) {
 ```
 
 **❌ Loading State Too Long**
+
 ```tsx
 // Current: Spinner forever if RevenueCat hangs
 // No timeout
@@ -1013,14 +1100,10 @@ if (hasUsedTrial) {
 useEffect(() => {
   const timeout = setTimeout(() => {
     if (isLoadingOfferings) {
-      Alert.alert(
-        'Taking Longer Than Expected',
-        'Would you like to try again?',
-        [
-          { text: 'Retry', onPress: loadSubscriptionOptions },
-          { text: 'Contact Support', onPress: openSupport }
-        ]
-      );
+      Alert.alert('Taking Longer Than Expected', 'Would you like to try again?', [
+        { text: 'Retry', onPress: loadSubscriptionOptions },
+        { text: 'Contact Support', onPress: openSupport },
+      ]);
     }
   }, 10000); // 10 second timeout
 
@@ -1029,6 +1112,7 @@ useEffect(() => {
 ```
 
 **❌ Quiz Data Missing**
+
 ```tsx
 // Current: Assumes params.answers exists
 const answers: QuizAnswer[] = JSON.parse(params.answers);
@@ -1046,16 +1130,15 @@ try {
   }
 } catch (error) {
   // Redirect back to quiz
-  Alert.alert(
-    'Quiz Data Missing',
-    'Please retake the quiz to see personalized plans.',
-    [{ text: 'Retake Quiz', onPress: () => router.replace('/onboarding/quiz') }]
-  );
+  Alert.alert('Quiz Data Missing', 'Please retake the quiz to see personalized plans.', [
+    { text: 'Retake Quiz', onPress: () => router.replace('/onboarding/quiz') },
+  ]);
   return;
 }
 ```
 
 **❌ Payment Sheet Errors**
+
 ```tsx
 // Current: Generic error message from catch block
 catch (error: any) {
@@ -1110,6 +1193,7 @@ function getHumanReadableError(error: any) {
 ### Edge Cases Not Handled:
 
 **❌ User Taps Back During Purchase**
+
 ```tsx
 // Current: Purchase continues in background
 // User might tap multiple times thinking nothing happened
@@ -1119,11 +1203,9 @@ useEffect(() => {
   const unsubscribe = navigation.addListener('beforeRemove', (e) => {
     if (isStartingTrial) {
       e.preventDefault();
-      Alert.alert(
-        'Purchase in Progress',
-        'Please wait for your subscription to complete.',
-        [{ text: 'OK' }]
-      );
+      Alert.alert('Purchase in Progress', 'Please wait for your subscription to complete.', [
+        { text: 'OK' },
+      ]);
     }
   });
 
@@ -1132,6 +1214,7 @@ useEffect(() => {
 ```
 
 **❌ User Already Subscribed (Different Account)**
+
 ```tsx
 // Current: No check
 // User might subscribe twice accidentally
@@ -1145,7 +1228,7 @@ const checkExistingSubscription = async () => {
       'You already have an active subscription. Would you like to manage it?',
       [
         { text: 'Manage', onPress: () => router.push('/settings/subscription') },
-        { text: 'Cancel', style: 'cancel' }
+        { text: 'Cancel', style: 'cancel' },
       ]
     );
     return true;
@@ -1155,6 +1238,7 @@ const checkExistingSubscription = async () => {
 ```
 
 **❌ Price Mismatch (Different Currency)**
+
 ```tsx
 // Current: Shows RevenueCat price as-is
 // No currency normalization or detection
@@ -1173,6 +1257,7 @@ const userCurrency = Localization.currency;
 ### Recommendations:
 
 **✅ Add Comprehensive Error Boundary:**
+
 ```tsx
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -1181,13 +1266,13 @@ import { ErrorBoundary } from 'react-error-boundary';
   onError={(error, errorInfo) => {
     // Log to analytics
     console.error('Paywall error:', error, errorInfo);
-  }}
->
+  }}>
   <QuizPaywall />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 **✅ Add Timeout Protection:**
+
 ```tsx
 const LOADING_TIMEOUT = 10000; // 10 seconds
 
@@ -1195,14 +1280,10 @@ useEffect(() => {
   const timeoutId = setTimeout(() => {
     if (isLoadingOfferings) {
       setIsLoadingOfferings(false);
-      Alert.alert(
-        'Connection Timeout',
-        'This is taking longer than expected. Please try again.',
-        [
-          { text: 'Retry', onPress: loadSubscriptionOptions },
-          { text: 'Contact Support', onPress: openSupport }
-        ]
-      );
+      Alert.alert('Connection Timeout', 'This is taking longer than expected. Please try again.', [
+        { text: 'Retry', onPress: loadSubscriptionOptions },
+        { text: 'Contact Support', onPress: openSupport },
+      ]);
     }
   }, LOADING_TIMEOUT);
 
@@ -1211,17 +1292,15 @@ useEffect(() => {
 ```
 
 **✅ Add Network Detection:**
+
 ```tsx
 import NetInfo from '@react-native-community/netinfo';
 
 useEffect(() => {
-  const unsubscribe = NetInfo.addEventListener(state => {
+  const unsubscribe = NetInfo.addEventListener((state) => {
     if (!state.isConnected && isLoadingOfferings) {
       setIsLoadingOfferings(false);
-      Alert.alert(
-        'No Internet Connection',
-        'Please check your connection and try again.'
-      );
+      Alert.alert('No Internet Connection', 'Please check your connection and try again.');
     }
   });
 
@@ -1230,6 +1309,7 @@ useEffect(() => {
 ```
 
 **✅ Add Better Error Messages:**
+
 ```tsx
 const ERROR_MESSAGES = {
   no_offerings: {
@@ -1259,6 +1339,7 @@ const ERROR_MESSAGES = {
 ### 🔴 Critical (Implement Immediately)
 
 **1. Add Social Proof Section (Est: 2 hours)**
+
 ```tsx
 <View style={styles.socialProof}>
   <View style={styles.stars}>
@@ -1275,37 +1356,36 @@ const ERROR_MESSAGES = {
   </Text>
   <Text style={styles.testimonialAuthor}>- Sarah M., Sleep Loop</Text>
 
-  <Text style={styles.community}>
-    Join 50,000+ overthinkers finding peace
-  </Text>
+  <Text style={styles.community}>Join 50,000+ overthinkers finding peace</Text>
 </View>
 ```
+
 **Expected Impact:** +15-25% conversion rate
 **Place:** After subtitle, before plans
 
 ---
 
 **2. Pre-select Annual Plan (Est: 5 minutes)**
+
 ```tsx
 // Line 185 - Change default selection
 setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 ```
+
 **Expected Impact:** +12% annual subscriptions, +45% LTV
 **Risk:** None (users can still choose monthly)
 
 ---
 
 **3. Consolidate Trial Messaging (Est: 1 hour)**
+
 ```tsx
 // Remove separate trial box, integrate with CTA:
 
 <View style={styles.ctaContainer}>
-  <Text style={styles.trialInfo}>
-    Start your 7-day FREE trial
-  </Text>
+  <Text style={styles.trialInfo}>Start your 7-day FREE trial</Text>
   <Text style={styles.billingInfo}>
-    Then {selectedPlan?.price}/{selectedPlan?.period}
-    • Cancel anytime
+    Then {selectedPlan?.price}/{selectedPlan?.period}• Cancel anytime
   </Text>
 
   <Pressable style={styles.ctaButton}>
@@ -1313,11 +1393,10 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
     <Text>Unlock My Protocol</Text>
   </Pressable>
 
-  <Text style={styles.guarantee}>
-    ✓ Full access • ✓ Cancel in 1 tap • ✓ Secure payment
-  </Text>
+  <Text style={styles.guarantee}>✓ Full access • ✓ Cancel in 1 tap • ✓ Secure payment</Text>
 </View>
 ```
+
 **Expected Impact:** +8-12% clarity, reduced confusion
 **Risk:** None
 
@@ -1326,17 +1405,16 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 **4. Reduce Cognitive Load (Est: 2 hours)**
 
 **Remove or simplify features box:**
+
 ```tsx
 // Option A: Collapse by default
 <Pressable onPress={() => setShowFeatures(!showFeatures)}>
   <Text>See what's included ▼</Text>
-</Pressable>
+</Pressable>;
 
-{showFeatures && (
-  <View style={styles.features}>
-    {/* Current features */}
-  </View>
-)}
+{
+  showFeatures && <View style={styles.features}>{/* Current features */}</View>;
+}
 
 // Option B: Move below plans (reinforcement, not decision-making)
 ```
@@ -1347,10 +1425,12 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 ---
 
 **5. Fix Error Handling (Est: 3 hours)**
+
 ```tsx
 // Add timeout, network detection, better messages
 // See section 9 for implementation details
 ```
+
 **Expected Impact:** -30% support tickets, better UX for edge cases
 **Risk:** None
 
@@ -1359,6 +1439,7 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 ### 🟡 High Priority (Implement This Week)
 
 **6. Add Comparison View (Est: 4 hours)**
+
 ```tsx
 <Pressable onPress={() => setShowComparison(true)}>
   <Text style={styles.compareLink}>
@@ -1372,12 +1453,14 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
   </View>
 </Modal>
 ```
+
 **Expected Impact:** +5-8% for analytical users
 **Risk:** None (optional feature)
 
 ---
 
 **7. Improve Accessibility (Est: 3 hours)**
+
 - Add semantic headings
 - Fix color-only selection indicators
 - Add dynamic type support
@@ -1389,17 +1472,23 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 ---
 
 **8. Add Loading Skeleton (Est: 2 hours)**
+
 ```tsx
-{isLoadingOfferings ? (
-  <View style={styles.skeleton}>
-    <SkeletonCard />
-    <SkeletonCard />
-    <SkeletonCard />
-  </View>
-) : (
-  {/* Actual content */}
-)}
+{
+  isLoadingOfferings ? (
+    <View style={styles.skeleton}>
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+    </View>
+  ) : (
+    {
+      /* Actual content */
+    }
+  );
+}
 ```
+
 **Expected Impact:** Better perceived performance
 **Risk:** None
 
@@ -1408,14 +1497,13 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 ### 🟢 Medium Priority (Nice to Have)
 
 **9. Add Skip Option (Est: 1 hour)**
+
 ```tsx
-<Pressable
-  onPress={() => router.replace('/')}
-  style={styles.skipButton}
->
+<Pressable onPress={() => router.replace('/')} style={styles.skipButton}>
   <Text>Maybe later</Text>
 </Pressable>
 ```
+
 **Expected Impact:** -5-10% conversion BUT reduces anger/frustration
 **Risk:** Lower paid conversion (but higher retention)
 **Controversial:** Product decision needed
@@ -1423,34 +1511,40 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 ---
 
 **10. A/B Test CTA Copy (Est: 2 hours setup + analysis)**
+
 ```tsx
 // Variant A: "Start 7-Day FREE Trial"
 // Variant B: "Unlock My Protocol FREE"
 // Variant C: "Try FREE - Cancel Anytime"
 ```
+
 **Expected Impact:** 5-15% improvement (data-driven)
 **Risk:** None (testing framework needed)
 
 ---
 
 **11. Add Price Anchoring (Est: 1 hour)**
+
 ```tsx
 <Text style={styles.originalPrice}>$9.99</Text>
 <Text style={styles.salePrice}>$4.99/mo</Text>
 <Text style={styles.savings}>Save $60/year</Text>
 ```
+
 **Expected Impact:** +8-12% annual plan selection
 **Risk:** Might feel manipulative if not genuine savings
 
 ---
 
 **12. Add Onboarding Progress (Est: 30 minutes)**
+
 ```tsx
 <View style={styles.progress}>
   <Text>Step 4 of 4</Text>
   <ProgressBar progress={1.0} />
 </View>
 ```
+
 **Expected Impact:** Better user orientation
 **Risk:** None
 
@@ -1520,18 +1614,18 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 
 ## Summary Score Card
 
-| Dimension | Score | Priority |
-|-----------|-------|----------|
-| Information Architecture | 5/10 | 🔴 Critical |
-| Cognitive Load | 4/10 | 🔴 Critical |
-| Decision Flow | 5.5/10 | 🟡 High |
-| Trust Signals | 3/10 | 🔴 Critical |
-| Friction Points | 6/10 | 🟡 High |
-| Mobile UX | 7/10 | 🟢 Medium |
-| Accessibility | 6.5/10 | 🟡 High |
-| CTA Strategy | 7/10 | 🟡 High |
-| Error States | 5/10 | 🟡 High |
-| **Overall** | **5.4/10** | **Needs Improvement** |
+| Dimension                | Score      | Priority              |
+| ------------------------ | ---------- | --------------------- |
+| Information Architecture | 5/10       | 🔴 Critical           |
+| Cognitive Load           | 4/10       | 🔴 Critical           |
+| Decision Flow            | 5.5/10     | 🟡 High               |
+| Trust Signals            | 3/10       | 🔴 Critical           |
+| Friction Points          | 6/10       | 🟡 High               |
+| Mobile UX                | 7/10       | 🟢 Medium             |
+| Accessibility            | 6.5/10     | 🟡 High               |
+| CTA Strategy             | 7/10       | 🟡 High               |
+| Error States             | 5/10       | 🟡 High               |
+| **Overall**              | **5.4/10** | **Needs Improvement** |
 
 ---
 
@@ -1539,6 +1633,7 @@ setSelectedPlan(annualPkg.identifier); // Was: monthlyPkg.identifier
 
 **Current State:**
 This paywall has a STRONG foundation with excellent personalization and clean code, but it's suffering from **classic conversion killers**:
+
 - Too much information
 - Missing social proof (huge missed opportunity)
 - No clear recommendation despite badges
@@ -1550,6 +1645,7 @@ This paywall has a STRONG foundation with excellent personalization and clean co
 
 **ROI of Improvements:**
 If you have 1,000 monthly signups:
+
 - Current: 300 conversions
 - After fixes: 450-500 conversions
 - **+150-200 paying users/month**
@@ -1585,6 +1681,7 @@ If you have 1,000 monthly signups:
 ---
 
 **Files Referenced:**
+
 - `/Users/toni/Downloads/dailyhush-blog/dailyhush-mobile-app/app/onboarding/quiz/paywall.tsx`
 - `/Users/toni/Downloads/dailyhush-blog/dailyhush-mobile-app/components/subscription/SubscriptionOption.tsx`
 - `/Users/toni/Downloads/dailyhush-blog/dailyhush-mobile-app/components/paywall/PaywallButton.tsx`

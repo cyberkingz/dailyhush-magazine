@@ -9,82 +9,81 @@ appId: com.dailyhush.app
 # ============================================
 # STEP 1: COMPLETE QUIZ & PROFILE
 # ============================================
-- tapOn: "Take the Quiz"
+- tapOn: 'Take the Quiz'
 
 # Quick quiz completion
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
-- tapOn: "Often"
+- tapOn: 'Often'
 - waitForAnimationToEnd
 
 # Profile setup
-- tapOn: "Often (Daily)"
-- tapOn: "Complete Setup"
+- tapOn: 'Often (Daily)'
+- tapOn: 'Complete Setup'
 - waitForAnimationToEnd
 
 # ============================================
 # TEST 1: INVALID EMAIL FORMAT
 # ============================================
-- assertVisible: "Unlock Your Results"
+- assertVisible: 'Unlock Your Results'
 
-- tapOn: "your.email@example.com"
-- inputText: "not-an-email"
+- tapOn: 'your.email@example.com'
+- inputText: 'not-an-email'
 
-- tapOn: "8+ characters"
-- inputText: "short"
+- tapOn: '8+ characters'
+- inputText: 'short'
 
-- tapOn: "Unlock My Results"
+- tapOn: 'Unlock My Results'
 
 # Should show validation error
-- assertVisible: "invalid"
+- assertVisible: 'invalid'
 
 # ============================================
 # TEST 2: SHORT PASSWORD
 # ============================================
 - clearState
 
-- tapOn: "your.email@example.com"
-- inputText: "valid@email.com"
+- tapOn: 'your.email@example.com'
+- inputText: 'valid@email.com'
 
-- tapOn: "8+ characters"
-- inputText: "123"  # Too short
+- tapOn: '8+ characters'
+- inputText: '123' # Too short
 
-- tapOn: "Unlock My Results"
+- tapOn: 'Unlock My Results'
 
 # Should show password error
-- assertVisible: "password"
+- assertVisible: 'password'
 
 # ============================================
 # TEST 3: VALID INPUTS (Should work)
 # ============================================
 - clearState
 
-- tapOn: "your.email@example.com"
-- inputText: "test-validation-${random}@test.com"
+- tapOn: 'your.email@example.com'
+- inputText: 'test-validation-${random}@test.com'
 
-- tapOn: "8+ characters"
-- inputText: "ValidPass123!"
+- tapOn: '8+ characters'
+- inputText: 'ValidPass123!'
 
-- tapOn: "Unlock My Results"
+- tapOn: 'Unlock My Results'
 - waitForAnimationToEnd
 
 # Should proceed to results
-- assertVisible: "Your Results"
-
+- assertVisible: 'Your Results'
 # SUCCESS! Validation works correctly 🎉

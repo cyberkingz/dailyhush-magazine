@@ -22,6 +22,7 @@ import {
   UIManager,
   useWindowDimensions,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -54,8 +55,7 @@ import AnimatedReanimated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@/components/ui/text';
-import { brandFonts } from '@/constants/profileTypography';
-import { useStore, useShiftDevice, useUser } from '@/store/useStore';
+import { useStore, useUser } from '@/store/useStore';
 import type { SpiralLog, Technique, AdaptiveProtocol, ProtocolOutcome } from '@/types';
 import { CountdownRing } from '@/components/CountdownRing';
 import { SuccessRipple } from '@/components/SuccessRipple';
@@ -70,16 +70,18 @@ import { selectAdaptiveProtocol, recordProtocolOutcome } from '@/services/adapti
 import { InteractiveStepInput } from '@/components/protocol/InteractiveStepInput';
 import { TECHNIQUE_LIBRARY } from '@/constants/techniqueLibrary';
 
-const HEADLINE_FONT_BOLD = brandFonts?.headlineBold ?? 'PlayfairDisplay_700Bold';
-const HEADLINE_FONT_SEMIBOLD = brandFonts?.headlineSemiBold ?? 'PlayfairDisplay_600SemiBold';
-const HEADLINE_FONT_MEDIUM = brandFonts?.headlineMedium ?? 'PlayfairDisplay_500Medium';
-const HEADLINE_FONT_REGULAR = brandFonts?.headlineRegular ?? 'PlayfairDisplay_400Regular';
-
 const BODY_FONT_REGULAR = 'Inter_400Regular';
 const BODY_FONT_MEDIUM = 'Inter_500Medium';
 const BODY_FONT_SEMIBOLD = 'Inter_600SemiBold';
+const HEADLINE_FONT_BOLD = 'PlayfairDisplay_700Bold';
 
-type Stage = 'pre-check' | 'protocol' | 'post-check' | 'log-trigger' | 'complete';
+type Stage =
+  | 'pre-check'
+  | 'protocol'
+  | 'post-check'
+  | 'log-trigger'
+  | 'complete'
+  | 'transition-buffer';
 
 export default function SpiralInterrupt() {
   const router = useRouter();
@@ -89,7 +91,7 @@ export default function SpiralInterrupt() {
     source?: string;
   }>();
   const user = useUser();
-  const shiftDevice = useShiftDevice();
+
   const { setSpiraling } = useStore();
   const insets = useSafeAreaInsets();
   const analytics = useAnalytics();
@@ -167,8 +169,6 @@ export default function SpiralInterrupt() {
     colors.background.secondary,
     colors.background.primary,
   ] as const;
-  const postCheckPaddingTop = Math.max(safeAreaTop + 64, 110);
-  const postCheckPaddingBottom = Math.max(safeAreaBottom + 48, 80);
   const logTriggerPaddingTop = Math.max(safeAreaTop + 84, 140);
   const logTriggerPaddingBottom = Math.max(safeAreaBottom + 80, 124);
 
@@ -281,6 +281,11 @@ export default function SpiralInterrupt() {
       console.log('Meditation sound loaded successfully');
     } catch (err) {
       console.log('Audio loading failed - continuing without sound:', err);
+      Alert.alert(
+        'Audio Unavailable',
+        "We couldn't load the meditation sound, but you can still proceed with the visual guide.",
+        [{ text: 'OK' }]
+      );
     }
   };
 
@@ -299,8 +304,7 @@ export default function SpiralInterrupt() {
       const protocol = await selectAdaptiveProtocol(
         user.user_id,
         preFeelingRating,
-        undefined, // No trigger yet (we ask after)
-        shiftDevice?.is_connected || false
+        undefined // No trigger yet (we ask after)
       );
 
       // Calculate total duration from technique steps
@@ -386,10 +390,6 @@ export default function SpiralInterrupt() {
       );
     }
   }, [stage]);
-
-  const breathGlowStyle = useAnimatedStyle(() => ({
-    opacity: breathGlowOpacity.value,
-  }));
 
   // Breathing orb animation for breathing steps (6-9)
   useEffect(() => {
@@ -651,7 +651,7 @@ export default function SpiralInterrupt() {
     // Track completion
     analytics.track('SPIRAL_COMPLETED', {
       pre_feeling: preFeelingRating,
-      duration: totalDuration,
+      duration: totalDuration.toString(),
       technique_id: selectedTechnique?.id,
       technique_name: selectedTechnique?.name,
     });
@@ -689,12 +689,12 @@ export default function SpiralInterrupt() {
         interactiveResponses:
           Object.keys(interactiveResponses).length > 0
             ? Object.fromEntries(
-                Object.entries(interactiveResponses).map(([stepIdx, response]) => [
-                  selectedTechnique?.steps[parseInt(stepIdx)]?.text.substring(0, 30) ||
-                    `step_${stepIdx}`,
-                  response,
-                ])
-              )
+              Object.entries(interactiveResponses).map(([stepIdx, response]) => [
+                selectedTechnique?.steps[parseInt(stepIdx)]?.text.substring(0, 30) ||
+                `step_${stepIdx}`,
+                response,
+              ])
+            )
             : undefined,
         completed: timeRemaining === 0, // True if completed, false if skipped
         timestamp: new Date().toISOString(),
@@ -716,7 +716,7 @@ export default function SpiralInterrupt() {
         interrupted: true,
         pre_feeling: preFeelingRating,
         post_feeling: postFeelingRating || 5,
-        used_shift: shiftDevice?.is_connected || false,
+        used_shift: false,
         technique_used: selectedTechnique?.name || 'Unknown',
         trigger: finalTrigger,
       };
@@ -957,19 +957,19 @@ export default function SpiralInterrupt() {
                       borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '15',
                       ...(isSelected
                         ? {
-                            shadowColor: colors.lime[500],
-                            shadowOffset: { width: 0, height: 4 },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 12,
-                            elevation: 4,
-                          }
+                          shadowColor: colors.lime[500],
+                          shadowOffset: { width: 0, height: 4 },
+                          shadowOpacity: 0.25,
+                          shadowRadius: 12,
+                          elevation: 4,
+                        }
                         : {
-                            shadowColor: colors.background.primary,
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.15,
-                            shadowRadius: 6,
-                            elevation: 2,
-                          }),
+                          shadowColor: colors.background.primary,
+                          shadowOffset: { width: 0, height: 2 },
+                          shadowOpacity: 0.15,
+                          shadowRadius: 6,
+                          elevation: 2,
+                        }),
                     }}>
                     {/* Icon Badge */}
                     <View
@@ -1376,7 +1376,7 @@ export default function SpiralInterrupt() {
                                   width: '100%',
                                 }}>
                                 <InteractiveStepInput
-                                  config={currentStep.interactive}
+                                  config={currentStep.interactive!}
                                   value={interactiveResponses[currentStepIndex] || ''}
                                   onChangeText={(text) => {
                                     setInteractiveResponses((prev) => ({
@@ -1787,19 +1787,19 @@ export default function SpiralInterrupt() {
                         borderColor: isSelected ? colors.lime[500] + '80' : colors.lime[600] + '15',
                         ...(isSelected
                           ? {
-                              shadowColor: colors.lime[500],
-                              shadowOffset: { width: 0, height: 4 },
-                              shadowOpacity: 0.25,
-                              shadowRadius: 12,
-                              elevation: 4,
-                            }
+                            shadowColor: colors.lime[500],
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 12,
+                            elevation: 4,
+                          }
                           : {
-                              shadowColor: colors.background.primary,
-                              shadowOffset: { width: 0, height: 2 },
-                              shadowOpacity: 0.15,
-                              shadowRadius: 6,
-                              elevation: 2,
-                            }),
+                            shadowColor: colors.background.primary,
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.15,
+                            shadowRadius: 6,
+                            elevation: 2,
+                          }),
                       }}>
                       <View
                         style={{

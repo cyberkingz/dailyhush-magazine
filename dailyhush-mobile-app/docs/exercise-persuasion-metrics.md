@@ -1,4 +1,5 @@
 # Exercise Persuasion Metrics Framework
+
 ## Measuring the 7 Principles in Action
 
 **Author:** Robert Cialdini
@@ -682,6 +683,7 @@ Run these tests IN ORDER (highest-impact first):
 ### MONTH 1: OPENING SCREEN OPTIMIZATION
 
 **Test 1: Authority Citation Format**
+
 - Control: "In a 2023 Stanford study..."
 - Variant A: "Stanford University researchers found..."
 - Variant B: "In a 2023 Stanford RCT with 114 participants..."
@@ -689,6 +691,7 @@ Run these tests IN ORDER (highest-impact first):
 - **Expected Winner:** Variant B (specificity persuades)
 
 **Test 2: Anna Testimonial Placement**
+
 - Control: Anna at bottom of opening screen
 - Variant A: Anna at top (before research)
 - Variant B: Anna in middle (between research and CTA)
@@ -700,6 +703,7 @@ Run these tests IN ORDER (highest-impact first):
 ### MONTH 2: SOCIAL PROOF OPTIMIZATION
 
 **Test 3: Social Proof Specificity**
+
 - Control: "10,000+ people used this"
 - Variant A: "10,247 people used this today"
 - Variant B: "10,247 people are using this right now"
@@ -707,6 +711,7 @@ Run these tests IN ORDER (highest-impact first):
 - **Expected Winner:** Variant B (real-time urgency)
 
 **Test 4: Social Proof Context**
+
 - Control: "10,247 used this today"
 - Variant A: "10,247 used this today. Join them."
 - Variant B: "10,247 people used this before bed last night"
@@ -718,6 +723,7 @@ Run these tests IN ORDER (highest-impact first):
 ### MONTH 3: COMMITMENT MECHANISM OPTIMIZATION
 
 **Test 5: Bookmark vs Reminder CTA**
+
 - Control: "Bookmark Exercise" button
 - Variant A: "Set 8am Reminder" button
 - Variant B: Both buttons side-by-side
@@ -725,6 +731,7 @@ Run these tests IN ORDER (highest-impact first):
 - **Expected Winner:** Variant A (specific time commitment)
 
 **Test 6: Unity Message Strength**
+
 - Control: "That's what 10K people are using DailyHush for"
 - Variant A: "You're part of the group that knows how to interrupt panic"
 - Variant B: "You're one of 10,247 people who completed this today"
@@ -775,11 +782,13 @@ You'll know the persuasion architecture is working when:
 ### If AUTHORITY isn't lifting conversion:
 
 **Possible Issues:**
+
 - Citation is too vague ("research shows" instead of "Stanford 2023")
 - Institutional names aren't recognizable (use Harvard, Stanford, Yale)
 - Too much clinical jargon (users feel intimidated, not reassured)
 
 **Fix:**
+
 - Add specific numbers (114 participants, 28 days, 65% reduction)
 - Use recognizable institutions
 - Balance clinical precision with accessibility
@@ -789,11 +798,13 @@ You'll know the persuasion architecture is working when:
 ### If SOCIAL PROOF isn't driving clicks:
 
 **Possible Issues:**
+
 - Numbers are TOO big (1M users = feels fake)
 - Numbers are static (users see same count every day)
 - Context is missing ("10K users" of what?)
 
 **Fix:**
+
 - Use specific, believable numbers (10,247 not 10,000)
 - Update daily with real data
 - Add context ("10,247 used this before bed last night")
@@ -803,11 +814,13 @@ You'll know the persuasion architecture is working when:
 ### If LIKING (Anna) isn't increasing engagement:
 
 **Possible Issues:**
+
 - Testimonial is too polished (feels like marketing)
 - No vulnerability (users don't relate)
 - No use case context (when/why does Anna use it?)
 
 **Fix:**
+
 - Add vulnerability ("embarrassingly fast," "only thing that works")
 - Add specific context ("during panic attacks," "every night")
 - Keep it conversational, not scripted
@@ -817,11 +830,13 @@ You'll know the persuasion architecture is working when:
 ### If COMMITMENT mechanisms aren't driving return:
 
 **Possible Issues:**
+
 - CTA is too vague ("Save this")
 - No specific time prompt ("Set reminder" vs "Set 8am reminder")
 - No loss framing ("Bookmark" vs "Don't lose this technique")
 
 **Fix:**
+
 - Make CTAs specific ("Set 8am reminder")
 - Use loss language ("Don't lose your chance...")
 - Stack multiple commitment options (bookmark + reminder)
@@ -835,6 +850,7 @@ The 7 principles aren't magic. They're PATTERNS that already govern human decisi
 Your job isn't to manipulate. It's to MEASURE whether you're working WITH these patterns or AGAINST them.
 
 If a principle isn't working, it's because:
+
 1. The implementation is weak (fix the copy)
 2. The measurement is wrong (fix the tracking)
 3. The context doesn't fit (not all principles apply everywhere)
@@ -847,11 +863,13 @@ If the answer is YES → you're doing ethical persuasion
 If the answer is NO → you're manipulating
 
 **Metrics that pass:**
+
 - Completion rate (they wanted to complete, we helped them finish)
 - Return rate (they benefited, they came back)
 - Positive rating rate (they felt better, measurably)
 
 **Metrics that fail:**
+
 - Tricked into subscribing (regret after purchase)
 - Couldn't find unsubscribe (dark patterns)
 - Felt pressured to continue (manipulation, not motivation)
@@ -861,36 +879,43 @@ If the answer is NO → you're manipulating
 ## IMPLEMENTATION CHECKLIST
 
 Week 1-2:
+
 - [ ] Set up baseline tracking (2 weeks of data)
 - [ ] Measure current funnel (card → open → start → complete → rate)
 - [ ] Document current copy (what we're changing FROM)
 
 Week 3-4:
+
 - [ ] Implement Phase 1 (Opening screens with authority + Anna)
 - [ ] Track authority citation view rate
 - [ ] Measure begin-click lift
 
 Week 5-6:
+
 - [ ] Implement Phase 2 (Real-time social proof)
 - [ ] Track social proof view rate
 - [ ] Measure card-click lift
 
 Week 7-8:
+
 - [ ] Implement Phase 3 (Micro-encouragement during exercises)
 - [ ] Track encouragement show rate
 - [ ] Measure completion rate lift
 
 Week 9-10:
+
 - [ ] Implement Phase 4 (Unity messaging post-completion)
 - [ ] Track unity message view rate
 - [ ] Measure 30-day retention lift
 
 Week 11-12:
+
 - [ ] Implement Phase 5 (Commitment prompts - bookmark, reminder)
 - [ ] Track CTA click rates
 - [ ] Measure 7-day return lift
 
 Week 13+:
+
 - [ ] Run A/B tests on copy variations
 - [ ] Optimize underperforming elements
 - [ ] Scale to all exercises

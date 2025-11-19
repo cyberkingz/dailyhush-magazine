@@ -70,7 +70,6 @@ export default function Insights() {
       } else {
         setWeeklyData(weeklyResult.data);
       }
-
     } catch (err) {
       console.error('Error fetching insights:', err);
       setError('Failed to load insights');
@@ -99,196 +98,196 @@ export default function Insights() {
           options={{
             headerShown: true,
             headerTitle: 'Pattern Insights',
-          headerTitleAlign: 'center',
-          headerStyle: {
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: colors.background.primary,
+            },
+            headerTintColor: colors.text.primary,
+            headerTitleStyle: {
+              fontWeight: '600',
+            },
+            headerBackTitleVisible: false,
+          }}
+        />
+        <SafeAreaView
+          style={{
+            flex: 1,
             backgroundColor: colors.background.primary,
-          },
-          headerTintColor: colors.text.primary,
-          headerTitleStyle: {
-            fontWeight: '600',
-          },
-          headerBackTitleVisible: false,
-        }}
-      />
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: colors.background.primary,
-        }}>
-        <StatusBar style="light" />
+          }}>
+          <StatusBar style="light" />
 
-        {/* Loading State */}
-        {loading && (
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            accessible={true}
-            accessibilityLiveRegion="polite"
-            accessibilityLabel="Loading your patterns">
-            <ActivityIndicator size="large" color={colors.lime[500]} />
-            <Text
+          {/* Loading State */}
+          {loading && (
+            <View
               style={{
-                color: colors.text.secondary,
-                fontSize: typography.size.base,
-                marginTop: spacing.md,
-                lineHeight: typography.size.base * typography.lineHeight.normal,
-              }}>
-              Looking at your patterns...
-            </Text>
-          </View>
-        )}
-
-        {/* Error State */}
-        {!loading && error && (
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingHorizontal: spacing.xl,
-            }}>
-            <BarChart3 size={64} color={colors.text.muted} strokeWidth={2} />
-            <Text
-              style={{
-                color: colors.text.primary,
-                fontSize: typography.size.xl,
-                fontWeight: typography.fontWeight.bold,
-                marginTop: spacing.md,
-                textAlign: 'center',
-                lineHeight: typography.size.xl * typography.lineHeight.tight,
-              }}>
-              Having Trouble Connecting
-            </Text>
-            <Text
-              style={{
-                color: colors.text.secondary,
-                fontSize: typography.size.base,
-                marginTop: spacing.sm,
-                textAlign: 'center',
-                lineHeight: typography.size.base * typography.lineHeight.relaxed,
-              }}>
-              We can&apos;t load your patterns right now. Your data is safe—try pulling down to
-              refresh in a moment.
-            </Text>
-            <Pressable
-              onPress={async () => {
-                await Haptics.selectionAsync();
-                setLoading(true);
-                fetchInsights();
-              }}
-              style={{
-                marginTop: spacing.lg,
-                backgroundColor: colors.button.secondary,
-                borderRadius: 12,
-                paddingHorizontal: spacing.xl,
-                paddingVertical: spacing.md,
-                minHeight: 48,
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               accessible={true}
-              accessibilityRole="button"
-              accessibilityLabel="Try again"
-              accessibilityHint="Attempts to reload your patterns">
+              accessibilityLiveRegion="polite"
+              accessibilityLabel="Loading your patterns">
+              <ActivityIndicator size="large" color={colors.lime[500]} />
+              <Text
+                style={{
+                  color: colors.text.secondary,
+                  fontSize: typography.size.base,
+                  marginTop: spacing.md,
+                  lineHeight: typography.size.base * typography.lineHeight.normal,
+                }}>
+                Looking at your patterns...
+              </Text>
+            </View>
+          )}
+
+          {/* Error State */}
+          {!loading && error && (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: spacing.xl,
+              }}>
+              <BarChart3 size={64} color={colors.text.muted} strokeWidth={2} />
               <Text
                 style={{
                   color: colors.text.primary,
-                  fontSize: typography.size.base,
-                  fontWeight: typography.fontWeight.semibold,
+                  fontSize: typography.size.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  marginTop: spacing.md,
+                  textAlign: 'center',
+                  lineHeight: typography.size.xl * typography.lineHeight.tight,
                 }}>
-                Try Again
+                Having Trouble Connecting
               </Text>
-            </Pressable>
-          </View>
-        )}
+              <Text
+                style={{
+                  color: colors.text.secondary,
+                  fontSize: typography.size.base,
+                  marginTop: spacing.sm,
+                  textAlign: 'center',
+                  lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                }}>
+                We can&apos;t load your patterns right now. Your data is safe—try pulling down to
+                refresh in a moment.
+              </Text>
+              <Pressable
+                onPress={async () => {
+                  await Haptics.selectionAsync();
+                  setLoading(true);
+                  fetchInsights();
+                }}
+                style={{
+                  marginTop: spacing.lg,
+                  backgroundColor: colors.button.secondary,
+                  borderRadius: 12,
+                  paddingHorizontal: spacing.xl,
+                  paddingVertical: spacing.md,
+                  minHeight: 48,
+                }}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Try again"
+                accessibilityHint="Attempts to reload your patterns">
+                <Text
+                  style={{
+                    color: colors.text.primary,
+                    fontSize: typography.size.base,
+                    fontWeight: typography.fontWeight.semibold,
+                  }}>
+                  Try Again
+                </Text>
+              </Pressable>
+            </View>
+          )}
 
-        {/* Empty State - No spiral logs yet */}
-        {!loading && !error && weeklyData && weeklyData.totalSpirals === 0 && (
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingHorizontal: spacing.xl,
-            }}>
-            <Sparkles size={64} color={colors.lime[500]} strokeWidth={2} />
-            <Text
+          {/* Empty State - No spiral logs yet */}
+          {!loading && !error && weeklyData && weeklyData.totalSpirals === 0 && (
+            <View
               style={{
-                color: colors.text.primary,
-                fontSize: typography.size.xl,
-                fontWeight: typography.fontWeight.bold,
-                marginTop: spacing.md,
-                textAlign: 'center',
-                lineHeight: typography.size.xl * typography.lineHeight.tight,
-              }}>
-              Your Patterns Will Reveal Themselves
-            </Text>
-            <Text
-              style={{
-                color: colors.text.secondary,
-                fontSize: typography.size.base,
-                marginTop: spacing.sm,
-                textAlign: 'center',
-                lineHeight: typography.size.base * typography.lineHeight.relaxed,
-              }}>
-              When you interrupt your first few spirals, you&apos;ll start seeing patterns here.
-              There&apos;s no rush—you&apos;re already doing the work by being here.
-            </Text>
-            <Pressable
-              onPress={async () => {
-                await Haptics.selectionAsync();
-                router.push('/training/focus' as any);
-              }}
-              style={{
-                marginTop: spacing.lg,
-                backgroundColor: colors.button.secondary,
-                borderRadius: 12,
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
                 paddingHorizontal: spacing.xl,
-                paddingVertical: spacing.md,
-                minHeight: 48,
-              }}
-              accessible={true}
-              accessibilityRole="button"
-              accessibilityLabel="Learn F.I.R.E. technique"
-              accessibilityHint="Opens training to learn the F.I.R.E. technique">
+              }}>
+              <Sparkles size={64} color={colors.lime[500]} strokeWidth={2} />
               <Text
                 style={{
                   color: colors.text.primary,
-                  fontSize: typography.size.base,
-                  fontWeight: typography.fontWeight.semibold,
+                  fontSize: typography.size.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  marginTop: spacing.md,
+                  textAlign: 'center',
+                  lineHeight: typography.size.xl * typography.lineHeight.tight,
                 }}>
-                Learn F.I.R.E. Technique
+                Your Patterns Will Reveal Themselves
               </Text>
-            </Pressable>
-          </View>
-        )}
+              <Text
+                style={{
+                  color: colors.text.secondary,
+                  fontSize: typography.size.base,
+                  marginTop: spacing.sm,
+                  textAlign: 'center',
+                  lineHeight: typography.size.base * typography.lineHeight.relaxed,
+                }}>
+                When you interrupt your first few spirals, you&apos;ll start seeing patterns here.
+                There&apos;s no rush—you&apos;re already doing the work by being here.
+              </Text>
+              <Pressable
+                onPress={async () => {
+                  await Haptics.selectionAsync();
+                  router.push('/training/focus' as any);
+                }}
+                style={{
+                  marginTop: spacing.lg,
+                  backgroundColor: colors.button.secondary,
+                  borderRadius: 12,
+                  paddingHorizontal: spacing.xl,
+                  paddingVertical: spacing.md,
+                  minHeight: 48,
+                }}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Learn F.I.R.E. technique"
+                accessibilityHint="Opens training to learn the F.I.R.E. technique">
+                <Text
+                  style={{
+                    color: colors.text.primary,
+                    fontSize: typography.size.base,
+                    fontWeight: typography.fontWeight.semibold,
+                  }}>
+                  Learn F.I.R.E. Technique
+                </Text>
+              </Pressable>
+            </View>
+          )}
 
-        {/* Data State - Show insights */}
-        {!loading && !error && weeklyData && weeklyData.totalSpirals > 0 && (
-          <ScrollFadeView
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              paddingHorizontal: spacing.lg,
-              paddingTop: spacing.md,
-              paddingBottom: 72 + insets.bottom,
-            }}
-            showsVerticalScrollIndicator={false}
-            fadeColor={colors.background.primary}
-            fadeHeight={48}
-            fadeIntensity={0.95}
-            fadeVisibility="always"
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                {...refreshControlColors}
-              />
-            }>
-            <WeeklyInsightsContent weeklyData={weeklyData} />
-          </ScrollFadeView>
-        )}
-      </SafeAreaView>
+          {/* Data State - Show insights */}
+          {!loading && !error && weeklyData && weeklyData.totalSpirals > 0 && (
+            <ScrollFadeView
+              style={{ flex: 1 }}
+              contentContainerStyle={{
+                paddingHorizontal: spacing.lg,
+                paddingTop: spacing.md,
+                paddingBottom: 72 + insets.bottom,
+              }}
+              showsVerticalScrollIndicator={false}
+              fadeColor={colors.background.primary}
+              fadeHeight={48}
+              fadeIntensity={0.95}
+              fadeVisibility="always"
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  {...refreshControlColors}
+                />
+              }>
+              <WeeklyInsightsContent weeklyData={weeklyData} />
+            </ScrollFadeView>
+          )}
+        </SafeAreaView>
       </>
     </ScrollControlProvider>
   );

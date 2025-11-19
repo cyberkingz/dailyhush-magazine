@@ -17,7 +17,7 @@ export default function TimerScreen() {
   const [progress, setProgress] = useState(0);
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="flex-1 items-center justify-center">
       <View style={{ position: 'relative', width: 260, height: 260 }}>
         <CountdownRing
           size={260}
@@ -30,8 +30,8 @@ export default function TimerScreen() {
         {/* Overlay countdown text */}
         <View style={{ position: 'absolute', alignSelf: 'center' }}>
           <Text className="text-6xl font-bold tracking-wider">90</Text>
-          <Text className="text-sm font-normal mt-1">seconds</Text>
-          <Text className="text-xs font-medium mt-2 opacity-75">Step 4 of 12</Text>
+          <Text className="mt-1 text-sm font-normal">seconds</Text>
+          <Text className="mt-2 text-xs font-medium opacity-75">Step 4 of 12</Text>
         </View>
       </View>
     </View>
@@ -80,7 +80,7 @@ import { MagmaLoader } from '@/components/MagmaLoader';
 
 export default function LoadingScreen() {
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="flex-1 items-center justify-center">
       <MagmaLoader text="Loading" size={80} />
     </View>
   );
@@ -178,16 +178,19 @@ export default function HomeScreen() {
 ### Variants
 
 **Primary** (default)
+
 - Background: #40916C
 - Pulse: #52B788
 - Text: #FFFFFF
 
 **Secondary**
+
 - Background: #1A4D3C
 - Pulse: #2D6A4F
 - Text: #E8F4F0
 
 **Danger**
+
 - Background: #DC2626
 - Pulse: #EF4444
 - Text: #FFFFFF
@@ -225,22 +228,26 @@ const colors = {
 ## 📱 Used In
 
 ### CountdownRing
+
 - `/app/spiral.tsx` - Main countdown timer with progress indicator
 - Meditation timers
 - Breathing exercise visualizations
 - Any timed protocols or exercises
 
 ### MagmaLoader
+
 - Loading screens
 - Data fetching states
 - Screen transitions
 
 ### SuccessRipple
+
 - `/app/spiral.tsx` - Post-check success animation
 - Onboarding completion
 - Achievement unlocks
 
 ### PulseButton
+
 - `/app/index.tsx` - "I'M SPIRALING" main CTA
 - High-priority action buttons
 - Emergency interrupt triggers
@@ -250,6 +257,7 @@ const colors = {
 ## 🔧 Technical Details
 
 All components use:
+
 - **React Native Animated API** with `useNativeDriver: true` for 60fps performance
 - **Expo Haptics** for tactile feedback
 - **TypeScript** for type safety
@@ -290,7 +298,7 @@ export default function DataFetchScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 bg-[#0A1612] justify-center items-center">
+      <View className="flex-1 items-center justify-center bg-[#0A1612]">
         <MagmaLoader text="Analyzing patterns" size={100} />
       </View>
     );
@@ -312,7 +320,7 @@ export default function CompletionScreen() {
   const [showNext, setShowNext] = useState(false);
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="flex-1 items-center justify-center">
       <SuccessRipple
         size={100}
         onAnimationComplete={() => {
@@ -320,11 +328,7 @@ export default function CompletionScreen() {
         }}
       />
 
-      {showNext && (
-        <Text className="text-[#E8F4F0] text-xl mt-8">
-          Great job! 🎉
-        </Text>
-      )}
+      {showNext && <Text className="mt-8 text-xl text-[#E8F4F0]">Great job! 🎉</Text>}
     </View>
   );
 }
@@ -339,7 +343,7 @@ import { Brain, TrendingUp, Settings } from 'lucide-react-native';
 
 export default function ActionScreen() {
   return (
-    <View className="flex-1 p-6 gap-4">
+    <View className="flex-1 gap-4 p-6">
       <PulseButton
         onPress={() => console.log('Primary')}
         title="Start Protocol"

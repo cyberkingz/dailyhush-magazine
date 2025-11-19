@@ -15,6 +15,7 @@ eas build --platform ios --profile production
 ```
 
 **Ce qui va se passer :**
+
 1. EAS va te demander si tu veux te connecter à ton compte Apple → **Réponds `yes`**
 2. Il va te demander ton Apple ID → **Entre : `thony.officiel@icloud.com`**
 3. Il va te demander ton mot de passe Apple
@@ -22,8 +23,9 @@ eas build --platform ios --profile production
 5. Le build va commencer (15-30 minutes)
 
 **✅ Confirmation :** Tu verras que les variables d'environnement sont bien chargées :
+
 ```
-Environment variables loaded from the "production" build profile "env" configuration: 
+Environment variables loaded from the "production" build profile "env" configuration:
 EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, ...
 ```
 
@@ -32,10 +34,12 @@ EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, ...
 ### Étape 2 : Attendre la fin du Build
 
 Le build prend environ **15-30 minutes**. Tu peux :
+
 - Suivre la progression dans le terminal
 - OU aller sur [expo.dev](https://expo.dev) → Ton projet → Builds
 
 **Quand c'est terminé, tu verras :**
+
 ```
 ✔ Build finished
 ```
@@ -51,6 +55,7 @@ eas submit --platform ios --latest
 ```
 
 **Ce qui va se passer :**
+
 1. EAS va récupérer automatiquement le dernier build
 2. Il va l'uploader vers App Store Connect
 3. Il va l'attacher à ta version 1.0.0
@@ -72,17 +77,19 @@ eas submit --platform ios --latest
 ### Vérifier que les variables sont bien incluses
 
 Pendant le build, tu devrais voir dans les logs :
+
 ```
-Environment variables loaded from the "production" build profile "env" configuration: 
-EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, 
-EXPO_PUBLIC_REVENUECAT_IOS_KEY, EXPO_PUBLIC_REVENUECAT_ANDROID_KEY, 
-EXPO_PUBLIC_POSTHOG_API_KEY, EXPO_PUBLIC_POSTHOG_HOST, 
+Environment variables loaded from the "production" build profile "env" configuration:
+EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY,
+EXPO_PUBLIC_REVENUECAT_IOS_KEY, EXPO_PUBLIC_REVENUECAT_ANDROID_KEY,
+EXPO_PUBLIC_POSTHOG_API_KEY, EXPO_PUBLIC_POSTHOG_HOST,
 SENTRY_AUTH_TOKEN, SENTRY_DISABLE_AUTO_UPLOAD
 ```
 
 ### Tester sur TestFlight
 
 Une fois le build disponible dans TestFlight :
+
 1. Installe-le sur ton iPhone
 2. Lance l'app
 3. **L'app ne devrait PLUS crasher** au lancement ! 🎉
@@ -121,4 +128,3 @@ eas build:list --platform ios --limit 1
 ---
 
 **C'est parti ! Lance le build maintenant ! 🚀**
-

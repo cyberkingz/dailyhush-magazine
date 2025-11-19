@@ -115,7 +115,7 @@ export interface MoodDatabase extends Database {
             columns: ['user_id'];
             referencedRelation: 'user_profiles';
             referencedColumns: ['user_id'];
-          }
+          },
         ];
       };
       user_encryption_keys: {
@@ -158,7 +158,7 @@ export interface MoodDatabase extends Database {
             columns: ['user_id'];
             referencedRelation: 'user_profiles';
             referencedColumns: ['user_id'];
-          }
+          },
         ];
       };
     };
@@ -167,7 +167,7 @@ export interface MoodDatabase extends Database {
       mood_entry_status: 'draft' | 'completed' | 'abandoned';
       transcription_status: 'pending' | 'processing' | 'completed' | 'failed';
     };
-    Functions: Database['public']['Functions'] & {
+    Functions: {
       get_user_mood_history: {
         Args: {
           p_user_id: string;
@@ -175,7 +175,7 @@ export interface MoodDatabase extends Database {
           p_offset?: number;
           p_include_drafts?: boolean;
         };
-        Returns: Array<{
+        Returns: {
           id: string;
           mood_type: 'calm' | 'anxious' | 'sad' | 'frustrated' | 'mixed' | null;
           mood_emoji: string | null;
@@ -185,20 +185,20 @@ export interface MoodDatabase extends Database {
           completed_at: string | null;
           created_at: string;
           time_spent_seconds: number | null;
-        }>;
+        }[];
       };
       get_mood_patterns: {
         Args: {
           p_user_id: string;
           p_days?: number;
         };
-        Returns: Array<{
+        Returns: {
           total_entries: number;
           most_common_mood: 'calm' | 'anxious' | 'sad' | 'frustrated' | 'mixed';
           avg_intensity: number;
           entries_by_mood: Record<string, number>;
           completion_rate: number;
-        }>;
+        }[];
       };
       cleanup_old_mood_drafts: {
         Args: Record<string, never>;
@@ -218,8 +218,10 @@ export type MoodEntryInsert = MoodDatabase['public']['Tables']['mood_entries']['
 export type MoodEntryUpdate = MoodDatabase['public']['Tables']['mood_entries']['Update'];
 
 export type UserEncryptionKey = MoodDatabase['public']['Tables']['user_encryption_keys']['Row'];
-export type UserEncryptionKeyInsert = MoodDatabase['public']['Tables']['user_encryption_keys']['Insert'];
-export type UserEncryptionKeyUpdate = MoodDatabase['public']['Tables']['user_encryption_keys']['Update'];
+export type UserEncryptionKeyInsert =
+  MoodDatabase['public']['Tables']['user_encryption_keys']['Insert'];
+export type UserEncryptionKeyUpdate =
+  MoodDatabase['public']['Tables']['user_encryption_keys']['Update'];
 
 // Type helper for enums
 export type MoodTypeEnum = MoodDatabase['public']['Enums']['mood_type'];

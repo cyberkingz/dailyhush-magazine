@@ -1,9 +1,11 @@
 # RevenueCat + Apple IAP Setup Guide
 
 ## Overview
+
 This guide walks through setting up RevenueCat with Apple In-App Purchases (IAP) for DailyHush mobile app.
 
 ## Business Model Summary
+
 - **Free Tier**: 3 conversations/week, 5 exercises/day, 7 days history
 - **Premium Tier**: Unlimited access
 - **Pricing**: $6.99/month or $69.99/year (17% savings)
@@ -45,6 +47,7 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_xxxxxxxxxxxxxxxxx
 ## Step 3: Create Products in App Store Connect
 
 ### Access App Store Connect
+
 1. Go to [https://appstoreconnect.apple.com](https://appstoreconnect.apple.com)
 2. Sign in with your Apple Developer account
 3. Navigate to **My Apps** > **DailyHush** (or create new app)
@@ -59,6 +62,7 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_xxxxxxxxxxxxxxxxx
    - Identifier: `premium_subscriptions`
 
 #### Monthly Subscription Details
+
 - **Product ID**: `com.dailyhush.premium.monthly`
 - **Reference Name**: `Premium Monthly`
 - **Subscription Duration**: `1 Month`
@@ -66,12 +70,14 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_xxxxxxxxxxxxxxxxx
 - **Free Trial**: `7 Days`
 
 #### Localization (English - US)
+
 - **Subscription Display Name**: `Premium Monthly`
 - **Description**: `Unlimited conversations, exercises, and full history access`
 
 ### Create Annual Subscription
 
 #### Annual Subscription Details
+
 - **Product ID**: `com.dailyhush.premium.annual`
 - **Reference Name**: `Premium Annual`
 - **Subscription Duration**: `1 Year`
@@ -80,16 +86,19 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_xxxxxxxxxxxxxxxxx
 - **Promotional Offer**: Optional - can add intro pricing
 
 #### Localization (English - US)
+
 - **Subscription Display Name**: `Premium Annual`
 - **Description**: `Best value - save 17% with annual billing`
 
 ### Important Notes
+
 - Both subscriptions should be in the **same Subscription Group**
 - Set subscription group ranking (Annual as Rank 1 = highest priority)
 - Configure **Subscription Pricing** for all territories you plan to sell in
 - Add **App Store Localization** for each territory
 
 ### Review Information
+
 - **Screenshot**: Upload a screenshot showing premium features
 - **Review Notes**: "This is a premium subscription that unlocks unlimited conversations with our AI coach and unlimited breathing exercises."
 
@@ -116,6 +125,7 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_xxxxxxxxxxxxxxxxx
 2. Click **+ New**
 
 #### Monthly Product
+
 - **Identifier**: `com.dailyhush.premium.monthly`
 - **Type**: Auto-renewable subscription
 - **Store**: Apple App Store
@@ -123,6 +133,7 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_xxxxxxxxxxxxxxxxx
 - Click **Save**
 
 #### Annual Product
+
 - **Identifier**: `com.dailyhush.premium.annual`
 - **Type**: Auto-renewable subscription
 - **Store**: Apple App Store
@@ -155,6 +166,7 @@ An **offering** is a collection of products you present to users.
 ### Add Packages to Offering
 
 #### Monthly Package
+
 - Click **+ Add Package**
 - **Identifier**: `$rc_monthly` (RevenueCat default)
 - **Product**: `com.dailyhush.premium.monthly`
@@ -162,6 +174,7 @@ An **offering** is a collection of products you present to users.
 - **Position**: 1
 
 #### Annual Package
+
 - Click **+ Add Package**
 - **Identifier**: `$rc_annual` (RevenueCat default)
 - **Product**: `com.dailyhush.premium.annual`
@@ -189,6 +202,7 @@ RevenueCat will notify your backend when subscriptions change.
    ```bash
    openssl rand -hex 32
    ```
+
    - Add to your backend `.env`:
      ```
      REVENUECAT_WEBHOOK_SECRET=your_generated_token_here
@@ -258,6 +272,7 @@ useEffect(() => {
    - Settings > App Store > Sign Out
 
 3. **Build and run app**:
+
    ```bash
    npx expo run:ios
    ```
@@ -366,23 +381,27 @@ await restorePurchases();
 ### Common Issues
 
 #### 1. "No products available"
+
 - Verify products are approved in App Store Connect
 - Check Bundle ID matches exactly
 - Ensure In-App Purchase Key is uploaded to RevenueCat
 - Wait 2-4 hours after creating products (App Store caching)
 
 #### 2. "Invalid Product ID"
+
 - Product IDs must match exactly between App Store Connect and RevenueCat
 - Check for typos
 - Ensure products are in "Ready to Submit" state
 
 #### 3. Sandbox purchase fails
+
 - Verify Sandbox tester account is created
 - Sign out of real Apple ID on device
 - Delete app and reinstall
 - Try different Sandbox account
 
 #### 4. Webhook not receiving events
+
 - Verify webhook URL is HTTPS
 - Check authorization header is correct
 - Look for errors in RevenueCat webhook logs

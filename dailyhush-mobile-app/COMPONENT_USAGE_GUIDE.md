@@ -7,11 +7,13 @@
 Enhanced card component with three visual variants and optional press handling.
 
 **Import:**
+
 ```tsx
 import { PremiumCard } from '@/components/PremiumCard';
 ```
 
 **Basic Usage:**
+
 ```tsx
 // Static card
 <PremiumCard variant="default">
@@ -32,6 +34,7 @@ import { PremiumCard } from '@/components/PremiumCard';
 ```
 
 **Props:**
+
 - `children`: React.ReactNode - Card content
 - `onPress?`: () => void - Optional press handler
 - `variant?`: 'default' | 'elevated' | 'gradient' - Visual style
@@ -39,11 +42,13 @@ import { PremiumCard } from '@/components/PremiumCard';
 - `activeOpacity?`: number - Press opacity (default: 0.9)
 
 **Variants:**
+
 - **default**: Standard card with subtle border (best for data display)
 - **elevated**: Enhanced shadow and glow (best for interactive cards)
 - **gradient**: Linear gradient overlay (best for hero sections)
 
 **Examples:**
+
 ```tsx
 // Stats card
 <PremiumCard variant="default" style={{ marginBottom: 16 }}>
@@ -75,11 +80,13 @@ import { PremiumCard } from '@/components/PremiumCard';
 Daily rotating educational tips with automatic day-based rotation.
 
 **Import:**
+
 ```tsx
 import { TipCard } from '@/components/TipCard';
 ```
 
 **Basic Usage:**
+
 ```tsx
 <TipCard />
 
@@ -88,9 +95,11 @@ import { TipCard } from '@/components/TipCard';
 ```
 
 **Props:**
+
 - `style?`: any - Additional styles
 
 **Features:**
+
 - 8 educational tips about rumination
 - Rotates automatically based on day of year
 - Sparkle icon
@@ -98,6 +107,7 @@ import { TipCard } from '@/components/TipCard';
 - No configuration needed
 
 **Tips included:**
+
 1. Spiral timing and interruption
 2. Brain threat detection
 3. Rumination vs problem-solving
@@ -114,11 +124,13 @@ import { TipCard } from '@/components/TipCard';
 Premium button with gradient background, glow effect, and optional pulsing animation.
 
 **Import:**
+
 ```tsx
 import { PulseButton } from '@/components/PulseButton';
 ```
 
 **Basic Usage:**
+
 ```tsx
 <PulseButton
   onPress={() => router.push('/spiral')}
@@ -130,6 +142,7 @@ import { PulseButton } from '@/components/PulseButton';
 ```
 
 **Props:**
+
 - `onPress`: () => void - Press handler (required)
 - `title`: string - Button text (required)
 - `subtitle?`: string - Optional secondary text
@@ -139,11 +152,13 @@ import { PulseButton } from '@/components/PulseButton';
 - `style?`: ViewStyle - Additional styles
 
 **Variants:**
+
 - **primary**: Emerald gradient (#52B788 → #40916C)
 - **secondary**: Dark gradient (#1A4D3C → #2D6A4F)
 - **danger**: Red gradient (#EF4444 → #DC2626)
 
 **Examples:**
+
 ```tsx
 // Primary CTA with pulse
 <PulseButton
@@ -179,21 +194,25 @@ import { PulseButton } from '@/components/PulseButton';
 Simple SVG leaf decoration for subtle tropical accents.
 
 **Import:**
+
 ```tsx
 import { TropicalLeaf } from '@/components/TropicalLeaf';
 ```
 
 **Basic Usage:**
+
 ```tsx
 <TropicalLeaf size={48} color={colors.emerald[600]} />
 ```
 
 **Props:**
+
 - `size?`: number - Leaf size in pixels (default: 48)
 - `color?`: string - Leaf color (default: colors.emerald[600])
 - `style?`: any - Additional styles
 
 **Example positioning:**
+
 ```tsx
 // Top-right corner decoration
 <View style={{ position: 'relative' }}>
@@ -208,9 +227,7 @@ import { TropicalLeaf } from '@/components/TropicalLeaf';
       transform: [{ rotate: '45deg' }],
     }}
   />
-  <PremiumCard variant="elevated">
-    {/* Card content */}
-  </PremiumCard>
+  <PremiumCard variant="elevated">{/* Card content */}</PremiumCard>
 </View>
 ```
 
@@ -221,27 +238,29 @@ import { TropicalLeaf } from '@/components/TropicalLeaf';
 Subtle background texture patterns for added depth.
 
 **Import:**
+
 ```tsx
 import { BackgroundPattern } from '@/components/BackgroundPattern';
 ```
 
 **Basic Usage:**
+
 ```tsx
 // Add to screen as first child (below StatusBar)
 <View style={{ flex: 1, backgroundColor: colors.background.primary }}>
   <StatusBar style="light" />
   <BackgroundPattern variant="dots" />
 
-  <ScrollView>
-    {/* Screen content */}
-  </ScrollView>
+  <ScrollView>{/* Screen content */}</ScrollView>
 </View>
 ```
 
 **Props:**
+
 - `variant?`: 'dots' | 'grid' | 'leaves' - Pattern type (default: 'dots')
 
 **Variants:**
+
 - **dots**: Subtle dot grid (recommended)
 - **grid**: Light grid lines
 - **leaves**: Reserved for future enhancement
@@ -253,6 +272,7 @@ import { BackgroundPattern } from '@/components/BackgroundPattern';
 ## Color System
 
 ### Importing Colors
+
 ```tsx
 import { colors } from '@/constants/colors';
 ```
@@ -260,44 +280,49 @@ import { colors } from '@/constants/colors';
 ### Common Colors
 
 **Backgrounds:**
+
 ```tsx
-colors.background.primary    // #0A1612 - Main screen background
-colors.background.secondary  // #0F1F1A - Card background
-colors.background.tertiary   // #1A4D3C - Elevated card background
-colors.background.border     // rgba(64, 145, 108, 0.15) - Subtle borders
+colors.background.primary; // #0A1612 - Main screen background
+colors.background.secondary; // #0F1F1A - Card background
+colors.background.tertiary; // #1A4D3C - Elevated card background
+colors.background.border; // rgba(64, 145, 108, 0.15) - Subtle borders
 ```
 
 **Text:**
+
 ```tsx
-colors.text.primary    // #E8F4F0 - High contrast text
-colors.text.secondary  // #A8CFC0 - Muted text
-colors.text.tertiary   // #52B788 - Accent text
+colors.text.primary; // #E8F4F0 - High contrast text
+colors.text.secondary; // #A8CFC0 - Muted text
+colors.text.tertiary; // #52B788 - Accent text
 ```
 
 **Emerald Scale:**
+
 ```tsx
-colors.emerald[50]   // #E8F4F0 - Lightest
-colors.emerald[200]  // #B7E4C7 - Light
-colors.emerald[400]  // #74C69D - Medium
-colors.emerald[500]  // #52B788 - Primary accent
-colors.emerald[600]  // #40916C - Primary button
-colors.emerald[700]  // #2D6A4F - Secondary button
-colors.emerald[800]  // #1A4D3C - Dark
+colors.emerald[50]; // #E8F4F0 - Lightest
+colors.emerald[200]; // #B7E4C7 - Light
+colors.emerald[400]; // #74C69D - Medium
+colors.emerald[500]; // #52B788 - Primary accent
+colors.emerald[600]; // #40916C - Primary button
+colors.emerald[700]; // #2D6A4F - Secondary button
+colors.emerald[800]; // #1A4D3C - Dark
 ```
 
 **Gradients:**
+
 ```tsx
-colors.gradients.primary  // ['#52B788', '#40916C'] - For LinearGradient
-colors.gradients.accent   // ['#74C69D', '#52B788']
-colors.gradients.card     // ['rgba(26, 77, 60, 0.6)', 'rgba(45, 106, 79, 0.4)']
-colors.gradients.glow     // 'rgba(82, 183, 136, 0.3)' - For outer glow
+colors.gradients.primary; // ['#52B788', '#40916C'] - For LinearGradient
+colors.gradients.accent; // ['#74C69D', '#52B788']
+colors.gradients.card; // ['rgba(26, 77, 60, 0.6)', 'rgba(45, 106, 79, 0.4)']
+colors.gradients.glow; // 'rgba(82, 183, 136, 0.3)' - For outer glow
 ```
 
 **Shadows:**
+
 ```tsx
-colors.shadow.light   // 'rgba(82, 183, 136, 0.15)'
-colors.shadow.medium  // 'rgba(82, 183, 136, 0.25)'
-colors.shadow.heavy   // 'rgba(0, 0, 0, 0.4)'
+colors.shadow.light; // 'rgba(82, 183, 136, 0.15)'
+colors.shadow.medium; // 'rgba(82, 183, 136, 0.25)'
+colors.shadow.heavy; // 'rgba(0, 0, 0, 0.4)'
 ```
 
 ---
@@ -325,8 +350,7 @@ export default function MyScreen() {
           paddingHorizontal: 20,
           paddingTop: 20,
           paddingBottom: 40,
-        }}
-      >
+        }}>
         {/* Hero CTA */}
         <PulseButton
           onPress={() => console.log('Spiral!')}
@@ -340,12 +364,8 @@ export default function MyScreen() {
         {/* Stats Card */}
         <PremiumCard variant="default" style={{ marginBottom: 16 }}>
           <View style={{ padding: 20 }}>
-            <Text style={{ color: colors.text.secondary, fontSize: 14 }}>
-              Spirals interrupted
-            </Text>
-            <Text style={{ color: colors.emerald[500], fontSize: 36, fontWeight: 'bold' }}>
-              12
-            </Text>
+            <Text style={{ color: colors.text.secondary, fontSize: 14 }}>Spirals interrupted</Text>
+            <Text style={{ color: colors.emerald[500], fontSize: 36, fontWeight: 'bold' }}>12</Text>
           </View>
         </PremiumCard>
 
@@ -353,8 +373,7 @@ export default function MyScreen() {
         <PremiumCard
           variant="elevated"
           onPress={() => console.log('Training')}
-          style={{ marginBottom: 16 }}
-        >
+          style={{ marginBottom: 16 }}>
           <View style={{ padding: 20, flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
@@ -362,8 +381,7 @@ export default function MyScreen() {
                 padding: 12,
                 borderRadius: 16,
                 marginRight: 16,
-              }}
-            >
+              }}>
               <Brain size={24} color={colors.emerald[500]} />
             </View>
             <View style={{ flex: 1 }}>
@@ -391,30 +409,35 @@ export default function MyScreen() {
 ## Best Practices
 
 ### Card Hierarchy
+
 1. **Hero/Primary CTA**: Use gradient PulseButton with pulse enabled
 2. **Important stats**: Use PremiumCard with `variant="default"`
 3. **Interactive features**: Use PremiumCard with `variant="elevated"` + onPress
 4. **Educational content**: Use TipCard or PremiumCard with `variant="default"`
 
 ### Spacing
+
 - Between sections: 24-32px
 - Between cards: 16px
 - Card padding: 20px
 - Screen padding: 20px horizontal
 
 ### Border Radius
+
 - Cards: 24px
 - Icon containers: 16px
 - Buttons: 24px
 - Small elements: 12px
 
 ### Shadows
+
 - Use emerald-tinted shadows for depth
 - Light shadows: `shadowRadius: 12, elevation: 3`
 - Medium shadows: `shadowRadius: 16, elevation: 5`
 - Heavy shadows: `shadowRadius: 20, elevation: 8`
 
 ### Color Usage
+
 - High contrast for primary actions (emerald[500], emerald[600])
 - Muted colors for secondary text (text.secondary)
 - Alpha values for subtle depth (emerald[600] + '30')
@@ -425,13 +448,15 @@ export default function MyScreen() {
 ## Migration from Old Components
 
 ### Before:
+
 ```tsx
-<View className="bg-[#1A4D3C] rounded-2xl p-5">
+<View className="rounded-2xl bg-[#1A4D3C] p-5">
   <Text className="text-[#E8F4F0]">Content</Text>
 </View>
 ```
 
 ### After:
+
 ```tsx
 <PremiumCard variant="elevated" style={{ marginBottom: 16 }}>
   <View style={{ padding: 20 }}>
@@ -441,6 +466,7 @@ export default function MyScreen() {
 ```
 
 ### Why?
+
 - Better visual depth with shadows
 - Consistent border radius (24px)
 - Proper color system usage

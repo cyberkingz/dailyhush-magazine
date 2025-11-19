@@ -198,11 +198,13 @@ console.log(`Current streak: ${streak} days`);
 **No migration needed.** Keep `spiral_logs` for the existing spiral interrupt feature, use `exercise_logs` for all new exercises.
 
 **Pros:**
+
 - No data migration
 - No breaking changes
 - Both systems coexist
 
 **Cons:**
+
 - Duplicate functionality for spiral tracking
 
 ---
@@ -511,6 +513,7 @@ DROP TYPE IF EXISTS fire_module;
 ### Issue: RLS policies not working
 
 **Solution:**
+
 ```sql
 -- Check RLS is enabled
 ALTER TABLE exercise_logs ENABLE ROW LEVEL SECURITY;
@@ -522,6 +525,7 @@ SELECT * FROM pg_policies WHERE tablename = 'exercise_logs';
 ### Issue: Materialized view not refreshing
 
 **Solution:**
+
 ```sql
 -- Manual refresh
 SELECT refresh_exercise_stats();
@@ -533,6 +537,7 @@ SELECT * FROM pg_locks WHERE relation = 'exercise_stats_by_user'::regclass;
 ### Issue: Slow queries
 
 **Solution:**
+
 ```sql
 -- Analyze table statistics
 ANALYZE exercise_logs;
@@ -544,6 +549,7 @@ REINDEX TABLE exercise_logs;
 ### Issue: Foreign key constraint error
 
 **Solution:**
+
 ```sql
 -- Verify user exists in user_profiles
 SELECT EXISTS (SELECT 1 FROM user_profiles WHERE user_id = 'USER_ID');
@@ -570,6 +576,7 @@ After successful migration:
 ## Support
 
 For questions or issues:
+
 - Check full documentation: `/docs/EXERCISE_LOGS_SCHEMA.md`
 - Review query examples: `/supabase/queries/exercise-logs-examples.sql`
 - Check TypeScript types: `/types/exercise-logs.ts`

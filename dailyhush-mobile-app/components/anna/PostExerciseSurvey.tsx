@@ -53,7 +53,12 @@ const postFeelingOptions = [
   },
 ];
 
-export function PostExerciseSurvey({ visible, preFeelingScore, onComplete, onSkip }: PostExerciseSurveyProps) {
+export function PostExerciseSurvey({
+  visible,
+  preFeelingScore,
+  onComplete,
+  onSkip,
+}: PostExerciseSurveyProps) {
   const [postFeelingScore, setPostFeelingScore] = useState<number | null>(null);
   const [selectedTrigger, setSelectedTrigger] = useState<string>('');
   const [customTriggerText, setCustomTriggerText] = useState<string>('');
@@ -81,7 +86,10 @@ export function PostExerciseSurvey({ visible, preFeelingScore, onComplete, onSki
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false} statusBarTranslucent>
-      <LinearGradient colors={['#0A1612', '#0F1F1A', '#0A1612']} locations={[0, 0.5, 1]} style={styles.container}>
+      <LinearGradient
+        colors={['#0A1612', '#0F1F1A', '#0A1612']}
+        locations={[0, 0.5, 1]}
+        style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
           <View style={{ width: 44 }} />
@@ -210,8 +218,8 @@ export function PostExerciseSurvey({ visible, preFeelingScore, onComplete, onSki
                   stage === 'feeling' && !postFeelingScore
                     ? '#1A2E26'
                     : pressed
-                    ? '#3A8360'
-                    : '#40916C',
+                      ? '#3A8360'
+                      : '#40916C',
                 opacity: stage === 'feeling' && !postFeelingScore ? 0.5 : 1,
               },
             ]}>

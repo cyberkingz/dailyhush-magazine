@@ -12,6 +12,7 @@
 The adaptive protocol system has been successfully integrated into the spiral interrupt flow. The implementation follows best practices for React Native/Expo, proper state management, and user experience design. However, **one critical bug** was discovered that causes duplicate database writes, and several medium-priority issues need attention.
 
 **Overall Grade: B+ (85/100)**
+
 - Functionality: ✅ Working
 - Architecture: ✅ Clean
 - Error Handling: ⚠️ Needs improvement
@@ -23,11 +24,13 @@ The adaptive protocol system has been successfully integrated into the spiral in
 ## 🔴 Critical Issues (Must Fix Immediately)
 
 ### Issue #1: Duplicate Database Writes
+
 **Severity:** 🔴 CRITICAL
 **Location:** `app/spiral.tsx:590-635` (handleFinish function)
 **Impact:** Every spiral completion writes to database TWICE
 
 **Problem:**
+
 ```typescript
 // Line 590-595: First insert via recordProtocolOutcome()
 await recordProtocolOutcome(outcome);
@@ -40,12 +43,14 @@ const { error } = await withRetry(
 ```
 
 **Why This Happens:**
+
 - `recordProtocolOutcome()` already inserts to `spiral_logs` table (see `services/adaptiveProtocol.ts:287`)
 - Code then inserts again "for backwards compatibility"
 - Results in 2 rows per spiral completion
 - Doubles storage costs, breaks analytics, inflates user stats
 
 **Database Impact:**
+
 ```sql
 -- Current behavior (WRONG):
 INSERT INTO spiral_logs (...) -- From recordProtocolOutcome()
@@ -73,6 +78,7 @@ await recordProtocolOutcome(outcome);
 ```
 
 **Testing Required:**
+
 1. Complete spiral interrupt
 2. Query `SELECT COUNT(*) FROM spiral_logs WHERE user_id = 'xxx'`
 3. Should see 1 row, not 2
@@ -82,31 +88,35 @@ await recordProtocolOutcome(outcome);
 ## 🟡 Medium Priority Issues
 
 ### Issue #2: Missing Fallback Protocol Metadata
+
 **Severity:** 🟡 MEDIUM
 **Location:** `app/spiral.tsx:240-249`
 **Impact:** Fallback technique has no confidence score or rationale
 
 **Problem:**
 When adaptive selection fails, fallback sets technique but not protocol:
+
 ```typescript
 setSelectedTechnique(TECHNIQUE_LIBRARY[0]); // ✅ Sets technique
 // ❌ Doesn't set selectedProtocol
 ```
 
 Result:
+
 ```typescript
 confidence: selectedProtocol?.confidence || 0,  // Will be 0
 rationale: selectedProtocol?.rationale || '',   // Will be empty
 ```
 
 **Fix:**
+
 ```typescript
 // Create fallback protocol object
 const fallbackProtocol: AdaptiveProtocol = {
   technique: TECHNIQUE_LIBRARY[0],
   confidence: 0.5,
   rationale: 'Default technique selected (adaptive selection unavailable)',
-  adaptations: []
+  adaptations: [],
 };
 
 setSelectedProtocol(fallbackProtocol);
@@ -118,16 +128,19 @@ setSelectedTechnique(fallbackProtocol.technique);
 ---
 
 ### Issue #3: No User Feedback During Protocol Loading
+
 **Severity:** 🟡 MEDIUM
 **Location:** `app/spiral.tsx:202-252`
 **Impact:** User sees blank screen for 1-2 seconds
 
 **Problem:**
+
 - Protocol loads asynchronously on entering protocol stage
 - `isLoadingProtocol` state exists but isn't shown to user in pre-check stage
 - User clicks "Let's Break This" → sees nothing → suddenly protocol appears
 
 **Current Flow:**
+
 ```
 User clicks button → Stage changes to 'protocol' →
 useEffect fires → loadAdaptiveProtocol() starts →
@@ -136,6 +149,7 @@ useEffect fires → loadAdaptiveProtocol() starts →
 
 **Fix:**
 Show loading indicator in protocol stage:
+
 ```typescript
 {stage === 'protocol' && isLoadingProtocol && (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -152,16 +166,19 @@ Already implemented at line 1076-1095, but verify it's working.
 ---
 
 ### Issue #4: Error Handling Lacks User Notification
+
 **Severity:** 🟡 MEDIUM
 **Location:** Multiple locations
 **Impact:** Errors logged to console but user not informed
 
 **Locations:**
+
 1. Line 239: `recordProtocolOutcome()` error → console only
 2. Line 594: Adaptive selection fails → console only
 3. Line 623: spiral_logs insert fails → console only
 
 **Problem:**
+
 ```typescript
 try {
   await recordProtocolOutcome(outcome);
@@ -173,6 +190,7 @@ try {
 
 **Fix:**
 Add user-facing error handling:
+
 ```typescript
 try {
   await recordProtocolOutcome(outcome);
@@ -196,32 +214,37 @@ try {
 ## 🔵 Minor Improvements (Nice to Have)
 
 ### Improvement #1: Interactive Response Key Generation
+
 **Location:** `app/spiral.tsx:578-582`
 **Current:**
+
 ```typescript
 Object.entries(interactiveResponses).map(([stepIdx, response]) => [
   selectedTechnique?.steps[parseInt(stepIdx)]?.text.substring(0, 30) || `step_${stepIdx}`,
   response,
-])
+]);
 ```
 
 **Issue:** Step text truncated to 30 chars might create ambiguous keys
 
 **Suggestion:**
 Use step index + step type:
+
 ```typescript
-`${stepIdx}_${selectedTechnique?.steps[parseInt(stepIdx)]?.interactive?.type || 'text'}`
+`${stepIdx}_${selectedTechnique?.steps[parseInt(stepIdx)]?.interactive?.type || 'text'}`;
 // Example: "1_list", "3_text", "5_count"
 ```
 
 ---
 
 ### Improvement #2: Add Protocol Selection Confidence Display
+
 **Location:** UI rendering section
 **Current:** Confidence calculated but never shown to user
 
 **Suggestion:**
 Show subtle confidence indicator:
+
 ```typescript
 {selectedProtocol && selectedProtocol.confidence < 0.6 && (
   <Text style={{ fontSize: 13, color: colors.text.muted, marginTop: 8 }}>
@@ -233,11 +256,13 @@ Show subtle confidence indicator:
 ---
 
 ### Improvement #3: Technique Rationale Display
+
 **Location:** Protocol stage UI
 **Current:** Rationale stored but not displayed
 
 **Suggestion:**
 Add expandable "Why this technique?" section:
+
 ```typescript
 <Pressable onPress={() => setShowRationale(!showRationale)}>
   <Text style={{ color: colors.lime[500] }}>
@@ -255,11 +280,14 @@ Add expandable "Why this technique?" section:
 ---
 
 ### Improvement #4: Analytics Enhancement
+
 **Location:** Throughout file
 **Current:** Basic analytics tracking
 
 **Suggestions:**
+
 1. Track interactive step completion rate:
+
 ```typescript
 analytics.track('INTERACTIVE_STEP_COMPLETED', {
   step_index: currentStepIndex,
@@ -269,6 +297,7 @@ analytics.track('INTERACTIVE_STEP_COMPLETED', {
 ```
 
 2. Track technique switch rate (if user skips):
+
 ```typescript
 analytics.track('TECHNIQUE_SKIPPED', {
   technique_id: selectedTechnique?.id,
@@ -282,7 +311,9 @@ analytics.track('TECHNIQUE_SKIPPED', {
 ## ✅ What's Working Well
 
 ### 1. Adaptive Protocol Selection (Lines 202-252)
+
 ✅ **Excellent implementation**
+
 - Clean async/await pattern
 - Proper error handling with fallback
 - Loading state management
@@ -290,7 +321,9 @@ analytics.track('TECHNIQUE_SKIPPED', {
 - Console logging for debugging
 
 ### 2. Interactive Step Handling (Lines 434-477)
+
 ✅ **Solid UX design**
+
 - Auto-pause on interactive steps
 - Resume functionality
 - State management with useRef for acknowledgment tracking
@@ -298,14 +331,18 @@ analytics.track('TECHNIQUE_SKIPPED', {
 - Haptic feedback
 
 ### 3. Timer & Step Calculation (Lines 394-432)
+
 ✅ **Accurate and performant**
+
 - Proper cleanup in useEffect
 - Step progression based on elapsed time
 - Handles variable technique durations
 - No memory leaks
 
 ### 4. State Management (Lines 130-135)
+
 ✅ **Clean TypeScript typing**
+
 ```typescript
 const [selectedProtocol, setSelectedProtocol] = useState<AdaptiveProtocol | null>(null);
 const [selectedTechnique, setSelectedTechnique] = useState<Technique | null>(null);
@@ -313,13 +350,17 @@ const [interactiveResponses, setInteractiveResponses] = useState<Record<number, 
 ```
 
 ### 5. Breathing Animations (Lines 294-335)
+
 ✅ **Smooth and therapeutic**
+
 - React Native Reanimated for performance
 - Proper scaling based on step type (inhale/exhale)
 - Reset on stage changes
 
 ### 6. Audio Management (Lines 337-350)
+
 ✅ **Well synchronized**
+
 - Mute state persistence
 - Proper play/pause on stage changes
 - No audio leaks
@@ -391,6 +432,7 @@ const [interactiveResponses, setInteractiveResponses] = useState<Record<number, 
 Before deploying to production, test these scenarios:
 
 ### Happy Path
+
 - [ ] Complete spiral from start to finish
 - [ ] Verify only 1 row in spiral_logs (not 2) ← **CRITICAL**
 - [ ] Verify user_technique_stats updated
@@ -398,6 +440,7 @@ Before deploying to production, test these scenarios:
 - [ ] Confirm confidence + rationale populated
 
 ### Interactive Steps
+
 - [ ] Timer pauses on interactive step
 - [ ] Input field appears with auto-focus
 - [ ] Submit resumes timer
@@ -405,12 +448,14 @@ Before deploying to production, test these scenarios:
 - [ ] Can complete protocol after interactive steps
 
 ### Error Cases
+
 - [ ] No internet: Adaptive selection fails → Fallback technique used
 - [ ] Database down: recordProtocolOutcome fails → Error logged
 - [ ] User has no stats: New user flow works
 - [ ] Technique library empty: Graceful degradation
 
 ### Edge Cases
+
 - [ ] User skips protocol early (timeRemaining > 0)
 - [ ] User closes app mid-protocol
 - [ ] Multiple interactive steps in sequence
@@ -422,14 +467,17 @@ Before deploying to production, test these scenarios:
 ## 🛠️ Recommended Fixes Priority
 
 ### Priority 1 (Do Now)
+
 1. ✅ Fix duplicate database writes (Remove lines 597-635)
 
 ### Priority 2 (This Week)
+
 2. Add fallback protocol metadata
 3. Improve error notifications to user
 4. Test with real users (beta)
 
 ### Priority 3 (Next Sprint)
+
 5. Add confidence/rationale display
 6. Enhanced analytics tracking
 7. Interactive response key improvement
@@ -439,12 +487,14 @@ Before deploying to production, test these scenarios:
 ## 📈 Performance Analysis
 
 **Measured Metrics:**
+
 - Protocol selection: ~500ms (acceptable)
 - Step progression: <16ms (60fps maintained)
 - Database writes: ~200ms with retry (good)
 - Memory usage: Stable (no leaks detected)
 
 **Bottlenecks:**
+
 - None identified
 
 **Optimizations Applied:**
@@ -457,6 +507,7 @@ Before deploying to production, test these scenarios:
 ## 🔒 Security & Privacy
 
 ✅ **All checks passed:**
+
 - User data scoped by auth.uid() (RLS policies)
 - Interactive responses stored encrypted in JSONB
 - No PII in logs
@@ -468,11 +519,13 @@ Before deploying to production, test these scenarios:
 ## 📝 Documentation Status
 
 ✅ **Code Documentation:**
+
 - JSDoc comments on functions: ✅
 - Inline comments for complex logic: ✅
 - Type definitions: ✅
 
 ⚠️ **Missing Documentation:**
+
 - No README for spiral flow
 - No developer onboarding guide
 - No troubleshooting section
@@ -486,6 +539,7 @@ Before deploying to production, test these scenarios:
 The adaptive protocol integration is **functionally complete** and follows React Native best practices. The code is clean, well-structured, and maintainable. However, the **duplicate database write bug is critical** and must be fixed before production deployment.
 
 **Action Items:**
+
 1. 🔴 Fix duplicate writes (1 hour)
 2. 🟡 Add error notifications (2 hours)
 3. 🟡 Complete fallback metadata (1 hour)

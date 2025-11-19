@@ -14,40 +14,44 @@ Updated the mobile app branding to match the **dark emerald aesthetic** of the D
 ## Color Palette Changes
 
 ### Primary Colors - Emerald (Full Scale)
+
 ```typescript
-emerald50: '#ecfdf5'
-emerald100: '#d1fae5'
-emerald200: '#a7f3d0'
-emerald300: '#6ee7b7'
-emerald400: '#34d399'
-emerald500: '#10b981'
-emerald600: '#059669'  // Main brand color
-emerald700: '#047857'
-emerald800: '#065f46'
-emerald900: '#064e3b'
+emerald50: '#ecfdf5';
+emerald100: '#d1fae5';
+emerald200: '#a7f3d0';
+emerald300: '#6ee7b7';
+emerald400: '#34d399';
+emerald500: '#10b981';
+emerald600: '#059669'; // Main brand color
+emerald700: '#047857';
+emerald800: '#065f46';
+emerald900: '#064e3b';
 ```
 
 ### Secondary Colors - Sage (New)
+
 ```typescript
-sage100: '#e8f0ed'
-sage200: '#d1e1da'
-sage300: '#b9d2c7'
-sage400: '#a2c3b4'
-sage500: '#8bb4a1'
-sage600: '#6d9280'
-sage700: '#527060'
-sage800: '#364d40'
-sage900: '#1b2620'
+sage100: '#e8f0ed';
+sage200: '#d1e1da';
+sage300: '#b9d2c7';
+sage400: '#a2c3b4';
+sage500: '#8bb4a1';
+sage600: '#6d9280';
+sage700: '#527060';
+sage800: '#364d40';
+sage900: '#1b2620';
 ```
 
 ### Background Colors - Dark Theme
+
 ```typescript
-primary: '#0f172a'    // neutral-900 (main background)
-secondary: '#1e293b'  // neutral-800 (surfaces/cards)
-tertiary: '#334155'   // neutral-700 (borders)
+primary: '#0f172a'; // neutral-900 (main background)
+secondary: '#1e293b'; // neutral-800 (surfaces/cards)
+tertiary: '#334155'; // neutral-700 (borders)
 ```
 
 ### Neutral Scale
+
 ```typescript
 neutral[0]: '#ffffff'
 neutral[50]: '#f8fafc'   // Light text
@@ -68,6 +72,7 @@ neutral[950]: '#020617'
 ## Updated Files
 
 ### Theme Configuration
+
 - **`constants/theme.ts`**
   - Added full emerald color scale (100-900)
   - Added sage secondary colors
@@ -77,6 +82,7 @@ neutral[950]: '#020617'
   - Maintained backward compatibility with aliases
 
 ### All App Screens Updated
+
 All 9 screens now use the dark emerald theme:
 
 1. **`app/index.tsx`** - Home screen
@@ -90,6 +96,7 @@ All 9 screens now use the dark emerald theme:
 9. **`app/onboarding/index.tsx`** - Onboarding flow
 
 ### Global Changes Applied
+
 ```bash
 # Backgrounds: Cream → Dark
 Colors.background.cream50 → Colors.background.primary
@@ -111,17 +118,20 @@ backgroundColor: '#FFFFFF' → Colors.background.secondary
 ## Design Tokens Matching Admin Dashboard
 
 ### ✅ Colors Match
+
 - Emerald-600 (#059669) as primary brand color
 - Sage supporting colors for accents
 - Neutral-900 (#0f172a) as main background
 - Neutral-800 (#1e293b) for elevated surfaces
 
 ### ✅ Typography Match
+
 - Same neutral scale for text colors
 - High contrast on dark backgrounds (WCAG AA compliant)
 - Minimum 18pt body text (maintained from accessibility requirements)
 
 ### ✅ Visual Hierarchy Match
+
 - Dark backgrounds create depth
 - Emerald accents for primary actions
 - Sage for subtle secondary elements
@@ -132,12 +142,14 @@ backgroundColor: '#FFFFFF' → Colors.background.secondary
 ## Key Visual Changes
 
 ### Before (Light Cream Theme)
+
 - Background: Cream (#FFFEF5)
 - Text: Dark slate (#0F172A)
 - Cards: White (#FFFFFF)
 - Accents: Amber (#F59E0B)
 
 ### After (Dark Emerald Theme)
+
 - Background: Dark neutral (#0f172a)
 - Text: Light neutral (#f8fafc)
 - Cards: Dark surface (#1e293b)
@@ -148,6 +160,7 @@ backgroundColor: '#FFFFFF' → Colors.background.secondary
 ## Backward Compatibility
 
 Theme includes aliases for existing color references:
+
 ```typescript
 text: {
   primary: '#0f172a',
@@ -195,12 +208,14 @@ secondary: {
 The mobile app now perfectly matches the admin dashboard's dark emerald branding:
 
 **Admin Dashboard:**
+
 - Dark neutral backgrounds (#0f172a, #1e293b)
 - Emerald-600 (#059669) primary color
 - Sage supporting colors
 - Light text on dark surfaces
 
 **Mobile App:**
+
 - ✅ Same dark neutral backgrounds
 - ✅ Same emerald-600 primary
 - ✅ Same sage palette

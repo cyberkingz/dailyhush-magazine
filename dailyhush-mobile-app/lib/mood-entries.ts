@@ -8,14 +8,17 @@ import {
   MoodType,
   MoodEntryStatus,
   MoodEntry,
-  MoodEntryInsert,
-  MoodEntryUpdate,
   MoodEntrySummary,
   MoodPatterns,
-  CreateMoodEntryRequest,
   UpdateMoodEntryRequest,
 } from '@/types/mood-entries';
-import { encryptText, decryptText, getUserEncryptionKey } from './encryption';
+
+import { encryptText, decryptText } from './encryption';
+// Types exported for consumers of this module
+
+export type MoodEntryInsert = Database['public']['Tables']['mood_entries']['Insert'];
+
+export type MoodEntryUpdate = Database['public']['Tables']['mood_entries']['Update'];
 
 // ================================================
 // CORE OPERATIONS
@@ -331,10 +334,7 @@ export async function clearDraftEntries(userId: string): Promise<void> {
 /**
  * Gets mood patterns for analytics
  */
-export async function getMoodPatterns(
-  userId: string,
-  days: number = 30
-): Promise<MoodPatterns> {
+export async function getMoodPatterns(userId: string, days: number = 30): Promise<MoodPatterns> {
   const { data, error } = await supabase.rpc('get_mood_patterns', {
     p_user_id: userId,
     p_days: days,

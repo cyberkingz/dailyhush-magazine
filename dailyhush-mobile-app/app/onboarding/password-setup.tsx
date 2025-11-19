@@ -210,7 +210,7 @@ export default function PasswordSetup() {
         age: params.profileAge ? parseInt(params.profileAge) : null,
         // Note: rumination_frequency not in schema - removed
         has_shift_necklace: false,
-        shift_paired: false,
+
         fire_progress: {
           focus: false,
           interrupt: false,

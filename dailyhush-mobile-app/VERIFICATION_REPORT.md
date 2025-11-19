@@ -8,6 +8,7 @@
 ## Executive Summary
 
 The data retention policy has been successfully implemented and verified end-to-end:
+
 - ✅ Database schema updated correctly
 - ✅ Migration applied and recorded
 - ✅ Frontend UI shows accurate information
@@ -23,6 +24,7 @@ The data retention policy has been successfully implemented and verified end-to-
 ### 1. ✅ user_profiles Table - NO Foreign Key to auth.users
 
 **Query Run:**
+
 ```sql
 SELECT conname, contype, pg_get_constraintdef(c.oid)
 FROM pg_constraint c
@@ -30,6 +32,7 @@ WHERE conrelid = 'public.user_profiles'::regclass;
 ```
 
 **Result:**
+
 - Primary Key: `user_profiles_pkey` on `user_id` ✅
 - Check Constraint: `quiz_score CHECK (quiz_score >= 1 AND quiz_score <= 10)` ✅
 - **Foreign Key to auth.users:** NONE ✅✅✅
@@ -41,6 +44,7 @@ WHERE conrelid = 'public.user_profiles'::regclass;
 ### 2. ✅ Child Tables - CASCADE DELETE from user_profiles Still Intact
 
 **Query Run:**
+
 ```sql
 SELECT tc.table_name, rc.delete_rule
 FROM information_schema.table_constraints AS tc
@@ -66,6 +70,7 @@ WHERE ccu.table_name = 'user_profiles' AND tc.constraint_type = 'FOREIGN KEY';
 ### 3. ✅ Migration Recorded in Database
 
 **Query Run:**
+
 ```sql
 SELECT version, name FROM supabase_migrations.schema_migrations;
 ```
@@ -74,6 +79,7 @@ SELECT version, name FROM supabase_migrations.schema_migrations;
 Migration `20251025185427_remove_auth_cascade_delete` is recorded ✅
 
 **All Migrations:**
+
 1. create_email_sends_table
 2. add_mobile_app_tables
 3. enhance_fire_training_progress
@@ -93,11 +99,13 @@ Migration `20251025185427_remove_auth_cascade_delete` is recorded ✅
 ### 4. ✅ Documentation Comment Added
 
 **Query Run:**
+
 ```sql
 SELECT col_description('public.user_profiles'::regclass, 1);
 ```
 
 **Result:**
+
 ```
 User ID from auth.users. Intentionally NOT a foreign key to allow data retention
 after account deletion. May be orphaned if auth account is deleted.
@@ -112,6 +120,7 @@ after account deletion. May be orphaned if auth account is deleted.
 ### 1. ✅ Code Implementation (delete-account.tsx)
 
 **Lines 109-121:** Clear comment explaining data retention policy
+
 ```typescript
 // NOTE: We intentionally DO NOT delete user data from database tables:
 // - user_profiles (email, preferences, etc.)
@@ -122,11 +131,13 @@ after account deletion. May be orphaned if auth account is deleted.
 ```
 
 **Line 124:** Only deletes auth account
+
 ```typescript
 const { error: authError } = await supabase.auth.admin.deleteUser(user.user_id);
 ```
 
 **Lines 172-187:** Confirmation dialog mentions data retention
+
 ```typescript
 'This action cannot be undone. Your account will be deleted and you will
 no longer be able to sign in.\n\nNote: Your usage data will be retained
@@ -138,23 +149,27 @@ for analytics and product improvement purposes.\n\nAre you absolutely sure?'
 ### 2. ✅ UI Shows Accurate Information
 
 **Warning Banner (lines 223-227):**
+
 ```
 "This will delete your account and prevent you from signing in.
 Your usage data will be retained for analytics and product improvement."
 ```
 
 **What Will Be Deleted (lines 230-254):**
+
 - ✅ Your login credentials (email: user@example.com)
 - ✅ Ability to sign in to your account
 - ✅ Access to your DailyHush data
 
 **What Will Be Retained (lines 256-291):**
+
 - ✅ Spiral logs and pattern insights (for analytics)
 - ✅ F.I.R.E. framework progress data
 - ✅ The Shift necklace usage data
 - ✅ Quiz submissions and preferences
 
 **Explanatory Note:**
+
 ```
 "This data helps us improve DailyHush for everyone.
 It cannot be accessed after account deletion."
@@ -195,23 +210,27 @@ It cannot be accessed after account deletion."
 ✅ **FULLY COMPLIANT**
 
 **Requirements:**
+
 1. ✅ Provide in-app account deletion (not just web)
 2. ✅ Actually delete the account (auth is deleted)
 3. ✅ Clearly inform users what happens (UI shows retention policy)
 
 **Data Retention Allowance:**
 Apple permits data retention for:
+
 - ✅ Analytics and product improvement (our use case)
 - ✅ Fraud prevention
 - ✅ Legal compliance
 - ✅ Security purposes
 
 **As long as:**
+
 - ✅ Users are clearly informed BEFORE deletion
 - ✅ User cannot access data after deletion
 - ✅ Authentication is removed (cannot sign in)
 
 **Our Implementation:**
+
 - ✅ Warning banner mentions retention
 - ✅ "What Will Be Retained" section lists specific data
 - ✅ Confirmation dialog repeats retention notice
@@ -223,14 +242,17 @@ Apple permits data retention for:
 ## Files Changed
 
 ### Backend
+
 1. `/supabase/schema.sql` - Updated for new database setups
 2. `/supabase/migrations/20251025_remove_auth_cascade_delete.sql` - Migration file
 3. `/supabase/migrations/README_DATA_RETENTION.md` - Technical documentation
 
 ### Frontend
+
 4. `/app/settings/delete-account.tsx` - Code implementation and UI updates
 
 ### Documentation
+
 5. `/APP_STORE_COMPLIANCE.md` - Compliance tracking
 6. `/DATA_RETENTION_FIX_SUMMARY.md` - Summary for stakeholders
 7. `/VERIFICATION_REPORT.md` - This file
@@ -242,6 +264,7 @@ Apple permits data retention for:
 ### Manual Test Scenario
 
 1. **Create test user:**
+
    ```bash
    # Sign up via app with test@example.com
    ```
@@ -282,11 +305,13 @@ Apple permits data retention for:
 **Answer:** NO ❌
 
 **Reason:** All RLS policies check `auth.uid() = user_id`
+
 - When auth account is deleted, `auth.uid()` returns NULL
 - NULL never equals user_id
 - RLS blocks all access to the data
 
 **Example Policy (spiral_logs):**
+
 ```sql
 CREATE POLICY "Users can view own spirals"
 ON public.spiral_logs FOR SELECT
@@ -294,6 +319,7 @@ USING (auth.uid() = user_id);
 ```
 
 When auth is deleted:
+
 - `auth.uid()` = NULL
 - `NULL = '123e4567-e89b-12d3-a456-426614174000'` = FALSE
 - Access denied ✅
@@ -303,18 +329,23 @@ When auth is deleted:
 ## Edge Cases Considered
 
 ### 1. What if someone manually deletes user_profiles?
+
 ✅ **Handled:** Child tables have CASCADE DELETE from user_profiles, so all related data is cleaned up.
 
 ### 2. What if Shift device needs to be re-paired?
+
 ✅ **Handled:** shift_devices uses `ON DELETE SET NULL`, so device record remains but user_id is nulled.
 
 ### 3. What if user creates new account with same email?
+
 ✅ **Handled:** Old data remains orphaned with old user_id. New account gets new user_id. No data mixing.
 
 ### 4. How do we query orphaned data for analytics?
+
 ✅ **Answer:** Just query normally. user_profiles.user_id still exists, just doesn't match any auth account.
 
 ### 5. GDPR "Right to be Forgotten" request?
+
 ⚠️ **Action Required:** Create manual admin process to ACTUALLY delete user_profiles record (which will cascade to all data). This is separate from in-app account deletion.
 
 ---
@@ -322,11 +353,13 @@ When auth is deleted:
 ## Production Readiness
 
 ### ✅ Ready for Testing
+
 - All code changes complete
 - Migration applied
 - Documentation complete
 
 ### ⚠️ Before Production Launch
+
 1. Test the manual deletion flow end-to-end
 2. Create admin process for GDPR deletion requests
 3. Add monitoring/logging for account deletions
@@ -343,6 +376,7 @@ When auth is deleted:
 **Migration:** ✅ APPLIED AND VERIFIED
 
 The data retention policy is fully implemented and working correctly. When users delete their account:
+
 - They can no longer sign in (auth deleted)
 - All their usage data is retained for analytics (user_profiles and child tables remain)
 - They are clearly informed this will happen (UI transparency)

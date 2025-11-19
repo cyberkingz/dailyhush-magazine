@@ -138,10 +138,9 @@ export class MoodLoggingError extends Error {
    * Network and timeout errors can be retried
    */
   isRetryable(): boolean {
-    return [
-      MoodLoggingErrorCode.NETWORK_ERROR,
-      MoodLoggingErrorCode.TIMEOUT_ERROR,
-    ].includes(this.code);
+    return [MoodLoggingErrorCode.NETWORK_ERROR, MoodLoggingErrorCode.TIMEOUT_ERROR].includes(
+      this.code
+    );
   }
 
   /**

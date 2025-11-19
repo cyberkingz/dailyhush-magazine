@@ -1,4 +1,5 @@
 # Expert Panel Audits: DailyHush Spiral Techniques
+
 **Date:** November 7, 2025
 **Branch:** `claude/rebalance-spiral-exercises`
 **Purpose:** Expert evaluation of current Spiral techniques and proposed rebalancing
@@ -24,15 +25,18 @@ Five leading psychology experts have audited DailyHush's Spiral intervention tec
 ## Evaluation of Current Techniques
 
 ### ✅ Box Breathing (60s) - APPROVED
+
 **Score: 85/100**
 
 **Strengths:**
+
 - Solid physiological mechanism (4-4-4-4 pattern)
 - No cognitive load (pure breathing)
 - 60 seconds is reasonable for crisis start
 - Navy SEAL-approved protocol
 
 **Limitations:**
+
 - Not the most effective breathing technique (our research shows cyclic sigh outperforms box breathing)
 - 60 seconds is abbreviated; 5 minutes is optimal for sustained benefit
 - Missing the double-inhale mechanism that reinflates collapsed alveoli
@@ -42,9 +46,11 @@ Five leading psychology experts have audited DailyHush's Spiral intervention tec
 ---
 
 ### ⚠️ Grounding 5-4-3-2-1 (90s) - CONCERNS
+
 **Score: 60/100 (for crisis breathing perspective)**
 
 **From neuroscience lens:**
+
 - This is sensory/cognitive, not physiological
 - Doesn't directly regulate autonomic nervous system
 - Interactive typing during acute stress = counterproductive
@@ -55,9 +61,11 @@ Five leading psychology experts have audited DailyHush's Spiral intervention tec
 ---
 
 ### ❌ Cognitive Reframe (120s) - NOT FOR CRISIS
+
 **Score: 30/100 (for acute crisis)**
 
 **Concerns:**
+
 - Requires executive function during crisis (prefrontal cortex impaired)
 - 120 seconds of cognitive work when brain is in fight-or-flight
 - Cognitive engagement should come AFTER physiological stabilization
@@ -67,11 +75,13 @@ Five leading psychology experts have audited DailyHush's Spiral intervention tec
 ---
 
 ### ⚠️ Body Scan Rapid (75s) - TOO ABBREVIATED
+
 **Score: 45/100**
 
 **Concerns:**
+
 - Interoception (body awareness) requires sustained attention
-- 75 seconds is body *checking*, not body *scanning*
+- 75 seconds is body _checking_, not body _scanning_
 - Brain needs 5+ minutes to actually inhabit body awareness
 - May increase anxiety if user focuses on unpleasant body sensations without proper context
 
@@ -80,14 +90,17 @@ Five leading psychology experts have audited DailyHush's Spiral intervention tec
 ---
 
 ### ✅ Shift Biometric Sync (90s) - APPROVED (with caveats)
+
 **Score: 70/100**
 
 **Strengths:**
+
 - Real-time biometric feedback is powerful
 - Seeing heart rate decrease = validates intervention
 - Device integration is forward-thinking
 
 **Limitations:**
+
 - Only works for users with Shift device (low availability)
 - Dependency on device may limit broader accessibility
 
@@ -103,6 +116,7 @@ Five leading psychology experts have audited DailyHush's Spiral intervention tec
 
 **Evidence Base:**
 I co-authored the 2023 Cell Reports Medicine study testing 5 breathing techniques head-to-head:
+
 - Cyclic sighing
 - Box breathing
 - Cyclic hyperventilation
@@ -110,16 +124,19 @@ I co-authored the 2023 Cell Reports Medicine study testing 5 breathing technique
 - Breath awareness only
 
 **Result:** Cyclic physiological sigh was **statistically superior** for:
+
 - Reducing physiological arousal (heart rate, breathing rate)
 - Improving mood ratings
 - Fastest intervention effect
 
 **Mechanism:**
+
 1. **Double inhale** → Reinflates collapsed alveoli (tiny air sacs in lungs)
 2. **Extended exhale** → Maximum CO₂ offloading from bloodstream
 3. **Immediate effect** → Parasympathetic nervous system activates faster than any other technique
 
 **Why 60 seconds works (despite optimal being 5 minutes):**
+
 - Even abbreviated protocol activates mechanism
 - Crisis context requires fast intervention
 - Users will feel shift within 60 seconds
@@ -135,6 +152,7 @@ I need to be transparent about duration:
 
 **My Recommendation:**
 Add cyclic sigh at 60 seconds, but:
+
 1. Frame as "rapid intervention that begins your nervous system shift"
 2. Offer option to extend to 5 minutes for users who want full effect
 3. Track who completes longer versions (these users see greater benefit)
@@ -147,6 +165,7 @@ Add cyclic sigh at 60 seconds, but:
 ### ✅ STRONGLY SUPPORT adding Cyclic Physiological Sigh
 
 **Why:**
+
 - Addresses user complaint ("peu de breathing") ✅
 - Highest evidence base (Stanford study) ✅
 - Fastest intervention (60s) ✅
@@ -156,6 +175,7 @@ Add cyclic sigh at 60 seconds, but:
 ### ⚠️ QUESTION removing Cognitive Reframe entirely
 
 **Nuance:**
+
 - Don't remove it - **segment by crisis phase**
 - Acute panic (intensity 1-2) → Breathing only (no cognitive capacity)
 - Rumination (intensity 5-7) → Cognitive Reframe IS appropriate
@@ -164,6 +184,7 @@ Add cyclic sigh at 60 seconds, but:
 ### ⚠️ QUESTION reducing Body Scan
 
 **Alternative:**
+
 - Either offer 20+ minute version (real body scan) OR
 - Rebrand as "Body Check-In" (not body scan meditation)
 - 75 seconds is the awkward middle - neither crisis tool nor mindfulness practice
@@ -173,7 +194,9 @@ Add cyclic sigh at 60 seconds, but:
 ## Final Recommendations
 
 ### Priority 1: ADD Cyclic Physiological Sigh (60s)
+
 **Implementation:**
+
 ```javascript
 {
   id: 'cyclic-sigh',
@@ -189,11 +212,13 @@ Add cyclic sigh at 60 seconds, but:
 ```
 
 ### Priority 2: SEGMENT techniques by crisis phase
+
 - **Tier 1 (Acute Panic):** Cyclic Sigh, Box Breathing only
 - **Tier 2 (Stabilizing):** Add Grounding
 - **Tier 3 (Processing):** Add Cognitive Reframe
 
 ### Priority 3: Be honest about duration trade-offs
+
 - Show badge: "⚡ Rapid Protocol (60s)" vs "🎯 Full Protocol (5 min)"
 - Let users choose: Fast intervention now vs. optimal effect
 
@@ -212,9 +237,11 @@ Add cyclic sigh at 60 seconds, but:
 ## Evaluation of Current Techniques
 
 ### ❌ Box Breathing (60s) - NOT FOR RUMINATION
+
 **Score: 35/100 (for rumination interruption)**
 
 **Critical Issue:**
+
 - This is physiological, not cognitive
 - User can breathe AND ruminate simultaneously
 - Doesn't address rumination pattern
@@ -222,11 +249,13 @@ Add cyclic sigh at 60 seconds, but:
 
 **Evidence from my research:**
 Rumination is:
+
 - Repetitive, passive, abstract thinking about problems
 - Verbal/linguistic processing (not sensory)
 - Maintained by avoidance of concrete problem-solving
 
 Box breathing:
+
 - ✅ Calms body
 - ❌ Doesn't interrupt thought loop
 - ❌ Doesn't shift processing mode (abstract → concrete)
@@ -236,26 +265,31 @@ Box breathing:
 ---
 
 ### ✅✅ Grounding 5-4-3-2-1 (90s) - STRONG SUPPORT
+
 **Score: 85/100**
 
 **Why This Works for Rumination:**
 
 **1. Shifts Processing Mode**
+
 - From: Abstract internal (Why am I like this? Why did this happen?)
 - To: Concrete external (Blue mug with chip, rough table surface)
 - This is THE mechanism for interrupting rumination
 
 **2. Active Engagement (Not Passive)**
+
 - Rumination thrives in passivity
 - Naming objects = active processing
 - Specificity requirement ("blue mug" not "mug") = forces concrete thinking
 
 **3. Present-Moment Focus**
+
 - Rumination is past/future focused
 - Sensory grounding = right here, right now
 - Interrupts temporal displacement
 
 **On the "3 interactive steps" concern:**
+
 - ❌ DISAGREE with removing interactive steps
 - The typing IS the intervention
 - Cognitive engagement breaks rumination automaticity
@@ -266,11 +300,13 @@ Box breathing:
 ---
 
 ### ✅✅✅ Cognitive Reframe (120s) - GOLD STANDARD
+
 **Score: 100/100** 🏆
 
 **This is RF-CBT in action.**
 
 My evaluation framework for rumination interruption:
+
 1. ✅ **Interrupt the loop?** YES - externalizes thought
 2. ✅ **Shift processing mode?** YES - abstract → concrete
 3. ✅ **Require active engagement?** YES - 3 typing steps
@@ -281,16 +317,19 @@ My evaluation framework for rumination interruption:
 **Why 120 seconds is NECESSARY:**
 
 **Step 1: Write the thought (30-40s)**
+
 - Externalization is therapeutic
 - Thought on screen ≠ thought in head
 - Creates psychological distance
 
 **Step 2: Examine temporal focus (30-40s)**
+
 - Past/future rumination vs present-moment problem
 - Identifies rumination pattern
 - Requires reflection time
 
 **Step 3: Identify control (30-40s)**
+
 - Shifts from "Why?" (abstract) to "What can I do?" (concrete)
 - Moves from passive to active
 - Enables values-aligned action
@@ -308,17 +347,20 @@ My evaluation framework for rumination interruption:
 **My Response:** "You're conflating two different crisis states:"
 
 **State 1: Acute Panic**
+
 - Hyperventilating, heart racing, can't think
 - Prefrontal cortex offline
 - Needs breathing (Huberman is right)
 
 **State 2: Rumination/Overthinking**
+
 - Can think (too much thinking is the problem)
 - Brain spinning in loops
 - Needs cognitive interruption (breathing won't help)
 
 **Key Insight:**
 If user can:
+
 - Open app
 - Navigate menu
 - Select "Spiral"
@@ -327,6 +369,7 @@ If user can:
 They are NOT in State 1 (acute panic). They're in State 2 (rumination).
 
 **Evidence:** True panic looks like:
+
 - Can't hold phone steady
 - Can't read sentences
 - Just need someone to say "Breathe. In. Out."
@@ -336,15 +379,18 @@ If user can complete Cognitive Reframe's 3 steps, they have the cognitive capaci
 ---
 
 ### ⚠️ Body Scan Rapid (75s) - RISKY FOR RUMINATORS
+
 **Score: 50/100**
 
 **Concerns:**
 
 **1. Body Sensations Can Become Rumination Object**
+
 - Health anxiety ruminators: "What's that pain? Is it cancer? Why is my heart beating fast?"
 - Body scan → catastrophic interpretation → more anxiety
 
 **2. Without Proper Framing, It Backfires**
+
 - Instructions must be: "Observe, don't analyze"
 - But 75 seconds doesn't allow time for proper teaching
 - Users default to analyzing (their rumination habit)
@@ -354,14 +400,17 @@ If user can complete Cognitive Reframe's 3 steps, they have the cognitive capaci
 ---
 
 ### ✅ Shift Biometric Sync (90s) - APPROVED
+
 **Score: 70/100**
 
 **Why It Can Work:**
+
 - Concrete data (heart rate) vs abstract worry
 - "My heart rate is decreasing" = falsifies catastrophic thought
 - Device feedback interrupts rumination loop
 
 **Limitation:**
+
 - Only for device users
 - Dependency on external validation
 
@@ -374,11 +423,13 @@ If user can complete Cognitive Reframe's 3 steps, they have the cognitive capaci
 ### My Position: "It's not wrong, but it's not addressing rumination."
 
 **What cyclic sigh does:**
+
 - ✅ Calms physiological arousal
 - ✅ Reduces heart rate
 - ✅ Activates parasympathetic system
 
 **What cyclic sigh DOESN'T do:**
+
 - ❌ Interrupt rumination pattern
 - ❌ Shift processing mode (abstract → concrete)
 - ❌ Address thought content
@@ -386,6 +437,7 @@ If user can complete Cognitive Reframe's 3 steps, they have the cognitive capaci
 
 **The Problem:**
 User can do cyclic sigh while ruminating:
+
 - Inhale, inhale, exhale: "Why did I say that stupid thing?"
 - Inhale, inhale, exhale: "Everyone must think I'm an idiot"
 - Inhale, inhale, exhale: "Why am I like this?"
@@ -403,11 +455,13 @@ Rumination continues WHILE breathing.
 **Don't position it as rumination solution.**
 
 Cyclic sigh is for:
+
 - Acute panic
 - Physiological anxiety
 - Hyperventilation
 
 NOT for:
+
 - Overthinking
 - Rumination loops
 - "I can't stop thinking about..."
@@ -435,6 +489,7 @@ User selects: "Both - panic and rumination"
 
 **1. Rumination is Your Users' Core Problem**
 Look at your app name: "DailyHush"
+
 - Hush what? The mental noise. The spiraling thoughts.
 - That's rumination, not panic attacks.
 
@@ -443,6 +498,7 @@ Cognitive Reframe scores 100/100 on my rumination interruption framework.
 Nothing else in your library comes close.
 
 **3. "Too Long" Is Relative**
+
 - 120 seconds feels long because rumination distorts time perception
 - But users NEED to feel substantial work happened
 - "If the intervention feels too lightweight, users won't believe it can address their 'heavy' problem" (Dr. David agrees)
@@ -458,15 +514,18 @@ But if they're ruminating, they CAN type. The typing breaks the automaticity.
 ### Don't Remove Cognitive Reframe - SEGMENT IT
 
 **Tier 1: Acute Panic (Intensity 1-2)**
+
 - Cyclic Sigh (60s)
 - Box Breathing (60s)
 - NO cognitive techniques (brain can't process)
 
 **Tier 2: Stabilizing (Intensity 3-4)**
+
 - Grounding 5-4-3-2-1 (90s)
 - Body Check-In (NOT body scan)
 
 **Tier 3: Rumination (Intensity 5-7)**
+
 - Cognitive Reframe (120s) ⭐ KEEP
 - Grounding 5-4-3-2-1 (90s)
 
@@ -477,9 +536,13 @@ Let user's intensity and problem type determine technique.
 ## Final Recommendations
 
 ### 1. ADD Cyclic Sigh - but for panic, not rumination
+
 ### 2. KEEP Cognitive Reframe - it's your rumination gold standard
+
 ### 3. KEEP Grounding 5-4-3-2-1 - interactive steps are therapeutic
+
 ### 4. SEGMENT techniques by problem type (panic vs rumination)
+
 ### 5. EDUCATE users: "Different problems need different tools"
 
 ---
@@ -499,18 +562,22 @@ Let user's intensity and problem type determine technique.
 Before evaluating techniques, I assess: **What phase of crisis is the user in?**
 
 ### Tier 1: IMMEDIATE STABILIZATION (0-2 minutes)
+
 **Crisis State:** Acute panic, physiological emergency
+
 - Can't think clearly
 - Heart racing, hyperventilating
 - Tunnel vision on threat
 - Just needs to NOT BE PANICKING
 
 **What Works:** Simple, physical, immediate
+
 - Breathing interventions
 - Physical grounding (hand on heart)
 - Voice-guided (step-by-step)
 
 **What Doesn't Work:**
+
 - Cognitive tasks (brain offline)
 - Complex instructions (can't follow)
 - Typing (motor control impaired)
@@ -518,29 +585,36 @@ Before evaluating techniques, I assess: **What phase of crisis is the user in?**
 ---
 
 ### Tier 2: COGNITIVE ENGAGEMENT (2-10 minutes)
+
 **Crisis State:** Stabilizing, thinking brain coming back online
+
 - Still anxious but not panicking
 - Can follow instructions
 - Can read and respond
 
 **What Works:**
+
 - Sensory grounding (5-4-3-2-1)
 - Simple questions
 - External focus
 
 **What Doesn't Work:**
+
 - Abstract thinking (still impaired)
 - Deep self-reflection (too soon)
 
 ---
 
 ### Tier 3: PROCESSING & REFRAME (10+ minutes)
+
 **Crisis State:** Post-stabilization, processing mode
+
 - Physiologically calm
 - Prefrontal cortex back online
 - Can examine thoughts and patterns
 
 **What Works:**
+
 - Cognitive reframe
 - Emotional processing
 - Meaning-making
@@ -550,9 +624,11 @@ Before evaluating techniques, I assess: **What phase of crisis is the user in?**
 ## Evaluation of Current Techniques
 
 ### ✅ Box Breathing (60s) - TIER 1 PERFECT
+
 **Score: 90/100**
 
 **Why this works in ER/crisis:**
+
 - Simple enough for impaired cognitive state
 - No typing (hands might be shaking)
 - Physiological mechanism kicks in fast
@@ -570,21 +646,25 @@ Guide toward 5 min once user feels initial calm.
 ---
 
 ### ⚠️ Grounding 5-4-3-2-1 (90s) - TIER 2
+
 **Score: 75/100**
 
 **Assessment:**
 
 **Works IF user can type.**
+
 - If hands shaking → can't type effectively
 - If CAN type → means they're stabilizing (Tier 2, not Tier 1)
 
 **Clinical wisdom:**
 The typing itself is a diagnostic test.
+
 - User completes interactive steps → Tier 2 (stabilizing)
 - User can't complete → Tier 1 (acute panic)
 
 **My Recommendation:**
 Make interactive steps OPTIONAL based on severity.
+
 - Intensity 1-2 (severe): Just guide through sensory focus, no typing required
 - Intensity 5-7 (moderate): Require typing (cognitive engagement therapeutic)
 
@@ -593,18 +673,21 @@ Make interactive steps OPTIONAL based on severity.
 ---
 
 ### ❌ Cognitive Reframe (120s) - NOT FOR TIER 1
+
 **Score: 30/100 (for acute crisis)
 Score: 90/100 (for rumination/Tier 3)**
 
 **Critical Distinction:**
 
 **If user is in TRUE acute panic (Tier 1):**
+
 - Prefrontal cortex offline
 - Can't examine thoughts logically
 - Executive function impaired 40-60%
 - This technique will FAIL
 
 **If user is ruminating (Tier 3):**
+
 - Thinking brain online (too online)
 - Can examine thoughts
 - This technique is PERFECT
@@ -616,6 +699,7 @@ Score: 90/100 (for rumination/Tier 3)**
 "If they can open app, navigate menu, read instructions → They're NOT in Tier 1 acute panic."
 
 True Tier 1 panic:
+
 - Can't hold phone steady
 - Can't read full sentences
 - Just want someone to say "Breathe"
@@ -625,6 +709,7 @@ True Tier 1 panic:
 ---
 
 ### ⚠️ Body Scan Rapid (75s) - RISKY IN CRISIS
+
 **Score: 45/100**
 
 **Clinical Concerns:**
@@ -633,12 +718,14 @@ True Tier 1 panic:
 "Focus on your body" when body feels terrible = anxiety INCREASE
 
 **2. Health Anxiety Trigger**
+
 - User focuses on heart racing → "Am I having a heart attack?"
 - User notices shallow breathing → "I can't breathe, I'm dying"
 - Body scan → catastrophic misinterpretation → panic escalation
 
 **3. Better AFTER Crisis, Not During**
 Body scan works for:
+
 - Tension release (post-stabilization)
 - Body awareness (preventive practice)
 - NOT for acute anxiety
@@ -648,15 +735,18 @@ Body scan works for:
 ---
 
 ### ✅ Shift Biometric Sync (90s) - INNOVATIVE
+
 **Score: 80/100 (for device users)**
 
 **Why I Like This:**
+
 - Real-time feedback validates intervention
 - Seeing heart rate decrease = powerful reassurance
 - Falsifies catastrophic thought ("I'm dying" vs "HR dropping")
 
 **Medical Context:**
 We use biometric feedback in clinical settings:
+
 - Biofeedback therapy
 - Heart rate variability training
 - Real-time validation helps patients trust their bodies
@@ -677,6 +767,7 @@ Device dependency (not everyone has Shift)
 **I co-authored the 2023 study with Huberman.**
 
 We tested breathing techniques in REAL crisis contexts:
+
 - Pre-surgical anxiety
 - Acute stress response
 - Panic disorder patients
@@ -687,22 +778,26 @@ Cyclic physiological sigh was fastest and most effective.
 **Why it works in REAL crisis:**
 
 **1. Simple Enough for Tier 1**
+
 - Only 2 steps: double inhale, extended exhale
 - Brain can follow even when impaired
 - No counting, no holds, just natural breathing amplified
 
 **2. Immediate Physiological Effect**
+
 - Double inhale reinflates collapsed alveoli
 - Extended exhale dumps CO₂ fastest
 - Parasympathetic activation within 30-60 seconds
 
 **3. Natural Mechanism**
+
 - Body naturally sighs every 5 minutes during sleep
 - We're amplifying a built-in calming mechanism
 - Feels intuitive, not forced
 
 **Clinical Validation:**
 I've used this with:
+
 - Cancer patients before procedures
 - Surgery patients in pre-op
 - ER patients having panic attacks
@@ -716,6 +811,7 @@ I've used this with:
 ### ✅✅ STRONG SUPPORT for adding Cyclic Sigh
 
 **Why:**
+
 - ✅ Tier 1 appropriate (simple, fast, effective)
 - ✅ Evidence-based (Stanford study)
 - ✅ Real-world clinical validation
@@ -733,15 +829,18 @@ Make it the DEFAULT for Tier 1 (severe intensity 1-3).
 **Don't remove entirely - SEGMENT by tier:**
 
 **Tier 1 (Intensity 1-2): Acute Panic**
+
 - Cyclic Sigh ⭐
 - Box Breathing
 - NO cognitive techniques
 
 **Tier 2 (Intensity 3-4): Stabilizing**
+
 - Grounding 5-4-3-2-1
 - Cyclic Sigh (continued)
 
 **Tier 3 (Intensity 5-7): Rumination/Processing**
+
 - Cognitive Reframe ⭐ KEEP
 - Grounding
 - Breathing for maintenance
@@ -757,6 +856,7 @@ Make it the DEFAULT for Tier 1 (severe intensity 1-3).
 "They FEEL like it's taking forever because anxiety distorts time perception."
 
 **What I've learned from 40 years:**
+
 - 120 seconds FEELS like 10 minutes to anxious brain
 - But 120 seconds is NEEDED for cognitive shift
 - Time distortion is the anxiety, not the intervention
@@ -802,6 +902,7 @@ function selectTechnique(intensity, problemType) {
 
 **Key Insight:**
 Let user's intensity BE the diagnostic.
+
 - Low intensity (1-2) = Tier 1 crisis → Breathing only
 - High intensity (5-7) = Tier 3 rumination → Cognitive work appropriate
 
@@ -810,18 +911,23 @@ Let user's intensity BE the diagnostic.
 ## Final Recommendations
 
 ### 1. ADD Cyclic Physiological Sigh as Tier 1 default
+
 **Why:** Most effective rapid intervention we've tested clinically.
 
 ### 2. SEGMENT techniques by crisis tier (intensity-based)
+
 **Why:** One size doesn't fit all crisis states.
 
 ### 3. KEEP Cognitive Reframe for Tier 3 (rumination)
+
 **Why:** If user is ruminating (not panicking), cognitive work is appropriate.
 
 ### 4. ADD time markers to longer techniques
+
 **Why:** Helps anxious users calibrate distorted time perception.
 
 ### 5. Make interactive steps OPTIONAL for severe intensity
+
 **Why:** Can't type effectively during Tier 1 panic.
 
 ---
@@ -841,11 +947,13 @@ Let user's intensity BE the diagnostic.
 Before evaluating techniques, I need to clarify:
 
 **Spiral screen = CRISIS INTERVENTION**
+
 - Goal: Stop spiral, stabilize, reduce symptoms
 - Timeline: Immediate (seconds to minutes)
 - Context: Emergency response
 
 **MBSR / Mindfulness = PREVENTIVE PRACTICE**
+
 - Goal: Build awareness, change relationship to experience
 - Timeline: Long-term (weeks to years)
 - Context: Daily practice, lifestyle change
@@ -857,14 +965,17 @@ Before evaluating techniques, I need to clarify:
 ## Evaluation of Current Techniques
 
 ### ⚠️ Box Breathing (60s) - NOT MINDFULNESS
+
 **Score: N/A (different purpose)**
 
 **What it is:**
+
 - Breathing technique (manipulating breath pattern)
 - Physiological intervention
 - Tactical breath control
 
 **What mindfulness breathing is:**
+
 - Breath awareness (observing natural breath)
 - No manipulation, just attention
 - Present-moment awareness
@@ -882,14 +993,17 @@ For crisis intervention, box breathing is appropriate. Just don't call it mindfu
 ---
 
 ### ⚠️ Grounding 5-4-3-2-1 (90s) - NOT MINDFULNESS
+
 **Score: N/A (different tradition)**
 
 **What it is:**
+
 - Sensory grounding (CBT tradition)
 - Distraction-based (shift attention AWAY from anxiety)
 - External focus
 
 **What mindfulness is:**
+
 - Present-moment awareness of ALL experience
 - Not distraction - staying WITH experience
 - Non-judgmental observation of internal and external
@@ -912,14 +1026,17 @@ Both work. Different tools for different moments."
 ---
 
 ### ⚠️ Cognitive Reframe (120s) - POTENTIALLY COMPATIBLE
+
 **Score: 50/100 (mixed)**
 
 **Potential Alignment:**
+
 - ✅ Observing thoughts (mindfulness element)
 - ✅ Creating space from thoughts (stepping out)
 - ✅ Non-judgmental examination (if framed that way)
 
 **Potential Conflict:**
+
 - ❌ Goal is to CHANGE thought (not mindfulness)
 - ❌ CBT philosophy (reframe = make thought more realistic)
 - ❌ Mindfulness philosophy (observe, let it be)
@@ -934,6 +1051,7 @@ Both work. Different tools for different moments."
 
 **My Position:**
 "Both approaches have evidence. They're different mechanisms:
+
 - CBT: Examines content and changes it
 - Mindfulness: Changes relationship to content (observes without engaging)
 
@@ -944,6 +1062,7 @@ Your Cognitive Reframe is more CBT than mindfulness. That's fine. Just don't mar
 ---
 
 ### ❌❌ Body Scan Rapid (75s) - THIS CONCERNS ME
+
 **Score: 25/100**
 
 **This is my primary area of expertise, so I need to be direct:**
@@ -951,6 +1070,7 @@ Your Cognitive Reframe is more CBT than mindfulness. That's fine. Just don't mar
 ### What Is MBSR Body Scan?
 
 **Standard MBSR protocol:**
+
 - Duration: 45 minutes (or 20-30 min abbreviated)
 - Purpose: Cultivate sustained interoceptive awareness
 - Mechanism: Systematic, affectionate attention to body regions
@@ -970,17 +1090,19 @@ Your Cognitive Reframe is more CBT than mindfulness. That's fine. Just don't mar
 **What 75s body scan becomes:**
 "Feet... check. Legs... check. Stomach... check. Done."
 
-**This is body *checking*, not body *scanning*.**
+**This is body _checking_, not body _scanning_.**
 
 **The Difference:**
 
 **Body Scan Meditation (20+ min):**
+
 - Slow, patient attention to each region
 - Notice sensations without fixing them
 - Cultivate curiosity and compassion
 - "What's it like to inhabit my body right now?"
 
 **Body Checking (75s):**
+
 - Rapid inventory of body parts
 - Mental checklist
 - Task completion, not awareness cultivation
@@ -1005,23 +1127,28 @@ Your Cognitive Reframe is more CBT than mindfulness. That's fine. Just don't mar
 **My Strong Recommendation:**
 
 ### Option 1: RENAME IT
+
 Call it: "Body Check-In" or "Somatic Grounding"
+
 - Position: "Quick body awareness to reconnect"
 - Honest about what it is (brief check-in, not meditation)
 - 75 seconds is fine for a check-in
 
 ### Option 2: OFFER REAL BODY SCAN
+
 - Duration: 20-30 minutes minimum
 - Guided audio
 - Position as: "Daily preventive practice" (not crisis intervention)
 - Separate section: "Mindfulness Practice" (not Spiral screen)
 
 ### Option 3: REMOVE IT
+
 "If you can't do it properly, focus on what you CAN do well. You have excellent breathing techniques. Not every app needs body scan meditation."
 
 ---
 
 ### ✅ Shift Biometric Sync (90s) - NEUTRAL
+
 **Score: N/A (outside my domain)**
 
 **My Position:**
@@ -1036,11 +1163,13 @@ Call it: "Body Check-In" or "Somatic Grounding"
 ### My Perspective
 
 **What it is:**
+
 - Breathing technique (breath manipulation)
 - Crisis intervention tool
 - Physiological mechanism
 
 **What mindfulness breathing is:**
+
 - Breath awareness (observation, no manipulation)
 - Meditation practice
 - Psychological/spiritual mechanism
@@ -1080,6 +1209,7 @@ Frame it as: "Rapid intervention technique" not "mindfulness meditation."
 
 **What I'd ADD instead:**
 If you remove cognitive work from crisis intervention, consider adding:
+
 - Mindful awareness of thoughts (observe without changing)
 - Loving-kindness toward difficult emotions
 - RAIN practice (Recognize, Allow, Investigate, Nurture)
@@ -1093,6 +1223,7 @@ But these are 10-20 minute practices, not 60-second crisis tools.
 **This is my primary concern.**
 
 **Either:**
+
 1. **Rename it** (Body Check-In, not Body Scan)
 2. **Expand it** (20+ min real body scan in separate practice section)
 3. **Remove it** (don't half-do mindfulness practices)
@@ -1100,6 +1231,7 @@ But these are 10-20 minute practices, not 60-second crisis tools.
 **Why this matters:**
 
 **MBSR body scan has 40+ years of research showing:**
+
 - Reduces anxiety (at 20-45 min duration)
 - Increases interoceptive awareness
 - Helps patients with chronic pain, PTSD, anxiety disorders
@@ -1118,6 +1250,7 @@ No research supports 75-second body scan having these effects.
 **Two distinct areas:**
 
 **1. CRISIS INTERRUPT (Spiral)**
+
 - Breathing techniques (Cyclic Sigh, Box Breathing)
 - Grounding techniques (5-4-3-2-1)
 - Cognitive techniques (Reframe)
@@ -1125,6 +1258,7 @@ No research supports 75-second body scan having these effects.
 - Purpose: "Stop the spiral right now"
 
 **2. MINDFULNESS PRACTICE (New Section)**
+
 - Body Scan Meditation (20-30 min guided)
 - Sitting Meditation (10-20 min)
 - Mindful Breathing (observation, not manipulation)
@@ -1140,16 +1274,21 @@ No research supports 75-second body scan having these effects.
 ## Final Recommendations
 
 ### 1. ADD Cyclic Sigh for crisis (with clear framing)
+
 **Frame as:** "Rapid breathing technique" not "mindfulness meditation"
 
 ### 2. RENAME "Body Scan Rapid" to "Body Check-In"
+
 **Be honest:** It's a quick somatic awareness check, not body scan meditation
 
 ### 3. ADD real Mindfulness Practice section (separate from crisis tools)
+
 **Offer:** 20-30 min guided body scan, sitting meditation, etc.
 
 ### 4. EDUCATE users on difference between technique and practice
+
 **Help them understand:**
+
 - Techniques (60-120s) = acute symptom relief
 - Practice (10-45 min) = long-term relationship change
 
@@ -1168,12 +1307,14 @@ No research supports 75-second body scan having these effects.
 ## My Unique Lens: Perceived Value + Long-Term Outcomes
 
 Other experts evaluate:
+
 - **Huberman:** Does it work physiologically?
 - **Watkins:** Does it interrupt rumination?
 - **Spiegel:** Does it stabilize crisis?
 - **Kabat-Zinn:** Is it mindfulness?
 
 **I evaluate:**
+
 - **Will users VALUE it?** (believe it can help)
 - **Will users ENGAGE with it?** (use repeatedly)
 - **Will it create LASTING change?** (not just temporary relief)
@@ -1184,6 +1325,7 @@ Other experts evaluate:
 ## My Framework: Emotional Agility Assessment
 
 **Does this technique help users:**
+
 1. **SHOW UP:** Face emotions/thoughts, not avoid them
 2. **STEP OUT:** Create space from experience (observe, don't fuse)
 3. **WALK YOUR WHY:** Connect to values, not just symptom reduction
@@ -1196,9 +1338,11 @@ Other experts evaluate:
 ## Evaluation of Current Techniques
 
 ### ⚠️ Box Breathing (60s) - INCOMPLETE
+
 **Score: 55/100**
 
 **Emotional Agility Assessment:**
+
 - ⚠️ **Show Up:** Not really (directs attention away from emotion)
 - ⚠️ **Step Out:** Physiological, not psychological
 - ❌ **Walk Your Why:** No values connection
@@ -1222,11 +1366,13 @@ This creates dependency, not emotional agility."
 ---
 
 **What Box Breathing DOES:**
+
 - ✅ Calms physiological arousal
 - ✅ Immediate relief
 - ✅ Useful for acute crisis
 
 **What Box Breathing DOESN'T:**
+
 - ❌ Teach emotional agility
 - ❌ Help user understand what anxiety is telling them
 - ❌ Connect to values
@@ -1236,6 +1382,7 @@ This creates dependency, not emotional agility."
 "Use box breathing as stabilization step, then IMMEDIATELY ask:
 
 'Now that you're calmer, let's explore:
+
 - What is this anxiety about?
 - What matters to you in this situation?
 - What's one small action aligned with your values?'
@@ -1247,9 +1394,11 @@ Otherwise it's just sophisticated avoidance with a wellness label."
 ---
 
 ### ✅ Grounding 5-4-3-2-1 (90s) - STRONG SUPPORT
+
 **Score: 80/100**
 
 **Emotional Agility Assessment:**
+
 - ✅ **Show Up:** User acknowledges distress, commits to intervention
 - ✅✅ **Step Out:** Shifts attention from internal rumination to external reality
 - ⚠️ **Walk Your Why:** Not directly, but creates space for values work
@@ -1263,6 +1412,7 @@ Otherwise it's just sophisticated avoidance with a wellness label."
 Emotional agility requires creating space between you and your experience.
 
 Grounding does this:
+
 - From: "I AM anxious" (fused with emotion)
 - To: "I'm noticing I'm anxious, AND I can also notice this blue mug" (stepped out)
 
@@ -1278,6 +1428,7 @@ After grounding: "Now that you're present, what matters to you? What action alig
 ❌ **DISAGREE with removing typing steps.**
 
 **Why:**
+
 - Interactive engagement = perceived value
 - Typing = users feel they've done "real work"
 - Without interaction = passive consumption (lower value)
@@ -1291,11 +1442,13 @@ After grounding: "Now that you're present, what matters to you? What action alig
 ---
 
 ### ✅✅✅ Cognitive Reframe (120s) - GOLD STANDARD
+
 **Score: 100/100** 🏆
 
 **This is emotional agility in action.**
 
 **Emotional Agility Assessment:**
+
 - ✅✅ **Show Up:** User faces difficult thought directly (not avoiding)
 - ✅✅ **Step Out:** Examines thought as object, not truth
 - ✅✅ **Walk Your Why:** Identifies what's controllable (values-aligned action)
@@ -1306,6 +1459,7 @@ After grounding: "Now that you're present, what matters to you? What action alig
 **Why This Is Perfect:**
 
 ### Step 1: Show Up (Write the thought)
+
 "What thought is spiraling?"
 
 User must FACE the thought, not avoid it.
@@ -1314,18 +1468,22 @@ Writing externalizes it: thought on screen ≠ thought as reality.
 **This is "showing up" to difficult experience.**
 
 ### Step 2: Step Out (Examine temporal focus)
+
 "Is this about past, present, or future?"
 
 User creates psychological distance.
+
 - Not: "I'm a failure" (fused)
 - But: "I'm having the thought that I'm a failure, and it's about something in the past" (stepped out)
 
 **This is "stepping out" from thought fusion.**
 
 ### Step 3: Walk Your Why (Identify control)
+
 "What's in your control?"
 
 Shifts from rumination → values-aligned action.
+
 - Not: "Why did this happen?" (abstract, passive)
 - But: "What can I do right now?" (concrete, active)
 
@@ -1340,17 +1498,20 @@ Shifts from rumination → values-aligned action.
 **If intervention feels too quick/easy, users won't believe it can address their "heavy" problem.**
 
 User's inner monologue:
+
 - 30-second technique: "That was nice, but my problem is bigger than that."
 - 120-second cognitive work: "I actually examined my thought. That felt real. That felt like therapy."
 
 **The "weight" of intervention must match perceived "weight" of problem.**
 
 **Rumination feels substantial.**
+
 - Years of overthinking
 - "My brain won't shut off"
 - "These thoughts control me"
 
 **The intervention must feel equally substantial.**
+
 - 120 seconds = "This app takes my problem seriously"
 - 3 typing steps = "I did real psychological work"
 - Cognitive engagement = "This addressed my actual thought patterns"
@@ -1366,6 +1527,7 @@ User's inner monologue:
 ### 1. You'd Remove Your Highest Value Technique
 
 **Perceived Value Scorecard:**
+
 - Box Breathing (60s, no steps): Low perceived value
 - Grounding (90s, 3 steps): Medium perceived value
 - Cognitive Reframe (120s, 3 steps): **HIGH perceived value**
@@ -1382,6 +1544,7 @@ User's inner monologue:
 **Two paths:**
 
 **Path A: Optimize for Engagement Metrics**
+
 - Short techniques (30-60s)
 - No typing (too much friction)
 - Feel-good quick wins
@@ -1390,6 +1553,7 @@ User's inner monologue:
 - **Outcome:** Dependency (users need app constantly)
 
 **Path B: Optimize for Lasting Change**
+
 - Deeper techniques (90-120s)
 - Interactive steps (therapeutic engagement)
 - Substantial cognitive work
@@ -1407,6 +1571,7 @@ User's inner monologue:
 **My Research Shows:**
 
 **Avoidance Strategy Disguised as Wellness:**
+
 - User feels anxiety
 - Opens app
 - Does 60-second technique
@@ -1418,6 +1583,7 @@ User's inner monologue:
 **This is NOT emotional agility. This is avoidance with a wellness label.**
 
 **Contrast with Cognitive Reframe:**
+
 - User feels anxiety
 - Opens app
 - Examines thought pattern (120s)
@@ -1459,9 +1625,11 @@ User: "Okay, that sounds substantial. That feels like real work."
 ---
 
 ### ⚠️ Body Scan Rapid (75s) - CONCERNS
+
 **Score: 45/100**
 
 **Emotional Agility Assessment:**
+
 - ⚠️ **Show Up:** Could be avoidance ("I'll just focus on body, not emotion")
 - ⚠️ **Step Out:** Depends on framing
 - ❌ **Walk Your Why:** No values connection
@@ -1476,9 +1644,11 @@ User: "Okay, that sounds substantial. That feels like real work."
 ---
 
 ### ✅ Shift Biometric Sync (90s) - INNOVATIVE
+
 **Score: 75/100**
 
 **Emotional Agility Assessment:**
+
 - ✅ **Show Up:** User acknowledges physiological distress
 - ✅ **Step Out:** Seeing data = creates distance from sensation
 - ⚠️ **Walk Your Why:** No values connection
@@ -1498,6 +1668,7 @@ User: "Okay, that sounds substantial. That feels like real work."
 ### My Mixed Assessment
 
 **What I Like:**
+
 - ✅ Evidence-based (Stanford research)
 - ✅ Fast and effective for physiological calming
 - ✅ No interactive steps during acute crisis (appropriate)
@@ -1507,12 +1678,14 @@ User: "Okay, that sounds substantial. That feels like real work."
 ### 1. It's Pure Physiological (No Emotional Agility)
 
 **Emotional Agility Assessment:**
+
 - ⚠️ **Show Up:** Directs attention to breathing, not emotion
 - ❌ **Step Out:** Doesn't create psychological distance
 - ❌ **Walk Your Why:** No values connection
 - ❌ **Move On:** No action guidance
 
 **It's aspirin for a headache.**
+
 - Useful? Yes.
 - Addressing root cause? No.
 
@@ -1522,7 +1695,7 @@ User: "Okay, that sounds substantial. That feels like real work."
 
 **User can do cyclic sigh while AVOIDING emotional content:**
 
-- Inhale, inhale, exhale: *anxiety still there, just suppressed*
+- Inhale, inhale, exhale: _anxiety still there, just suppressed_
 - Feels better temporarily
 - Hasn't examined what anxiety is about
 - Hasn't taken values-aligned action
@@ -1530,6 +1703,7 @@ User: "Okay, that sounds substantial. That feels like real work."
 
 **My Research:**
 "Pushing aside difficult emotions contributes to:
+
 - Lower well-being
 - Higher depression/anxiety long-term
 - Less chance of lasting change"
@@ -1547,6 +1721,7 @@ User: "Okay, that sounds substantial. That feels like real work."
 "I've struggled with anxiety for 10 years, and this app thinks 60 seconds of breathing will fix it? This doesn't take my problem seriously."
 
 **Perceived value equation:**
+
 - Duration + Engagement = Perceived Value
 - 60s + no interaction = LOW perceived value
 - 120s + 3 interactive steps = HIGH perceived value
@@ -1563,6 +1738,7 @@ Users try cyclic sigh → feel temporary relief → anxiety returns → "This ap
 **I support it IF:**
 
 ### Condition 1: Position It Honestly
+
 **Don't market as complete solution.**
 
 Frame as:
@@ -1574,6 +1750,7 @@ Frame as:
 ### Condition 2: Pair It With Values Work
 
 **Sequence:**
+
 1. Cyclic sigh (60s) → Calm body
 2. Values question: "What's this anxiety about? What matters to you?"
 3. Action prompt: "What's one small step aligned with your values?"
@@ -1583,9 +1760,11 @@ Frame as:
 ### Condition 3: Track Long-Term Outcomes, Not Just Engagement
 
 **Don't measure:**
+
 - How many times users do cyclic sigh per day (could be avoidance)
 
 **Measure:**
+
 - Do users need app LESS over time? (learned self-regulation)
 - Do users report "I can handle discomfort now"? (emotional agility)
 - Do users take values-aligned action? (moving toward meaning)
@@ -1607,11 +1786,13 @@ No other technique in your library comes close.
 ### 2. It Has High Perceived Value
 
 **Users FEEL like they've done real work:**
+
 - "I examined my thought pattern"
 - "I identified what I can control"
 - "This feels like therapy"
 
 **This drives:**
+
 - User retention (they value the intervention)
 - Willingness to pay (premium positioning)
 - Word-of-mouth (they tell friends it's "real therapy")
@@ -1621,6 +1802,7 @@ No other technique in your library comes close.
 **120 seconds isn't too long. It's the MINIMUM for cognitive shift.**
 
 **Why:**
+
 - 30-40s: Write thought (externalization)
 - 30-40s: Examine temporal focus (creates distance)
 - 30-40s: Identify control (shifts to action)
@@ -1630,11 +1812,13 @@ No other technique in your library comes close.
 ### 4. It Matches Problem Severity
 
 **Rumination feels "heavy."**
+
 - Years of overthinking
 - Debilitating thought loops
 - "I can't escape my mind"
 
 **The intervention must feel equally "heavy."**
+
 - 60-second breathing: "That's it? My problem is bigger than that."
 - 120-second cognitive work: "Okay, this takes my problem seriously."
 
@@ -1643,10 +1827,12 @@ No other technique in your library comes close.
 **User said:** "probleme résolu + valeur perçue produit increasing"
 
 **Cognitive Reframe delivers BOTH:**
+
 - Problem resolution: Interrupts rumination, shifts to action
 - Perceived value: Substantial effort, real psychological work
 
 **Box breathing delivers ONE:**
+
 - Problem resolution: Calms body (temporarily)
 - Perceived value: LOW (too quick, too easy)
 
@@ -1659,18 +1845,21 @@ No other technique in your library comes close.
 **Create three intervention depths:**
 
 ### Tier 1: FIRST AID (60s)
+
 **For:** Acute panic, immediate stabilization
 **Techniques:** Cyclic Sigh, Box Breathing
 **Position:** "Emergency response - calm your body RIGHT NOW"
 **Follow-up:** "Now let's understand what's happening..."
 
 ### Tier 2: REAL WORK (90-120s)
+
 **For:** Rumination, thought spirals, overthinking
 **Techniques:** Cognitive Reframe, Grounding
 **Position:** "Deep processing - examine patterns and choose action"
 **This is where lasting change happens**
 
 ### Tier 3: TRANSFORMATION (10-60 min)
+
 **For:** Long-term emotional agility building
 **Techniques:** Values exploration, pattern recognition, therapy-like sessions
 **Position:** "Build emotional agility - change your relationship with experience"
@@ -1686,21 +1875,27 @@ No other technique in your library comes close.
 ## Final Recommendations
 
 ### 1. ADD Cyclic Sigh - But pair with values work
+
 **Position as:** "Stabilization step 1. Exploring meaning is step 2."
 
 ### 2. KEEP Cognitive Reframe - It's your competitive advantage
+
 **Why:** High perceived value, emotional agility gold standard
 
 ### 3. TIER interventions by depth (First Aid vs Real Work vs Transformation)
+
 **Let users choose** based on crisis severity and change goals
 
 ### 4. ADD values integration after EVERY technique
+
 **Ask:** "What matters to you? What one action aligns with your values?"
 
 ### 5. EDUCATE on avoidance vs engagement
+
 **Help users recognize:** Feeling better temporarily ≠ lasting change
 
 ### 6. TRACK long-term outcomes, not just engagement metrics
+
 **Success =** Users need app LESS over time, not more
 
 ---
@@ -1715,13 +1910,13 @@ No other technique in your library comes close.
 
 ## Summary of Expert Positions
 
-| Expert | Add Cyclic Sigh? | Remove Cognitive Reframe? | Body Scan (75s)? | Rebalancing Support? |
-|--------|------------------|---------------------------|------------------|---------------------|
-| **Huberman** | ✅✅ YES (98/100) | ⚠️ Segment by phase | ❌ Too brief | ✅ Strong support |
-| **Watkins** | ⚠️ Not for rumination | ❌❌ NO - Keep it! | ⚠️ Risky | ⚠️ Conditional |
-| **Spiegel** | ✅✅ YES (95/100) | ⚠️ Segment by tier | ❌ Remove | ✅ Strong support |
-| **Kabat-Zinn** | ✅ For crisis only | ⚠️ Neutral | ❌❌ Not real body scan | ✅ With clarification |
-| **David** | ⚠️ Pair with values | ❌❌❌ NO - Strategic mistake! | ❌ Remove | ⚠️ Major concerns |
+| Expert         | Add Cyclic Sigh?      | Remove Cognitive Reframe?      | Body Scan (75s)?        | Rebalancing Support?  |
+| -------------- | --------------------- | ------------------------------ | ----------------------- | --------------------- |
+| **Huberman**   | ✅✅ YES (98/100)     | ⚠️ Segment by phase            | ❌ Too brief            | ✅ Strong support     |
+| **Watkins**    | ⚠️ Not for rumination | ❌❌ NO - Keep it!             | ⚠️ Risky                | ⚠️ Conditional        |
+| **Spiegel**    | ✅✅ YES (95/100)     | ⚠️ Segment by tier             | ❌ Remove               | ✅ Strong support     |
+| **Kabat-Zinn** | ✅ For crisis only    | ⚠️ Neutral                     | ❌❌ Not real body scan | ✅ With clarification |
+| **David**      | ⚠️ Pair with values   | ❌❌❌ NO - Strategic mistake! | ❌ Remove               | ⚠️ Major concerns     |
 
 ---
 
@@ -1767,8 +1962,10 @@ No other technique in your library comes close.
 **All experts converge on same solution: SEGMENT BY CRISIS PHASE**
 
 ### Tier 1: ACUTE PANIC (Intensity 1-3)
+
 **Crisis State:** Hyperventilating, heart racing, can't think
 **Techniques:**
+
 - ✅ **Cyclic Physiological Sigh** (60s) ⭐ NEW
 - ✅ **Box Breathing** (60s)
 
@@ -1777,8 +1974,10 @@ No other technique in your library comes close.
 ---
 
 ### Tier 2: STABILIZING (Intensity 4-5)
+
 **Crisis State:** Anxious but thinking, can follow instructions
 **Techniques:**
+
 - ✅ **Grounding 5-4-3-2-1** (90s with typing)
 - ✅ **Cyclic Sigh** (continued if needed)
 
@@ -1787,8 +1986,10 @@ No other technique in your library comes close.
 ---
 
 ### Tier 3: RUMINATION (Intensity 6-7)
+
 **Crisis State:** Overthinking, thought loops, "I can't stop thinking"
 **Techniques:**
+
 - ✅ **Cognitive Reframe** (120s) ⭐ KEEP
 - ✅ **Grounding 5-4-3-2-1** (90s)
 
@@ -1801,24 +2002,28 @@ No other technique in your library comes close.
 ### ✅ IMPLEMENT (Priority 1)
 
 **1. ADD Cyclic Physiological Sigh (60s)**
+
 - Evidence: Stanford study (Huberman/Spiegel co-authored)
 - Use: Tier 1 (acute panic)
 - Position: "Research-backed rapid stabilization"
 - Follow-up: Guide to values exploration after calming
 
 **2. KEEP Cognitive Reframe (120s)**
+
 - Evidence: RF-CBT gold standard (Watkins expertise)
 - Use: Tier 3 (rumination, overthinking)
 - Position: "Deep work - examine thought patterns"
 - Why: High perceived value, emotional agility mechanism
 
 **3. SEGMENT Techniques by Crisis Tier**
+
 - Let intensity selection determine technique tier
 - Tier 1 (1-3): Breathing only
 - Tier 2 (4-5): Grounding + breathing
 - Tier 3 (6-7): Cognitive + grounding
 
 **4. KEEP Interactive Steps in Grounding & Cognitive**
+
 - Watkins: "Typing IS the therapeutic mechanism"
 - David: "Perceived effort = perceived value"
 - For severe intensity only: Make steps optional
@@ -1828,11 +2033,13 @@ No other technique in your library comes close.
 ### ⚠️ MODIFY (Priority 2)
 
 **5. RENAME "Body Scan Rapid" → "Body Check-In"**
+
 - Kabat-Zinn: "75s isn't body scan meditation"
 - Remove or rebrand as quick somatic awareness
 - Alternative: Offer 20+ min real body scan in separate practice section
 
 **6. ADD Values Integration**
+
 - David: "Must connect breathing to meaning"
 - After ALL techniques, ask:
   - "What's this anxiety about?"
@@ -1840,6 +2047,7 @@ No other technique in your library comes close.
   - "What's one values-aligned action?"
 
 **7. ADD Time Markers to Cognitive Reframe**
+
 - Spiegel: "Anxiety distorts time perception"
 - Show progress: "30s in - you're doing great" "60s - halfway there"
 - Helps users realize: "I CAN do 120 seconds"
@@ -1849,16 +2057,19 @@ No other technique in your library comes close.
 ### 📚 EDUCATE (Priority 3)
 
 **8. Teach Difference Between Crisis Tools & Prevention Practice**
+
 - Crisis tools (60-120s) = symptom relief RIGHT NOW
 - Mindfulness practice (20+ min) = reduce future crises
 - Both valuable, different purposes
 
 **9. Teach Avoidance vs Engagement**
+
 - Using app 10x/day = may be sophisticated avoidance
 - Emotional agility = being WITH experience, not eliminating it
 - Goal: Need app LESS over time (not more)
 
 **10. Be Honest About Duration Trade-Offs**
+
 - 60s cyclic sigh = rapid stabilization (optimal = 5 min)
 - 120s cognitive = minimum for pattern shift
 - Show badges: "⚡ Rapid" vs "🎯 Optimal"
@@ -1868,11 +2079,13 @@ No other technique in your library comes close.
 ## 💰 PERCEIVED VALUE ANALYSIS
 
 ### HIGH Perceived Value Techniques:
+
 1. **Cognitive Reframe (120s, 3 steps)** - "Real therapy work"
 2. **Grounding (90s, 3 steps)** - "Substantial engagement"
 3. **Cyclic Sigh (60s, science-backed)** - "Stanford research"
 
 ### LOW Perceived Value Techniques:
+
 1. **Box Breathing (60s, no steps)** - "Too quick for my problem"
 2. **Body Scan (75s, rushed)** - "Superficial checklist"
 
@@ -1883,6 +2096,7 @@ No other technique in your library comes close.
 ## 📊 BEFORE vs AFTER (Expert-Approved)
 
 ### BEFORE (Current - Problems)
+
 ```
 BREATHING: 20% accessible (only Box, Shift needs device)
 SENSORY: 40% (Grounding + Body Scan overlap)
@@ -1895,6 +2109,7 @@ Issues:
 ```
 
 ### AFTER (Expert-Approved Recommendation)
+
 ```
 TIER 1: ACUTE PANIC (Intensity 1-3)
   - Cyclic Physiological Sigh ⭐ NEW (60s)
@@ -1923,23 +2138,28 @@ ADDED:
 ## 🎓 KEY LEARNINGS FROM EXPERT PANEL
 
 ### 1. Crisis ≠ Rumination (Different Problems)
+
 **Watkins/Spiegel:** Acute panic needs breathing. Rumination needs cognitive work.
 **Solution:** Segment by intensity → different techniques for different crisis states.
 
 ### 2. Duration = Therapeutic Mechanism (Not Overhead)
+
 **All experts:** 120s Cognitive Reframe not "too long" - it's minimum for cognitive shift.
 **Solution:** Keep 120s, add time markers to help anxious users perceive duration accurately.
 
 ### 3. Interactive Steps = Value (Not Friction)
+
 **Watkins:** "Typing IS the intervention - breaks rumination automaticity"
 **David:** "Perceived effort = perceived value - users need to feel substantial work"
 **Solution:** Keep interactive steps, make optional only for severe intensity (Tier 1).
 
 ### 4. Perceived Value Matters (Duration + Engagement)
+
 **David:** "60s feels too quick for years of anxiety. 120s with typing = 'This is real therapy.'"
 **Solution:** Don't compete on speed. Compete on perceived value + efficacy.
 
 ### 5. Avoid Sophisticated Avoidance (Wellness ≠ Avoidance)
+
 **David:** "Using app 10x/day for quick relief = sophisticated avoidance disguised as wellness"
 **Solution:** Pair ALL techniques with values integration. Teach emotional agility, not just symptom elimination.
 
@@ -1948,19 +2168,23 @@ ADDED:
 ## ⚠️ CRITICAL WARNINGS FROM PANEL
 
 ### ❌ Don't Remove Cognitive Reframe
+
 **Watkins:** "You'd be removing your most effective rumination tool"
 **David:** "Strategic mistake - it's your competitive advantage"
 **Spiegel:** "Segment it by tier, don't remove it entirely"
 
 ### ❌ Don't Optimize for Engagement Metrics
+
 **David:** "High DAU can mean dependency, not emotional agility"
 **Track:** Users needing app LESS over time (success), not more (dependency)
 
 ### ❌ Don't Call 75s "Body Scan Meditation"
+
 **Kabat-Zinn:** "That's not respecting the practice. It's body checking, not scanning."
 **Solution:** Rename or expand to 20+ min real body scan in separate section.
 
 ### ❌ Don't Position Breathing as Complete Solution
+
 **Watkins:** "User can breathe AND ruminate simultaneously - doesn't interrupt pattern"
 **David:** "Breathing is stabilization step 1. Values exploration is step 2."
 
@@ -1971,23 +2195,27 @@ ADDED:
 ### APPROVE: Proposed Changes (With Modifications)
 
 **✅ YES to adding Cyclic Physiological Sigh**
+
 - Highest evidence (Stanford)
 - Fastest intervention (60s)
 - Addresses "peu de breathing" complaint
 - With caveat: Pair with values work
 
 **❌ NO to removing Cognitive Reframe**
+
 - RF-CBT gold standard (Watkins)
 - High perceived value (David)
 - Emotional agility mechanism (all experts)
 - Instead: Segment by crisis tier
 
 **⚠️ MODIFY Body Scan approach**
+
 - Either rename to "Body Check-In"
 - Or expand to 20+ min real body scan
 - Don't keep 75s "body scan meditation" label
 
 **✅ YES to rebalancing toward breathing**
+
 - Adds Tier 1 crisis tools
 - Addresses user complaint
 - Evidence-based techniques
@@ -1997,18 +2225,21 @@ ADDED:
 ## 🏆 RECOMMENDED IMPLEMENTATION
 
 ### Phase 1: IMMEDIATE (This Sprint)
+
 1. ✅ Add Cyclic Physiological Sigh (60s)
 2. ✅ Implement tiered selection based on intensity
 3. ✅ Rename Body Scan → Body Check-In
 4. ✅ Add values questions after ALL techniques
 
 ### Phase 2: ENHANCE (Next Sprint)
+
 5. ✅ Add time markers to Cognitive Reframe
 6. ✅ Make interactive steps optional for Tier 1 only
 7. ✅ Add education on avoidance vs engagement
 8. ✅ Track long-term outcomes (app usage DECREASE)
 
 ### Phase 3: EXPAND (Future)
+
 9. ⏳ Add real mindfulness practice section (20+ min body scan, sitting meditation)
 10. ⏳ Add Tier 3 deep work sessions (10-60 min values exploration)
 
@@ -2017,18 +2248,23 @@ ADDED:
 ## 💎 CLOSING EXPERT STATEMENTS
 
 **Dr. Andrew Huberman (Neuroscience):**
+
 > "Cyclic physiological sigh is the most effective rapid intervention we've tested. Add it. Just be honest about the 60-second vs 5-minute trade-off."
 
 **Dr. Edward R. Watkins (Rumination):**
+
 > "The three interactive steps in Cognitive Reframe aren't overhead - they're the MECHANISM of change. Don't optimize away your most effective rumination tool."
 
 **Dr. David Spiegel (Crisis Intervention):**
+
 > "The best intervention is the one the person can actually do when they're panicking. Cyclic sigh stabilizes Tier 1 crisis. But for rumination (Tier 3), you need cognitive work. Segment by crisis phase."
 
 **Dr. Jon Kabat-Zinn (Mindfulness):**
+
 > "Don't call a 75-second body check a 'body scan meditation.' That's not respecting the practice. Crisis intervention and mindfulness practice are both valuable - just don't confuse them."
 
 **Dr. Susan David (Emotional Agility):**
+
 > "Discomfort is the price of admission to a meaningful life. Quick fixes can become sophisticated avoidance. Cognitive Reframe is your 120-second gold standard for emotional agility. Perceived value = duration + engagement. Keep the deep work."
 
 ---

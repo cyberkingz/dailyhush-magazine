@@ -14,58 +14,58 @@ appId: host.exp.Exponent
 # ============================================
 # STEP 1: QUIZ - Answer all 10 questions
 # ============================================
-- tapOn: "Take the Quiz"
+- tapOn: 'Take the Quiz'
 - waitForAnimationToEnd
 
 # Question 1
-- assertVisible: "I replay past conversations"
+- assertVisible: 'I replay past conversations'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 2
-- assertVisible: "When someone says"
+- assertVisible: 'When someone says'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 3
-- assertVisible: "imagining worst-case scenarios"
+- assertVisible: 'imagining worst-case scenarios'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 4
-- assertVisible: "stuck thinking about the same problem"
+- assertVisible: 'stuck thinking about the same problem'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 5
-- assertVisible: "overanalyze small decisions"
+- assertVisible: 'overanalyze small decisions'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 6
-- assertVisible: "relive embarrassing moments"
+- assertVisible: 'relive embarrassing moments'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 7
 - assertVisible: "dwelling on things I can't control"
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 8
-- assertVisible: "racing thoughts at night"
+- assertVisible: 'racing thoughts at night'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 9
-- assertVisible: "criticize myself"
+- assertVisible: 'criticize myself'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Question 10
-- assertVisible: "imagining future conversations"
+- assertVisible: 'imagining future conversations'
 - tapOn:
-    text: "Often"
+    text: 'Often'
 
 # Wait for quiz to process
 - waitForAnimationToEnd
@@ -73,29 +73,29 @@ appId: host.exp.Exponent
 # ============================================
 # STEP 2: PROFILE SETUP
 # ============================================
-- assertVisible: "Complete Your Profile"
+- assertVisible: 'Complete Your Profile'
 
 # Enter name (optional field)
-- tapOn: "Your name"
-- inputText: "Jane Doe"
+- tapOn: 'Your name'
+- inputText: 'Jane Doe'
 
 # Enter age (optional field)
-- tapOn: "Your age"
-- inputText: "58"
+- tapOn: 'Your age'
+- inputText: '58'
 
 # Select rumination frequency (required)
-- assertVisible: "How often do you ruminate?"
-- tapOn: "Often (Daily)"
+- assertVisible: 'How often do you ruminate?'
+- tapOn: 'Often (Daily)'
 
 # Continue to signup
-- tapOn: "Complete Setup"
+- tapOn: 'Complete Setup'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 3: SIGNUP (Email + Password)
 # ============================================
-- assertVisible: "Unlock Your Results"
-- assertVisible: "Your overthinker analysis is ready"
+- assertVisible: 'Unlock Your Results'
+- assertVisible: 'Your overthinker analysis is ready'
 
 # Generate unique email for testing
 - runScript:
@@ -104,44 +104,44 @@ appId: host.exp.Exponent
     file: ./scripts/generate-test-email.js
 
 # Enter email
-- tapOn: "your.email@example.com"
-- inputText: "${TEST_EMAIL}"
+- tapOn: 'your.email@example.com'
+- inputText: '${TEST_EMAIL}'
 
 # Enter password
-- tapOn: "8+ characters"
-- inputText: "TestPass123!"
+- tapOn: '8+ characters'
+- inputText: 'TestPass123!'
 
 # Create account
-- tapOn: "Unlock My Results"
+- tapOn: 'Unlock My Results'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 4: RESULTS SCREEN
 # ============================================
-- assertVisible: "Your Results"
+- assertVisible: 'Your Results'
 - assertVisible: "✨ You're all set!"
 
 # Verify overthinker type is shown (check for key word)
-- assertVisible: "Overthinker"
+- assertVisible: 'Overthinker'
 
 # Continue to home
-- tapOn: "Get Started"
+- tapOn: 'Get Started'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 5: HOME SCREEN - Onboarding Complete!
 # ============================================
 # Verify greeting appears (will match morning, afternoon, or evening)
-- assertVisible: "Good"
+- assertVisible: 'Good'
 
 # Verify user name is shown
-- assertVisible: "Jane Doe"
+- assertVisible: 'Jane Doe'
 
 # Verify home screen elements
-- assertVisible: "Today"
+- assertVisible: 'Today'
 - assertVisible: "I'M SPIRALING"
-- assertVisible: "F.I.R.E. Training"
+- assertVisible: 'F.I.R.E. Training'
 
 # SUCCESS! 🎉
-- tapOn: "Settings"
-- assertVisible: "Settings"
+- tapOn: 'Settings'
+- assertVisible: 'Settings'

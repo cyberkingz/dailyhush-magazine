@@ -446,12 +446,7 @@ interface AutoSaveOptions {
   enabled?: boolean;
 }
 
-export function useAutoSave({
-  delay = 1000,
-  onSave,
-  deps,
-  enabled = true,
-}: AutoSaveOptions) {
+export function useAutoSave({ delay = 1000, onSave, deps, enabled = true }: AutoSaveOptions) {
   const isMounted = useRef(false);
 
   // Create debounced save function
@@ -995,9 +990,7 @@ export function getHapticIntensity(): number {
  * Note: React Native Haptics doesn't support intensity directly,
  * so we use different patterns for different intensities
  */
-export async function playAdaptiveHaptic(
-  type: 'light' | 'medium' | 'heavy' = 'light'
-) {
+export async function playAdaptiveHaptic(type: 'light' | 'medium' | 'heavy' = 'light') {
   const intensity = getHapticIntensity();
 
   // Skip haptics entirely at night if user prefers
@@ -1007,9 +1000,7 @@ export async function playAdaptiveHaptic(
   } else if (intensity < 0.7) {
     // Use medium haptic style
     await Haptics.impactAsync(
-      type === 'heavy'
-        ? Haptics.ImpactFeedbackStyle.Medium
-        : Haptics.ImpactFeedbackStyle.Light
+      type === 'heavy' ? Haptics.ImpactFeedbackStyle.Medium : Haptics.ImpactFeedbackStyle.Light
     );
   } else {
     // Use requested haptic style
@@ -1061,9 +1052,9 @@ const BUTTON_HEIGHT_LARGE = 60; // For critical actions
 const MIN_TOUCH_TARGET = 44; // Never go below
 
 // 4. Age-optimized fonts
-const FONT_BODY = 18;     // Primary text
-const FONT_LARGE = 20;    // Important text
-const FONT_HEADING = 28;  // Screen titles
+const FONT_BODY = 18; // Primary text
+const FONT_LARGE = 20; // Important text
+const FONT_HEADING = 28; // Screen titles
 
 // 5. Auto-save progress
 useAutoSave({
@@ -1093,6 +1084,7 @@ const backgroundColor = isNightTime ? '#000000' : colors.background.primary;
 Before shipping each exercise:
 
 ### Visual Tests
+
 - [ ] Test with iOS Dynamic Type at maximum size
 - [ ] Test at 20% screen brightness
 - [ ] Test with Reduce Transparency enabled
@@ -1100,6 +1092,7 @@ Before shipping each exercise:
 - [ ] Test in pure darkness (bedroom test)
 
 ### Interaction Tests
+
 - [ ] Test all buttons with finger tip (not stylus)
 - [ ] Test with tremor simulation (shake phone slightly)
 - [ ] Test with Reduce Motion enabled
@@ -1107,6 +1100,7 @@ Before shipping each exercise:
 - [ ] Test exit at every step
 
 ### Accessibility Tests
+
 - [ ] Run Xcode Accessibility Inspector
 - [ ] Test with VoiceOver screen reader
 - [ ] Verify all touch targets ≥ 44pt
@@ -1114,6 +1108,7 @@ Before shipping each exercise:
 - [ ] Verify contrast ratios ≥ 7:1 (WCAG AAA)
 
 ### Real-World Tests
+
 - [ ] Test lying in bed (portrait only)
 - [ ] Test in bright sunlight
 - [ ] Test in moving vehicle (if applicable)
@@ -1170,6 +1165,7 @@ utils/
 ## Performance Optimizations
 
 ### 1. Lazy Load Exercise Screens
+
 ```typescript
 // app/_layout.tsx
 const CalmAnxiety = lazy(() => import('./exercises/calm-anxiety'));
@@ -1178,12 +1174,14 @@ const GainFocus = lazy(() => import('./exercises/gain-focus'));
 ```
 
 ### 2. Memoize Heavy Components
+
 ```typescript
 const BreathingCircle = memo(BreathingCircleComponent);
 const EmotionWheel = memo(EmotionWheelComponent);
 ```
 
 ### 3. Optimize Animations
+
 ```typescript
 // Use useNativeDriver for transforms
 Animated.timing(value, {
@@ -1194,6 +1192,7 @@ Animated.timing(value, {
 ```
 
 ### 4. Cache Audio Files
+
 ```typescript
 // Preload meditation audio on app launch
 useEffect(() => {

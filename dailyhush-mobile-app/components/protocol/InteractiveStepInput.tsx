@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, Text, StyleSheet, Platform } from 'react-native';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
-import { RADIUS, TYPOGRAPHY, TOUCH_TARGET, ANIMATIONS } from '@/constants/design-tokens';
+import { RADIUS, TOUCH_TARGET } from '@/constants/design-tokens';
 import { InteractiveStepConfig } from '@/types';
 
 interface InteractiveStepInputProps {

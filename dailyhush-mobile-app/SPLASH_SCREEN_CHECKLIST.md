@@ -17,6 +17,7 @@ Use this checklist to ensure proper implementation and testing of the splash scr
 ## Installation & Dependencies
 
 - [ ] Install required dependencies:
+
   ```bash
   npx expo install expo-linear-gradient react-native-svg
   ```
@@ -41,18 +42,21 @@ Use this checklist to ensure proper implementation and testing of the splash scr
 Choose your integration approach:
 
 ### Option A: Basic Integration
+
 - [ ] Import SplashScreen in `app/_layout.tsx`
 - [ ] Add state management for splash visibility
 - [ ] Add `onAnimationComplete` callback
 - [ ] Test basic show/hide functionality
 
 ### Option B: Async Initialization
+
 - [ ] Create initialization function
 - [ ] Track loading state separately from animation state
 - [ ] Add error handling for failed initialization
 - [ ] Test with slow network conditions
 
 ### Option C: Minimum Display Time
+
 - [ ] Add timer for minimum display duration
 - [ ] Coordinate with data loading state
 - [ ] Ensure smooth transition after both complete
@@ -63,6 +67,7 @@ Choose your integration approach:
 ## Expo Configuration
 
 - [ ] Update `app.json` splash configuration:
+
   ```json
   "splash": {
     "image": "./assets/splash-simple.png",
@@ -115,12 +120,14 @@ Choose your integration approach:
 ## Visual Elements
 
 ### Moon Icon
+
 - [ ] Verify moon icon renders correctly
 - [ ] Check crescent shape is visible
 - [ ] Verify accent dots appear
 - [ ] Check opacity is correct (0.9 for main shape)
 
 ### Breaking Spiral
+
 - [ ] Verify spiral graphic renders
 - [ ] Check three arcs are visible
 - [ ] Verify arcs have breaks/gaps
@@ -129,6 +136,7 @@ Choose your integration approach:
 - [ ] Check opacity levels (0.3, 0.5, 0.7 for arcs)
 
 ### Typography
+
 - [ ] Verify app name displays correctly
 - [ ] Check font size (42px)
 - [ ] Verify letter spacing (1.5px)
@@ -136,6 +144,7 @@ Choose your integration approach:
 - [ ] Verify tagline opacity (0.8)
 
 ### Loading Indicator
+
 - [ ] Test loading dots appear when enabled
 - [ ] Verify wave animation works
 - [ ] Check dot sizing (8×8px)
@@ -154,6 +163,7 @@ Choose your integration approach:
 - [ ] Test on iPad (tablet size)
 
 #### iOS-Specific Checks
+
 - [ ] Verify safe area handling (notch/Dynamic Island)
 - [ ] Check top safe area (60px padding)
 - [ ] Check bottom safe area (40px padding)
@@ -168,6 +178,7 @@ Choose your integration approach:
 - [ ] Test on Android tablet
 
 #### Android-Specific Checks
+
 - [ ] Verify safe area handling (status bar)
 - [ ] Check top safe area (40px padding)
 - [ ] Check bottom safe area (30px padding)
@@ -187,6 +198,7 @@ Choose your integration approach:
 - [ ] Verify no memory leaks
 
 ### Performance Benchmarks
+
 - [ ] Cold start time < 3 seconds
 - [ ] Splash animation runs at 60fps
 - [ ] No dropped frames during animation
@@ -205,6 +217,7 @@ Choose your integration approach:
 - [ ] Test with interrupted initialization
 
 ### Error Scenarios
+
 - [ ] Network timeout during init
 - [ ] Auth restoration failure
 - [ ] Data loading failure
@@ -225,7 +238,7 @@ Choose your integration approach:
 - [ ] Test with bold text enabled
 - [ ] Check reduced motion preference:
   ```tsx
-  AccessibilityInfo.isReduceMotionEnabled()
+  AccessibilityInfo.isReduceMotionEnabled();
   ```
 - [ ] Verify no essential information is conveyed by animation alone
 
@@ -241,6 +254,7 @@ Choose your integration approach:
 - [ ] User understands app is loading
 
 ### UX Considerations
+
 - [ ] Does splash create positive first impression?
 - [ ] Does design align with app's mental health focus?
 - [ ] Is the animation calming rather than anxiety-inducing?
@@ -251,6 +265,7 @@ Choose your integration approach:
 ## Production Readiness
 
 ### Code Quality
+
 - [ ] No TypeScript errors
 - [ ] No console warnings
 - [ ] Code is properly commented
@@ -258,12 +273,14 @@ Choose your integration approach:
 - [ ] Props interface is documented
 
 ### Assets
+
 - [ ] All required assets are included
 - [ ] SVG paths render correctly
 - [ ] No external image dependencies
 - [ ] Assets are optimized for performance
 
 ### Configuration
+
 - [ ] `app.json` splash config is correct
 - [ ] Colors match across Expo splash and custom splash
 - [ ] Safe area handling is properly configured
@@ -274,6 +291,7 @@ Choose your integration approach:
 ## Analytics & Monitoring
 
 - [ ] Add analytics tracking for splash screen:
+
   ```tsx
   trackEvent('splash_screen_viewed', {
     duration_ms: number,
@@ -301,11 +319,13 @@ Choose your integration approach:
 ## Build & Deployment
 
 ### Development Build
+
 - [ ] Test with Expo Go
 - [ ] Test with development build (EAS)
 - [ ] Verify splash shows correctly in dev mode
 
 ### Production Build
+
 - [ ] Create production build (iOS):
   ```bash
   eas build --platform ios --profile production
@@ -320,6 +340,7 @@ Choose your integration approach:
 - [ ] Verify no debug warnings
 
 ### App Store Assets
+
 - [ ] Prepare screenshots with splash screen
 - [ ] Verify splash looks good in App Store previews
 - [ ] Test on actual devices (not just simulators)
@@ -341,6 +362,7 @@ Choose your integration approach:
 ## Post-Launch Monitoring
 
 ### Week 1
+
 - [ ] Monitor crash reports
 - [ ] Check analytics for splash duration
 - [ ] Review user feedback
@@ -348,6 +370,7 @@ Choose your integration approach:
 - [ ] Check for any reported issues
 
 ### Month 1
+
 - [ ] Analyze average splash duration
 - [ ] Review user retention from splash
 - [ ] Check for any pattern in crashes
@@ -388,10 +411,10 @@ If issues are discovered after launch:
 
 ## Sign-Off
 
-**Developer**: _________________ Date: _______
-**Designer**: __________________ Date: _______
-**QA**: _______________________ Date: _______
-**Product**: ___________________ Date: _______
+**Developer**: ********\_******** Date: **\_\_\_**
+**Designer**: ********\_\_******** Date: **\_\_\_**
+**QA**: **********\_\_\_********** Date: **\_\_\_**
+**Product**: ********\_\_\_******** Date: **\_\_\_**
 
 ---
 

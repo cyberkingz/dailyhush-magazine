@@ -23,10 +23,7 @@ interface LoadingOverlayProps {
  * LoadingOverlay component
  * Shows spinner during async operations with encouraging messages
  */
-export function LoadingOverlay({
-  visible,
-  message = 'Saving your mood...',
-}: LoadingOverlayProps) {
+export function LoadingOverlay({ visible, message = 'Saving your mood...' }: LoadingOverlayProps) {
   const [displayMessage, setDisplayMessage] = useState(message);
 
   // Update message after 2 seconds if still loading

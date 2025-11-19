@@ -1,4 +1,5 @@
 # Nœma Rebranding Summary
+
 **Date:** November 11, 2025
 **Previous Name:** DailyHush
 **New Name:** Nœma
@@ -18,6 +19,7 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 ### 1. **App Configuration** (Critical for App Store)
 
 #### app.json
+
 - **Name:** `DailyHush` → `Nœma`
 - **Slug:** `dailyhush` → `noema`
 - **Scheme:** `dailyhush` → `noema`
@@ -26,9 +28,11 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 - **EAS Project ID:** `dailyhush-mobile-app` → `noema-mobile-app`
 
 #### package.json
+
 - **Package Name:** `dailyhush-mobile-app-new` → `noema-mobile-app`
 
 #### eas.json
+
 - **Apple ID Email:** `toni@trynoema.com` → `toni@trynoema.com`
 
 ---
@@ -36,11 +40,13 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 ### 2. **Legal Documents** (Required for App Store Compliance)
 
 #### Privacy Policy
+
 - ✅ `app/legal/privacy.tsx` - Updated all DailyHush references to Nœma
 - ✅ `legal/PRIVACY_POLICY.md` - Updated markdown version
 - ✅ Email contact: `hello@daily-hush.com` → `hello@trynoema.com`
 
 #### Terms of Service
+
 - ✅ `app/legal/terms.tsx` - Updated all DailyHush references to Nœma
 - ✅ `legal/TERMS_OF_SERVICE.md` - Updated markdown version
 - ✅ Company name updated throughout
@@ -50,17 +56,20 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 ### 3. **User-Facing Text** (All Screens)
 
 #### Onboarding Screens
+
 - ✅ `app/onboarding/index.tsx` - Welcome messages
 - ✅ `app/onboarding/quiz/paywall.tsx` - Paywall copy
 - ✅ All onboarding flows now say "Nœma"
 
 #### Settings & Profile
+
 - ✅ `app/settings.tsx` - Settings screen header and text
 - ✅ `app/settings/subscription.tsx` - Subscription management
 - ✅ `app/settings/delete-account.tsx` - Account deletion warnings
 - ✅ `app/profile/edit.tsx` - Profile editing
 
 #### Payment & Support
+
 - ✅ `app/payment-failed.tsx` - Payment error messages
 - ✅ `app/trial-expired.tsx` - Trial expiry screen
 - ✅ `app/faq.tsx` - FAQ references
@@ -70,11 +79,13 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 ### 4. **Permission Descriptions** (iOS & Android)
 
 #### iOS Info.plist Descriptions
+
 - **Bluetooth:** "Nœma needs Bluetooth to connect with your Shift necklace..."
 - **Microphone:** "Nœma needs microphone access for voice journaling..."
 - **Notifications:** "Nœma sends daily mindful quotes to help you..."
 
 #### Expo Plugin Permissions
+
 - ✅ `expo-av` microphone permission text
 - ✅ `react-native-ble-plx` Bluetooth permission text
 
@@ -83,6 +94,7 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 ### 5. **Code Comments & Documentation**
 
 #### Updated Files (24 total):
+
 - ✅ All component JSDoc comments
 - ✅ All service file headers
 - ✅ All hook documentation
@@ -90,6 +102,7 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 - ✅ Configuration file comments
 
 #### Documentation Files:
+
 - ✅ `APP_STORE_COMPLIANCE.md`
 - ✅ `AUDIT_REPORT_SUPABASE_SCHEMA.md`
 - ✅ `LEGAL_PLACEMENT_COMPLIANCE_RESEARCH.md`
@@ -103,9 +116,11 @@ Your app has been successfully rebranded from **DailyHush** to **Nœma** across 
 ## ⚠️ CRITICAL NEXT STEPS
 
 ### 1. **Apple Developer Account**
+
 Your bundle identifier changed from `com.dailyhush.mobile` to `com.noema.mobile`.
 
 **Required Actions:**
+
 1. Go to [Apple Developer](https://developer.apple.com/account/resources/identifiers/list)
 2. Create NEW App ID: `com.noema.mobile`
 3. Enable capabilities:
@@ -124,9 +139,11 @@ Your bundle identifier changed from `com.dailyhush.mobile` to `com.noema.mobile`
 ---
 
 ### 2. **App Store Connect**
+
 Your app is now a different bundle ID, so it's technically a **new app** in Apple's eyes.
 
 **Required Actions:**
+
 1. Go to [App Store Connect](https://appstoreconnect.apple.com)
 2. Create NEW app entry:
    - Bundle ID: `com.noema.mobile`
@@ -143,6 +160,7 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
    - Privacy Policy URL: `https://trynoema.com/privacy`
 
 4. Get NEW `ascAppId` and update `eas.json`:
+
 ```json
 "ascAppId": "YOUR_NEW_10_DIGIT_ID"
 ```
@@ -152,6 +170,7 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
 ### 3. **Update External Services**
 
 #### RevenueCat
+
 - **Bundle ID changed!** RevenueCat tracks subscriptions by bundle ID
 - Login to [RevenueCat Dashboard](https://app.revenuecat.com)
 - Create NEW app configuration:
@@ -167,6 +186,7 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
 ---
 
 #### PostHog Analytics
+
 - Login to [PostHog](https://posthog.com)
 - Update project name: DailyHush → Nœma
 - **No action required** - API key remains the same
@@ -174,6 +194,7 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
 ---
 
 #### Supabase
+
 - Login to [Supabase Dashboard](https://supabase.com/dashboard)
 - Update project name: DailyHush → Nœma (cosmetic only)
 - **No action required** - Database connections remain the same
@@ -183,9 +204,11 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
 ### 4. **Domain & Email Setup**
 
 #### Domain: trynoema.com
+
 **Status:** Referenced in code but may not be registered yet
 
 **Required Actions:**
+
 1. Register domain: `trynoema.com` (or `noema.com`)
 2. Set up email: `hello@trynoema.com`
 3. Create support email: `support@trynoema.com`
@@ -195,6 +218,7 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
    - TXT records for SPF/DKIM (email authentication)
 
 #### Email Addresses Updated in Code:
+
 - `hello@trynoema.com` (Privacy Policy contact)
 - `support@trynoema.com` (Support requests)
 - `toni@trynoema.com` (EAS submission Apple ID)
@@ -208,18 +232,21 @@ Your app is now a different bundle ID, so it's technically a **new app** in Appl
 Before submitting to App Store, test thoroughly with the new branding:
 
 ### Test on Device
+
 - [ ] App name shows as "Nœma" on home screen
 - [ ] Deep links work with new scheme (`noema://`)
 - [ ] Push notifications work (test with new APNs certificate)
 - [ ] App Store Connect recognizes bundle ID
 
 ### Test in App
+
 - [ ] All screens show "Nœma" not "DailyHush"
 - [ ] Legal pages link to correct domain (`trynoema.com`)
 - [ ] Support emails go to correct address
 - [ ] Permission prompts show "Nœma" in descriptions
 
 ### Test Subscriptions (Critical!)
+
 - [ ] RevenueCat SDK initializes with new keys
 - [ ] Test purchase flow works
 - [ ] Subscription status syncs correctly
@@ -232,6 +259,7 @@ Before submitting to App Store, test thoroughly with the new branding:
 Once you complete the critical next steps above:
 
 ### 1. Update Your `.env` File
+
 ```env
 # RevenueCat NEW Keys (from new Nœma app configuration)
 EXPO_PUBLIC_REVENUECAT_IOS_KEY=appl_NEW_KEY_HERE
@@ -239,6 +267,7 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_NEW_KEY_HERE
 ```
 
 ### 2. Update `eas.json`
+
 ```json
 {
   "submit": {
@@ -254,11 +283,13 @@ EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=goog_NEW_KEY_HERE
 ```
 
 ### 3. Build for TestFlight
+
 ```bash
 eas build --profile preview --platform ios
 ```
 
 ### 4. Submit to App Store
+
 ```bash
 eas submit --platform ios
 ```
@@ -282,11 +313,13 @@ eas submit --platform ios
 ## 💡 WHY THE REBRAND?
 
 **Nœma** (from Greek νόημα) means:
+
 - **Thought** - Mental content, cognition
 - **Meaning** - Understanding, interpretation
 - **Perception** - How we experience the world
 
 Perfect for an app focused on:
+
 - Managing anxious thoughts
 - Creating meaning from rumination
 - Changing perception patterns
@@ -296,14 +329,17 @@ Perfect for an app focused on:
 ## 📞 SUPPORT RESOURCES
 
 **Apple Developer Help:**
+
 - App IDs: [developer.apple.com/account](https://developer.apple.com/account/resources/identifiers/list)
 - Certificates: [developer.apple.com/account](https://developer.apple.com/account/resources/certificates/list)
 - App Store Connect: [appstoreconnect.apple.com](https://appstoreconnect.apple.com)
 
 **EAS Build Help:**
+
 - [docs.expo.dev/build-reference/app-credentials](https://docs.expo.dev/build-reference/app-credentials/)
 
 **RevenueCat Help:**
+
 - [docs.revenuecat.com/docs/configuring-sdk](https://docs.revenuecat.com/docs/configuring-sdk)
 
 ---
@@ -311,6 +347,7 @@ Perfect for an app focused on:
 ## ⏱️ TIME ESTIMATE
 
 **To complete external setup:**
+
 - Apple Developer setup: 1-2 hours
 - App Store Connect setup: 1-2 hours
 - RevenueCat reconfiguration: 30 minutes

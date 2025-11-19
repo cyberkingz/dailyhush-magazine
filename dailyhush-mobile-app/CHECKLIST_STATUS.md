@@ -9,11 +9,13 @@
 ## ✅ COMPLETED
 
 ### ✅ Subtitle
+
 - **Status:** ✅ Ajouté
 - **Value:** "Science-backed relief" (21 caractères sur 30 max)
 - **Location:** App Information → Localizable Information
 
 ### ✅ Content Rights Information
+
 - **Status:** ✅ Configuré
 - **Answer:** "No, it does not contain, show, or access third-party content"
 - **Location:** App Information → General Information
@@ -23,6 +25,7 @@
 ## ⚠️ IN PROGRESS
 
 ### ⚠️ Age Ratings
+
 - **Status:** ⚠️ À configurer
 - **Action:** Cliquer sur "Set Up Age Ratings" et répondre au questionnaire
 - **Expected Rating:** 12+ (pour thèmes de santé mentale légers)
@@ -33,11 +36,13 @@
 ## ⬜ PENDING (Bloquants)
 
 ### ⬜ Build Upload
+
 - **Status:** ❌ NON UPLOADÉ
 - **Action:** Uploader le build via Xcode/Transporter
 - **Note:** REQUIRED - Bloque la soumission
 
 ### ⬜ App Privacy (Configuration complète)
+
 - **Status:** ⚠️ Partiellement configuré
 - **Completed:**
   - ✅ Get Started cliqué
@@ -55,21 +60,25 @@
 ## ⬜ PENDING (Fortement recommandé)
 
 ### ⬜ Catégorie secondaire
+
 - **Status:** ⚠️ Non sélectionnée
 - **Suggestion:** "Lifestyle" ou "Medical" (si applicable)
 - **Location:** App Information → Category → Secondary
 
 ### ⬜ Screenshots supplémentaires
+
 - **Status:** ⚠️ 5/10 uploadés
 - **Action:** Ajouter 5 screenshots supplémentaires iPhone
 - **Location:** Version 1.0 → Previews and Screenshots
 
 ### ⬜ App Preview vidéos
+
 - **Status:** ⚠️ 0/3 uploadés
 - **Action:** Créer 1-3 App Preview vidéos (15-30 sec)
 - **Location:** Version 1.0 → Previews and Screenshots
 
 ### ⬜ App Encryption Documentation
+
 - **Status:** ⚠️ À vérifier
 - **Note:** Si l'app utilise seulement HTTPS standard, répondre "No" dans Xcode (Info.plist)
 - **Location:** App Information → App Encryption Documentation
@@ -98,4 +107,3 @@
 4. ⬜ Ajouter catégorie secondaire
 5. ⬜ Ajouter screenshots supplémentaires
 6. ⬜ Créer App Preview vidéos
-

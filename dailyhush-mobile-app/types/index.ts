@@ -14,7 +14,7 @@ export interface UserProfile {
   age?: number | null;
   quiz_score?: number; // 1-10 from Overthinking Quiz
   has_shift_necklace: boolean;
-  shift_paired: boolean;
+
   onboarding_completed: boolean;
   fire_progress: {
     focus: boolean;

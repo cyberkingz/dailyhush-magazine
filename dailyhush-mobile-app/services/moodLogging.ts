@@ -22,7 +22,6 @@ import type {
   MoodSubmitData,
   MoodLog,
   MoodLogUpdate,
-  MoodLoggingError,
   MoodLoggingErrorCode,
   ValidationResult,
   SaveMoodLogOptions,
@@ -177,10 +176,7 @@ function createMoodLoggingError(error: unknown): MoodLoggingErrorClass {
  * @returns Result of the function
  * @throws Last error if all retries fail
  */
-async function withRetry<T>(
-  fn: () => Promise<T>,
-  options: RetryOptions = {}
-): Promise<T> {
+async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions = {}): Promise<T> {
   const opts = { ...DEFAULT_RETRY_OPTIONS, ...options };
   let lastError: unknown;
 
@@ -502,10 +498,7 @@ export async function getTodayMoodLog(
  * });
  * ```
  */
-export async function updateMoodLog(
-  id: string,
-  data: MoodLogUpdate
-): Promise<MoodLog> {
+export async function updateMoodLog(id: string, data: MoodLogUpdate): Promise<MoodLog> {
   // Validate partial data
   const validation = validateMoodData(data);
   if (!validation.valid) {

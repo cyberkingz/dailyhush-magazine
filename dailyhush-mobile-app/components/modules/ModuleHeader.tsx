@@ -5,19 +5,8 @@
  */
 
 import React, { memo, useCallback } from 'react';
-import {
-  View,
-  Pressable,
-  StyleSheet,
-  ViewStyle,
-  Platform,
-} from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import { View, Pressable, StyleSheet, ViewStyle } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { ArrowLeft } from 'lucide-react-native';
@@ -138,14 +127,9 @@ export const ModuleHeader = memo<ModuleHeaderProps>(
             accessibilityHint="Navigate to previous screen"
             hitSlop={TOUCH_TARGET.hitSlop}
             style={styles.backButton}
-            testID={`${testID}-back-button`}
-          >
+            testID={`${testID}-back-button`}>
             <View style={styles.backButtonInner}>
-              <ArrowLeft
-                size={ICON_SIZE.md}
-                color={COLORS.text.primary}
-                strokeWidth={2.5}
-              />
+              <ArrowLeft size={ICON_SIZE.md} color={COLORS.text.primary} strokeWidth={2.5} />
             </View>
           </Pressable>
         </Animated.View>
@@ -159,8 +143,7 @@ export const ModuleHeader = memo<ModuleHeaderProps>(
         <View
           style={styles.progressDots}
           accessibilityLabel={`Step ${currentStep} of ${totalSteps}`}
-          accessibilityRole="progressbar"
-        >
+          accessibilityRole="progressbar">
           {Array.from({ length: totalSteps }).map((_, index) => {
             const isActive = index + 1 === currentStep;
             const isCompleted = index + 1 < currentStep;
@@ -188,16 +171,9 @@ export const ModuleHeader = memo<ModuleHeaderProps>(
       return (
         <View style={styles.progressBarContainer}>
           <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressBarFill,
-                { width: `${percentage}%` },
-              ]}
-            />
+            <View style={[styles.progressBarFill, { width: `${percentage}%` }]} />
           </View>
-          <Text style={styles.progressPercentageText}>
-            {Math.round(percentage)}%
-          </Text>
+          <Text style={styles.progressPercentageText}>{Math.round(percentage)}%</Text>
         </View>
       );
     };
@@ -207,19 +183,11 @@ export const ModuleHeader = memo<ModuleHeaderProps>(
 
       return (
         <View style={styles.titleContainer}>
-          <Text
-            style={styles.title}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
             {title}
           </Text>
           {subtitle && (
-            <Text
-              style={styles.subtitle}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
+            <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode="tail">
               {subtitle}
             </Text>
           )}
@@ -241,24 +209,17 @@ export const ModuleHeader = memo<ModuleHeaderProps>(
           },
           style,
         ]}
-        testID={testID || 'module-header'}
-      >
+        testID={testID || 'module-header'}>
         {/* Main header row */}
         <View style={styles.mainRow}>
           {/* Left: Back button */}
-          <View style={styles.leftSection}>
-            {renderBackButton()}
-          </View>
+          <View style={styles.leftSection}>{renderBackButton()}</View>
 
           {/* Center: Title */}
-          <View style={styles.centerSection}>
-            {renderTitle()}
-          </View>
+          <View style={styles.centerSection}>{renderTitle()}</View>
 
           {/* Right: Custom action or spacer */}
-          <View style={styles.rightSection}>
-            {rightAction || <View style={styles.spacer} />}
-          </View>
+          <View style={styles.rightSection}>{rightAction || <View style={styles.spacer} />}</View>
         </View>
 
         {/* Progress indicators */}
@@ -268,7 +229,7 @@ export const ModuleHeader = memo<ModuleHeaderProps>(
         </View>
       </View>
     );
-  },
+  }
 );
 
 ModuleHeader.displayName = 'ModuleHeader';

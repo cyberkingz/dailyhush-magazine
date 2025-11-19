@@ -13,8 +13,22 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
 import * as Crypto from 'expo-crypto';
+
+import { v4 as uuidv4 } from 'uuid';
+
+import type {
+  ExerciseSession,
+  ExerciseConfig,
+  ExerciseStage,
+  ExerciseData,
+  ModuleContext,
+  TriggerData,
+} from '@/types/exercises';
+import { useUser } from '@/store/useStore';
+import { useAnalytics } from '@/utils/analytics';
+import { startExercise, completeExercise, abandonExercise } from '@/utils/supabase/exercise-logs';
+import * as Haptics from 'expo-haptics';
 
 // Polyfill crypto.getRandomValues for React Native
 if (typeof global.crypto !== 'object') {
@@ -28,26 +42,6 @@ if (typeof global.crypto.getRandomValues !== 'function') {
     return array;
   };
 }
-
-import { v4 as uuidv4 } from 'uuid';
-
-import type {
-  ExerciseSession,
-  ExerciseConfig,
-  ExerciseStage,
-  ExerciseData,
-  CompletionStatus,
-  ModuleContext,
-  TriggerData,
-} from '@/types/exercises';
-import { useUser } from '@/store/useStore';
-import { useAnalytics } from '@/utils/analytics';
-import {
-  startExercise,
-  completeExercise,
-  abandonExercise,
-} from '@/utils/supabase/exercise-logs';
-import * as Haptics from 'expo-haptics';
 
 const STORAGE_KEY = '@dailyhush_exercise_session';
 const AUTO_SAVE_INTERVAL = 5000; // 5 seconds
@@ -68,7 +62,6 @@ export function useExerciseSession({
   onAbandon,
 }: UseExerciseSessionProps) {
   const user = useUser();
-  const router = useRouter();
   const analytics = useAnalytics();
 
   // Session state
@@ -77,7 +70,6 @@ export function useExerciseSession({
   const [error, setError] = useState<string | null>(null);
 
   // Timers
-  const startTimeRef = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const autoSaveRef = useRef<NodeJS.Timeout | null>(null);
   const hasInitialized = useRef<boolean>(false);
@@ -106,10 +98,7 @@ export function useExerciseSession({
         const parsed: ExerciseSession = JSON.parse(existingSession);
 
         // Only restore if it's the same exercise type and not completed
-        if (
-          parsed.exerciseType === config.type &&
-          parsed.completionStatus !== 'completed'
-        ) {
+        if (parsed.exerciseType === config.type && parsed.completionStatus !== 'completed') {
           setSession(parsed);
           setIsLoading(false);
 
@@ -136,8 +125,8 @@ export function useExerciseSession({
         currentStage: config.stages.requirePreRating
           ? 'pre_rating'
           : config.stages.showInstructions
-          ? 'instructions'
-          : 'exercise',
+            ? 'instructions'
+            : 'exercise',
         completionStatus: 'in_progress',
         currentStageDuration: 0,
         totalDuration: 0,
@@ -218,17 +207,14 @@ export function useExerciseSession({
   /**
    * Update session state
    */
-  const updateSession = useCallback(
-    (updates: Partial<ExerciseSession>) => {
-      setSession((prev) => {
-        if (!prev) return null;
-        const updated = { ...prev, ...updates };
-        saveSessionToStorage(updated); // Auto-save
-        return updated;
-      });
-    },
-    []
-  );
+  const updateSession = useCallback((updates: Partial<ExerciseSession>) => {
+    setSession((prev) => {
+      if (!prev) return null;
+      const updated = { ...prev, ...updates };
+      saveSessionToStorage(updated); // Auto-save
+      return updated;
+    });
+  }, []);
 
   /**
    * Transition to next stage
@@ -389,12 +375,12 @@ export function useExerciseSession({
       duration_seconds: totalDuration,
       pre_anxiety_rating: session.preRating,
       post_anxiety_rating: session.postRating,
-      anxiety_reduction: session.preRating && session.postRating
-        ? session.preRating - session.postRating
-        : 0,
-      reduction_percentage: session.preRating && session.postRating && session.preRating > 0
-        ? Math.round(((session.preRating - session.postRating) / session.preRating) * 100)
-        : 0,
+      anxiety_reduction:
+        session.preRating && session.postRating ? session.preRating - session.postRating : 0,
+      reduction_percentage:
+        session.preRating && session.postRating && session.preRating > 0
+          ? Math.round(((session.preRating - session.postRating) / session.preRating) * 100)
+          : 0,
       trigger_category: session.trigger?.category,
       module_context: session.moduleContext,
       synced_to_database: !!session.logId,
@@ -618,10 +604,7 @@ function calculateTotalSteps(config: ExerciseConfig): number {
 /**
  * Get next stage based on config
  */
-function getNextStage(
-  currentStage: ExerciseStage,
-  config: ExerciseConfig
-): ExerciseStage | null {
+function getNextStage(currentStage: ExerciseStage, config: ExerciseConfig): ExerciseStage | null {
   switch (currentStage) {
     case 'pre_rating':
       return config.stages.showInstructions ? 'instructions' : 'exercise';

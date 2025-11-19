@@ -91,6 +91,7 @@ Si tu peux récupérer ces infos depuis l'app ou le code, ça m'aiderait :
 Salut équipe 👋 Merci pour le récap très clair. Voici toutes les infos dont vous avez besoin pour terminer la configuration.
 
 ### 1. Contenu Premium (pour les descriptions courtes 170 caractères max)
+
 - Personalized loop-breaking exercises
 - Advanced rumination interrupt techniques
 - Progress tracking & insights
@@ -104,11 +105,13 @@ Salut équipe 👋 Merci pour le récap très clair. Voici toutes les infos dont
 Vous pouvez l’utiliser telle quelle pour les localizations Monthly/Annual (respecte la limite 170 caractères).
 
 ### 2. Review Notes / Détails sur les features
-- Le code (`app/subscription.tsx`, `services/profileService.ts`, etc.) montre que toutes les formules débloquent **exactement les mêmes features** : interruptions de spirales, analytics, journaux vocaux, support prioritaire.  
-- Toutes les notes “review” préparées dans `APP_STORE_CONNECT_METADATA.md` sont toujours valides — elles décrivent correctement comment les exercices F.I.R.E./spiral interrupt fonctionnent (science-backed techniques + progress tracking).  
+
+- Le code (`app/subscription.tsx`, `services/profileService.ts`, etc.) montre que toutes les formules débloquent **exactement les mêmes features** : interruptions de spirales, analytics, journaux vocaux, support prioritaire.
+- Toutes les notes “review” préparées dans `APP_STORE_CONNECT_METADATA.md` sont toujours valides — elles décrivent correctement comment les exercices F.I.R.E./spiral interrupt fonctionnent (science-backed techniques + progress tracking).
 - Pas de fonctionnalité exclusive à une formule : seule la durée/paiement change.
 
 ### 3. Product IDs & différences
+
 - **Monthly:** `com.anthony.noema.monthly`
 - **Annual:** `com.anthony.noema.annual`
 - **Lifetime:** `com.anthony.noema.lifetime`
@@ -117,6 +120,7 @@ Confirmé dans `APP_STORE_CONNECT_METADATA.md` + code RevenueCat (`utils/revenue
 Les trois packages donnent accès au même contenu Premium : seule la facturation change (auto-renouvelable pour Monthly/Annual, achat unique pour Lifetime).
 
 ### 4. Actions restantes côté App Store Connect
+
 - Mettre à jour la localization “English (U.S.)” du Monthly avec :
   - **Display Name:** `Premium Monthly`
   - **Description:** utiliser la version courte ci-dessus
@@ -125,6 +129,7 @@ Les trois packages donnent accès au même contenu Premium : seule la facturatio
 - Vérifier qu’un screenshot est associé à chaque produit quand vous aurez capturé les visuels.
 
 ### 5. Divers
+
 - Les intro offers 7 jours doivent être actives seulement sur Monthly & Annual (déjà le cas pour Monthly, à dupliquer sur Annual).
 - Lifetime n’a pas de trial.
 
@@ -191,10 +196,12 @@ J'ai besoin de ton aide pour les **screenshots** requis dans App Store Connect. 
 **Pour chaque produit (Monthly, Annual, Lifetime), Apple demande un screenshot dans la section "Review Information".**
 
 #### ⚠️ Important :
+
 - **Usage :** Ces screenshots sont **uniquement pour la révision d'Apple** (pas affichés sur l'App Store)
 - **Message Apple :** "We'll only use the screenshot for our review — it won't be displayed on the App Store."
 
 #### 📋 Spécifications techniques :
+
 - **Résolution minimale recommandée :** 640 x 920 pixels
 - **Format :** PNG ou JPEG
 - **Contenu requis :** Capture d'écran de l'écran de paywall/achat dans l'app montrant l'offre d'abonnement
@@ -202,18 +209,21 @@ J'ai besoin de ton aide pour les **screenshots** requis dans App Store Connect. 
 #### 🎯 Ce que le screenshot doit montrer :
 
 **Pour Monthly Premium :**
+
 - L'écran où l'utilisateur voit l'offre d'abonnement **Monthly Premium**
 - Le prix ($9.99 USD / mois)
 - Les informations sur le **7-day free trial** (si visible dans l'UI)
 - Les features Premium mentionnées
 
 **Pour Annual Premium :**
+
 - L'écran où l'utilisateur voit l'offre d'abonnement **Annual Premium**
 - Le prix ($59.99 USD / an)
 - Les informations sur le **7-day free trial** (si visible dans l'UI)
 - Les features Premium mentionnées
 
 **For Lifetime Premium :**
+
 - L'écran où l'utilisateur voit l'offre d'achat **Lifetime Premium**
 - Le prix ($149.99 USD - one-time)
 - Les features Premium mentionnées
@@ -251,20 +261,24 @@ Il y a aussi une section **"Image (Optional)"** (1024 x 1024 pixels) pour les wi
 Salut 👋 Voici toutes les infos pour capturer et livrer les screenshots demandés.
 
 ### 📸 Contenu précis à faire apparaître
+
 - **Monthly Premium** — Sur `app/onboarding/quiz/paywall.tsx`, laisse les trois cartes visibles mais sélectionne la carte mensuelle (elle passe en vert). Assure-toi que le prix `$9.99 / month`, le badge “7-Day Free Trial Included” et un aperçu des features personnalisées (bloc « Personalized Protocol » ou liste) soient dans le cadre.
 - **Annual Premium** — Même écran, sélectionne la carte annuelle (elle porte le badge `MOST POPULAR`). Le prix `$59.99 / year`, la mention des économies (“Save 33%” lorsque RevenueCat renvoie l’info) et la section “7-Day Free Trial Included” doivent être lisibles.
 - **Lifetime Premium** — Sélectionne la carte lifetime (badge `BEST VALUE`, prix `$149.99 one-time`). Scroll légèrement pour cadrer la carte, le bloc “What you unlock” et, si possible, le footer légal. Comme Lifetime n’a pas de trial, cadre l’image de manière à ne pas inclure le panneau “7-Day Free Trial Included” qui reste affiché plus bas (scroll pour qu’il sorte du cadre avant de capturer).
 
 ### 🗺️ Où se trouve le paywall dans l’app ?
+
 - **Fichier & route principale :** `app/onboarding/quiz/paywall.tsx` (route Expo Router `/onboarding/quiz/paywall`). C’est l’écran affiché automatiquement après le quiz (cf. `app/onboarding/profile-setup.tsx` lignes 119-135 qui `router.replace('/onboarding/quiz/paywall')`).
 - **Entrée alternative après onboarding :** les utilisateurs peuvent toujours rouvrir les plans via `Settings → Subscription` (`app/settings.tsx` lignes 236-255) puis bouton “Manage plan” qui pousse vers `app/subscription.tsx`. Cette seconde page affiche les mêmes trois options (sans l’emoji de boucle) et fonctionne même si tu ne veux pas repasser le quiz.
 
 ### 🧱 Structure de l’écran
+
 - Le paywall affiche simultanément les trois offres ; chacune est rendue par `components/subscription/SubscriptionOption.tsx`. Le composant ajoute badge, prix, période et description ; il suffit de toucher la carte pour mettre en avant le plan voulu (le cercle à gauche devient plein + contour vert).
 - L’entête et la liste de features proviennent de `LOOP_PAYWALL_CONFIG` (`src/constants/loopPaywalls.ts`), donc tu peux choisir la boucle (via le paramètre `loopType`) qui colle le mieux visuellement avant de shooter.
 - La section “7-Day Free Trial Included” (Monthly + Annual) est en bas du scroll. Pour Lifetime, scroll ou cadre différemment pour ne pas promettre un trial inexistant.
 
 ### 📷 Méthode recommandée pour capturer
+
 1. **Lancer l’app en local** : `pnpm expo start --clear`, puis `i` pour ouvrir l’iOS Simulator (choisis un iPhone 15 Pro Max/6.7" : Apple accepte ≥640×920 mais autant capturer en haute résolution). Assure-toi que les clés RevenueCat (`EXPO_PUBLIC_REVENUECAT_IOS_KEY`) sont dans `.env` pour récupérer les prix réels.
 2. **Atteindre l’écran :**
    - soit tu fais le flux onboarding (signup → quiz → profil) et tu es automatiquement redirigé vers `/onboarding/quiz/paywall`,
@@ -273,6 +287,7 @@ Salut 👋 Voici toutes les infos pour capturer et livrer les screenshots demand
 4. **Capturer :** dans le simulateur, `⌘ + S` enregistre un PNG directement dans `~/Library/Developer/CoreSimulator/Devices/.../Screenshots/`. Renomme ensuite en `noema-monthly-review.png`, etc. Si tu veux un run “réaliste”, tu peux aussi brancher un iPhone et lancer `pnpm expo run:ios --device`, puis faire la capture via `Side Button + Volume Up`.
 
 ### 🗃️ Assets existants
+
 - Il n’y a actuellement aucun screenshot de paywall dans le repo (`assets/` ne contient que les icônes et j’ai cherché `rg "screenshot"` sans trouver de dossier dédié), il faudra donc prendre ces trois captures from scratch.
 
 Dis-moi si tu veux un script pour automatiser le passage sur `/onboarding/quiz/paywall` avec des paramètres fictifs (ça éviterait de refaire tout le quiz à chaque fois). 🚀

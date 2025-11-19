@@ -5,86 +5,85 @@ appId: com.dailyhush.app
 # Flow: Quiz → Profile → Signup (with existing email) → Redirected to Login
 
 - launchApp
-- assertVisible: "DailyHush"
+- assertVisible: 'DailyHush'
 
 # ============================================
 # STEP 1: QUIZ - Quick answers
 # ============================================
-- assertVisible: "Take the Quiz"
-- tapOn: "Take the Quiz"
+- assertVisible: 'Take the Quiz'
+- tapOn: 'Take the Quiz'
 
 # Answer all 10 questions quickly
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 - tapOn:
-    text: "Often"
+    text: 'Often'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 2: PROFILE SETUP
 # ============================================
-- assertVisible: "Complete Your Profile"
-- tapOn: "Your name"
-- inputText: "Test User"
-- tapOn: "Often (Daily)"
-- tapOn: "Complete Setup"
+- assertVisible: 'Complete Your Profile'
+- tapOn: 'Your name'
+- inputText: 'Test User'
+- tapOn: 'Often (Daily)'
+- tapOn: 'Complete Setup'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 3: SIGNUP WITH EXISTING EMAIL
 # ============================================
-- assertVisible: "Unlock Your Results"
+- assertVisible: 'Unlock Your Results'
 
 # Use an email that already exists in the database
 # NOTE: Replace with an actual existing test email in your database
-- tapOn: "your.email@example.com"
-- inputText: "existing-user@test.com"
+- tapOn: 'your.email@example.com'
+- inputText: 'existing-user@test.com'
 
-- tapOn: "8+ characters"
-- inputText: "TestPass123!"
+- tapOn: '8+ characters'
+- inputText: 'TestPass123!'
 
-- tapOn: "Unlock My Results"
+- tapOn: 'Unlock My Results'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 4: VERIFY REDIRECT TO LOGIN
 # ============================================
 # Should show error message
-- assertVisible: "An account with this email already exists"
+- assertVisible: 'An account with this email already exists'
 
 # Should redirect to login screen after 2 seconds
 - waitForAnimationToEnd:
     timeout: 5000
 
-- assertVisible: "Welcome Back"
-- assertVisible: "Sign in to continue"
+- assertVisible: 'Welcome Back'
+- assertVisible: 'Sign in to continue'
 
 # Verify email is prefilled
-- assertVisible: "existing-user@test.com"
-
+- assertVisible: 'existing-user@test.com'
 # SUCCESS! User redirected correctly 🎉

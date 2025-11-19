@@ -8,6 +8,7 @@
 ## ✅ REVENUECAT - VÉRIFICATIONS COMPLÉTÉES
 
 ### 1. Offering "default" ✅
+
 - **Identifier:** `default`
 - **Display Name:** Default Offering
 - **Status:** ✅ Configuré et actif
@@ -16,24 +17,28 @@
 ### 2. Packages dans l'Offering ✅
 
 #### Package 1: Premium Lifetime
+
 - **Package ID:** `$rc_lifetime` ✅
 - **Produits configurés:**
   - Test Store: `dailyhush_premium_lifetime`
   - **App Store: `com.anthony.noema.lifetime`** ✅
 
 #### Package 2: Premium Annual
+
 - **Package ID:** `$rc_annual` ✅
 - **Produits configurés:**
   - Test Store: `dailyhush_premium_annual`
   - **App Store: `com.anthony.noema.annual`** ✅
 
 #### Package 3: Premium Monthly
+
 - **Package ID:** `$rc_monthly` ✅
 - **Produits configurés:**
   - Test Store: `dailyhush_premium_monthly`
   - **App Store: `com.anthony.noema.monthly`** ✅
 
 ### 3. Entitlement ✅
+
 - **Entitlement ID:** `premium` ✅
 - **Display Name:** Premium access to all features ✅
 - **Products:** 6 produits attachés (3 Test Store + 3 App Store) ✅
@@ -45,18 +50,21 @@
 D'après RevenueCat, les produits suivants doivent exister dans App Store Connect :
 
 ### ✅ Product 1: Monthly
+
 - **Product ID:** `com.anthony.noema.monthly`
 - **Type:** Auto-renewable subscription
 - **Prix attendu:** $9.99 USD
 - **Trial:** 7 jours
 
 ### ✅ Product 2: Annual
+
 - **Product ID:** `com.anthony.noema.annual`
 - **Type:** Auto-renewable subscription
 - **Prix attendu:** $59.99 USD
 - **Trial:** 7 jours
 
 ### ✅ Product 3: Lifetime
+
 - **Product ID:** `com.anthony.noema.lifetime`
 - **Type:** Non-consumable
 - **Prix attendu:** $149.99 USD
@@ -66,6 +74,7 @@ D'après RevenueCat, les produits suivants doivent exister dans App Store Connec
 ## 🔍 PROCHAINES ÉTAPES
 
 ### Dans App Store Connect:
+
 1. Aller dans **My Apps** → Sélectionner **Noema**
 2. Naviguer vers **Monetization** → **In-App Purchases**
 3. Vérifier que les 3 produits suivants existent :
@@ -76,6 +85,7 @@ D'après RevenueCat, les produits suivants doivent exister dans App Store Connec
 5. Vérifier que le Subscription Group est configuré correctement
 
 ### Vérifications à faire:
+
 - [ ] Les 3 Product IDs correspondent exactement à ceux dans RevenueCat
 - [ ] Les prix sont corrects ($9.99, $59.99, $149.99)
 - [ ] Le 7-day free trial est activé pour Monthly et Annual
@@ -123,10 +133,11 @@ D'après RevenueCat, les produits suivants doivent exister dans App Store Connec
 2. **Cliquer sur:** "Apps" dans le menu
 3. **Sélectionner:** "Nœma" dans la liste des apps
 4. **Dans le menu de gauche de l'app**, chercher:
-   - **"Features"** ou **"Monetization"** 
+   - **"Features"** ou **"Monetization"**
    - Puis cliquer sur **"In-App Purchases"**
 
 ### Alternative:
+
 - Depuis la page principale de l'app, chercher un onglet ou lien **"Features"** ou **"Monetization"**
 - Les In-App Purchases peuvent aussi être accessibles via le menu latéral de l'app
 
@@ -140,7 +151,7 @@ Une fois dans la section In-App Purchases, vérifier que ces 3 produits existent
    - Trial: 7 jours
 
 2. **`com.anthony.noema.annual`**
-   - Type: Auto-renewable subscription  
+   - Type: Auto-renewable subscription
    - Prix: $59.99
    - Trial: 7 jours
 
@@ -153,11 +164,12 @@ Une fois dans la section In-App Purchases, vérifier que ces 3 produits existent
 ## ✅ RÉSUMÉ FINAL
 
 **RevenueCat:** ✅ **100% CONFIGURÉ CORRECTEMENT**
+
 - Offering `default` avec 3 packages ✅
 - Entitlement `premium` avec tous les produits ✅
 - Product IDs App Store corrects ✅
 
 **App Store Connect:** ⏳ **À VÉRIFIER MANUELLEMENT**
+
 - Les produits doivent correspondre exactement aux Product IDs dans RevenueCat
 - Vérifier les prix et les configurations de trial
-

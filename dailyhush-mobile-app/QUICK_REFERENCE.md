@@ -23,28 +23,28 @@ import { Brain, Moon, Info, TrendingUp, Sparkles } from 'lucide-react-native';
 
 ```tsx
 // Backgrounds
-colors.background.primary     // #0A1612 - Main screen
-colors.background.secondary   // #0F1F1A - Cards
-colors.background.tertiary    // #1A4D3C - Elevated cards
-colors.background.border      // rgba(64, 145, 108, 0.15)
+colors.background.primary; // #0A1612 - Main screen
+colors.background.secondary; // #0F1F1A - Cards
+colors.background.tertiary; // #1A4D3C - Elevated cards
+colors.background.border; // rgba(64, 145, 108, 0.15)
 
 // Text
-colors.text.primary          // #E8F4F0 - Main text
-colors.text.secondary        // #A8CFC0 - Muted text
-colors.text.tertiary         // #52B788 - Accent text
+colors.text.primary; // #E8F4F0 - Main text
+colors.text.secondary; // #A8CFC0 - Muted text
+colors.text.tertiary; // #52B788 - Accent text
 
 // Emerald
-colors.emerald[500]          // #52B788 - Primary accent
-colors.emerald[600]          // #40916C - Primary button
-colors.emerald[700]          // #2D6A4F - Secondary button
+colors.emerald[500]; // #52B788 - Primary accent
+colors.emerald[600]; // #40916C - Primary button
+colors.emerald[700]; // #2D6A4F - Secondary button
 
 // Gradients
-colors.gradients.primary     // ['#52B788', '#40916C']
-colors.gradients.glow        // 'rgba(82, 183, 136, 0.3)'
+colors.gradients.primary; // ['#52B788', '#40916C']
+colors.gradients.glow; // 'rgba(82, 183, 136, 0.3)'
 
 // Shadows
-colors.shadow.light          // 'rgba(82, 183, 136, 0.15)'
-colors.shadow.medium         // 'rgba(82, 183, 136, 0.25)'
+colors.shadow.light; // 'rgba(82, 183, 136, 0.15)'
+colors.shadow.medium; // 'rgba(82, 183, 136, 0.25)'
 ```
 
 ---
@@ -135,8 +135,7 @@ export default function MyScreen() {
           paddingHorizontal: 20,
           paddingTop: 20,
           paddingBottom: 40,
-        }}
-      >
+        }}>
         {/* Content */}
       </ScrollView>
     </View>
@@ -147,11 +146,7 @@ export default function MyScreen() {
 ### Feature Card
 
 ```tsx
-<PremiumCard
-  variant="elevated"
-  onPress={() => router.push('/route')}
-  style={{ marginBottom: 16 }}
->
+<PremiumCard variant="elevated" onPress={() => router.push('/route')} style={{ marginBottom: 16 }}>
   <View style={{ padding: 20, flexDirection: 'row', alignItems: 'center' }}>
     {/* Icon container */}
     <View
@@ -160,8 +155,7 @@ export default function MyScreen() {
         padding: 12,
         borderRadius: 16,
         marginRight: 16,
-      }}
-    >
+      }}>
       <Brain size={24} color={colors.emerald[500]} />
     </View>
 
@@ -173,8 +167,7 @@ export default function MyScreen() {
           fontSize: 18,
           fontWeight: '600',
           marginBottom: 4,
-        }}
-      >
+        }}>
         Feature Title
       </Text>
       <Text
@@ -182,16 +175,13 @@ export default function MyScreen() {
           color: colors.text.secondary,
           fontSize: 14,
           lineHeight: 20,
-        }}
-      >
+        }}>
         Feature description
       </Text>
     </View>
 
     {/* Arrow */}
-    <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>
-      →
-    </Text>
+    <Text style={{ color: colors.emerald[500], fontSize: 20, marginLeft: 8 }}>→</Text>
   </View>
 </PremiumCard>
 ```
@@ -206,8 +196,7 @@ export default function MyScreen() {
         color: colors.text.secondary,
         fontSize: 14,
         marginBottom: 8,
-      }}
-    >
+      }}>
       Metric Name
     </Text>
     <Text
@@ -215,8 +204,7 @@ export default function MyScreen() {
         color: colors.emerald[500],
         fontSize: 36,
         fontWeight: 'bold',
-      }}
-    >
+      }}>
       {value}
     </Text>
   </View>
@@ -228,11 +216,13 @@ export default function MyScreen() {
 ## Style Snippets
 
 ### Standard Card Padding
+
 ```tsx
 style={{ padding: 20 }}
 ```
 
 ### Icon Container
+
 ```tsx
 style={{
   backgroundColor: colors.emerald[600] + '30',
@@ -242,6 +232,7 @@ style={{
 ```
 
 ### Section Title
+
 ```tsx
 style={{
   color: colors.text.primary,
@@ -252,6 +243,7 @@ style={{
 ```
 
 ### Body Text
+
 ```tsx
 style={{
   color: colors.text.secondary,
@@ -261,6 +253,7 @@ style={{
 ```
 
 ### Large Number
+
 ```tsx
 style={{
   color: colors.emerald[500],
@@ -275,22 +268,22 @@ style={{
 
 ```tsx
 // Between sections
-marginBottom: 24
+marginBottom: 24;
 
 // Between cards
-marginBottom: 16
+marginBottom: 16;
 
 // Card padding
-padding: 20
+padding: 20;
 
 // Screen padding
-paddingHorizontal: 20
+paddingHorizontal: 20;
 
 // Icon margin
-marginRight: 16
+marginRight: 16;
 
 // Text line height
-lineHeight: 20
+lineHeight: 20;
 ```
 
 ---
@@ -298,6 +291,7 @@ lineHeight: 20
 ## Shadow Presets
 
 ### Light Shadow (default cards)
+
 ```tsx
 shadowColor: colors.shadow.light,
 shadowOffset: { width: 0, height: 4 },
@@ -307,6 +301,7 @@ elevation: 3,
 ```
 
 ### Medium Shadow (elevated cards)
+
 ```tsx
 shadowColor: colors.shadow.light,
 shadowOffset: { width: 0, height: 4 },
@@ -316,6 +311,7 @@ elevation: 5,
 ```
 
 ### Heavy Shadow (buttons)
+
 ```tsx
 shadowColor: colors.emerald[500],
 shadowOffset: { width: 0, height: 8 },
@@ -330,16 +326,16 @@ elevation: 8,
 
 ```tsx
 // Cards & Buttons
-borderRadius: 24
+borderRadius: 24;
 
 // Icon containers
-borderRadius: 16
+borderRadius: 16;
 
 // Small elements
-borderRadius: 12
+borderRadius: 12;
 
 // Pills/badges
-borderRadius: 999
+borderRadius: 999;
 ```
 
 ---
@@ -388,15 +384,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 ## Migration Quick Tips
 
 ### Replace hardcoded colors
+
 ```tsx
 // Old
-color: '#E8F4F0'
+color: '#E8F4F0';
 
 // New
-color: colors.text.primary
+color: colors.text.primary;
 ```
 
 ### Replace basic View with PremiumCard
+
 ```tsx
 // Old
 <View className="bg-[#1A4D3C] rounded-2xl p-5">
@@ -407,6 +405,7 @@ color: colors.text.primary
 ```
 
 ### Replace basic button with PulseButton
+
 ```tsx
 // Old
 <Pressable style={styles.button}>

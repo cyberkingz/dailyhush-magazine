@@ -6,7 +6,15 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, PanResponder, TouchableOpacity, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  PanResponder,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
 import { SPACING } from '@/constants/designTokens';
@@ -76,7 +84,10 @@ function getPositionForIntensity(intensity: IntensityValue): { x: number; y: num
   return { x, y };
 }
 
-export function IntensityCircular({ selectedIntensity, onIntensitySelect }: IntensityCircularProps) {
+export function IntensityCircular({
+  selectedIntensity,
+  onIntensitySelect,
+}: IntensityCircularProps) {
   const [currentIntensity, setCurrentIntensity] = useState<IntensityValue>(selectedIntensity || 4);
   const lastHapticIntensity = useRef<IntensityValue | null>(null);
   const dialRef = useRef<View>(null);
@@ -220,8 +231,8 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
             newIntensity >= 6
               ? Haptics.ImpactFeedbackStyle.Heavy
               : newIntensity >= 4
-              ? Haptics.ImpactFeedbackStyle.Medium
-              : Haptics.ImpactFeedbackStyle.Light;
+                ? Haptics.ImpactFeedbackStyle.Medium
+                : Haptics.ImpactFeedbackStyle.Light;
 
           if (lastHapticIntensity.current !== newIntensity) {
             Haptics.impactAsync(hapticStyle);
@@ -243,17 +254,11 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
 
       {/* Circular Dial */}
       <View style={styles.dialContainer}>
-        <View
-          ref={dialRef}
-          onLayout={() => measureDial()}
-          style={styles.dialBackground}
-        >
+        <View ref={dialRef} onLayout={() => measureDial()} style={styles.dialBackground}>
           {/* Center Label */}
           <View style={styles.centerLabel}>
             <Text style={styles.intensityNumber}>{currentIntensity}</Text>
-            <Text style={styles.intensityLabel}>
-              {INTENSITY_LABELS[currentIntensity]}
-            </Text>
+            <Text style={styles.intensityLabel}>{INTENSITY_LABELS[currentIntensity]}</Text>
           </View>
 
           {/* Track */}
@@ -280,8 +285,7 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
                   updateHandlePosition(intensity);
                 }}
                 accessibilityLabel={`Intensity ${intensity}`}
-                accessibilityRole="button"
-              >
+                accessibilityRole="button">
                 <View
                   style={[
                     styles.marker,
@@ -309,8 +313,7 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
                 top: handleY,
                 transform: [{ scale: handleScale }],
               },
-            ]}
-          >
+            ]}>
             <View style={styles.handleInner} />
           </Animated.View>
         </View>
@@ -325,8 +328,7 @@ export function IntensityCircular({ selectedIntensity, onIntensitySelect }: Inte
         onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
           onIntensitySelect(currentIntensity);
-        }}
-      >
+        }}>
         <Text style={styles.continueButtonText}>Continue</Text>
       </Pressable>
     </View>
@@ -439,7 +441,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     color: colors.text.secondary,
-    opacity: 0.80,
+    opacity: 0.8,
     marginBottom: SPACING.md,
   },
   continueButton: {

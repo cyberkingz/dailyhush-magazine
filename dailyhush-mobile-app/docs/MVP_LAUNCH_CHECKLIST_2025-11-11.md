@@ -1,4 +1,5 @@
 # DailyHush MVP Launch Checklist
+
 **Date:** November 11, 2025
 **Target:** App Store Launch
 **Status:** 95% Ready 🎯
@@ -8,6 +9,7 @@
 ## 🎉 COMPLETED (Automated Fixes)
 
 ### ✅ Critical Fixes Applied
+
 1. **Platform Detection Fixed** - No longer hardcoded to iOS
    - File: `hooks/useExerciseSession.ts:167`
    - Now detects: iOS, Android, Web automatically
@@ -40,6 +42,7 @@
    - Removed outdated TODO in `trial-expired.tsx` (subscription screen exists)
 
 ### ✅ Spiral Technique Rebalancing (Previous Work)
+
 - Reduced from 4 to 3 techniques based on 11-expert consensus
 - Implemented Gateway Protocol for duration transparency
 - Removed Box Breathing (redundant with Cyclic Sigh)
@@ -50,27 +53,32 @@
 ## 🚨 REQUIRES YOUR ACTION (3 Critical Items)
 
 ### 1️⃣ Update EAS Build Configuration
+
 **File:** `eas.json` (Lines 31-32)
 **Priority:** CRITICAL - Blocks App Store submission
 
 **Current (Placeholders):**
+
 ```json
 "ascAppId": "placeholder",
 "appleTeamId": "placeholder"
 ```
 
 **Action Required:**
+
 1. Go to [App Store Connect](https://appstoreconnect.apple.com)
 2. Find your App Store Connect App ID (10-digit number like `1234567890`)
 3. Go to [Apple Developer Account](https://developer.apple.com/account)
 4. Find your Apple Team ID (10-character string like `ABC123XYZ`)
 5. Replace in `eas.json`:
+
 ```json
 "ascAppId": "1234567890",
 "appleTeamId": "ABC123XYZ"
 ```
 
 **Where to find these:**
+
 - **App Store Connect App ID**:
   - Login to App Store Connect
   - Go to your app
@@ -86,15 +94,18 @@
 ---
 
 ### 2️⃣ Create Notification Icon
+
 **File:** `assets/notification-icon.png`
 **Priority:** CRITICAL - Build will fail without this
 
 **Requirements:**
+
 - **Size:** 96x96px (Android) or 1024x1024px (iOS)
 - **Format:** PNG with transparent background
 - **Content:** Simple DailyHush leaf icon (same as app icon, simplified)
 
 **Action Required:**
+
 1. Open your main app icon (`assets/icon.png`)
 2. Simplify it (remove gradients, keep it monochrome)
 3. Export as 96x96px PNG with transparent background
@@ -106,12 +117,14 @@ Use an online tool like [CloudConvert](https://cloudconvert.com/png-resize) or F
 ---
 
 ### 3️⃣ Verify Meditation Audio License
+
 **File:** `assets/sounds/meditation.mp3` (4.2 MB)
 **Priority:** HIGH - Legal requirement
 
 **Current Status:** File exists but needs license verification
 
 **Action Required:**
+
 1. Check where this audio file came from (Pixabay? Custom recording?)
 2. Verify the license allows **commercial use**
 3. If using free audio:
@@ -124,6 +137,7 @@ Use an online tool like [CloudConvert](https://cloudconvert.com/png-resize) or F
 
 **Why This Matters:**
 If the audio is copyrighted, you could face:
+
 - App Store rejection
 - Legal takedown notice
 - Copyright infringement lawsuit
@@ -133,10 +147,12 @@ If the audio is copyrighted, you could face:
 ## 🟡 NICE TO HAVE (Not Blocking Launch)
 
 ### Console.log Cleanup
+
 **Status:** 329 console.log statements found
 **Impact:** Performance and log noise in production
 
 **Recommendation:** Clean up before launch or wrap in `__DEV__` checks:
+
 ```typescript
 if (__DEV__) {
   console.log('Debug info');
@@ -144,6 +160,7 @@ if (__DEV__) {
 ```
 
 **Quick Find:**
+
 ```bash
 grep -r "console.log" --include="*.ts" --include="*.tsx" app/ components/ services/ hooks/
 ```
@@ -151,6 +168,7 @@ grep -r "console.log" --include="*.ts" --include="*.tsx" app/ components/ servic
 ---
 
 ### Mood Widget TypeScript Errors
+
 **Status:** 6 TypeScript errors in mood capture flow
 **Impact:** Potential runtime crashes
 
@@ -163,6 +181,7 @@ grep -r "console.log" --include="*.ts" --include="*.tsx" app/ components/ servic
 Once you complete the 3 action items above, follow this sequence:
 
 ### Step 1: Final Commit
+
 ```bash
 git add -A
 git commit -m "fix: Complete MVP launch prep - ready for EAS build"
@@ -170,18 +189,23 @@ git push origin claude/rebalance-spiral-exercises
 ```
 
 ### Step 2: Test TypeScript Compilation
+
 ```bash
 npx tsc --noEmit
 ```
+
 Expected: Some warnings OK, but no blocking errors.
 
 ### Step 3: Build Preview for TestFlight
+
 ```bash
 eas build --profile preview --platform ios
 ```
+
 This creates a TestFlight-ready build.
 
 ### Step 4: Test on TestFlight
+
 1. EAS will upload to App Store Connect automatically
 2. Add internal testers in App Store Connect
 3. Test on real devices (3-5 testers minimum)
@@ -192,17 +216,21 @@ This creates a TestFlight-ready build.
    - Mood logging
 
 ### Step 5: Production Build
+
 Once TestFlight testing is successful:
+
 ```bash
 eas build --profile production --platform ios
 ```
 
 ### Step 6: Submit to App Store
+
 ```bash
 eas submit --platform ios
 ```
 
 ### Step 7: Monitor
+
 1. Set up [Sentry.io](https://sentry.io) for crash reporting (recommended)
 2. Watch PostHog analytics for user behavior
 3. Monitor RevenueCat for subscription metrics
@@ -232,6 +260,7 @@ Your app is **95% ready** for launch!
 ## ⏱️ TIME ESTIMATE
 
 With your Apple Developer license ready:
+
 - **30 minutes:** Complete 3 action items
 - **1 hour:** Build preview on EAS
 - **2-3 days:** TestFlight beta testing
@@ -245,12 +274,14 @@ With your Apple Developer license ready:
 ## 🆘 NEED HELP?
 
 ### Resources:
+
 - **EAS Build:** [docs.expo.dev/build/introduction](https://docs.expo.dev/build/introduction/)
 - **App Store Connect:** [developer.apple.com/app-store-connect](https://developer.apple.com/app-store-connect/)
 - **TestFlight:** [developer.apple.com/testflight](https://developer.apple.com/testflight/)
 - **RevenueCat:** [revenuecat.com/docs](https://www.revenuecat.com/docs/)
 
 ### Common Issues:
+
 1. **Build fails?** Check eas.json values match Apple Developer account
 2. **Notification icon error?** Make sure PNG is exactly 96x96px or 1024x1024px
 3. **TypeScript errors?** Run `npx tsc --noEmit` to see all errors
@@ -261,6 +292,7 @@ With your Apple Developer license ready:
 ## 🎊 YOU'RE ALMOST THERE!
 
 **Big day indeed!** You've built:
+
 - A beautiful anxiety relief app for women 65+
 - 3 Stanford-backed crisis intervention techniques
 - A comprehensive onboarding and training system

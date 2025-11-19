@@ -177,8 +177,8 @@ export default function FAQ() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            Common questions about using Nœma. Can&apos;t find what you&apos;re looking for?
-            Email us at{' '}
+            Common questions about using Nœma. Can&apos;t find what you&apos;re looking for? Email
+            us at{' '}
             <Text
               style={{ color: colors.emerald[400], fontWeight: typography.fontWeight.semibold }}>
               hello@trynoema.com

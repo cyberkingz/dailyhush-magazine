@@ -11,7 +11,6 @@ import { MotiView } from 'moti';
 import { Sparkles, Heart, Target } from 'lucide-react-native';
 import type { LoopType } from '@/constants/loopTypes';
 import { getLoopTypeConfig } from '@/constants/loopTypes';
-import { profileTypography } from '@/constants/profileTypography';
 import { colors } from '@/constants/colors';
 
 interface LoopCharacteristicsProps {

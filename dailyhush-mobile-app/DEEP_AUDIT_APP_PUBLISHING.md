@@ -9,6 +9,7 @@
 ## 📊 RÉSUMÉ EXÉCUTIF
 
 ### ✅ COMPLÉTÉ
+
 - ✅ App Version 1.0 créée
 - ✅ Screenshots: 5 of 10 uploadés
 - ✅ App Store Listing: Description, Keywords, Promotional Text, Support URL, Marketing URL
@@ -17,6 +18,7 @@
 - ✅ 7-day Free Trials: Monthly et Annual configurés
 
 ### ❌ MANQUANT (BLOCKING)
+
 1. **App Privacy** - NON CONFIGURÉ (REQUIRED)
 2. **App Pricing** - NON CONFIGURÉ (REQUIRED)
 3. **App Availability** - NON CONFIGURÉ (REQUIRED)
@@ -30,10 +32,12 @@
 ## 🚨 ÉLÉMENTS CRITIQUES MANQUANTS
 
 ### 1. APP PRIVACY ⚠️ REQUIRED
+
 **Statut:** ❌ NON CONFIGURÉ  
 **Lien:** https://appstoreconnect.apple.com/apps/6755148761/distribution/privacy
 
 **Actions requises:**
+
 - [ ] Cliquer sur "Get Started"
 - [ ] Configurer les pratiques de collecte de données
 - [ ] Ajouter Privacy Policy URL (actuellement vide)
@@ -44,10 +48,12 @@
 ---
 
 ### 2. APP PRICING ⚠️ REQUIRED
+
 **Statut:** ❌ NON CONFIGURÉ  
 **Lien:** https://appstoreconnect.apple.com/apps/6755148761/distribution/pricing
 
 **Actions requises:**
+
 - [ ] Cliquer sur "Add Pricing"
 - [ ] Sélectionner "Free" (si l'app est gratuite) ou un prix de départ
 - [ ] Sauvegarder
@@ -57,10 +63,12 @@
 ---
 
 ### 3. APP AVAILABILITY ⚠️ REQUIRED
+
 **Statut:** ❌ NON CONFIGURÉ  
 **Lien:** https://appstoreconnect.apple.com/apps/6755148761/distribution/pricing
 
 **Actions requises:**
+
 - [ ] Cliquer sur "Set Up Availability"
 - [ ] Sélectionner les pays/régions où l'app sera disponible
 - [ ] Sauvegarder
@@ -70,10 +78,12 @@
 ---
 
 ### 4. BUILD ⚠️ REQUIRED
+
 **Statut:** ❌ NON UPLOADÉ  
 **Lien:** https://appstoreconnect.apple.com/apps/6755148761/distribution/ios/version/inflight
 
 **Actions requises:**
+
 - [ ] Uploader un build via Xcode, Transporter, ou API
 - [ ] Attendre que le build soit traité
 - [ ] Sélectionner le build dans la version 1.0
@@ -83,10 +93,12 @@
 ---
 
 ### 5. APP REVIEW INFORMATION ⚠️ REQUIRED
+
 **Statut:** ⚠️ INCOMPLET  
 **Lien:** https://appstoreconnect.apple.com/apps/6755148761/distribution/ios/version/inflight
 
 **Champs manquants:**
+
 - [ ] User name (pour sign-in)
 - [ ] Password (pour sign-in)
 - [ ] First name
@@ -96,10 +108,12 @@
 - [ ] Notes (optionnel mais recommandé)
 
 **Informations disponibles:**
+
 - Compte de test: review@trynoema.com
 - Mot de passe: HeyReviewerNoema!
 
 **Actions requises:**
+
 - [ ] Remplir tous les champs requis
 - [ ] Utiliser les identifiants de test fournis
 
@@ -108,10 +122,12 @@
 ---
 
 ### 6. IN-APP PURCHASES AND SUBSCRIPTIONS ⚠️ REQUIRED
+
 **Statut:** ❌ NON SÉLECTIONNÉS  
 **Lien:** https://appstoreconnect.apple.com/apps/6755148761/distribution/ios/version/inflight
 
 **Actions requises:**
+
 - [ ] Naviguer vers la section "In-App Purchases and Subscriptions" dans la version 1.0
 - [ ] Sélectionner les 3 subscriptions (Monthly, Annual, Lifetime)
 - [ ] Sauvegarder
@@ -123,9 +139,11 @@
 ---
 
 ### 7. SUBSCRIPTION STATUS - "MISSING METADATA" ⚠️ BLOCKING
+
 **Statut:** ❌ Tous les 3 produits affichent "Missing Metadata"
 
 #### Monthly Premium (com.anthony.noema.monthly)
+
 - ✅ Localization: "Prepare for Submission"
 - ⏳ Pricing: Progressbar visible (en traitement)
 - ✅ Screenshot: Uploadé
@@ -134,11 +152,13 @@
 - ❌ Status: "Missing Metadata"
 
 **Actions requises:**
+
 - [ ] Attendre que le pricing soit finalisé
 - [ ] Vérifier la section "Availability" (actuellement vide)
 - [ ] S'assurer que "All countries" est sélectionné
 
 #### Annual Premium (com.anthony.noema.annual)
+
 - ✅ Localization: Configuré
 - ✅ Pricing: $59.99 USD configuré
 - ✅ Screenshot: Uploadé
@@ -147,10 +167,12 @@
 - ❌ Status: "Missing Metadata"
 
 **Actions requises:**
+
 - [ ] Vérifier la section "Availability" (actuellement vide)
 - [ ] S'assurer que "All countries" est sélectionné
 
 #### Lifetime Premium (com.anthony.noema.lifetime)
+
 - ✅ Localization: Configuré
 - ✅ Pricing: $149.99 USD configuré
 - ✅ Screenshot: Uploadé
@@ -159,6 +181,7 @@
 - ❌ Status: "Missing Metadata"
 
 **Actions requises:**
+
 - [ ] Vérifier la section "Availability" (actuellement vide)
 - [ ] S'assurer que "All countries" est sélectionné
 
@@ -169,12 +192,14 @@
 ## 📋 CHECKLIST COMPLÈTE DE SOUMISSION
 
 ### PHASE 1: Configuration de Base (REQUIRED)
+
 - [ ] **App Privacy** - Configurer et publier
 - [ ] **App Pricing** - Ajouter un prix (Free ou payant)
 - [ ] **App Availability** - Configurer les pays/régions
 - [ ] **Build** - Uploader et sélectionner dans la version
 
 ### PHASE 2: Informations de Review (REQUIRED)
+
 - [ ] **App Review Information** - Remplir tous les champs
   - [ ] User name: review@trynoema.com
   - [ ] Password: HeyReviewerNoema!
@@ -185,6 +210,7 @@
   - [ ] Notes (optionnel)
 
 ### PHASE 3: Subscriptions (REQUIRED)
+
 - [ ] **Monthly Premium** - Résoudre "Missing Metadata"
   - [ ] Vérifier que le pricing est finalisé
   - [ ] Configurer "Availability" (All countries)
@@ -195,6 +221,7 @@
 - [ ] **In-App Purchases and Subscriptions** - Sélectionner les 3 produits dans la version 1.0
 
 ### PHASE 4: Finalisation (REQUIRED)
+
 - [ ] Vérifier que tous les statuts sont "Ready to Submit"
 - [ ] Vérifier que le build est sélectionné
 - [ ] Vérifier que toutes les informations sont complètes
@@ -205,15 +232,18 @@
 ## 🔗 LIENS IMPORTANTS
 
 ### App Version
+
 - Version 1.0: https://appstoreconnect.apple.com/apps/6755148761/distribution/ios/version/inflight
 
 ### Subscriptions
+
 - Subscription Group: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscription-groups/21829692
 - Monthly: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752
 - Annual: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150717
 - Lifetime: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150952
 
 ### Configuration
+
 - App Privacy: https://appstoreconnect.apple.com/apps/6755148761/distribution/privacy
 - Pricing and Availability: https://appstoreconnect.apple.com/apps/6755148761/distribution/pricing
 
@@ -247,4 +277,3 @@
 ---
 
 **Dernière mise à jour:** 2025-11-16
-

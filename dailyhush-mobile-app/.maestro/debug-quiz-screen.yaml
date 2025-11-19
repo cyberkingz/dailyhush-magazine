@@ -3,7 +3,7 @@ appId: host.exp.Exponent
 # Debug Quiz Screen - Find out what Maestro can see
 
 # Navigate to quiz screen
-- tapOn: "Try It Now"
+- tapOn: 'Try It Now'
 - waitForAnimationToEnd
 - tapOn: "No, I'm new here"
 - waitForAnimationToEnd
@@ -12,18 +12,17 @@ appId: host.exp.Exponent
 - takeScreenshot: quiz-question-1
 
 # Try to find ANY text on screen
-- assertVisible: "Question 1"
+- assertVisible: 'Question 1'
 
 # Try tapping on "Rarely" (first option)
-- tapOn: "Rarely"
+- tapOn: 'Rarely'
 
 # Check if that worked
 - takeScreenshot: after-tapping-rarely
 
 # Try tapping Next
-- tapOn: "Next"
+- tapOn: 'Next'
 
 # See if we advanced
 - takeScreenshot: after-next-button
-
 # SUCCESS! This will show us what's visible

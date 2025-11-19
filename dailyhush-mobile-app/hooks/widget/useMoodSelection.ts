@@ -81,9 +81,7 @@ interface MoodAnimatedValues {
  * ))}
  * ```
  */
-export function useMoodSelection(
-  config: UseMoodSelectionConfig
-): UseMoodSelectionReturn {
+export function useMoodSelection(config: UseMoodSelectionConfig): UseMoodSelectionReturn {
   const { moods, staggerDelay, visible } = config;
 
   // ========================================================================
@@ -195,46 +193,58 @@ export function useMoodSelection(
   // ASSEMBLE INTO RECORDS
   // ========================================================================
 
-  const moodAnimatedValues = useMemo<Record<MoodChoice, MoodAnimatedValues>>(() => ({
-    calm: {
-      opacity: calmOpacity,
-      translateY: calmTranslateY,
-      scale: calmScale,
-      rotate: calmRotate,
-    },
-    anxious: {
-      opacity: anxiousOpacity,
-      translateY: anxiousTranslateY,
-      scale: anxiousScale,
-      rotate: anxiousRotate,
-    },
-    sad: {
-      opacity: sadOpacity,
-      translateY: sadTranslateY,
-      scale: sadScale,
-      rotate: sadRotate,
-    },
-    frustrated: {
-      opacity: frustratedOpacity,
-      translateY: frustratedTranslateY,
-      scale: frustratedScale,
-      rotate: frustratedRotate,
-    },
-    mixed: {
-      opacity: mixedOpacity,
-      translateY: mixedTranslateY,
-      scale: mixedScale,
-      rotate: mixedRotate,
-    },
-  }), []);
+  const moodAnimatedValues = useMemo<Record<MoodChoice, MoodAnimatedValues>>(
+    () => ({
+      calm: {
+        opacity: calmOpacity,
+        translateY: calmTranslateY,
+        scale: calmScale,
+        rotate: calmRotate,
+      },
+      anxious: {
+        opacity: anxiousOpacity,
+        translateY: anxiousTranslateY,
+        scale: anxiousScale,
+        rotate: anxiousRotate,
+      },
+      sad: {
+        opacity: sadOpacity,
+        translateY: sadTranslateY,
+        scale: sadScale,
+        rotate: sadRotate,
+      },
+      frustrated: {
+        opacity: frustratedOpacity,
+        translateY: frustratedTranslateY,
+        scale: frustratedScale,
+        rotate: frustratedRotate,
+      },
+      mixed: {
+        opacity: mixedOpacity,
+        translateY: mixedTranslateY,
+        scale: mixedScale,
+        rotate: mixedRotate,
+      },
+    }),
+    []
+  );
 
-  const moodAnimations = useMemo<Record<MoodChoice, { style: any }>>(() => ({
-    calm: { style: calmAnimatedStyle },
-    anxious: { style: anxiousAnimatedStyle },
-    sad: { style: sadAnimatedStyle },
-    frustrated: { style: frustratedAnimatedStyle },
-    mixed: { style: mixedAnimatedStyle },
-  }), [calmAnimatedStyle, anxiousAnimatedStyle, sadAnimatedStyle, frustratedAnimatedStyle, mixedAnimatedStyle]);
+  const moodAnimations = useMemo<Record<MoodChoice, { style: any }>>(
+    () => ({
+      calm: { style: calmAnimatedStyle },
+      anxious: { style: anxiousAnimatedStyle },
+      sad: { style: sadAnimatedStyle },
+      frustrated: { style: frustratedAnimatedStyle },
+      mixed: { style: mixedAnimatedStyle },
+    }),
+    [
+      calmAnimatedStyle,
+      anxiousAnimatedStyle,
+      sadAnimatedStyle,
+      frustratedAnimatedStyle,
+      mixedAnimatedStyle,
+    ]
+  );
 
   // ========================================================================
   // ENTRANCE ANIMATION
@@ -257,16 +267,10 @@ export function useMoodSelection(
         );
 
         // TranslateY: slide up from bottom
-        values.translateY.value = withDelay(
-          delay,
-          withSpring(0, SPRING_CONFIGS.moodSelection)
-        );
+        values.translateY.value = withDelay(delay, withSpring(0, SPRING_CONFIGS.moodSelection));
 
         // Scale: grow to full size
-        values.scale.value = withDelay(
-          delay,
-          withSpring(1, SPRING_CONFIGS.moodSelection)
-        );
+        values.scale.value = withDelay(delay, withSpring(1, SPRING_CONFIGS.moodSelection));
       });
     }
   }, [visible, selectedMood, moods, staggerDelay, moodAnimatedValues]);
@@ -281,54 +285,54 @@ export function useMoodSelection(
    * 1. Selected mood pulses and wiggles
    * 2. Other moods fly out to sides
    */
-  const selectMood = useCallback((mood: MoodOption) => {
-    setSelectedMood(mood.value);
+  const selectMood = useCallback(
+    (mood: MoodOption) => {
+      setSelectedMood(mood.value);
 
-    const selectedValues = moodAnimatedValues[mood.value];
+      const selectedValues = moodAnimatedValues[mood.value];
 
-    // ========================================
-    // SELECTED MOOD ANIMATIONS
-    // ========================================
+      // ========================================
+      // SELECTED MOOD ANIMATIONS
+      // ========================================
 
-    // Pulse animation (scale up then settle)
-    selectedValues.scale.value = withSequence(
-      withTiming(1.2, { duration: 150 }),
-      withSpring(1, { damping: 10 })
-    );
+      // Pulse animation (scale up then settle)
+      selectedValues.scale.value = withSequence(
+        withTiming(1.2, { duration: 150 }),
+        withSpring(1, { damping: 10 })
+      );
 
-    // Wiggle animation (rotate left-right-center)
-    selectedValues.rotate.value = withSequence(
-      withTiming(5, { duration: 100 }),
-      withTiming(-5, { duration: 100 }),
-      withTiming(0, { duration: 100 })
-    );
+      // Wiggle animation (rotate left-right-center)
+      selectedValues.rotate.value = withSequence(
+        withTiming(5, { duration: 100 }),
+        withTiming(-5, { duration: 100 }),
+        withTiming(0, { duration: 100 })
+      );
 
-    // ========================================
-    // OTHER MOODS FLY OUT
-    // ========================================
+      // ========================================
+      // OTHER MOODS FLY OUT
+      // ========================================
 
-    moods.forEach((otherMood, index) => {
-      if (otherMood.value !== mood.value) {
-        const otherValues = moodAnimatedValues[otherMood.value];
+      moods.forEach((otherMood, index) => {
+        if (otherMood.value !== mood.value) {
+          const otherValues = moodAnimatedValues[otherMood.value];
 
-        // Fly out with stagger
-        otherValues.translateY.value = withDelay(
-          index * 30, // Small stagger for wave effect
-          withTiming(0, { duration: 200 })
-        );
+          // Fly out with stagger
+          otherValues.translateY.value = withDelay(
+            index * 30, // Small stagger for wave effect
+            withTiming(0, { duration: 200 })
+          );
 
-        otherValues.opacity.value = withDelay(
-          index * 30,
-          withTiming(0, { duration: 200 })
-        );
-      }
-    });
+          otherValues.opacity.value = withDelay(index * 30, withTiming(0, { duration: 200 }));
+        }
+      });
 
-    // Mark selection as complete after animations
-    setTimeout(() => {
-      setIsComplete(true);
-    }, 400);
-  }, [moods, moodAnimatedValues]);
+      // Mark selection as complete after animations
+      setTimeout(() => {
+        setIsComplete(true);
+      }, 400);
+    },
+    [moods, moodAnimatedValues]
+  );
 
   // ========================================================================
   // CLEANUP

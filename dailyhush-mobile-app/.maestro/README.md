@@ -29,6 +29,7 @@ maestro test --continuous .maestro/01-onboarding-happy-path.yaml
 ## 📱 Visual Testing - See the UI Move!
 
 **Maestro will:**
+
 - ✅ Launch your app on the simulator/device
 - ✅ Type text into inputs (you'll see it typing!)
 - ✅ Tap buttons and navigate screens
@@ -53,9 +54,11 @@ maestro test --record .maestro/
 ## 🧪 Available Tests
 
 ### 1. Happy Path - Complete Onboarding
+
 **File:** `01-onboarding-happy-path.yaml`
 
 **What it tests:**
+
 - ✅ Complete quiz (all 10 questions)
 - ✅ Profile setup (name, age, frequency)
 - ✅ Account creation (email + password)
@@ -63,6 +66,7 @@ maestro test --record .maestro/
 - ✅ Landing on home screen
 
 **Run:**
+
 ```bash
 maestro test .maestro/01-onboarding-happy-path.yaml
 ```
@@ -72,15 +76,18 @@ maestro test .maestro/01-onboarding-happy-path.yaml
 ---
 
 ### 2. Existing Email - Redirect to Login
+
 **File:** `02-existing-email-redirect.yaml`
 
 **What it tests:**
+
 - ✅ User tries to signup with existing email
 - ✅ Error message displays
 - ✅ Auto-redirect to login screen
 - ✅ Email is prefilled on login
 
 **Run:**
+
 ```bash
 maestro test .maestro/02-existing-email-redirect.yaml
 ```
@@ -92,9 +99,11 @@ maestro test .maestro/02-existing-email-redirect.yaml
 ---
 
 ### 3. Quiz Lookup - Connect Website Quiz
+
 **File:** `03-quiz-lookup-flow.yaml`
 
 **What it tests:**
+
 - ✅ "I already took the quiz" flow
 - ✅ Email lookup from quiz_submissions
 - ✅ Password setup screen
@@ -102,6 +111,7 @@ maestro test .maestro/02-existing-email-redirect.yaml
 - ✅ Results display
 
 **Run:**
+
 ```bash
 maestro test .maestro/03-quiz-lookup-flow.yaml
 ```
@@ -113,15 +123,18 @@ maestro test .maestro/03-quiz-lookup-flow.yaml
 ---
 
 ### 4. Validation Errors
+
 **File:** `04-validation-errors.yaml`
 
 **What it tests:**
+
 - ✅ Invalid email format detection
 - ✅ Short password detection
 - ✅ Error messages display
 - ✅ Valid inputs proceed correctly
 
 **Run:**
+
 ```bash
 maestro test .maestro/04-validation-errors.yaml
 ```
@@ -133,26 +146,31 @@ maestro test .maestro/04-validation-errors.yaml
 Before running tests, ensure you have:
 
 ### For Test 2 (Existing Email):
+
 1. Create a test user in Supabase Auth
 2. Update email in test file: `existing-user@test.com`
 
 ### For Test 3 (Quiz Lookup):
+
 1. Create a quiz submission in `quiz_submissions` table
 2. Update email in test file: `quiz-taker@test.com`
 
 ## 🐛 Debugging Tests
 
 ### View Detailed Logs
+
 ```bash
 maestro test --debug-output maestro-logs .maestro/01-onboarding-happy-path.yaml
 ```
 
 ### Interactive Mode (Maestro Studio)
+
 ```bash
 maestro studio .maestro/01-onboarding-happy-path.yaml
 ```
 
 This opens a visual editor where you can:
+
 - Step through the test line by line
 - See exactly what element is being tapped
 - Modify the test in real-time
@@ -161,16 +179,18 @@ This opens a visual editor where you can:
 ### Common Issues
 
 **Test can't find element:**
+
 ```yaml
 # Instead of:
-- tapOn: "Submit"
+- tapOn: 'Submit'
 
 # Try with pattern matching:
 - tapOn:
-    text: ".*Submit.*"
+    text: '.*Submit.*'
 ```
 
 **App not launching:**
+
 ```bash
 # Make sure your app is running first
 npm start
@@ -182,6 +202,7 @@ maestro test --device "iPhone 16 Pro" .maestro/01-onboarding-happy-path.yaml
 ## 📊 CI/CD Integration
 
 ### Run on GitHub Actions
+
 ```yaml
 - name: Run Maestro Tests
   uses: mobile-dev-inc/action-maestro-cloud@v1
@@ -192,6 +213,7 @@ maestro test --device "iPhone 16 Pro" .maestro/01-onboarding-happy-path.yaml
 ```
 
 ### Upload to Maestro Cloud
+
 ```bash
 # Upload and run tests in the cloud
 maestro cloud --apiKey <your-api-key> .maestro/
@@ -200,19 +222,20 @@ maestro cloud --apiKey <your-api-key> .maestro/
 ## 🎨 Writing Your Own Tests
 
 ### Basic Structure
+
 ```yaml
 appId: com.dailyhush.app
 ---
 - launchApp
 
 # Assert text is visible
-- assertVisible: "Welcome"
+- assertVisible: 'Welcome'
 
 # Tap on element
-- tapOn: "Continue"
+- tapOn: 'Continue'
 
 # Type text
-- inputText: "Hello World"
+- inputText: 'Hello World'
 
 # Wait for animations
 - waitForAnimationToEnd
@@ -225,22 +248,23 @@ appId: com.dailyhush.app
 ```
 
 ### Advanced Actions
+
 ```yaml
 # Tap on element by ID
 - tapOn:
-    id: "submit-button"
+    id: 'submit-button'
 
 # Swipe
 - swipe:
     direction: UP
 
 # Assert NOT visible
-- assertNotVisible: "Error"
+- assertNotVisible: 'Error'
 
 # Conditional logic
 - runFlow:
     when:
-      visible: "Skip"
+      visible: 'Skip'
     file: skip-flow.yaml
 ```
 
@@ -252,15 +276,17 @@ appId: com.dailyhush.app
    - Watch the magic happen!
 
 2. **Speed Up Tests**
+
    ```yaml
    # Disable animations in test
    - runScript: adb shell settings put global animator_duration_scale 0
    ```
 
 3. **Create Test Variants**
+
    ```yaml
    # Use environment variables
-   - inputText: "${TEST_EMAIL}"
+   - inputText: '${TEST_EMAIL}'
    ```
 
 4. **Parallel Testing**

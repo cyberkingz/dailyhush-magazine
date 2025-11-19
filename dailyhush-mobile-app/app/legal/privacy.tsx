@@ -105,8 +105,8 @@ export default function PrivacyPolicy() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            Nœma is built with your privacy at its core. We believe your healing journey should
-            be completely private. This policy explains how we collect, use, and protect your
+            Nœma is built with your privacy at its core. We believe your healing journey should be
+            completely private. This policy explains how we collect, use, and protect your
             information.
           </Text>
         </View>
@@ -516,9 +516,9 @@ export default function PrivacyPolicy() {
               color: colors.text.secondary,
               lineHeight: typography.size.base * typography.lineHeight.relaxed,
             }}>
-            Nœma is intended for users 18 years and older. We do not knowingly collect
-            information from children under 18. If you believe we have collected information from a
-            child under 18, please contact us at hello@trynoema.com.
+            Nœma is intended for users 18 years and older. We do not knowingly collect information
+            from children under 18. If you believe we have collected information from a child under
+            18, please contact us at hello@trynoema.com.
           </Text>
         </View>
 

@@ -4,6 +4,7 @@
 **Issue**: Keyboard doesn't open when tapping inside input fields during interactive spiral exercise steps
 **Severity**: High - Blocks users from completing interactive protocol steps
 **Files Affected**:
+
 - `app/spiral.tsx` (main spiral interrupt screen)
 - `components/protocol/InteractiveStepInput.tsx` (input component)
 
@@ -14,10 +15,11 @@
 The keyboard fails to open when users tap on text inputs during interactive steps of spiral exercises. This is caused by missing `KeyboardAvoidingView` and `ScrollView` wrappers in the protocol stage, which are present in other input-heavy stages of the same screen (e.g., log-trigger stage).
 
 **Root Causes Identified:**
+
 1. ❌ No `KeyboardAvoidingView` wrapper in protocol stage
 2. ❌ No `ScrollView` wrapper for interactive step input area
-3. ⚠️  `autoFocus` prop may not reliably trigger keyboard on all platforms
-4. ⚠️  No `keyboardShouldPersistTaps="handled"` to prevent keyboard dismissal
+3. ⚠️ `autoFocus` prop may not reliably trigger keyboard on all platforms
+4. ⚠️ No `keyboardShouldPersistTaps="handled"` to prevent keyboard dismissal
 
 ---
 
@@ -28,6 +30,7 @@ The keyboard fails to open when users tap on text inputs during interactive step
 **Location**: `app/spiral.tsx` lines 997-1470
 
 **Current Structure**:
+
 ```tsx
 {stage === 'protocol' && (
   <LinearGradient>
@@ -58,6 +61,7 @@ The keyboard fails to open when users tap on text inputs during interactive step
 ```
 
 **Problems**:
+
 - ❌ Input is nested in a `View` without `ScrollView` - user cannot scroll if keyboard covers input
 - ❌ No `KeyboardAvoidingView` - keyboard overlays the input instead of pushing it up
 - ❌ `autoFocus={true}` alone is insufficient - doesn't guarantee keyboard opens on all devices
@@ -70,6 +74,7 @@ The keyboard fails to open when users tap on text inputs during interactive step
 **Location**: `app/spiral.tsx` lines 1806-2034
 
 **Working Structure**:
+
 ```tsx
 {stage === 'log-trigger' && (
   <LinearGradient>
@@ -99,6 +104,7 @@ The keyboard fails to open when users tap on text inputs during interactive step
 ```
 
 **Why This Works**:
+
 - ✅ `KeyboardAvoidingView` with platform-specific behavior
 - ✅ `ScrollView` with `keyboardShouldPersistTaps="handled"`
 - ✅ Proper nesting hierarchy for keyboard handling
@@ -113,6 +119,7 @@ The keyboard fails to open when users tap on text inputs during interactive step
 **Key Findings**:
 
 #### autoFocus Implementation (lines 62-71):
+
 ```tsx
 useEffect(() => {
   if (autoFocus && inputRef.current) {
@@ -128,6 +135,7 @@ useEffect(() => {
 **Issue**: `inputRef.current?.focus()` only focuses the input element but does NOT guarantee the system keyboard will open. This is a known React Native limitation on certain platforms/devices.
 
 #### TextInput Configuration (lines 204-227):
+
 ```tsx
 <TextInput
   ref={inputRef}
@@ -141,6 +149,7 @@ useEffect(() => {
 ```
 
 **Note**: The `autoFocus` prop on `TextInput` is known to be unreliable across platforms, especially when:
+
 - Input is not immediately visible on screen
 - Parent components use complex layouts (LinearGradient, Animated views)
 - Input is conditionally rendered
@@ -151,11 +160,13 @@ useEffect(() => {
 ### 4. Platform-Specific Keyboard Behavior
 
 #### iOS Issues:
+
 - Keyboard may not show if `KeyboardAvoidingView` is missing
 - `autoFocus` can focus input without showing keyboard
 - Requires `behavior="padding"` in `KeyboardAvoidingView`
 
 #### Android Issues:
+
 - Keyboard may show but cover input completely without `KeyboardAvoidingView`
 - Requires `behavior="height"` in `KeyboardAvoidingView`
 - `android:windowSoftInputMode` in AndroidManifest.xml affects behavior
@@ -164,13 +175,13 @@ useEffect(() => {
 
 ### 5. Comparison: Interactive Input vs Other Inputs
 
-| Feature | Interactive Step Input | Log-Trigger Input | Working? |
-|---------|------------------------|-------------------|----------|
-| `KeyboardAvoidingView` | ❌ Missing | ✅ Present | ❌ No |
-| `ScrollView` | ❌ Missing | ✅ Present | ❌ No |
-| `keyboardShouldPersistTaps` | ❌ Missing | ✅ "handled" | ❌ No |
-| `autoFocus` | ⚠️  Present but unreliable | N/A (not needed) | ⚠️  Partial |
-| Platform behavior | ❌ Not handled | ✅ Platform-specific | ❌ No |
+| Feature                     | Interactive Step Input    | Log-Trigger Input    | Working?   |
+| --------------------------- | ------------------------- | -------------------- | ---------- |
+| `KeyboardAvoidingView`      | ❌ Missing                | ✅ Present           | ❌ No      |
+| `ScrollView`                | ❌ Missing                | ✅ Present           | ❌ No      |
+| `keyboardShouldPersistTaps` | ❌ Missing                | ✅ "handled"         | ❌ No      |
+| `autoFocus`                 | ⚠️ Present but unreliable | N/A (not needed)     | ⚠️ Partial |
+| Platform behavior           | ❌ Not handled            | ✅ Platform-specific | ❌ No      |
 
 ---
 
@@ -189,18 +200,21 @@ useEffect(() => {
 ## Impact Assessment
 
 ### User Experience Impact: **CRITICAL**
+
 - Users cannot complete interactive protocol steps
 - Protocol timer remains paused indefinitely
 - Users cannot submit responses or continue
 - Severely impacts therapeutic effectiveness
 
 ### Affected Features:
+
 - ✅ 5-4-3-2-1 Sensory Grounding (interactive lists)
 - ✅ Thought Challenging (text responses)
 - ✅ Pattern Recognition (text/count inputs)
 - ✅ Any future adaptive protocols with interactive steps
 
 ### Devices Affected:
+
 - iOS: iPhone (all models tested)
 - Android: Various devices (inconsistent behavior)
 - Both portrait and landscape orientations
@@ -214,44 +228,44 @@ useEffect(() => {
 Wrap the protocol stage's middle section (interactive input area) with proper keyboard handling:
 
 ```tsx
-{stage === 'protocol' && (
-  <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={{ flex: 1 }}>
-    {/* Mute button */}
+{
+  stage === 'protocol' && (
+    <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={{ flex: 1 }}>
+      {/* Mute button */}
 
-    {/* Wrap entire content in KeyboardAvoidingView */}
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
-
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingHorizontal: 24,
-          paddingTop: protocolPaddingTop,
-          paddingBottom: protocolPaddingBottom,
-          alignItems: 'center',
-          justifyContent: isInteractiveAwaitingResume ? 'center' : 'space-between',
-          gap: isInteractiveAwaitingResume ? 40 : 0,
-        }}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={isInteractiveAwaitingResume} // Only scroll when input is visible
-        bounces={false}>
-
-        {/* Countdown Section */}
-        {/* Middle Section with InteractiveStepInput */}
-        {/* Bottom Controls */}
-
-      </ScrollView>
-    </KeyboardAvoidingView>
-  </LinearGradient>
-)}
+      {/* Wrap entire content in KeyboardAvoidingView */}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingHorizontal: 24,
+            paddingTop: protocolPaddingTop,
+            paddingBottom: protocolPaddingBottom,
+            alignItems: 'center',
+            justifyContent: isInteractiveAwaitingResume ? 'center' : 'space-between',
+            gap: isInteractiveAwaitingResume ? 40 : 0,
+          }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={isInteractiveAwaitingResume} // Only scroll when input is visible
+          bounces={false}>
+          {/* Countdown Section */}
+          {/* Middle Section with InteractiveStepInput */}
+          {/* Bottom Controls */}
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </LinearGradient>
+  );
+}
 ```
 
 ### Additional Improvements:
 
 1. **Force Keyboard Open** in InteractiveStepInput.tsx:
+
 ```tsx
 useEffect(() => {
   if (autoFocus && inputRef.current && Platform.OS === 'ios') {
@@ -268,11 +282,10 @@ useEffect(() => {
 ```
 
 2. **Add Manual Focus Trigger**:
+
 ```tsx
 // In InteractiveStepInput
-<Pressable
-  onPress={() => inputRef.current?.focus()}
-  style={styles.inputContainer}>
+<Pressable onPress={() => inputRef.current?.focus()} style={styles.inputContainer}>
   <TextInput ref={inputRef} {...props} />
 </Pressable>
 ```
@@ -302,13 +315,16 @@ After implementing fixes, verify:
 ## Related Code Locations
 
 ### Primary Files:
+
 - `app/spiral.tsx` (lines 997-1470: protocol stage rendering)
 - `components/protocol/InteractiveStepInput.tsx` (entire file)
 
 ### Reference Implementation:
+
 - `app/spiral.tsx` (lines 1806-2034: working log-trigger stage with KeyboardAvoidingView)
 
 ### Similar Input Components (for consistency):
+
 - `components/auth/AuthTextInput.tsx` (auth screens - working)
 - `components/anna/ChatInput.tsx` (chat - working)
 - `components/moodCapture/steps/FreeWriting.tsx` (mood capture - check if working)

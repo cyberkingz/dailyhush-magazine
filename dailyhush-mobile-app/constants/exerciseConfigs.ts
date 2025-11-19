@@ -11,11 +11,7 @@
  * NO HARDCODED DATA - All values passed through props to components
  */
 
-import {
-  ExerciseType,
-  ExerciseCategory,
-  ExerciseConfig,
-} from '@/types/exercises';
+import { ExerciseType, ExerciseCategory, ExerciseConfig } from '@/types/exercises';
 
 // ============================================================================
 // EXERCISE 1: CYCLIC PHYSIOLOGICAL SIGH
@@ -27,7 +23,8 @@ export const CYCLIC_SIGH_CONFIG: ExerciseConfig = {
   category: ExerciseCategory.BREATHING,
   title: 'Cyclic Physiological Sigh',
   shortTitle: 'Cyclic Sigh',
-  description: 'A rapid calm-down technique using double inhales and extended exhales. Stanford-tested for maximum effectiveness.',
+  description:
+    'A rapid calm-down technique using double inhales and extended exhales. Stanford-tested for maximum effectiveness.',
 
   // Instructions
   instructions: [
@@ -111,7 +108,8 @@ export const GROUNDING_5_4_3_2_1_CONFIG: ExerciseConfig = {
   category: ExerciseCategory.SENSORY,
   title: '5-4-3-2-1 Grounding',
   shortTitle: 'Grounding',
-  description: 'Reconnect with your immediate environment using all five senses. Clinically proven to interrupt rumination.',
+  description:
+    'Reconnect with your immediate environment using all five senses. Clinically proven to interrupt rumination.',
 
   // Instructions
   instructions: [
@@ -153,11 +151,13 @@ export const GROUNDING_5_4_3_2_1_CONFIG: ExerciseConfig = {
 
   // Copy (from David Ogilvy)
   copy: {
-    headline: 'Name it. Touch it. Hear it. You\'re here, not there.',
-    subheadline: 'CBT therapists use this to interrupt rumination. It forces your brain to process what\'s actually happening right now.',
+    headline: "Name it. Touch it. Hear it. You're here, not there.",
+    subheadline:
+      "CBT therapists use this to interrupt rumination. It forces your brain to process what's actually happening right now.",
     ctaStart: 'Start Grounding',
-    ctaComplete: 'I\'m Here Now',
-    completionMessage: 'You interrupted your rumination loop by forcing your brain to process immediate sensory input.',
+    ctaComplete: "I'm Here Now",
+    completionMessage:
+      'You interrupted your rumination loop by forcing your brain to process immediate sensory input.',
   },
 
   // Accessibility
@@ -200,7 +200,8 @@ export const BREATHING_4_7_8_CONFIG: ExerciseConfig = {
   category: ExerciseCategory.BREATHING,
   title: '4-7-8 Breathing',
   shortTitle: '4-7-8 Breath',
-  description: 'Dr. Andrew Weil\'s technique to activate your parasympathetic nervous system. Used by Navy SEALs.',
+  description:
+    "Dr. Andrew Weil's technique to activate your parasympathetic nervous system. Used by Navy SEALs.",
 
   // Instructions
   instructions: [
@@ -242,10 +243,12 @@ export const BREATHING_4_7_8_CONFIG: ExerciseConfig = {
   // Copy (from David Ogilvy)
   copy: {
     headline: '4-7-8. The breathing pattern that switches off your fight-or-flight response.',
-    subheadline: 'Dr. Andrew Weil taught this to Navy SEALs. The 7-second hold forces CO₂ buildup. The 8-second exhale activates your vagus nerve.',
+    subheadline:
+      'Dr. Andrew Weil taught this to Navy SEALs. The 7-second hold forces CO₂ buildup. The 8-second exhale activates your vagus nerve.',
     ctaStart: 'Start 4-7-8',
-    ctaComplete: 'I\'m Calm',
-    completionMessage: 'You activated your parasympathetic nervous system. Your body just switched from fight-or-flight to rest-and-digest.',
+    ctaComplete: "I'm Calm",
+    completionMessage:
+      'You activated your parasympathetic nervous system. Your body just switched from fight-or-flight to rest-and-digest.',
   },
 
   // Accessibility
@@ -284,7 +287,8 @@ export const EMOTION_WHEEL_CONFIG: ExerciseConfig = {
   category: ExerciseCategory.COGNITIVE,
   title: 'Emotion Wheel',
   shortTitle: 'Name the Feeling',
-  description: 'UCLA research: Naming an emotion reduces amygdala activation by 40%. Name it to tame it.',
+  description:
+    'UCLA research: Naming an emotion reduces amygdala activation by 40%. Name it to tame it.',
 
   // Instructions
   instructions: [
@@ -326,10 +330,12 @@ export const EMOTION_WHEEL_CONFIG: ExerciseConfig = {
   // Copy (from David Ogilvy)
   copy: {
     headline: 'Name it to tame it. Find the exact word.',
-    subheadline: 'UCLA researchers proved it: Naming an emotion reduces amygdala activation by 40%. The more specific the word, the bigger the effect.',
+    subheadline:
+      'UCLA researchers proved it: Naming an emotion reduces amygdala activation by 40%. The more specific the word, the bigger the effect.',
     ctaStart: 'Name the Feeling',
     ctaComplete: 'I Named It',
-    completionMessage: 'You engaged your prefrontal cortex, which dampened your amygdala. That\'s why naming it works.',
+    completionMessage:
+      "You engaged your prefrontal cortex, which dampened your amygdala. That's why naming it works.",
   },
 
   // Accessibility
@@ -368,17 +374,18 @@ export const BRAIN_DUMP_CONFIG: ExerciseConfig = {
   category: ExerciseCategory.EXPRESSIVE,
   title: 'Brain Dump',
   shortTitle: 'Write It Out',
-  description: 'Expressive writing reduces intrusive thoughts by 47%. Get it out of your head and onto the page.',
+  description:
+    'Expressive writing reduces intrusive thoughts by 47%. Get it out of your head and onto the page.',
 
   // Instructions
   instructions: [
     'Write everything in your head right now',
-    'Don\'t edit. Don\'t filter. Just dump.',
+    "Don't edit. Don't filter. Just dump.",
     'No one will read this. Not even the app.',
-    'When you\'re done, you can delete it or keep it locally',
+    "When you're done, you can delete it or keep it locally",
   ],
   tips: [
-    'This is NOT a journal - it\'s a dump',
+    "This is NOT a journal - it's a dump",
     'Write in fragments if you want',
     'The act of writing engages your prefrontal cortex and interrupts rumination',
     'Research shows this reduces intrusive thoughts by 47% within 24 hours',
@@ -411,10 +418,12 @@ export const BRAIN_DUMP_CONFIG: ExerciseConfig = {
   // Copy (from David Ogilvy)
   copy: {
     headline: 'Get it out of your head. All of it.',
-    subheadline: 'Pennebaker\'s research: Expressive writing reduces intrusive thoughts by 47% within 24 hours. Don\'t edit. Don\'t filter. Just dump.',
+    subheadline:
+      "Pennebaker's research: Expressive writing reduces intrusive thoughts by 47% within 24 hours. Don't edit. Don't filter. Just dump.",
     ctaStart: 'Start Writing',
-    ctaComplete: 'It\'s Out',
-    completionMessage: 'You engaged your prefrontal cortex by writing. This interrupts rumination and reduces intrusive thoughts.',
+    ctaComplete: "It's Out",
+    completionMessage:
+      'You engaged your prefrontal cortex by writing. This interrupts rumination and reduces intrusive thoughts.',
   },
 
   // Accessibility
@@ -452,7 +461,8 @@ export const MIND_CLEAR_CONFIG: ExerciseConfig = {
   category: ExerciseCategory.COGNITIVE,
   title: 'Mind Clear',
   shortTitle: 'Clear & Focus',
-  description: 'Cognitive offloading: Writing down tasks reduces working memory load by 60%. Clear the mental cache.',
+  description:
+    'Cognitive offloading: Writing down tasks reduces working memory load by 60%. Clear the mental cache.',
 
   // Instructions
   instructions: [
@@ -495,10 +505,12 @@ export const MIND_CLEAR_CONFIG: ExerciseConfig = {
   // Copy (from David Ogilvy)
   copy: {
     headline: 'Clear the mental cache. Free up your RAM.',
-    subheadline: 'Cognitive scientists proved it: Writing down tasks reduces working memory load by 60%. Your brain can only hold 4-7 items at once.',
+    subheadline:
+      'Cognitive scientists proved it: Writing down tasks reduces working memory load by 60%. Your brain can only hold 4-7 items at once.',
     ctaStart: 'Start Clearing',
     ctaComplete: 'Mind Clear',
-    completionMessage: 'You offloaded your working memory. That\'s why your mind feels lighter and your focus improved.',
+    completionMessage:
+      "You offloaded your working memory. That's why your mind feels lighter and your focus improved.",
   },
 
   // Accessibility
@@ -512,7 +524,7 @@ export const MIND_CLEAR_CONFIG: ExerciseConfig = {
     },
     screenReaderAnnouncements: [
       'Starting Mind Clear',
-      'Write down what\'s in your head',
+      "Write down what's in your head",
       'Categorize each item',
       'Mark as clear when written',
       'Mind clear complete',

@@ -9,6 +9,7 @@
 ## What We've Done
 
 ### 1. ✅ Fixed Code Issues
+
 - Converted `isPlaying` from SharedValue to React state
 - Converted `isExpanded` from SharedValue to React state
 - Removed shared values from useCallback dependency arrays
@@ -16,6 +17,7 @@
 - Disabled haptics (suspected simulator crash)
 
 ### 2. ✅ Cleared All Caches
+
 ```bash
 rm -rf .expo
 rm -rf node_modules/.cache
@@ -25,6 +27,7 @@ npx expo start --clear
 ```
 
 ### 3. ✅ Added Comprehensive Debug Logging
+
 All steps of the animation trigger are now logged:
 
 ```typescript
@@ -51,6 +54,7 @@ All steps of the animation trigger are now logged:
 ## How to Test
 
 ### Step 1: Clear Everything
+
 ```bash
 # Stop Metro if running (Ctrl+C)
 
@@ -60,6 +64,7 @@ npx expo start --clear
 ```
 
 ### Step 2: Submit a Mood
+
 1. Open app
 2. Click "Log Mood"
 3. Select a mood (e.g., "Calm")
@@ -69,6 +74,7 @@ npx expo start --clear
 7. **WATCH THE LOGS CAREFULLY**
 
 ### Step 3: Identify Crash Location
+
 Find the **LAST** log that appears before the crash:
 
 ---
@@ -76,6 +82,7 @@ Find the **LAST** log that appears before the crash:
 ## What the Logs Will Tell Us
 
 ### Scenario A: Crash Before Animation Start
+
 ```
 LOG  NOTES_SUBMITTED {"notesLength": 4}
 LOG  [Widget] Submitting mood: {...}
@@ -89,6 +96,7 @@ LOG  [Widget] Submitting mood: {...}
 ---
 
 ### Scenario B: Crash During Animation Setup
+
 ```
 LOG  [Animation] Trigger start
 LOG  [Animation] setIsPlaying done
@@ -103,6 +111,7 @@ LOG  [Animation] Starting path animation
 ---
 
 ### Scenario C: Crash During Scale Animation
+
 ```
 LOG  [Animation] Path animation queued
 LOG  [Animation] Starting scale animation
@@ -116,6 +125,7 @@ LOG  [Animation] Starting scale animation
 ---
 
 ### Scenario D: Crash During Glow Setup
+
 ```
 LOG  [Animation] Rotation set
 LOG  [Animation] Checking glow: true
@@ -130,6 +140,7 @@ LOG  [Animation] Starting glow animation
 ---
 
 ### Scenario E: Crash After Trigger Complete
+
 ```
 LOG  [Animation] Trigger complete
 [APP CRASHES]
@@ -142,6 +153,7 @@ LOG  [Animation] Trigger complete
 ---
 
 ### Scenario F: Crash During Completion Callback
+
 ```
 LOG  [Animation] Trigger complete
 [... time passes ...]
@@ -157,6 +169,7 @@ LOG  [Animation] setIsPlaying(false) done
 ---
 
 ### Scenario G: Animation Works, Crash Later
+
 ```
 LOG  [Animation] onComplete() done
 LOG  [Widget] Success animation complete
@@ -173,28 +186,34 @@ LOG  [Widget] Success animation complete
 ## Most Likely Causes (Ranked)
 
 ### 1. 🔥 Haptics API (Most Likely - ALREADY DISABLED)
+
 **Status**: ✅ Disabled
 **Reason**: Haptics.notificationAsync() crashes on iOS simulator
 
 ### 2. 🔥 Shared Value in Render (Fixed - But May Be Cached)
+
 **Status**: ✅ Fixed, but Metro may still be serving cached code
 **Evidence**: Previous error showed this exact issue
 **Solution**: Restart Metro with `--clear` flag
 
 ### 3. 🔥 Worklet/Reanimated Plugin Conflict
+
 **Status**: ✅ Fixed in babel.config.js
 **Evidence**: Duplicate plugin error resolved
 **But**: Old transformed code may still be cached
 
 ### 4. 🔥 Native Module Crash (Silent - No JS Error)
+
 **Evidence**: No error logs, just silent crash
 **Suspects**:
-  - Haptics (disabled)
-  - SVG rendering
-  - Animated props
-  - Shadow rendering
+
+- Haptics (disabled)
+- SVG rendering
+- Animated props
+- Shadow rendering
 
 ### 5. 🔥 Component Unmount During Animation
+
 **Status**: Should be safe (cleanup on unmount)
 **But**: May crash if onComplete() runs after unmount
 **Check**: isMounted pattern in useWidgetStateMachine
@@ -204,17 +223,23 @@ LOG  [Widget] Success animation complete
 ## Special Checks
 
 ### Check 1: Is Animation Even Triggered?
+
 If you see **NO** `[Animation]` logs at all:
+
 - Animation trigger is not being called
 - SuccessCheckmark component not rendering
 - State is not transitioning to 'success'
 
 ### Check 2: Metro Cache Still Serving Old Code?
+
 If crash happens with old error message:
+
 ```
 ERROR  [TypeError: Cannot create property 'value' on boolean 'false']
 ```
+
 Then Metro is **STILL** serving cached code. Nuclear option:
+
 ```bash
 # Kill all Metro/Expo processes
 killall node
@@ -236,7 +261,9 @@ npx expo start --clear --reset-cache
 ```
 
 ### Check 3: SVG Rendering Issue?
+
 If crash happens in Scenario B or E (during/after trigger):
+
 - May be SVG Path rendering issue
 - Try disabling SVG checkmark temporarily
 - Replace with simple Animated.View
@@ -257,19 +284,23 @@ If crash happens in Scenario B or E (during/after trigger):
 ## Code Changes Made
 
 ### File: hooks/widget/useSuccessAnimation.ts
+
 - ✅ Converted isPlaying to React state
 - ✅ Removed shared values from deps
 - ✅ Disabled haptics
 - ✅ Added comprehensive logging
 
 ### File: hooks/widget/useCardExpansion.ts
+
 - ✅ Converted isExpanded to React state
 - ✅ Removed shared values from deps
 
 ### File: babel.config.js
+
 - ✅ Added unique plugin names
 
 ### File: components/mood-widget/EmotionalWeatherWidget.tsx
+
 - ✅ Re-enabled cache clearing on mount (temporary)
 
 ---
@@ -277,6 +308,7 @@ If crash happens in Scenario B or E (during/after trigger):
 ## Expected Behavior (If Working)
 
 You should see this log sequence:
+
 ```
 LOG  NOTES_SUBMITTED {"notesLength": 4}
 LOG  [Widget] Submitting mood: {...}

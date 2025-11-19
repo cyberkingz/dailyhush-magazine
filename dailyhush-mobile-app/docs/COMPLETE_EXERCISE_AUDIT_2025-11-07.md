@@ -1,4 +1,5 @@
 # Complete Exercise Audit - DailyHush
+
 **Date:** November 7, 2025
 **Purpose:** Analyze all existing exercises to rebalance Spiral techniques using Pareto 80/20 principle
 
@@ -9,12 +10,14 @@
 DailyHush has **TWO SEPARATE EXERCISE SYSTEMS:**
 
 ### 1️⃣ SPIRAL TECHNIQUES (Interrupt Flow)
+
 **File:** `constants/techniqueLibrary.ts`
 **Usage:** Used in `/spiral` screen for immediate anxiety interruption
 **Duration:** 45-120 seconds
 **Context:** User is IN crisis, needs fast intervention
 
 ### 2️⃣ GENERAL EXERCISES (Training/Practice)
+
 **File:** `constants/exerciseConfigs.ts`
 **Usage:** Used in training/practice screens for skill building
 **Duration:** 30 seconds - 10 minutes
@@ -25,15 +28,17 @@ DailyHush has **TWO SEPARATE EXERCISE SYSTEMS:**
 ## 📊 SPIRAL TECHNIQUES AUDIT (Crisis Intervention)
 
 ### Current Distribution
-| Technique | Duration | Category | Requires Device | Interactive Steps | Evidence Base |
-|-----------|----------|----------|----------------|-------------------|---------------|
-| **Grounding 5-4-3-2-1** | 90s | SENSORY | No | 3 (see, touch, hear) | CBT-approved |
-| **Box Breathing** | 60s | BREATHING | No | 0 | Navy SEAL |
-| **Cognitive Reframe** | 120s | COGNITIVE | No | 3 (thought, control, reframe) | CBT restructuring |
-| **Body Scan Rapid** | 75s | SENSORY/BODY | No | 0 | Mindfulness |
-| **Shift Biometric Sync** | 90s | BREATHING | YES (Shift device) | 0 | Biometric feedback |
+
+| Technique                | Duration | Category     | Requires Device    | Interactive Steps             | Evidence Base      |
+| ------------------------ | -------- | ------------ | ------------------ | ----------------------------- | ------------------ |
+| **Grounding 5-4-3-2-1**  | 90s      | SENSORY      | No                 | 3 (see, touch, hear)          | CBT-approved       |
+| **Box Breathing**        | 60s      | BREATHING    | No                 | 0                             | Navy SEAL          |
+| **Cognitive Reframe**    | 120s     | COGNITIVE    | No                 | 3 (thought, control, reframe) | CBT restructuring  |
+| **Body Scan Rapid**      | 75s      | SENSORY/BODY | No                 | 0                             | Mindfulness        |
+| **Shift Biometric Sync** | 90s      | BREATHING    | YES (Shift device) | 0                             | Biometric feedback |
 
 ### Breakdown by Type
+
 ```
 SENSORY/GROUNDING: 2 techniques (40%)
   - Grounding 5-4-3-2-1 (90s) - "Most Popular"
@@ -73,16 +78,18 @@ COGNITIVE: 1 technique (20%)
 ## 📊 GENERAL EXERCISES AUDIT (Training/Practice)
 
 ### Current Distribution
-| Exercise | Duration | Category | Requires Input | Evidence Base |
-|----------|----------|----------|----------------|---------------|
-| **Cyclic Physiological Sigh** | 30-120s | BREATHING | No | Stanford (Huberman Lab) |
-| **5-4-3-2-1 Grounding** | 90-300s | SENSORY | Yes | CBT-approved |
-| **4-7-8 Breathing** | 60-240s | BREATHING | No | Dr. Andrew Weil / Navy SEALs |
-| **Emotion Wheel** | 60-300s | COGNITIVE | Yes | UCLA research |
-| **Brain Dump** | 120-600s | EXPRESSIVE | Yes | Pennebaker method |
-| **Mind Clear** | 180-600s | COGNITIVE | Yes | Cognitive offloading |
+
+| Exercise                      | Duration | Category   | Requires Input | Evidence Base                |
+| ----------------------------- | -------- | ---------- | -------------- | ---------------------------- |
+| **Cyclic Physiological Sigh** | 30-120s  | BREATHING  | No             | Stanford (Huberman Lab)      |
+| **5-4-3-2-1 Grounding**       | 90-300s  | SENSORY    | Yes            | CBT-approved                 |
+| **4-7-8 Breathing**           | 60-240s  | BREATHING  | No             | Dr. Andrew Weil / Navy SEALs |
+| **Emotion Wheel**             | 60-300s  | COGNITIVE  | Yes            | UCLA research                |
+| **Brain Dump**                | 120-600s | EXPRESSIVE | Yes            | Pennebaker method            |
+| **Mind Clear**                | 180-600s | COGNITIVE  | Yes            | Cognitive offloading         |
 
 ### Breakdown by Type
+
 ```
 BREATHING: 2 exercises (33%)
   - Cyclic Physiological Sigh
@@ -148,6 +155,7 @@ EXPRESSIVE: 1 exercise (17%)
 **Duration:** 45-60s (FASTEST intervention)
 
 **Evidence:**
+
 - Stanford Neuroscience (Andrew Huberman Lab)
 - Tested against 5 other techniques
 - Fastest anxiety reduction
@@ -155,6 +163,7 @@ EXPRESSIVE: 1 exercise (17%)
 - Extended exhale dumps CO₂ fastest
 
 **Structure for Spiral:**
+
 ```javascript
 {
   id: 'cyclic-sigh',
@@ -189,6 +198,7 @@ EXPRESSIVE: 1 exercise (17%)
 ```
 
 **Pros:**
+
 - ✅ FASTEST (60s vs 90-120s others)
 - ✅ NO interactive steps (pure breathing)
 - ✅ Strongest evidence base (Stanford study)
@@ -197,6 +207,7 @@ EXPRESSIVE: 1 exercise (17%)
 - ✅ Already familiar (in exerciseConfigs)
 
 **Cons:**
+
 - ❌ None significant
 
 **Pareto Score: 95/100** 🏆
@@ -208,12 +219,14 @@ EXPRESSIVE: 1 exercise (17%)
 **Duration:** 75-90s
 
 **Evidence:**
+
 - Dr. Andrew Weil
 - Used by Navy SEALs
 - 7-second hold forces CO₂ buildup
 - 8-second exhale activates vagus nerve
 
 **Structure for Spiral:**
+
 ```javascript
 {
   id: 'breathing-4-7-8',
@@ -248,12 +261,14 @@ EXPRESSIVE: 1 exercise (17%)
 ```
 
 **Pros:**
+
 - ✅ Strong evidence base (Dr. Weil, Navy SEALs)
 - ✅ NO interactive steps
 - ✅ Different mechanism than Box Breathing (variety)
 - ✅ Already familiar (in exerciseConfigs)
 
 **Cons:**
+
 - ❌ Longer than Cyclic Sigh (90s vs 60s)
 - ❌ More complex (3 phases vs 2)
 - ❌ Hold breath can be uncomfortable for some
@@ -302,6 +317,7 @@ EXPRESSIVE: 1 exercise (17%)
 ### Action #2: REMOVE Cognitive Reframe from Spiral
 
 **Why:**
+
 - Too long (120s)
 - Too complex (3 interactive steps)
 - Requires cognitive function during impairment
@@ -312,6 +328,7 @@ EXPRESSIVE: 1 exercise (17%)
 ### Action #3: REDUCE Body Scan selection weight
 
 **Why:**
+
 - Overlaps with Grounding
 - Less effective than breathing for acute anxiety
 - Keep but make rare
@@ -325,6 +342,7 @@ EXPRESSIVE: 1 exercise (17%)
 ## 📊 BEFORE vs AFTER
 
 ### BEFORE (Current)
+
 ```
 BREATHING: 40% (but only 20% accessible without device)
   - Box Breathing ✅
@@ -339,6 +357,7 @@ COGNITIVE: 20%
 ```
 
 ### AFTER (Recommended)
+
 ```
 BREATHING: 50% (100% accessible)
   - Cyclic Physiological Sigh ⭐ NEW - 60s, no typing
@@ -358,25 +377,28 @@ TOTAL TECHNIQUES: 4 core (down from 5)
 ## 🎯 PARETO EFFICIENCY SCORES
 
 ### Current Library
-| Technique | Pareto Score | Keep/Remove |
-|-----------|-------------|-------------|
-| Box Breathing | 95/100 | ✅ KEEP |
-| Grounding 5-4-3-2-1 | 85/100 | ✅ KEEP |
-| Body Scan | 60/100 | ⚠️ REDUCE |
-| Cognitive Reframe | 40/100 | ❌ REMOVE |
-| Shift Biometric Sync | 50/100 | ⚠️ KEEP (rare) |
+
+| Technique            | Pareto Score | Keep/Remove    |
+| -------------------- | ------------ | -------------- |
+| Box Breathing        | 95/100       | ✅ KEEP        |
+| Grounding 5-4-3-2-1  | 85/100       | ✅ KEEP        |
+| Body Scan            | 60/100       | ⚠️ REDUCE      |
+| Cognitive Reframe    | 40/100       | ❌ REMOVE      |
+| Shift Biometric Sync | 50/100       | ⚠️ KEEP (rare) |
 
 ### Proposed Additions
-| Technique | Pareto Score | Priority |
-|-----------|-------------|----------|
-| **Cyclic Physiological Sigh** | **95/100** | **🏆 #1 PRIORITY** |
-| 4-7-8 Breathing | 80/100 | #2 Optional |
+
+| Technique                     | Pareto Score | Priority           |
+| ----------------------------- | ------------ | ------------------ |
+| **Cyclic Physiological Sigh** | **95/100**   | **🏆 #1 PRIORITY** |
+| 4-7-8 Breathing               | 80/100       | #2 Optional        |
 
 ---
 
 ## 💡 IMPLEMENTATION PLAN
 
 ### Phase 1: Immediate (This sprint)
+
 1. ✅ Create backup branch (`backup-main-2025-11-07`)
 2. ✅ Create working branch (`claude/rebalance-spiral-exercises`)
 3. ⏳ Add Cyclic Physiological Sigh to `techniqueLibrary.ts`
@@ -386,12 +408,14 @@ TOTAL TECHNIQUES: 4 core (down from 5)
 7. ⏳ Test in `/spiral` screen
 
 ### Phase 2: Monitor (Next 2 weeks)
+
 1. Track technique selection rates
 2. Track user completion rates
 3. Track pre/post feeling improvement
 4. Collect user feedback
 
 ### Phase 3: Iterate (Based on data)
+
 1. If need more variety: Add 4-7-8 Breathing
 2. If grounding still needed: Keep Body Scan at low weight
 3. If Cognitive Reframe missed: Add back as "advanced" option

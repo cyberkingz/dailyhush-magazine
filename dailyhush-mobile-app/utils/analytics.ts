@@ -14,6 +14,11 @@ import { usePostHog } from 'posthog-react-native';
 import type { LoopType, OverthinkerType } from '@/data/quizQuestions';
 
 /**
+ * JSON-serializable value type for analytics properties
+ */
+
+
+/**
  * Analytics Events
  * All events we track in the app
  */
@@ -86,7 +91,7 @@ export const AnalyticsEvents = {
  * Analytics Properties
  * Common properties for events
  */
-export interface AnalyticsProperties {
+export type AnalyticsProperties = {
   // User context (non-PII)
   loop_type?: LoopType;
   overthinker_type?: OverthinkerType;
@@ -110,7 +115,7 @@ export interface AnalyticsProperties {
   step?: number;
 
   // Anna AI Therapy
-  exercise_type?: '5-4-3-2-1' | 'breathing';
+
   pre_feeling?: number;
   pre_feeling_score?: number;
   post_feeling?: number;
@@ -119,6 +124,9 @@ export interface AnalyticsProperties {
   message_count?: number;
   reduction?: number;
   trigger?: string;
+  technique_id?: string;
+  technique_name?: string;
+  confidence?: number;
 
   // Module Selection
   module_id?: string;
@@ -153,11 +161,11 @@ export interface AnalyticsProperties {
   skip_reason?: string;
   device_type?: 'ios' | 'android' | 'web';
   app_version?: string;
-}
+};
 
 /**
  * Hook to track analytics events
- * Usage: const analytics = useAnalytics()
+ * Usage: const analytics = useAnalytics()s
  */
 export function useAnalytics() {
   const posthog = usePostHog();
@@ -185,11 +193,14 @@ export function useAnalytics() {
    * Identify a user (call after authentication)
    * NOTE: Use hashed/anonymized user ID, not email or PII
    */
-  const identify = (userId: string, properties?: {
-    loop_type?: LoopType;
-    is_premium?: boolean;
-    created_at?: string;
-  }) => {
+  const identify = (
+    userId: string,
+    properties?: {
+      loop_type?: LoopType;
+      is_premium?: boolean;
+      created_at?: string;
+    }
+  ) => {
     try {
       posthog.identify(userId, properties);
 

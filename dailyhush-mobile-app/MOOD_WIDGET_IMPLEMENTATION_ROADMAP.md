@@ -1,4 +1,5 @@
 # Mood Widget Implementation Roadmap
+
 **Date**: 2025-11-06
 **Project**: DailyHush Mobile App - Inline Mood Logging Widget
 **Technology Stack**: React Native, Expo, Reanimated 4, TypeScript
@@ -9,6 +10,7 @@
 ## 📋 Executive Summary
 
 Transform the mood logging experience from a navigation-based multi-screen flow to an inline animated widget on the home page. This implementation follows senior developer best practices including:
+
 - **Modular architecture** with reusable components
 - **Props-based data flow** (no hardcoded values)
 - **Type-safe TypeScript** interfaces
@@ -21,7 +23,9 @@ Transform the mood logging experience from a navigation-based multi-screen flow 
 ## 🎯 Current State Audit
 
 ### Dependencies Status ✅
+
 All required dependencies are already installed:
+
 - ✅ `react-native-reanimated@4.1.1`
 - ✅ `react-native-gesture-handler@2.28.0`
 - ✅ `react-native-svg@15.12.1`
@@ -29,11 +33,13 @@ All required dependencies are already installed:
 - ✅ `expo-haptics@15.0.7`
 
 ### Configuration Needed ⚠️
+
 - **Babel Config**: Needs `react-native-reanimated/plugin` addition
   - Current: Only has `react-native-worklets/plugin`
   - Required: Add Reanimated plugin (must be last in plugins array)
 
 ### Existing Infrastructure ✅
+
 - ✅ `useMoodCapture` hook exists with excellent state management
 - ✅ `EmotionalWeather` component exists (needs transformation)
 - ✅ Design system tokens in place (`colors`, `spacing`, `SPACING`)
@@ -88,18 +94,18 @@ interface WidgetProps {
 
 interface WidgetConfig {
   // Animation timings (all configurable)
-  expansionDuration?: number;        // default: 300ms
-  moodStaggerDelay?: number;         // default: 50ms
-  collapseDelay?: number;            // default: 800ms
+  expansionDuration?: number; // default: 300ms
+  moodStaggerDelay?: number; // default: 50ms
+  collapseDelay?: number; // default: 800ms
 
   // Dimensions (responsive)
-  collapsedHeight?: number;          // default: 240px
-  expandedHeight?: number;           // default: 480px
+  collapsedHeight?: number; // default: 240px
+  expandedHeight?: number; // default: 480px
 
   // Feature flags
-  enableQuickNotes?: boolean;        // default: true
-  enableVoiceInput?: boolean;        // default: false
-  enableHaptics?: boolean;           // default: true
+  enableQuickNotes?: boolean; // default: true
+  enableVoiceInput?: boolean; // default: false
+  enableHaptics?: boolean; // default: true
 
   // Mood options (customizable)
   moodChoices?: MoodChoice[];
@@ -112,15 +118,18 @@ interface WidgetConfig {
 ## 📊 Implementation Phases
 
 ### **Phase 1: Foundation & Configuration** (1-2 hours)
+
 **Agent**: None (direct implementation)
 
 **Tasks**:
+
 1. ✅ Update `babel.config.js` with Reanimated plugin
 2. ✅ Create `types/widget.types.ts` with all interfaces
 3. ✅ Set up folder structure: `components/mood-widget/`
 4. ✅ Create base configuration file: `constants/widgetConfig.ts`
 
 **Deliverables**:
+
 - Updated babel config
 - Complete TypeScript type definitions
 - Configuration file with defaults
@@ -129,9 +138,11 @@ interface WidgetConfig {
 ---
 
 ### **Phase 2: UX Expert Review** (30 mins - 1 hour)
+
 **Agent**: `ux-expert`
 
 **Delegation**:
+
 ```
 Task: Review the mood widget flow and provide UX recommendations
 
@@ -154,9 +165,11 @@ Deliverable: UX review document with specific recommendations
 ---
 
 ### **Phase 3: UI Design System** (1-2 hours)
+
 **Agent**: `ui-design-expert`
 
 **Delegation**:
+
 ```
 Task: Create comprehensive UI design specifications for widget states
 
@@ -181,11 +194,13 @@ Deliverable: Design system document + Figma/mockups (if possible)
 ---
 
 ### **Phase 4: Animation Hooks** (3-4 hours)
+
 **Agent**: None (direct implementation with best practices)
 
 **Tasks**:
 
 #### 4.1 `useCardExpansion.ts`
+
 ```typescript
 /**
  * Manages card height, background color, and shadow animations
@@ -204,16 +219,23 @@ export function useCardExpansion(config: UseCardExpansionConfig) {
   const height = useSharedValue(config.collapsedHeight);
   const backgroundColor = useSharedValue(colors.background.card);
 
-  const expand = () => { /* ... */ };
-  const collapse = () => { /* ... */ };
+  const expand = () => {
+    /* ... */
+  };
+  const collapse = () => {
+    /* ... */
+  };
 
-  const animatedStyle = useAnimatedStyle(() => ({ /* ... */ }));
+  const animatedStyle = useAnimatedStyle(() => ({
+    /* ... */
+  }));
 
   return { expand, collapse, animatedStyle };
 }
 ```
 
 #### 4.2 `useMoodSelection.ts`
+
 ```typescript
 /**
  * Manages mood choice animations (stagger, selection, fly-out)
@@ -222,10 +244,7 @@ export function useCardExpansion(config: UseCardExpansionConfig) {
  * @param config - Stagger and selection config
  * @returns Animation values per mood + selection handler
  */
-export function useMoodSelection(
-  moods: MoodChoice[],
-  config: MoodSelectionConfig
-) {
+export function useMoodSelection(moods: MoodChoice[], config: MoodSelectionConfig) {
   // Stagger animations for entrance
   // Pulse animation for selection
   // Fly-out for non-selected moods
@@ -234,6 +253,7 @@ export function useMoodSelection(
 ```
 
 #### 4.3 `useIntensitySlider.ts`
+
 ```typescript
 /**
  * Gesture-based slider with snapping to steps
@@ -242,21 +262,23 @@ export function useMoodSelection(
  * @param config - Slider configuration
  * @returns Gesture handler, animated value, current intensity
  */
-export function useIntensitySlider(
-  range: [number, number],
-  config: IntensitySliderConfig
-) {
+export function useIntensitySlider(range: [number, number], config: IntensitySliderConfig) {
   const translateX = useSharedValue(0);
 
   const panGesture = Gesture.Pan()
-    .onUpdate((e) => { /* ... */ })
-    .onEnd(() => { /* snap to step */ });
+    .onUpdate((e) => {
+      /* ... */
+    })
+    .onEnd(() => {
+      /* snap to step */
+    });
 
   return { panGesture, animatedStyle, currentValue };
 }
 ```
 
 #### 4.4 `useSuccessAnimation.ts`
+
 ```typescript
 /**
  * Success checkmark SVG path animation + confetti (optional)
@@ -269,13 +291,16 @@ export function useSuccessAnimation(config: SuccessAnimationConfig) {
   const rotateValue = useSharedValue(0);
   const scaleValue = useSharedValue(0);
 
-  const trigger = () => { /* ... */ };
+  const trigger = () => {
+    /* ... */
+  };
 
   return { trigger, animatedProps };
 }
 ```
 
 **Best Practices**:
+
 - All timings via props (no magic numbers)
 - Worklets for on-UI-thread animations
 - Cleanup on unmount
@@ -284,9 +309,11 @@ export function useSuccessAnimation(config: SuccessAnimationConfig) {
 ---
 
 ### **Phase 5: Presentation Components** (4-5 hours)
+
 **Agent**: None (direct implementation)
 
 #### 5.1 `MoodSelector.tsx`
+
 ```typescript
 interface MoodSelectorProps {
   moods: MoodChoice[];
@@ -324,6 +351,7 @@ export function MoodSelector({ moods, onSelect, visible, config }: MoodSelectorP
 ```
 
 #### 5.2 `IntensitySlider.tsx`
+
 ```typescript
 interface IntensitySliderProps {
   range: [number, number];
@@ -356,6 +384,7 @@ export function IntensitySlider({ range, initialValue, onChange, visible, config
 ```
 
 #### 5.3 `QuickNotesInput.tsx`
+
 ```typescript
 interface QuickNotesInputProps {
   value: string;
@@ -371,7 +400,13 @@ interface QuickNotesInputProps {
  * - Character limit (optional)
  * - "Skip" button always available
  */
-export function QuickNotesInput({ value, onChange, onSkip, visible, config }: QuickNotesInputProps) {
+export function QuickNotesInput({
+  value,
+  onChange,
+  onSkip,
+  visible,
+  config,
+}: QuickNotesInputProps) {
   // Auto-focus management
   // Keyboard handling
   // Placeholder variations
@@ -379,6 +414,7 @@ export function QuickNotesInput({ value, onChange, onSkip, visible, config }: Qu
 ```
 
 #### 5.4 `SuccessCheckmark.tsx`
+
 ```typescript
 interface SuccessCheckmarkProps {
   visible: boolean;
@@ -411,6 +447,7 @@ export function SuccessCheckmark({ visible, onComplete, config }: SuccessCheckma
 ```
 
 #### 5.5 `WeatherDisplay.tsx`
+
 ```typescript
 interface WeatherDisplayProps {
   weather: EmotionalWeather;
@@ -427,7 +464,13 @@ interface WeatherDisplayProps {
  * - Notes preview (if any)
  * - "Update" button to re-enter flow
  */
-export function WeatherDisplay({ weather, moodRating, notes, onUpdate, visible }: WeatherDisplayProps) {
+export function WeatherDisplay({
+  weather,
+  moodRating,
+  notes,
+  onUpdate,
+  visible,
+}: WeatherDisplayProps) {
   // Fade in animation
   // Display weather config
   // "Update" button → restarts widget
@@ -435,6 +478,7 @@ export function WeatherDisplay({ weather, moodRating, notes, onUpdate, visible }
 ```
 
 **Best Practices**:
+
 - Pure presentation components (no business logic)
 - All data via props
 - Accessibility attributes on all interactive elements
@@ -444,9 +488,11 @@ export function WeatherDisplay({ weather, moodRating, notes, onUpdate, visible }
 ---
 
 ### **Phase 6: State Machine & Container** (3-4 hours)
+
 **Agent**: None (direct implementation)
 
 #### 6.1 `useWidgetStateMachine.ts`
+
 ```typescript
 /**
  * State machine for widget flow
@@ -457,9 +503,7 @@ export function WeatherDisplay({ weather, moodRating, notes, onUpdate, visible }
  */
 type WidgetState = 'empty' | 'mood' | 'intensity' | 'notes' | 'success' | 'display';
 
-export function useWidgetStateMachine(
-  onSubmit: (data: MoodSubmitData) => Promise<void>
-) {
+export function useWidgetStateMachine(onSubmit: (data: MoodSubmitData) => Promise<void>) {
   const [state, setState] = useState<WidgetState>('empty');
   const [data, setData] = useState<Partial<MoodSubmitData>>({});
 
@@ -504,6 +548,7 @@ export function useWidgetStateMachine(
 ```
 
 #### 6.2 `EmotionalWeatherWidget.tsx` (Main Container)
+
 ```typescript
 interface EmotionalWeatherWidgetProps {
   // Existing mood data (if already logged today)
@@ -628,9 +673,11 @@ export function EmotionalWeatherWidget({
 ---
 
 ### **Phase 7: Backend Integration** (2-3 hours)
+
 **Agent**: `supabase-expert`
 
 **Delegation**:
+
 ```
 Task: Create mood logging API service with Supabase integration
 
@@ -666,11 +713,13 @@ Deliverable: Service + hook with full error handling
 ---
 
 ### **Phase 8: Testing & Accessibility** (2-3 hours)
+
 **Agent**: None (direct implementation)
 
 **Tasks**:
 
 #### 8.1 Accessibility Audit
+
 - [ ] Screen reader labels for all interactive elements
 - [ ] Minimum touch target size (44x44pt)
 - [ ] Color contrast ratios (WCAG AA)
@@ -679,6 +728,7 @@ Deliverable: Service + hook with full error handling
 - [ ] Voice-over friendly component names
 
 #### 8.2 Responsive Testing
+
 - [ ] iPhone SE (smallest screen)
 - [ ] iPhone 14 Pro Max (largest phone)
 - [ ] iPad Mini (tablet)
@@ -686,12 +736,14 @@ Deliverable: Service + hook with full error handling
 - [ ] Dynamic text sizing
 
 #### 8.3 Performance Testing
+
 - [ ] 60 FPS during all animations (use Reanimated profiler)
 - [ ] Memory usage stable
 - [ ] No memory leaks on mount/unmount cycles
 - [ ] Animation cancellation on component unmount
 
 #### 8.4 Edge Case Testing
+
 - [ ] Rapid taps during animation
 - [ ] Back navigation mid-flow
 - [ ] App backgrounded during submission
@@ -702,9 +754,11 @@ Deliverable: Service + hook with full error handling
 ---
 
 ### **Phase 9: Home Page Integration** (1 hour)
+
 **Agent**: None (direct implementation)
 
 **Tasks**:
+
 1. Replace current `EmotionalWeather` usage in `app/index.tsx`
 2. Remove navigation to `/mood-capture/mood`
 3. Integrate with existing data fetching
@@ -712,12 +766,14 @@ Deliverable: Service + hook with full error handling
 5. Test full flow end-to-end
 
 **Before**:
+
 ```typescript
 <EmotionalWeather onPress={handleCheckIn} />
 // handleCheckIn → router.push('/mood-capture/mood')
 ```
 
 **After**:
+
 ```typescript
 <EmotionalWeatherWidget
   weather={todayMood?.weather}
@@ -734,9 +790,11 @@ Deliverable: Service + hook with full error handling
 ---
 
 ### **Phase 10: Analytics & Monitoring** (1-2 hours)
+
 **Agent**: None (direct implementation)
 
 **Events to Track**:
+
 ```typescript
 // Widget opened
 analytics.track('MOOD_WIDGET_EXPANDED', {
@@ -785,6 +843,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ## 🎨 Design Specifications (To Be Completed by UI Expert)
 
 ### Animation Timings
+
 - **Card Expansion**: 300ms (Easing.bezier(0.25, 0.1, 0.25, 1))
 - **Mood Stagger**: 50ms per item
 - **Mood Selection**: 150ms pulse + 300ms fly-out
@@ -793,12 +852,14 @@ analytics.track('MOOD_WIDGET_ERROR', {
 - **Card Collapse**: 400ms (same easing as expansion)
 
 ### Dimensions
+
 - **Collapsed Height**: 240px
 - **Expanded Height**: 480px (to be validated by UI expert)
 - **Card Border Radius**: 24px (from SPACING.xxl)
 - **Card Padding**: 24px horizontal, 28px vertical
 
 ### Color Palette (To Be Defined by UI Expert)
+
 - Empty state background
 - Mood selection backgrounds
 - Intensity slider colors
@@ -810,6 +871,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ## 📚 Best Practices Checklist
 
 ### Code Quality
+
 - [ ] All components are pure (no side effects except hooks)
 - [ ] TypeScript strict mode enabled
 - [ ] No `any` types (use `unknown` if needed)
@@ -818,6 +880,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 - [ ] All objects are memoized with `useMemo` where appropriate
 
 ### Performance
+
 - [ ] Worklets for all animations (run on UI thread)
 - [ ] No bridge communication during gestures
 - [ ] Batch state updates where possible
@@ -825,6 +888,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 - [ ] Lazy load heavy components
 
 ### Accessibility
+
 - [ ] All buttons have `accessibilityLabel`
 - [ ] All buttons have `accessibilityHint`
 - [ ] All state changes have `accessibilityLiveRegion`
@@ -832,6 +896,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 - [ ] Minimum 44pt touch targets
 
 ### Testing
+
 - [ ] Unit tests for hooks
 - [ ] Component tests with React Native Testing Library
 - [ ] Integration tests for full flow
@@ -839,6 +904,7 @@ analytics.track('MOOD_WIDGET_ERROR', {
 - [ ] Accessibility tests (automated + manual)
 
 ### Documentation
+
 - [ ] JSDoc comments for all public functions
 - [ ] README for widget usage
 - [ ] Configuration guide
@@ -850,12 +916,14 @@ analytics.track('MOOD_WIDGET_ERROR', {
 ## 🚀 Success Metrics
 
 ### Quantitative
+
 - **Completion Time**: Target 50% reduction (45s → 22s)
 - **Completion Rate**: Target 95%+ (up from ~70%)
 - **Frame Rate**: 60 FPS throughout (measured via Reanimated profiler)
 - **Error Rate**: <1% of submissions fail
 
 ### Qualitative
+
 - User feedback: NPS score improvement
 - App store reviews mentioning mood logging
 - Support tickets reduction
@@ -865,12 +933,12 @@ analytics.track('MOOD_WIDGET_ERROR', {
 
 ## 👥 Agent Delegation Summary
 
-| Phase | Agent | Task | Duration | Priority |
-|-------|-------|------|----------|----------|
-| 2 | `ux-expert` | UX flow review & recommendations | 30-60m | High |
-| 3 | `ui-design-expert` | Design system & specifications | 1-2h | High |
-| 7 | `supabase-expert` | Backend API integration | 2-3h | High |
-| 1, 4, 5, 6, 8, 9, 10 | Direct Implementation | Core development | 18-22h | High |
+| Phase                | Agent                 | Task                             | Duration | Priority |
+| -------------------- | --------------------- | -------------------------------- | -------- | -------- |
+| 2                    | `ux-expert`           | UX flow review & recommendations | 30-60m   | High     |
+| 3                    | `ui-design-expert`    | Design system & specifications   | 1-2h     | High     |
+| 7                    | `supabase-expert`     | Backend API integration          | 2-3h     | High     |
+| 1, 4, 5, 6, 8, 9, 10 | Direct Implementation | Core development                 | 18-22h   | High     |
 
 **Total Estimated Time**: 22-28 hours
 

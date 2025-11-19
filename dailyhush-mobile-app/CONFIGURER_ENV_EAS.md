@@ -7,6 +7,7 @@ J'ai mis à jour ton `eas.json` pour inclure les variables d'environnement. **Tu
 ### Étape 1 : Ouvrir ton fichier `.env`
 
 Ouvre ton fichier `.env` et copie les valeurs de :
+
 - `EXPO_PUBLIC_SUPABASE_URL`
 - `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 - `EXPO_PUBLIC_REVENUECAT_IOS_KEY` (si tu l'as)
@@ -41,4 +42,3 @@ eas secret:create --scope project --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value "
 ```
 
 Voir `GUIDE_ENV_VARIABLES_EAS.md` pour plus de détails.
-

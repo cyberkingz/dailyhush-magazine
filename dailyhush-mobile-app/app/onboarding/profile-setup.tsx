@@ -410,7 +410,12 @@ export default function ProfileSetup() {
                             alignItems: 'center',
                             justifyContent: 'center',
                           }}>
-                          <Text style={{ color: colors.button.primaryText, fontSize: 16, fontWeight: 'bold' }}>
+                          <Text
+                            style={{
+                              color: colors.button.primaryText,
+                              fontSize: 16,
+                              fontWeight: 'bold',
+                            }}>
                             ✓
                           </Text>
                         </View>

@@ -32,10 +32,7 @@ interface ProgressIndicatorProps {
  * Progress indicator with animated dots
  * Shows which step user is on in the flow
  */
-export function ProgressIndicator({
-  currentStep,
-  totalSteps = 4,
-}: ProgressIndicatorProps) {
+export function ProgressIndicator({ currentStep, totalSteps = 4 }: ProgressIndicatorProps) {
   return (
     <View
       style={styles.container}
@@ -45,20 +42,13 @@ export function ProgressIndicator({
         min: 0,
         max: totalSteps,
         now: currentStep,
-      }}
-    >
+      }}>
       {Array.from({ length: totalSteps }, (_, index) => {
         const stepNumber = index + 1;
         const isActive = stepNumber === currentStep;
         const isCompleted = stepNumber < currentStep;
 
-        return (
-          <ProgressDot
-            key={stepNumber}
-            isActive={isActive}
-            isCompleted={isCompleted}
-          />
-        );
+        return <ProgressDot key={stepNumber} isActive={isActive} isCompleted={isCompleted} />;
       })}
     </View>
   );
@@ -78,8 +68,8 @@ function ProgressDot({ isActive, isCompleted }: ProgressDotProps) {
   const dotStyle = isActive
     ? PROGRESS_INDICATOR.dot.active
     : isCompleted
-    ? PROGRESS_INDICATOR.dot.completed
-    : PROGRESS_INDICATOR.dot.default;
+      ? PROGRESS_INDICATOR.dot.completed
+      : PROGRESS_INDICATOR.dot.default;
 
   return (
     <MotiView

@@ -28,15 +28,8 @@ import {
   Flower,
   type LucideIcon,
 } from 'lucide-react-native';
-import {
-  STEP_HEADER,
-  SUGGESTION_CARD,
-  ANIMATIONS,
-} from '@/constants/moodCaptureDesign';
-import {
-  getSuggestionForMood,
-  type SuggestionTemplate,
-} from '@/constants/suggestions';
+import { STEP_HEADER, SUGGESTION_CARD, ANIMATIONS } from '@/constants/moodCaptureDesign';
+import { getSuggestionForMood, type SuggestionTemplate } from '@/constants/suggestions';
 import { STEP_SUBTITLES, getMoodEmoji } from '@/constants/moodOptions';
 import type { Enums } from '@/types/supabase';
 import type { IntensityValue } from '@/constants/moodOptions';
@@ -113,16 +106,14 @@ export function GentleSuggestion({
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
+      showsVerticalScrollIndicator={false}>
       <MotiView
         from={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
           type: 'timing',
           duration: ANIMATIONS.fadeIn.duration,
-        }}
-      >
+        }}>
         {/* Step Header */}
         <View style={styles.header}>
           <Text style={styles.title}>A gentle suggestion for you {moodEmoji}</Text>
@@ -143,9 +134,7 @@ export function GentleSuggestion({
           {/* Badge (if relevant loop type) */}
           {suggestion.relevantLoops && suggestion.relevantLoops.length > 0 && (
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>
-                Recommended for your loops
-              </Text>
+              <Text style={styles.badgeText}>Recommended for your loops</Text>
             </View>
           )}
 

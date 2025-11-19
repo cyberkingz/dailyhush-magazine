@@ -107,30 +107,26 @@ export function FreeWriting({
   };
 
   // Show character count only if enabled and above threshold
-  const shouldShowCharCount =
-    showCharacterCount && content.length > CHARACTER_COUNT.showThreshold;
+  const shouldShowCharCount = showCharacterCount && content.length > CHARACTER_COUNT.showThreshold;
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={styles.container}
-      keyboardVerticalOffset={100}
-    >
+      keyboardVerticalOffset={100}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-      >
+        keyboardDismissMode="on-drag">
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{
             type: 'timing',
             duration: ANIMATIONS.fadeIn.duration,
-          }}
-        >
+          }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
               {/* Step Header */}
@@ -154,8 +150,7 @@ export function FreeWriting({
                 }
               }}
               android_disableSound
-              accessible={false}
-            >
+              accessible={false}>
               <TextInput
                 ref={textInputRef}
                 style={styles.textInput}
@@ -189,9 +184,7 @@ export function FreeWriting({
                   size={STATUS_INDICATORS.privacy.icon.size}
                   color={STATUS_INDICATORS.privacy.icon.color}
                 />
-                <Text style={styles.privacyText}>
-                  {PRIVACY_MESSAGES.encrypted}
-                </Text>
+                <Text style={styles.privacyText}>{PRIVACY_MESSAGES.encrypted}</Text>
               </View>
 
               {/* Character Count (optional) */}

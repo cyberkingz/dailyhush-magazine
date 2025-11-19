@@ -235,7 +235,7 @@ export default function QuizSignup() {
           quiz_email: null,
           quiz_connected: false,
           has_shift_necklace: false,
-          shift_paired: false,
+
           fire_progress: {
             focus: false,
             interrupt: false,

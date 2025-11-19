@@ -1,8 +1,13 @@
 import { View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
-  Heart, Sparkles, Clock, TrendingUp,
-  Lightbulb, BarChart3, ChevronRight
+  Heart,
+  Sparkles,
+  Clock,
+  TrendingUp,
+  Lightbulb,
+  BarChart3,
+  ChevronRight,
 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
@@ -48,12 +53,7 @@ export function WeeklyInsightsContent({ weeklyData }: WeeklyInsightsContentProps
                 borderRadius: 12,
                 marginRight: 12,
               }}>
-              <Heart
-                size={18}
-                color={colors.lime[500]}
-                strokeWidth={2.5}
-                fill={colors.lime[500]}
-              />
+              <Heart size={18} color={colors.lime[500]} strokeWidth={2.5} fill={colors.lime[500]} />
             </View>
             <Text
               style={{
@@ -70,8 +70,8 @@ export function WeeklyInsightsContent({ weeklyData }: WeeklyInsightsContentProps
               fontSize: 15,
               lineHeight: 22,
             }}>
-            Seeing many spirals doesn&apos;t mean you&apos;re failing. It means you&apos;re
-            paying attention. That awareness is the first step toward healing.
+            Seeing many spirals doesn&apos;t mean you&apos;re failing. It means you&apos;re paying
+            attention. That awareness is the first step toward healing.
           </Text>
         </View>
       )}
@@ -113,8 +113,8 @@ export function WeeklyInsightsContent({ weeklyData }: WeeklyInsightsContentProps
               fontSize: 15,
               lineHeight: 22,
             }}>
-            You interrupted {weeklyData.improvementVsLastWeek}% more spirals than last week.
-            The awareness itself is healing.
+            You interrupted {weeklyData.improvementVsLastWeek}% more spirals than last week. The
+            awareness itself is healing.
           </Text>
         </View>
       ) : weeklyData.totalSpirals > 0 ? (
@@ -153,8 +153,8 @@ export function WeeklyInsightsContent({ weeklyData }: WeeklyInsightsContentProps
               fontSize: 15,
               lineHeight: 22,
             }}>
-            Healing isn't linear. Some weeks are harder, and that's part of the process.
-            You're still rewiring the pattern.
+            Healing isn't linear. Some weeks are harder, and that's part of the process. You're
+            still rewiring the pattern.
           </Text>
         </View>
       ) : null}
@@ -368,8 +368,7 @@ export function WeeklyInsightsContent({ weeklyData }: WeeklyInsightsContentProps
                 fontSize: 14,
                 lineHeight: 20,
               }}>
-              Around {weeklyData.peakTime}, your mind shows a pattern. What happens just
-              before?
+              Around {weeklyData.peakTime}, your mind shows a pattern. What happens just before?
             </Text>
           </View>
         </View>

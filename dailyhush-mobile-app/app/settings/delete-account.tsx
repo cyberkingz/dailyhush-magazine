@@ -321,8 +321,8 @@ export default function DeleteAccountScreen() {
               </View>
 
               <Text style={styles.retainNote}>
-                This data helps us improve Nœma for everyone. It cannot be accessed after
-                account deletion.
+                This data helps us improve Nœma for everyone. It cannot be accessed after account
+                deletion.
               </Text>
             </View>
 

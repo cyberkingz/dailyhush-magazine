@@ -17,16 +17,19 @@ Les produits ont le statut "Missing Metadata" dans RevenueCat parce qu'ils ne so
 ## 📋 Actions à Effectuer (dans l'ordre)
 
 ### 1. ✅ Uploader un Build
+
 - **Action** : Uploader un build via EAS Build ou Xcode/Transporter
 - **Commande** : `eas build --platform ios --profile production` puis `eas submit`
 - **Statut** : Build number déjà incrémenté à `1.0.2` dans `app.json` ✅
 
 ### 2. ✅ Compléter App Privacy
+
 - **Action** : Aller dans App Privacy et ajouter une Privacy Policy URL
 - **URL** : Probablement `https://trynoema.com/privacy` ou similaire
 - **Statut** : App Privacy partiellement configuré ⚠️
 
 ### 3. ⏳ Sélectionner les Produits dans la Version
+
 - **Action** : Une fois le build uploadé, la section **"In-App Purchases and Subscriptions"** apparaîtra sur la page de version
 - **Produits à sélectionner** :
   - Noema Premium Monthly (`com.anthony.noema.monthly`)
@@ -35,6 +38,7 @@ Les produits ont le statut "Missing Metadata" dans RevenueCat parce qu'ils ne so
 - **Statut** : En attente du build ⏳
 
 ### 4. ⏳ Soumettre la Version pour Review
+
 - **Action** : Cliquer sur "Add for Review" une fois que :
   - Le build est uploadé ✅
   - App Privacy est complété ✅
@@ -59,4 +63,3 @@ Une fois que la version sera soumise pour review avec les produits sélectionné
 **La section "In-App Purchases and Subscriptions" n'apparaît sur la page de version qu'après qu'un build soit uploadé.** C'est pour ça qu'on ne peut pas sélectionner les produits maintenant.
 
 Une fois le build uploadé, cette section apparaîtra automatiquement et on pourra sélectionner les 3 produits avant de soumettre pour review.
-

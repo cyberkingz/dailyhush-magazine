@@ -129,6 +129,7 @@ Opacity: 0.9 (main shape), 0.6 (accent dots)
 ## Typography Samples
 
 ### App Name
+
 ```
 D a i l y H u s h
 
@@ -140,6 +141,7 @@ Font:    System (SF Pro / Roboto)
 ```
 
 ### Tagline
+
 ```
 Stop the Spiral of Overthinking
 
@@ -156,6 +158,7 @@ Font:    System (SF Pro / Roboto)
 ## Animation States
 
 ### State 1: Initial (0s)
+
 ```
 ┌─────────────────┐
 │                 │
@@ -170,6 +173,7 @@ Background: Solid #0A1612
 ```
 
 ### State 2: Background Fade (0-0.4s)
+
 ```
 ┌─────────────────┐
 │▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
@@ -183,6 +187,7 @@ Background: Solid #0A1612
 ```
 
 ### State 3: Logo Appears (0.4-1.0s)
+
 ```
 ┌─────────────────┐
 │▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
@@ -196,6 +201,7 @@ Background: Solid #0A1612
 ```
 
 ### State 4: Spiral Rotates (0.4-1.6s)
+
 ```
 ┌─────────────────┐
 │▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
@@ -210,6 +216,7 @@ Background: Solid #0A1612
 ```
 
 ### State 5: Complete (1.6-2.0s)
+
 ```
 ┌─────────────────┐
 │▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
@@ -259,6 +266,7 @@ Background: Solid #0A1612
 ## Responsive Behavior
 
 ### iPhone SE (Small Screen)
+
 ```
 ┌─────────┐
 │   🌙    │  Smaller safe areas
@@ -272,6 +280,7 @@ Background: Solid #0A1612
 ```
 
 ### iPhone 15 Pro Max (Large Screen)
+
 ```
 ┌───────────────┐
 │               │
@@ -289,6 +298,7 @@ Background: Solid #0A1612
 ```
 
 ### iPad (Tablet)
+
 ```
 ┌─────────────────────────┐
 │                         │
@@ -310,6 +320,7 @@ Background: Solid #0A1612
 ## Device-Specific Notes
 
 ### iPhone with Dynamic Island
+
 ```
 ┌───────────────────┐
 │  ⚫━━━━━━━━⚫      │ ← Dynamic Island
@@ -321,6 +332,7 @@ Background: Solid #0A1612
 ```
 
 ### Android with Gesture Navigation
+
 ```
 │                   │
 │       🌙          │
@@ -337,6 +349,7 @@ Background: Solid #0A1612
 ## Color Contrast Analysis
 
 ### Text on Background
+
 ```
 Foreground: #ECFDF5 (emerald-50)
 Background: #0A1612 (very dark green)
@@ -349,6 +362,7 @@ WCAG Level: AAA (exceeds 7:1 requirement)
 ```
 
 ### Accent on Background
+
 ```
 Foreground: #34D399 (emerald-400)
 Background: #0A1612 (very dark green)
@@ -367,11 +381,13 @@ WCAG Level: AAA (exceeds 4.5:1)
 ### For Designers Using Figma/Sketch
 
 **Frame Setup:**
+
 - Width: 375px (iPhone base) or 390px (iPhone 14/15)
 - Height: 812px (iPhone X+) or 844px (iPhone 14/15)
 - Background: #0A1612
 
 **Layer Structure:**
+
 ```
 Splash Screen Frame
 ├─ Background Gradient (Linear)

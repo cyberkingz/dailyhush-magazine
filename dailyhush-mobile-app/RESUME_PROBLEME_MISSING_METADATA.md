@@ -6,17 +6,18 @@
 
 **Tous les 3 produits ont le statut "Missing Metadata" :**
 
-| Produit | Product ID | Statut | Durée |
-|---------|------------|--------|-------|
-| Noema Premium Monthly | `com.anthony.noema.monthly` | ⚠️ **Missing Metadata** | 1 month |
-| Noema Premium Annual | `com.anthony.noema.annual` | ⚠️ **Missing Metadata** | 1 year |
-| Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** | - |
+| Produit                | Product ID                   | Statut                  | Durée   |
+| ---------------------- | ---------------------------- | ----------------------- | ------- |
+| Noema Premium Monthly  | `com.anthony.noema.monthly`  | ⚠️ **Missing Metadata** | 1 month |
+| Noema Premium Annual   | `com.anthony.noema.annual`   | ⚠️ **Missing Metadata** | 1 year  |
+| Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** | -       |
 
 ---
 
 ## 📋 Détails Vérifiés pour Monthly
 
 ### ✅ Métadonnées Complètes
+
 - **Reference Name**: "Noema Premium Monthly" ✅
 - **Product ID**: `com.anthony.noema.monthly` ✅
 - **Subscription Duration**: 1 month ✅
@@ -30,6 +31,7 @@
 - **Tax Category**: "Match to parent app" ✅
 
 ### ⚠️ Pricing
+
 - **Section "Subscription Prices"** : Présente
 - **Bouton "Add Pricing"** : Disponible
 - **"Starting Price"** : Cliquable (suggère qu'un prix existe peut-être)
@@ -88,4 +90,3 @@ Le statut **"Missing Metadata"** peut être causé par :
 - **Subscription Group**: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscription-groups/21829692
 - **Monthly Product**: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752
 - **Pricing Page**: https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752/pricing
-

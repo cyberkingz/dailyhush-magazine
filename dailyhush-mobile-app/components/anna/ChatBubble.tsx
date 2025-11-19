@@ -15,10 +15,7 @@ const StreamingIndicator: React.FC = () => {
   const dot3Opacity = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
-    const createPulseAnimation = (
-      animatedValue: Animated.Value,
-      delay: number
-    ) => {
+    const createPulseAnimation = (animatedValue: Animated.Value, delay: number) => {
       return Animated.loop(
         Animated.sequence([
           Animated.delay(delay),
@@ -51,15 +48,9 @@ const StreamingIndicator: React.FC = () => {
 
   return (
     <View style={styles.streamingContainer}>
-      <Animated.Text style={[styles.streamingDot, { opacity: dot1Opacity }]}>
-        ●
-      </Animated.Text>
-      <Animated.Text style={[styles.streamingDot, { opacity: dot2Opacity }]}>
-        ●
-      </Animated.Text>
-      <Animated.Text style={[styles.streamingDot, { opacity: dot3Opacity }]}>
-        ●
-      </Animated.Text>
+      <Animated.Text style={[styles.streamingDot, { opacity: dot1Opacity }]}>●</Animated.Text>
+      <Animated.Text style={[styles.streamingDot, { opacity: dot2Opacity }]}>●</Animated.Text>
+      <Animated.Text style={[styles.streamingDot, { opacity: dot3Opacity }]}>●</Animated.Text>
     </View>
   );
 };
@@ -73,21 +64,11 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
   const isAssistant = role === 'assistant';
 
   const BubbleContent = () => (
-    <View
-      style={[
-        styles.bubble,
-        isAssistant ? styles.assistantBubble : styles.userBubble,
-      ]}
-    >
+    <View style={[styles.bubble, isAssistant ? styles.assistantBubble : styles.userBubble]}>
       {isStreaming ? (
         <StreamingIndicator />
       ) : (
-        <Text
-          style={[
-            styles.text,
-            isAssistant ? styles.assistantText : styles.userText,
-          ]}
-        >
+        <Text style={[styles.text, isAssistant ? styles.assistantText : styles.userText]}>
           {content}
         </Text>
       )}
@@ -96,18 +77,13 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
 
   return (
     <View
-      style={[
-        styles.container,
-        isAssistant ? styles.assistantContainer : styles.userContainer,
-      ]}
-    >
+      style={[styles.container, isAssistant ? styles.assistantContainer : styles.userContainer]}>
       {isAssistant ? (
         <LinearGradient
           colors={['rgba(22, 46, 38, 0.6)', 'rgba(15, 31, 26, 0.8)']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[styles.bubble, styles.assistantBubble]}
-        >
+          style={[styles.bubble, styles.assistantBubble]}>
           {isStreaming ? (
             <StreamingIndicator />
           ) : (
@@ -119,11 +95,7 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
       )}
       {timestamp && !isStreaming && (
         <Text
-          style={[
-            styles.timestamp,
-            isAssistant ? styles.timestampLeft : styles.timestampRight,
-          ]}
-        >
+          style={[styles.timestamp, isAssistant ? styles.timestampLeft : styles.timestampRight]}>
           {timestamp}
         </Text>
       )}

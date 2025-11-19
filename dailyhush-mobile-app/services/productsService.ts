@@ -53,10 +53,12 @@ export async function getRecommendedProducts(limit: number = 4): Promise<Recomme
     // Get existing recommendations from database
     const { data: recommendations, error: recsError } = await supabase
       .from('product_recommendations')
-      .select(`
+      .select(
+        `
         *,
         products (*)
-      `)
+      `
+      )
       .eq('user_id', user.id)
       .eq('is_clicked', false)
       .order('recommendation_score', { ascending: false })
@@ -79,7 +81,12 @@ export async function getRecommendedProducts(limit: number = 4): Promise<Recomme
     }
 
     // Otherwise, generate recommendations based on loop type
-    return await generateRecommendations(user.id, userProfile.loop_type, userProfile.premium_trial_active, limit);
+    return await generateRecommendations(
+      user.id,
+      userProfile.loop_type,
+      userProfile.premium_trial_active,
+      limit
+    );
   } catch (error) {
     console.error('Error getting recommended products:', error);
     return [];
@@ -111,7 +118,10 @@ async function generateRecommendations(
     }
 
     // Order by featured first, then by sales
-    query = query.order('is_featured', { ascending: false }).order('total_sales', { ascending: false }).limit(limit);
+    query = query
+      .order('is_featured', { ascending: false })
+      .order('total_sales', { ascending: false })
+      .limit(limit);
 
     const { data: products, error } = await query;
 
@@ -169,7 +179,10 @@ async function createRecommendations(
  * Track product click for analytics
  * Updates recommendation record and fires analytics event
  */
-export async function trackProductClick(productId: string, source: 'profile' | 'recommendations' | 'search'): Promise<void> {
+export async function trackProductClick(
+  productId: string,
+  source: 'profile' | 'recommendations' | 'search'
+): Promise<void> {
   try {
     const {
       data: { user },
@@ -381,10 +394,12 @@ export async function getPurchaseHistory(): Promise<Tables<'purchases'>[]> {
 
     const { data, error } = await supabase
       .from('purchases')
-      .select(`
+      .select(
+        `
         *,
         products (*)
-      `)
+      `
+      )
       .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 

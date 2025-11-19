@@ -3,11 +3,13 @@
 ## ✅ Vérifications Effectuées
 
 ### 1. Clés API RevenueCat
+
 - ✅ **Clé iOS dans `eas.json`** : `appl_URekFOERLWIiXnSYeGkOJWUYKpM`
 - ✅ **Clé iOS dans RevenueCat** : `appl_URekFOERLWIiXnSYeGkOJWUYKpM`
 - ✅ **Les clés correspondent parfaitement !**
 
 ### 2. Offering "default"
+
 - ✅ **Identifier** : `default`
 - ✅ **Statut** : Marqué comme "Default" (current offering)
 - ✅ **Packages configurés** : 3 packages
@@ -16,6 +18,7 @@
   - `$rc_lifetime` → `com.anthony.noema.lifetime` (App Store)
 
 ### 3. Entitlement "premium"
+
 - ✅ **Identifier** : `premium`
 - ✅ **Description** : "Premium access to all features"
 - ✅ **Produits attachés** : Les 3 produits sont bien attachés
@@ -28,11 +31,11 @@
 
 **Tous les 3 produits ont le statut "Missing Metadata" :**
 
-| Produit | Product ID | Statut RevenueCat | Message |
-|---------|------------|-------------------|---------|
-| Noema Premium Monthly | `com.anthony.noema.monthly` | ⚠️ **Missing Metadata** | "Action is needed from the developer before a product can be made available to users (state: \"MISSING_METADATA\")" |
-| Noema Premium Annual | `com.anthony.noema.annual` | ⚠️ **Missing Metadata** | Même statut |
-| Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** | Même statut |
+| Produit                | Product ID                   | Statut RevenueCat       | Message                                                                                                             |
+| ---------------------- | ---------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Noema Premium Monthly  | `com.anthony.noema.monthly`  | ⚠️ **Missing Metadata** | "Action is needed from the developer before a product can be made available to users (state: \"MISSING_METADATA\")" |
+| Noema Premium Annual   | `com.anthony.noema.annual`   | ⚠️ **Missing Metadata** | Même statut                                                                                                         |
+| Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** | Même statut                                                                                                         |
 
 **C'est la cause du problème !**
 
@@ -66,6 +69,7 @@ Quand RevenueCat synchronise avec App Store Connect, il récupère le statut des
 Pour chaque produit (Monthly, Annual, Lifetime), vérifie que **TOUS** ces champs sont remplis :
 
 #### Champs obligatoires :
+
 - ✅ **Subscription Display Name** (ex: "Premium Monthly")
 - ✅ **Description** (ce que voit l'utilisateur dans l'App Store)
 - ✅ **Review Notes** (pour Apple, expliquant le produit)
@@ -73,11 +77,13 @@ Pour chaque produit (Monthly, Annual, Lifetime), vérifie que **TOUS** ces champ
 - ✅ **Screenshots** (si requis par Apple)
 
 #### Pour les subscriptions (Monthly, Annual) :
+
 - ✅ **Subscription Duration** (1 month, 1 year)
 - ✅ **Introductory Offers** (7-day free trial si configuré)
 - ✅ **Subscription Group** (doit être "Noema Premium")
 
 #### Pour le Lifetime :
+
 - ✅ **Product Type** (Non-consumable)
 - ✅ **Pricing** (Tier 150 = $149.99)
 
@@ -106,7 +112,8 @@ Après l'approbation dans App Store Connect :
 
 **Cause :** Les métadonnées ne sont pas complètes dans App Store Connect.
 
-**Solution :** 
+**Solution :**
+
 1. Compléter toutes les métadonnées dans App Store Connect
 2. Soumettre les produits pour review
 3. Attendre l'approbation d'Apple
@@ -121,4 +128,3 @@ Après l'approbation dans App Store Connect :
 - [App Store Connect - In-App Purchases](https://appstoreconnect.apple.com/apps/6755148761/features/in-app-purchase)
 - [RevenueCat - Products](https://app.revenuecat.com/projects/2aae4d1b/product-catalog/products)
 - [Documentation Apple - In-App Purchase Statuses](https://developer.apple.com/help/app-store-connect/reference/in-app-purchase-statuses/)
-

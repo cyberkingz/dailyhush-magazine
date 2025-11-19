@@ -20,7 +20,7 @@
 
 import { supabase } from '@/utils/supabase';
 import { withRetry } from '@/utils/retry';
-import { TECHNIQUE_LIBRARY, getTechniqueById } from '@/constants/techniqueLibrary';
+import { getTechniqueById } from '@/constants/techniqueLibrary';
 import type { SpiralPattern } from '@/types';
 
 // ============================================================================
@@ -38,6 +38,15 @@ const PATTERN_DETECTION_CONSTANTS = {
 // ============================================================================
 // MAIN PATTERN DETECTION FUNCTION
 // ============================================================================
+
+// Cache for pattern results to reduce DB load
+let cachedPatterns: {
+  userId: string;
+  timestamp: number;
+  data: SpiralPattern;
+} | null = null;
+
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 /**
  * Analyzes user's spiral history to detect patterns
@@ -66,6 +75,16 @@ export async function detectSpiralPatterns(
   daysBack: number = PATTERN_DETECTION_CONSTANTS.DEFAULT_DAYS_BACK
 ): Promise<SpiralPattern> {
   try {
+    // Check cache first
+    if (
+      cachedPatterns &&
+      cachedPatterns.userId === userId &&
+      Date.now() - cachedPatterns.timestamp < CACHE_TTL_MS
+    ) {
+      console.log('[PatternDetection] Returning cached patterns');
+      return cachedPatterns.data;
+    }
+
     console.log('[PatternDetection] Starting pattern analysis:', {
       userId,
       daysBack,
@@ -97,6 +116,13 @@ export async function detectSpiralPatterns(
       avgSpiralsPerWeek,
       mostEffectiveTechnique,
       earlyDetectionRate,
+    };
+
+    // Update cache
+    cachedPatterns = {
+      userId,
+      timestamp: Date.now(),
+      data: patterns,
     };
 
     console.log('[PatternDetection] Pattern analysis complete:', patterns);
@@ -142,9 +168,9 @@ export async function getPeakSpiralTime(
     console.log('[PatternDetection] Detecting peak spiral time:', { userId, daysBack });
 
     // Query to get hour with most spirals
-    const { data, error } = await withRetry(
-      () =>
-        supabase.rpc('get_peak_spiral_hour', {
+    const { data, error } = await withRetry<any[]>(
+      async () =>
+        await supabase.rpc('get_peak_spiral_hour', {
           p_user_id: userId,
           p_days_back: daysBack,
         }),
@@ -181,17 +207,14 @@ export async function getPeakSpiralTime(
  * Direct query fallback for peak spiral time
  * Uses client-side extraction if RPC not available
  */
-async function getPeakSpiralTimeDirect(
-  userId: string,
-  daysBack: number
-): Promise<number | null> {
+async function getPeakSpiralTimeDirect(userId: string, daysBack: number): Promise<number | null> {
   try {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysBack);
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const { data, error } = await withRetry<any[]>(
+      async () =>
+        await supabase
           .from('spiral_logs')
           .select('timestamp')
           .eq('user_id', userId)
@@ -199,9 +222,7 @@ async function getPeakSpiralTimeDirect(
       {
         maxRetries: 3,
         onRetry: (attempt) => {
-          console.log(
-            `[PatternDetection] Retry attempt ${attempt} for getPeakSpiralTimeDirect`
-          );
+          console.log(`[PatternDetection] Retry attempt ${attempt} for getPeakSpiralTimeDirect`);
         },
       }
     );
@@ -233,7 +254,9 @@ async function getPeakSpiralTimeDirect(
       }
     });
 
-    console.log(`[PatternDetection] Peak spiral time (direct): ${maxHour}:00 (${maxCount} spirals)`);
+    console.log(
+      `[PatternDetection] Peak spiral time (direct): ${maxHour}:00 (${maxCount} spirals)`
+    );
     return maxHour;
   } catch (error) {
     console.error('[PatternDetection] getPeakSpiralTimeDirect failed:', error);
@@ -278,9 +301,9 @@ export async function getMostCommonTrigger(
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysBack);
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const { data, error } = await withRetry<any[]>(
+      async () =>
+        await supabase
           .from('spiral_logs')
           .select('trigger')
           .eq('user_id', userId)
@@ -322,9 +345,7 @@ export async function getMostCommonTrigger(
       }
     });
 
-    console.log(
-      `[PatternDetection] Most common trigger: ${maxTrigger} (${maxCount} occurrences)`
-    );
+    console.log(`[PatternDetection] Most common trigger: ${maxTrigger} (${maxCount} occurrences)`);
     return maxTrigger;
   } catch (error) {
     console.error('[PatternDetection] getMostCommonTrigger failed:', error);
@@ -351,19 +372,16 @@ export async function getMostCommonTrigger(
  * console.log(`You average ${avgPerWeek} spirals per week`);
  * // "You average 4.2 spirals per week"
  */
-async function getAvgSpiralsPerWeek(
-  userId: string,
-  daysBack: number
-): Promise<number> {
+async function getAvgSpiralsPerWeek(userId: string, daysBack: number): Promise<number> {
   try {
     console.log('[PatternDetection] Calculating avg spirals per week:', { userId, daysBack });
 
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysBack);
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const result = await withRetry<any>(
+      async () =>
+        await supabase
           .from('spiral_logs')
           .select('spiral_id', { count: 'exact', head: true })
           .eq('user_id', userId)
@@ -376,12 +394,12 @@ async function getAvgSpiralsPerWeek(
       }
     );
 
-    if (error) {
-      console.error('[PatternDetection] Error counting spirals:', error);
-      throw new Error(`Failed to count spirals: ${error.message}`);
+    if (result.error) {
+      console.error('[PatternDetection] Error counting spirals:', result.error);
+      throw new Error(`Failed to count spirals: ${result.error.message}`);
     }
 
-    const totalSpirals = data?.count || 0;
+    const totalSpirals = (result as any).count || 0;
     const weeks = daysBack / PATTERN_DETECTION_CONSTANTS.DAYS_PER_WEEK;
     const avgPerWeek = weeks > 0 ? totalSpirals / weeks : 0;
 
@@ -419,9 +437,9 @@ async function getMostEffectiveTechniqueName(userId: string): Promise<string | n
   try {
     console.log('[PatternDetection] Finding most effective technique:', { userId });
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const { data, error } = await withRetry<any[]>(
+      async () =>
+        await supabase
           .from('user_technique_stats')
           .select('technique_id, avg_reduction, times_used')
           .eq('user_id', userId)
@@ -480,24 +498,22 @@ async function getMostEffectiveTechniqueName(userId: string): Promise<string | n
  * // "Box Breathing: 75% success, 4.2 avg reduction"
  * // "Grounding: 60% success, 3.1 avg reduction"
  */
-export async function getTechniqueRankings(
-  userId: string
-): Promise<
-  Array<{
+export async function getTechniqueRankings(userId: string): Promise<
+  {
     techniqueId: string;
     techniqueName: string;
     timesUsed: number;
     timesSuccessful: number;
     successRate: number;
     avgReduction: number;
-  }>
+  }[]
 > {
   try {
     console.log('[PatternDetection] Getting technique rankings:', { userId });
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const { data, error } = await withRetry<any[]>(
+      async () =>
+        await supabase
           .from('user_technique_stats')
           .select('technique_id, times_used, times_successful, avg_reduction')
           .eq('user_id', userId)
@@ -525,9 +541,7 @@ export async function getTechniqueRankings(
     const rankings = data.map((stat) => {
       const technique = getTechniqueById(stat.technique_id);
       const successRate =
-        stat.times_used > 0
-          ? Math.round((stat.times_successful / stat.times_used) * 100)
-          : 0;
+        stat.times_used > 0 ? Math.round((stat.times_successful / stat.times_used) * 100) : 0;
 
       return {
         techniqueId: stat.technique_id,
@@ -582,9 +596,9 @@ export async function getEarlyDetectionRate(
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysBack);
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const { data, error } = await withRetry<any[]>(
+      async () =>
+        await supabase
           .from('spiral_logs')
           .select('pre_feeling')
           .eq('user_id', userId)
@@ -655,27 +669,24 @@ export async function hasSufficientData(
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysBack);
 
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const result = (await withRetry<any>(
+      async () =>
+        await supabase
           .from('spiral_logs')
           .select('spiral_id', { count: 'exact', head: true })
           .eq('user_id', userId)
-          .gte('timestamp', cutoffDate.toISOString()),
-      {
-        maxRetries: 3,
-      }
-    );
+          .gte('timestamp', cutoffDate.toISOString())
+    )) as any;
 
-    if (error) {
-      console.error('[PatternDetection] Error checking data sufficiency:', error);
+    if (result.error) {
+      console.error('[PatternDetection] Error checking data sufficiency:', result.error);
       return false;
     }
 
-    const count = data?.count || 0;
-    const sufficient = count >= PATTERN_DETECTION_CONSTANTS.MIN_SPIRALS_FOR_PATTERN;
+    const totalSpirals = (result as any).count || 0;
+    const sufficient = totalSpirals >= PATTERN_DETECTION_CONSTANTS.MIN_SPIRALS_FOR_PATTERN;
     console.log(
-      `[PatternDetection] Data sufficiency check: ${count} spirals (min: ${PATTERN_DETECTION_CONSTANTS.MIN_SPIRALS_FOR_PATTERN}) - ${sufficient ? 'sufficient' : 'insufficient'}`
+      `[PatternDetection] Data sufficiency check: ${totalSpirals} spirals (min: ${PATTERN_DETECTION_CONSTANTS.MIN_SPIRALS_FOR_PATTERN}) - ${sufficient ? 'sufficient' : 'insufficient'}`
     );
     return sufficient;
   } catch (error) {

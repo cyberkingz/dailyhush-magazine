@@ -102,6 +102,7 @@ steps: [
 ```
 
 **Key Insight:**
+
 - UI shows "Step 1" for `currentStepIndex = 0` (line 1205: `Step {currentStepIndex + 1}`)
 - `currentStepIndex = 0` has NO interactive field
 - Therefore, buttons SHOULD be visible
@@ -113,6 +114,7 @@ steps: [
 ### Hypothesis #1: Initial Load Timing Issue ✅ LIKELY
 
 **Timeline:**
+
 1. User enters protocol stage
 2. `selectedTechnique = null` initially
 3. `loadAdaptiveProtocol()` runs async (takes ~500ms)
@@ -126,6 +128,7 @@ steps: [
 **Problem:** When the protocol first loads, `isPlaying = false` (line 108). The user needs to press Play to start, but if buttons aren't visible, they can't!
 
 **Test:**
+
 - When protocol loads, check `isInteractiveAwaitingResume` value
 - Check if `currentStep.interactive` is being evaluated correctly
 - Verify `interactiveStepsAcknowledgedRef.current` is empty
@@ -135,6 +138,7 @@ steps: [
 ### Hypothesis #2: useEffect Dependencies Issue ❓ POSSIBLE
 
 The useEffect that controls button visibility depends on:
+
 ```typescript
 }, [stage, selectedTechnique, currentStepIndex, isPlaying]);
 ```
@@ -142,6 +146,7 @@ The useEffect that controls button visibility depends on:
 If `isPlaying` changes unexpectedly, or if `currentStepIndex` is not 0 when it should be, buttons might hide.
 
 **Test:**
+
 - Add console.log in useEffect to track state changes
 - Verify `currentStepIndex` stays at 0 on initial load
 - Check if `isPlaying` changes unexpectedly
@@ -164,6 +169,7 @@ useEffect(() => {
 If `timeRemaining` is not equal to `totalDuration` when protocol loads, it might calculate the wrong step.
 
 **Test:**
+
 - Verify `timeRemaining` equals `totalDuration` on load
 - Check if elapsed time is 0 initially
 
@@ -179,21 +185,19 @@ const countdownContainerStyle = useAnimatedStyle(() => {
   return {
     height: countdownSectionHeight * visibility,
     opacity: visibility,
-    transform: [
-      { translateY: -24 * (1 - visibility) },
-      { scale: 0.95 + 0.05 * visibility }
-    ],
+    transform: [{ translateY: -24 * (1 - visibility) }, { scale: 0.95 + 0.05 * visibility }],
   };
 });
 ```
 
 And the visibility value is set by:
+
 ```typescript
 useEffect(() => {
-  countdownVisibility.value = withTiming(
-    isInteractiveAwaitingResume ? 0 : 1,
-    { duration: 350, easing: Easing.bezier(0.4, 0, 0.2, 1) }
-  );
+  countdownVisibility.value = withTiming(isInteractiveAwaitingResume ? 0 : 1, {
+    duration: 350,
+    easing: Easing.bezier(0.4, 0, 0.2, 1),
+  });
 }, [isInteractiveAwaitingResume, countdownVisibility]);
 ```
 
@@ -206,6 +210,7 @@ If this animation is running during initial load, the layout might be affected.
 ### **Protocol doesn't auto-start - user must press Play**
 
 **The Issue:**
+
 1. Protocol loads on Step 1 (index 0)
 2. `isPlaying = false` initially
 3. User needs to press Play button to start
@@ -214,6 +219,7 @@ If this animation is running during initial load, the layout might be affected.
 **Why buttons might be hidden:**
 
 Looking at the useEffect dependencies again:
+
 ```typescript
 }, [stage, selectedTechnique, currentStepIndex, isPlaying]);
 ```
@@ -221,6 +227,7 @@ Looking at the useEffect dependencies again:
 When `selectedTechnique` changes from `null` to the loaded technique, the useEffect runs. But it also depends on `isPlaying`, which might cause unexpected behavior.
 
 **Specific scenario:**
+
 1. Protocol loads, `selectedTechnique` changes from null → technique object
 2. useEffect runs with `isPlaying = false`
 3. Gets currentStep = steps[0] (no interactive)
@@ -230,6 +237,7 @@ When `selectedTechnique` changes from `null` to the loaded technique, the useEff
 So according to the code flow, this SHOULD work. But the user reports it doesn't.
 
 **Possible timing issue:**
+
 - Maybe the useEffect runs BEFORE `selectedTechnique.steps` is fully populated?
 - Maybe `currentStep` is undefined initially?
 - Maybe there's a re-render that sets it back to true?
@@ -250,7 +258,7 @@ useEffect(() => {
     return;
   }
 
-  const currentStep = selectedTechnique.steps?.[currentStepIndex];  // ← Safe navigation
+  const currentStep = selectedTechnique.steps?.[currentStepIndex]; // ← Safe navigation
 
   // Defense: If step doesn't exist or has no interactive field, show buttons
   if (!currentStep || !currentStep.interactive) {
@@ -272,6 +280,7 @@ useEffect(() => {
 ```
 
 **Benefits:**
+
 - Adds safe navigation (`steps?.[currentStepIndex]`)
 - Early return for non-interactive steps
 - Clearer logic flow
@@ -304,6 +313,7 @@ if (currentStep.interactive) {
 ```
 
 **Benefits:**
+
 - Prevents useEffect from running every time user presses Play/Pause
 - Reduces potential race conditions
 
@@ -333,6 +343,7 @@ useEffect(() => {
 ```
 
 **Benefits:**
+
 - Will show exact state when bug occurs
 - Can identify timing issues
 - Easy to add, easy to remove
@@ -342,6 +353,7 @@ useEffect(() => {
 ## 🧪 Testing Plan
 
 ### Test Case 1: Fresh Protocol Load
+
 1. Open app
 2. Navigate to spiral interrupt
 3. Rate anxiety
@@ -351,6 +363,7 @@ useEffect(() => {
 7. **Verify:** Can press Play button to start protocol
 
 ### Test Case 2: Non-Interactive Steps
+
 1. Complete protocol through Step 1 (intro)
 2. Continue to Step 5 (smell - non-interactive)
 3. **Verify:** Buttons visible on Step 5
@@ -358,6 +371,7 @@ useEffect(() => {
 5. **Verify:** Buttons visible on Step 6
 
 ### Test Case 3: Interactive Steps
+
 1. Start protocol
 2. Advance to Step 2 ("Name 5 things you can see" - interactive)
 3. **Verify:** Buttons HIDE, input field shows
@@ -366,6 +380,7 @@ useEffect(() => {
 6. **Verify:** Buttons reappear, timer resumes
 
 ### Test Case 4: Protocol State Transitions
+
 1. Start protocol (Step 1)
 2. Press Pause
 3. **Verify:** Button changes to "Resume"
@@ -383,6 +398,7 @@ useEffect(() => {
 **User Impact:** Cannot start protocol = Complete feature failure
 
 **Affected Users:**
+
 - All users if reproducible 100%
 - Some users if timing-dependent (race condition)
 
@@ -390,12 +406,12 @@ useEffect(() => {
 
 ## ⏱️ Estimated Fix Time
 
-| Fix | Time | Risk |
-|-----|------|------|
-| Fix #1 (Defense checks) | 15 minutes | Low |
+| Fix                        | Time       | Risk   |
+| -------------------------- | ---------- | ------ |
+| Fix #1 (Defense checks)    | 15 minutes | Low    |
 | Fix #2 (Remove dependency) | 30 minutes | Medium |
-| Fix #3 (Add logging) | 10 minutes | None |
-| Testing (all scenarios) | 1 hour | - |
+| Fix #3 (Add logging)       | 10 minutes | None   |
+| Testing (all scenarios)    | 1 hour     | -      |
 
 **Total:** ~2 hours to implement all fixes + test thoroughly
 
@@ -415,6 +431,7 @@ useEffect(() => {
 ### Current Step Display Logic
 
 The UI shows "Step X · Y" where:
+
 - X = `currentStepIndex + 1` (1-indexed for users)
 - Y = Total steps in technique
 

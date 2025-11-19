@@ -6,17 +6,18 @@
 
 **Tous les 3 produits ont le statut "Missing Metadata" :**
 
-| Produit | Product ID | Statut | Durée |
-|---------|------------|--------|-------|
-| Noema Premium Monthly | `com.anthony.noema.monthly` | ⚠️ **Missing Metadata** | 1 month |
-| Noema Premium Annual | `com.anthony.noema.annual` | ⚠️ **Missing Metadata** | 1 year |
-| Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** | - |
+| Produit                | Product ID                   | Statut                  | Durée   |
+| ---------------------- | ---------------------------- | ----------------------- | ------- |
+| Noema Premium Monthly  | `com.anthony.noema.monthly`  | ⚠️ **Missing Metadata** | 1 month |
+| Noema Premium Annual   | `com.anthony.noema.annual`   | ⚠️ **Missing Metadata** | 1 year  |
+| Noema Premium Lifetime | `com.anthony.noema.lifetime` | ⚠️ **Missing Metadata** | -       |
 
 ---
 
 ## 📋 Détails du Produit Monthly (Vérifié)
 
 ### Informations de base
+
 - ✅ **Reference Name**: "Noema Premium Monthly"
 - ✅ **Product ID**: `com.anthony.noema.monthly`
 - ✅ **Apple ID**: 6755150752
@@ -25,15 +26,18 @@
 - ⚠️ **Status**: **Missing Metadata**
 
 ### Localization (English U.S.)
+
 - ✅ **Display Name**: "Premium Monthly"
 - ✅ **Subscription Description**: "Premium features. 7-day trial."
 - ✅ **Status**: "Prepare for Submission"
 
 ### Review Information
+
 - ✅ **Review Notes**: Rempli (3599 caractères restants)
 - ⚠️ **Screenshot**: À vérifier (peut être requis)
 
 ### Autres sections
+
 - ✅ **Availability**: "All countries or regions selected"
 - ✅ **Family Sharing**: Option disponible (pas activé)
 - ⚠️ **Subscription Prices**: À vérifier (section présente)
@@ -86,4 +90,3 @@ Le statut **"Missing Metadata"** dans App Store Connect signifie qu'il manque de
 5. Vérifier que le statut se met à jour dans RevenueCat
 
 Une fois que les produits auront le statut "Ready to Submit" ou "Approved" dans App Store Connect, le statut se mettra à jour dans RevenueCat et l'offering fonctionnera correctement !
-

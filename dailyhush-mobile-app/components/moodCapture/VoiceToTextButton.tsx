@@ -19,13 +19,9 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { MotiView } from 'moti';
 import { Mic, MicOff, AlertCircle } from 'lucide-react-native';
-import { VOICE_BUTTON, RECORDING_INDICATOR, HAPTICS } from '@/constants/moodCaptureDesign';
+import { VOICE_BUTTON, RECORDING_INDICATOR } from '@/constants/moodCaptureDesign';
 import { colors } from '@/constants/colors';
-import {
-  useVoiceToText,
-  type UseVoiceToTextOptions,
-  type VoiceRecordingState,
-} from '@/hooks/useVoiceToText';
+import { useVoiceToText } from '@/hooks/useVoiceToText';
 
 // ============================================================================
 // TYPES
@@ -110,29 +106,14 @@ export function VoiceToTextButton({
     }
 
     if (voice.state === 'error') {
-      return (
-        <AlertCircle
-          size={VOICE_BUTTON.icon.size}
-          color={VOICE_BUTTON.icon.color}
-        />
-      );
+      return <AlertCircle size={VOICE_BUTTON.icon.size} color={VOICE_BUTTON.icon.color} />;
     }
 
     if (voice.isRecording) {
-      return (
-        <MicOff
-          size={VOICE_BUTTON.icon.size}
-          color={VOICE_BUTTON.icon.color}
-        />
-      );
+      return <MicOff size={VOICE_BUTTON.icon.size} color={VOICE_BUTTON.icon.color} />;
     }
 
-    return (
-      <Mic
-        size={VOICE_BUTTON.icon.size}
-        color={VOICE_BUTTON.icon.color}
-      />
-    );
+    return <Mic size={VOICE_BUTTON.icon.size} color={VOICE_BUTTON.icon.color} />;
   };
 
   return (
@@ -148,16 +129,14 @@ export function VoiceToTextButton({
         }}
         animate={{
           backgroundColor:
-            getButtonStyle().backgroundColor ||
-            VOICE_BUTTON.container.backgroundColor,
+            getButtonStyle().backgroundColor || VOICE_BUTTON.container.backgroundColor,
           scale: voice.isRecording ? 1.05 : 1,
         }}
         transition={{
           type: 'timing',
           duration: 200,
         }}
-        style={styles.container}
-      >
+        style={styles.container}>
         <TouchableOpacity
           style={styles.button}
           onPress={handlePress}
@@ -167,10 +146,10 @@ export function VoiceToTextButton({
             voice.isRecording
               ? 'Stop voice recording'
               : voice.state === 'processing'
-              ? 'Processing voice recording'
-              : voice.state === 'error'
-              ? 'Retry voice recording'
-              : 'Start voice recording'
+                ? 'Processing voice recording'
+                : voice.state === 'error'
+                  ? 'Retry voice recording'
+                  : 'Start voice recording'
           }
           accessibilityHint={
             voice.isRecording
@@ -179,8 +158,7 @@ export function VoiceToTextButton({
           }
           accessibilityState={{
             disabled: voice.state === 'processing',
-          }}
-        >
+          }}>
           {renderIcon()}
         </TouchableOpacity>
       </MotiView>
@@ -197,8 +175,7 @@ export function VoiceToTextButton({
                 } else {
                   voice.reset();
                 }
-              }}
-            >
+              }}>
               <Text style={styles.errorAction}>{voice.error.action}</Text>
             </TouchableOpacity>
           )}

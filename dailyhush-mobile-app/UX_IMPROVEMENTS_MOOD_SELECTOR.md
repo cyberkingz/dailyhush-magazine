@@ -24,6 +24,7 @@ For older users, a **"belt and suspenders"** approach provides redundant visual 
 **Location**: Top of modal, below subtitle
 
 **Visual Design**:
+
 - Prominent banner with emerald background (`rgba(64, 145, 108, 0.15)`)
 - Icon + text combination: Down arrow circle + "Swipe up to see all 5 moods"
 - Larger font size (15px, up from 13px)
@@ -32,6 +33,7 @@ For older users, a **"belt and suspenders"** approach provides redundant visual 
 - Bordered container with subtle glow
 
 **Why it works**:
+
 - Icon provides visual metaphor for scrolling action
 - Explicit number "5 moods" sets clear expectations
 - Action verb "Swipe up" gives direct instruction
@@ -46,6 +48,7 @@ For older users, a **"belt and suspenders"** approach provides redundant visual 
 **Location**: Bottom center, above gradient
 
 **Visual Design**:
+
 - Large chevron-down icon (32px) in emerald-300 color
 - "MORE BELOW" text in uppercase, bold, emerald-300
 - Continuous bounce animation (8px vertical movement)
@@ -54,6 +57,7 @@ For older users, a **"belt and suspenders"** approach provides redundant visual 
 - Elevated with shadow for depth
 
 **Animation Parameters**:
+
 ```typescript
 from: { translateY: 0, opacity: 0.6 }
 animate: { translateY: 8, opacity: 1 }
@@ -61,6 +65,7 @@ transition: { type: 'timing', duration: 1000, loop: true, repeatReverse: true }
 ```
 
 **Why it works**:
+
 - Motion naturally draws eye attention
 - Chevron universally understood as "more content below"
 - Text reinforces visual metaphor
@@ -76,6 +81,7 @@ transition: { type: 'timing', duration: 1000, loop: true, repeatReverse: true }
 **Location**: Bottom 120px of scrollable area
 
 **Visual Design**:
+
 - Extended height (120px, up from 80px)
 - Four-color gradient for stronger effect:
   - `transparent` (top)
@@ -84,6 +90,7 @@ transition: { type: 'timing', duration: 1000, loop: true, repeatReverse: true }
   - `colors.emerald[800]` (100% opacity)
 
 **Why it works**:
+
 - More aggressive opacity creates clearer "cut-off" effect
 - Four stops create smoother, more noticeable transition
 - Extended height ensures third card is visibly faded
@@ -98,6 +105,7 @@ transition: { type: 'timing', duration: 1000, loop: true, repeatReverse: true }
 **Location**: Right side, vertically centered
 
 **Visual Design**:
+
 - 5 dots representing 5 mood cards
 - Active dot: Larger (scale: 1.2), brighter, with glow effect
 - Inactive dots: Subtle emerald with low opacity
@@ -105,11 +113,13 @@ transition: { type: 'timing', duration: 1000, loop: true, repeatReverse: true }
 - Positioned at 50% vertical center using transform
 
 **Smart Behavior**:
+
 - Dots light up as cards become visible in viewport
 - Provides spatial awareness of scroll position
 - Helps users understand how much content remains
 
 **Why it works**:
+
 - Familiar pattern from mobile interfaces
 - Provides progress feedback
 - Doesn't obstruct content (right-side placement)
@@ -124,18 +134,21 @@ transition: { type: 'timing', duration: 1000, loop: true, repeatReverse: true }
 **Logic**: All scroll indicators conditionally render
 
 **Hide conditions**:
+
 ```typescript
 const isScrolledToBottom = contentHeight - scrollPosition <= scrollViewHeight + 20;
 const showScrollIndicators = !isScrolledToBottom && contentHeight > scrollViewHeight;
 ```
 
 **Why it works**:
+
 - Clutter reduction once user has scrolled
 - Indicators only appear when genuinely needed
 - Smooth fade-out prevents jarring disappearance
 - Respects user's learning (indicators served their purpose)
 
 **Benefits**:
+
 - Cleaner interface after discovery
 - Prevents visual noise during interaction
 - Only displays when actionable information exists
@@ -147,6 +160,7 @@ const showScrollIndicators = !isScrolledToBottom && contentHeight > scrollViewHe
 ### 6. Safe Area Insets (iPhone Notch Fix) ✅
 
 **Implementation**:
+
 ```typescript
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const insets = useSafeAreaInsets();
@@ -155,6 +169,7 @@ const insets = useSafeAreaInsets();
 ```
 
 **Why it works**:
+
 - Respects device-specific safe areas (notch, Dynamic Island)
 - Minimum 20px padding ensures spacing on older devices
 - Uses native safe area detection for accuracy
@@ -169,6 +184,7 @@ const insets = useSafeAreaInsets();
 **Trigger**: First scroll gesture (>10px scroll position)
 
 **Implementation**:
+
 ```typescript
 if (!hasScrolled && newPosition > 10) {
   setHasScrolled(true);
@@ -177,6 +193,7 @@ if (!hasScrolled && newPosition > 10) {
 ```
 
 **Why it works**:
+
 - Provides tactile confirmation of scrollability
 - Light impact doesn't startle users
 - Only fires once (discovery moment)

@@ -13,7 +13,7 @@
  * 6. Completion (celebration + stats)
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ExerciseContainer } from '@/components/exercises/ExerciseContainer';
@@ -105,22 +105,6 @@ export default function CyclicSighExercise() {
   });
 
   /**
-   * Handle pre-rating submission
-   */
-  const handlePreRating = async (rating: number) => {
-    await setPreRating(rating);
-    await goToNextStage();
-  };
-
-  /**
-   * Handle post-rating submission
-   */
-  const handlePostRating = async (rating: number) => {
-    await setPostRating(rating);
-    await goToNextStage();
-  };
-
-  /**
    * Handle trigger log submission
    */
   const handleTriggerLog = async () => {
@@ -187,11 +171,9 @@ export default function CyclicSighExercise() {
   // Loading state
   if (isLoading) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center">
+      <View className="bg-forest-900 flex-1 items-center justify-center">
         <ActivityIndicator size="large" color="#4FD1C5" />
-        <Text className="text-sage-300 font-inter-medium text-base mt-4">
-          Loading exercise...
-        </Text>
+        <Text className="font-inter-medium mt-4 text-base text-sage-300">Loading exercise...</Text>
       </View>
     );
   }
@@ -199,15 +181,14 @@ export default function CyclicSighExercise() {
   // Error state
   if (error || !session) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center px-6">
-        <Text className="text-red-400 font-poppins-semibold text-xl mb-2">Error</Text>
-        <Text className="text-sage-300 font-inter-regular text-base text-center mb-6">
+      <View className="bg-forest-900 flex-1 items-center justify-center px-6">
+        <Text className="font-poppins-semibold mb-2 text-xl text-red-400">Error</Text>
+        <Text className="font-inter-regular mb-6 text-center text-base text-sage-300">
           {error || 'Failed to start exercise'}
         </Text>
         <TouchableOpacity
           onPress={() => router.back()}
-          className="bg-mindful-teal rounded-xl px-6 py-3"
-        >
+          className="bg-mindful-teal rounded-xl px-6 py-3">
           <Text className="text-forest-900 font-poppins-semibold text-base">Go Back</Text>
         </TouchableOpacity>
       </View>
@@ -272,12 +253,12 @@ export default function CyclicSighExercise() {
         );
 
       case 'complete':
-        const reduction = session.preRating && session.postRating
-          ? session.preRating - session.postRating
-          : 0;
-        const reductionPercentage = session.preRating && session.preRating > 0
-          ? Math.round((reduction / session.preRating) * 100)
-          : 0;
+        const reduction =
+          session.preRating && session.postRating ? session.preRating - session.postRating : 0;
+        const reductionPercentage =
+          session.preRating && session.preRating > 0
+            ? Math.round((reduction / session.preRating) * 100)
+            : 0;
 
         return (
           <CompletionScreen
@@ -306,8 +287,7 @@ export default function CyclicSighExercise() {
       session={session}
       onPause={pause}
       onResume={resume}
-      onAbandon={abandon}
-    >
+      onAbandon={abandon}>
       {renderStage()}
     </ExerciseContainer>
   );
@@ -331,7 +311,7 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
           <Text className="text-sage-50 font-poppins-bold text-3xl leading-tight">
             {CYCLIC_SIGH_CONFIG.copy.headline}
           </Text>
-          <Text className="text-sage-300 font-inter-regular text-lg leading-relaxed">
+          <Text className="font-inter-regular text-lg leading-relaxed text-sage-300">
             {CYCLIC_SIGH_CONFIG.copy.subheadline}
           </Text>
         </View>
@@ -339,27 +319,25 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
         {/* Cialdini Hooks */}
         <View className="flex-row gap-3">
           {/* Authority */}
-          <View className="flex-1 bg-mindful-teal/10 border border-mindful-teal/30 rounded-xl p-3">
-            <View className="flex-row items-center gap-2 mb-1">
+          <View className="bg-mindful-teal/10 border-mindful-teal/30 flex-1 rounded-xl border p-3">
+            <View className="mb-1 flex-row items-center gap-2">
               <BookOpen size={16} color="#4FD1C5" />
               <Text className="text-mindful-teal font-inter-semibold text-xs uppercase">
                 Research
               </Text>
             </View>
-            <Text className="text-sage-300 font-inter-medium text-sm">
+            <Text className="font-inter-medium text-sm text-sage-300">
               {CYCLIC_SIGH_CONFIG.persuasion?.authorityBadge}
             </Text>
           </View>
 
           {/* Pre-commitment */}
-          <View className="flex-1 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
-            <View className="flex-row items-center gap-2 mb-1">
+          <View className="flex-1 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
+            <View className="mb-1 flex-row items-center gap-2">
               <Sparkles size={16} color="#F59E0B" />
-              <Text className="text-amber-400 font-inter-semibold text-xs uppercase">
-                Quick
-              </Text>
+              <Text className="font-inter-semibold text-xs uppercase text-amber-400">Quick</Text>
             </View>
-            <Text className="text-sage-300 font-inter-medium text-sm">
+            <Text className="font-inter-medium text-sm text-sage-300">
               {CYCLIC_SIGH_CONFIG.persuasion?.preCommitment}
             </Text>
           </View>
@@ -370,12 +348,10 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
           <Text className="text-sage-50 font-poppins-semibold text-xl">How it works:</Text>
           {CYCLIC_SIGH_CONFIG.instructions.map((instruction, index) => (
             <View key={index} className="flex-row gap-3">
-              <View className="w-8 h-8 bg-mindful-teal/20 rounded-full items-center justify-center">
-                <Text className="text-mindful-teal font-poppins-bold text-sm">
-                  {index + 1}
-                </Text>
+              <View className="bg-mindful-teal/20 h-8 w-8 items-center justify-center rounded-full">
+                <Text className="text-mindful-teal font-poppins-bold text-sm">{index + 1}</Text>
               </View>
-              <Text className="flex-1 text-sage-300 font-inter-regular text-base leading-relaxed pt-1">
+              <Text className="font-inter-regular flex-1 pt-1 text-base leading-relaxed text-sage-300">
                 {instruction}
               </Text>
             </View>
@@ -384,15 +360,12 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
 
         {/* Tips */}
         {CYCLIC_SIGH_CONFIG.tips && (
-          <View className="bg-forest-800/50 rounded-xl p-4 border border-forest-700/30">
-            <Text className="text-sage-50 font-poppins-semibold text-base mb-2">
-              💡 Pro Tips:
-            </Text>
+          <View className="bg-forest-800/50 border-forest-700/30 rounded-xl border p-4">
+            <Text className="text-sage-50 font-poppins-semibold mb-2 text-base">💡 Pro Tips:</Text>
             {CYCLIC_SIGH_CONFIG.tips.map((tip, index) => (
               <Text
                 key={index}
-                className="text-sage-300 font-inter-regular text-sm leading-relaxed mb-1"
-              >
+                className="font-inter-regular mb-1 text-sm leading-relaxed text-sage-300">
                 • {tip}
               </Text>
             ))}
@@ -400,8 +373,8 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
         )}
 
         {/* Social Proof (Cialdini) */}
-        <View className="bg-mindful-teal/5 border border-mindful-teal/20 rounded-xl p-4">
-          <Text className="text-sage-300 font-inter-medium text-sm text-center">
+        <View className="bg-mindful-teal/5 border-mindful-teal/20 rounded-xl border p-4">
+          <Text className="font-inter-medium text-center text-sm text-sage-300">
             {CYCLIC_SIGH_CONFIG.persuasion?.socialProof}
           </Text>
         </View>
@@ -409,10 +382,9 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
         {/* CTA */}
         <TouchableOpacity
           onPress={handleContinue}
-          className="bg-mindful-teal rounded-xl py-4 flex-row items-center justify-center gap-2 shadow-lg mt-2"
+          className="bg-mindful-teal mt-2 flex-row items-center justify-center gap-2 rounded-xl py-4 shadow-lg"
           accessibilityLabel={CYCLIC_SIGH_CONFIG.copy.ctaStart}
-          accessibilityRole="button"
-        >
+          accessibilityRole="button">
           <Text className="text-forest-900 font-poppins-semibold text-lg">
             {CYCLIC_SIGH_CONFIG.copy.ctaStart}
           </Text>

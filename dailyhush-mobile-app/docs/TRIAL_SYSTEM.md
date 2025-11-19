@@ -1,6 +1,7 @@
 # Premium Trial System Documentation
 
 ## Overview
+
 DailyHush uses a **NO credit card required** 7-day Premium trial system. Users can start a trial after completing the quiz, and when the trial expires, they're offered subscription options or can continue with the Free tier.
 
 ## System Architecture
@@ -8,6 +9,7 @@ DailyHush uses a **NO credit card required** 7-day Premium trial system. Users c
 ### 1. Database Schema
 
 **user_profiles table** (trial tracking):
+
 ```sql
 premium_trial_active BOOLEAN DEFAULT FALSE
 premium_trial_start TIMESTAMPTZ
@@ -18,7 +20,9 @@ loop_type TEXT CHECK (loop_type IN ('sleep-loop', 'decision-loop', 'social-loop'
 ### 2. Core Components
 
 #### Trial Manager (`/utils/trialManager.ts`)
+
 Handles trial lifecycle:
+
 - `startPremiumTrial()` - Start 7-day trial
 - `getTrialStatus()` - Check trial status
 - `expireTrial()` - Auto-expire trial
@@ -26,25 +30,33 @@ Handles trial lifecycle:
 - `isPremiumActive()` - Check Premium access
 
 #### Trial Expired Paywall (`/components/TrialExpiredPaywall.tsx`)
+
 Shows when trial ends:
+
 - Loop-specific messaging
 - Premium features list
 - Subscription CTA
 - Continue with Free option
 
 #### Trial Expired Screen (`/app/trial-expired.tsx`)
+
 Modal screen shown when trial expires:
+
 - Uses TrialExpiredPaywall component
 - Redirects to subscription or home
 
 #### Subscription Screen (`/app/subscription.tsx`)
+
 Shows RevenueCat subscription options:
+
 - Monthly: $9.99/month
 - Annual: $59.99/year (50% savings)
 - Lifetime: $149.99 one-time
 
 #### Trial Guard Hook (`/hooks/useTrialGuard.ts`)
+
 Detects trial expiration and redirects:
+
 - Checks trial status on app launch
 - Periodic checks every hour
 - Redirects to trial-expired screen when expired
@@ -52,6 +64,7 @@ Detects trial expiration and redirects:
 ### 3. User Flow
 
 #### Starting Trial (After Quiz)
+
 ```
 Quiz Complete → Profile Setup → Signup → Quiz Results
                                             ↓
@@ -69,6 +82,7 @@ Quiz Complete → Profile Setup → Signup → Quiz Results
 ```
 
 #### Trial Expiration
+
 ```
 App Launch → useTrialGuard() → getTrialStatus()
                                       ↓
@@ -148,6 +162,7 @@ function Header() {
 ## Trial Reminders
 
 ### Day 5 & Day 6 Reminders
+
 Use `shouldShowTrialReminder()` from trialManager:
 
 ```typescript
@@ -166,8 +181,10 @@ async function checkTrialReminder() {
 ## RevenueCat Integration
 
 ### Setup (TODO)
+
 1. Install RevenueCat SDK: `npx expo install react-native-purchases`
 2. Configure in `app.json`:
+
 ```json
 {
   "expo": {
@@ -193,6 +210,7 @@ async function checkTrialReminder() {
 ### Subscription Status Sync
 
 When user subscribes via RevenueCat:
+
 ```typescript
 import Purchases from 'react-native-purchases';
 
@@ -213,23 +231,28 @@ async function handleSubscription() {
 ## Testing
 
 ### Test Trial Flow
+
 1. Complete quiz → Start trial
 2. Check `user_profiles.premium_trial_active = true`
 3. Check `premium_trial_end` = 7 days from now
 4. Verify Premium features are accessible
 
 ### Test Trial Expiration
+
 1. Manually set `premium_trial_end` to past date:
+
 ```sql
 UPDATE user_profiles
 SET premium_trial_end = NOW() - INTERVAL '1 day'
 WHERE user_id = 'test-user-id';
 ```
+
 2. Restart app
 3. Verify redirect to `/trial-expired` screen
 4. Test "Subscribe" and "Continue Free" options
 
 ### Test Subscription (TODO)
+
 1. Configure RevenueCat test products
 2. Test purchase flow
 3. Verify subscription status syncs to Supabase
@@ -238,6 +261,7 @@ WHERE user_id = 'test-user-id';
 ## Free Tier Features
 
 These features remain FREE forever:
+
 - Spiral interrupt exercises (core feature)
 - Daily content (1-2 pieces per day)
 - Community support
@@ -246,6 +270,7 @@ These features remain FREE forever:
 ## Premium Features
 
 Require active trial OR subscription:
+
 - Personalized loop-breaking exercises
 - Advanced rumination interrupt techniques
 - Full progress tracking & insights
@@ -256,16 +281,19 @@ Require active trial OR subscription:
 ## Troubleshooting
 
 ### Trial not starting
+
 - Check `startPremiumTrial()` errors in console
 - Verify user is authenticated
 - Check Supabase user_profiles table for trial fields
 
 ### Trial not expiring
+
 - Check `useTrialGuard()` is enabled in root layout
 - Check AsyncStorage for `last_trial_check` timestamp
 - Check console for trial expiration logs
 
 ### Subscription not working
+
 - Verify RevenueCat SDK is installed
 - Check RevenueCat API keys in `.env`
 - Check RevenueCat dashboard for product configuration

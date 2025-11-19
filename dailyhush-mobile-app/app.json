@@ -4,10 +4,7 @@
     "slug": "noema",
     "version": "1.0.0",
     "scheme": "noema",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -25,10 +22,7 @@
         "react-native-ble-plx",
         {
           "isBackgroundEnabled": true,
-          "modes": [
-            "peripheral",
-            "central"
-          ],
+          "modes": ["peripheral", "central"],
           "bluetoothAlwaysPermission": "Nœma needs Bluetooth to connect with your Shift necklace for guided breathing exercises."
         }
       ],
@@ -65,9 +59,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#0A1612"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anthony.noema",
@@ -83,18 +75,13 @@
         "NSMicrophoneUsageDescription": "Nœma needs microphone access for voice journaling features.",
         "NSUserNotificationsUsageDescription": "Nœma sends daily mindful quotes to help you interrupt rumination patterns.",
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": [
-          "audio",
-          "bluetooth-central"
-        ]
+        "UIBackgroundModes": ["audio", "bluetooth-central"]
       },
       "privacyManifests": {
         "NSPrivacyAccessedAPITypes": [
           {
             "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
-            "NSPrivacyAccessedAPITypeReasons": [
-              "CA92.1"
-            ]
+            "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]
           }
         ]
       }

@@ -55,12 +55,7 @@ Android: Top 40px / Bottom 30px
 import { SplashScreen } from '@/components/SplashScreen';
 
 if (!isReady) {
-  return (
-    <SplashScreen
-      onAnimationComplete={() => setIsReady(true)}
-      showLoading={true}
-    />
-  );
+  return <SplashScreen onAnimationComplete={() => setIsReady(true)} showLoading={true} />;
 }
 ```
 
@@ -183,19 +178,22 @@ Dependencies:    2 (Expo standard)
 ## 🔧 Customization
 
 Change colors:
+
 ```tsx
 // In SplashScreen.tsx styles
-backgroundColor: '#YOUR_COLOR'
-color: '#YOUR_COLOR'
+backgroundColor: '#YOUR_COLOR';
+color: '#YOUR_COLOR';
 ```
 
 Adjust timing:
+
 ```tsx
 // In animation definitions
 duration: 200,  // Change from default
 ```
 
 Hide loading:
+
 ```tsx
 <SplashScreen showLoading={false} />
 ```

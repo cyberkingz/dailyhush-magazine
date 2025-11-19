@@ -32,15 +32,10 @@ const LoopTypeHero = ({ loopType, userName }) => {
 
   return (
     <LinearGradient
-      colors={[
-        colors.gradient.start,
-        colors.gradient.middle,
-        colors.gradient.end,
-      ]}
+      colors={[colors.gradient.start, colors.gradient.middle, colors.gradient.end]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={{ height: 320, borderRadius: 24 }}
-    >
+      style={{ height: 320, borderRadius: 24 }}>
       <View style={{ padding: 32, alignItems: 'center' }}>
         <Text style={{ fontSize: 64 }}>{icon.emoji}</Text>
         <Text style={{ fontSize: 32, color: colors.text.primary }}>
@@ -68,17 +63,12 @@ const InsightCard = ({ insight, index }) => {
         duration: 500,
         delay: index * 100, // Stagger animation
       }}
-      style={patternInsightCardStyles.container}
-    >
+      style={patternInsightCardStyles.container}>
       <View style={patternInsightCardStyles.iconContainer}>
         <Text style={{ fontSize: 32 }}>{insight.icon}</Text>
       </View>
-      <Text style={{ fontSize: 18, fontWeight: '600' }}>
-        {insight.title}
-      </Text>
-      <Text style={{ fontSize: 15, opacity: 0.85 }}>
-        {insight.description}
-      </Text>
+      <Text style={{ fontSize: 18, fontWeight: '600' }}>{insight.title}</Text>
+      <Text style={{ fontSize: 15, opacity: 0.85 }}>{insight.description}</Text>
     </MotiView>
   );
 };
@@ -97,12 +87,8 @@ const ProductCard = ({ product }) => {
       </View>
 
       <View style={productCardStyles.content}>
-        <Text style={{ fontSize: 16, fontWeight: '600' }}>
-          {product.name}
-        </Text>
-        <Text style={{ fontSize: 20, fontWeight: '700' }}>
-          {formatCurrency(product.price)}
-        </Text>
+        <Text style={{ fontSize: 16, fontWeight: '600' }}>{product.name}</Text>
+        <Text style={{ fontSize: 20, fontWeight: '700' }}>{formatCurrency(product.price)}</Text>
         <Pressable style={productCardStyles.ctaButton}>
           <Text style={{ color: '#FFF' }}>Add to Cart</Text>
         </Pressable>
@@ -140,13 +126,13 @@ const colors = getLoopTypeColors('sleep-loop');
 ```tsx
 // Emoji icons
 const icon = loopTypeIcons['sleep-loop'];
-<Text>{icon.emoji}</Text> // 🌙
+<Text>{icon.emoji}</Text>; // 🌙
 
 // Lucide icons
 import { Moon } from 'lucide-react-native';
 import { getIconSize } from '@/constants';
 
-<Moon size={getIconSize('lg')} color="#FFF" />
+<Moon size={getIconSize('lg')} color="#FFF" />;
 ```
 
 ### Using Typography
@@ -175,10 +161,9 @@ import { fadeAnimations, getDuration } from '@/constants';
   transition={{
     type: 'timing',
     duration: getDuration('slow'),
-  }}
->
+  }}>
   {/* Animated content */}
-</MotiView>
+</MotiView>;
 ```
 
 ---
@@ -191,9 +176,7 @@ import { fadeAnimations, getDuration } from '@/constants';
 import { getLoopTypeGradient } from '@/constants';
 
 const gradient = getLoopTypeGradient('sleep-loop');
-<LinearGradient {...gradient}>
-  {/* Content */}
-</LinearGradient>
+<LinearGradient {...gradient}>{/* Content */}</LinearGradient>;
 ```
 
 ### Responsive Fonts
@@ -214,10 +197,9 @@ import { createAccessibilityLabel, createAccessibilityHint } from '@/constants';
     loopType: 'sleep-loop',
     description: 'Bedtime rumination',
   })}
-  accessibilityHint={createAccessibilityHint('share')}
->
+  accessibilityHint={createAccessibilityHint('share')}>
   {/* Content */}
-</Pressable>
+</Pressable>;
 ```
 
 ### Growth Garden
@@ -239,12 +221,13 @@ const message = getGrowthMessage(stage); // "Your garden is starting to grow..."
 ```tsx
 import { createShadow } from '@/constants';
 
-<View style={[
-  styles.card,
-  createShadow(8, '#000', 0.2) // Works on iOS and Android
-]}>
+<View
+  style={[
+    styles.card,
+    createShadow(8, '#000', 0.2), // Works on iOS and Android
+  ]}>
   {/* Card content */}
-</View>
+</View>;
 ```
 
 ### Glassmorphism
@@ -252,12 +235,7 @@ import { createShadow } from '@/constants';
 ```tsx
 import { createGlassmorphism } from '@/constants';
 
-<View style={[
-  styles.card,
-  createGlassmorphism(0.08, 20, 0.12)
-]}>
-  {/* Frosted glass card */}
-</View>
+<View style={[styles.card, createGlassmorphism(0.08, 20, 0.12)]}>{/* Frosted glass card */}</View>;
 ```
 
 ---
@@ -274,10 +252,7 @@ const Component = () => {
   const duration = getAccessibleDuration(500, 150);
 
   return (
-    <MotiView
-      animate={{ opacity: 1 }}
-      transition={{ duration }}
-    >
+    <MotiView animate={{ opacity: 1 }} transition={{ duration }}>
       {/* Content */}
     </MotiView>
   );
@@ -297,7 +272,7 @@ import { TOUCH_TARGETS } from '@/constants/designTokens';
   hitSlop={20} // Extend touch area
 >
   {/* Button */}
-</Pressable>
+</Pressable>;
 ```
 
 ---
@@ -315,7 +290,7 @@ const colors = getLoopTypeColors(loopType);
 const gradient = getLoopTypeGradient('sleep-loop');
 
 // ✓ Provide accessibility
-accessibilityLabel="Your loop type: Sleep Loop"
+accessibilityLabel = 'Your loop type: Sleep Loop';
 
 // ✓ Respect reduced motion
 const duration = getAccessibleDuration(500);
@@ -342,6 +317,7 @@ const duration = getAccessibleDuration(500);
 ## 📚 Full Documentation
 
 See `PROFILE_DESIGN_SYSTEM.md` for:
+
 - Complete color palettes
 - All icon mappings
 - Typography specifications

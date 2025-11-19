@@ -16,12 +16,23 @@
 import { supabase } from '@/utils/supabase';
 import { withRetry } from '@/utils/retry';
 import { TECHNIQUE_LIBRARY } from '@/constants/techniqueLibrary';
-import type {
-  Technique,
-  UserTechniqueStats,
-  AdaptiveProtocol,
-  ProtocolOutcome,
-} from '@/types';
+import type { Technique, UserTechniqueStats, AdaptiveProtocol, ProtocolOutcome } from '@/types';
+
+interface UserTechniqueStatsRow {
+  id: string;
+  user_id: string;
+  technique_id: string;
+  times_used: number;
+  times_successful: number;
+  avg_reduction: number | string;
+  last_used_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface SpiralLogRow {
+  spiral_id: string;
+}
 
 // ============================================================================
 // SCORING CONSTANTS
@@ -35,10 +46,9 @@ const SCORING_WEIGHTS = {
 } as const;
 
 const RECENCY_THRESHOLD_HOURS = 24; // Penalize techniques used within last 24 hours
-const SUCCESS_THRESHOLD = 2; // Reduction of 2+ points considered successful
 
 // ============================================================================
-// MAIN SELECTION FUNCTION
+// MAIN SELECTION FUNCTIONs
 // ============================================================================
 
 /**
@@ -75,15 +85,13 @@ const SUCCESS_THRESHOLD = 2; // Reduction of 2+ points considered successful
 export async function selectAdaptiveProtocol(
   userId: string,
   intensity: number,
-  trigger?: string,
-  shiftConnected: boolean = false
+  trigger?: string
 ): Promise<AdaptiveProtocol> {
   try {
     console.log('[AdaptiveProtocol] Selection started:', {
       userId,
       intensity,
       trigger,
-      shiftConnected,
     });
 
     // Validate intensity
@@ -100,11 +108,7 @@ export async function selectAdaptiveProtocol(
     console.log(`[AdaptiveProtocol] Intensity ${intensity} mapped to range: ${intensityRange}`);
 
     // Step 3: Filter available techniques
-    const availableTechniques = filterTechniques(
-      TECHNIQUE_LIBRARY,
-      intensityRange,
-      shiftConnected
-    );
+    const availableTechniques = filterTechniques(TECHNIQUE_LIBRARY, intensityRange);
     console.log(
       `[AdaptiveProtocol] ${availableTechniques.length} techniques available after filtering`
     );
@@ -137,11 +141,7 @@ export async function selectAdaptiveProtocol(
     const selected = scoredTechniques[0];
 
     // Step 6: Calculate confidence
-    const confidence = calculateConfidence(
-      selected.score,
-      selected.stats,
-      scoredTechniques.length
-    );
+    const confidence = calculateConfidence(selected.score, selected.stats, scoredTechniques.length);
 
     // Step 7: Generate human-readable rationale
     const rationale = generateRationale(selected.technique, selected.stats, intensity, trigger);
@@ -182,17 +182,16 @@ export async function selectAdaptiveProtocol(
  *   console.log(`${stat.techniqueId}: ${stat.avgReduction} avg reduction`);
  * });
  */
-export async function getUserTechniqueStats(
-  userId: string
-): Promise<UserTechniqueStats[]> {
+export async function getUserTechniqueStats(userId: string): Promise<UserTechniqueStats[]> {
   try {
-    const { data, error } = await withRetry(
-      () =>
-        supabase
+    const { data, error } = await withRetry<UserTechniqueStatsRow[]>(
+      async () => {
+        return await supabase
           .from('user_technique_stats')
           .select('*')
           .eq('user_id', userId)
-          .order('last_used_at', { ascending: false, nullsFirst: false }),
+          .order('last_used_at', { ascending: false, nullsFirst: false });
+      },
       {
         maxRetries: 3,
         onRetry: (attempt, err) => {
@@ -218,7 +217,7 @@ export async function getUserTechniqueStats(
       techniqueId: row.technique_id,
       timesUsed: row.times_used,
       timesSuccessful: row.times_successful,
-      avgReduction: parseFloat(row.avg_reduction),
+      avgReduction: parseFloat(String(row.avg_reduction)),
       lastUsedAt: row.last_used_at ? new Date(row.last_used_at) : null,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
@@ -284,8 +283,10 @@ export async function recordProtocolOutcome(outcome: ProtocolOutcome): Promise<v
     };
 
     // Insert into spiral_logs (trigger will auto-update user_technique_stats)
-    const { data, error } = await withRetry(
-      () => supabase.from('spiral_logs').insert(spiralLog).select().single(),
+    const { data, error } = await withRetry<SpiralLogRow>(
+      async () => {
+        return await supabase.from('spiral_logs').insert(spiralLog).select().single();
+      },
       {
         maxRetries: 3,
         onRetry: (attempt, err) => {
@@ -299,7 +300,10 @@ export async function recordProtocolOutcome(outcome: ProtocolOutcome): Promise<v
       throw new Error(`Failed to record protocol outcome: ${error.message}`);
     }
 
-    console.log('[AdaptiveProtocol] Protocol outcome recorded successfully:', data.spiral_id);
+    console.log(
+      '[AdaptiveProtocol] Protocol outcome recorded successfully:',
+      data?.spiral_id ?? '(unknown)'
+    );
   } catch (error) {
     console.error('[AdaptiveProtocol] recordProtocolOutcome failed:', error);
     throw error;
@@ -350,17 +354,13 @@ function scoreTechnique(
 
   // 3. Intensity match score
   const intensityRange = getIntensityRange(intensity);
-  if (
-    technique.intensityRange === intensityRange ||
-    technique.intensityRange === 'any'
-  ) {
+  if (technique.intensityRange === intensityRange || technique.intensityRange === 'any') {
     intensityMatch = SCORING_WEIGHTS.INTENSITY_MATCH;
   }
 
   // 4. Recency penalty (prevent habituation)
   if (stats?.lastUsedAt) {
-    const hoursSinceLastUse =
-      (Date.now() - stats.lastUsedAt.getTime()) / (1000 * 60 * 60);
+    const hoursSinceLastUse = (Date.now() - stats.lastUsedAt.getTime()) / (1000 * 60 * 60);
     if (hoursSinceLastUse < RECENCY_THRESHOLD_HOURS) {
       recencyPenalty = -SCORING_WEIGHTS.RECENCY_PENALTY;
     }
@@ -418,10 +418,7 @@ function calculateConfidence(
   const choiceReduction = Math.min(techniqueCount / 5, 1) * 0.1;
 
   // Final confidence calculation
-  const confidence = Math.min(
-    Math.max(normalizedScore + dataBonus - choiceReduction, 0),
-    1
-  );
+  const confidence = Math.min(Math.max(normalizedScore + dataBonus - choiceReduction, 0), 1);
 
   return Math.round(confidence * 100) / 100; // Round to 2 decimal places
 }
@@ -487,8 +484,8 @@ export function generateRationale(
       intensityRange === 'severe'
         ? 'high-intensity spirals'
         : intensityRange === 'moderate'
-        ? 'moderate anxiety'
-        : 'mild worry';
+          ? 'moderate anxiety'
+          : 'mild worry';
     parts.push(`It's effective for ${intensityDescription} like what you're experiencing now.`);
   }
 
@@ -529,20 +526,11 @@ function getIntensityRange(intensity: number): 'severe' | 'moderate' | 'mild' {
  */
 function filterTechniques(
   techniques: readonly Technique[],
-  intensityRange: 'severe' | 'moderate' | 'mild',
-  shiftConnected: boolean
+  intensityRange: 'severe' | 'moderate' | 'mild'
 ): Technique[] {
   return [...techniques].filter((technique) => {
-    // Filter by Shift requirement
-    if (technique.requiresShift && !shiftConnected) {
-      return false;
-    }
-
     // Filter by intensity range (include 'any' techniques)
-    if (
-      technique.intensityRange !== intensityRange &&
-      technique.intensityRange !== 'any'
-    ) {
+    if (technique.intensityRange !== intensityRange && technique.intensityRange !== 'any') {
       return false;
     }
 

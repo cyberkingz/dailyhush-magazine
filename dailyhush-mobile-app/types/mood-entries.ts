@@ -334,12 +334,12 @@ export interface MoodPatterns {
  * Mood trends over time
  */
 export interface MoodTrends {
-  daily_mood_counts: Array<{
+  daily_mood_counts: {
     date: string;
     mood_type: MoodType;
     count: number;
     avg_intensity: number;
-  }>;
+  }[];
   weekly_completion_rate: number;
   total_words_written: number;
   most_active_time_of_day: string; // e.g., "03:00"

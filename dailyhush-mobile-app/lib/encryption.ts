@@ -31,10 +31,7 @@ const SECURE_STORE_KEYS = {
  * Generates a new encryption key for the user
  * Called during onboarding or first mood entry
  */
-export async function generateEncryptionKey(
-  userId: string,
-  userPassword: string
-): Promise<void> {
+export async function generateEncryptionKey(userId: string, userPassword: string): Promise<void> {
   // Generate random master key
   const masterKey = crypto.getRandomValues(new Uint8Array(KEY_LENGTH / 8));
 
@@ -62,10 +59,7 @@ export async function generateEncryptionKey(
   }
 
   // Store master key in secure storage (for quick access)
-  await SecureStore.setItemAsync(
-    SECURE_STORE_KEYS.MASTER_KEY,
-    arrayBufferToBase64(masterKey)
-  );
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.MASTER_KEY, arrayBufferToBase64(masterKey));
   await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEY_SALT, saltBase64);
   await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEY_VERSION, '1');
 }
@@ -76,9 +70,7 @@ export async function generateEncryptionKey(
  */
 export async function getUserEncryptionKey(): Promise<CryptoKey> {
   // Try to get from secure storage first (fastest)
-  const storedKeyBase64 = await SecureStore.getItemAsync(
-    SECURE_STORE_KEYS.MASTER_KEY
-  );
+  const storedKeyBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.MASTER_KEY);
 
   if (storedKeyBase64) {
     const keyBuffer = base64ToArrayBuffer(storedKeyBase64);
@@ -92,19 +84,14 @@ export async function getUserEncryptionKey(): Promise<CryptoKey> {
   }
 
   // If not in secure storage, need to re-derive from password
-  throw new Error(
-    'Encryption key not found. Please re-authenticate to restore access.'
-  );
+  throw new Error('Encryption key not found. Please re-authenticate to restore access.');
 }
 
 /**
  * Unlocks the encryption key using user's password
  * Called during login or when secure storage is cleared
  */
-export async function unlockEncryptionKey(
-  userId: string,
-  userPassword: string
-): Promise<void> {
+export async function unlockEncryptionKey(userId: string, userPassword: string): Promise<void> {
   // Fetch encrypted key from database
   const { data, error } = await supabase
     .from('user_encryption_keys')
@@ -121,10 +108,7 @@ export async function unlockEncryptionKey(
   }
 
   // Derive key from password
-  const passwordKey = await deriveKeyFromPassword(
-    userPassword,
-    data.key_derivation_salt
-  );
+  const passwordKey = await deriveKeyFromPassword(userPassword, data.key_derivation_salt);
 
   // Decrypt master key
   try {
@@ -141,15 +125,9 @@ export async function unlockEncryptionKey(
       SECURE_STORE_KEYS.MASTER_KEY,
       arrayBufferToBase64(decryptedMasterKey)
     );
-    await SecureStore.setItemAsync(
-      SECURE_STORE_KEYS.KEY_SALT,
-      data.key_derivation_salt
-    );
-    await SecureStore.setItemAsync(
-      SECURE_STORE_KEYS.KEY_VERSION,
-      data.key_version.toString()
-    );
-  } catch (error) {
+    await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEY_SALT, data.key_derivation_salt);
+    await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEY_VERSION, data.key_version.toString());
+  } catch {
     throw new Error('Invalid password. Could not decrypt encryption key.');
   }
 }
@@ -158,10 +136,7 @@ export async function unlockEncryptionKey(
  * Rotates the encryption key (for security best practices)
  * Should be done every 90 days or on password change
  */
-export async function rotateEncryptionKey(
-  userId: string,
-  newPassword: string
-): Promise<void> {
+export async function rotateEncryptionKey(userId: string, newPassword: string): Promise<void> {
   // Get current master key
   const currentKey = await getUserEncryptionKey();
 
@@ -198,10 +173,7 @@ export async function rotateEncryptionKey(
   }
 
   // Update secure storage
-  await SecureStore.setItemAsync(
-    SECURE_STORE_KEYS.MASTER_KEY,
-    arrayBufferToBase64(newMasterKey)
-  );
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.MASTER_KEY, arrayBufferToBase64(newMasterKey));
   await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEY_SALT, newSaltBase64);
 }
 
@@ -252,10 +224,7 @@ export async function encryptText(plaintext: string): Promise<{
 /**
  * Decrypts text using user's encryption key
  */
-export async function decryptText(
-  ciphertext: Uint8Array,
-  nonceBase64: string
-): Promise<string> {
+export async function decryptText(ciphertext: Uint8Array, nonceBase64: string): Promise<string> {
   if (!ciphertext || !nonceBase64) {
     throw new Error('Cannot decrypt without ciphertext and nonce');
   }
@@ -287,21 +256,15 @@ export async function decryptText(
 /**
  * Derives an encryption key from a password using PBKDF2
  */
-async function deriveKeyFromPassword(
-  password: string,
-  saltBase64: string
-): Promise<CryptoKey> {
+async function deriveKeyFromPassword(password: string, saltBase64: string): Promise<CryptoKey> {
   const passwordBuffer = new TextEncoder().encode(password);
   const salt = base64ToArrayBuffer(saltBase64);
 
   // Import password as key material
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    passwordBuffer,
-    'PBKDF2',
-    false,
-    ['deriveBits', 'deriveKey']
-  );
+  const keyMaterial = await crypto.subtle.importKey('raw', passwordBuffer, 'PBKDF2', false, [
+    'deriveBits',
+    'deriveKey',
+  ]);
 
   // Derive actual encryption key
   return await crypto.subtle.deriveKey(
@@ -406,7 +369,7 @@ export async function validateEncryptionKey(): Promise<boolean> {
   try {
     const key = await getUserEncryptionKey();
     return key !== null;
-  } catch (error) {
+  } catch {
     return false;
   }
 }

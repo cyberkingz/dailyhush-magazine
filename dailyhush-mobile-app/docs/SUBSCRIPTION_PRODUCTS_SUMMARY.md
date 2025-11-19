@@ -1,4 +1,5 @@
 # Nœma - Subscription Products Summary
+
 **Date:** November 11, 2025
 **For:** App Store Connect & RevenueCat Configuration
 
@@ -7,6 +8,7 @@
 ## 📦 SUBSCRIPTION PRODUCTS
 
 ### Product 1: Monthly Premium
+
 **Product ID:** `com.anthony.noema.monthly`
 **Type:** Auto-renewable subscription
 **Duration:** 1 month
@@ -16,6 +18,7 @@
 **Description:** "Perfect for trying Premium"
 
 **Benefits:**
+
 - Personalized loop-breaking exercises
 - Advanced rumination interrupt techniques
 - Progress tracking & insights
@@ -26,6 +29,7 @@
 ---
 
 ### Product 2: Annual Premium (MOST POPULAR)
+
 **Product ID:** `com.anthony.noema.annual`
 **Type:** Auto-renewable subscription
 **Duration:** 1 year
@@ -36,6 +40,7 @@
 **Description:** "Best value - 2 months free"
 
 **Benefits:**
+
 - All Monthly Premium features
 - 50% savings (equivalent to $5/month)
 - 2 months free compared to monthly billing
@@ -43,6 +48,7 @@
 ---
 
 ### Product 3: Lifetime Premium
+
 **Product ID:** `com.anthony.noema.lifetime`
 **Type:** Non-consumable (one-time purchase)
 **Duration:** Forever
@@ -53,6 +59,7 @@
 **Description:** "Never pay again"
 
 **Benefits:**
+
 - All Premium features forever
 - No recurring payments
 - Best long-term value (pays for itself after 15 months vs monthly)
@@ -67,6 +74,7 @@
 **Disclaimer:** "Cancel anytime before trial ends to avoid charges"
 
 **Trial Behavior:**
+
 - Users get full Premium access for 7 days
 - No charge during trial period
 - Auto-converts to paid subscription after 7 days
@@ -76,19 +84,20 @@
 
 ## 💰 PRICING COMPARISON
 
-| Plan | Price | Per Month | Savings | Trial |
-|------|-------|-----------|---------|-------|
-| **Monthly** | $9.99/month | $9.99 | — | 7 days |
-| **Annual** | $59.99/year | $5.00 | 50% | 7 days |
-| **Lifetime** | $149.99 once | $0.83* | 92%* | No trial |
+| Plan         | Price        | Per Month | Savings | Trial    |
+| ------------ | ------------ | --------- | ------- | -------- |
+| **Monthly**  | $9.99/month  | $9.99     | —       | 7 days   |
+| **Annual**   | $59.99/year  | $5.00     | 50%     | 7 days   |
+| **Lifetime** | $149.99 once | $0.83\*   | 92%\*   | No trial |
 
-*Lifetime calculation: $149.99 ÷ 15 years ÷ 12 months = $0.83/month
+\*Lifetime calculation: $149.99 ÷ 15 years ÷ 12 months = $0.83/month
 
 ---
 
 ## 🆓 FREE PLAN FEATURES
 
 Users without Premium subscription get:
+
 - ✅ Spiral interrupt exercises (limited)
 - ✅ Daily content
 - ✅ Community support
@@ -101,12 +110,15 @@ Users without Premium subscription get:
 ## 📋 SUBSCRIPTION TERMS
 
 ### Auto-Renewal
+
 "Subscriptions renew automatically unless canceled 24 hours before the end of your current period."
 
 ### Cancellation
+
 "You can cancel anytime through your App Store or Google Play settings."
 
 ### Full Legal Text
+
 "Subscriptions auto-renew unless canceled 24 hours before the end of the current period. Cancel anytime in your App Store settings."
 
 ---
@@ -118,6 +130,7 @@ Users without Premium subscription get:
 Go to: **App Store Connect → Your App → Monetization → In-App Purchases**
 
 #### Product 1: Monthly
+
 - **Reference Name:** Noema Premium Monthly
 - **Product ID:** `com.anthony.noema.monthly`
 - **Type:** Auto-Renewable Subscription
@@ -128,6 +141,7 @@ Go to: **App Store Connect → Your App → Monetization → In-App Purchases**
 - **Review Notes:** "Monthly subscription with 7-day trial"
 
 #### Product 2: Annual
+
 - **Reference Name:** Noema Premium Annual
 - **Product ID:** `com.anthony.noema.annual`
 - **Type:** Auto-Renewable Subscription
@@ -138,6 +152,7 @@ Go to: **App Store Connect → Your App → Monetization → In-App Purchases**
 - **Review Notes:** "Annual subscription with 7-day trial, 50% savings"
 
 #### Product 3: Lifetime
+
 - **Reference Name:** Noema Premium Lifetime
 - **Product ID:** `com.anthony.noema.lifetime`
 - **Type:** Non-Consumable
@@ -150,11 +165,13 @@ Go to: **App Store Connect → Your App → Monetization → In-App Purchases**
 
 **Group Name:** Noema Premium
 **Subscription Rank:**
+
 1. Annual (highest - Apple will suggest this first)
 2. Monthly (middle)
 3. Lifetime (N/A - not in subscription group)
 
 **Introductory Offer:**
+
 - ✅ Enable for Monthly: 7 days free trial
 - ✅ Enable for Annual: 7 days free trial
 - Type: Free Trial
@@ -190,6 +207,7 @@ Go to: **RevenueCat Dashboard → Offerings**
 **Offering ID:** `default` (or create named offering)
 
 **Add Packages:**
+
 1. **Package ID:** `$rc_monthly`
    - Product: monthly
    - Type: Monthly
@@ -210,20 +228,24 @@ Go to: **RevenueCat Dashboard → Offerings**
 ## 🎨 DISPLAY COPY IN APP
 
 ### Paywall Header
+
 "Begin Your Journey to Peace"
 
 ### Paywall Subheader
+
 "Choose the path that feels right for you"
 
 ### Plan Cards
 
 **Monthly:**
+
 - Title: "Monthly"
 - Price: "$9.99/month" (loaded from RevenueCat)
 - Description: "Perfect for trying Premium"
 - Trial: "Start your 7-day journey"
 
 **Annual:** ⭐ Most Popular
+
 - Title: "Annual"
 - Price: "$59.99/year" (loaded from RevenueCat)
 - Badge: "MOST POPULAR"
@@ -232,6 +254,7 @@ Go to: **RevenueCat Dashboard → Offerings**
 - Trial: "Start your 7-day journey"
 
 **Lifetime:** 💎 Best Value
+
 - Title: "Lifetime"
 - Price: "$149.99" (loaded from RevenueCat)
 - Badge: "BEST VALUE"
@@ -240,10 +263,12 @@ Go to: **RevenueCat Dashboard → Offerings**
 - Trial: None (immediate purchase)
 
 ### CTA Buttons
+
 - Free trial: "Start 7-Day Trial"
 - Lifetime: "Buy Lifetime Access"
 
 ### Legal Footer
+
 "Subscriptions renew automatically unless canceled 24 hours before the end of your current period. Cancel anytime in your App Store settings."
 
 ---
@@ -251,22 +276,27 @@ Go to: **RevenueCat Dashboard → Offerings**
 ## 🚨 IMPORTANT NOTES
 
 ### Pricing is Reference Only
+
 The hardcoded prices in `constants/subscription.ts` are **FOR REFERENCE ONLY**.
 **Production app loads actual pricing from RevenueCat/App Store dynamically.**
 
 This ensures:
+
 - ✅ International currency localization (€, £, ¥, etc.)
 - ✅ Apple's pricing tiers are respected
 - ✅ Price changes don't require app update
 - ✅ A/B testing capabilities through RevenueCat
 
 ### Bundle ID Changed
+
 - Old Bundle ID: `com.noema.mobile`
 - **New Bundle ID:** `com.anthony.noema` ✅
 - **All product IDs must use new bundle prefix**
 
 ### Testing
+
 Before production launch:
+
 1. Create **Sandbox Tester** in App Store Connect
 2. Test all 3 products in TestFlight build
 3. Test 7-day trial flow (use date manipulation)
@@ -279,6 +309,7 @@ Before production launch:
 ## ✅ CHECKLIST
 
 ### App Store Connect
+
 - [ ] Create Subscription Group "Noema Premium"
 - [ ] Create Product: `com.anthony.noema.monthly` ($9.99, 1 month, 7-day trial)
 - [ ] Create Product: `com.anthony.noema.annual` ($59.99, 1 year, 7-day trial)
@@ -287,6 +318,7 @@ Before production launch:
 - [ ] Submit products for review
 
 ### RevenueCat Dashboard
+
 - [ ] Add 3 products with correct Store Product IDs
 - [ ] Create "default" offering
 - [ ] Add packages: $rc_monthly, $rc_annual, $rc_lifetime
@@ -295,6 +327,7 @@ Before production launch:
 - [ ] Verify credentials (green checkmark)
 
 ### Testing
+
 - [ ] Create sandbox tester account
 - [ ] Install TestFlight build
 - [ ] Test purchase flow for all 3 products
@@ -307,6 +340,7 @@ Before production launch:
 ## 📞 SUPPORT
 
 If users have issues:
+
 - **Email:** hello@trynoema.com
 - **In-App:** Settings → Contact Support
 - **RevenueCat:** Handles subscription status automatically

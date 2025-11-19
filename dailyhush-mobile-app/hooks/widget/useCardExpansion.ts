@@ -67,15 +67,8 @@ interface UseCardExpansionConfig {
  * </Animated.View>
  * ```
  */
-export function useCardExpansion(
-  config: UseCardExpansionConfig
-): UseCardExpansionReturn {
-  const {
-    collapsedHeight,
-    expandedHeight,
-    expansionDuration,
-    collapseDuration,
-  } = config;
+export function useCardExpansion(config: UseCardExpansionConfig): UseCardExpansionReturn {
+  const { collapsedHeight, expandedHeight, expansionDuration, collapseDuration } = config;
 
   // ========================================================================
   // STATE

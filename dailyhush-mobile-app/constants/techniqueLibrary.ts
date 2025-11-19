@@ -21,7 +21,6 @@
  */
 
 import type { Technique } from '@/types';
-import { ANIMATIONS } from '@/constants/design-tokens';
 import { colors } from '@/constants/colors';
 
 // ============================================================================
@@ -40,7 +39,7 @@ const GROUNDING_5_4_3_2_1: Technique = {
   name: 'Grounding 5-4-3-2-1',
   shortName: 'Grounding',
   description:
-    "Use your five senses to reconnect with the present moment. CBT-approved sensory technique that interrupts rumination by engaging with your immediate environment.",
+    'Use your five senses to reconnect with the present moment. CBT-approved sensory technique that interrupts rumination by engaging with your immediate environment.',
   duration: 90, // seconds
   bestFor: ['anxiety', 'overwhelm', 'general'],
   intensityRange: 'moderate',

@@ -49,7 +49,7 @@ export default function HomeModern() {
   const welcomeLine = displayName === 'Friend' ? 'Welcome back' : `Welcome back, ${displayName}`;
 
   // Mood logging integration
-  const { submitMood, getTodayMood, isSubmitting, error: moodError } = useMoodLogging();
+  const { getTodayMood } = useMoodLogging();
   const [todayMood, setTodayMood] = useState<{
     weather: string;
     intensity: number;
@@ -57,7 +57,7 @@ export default function HomeModern() {
     createdAt?: string;
     updatedAt?: string;
   } | null>(null);
-  const [isFetchingMood, setIsFetchingMood] = useState(false);
+  const [, setIsFetchingMood] = useState(false);
 
   // Handle mood submission
   // Note: The widget already submitted the mood - this callback just updates the UI
@@ -182,7 +182,7 @@ export default function HomeModern() {
     if (user) {
       try {
         setIsFetchingMood(true);
-        console.log('[Home] Fetching today\'s mood...');
+        console.log("[Home] Fetching today's mood...");
         const mood = await getTodayMood();
         if (mood) {
           console.log('[Home] Mood found:', {
@@ -204,7 +204,7 @@ export default function HomeModern() {
           setTodayMood(null);
         }
       } catch (error) {
-        console.error('[Home] Failed to fetch today\'s mood:', error);
+        console.error("[Home] Failed to fetch today's mood:", error);
         setTodayMood(null);
       } finally {
         setIsFetchingMood(false);
@@ -332,110 +332,116 @@ export default function HomeModern() {
         <StatusBar style="light" />
 
         <ScrollFadeView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          paddingTop: insets.top + spacing.safeArea.top,
-          paddingBottom: 72 + insets.bottom,
-        }}
-        showsVerticalScrollIndicator={false}
-        fadeColor={colors.background.primary}
-        fadeHeight={48}
-        fadeIntensity={0.95}
-        fadeVisibility="always">
-        {/* Header & Greeting */}
-        <View
-          style={{
-            paddingHorizontal: spacing.screenPadding,
-            marginBottom: spacing.xl,
-          }}>
+          style={{ flex: 1 }}
+          contentContainerStyle={{
+            paddingTop: insets.top + spacing.safeArea.top,
+            paddingBottom: 72 + insets.bottom,
+          }}
+          showsVerticalScrollIndicator={false}
+          fadeColor={colors.background.primary}
+          fadeHeight={48}
+          fadeIntensity={0.95}
+          fadeVisibility="always">
+          {/* Header & Greeting */}
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 18,
+              paddingHorizontal: spacing.screenPadding,
+              marginBottom: spacing.xl,
             }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
-              <Image
-                source={require('@/assets/img/rounded-logo.png')}
-                style={{
-                  width: 48,
-                  height: 48,
-                  resizeMode: 'contain',
-                }}
-              />
-              <View>
-                <Text
-                  style={{
-                    fontSize: 24,
-                    fontFamily: brandFonts.headlineBold,
-                    fontWeight: '700',
-                    color: colors.text.primary,
-                    letterSpacing: 0.15,
-                    lineHeight: 32,
-                  }}>
-                  {greetingLine}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    color: colors.text.secondary,
-                    marginTop: 6,
-                    opacity: 0.85,
-                  }}>
-                  {welcomeLine}
-                </Text>
-              </View>
-            </View>
-
-            <Pressable
-              onPress={() => {
-                Haptics.selectionAsync();
-                router.push('/settings' as any);
-              }}
+            <View
               style={{
-                width: 40,
-                height: 40,
+                flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 18,
               }}>
-              {({ pressed }) => (
-                <Settings size={24} color={colors.text.secondary} opacity={pressed ? 0.5 : 0.7} />
-              )}
-            </Pressable>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+                <Image
+                  source={require('@/assets/img/rounded-logo.png')}
+                  style={{
+                    width: 48,
+                    height: 48,
+                    resizeMode: 'contain',
+                  }}
+                />
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      fontFamily: brandFonts.headlineBold,
+                      fontWeight: '700',
+                      color: colors.text.primary,
+                      letterSpacing: 0.15,
+                      lineHeight: 32,
+                    }}>
+                    {greetingLine}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: colors.text.secondary,
+                      marginTop: 6,
+                      opacity: 0.85,
+                    }}>
+                    {welcomeLine}
+                  </Text>
+                </View>
+              </View>
+
+              <Pressable
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  router.push('/settings' as any);
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                {({ pressed }) => (
+                  <Settings size={24} color={colors.text.secondary} opacity={pressed ? 0.5 : 0.7} />
+                )}
+              </Pressable>
+            </View>
           </View>
-        </View>
 
-        {/* Daily Quote */}
-        <QuoteBanner style={{ marginHorizontal: spacing.screenPadding, marginBottom: spacing.xl, alignSelf: 'flex-end' }} />
-
-        {/* Mood Logging Card */}
-        <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: spacing['2xl'] }}>
-          <EmotionalWeatherWidget
-            weather={todayMood?.weather as any}
-            moodRating={todayMood?.intensity}
-            notes={todayMood?.notes}
-            createdAt={todayMood?.createdAt}
-            updatedAt={todayMood?.updatedAt}
-            onMoodSubmit={handleMoodSubmit}
-            onUpdate={handleMoodUpdate}
+          {/* Daily Quote */}
+          <QuoteBanner
+            style={{
+              marginHorizontal: spacing.screenPadding,
+              marginBottom: spacing.xl,
+              alignSelf: 'flex-end',
+            }}
           />
-        </View>
 
-        {/* Main CTA - Direct to crisis interruption */}
-        <CTAButton
-          title="I'M SPIRALING"
-          subtitle="90-Second Reset"
-          icon={Infinity}
-          onPress={() => router.push('/spiral')}
-        />
+          {/* Mood Logging Card */}
+          <View style={{ paddingHorizontal: spacing.screenPadding, marginBottom: spacing['2xl'] }}>
+            <EmotionalWeatherWidget
+              weather={todayMood?.weather as any}
+              moodRating={todayMood?.intensity}
+              notes={todayMood?.notes}
+              createdAt={todayMood?.createdAt}
+              updatedAt={todayMood?.updatedAt}
+              onMoodSubmit={handleMoodSubmit}
+              onUpdate={handleMoodUpdate}
+            />
+          </View>
 
-        {/* Feature Grid */}
-        <FeatureGrid features={features} />
+          {/* Main CTA - Direct to crisis interruption */}
+          <CTAButton
+            title="I'M SPIRALING"
+            subtitle="90-Second Reset"
+            icon={Infinity}
+            onPress={() => router.push('/spiral')}
+          />
 
-        {/* Bottom spacing */}
-        <View style={{ height: 24 }} />
-      </ScrollFadeView>
+          {/* Feature Grid */}
+          <FeatureGrid features={features} />
+
+          {/* Bottom spacing */}
+          <View style={{ height: 24 }} />
+        </ScrollFadeView>
       </View>
     </ScrollControlProvider>
   );

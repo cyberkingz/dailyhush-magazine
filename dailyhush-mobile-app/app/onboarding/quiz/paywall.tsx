@@ -48,13 +48,8 @@ export default function QuizPaywall() {
   const [subscriptionOptions, setSubscriptionOptions] = useState<any[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
-  const planIncludesTrial =
-    selectedPlan === PACKAGE_IDS.MONTHLY || selectedPlan === PACKAGE_IDS.ANNUAL;
-  const isLifetimeSelected = selectedPlan === PACKAGE_IDS.LIFETIME;
-  const primaryButtonLabel = isLifetimeSelected ? 'Unlock Lifetime Access' : 'Start My Free Trial';
-  const primaryButtonLoadingLabel = isLifetimeSelected
-    ? 'Processing Purchase...'
-    : 'Starting Trial...';
+  const primaryButtonLabel = 'Start My Free Trial';
+  const primaryButtonLoadingLabel = 'Starting Trial...';
 
   // Get config for the loop type, with fallback to social-loop if invalid
   const config =
@@ -152,24 +147,21 @@ export default function QuizPaywall() {
 
       const packages = offering.availablePackages;
 
-      // Find specific packages
+      // Find specific packages (Monthly and Annual only)
       const monthlyPkg = packages.find((p) => p.identifier === PACKAGE_IDS.MONTHLY);
       const annualPkg = packages.find((p) => p.identifier === PACKAGE_IDS.ANNUAL);
-      const lifetimePkg = packages.find((p) => p.identifier === PACKAGE_IDS.LIFETIME);
 
       console.log('RevenueCat packages found:', {
         total: packages.length,
         identifiers: packages.map((p) => p.identifier),
         monthly: !!monthlyPkg,
         annual: !!annualPkg,
-        lifetime: !!lifetimePkg,
       });
 
-      if (!monthlyPkg || !annualPkg || !lifetimePkg) {
+      if (!monthlyPkg || !annualPkg) {
         console.error('Missing subscription packages:', {
           monthly: !!monthlyPkg,
           annual: !!annualPkg,
-          lifetime: !!lifetimePkg,
         });
         Alert.alert(
           'Configuration Error',
@@ -182,11 +174,10 @@ export default function QuizPaywall() {
       // Calculate annual savings
       const annualSavings = calculateAnnualSavings(monthlyPkg, annualPkg);
 
-      // Build subscription options
+      // Build subscription options (Monthly and Annual only)
       const options = [
         packageToSubscriptionPlan(monthlyPkg),
         packageToSubscriptionPlan(annualPkg, 'MOST POPULAR', annualSavings || undefined),
-        packageToSubscriptionPlan(lifetimePkg, 'BEST VALUE', 'Pay once, keep forever'),
       ];
 
       setSubscriptionOptions(options);
@@ -335,6 +326,10 @@ export default function QuizPaywall() {
       }
 
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+      // Stop loading state BEFORE navigation to prevent infinite spinner
+      setIsProcessingPurchase(false);
+
       router.replace('/');
     } catch (error: any) {
       console.error('Exception starting trial:', error);
@@ -561,7 +556,10 @@ export default function QuizPaywall() {
                     justifyContent: 'center',
                     marginRight: 12,
                   }}>
-                  <Text style={{ color: colors.button.primaryText, fontSize: 14, fontWeight: '700' }}>✓</Text>
+                  <Text
+                    style={{ color: colors.button.primaryText, fontSize: 14, fontWeight: '700' }}>
+                    ✓
+                  </Text>
                 </View>
                 <Text
                   style={{
@@ -617,8 +615,8 @@ export default function QuizPaywall() {
               />
             ))}
 
-          {/* Trial / Lifetime Info */}
-          {!isLoadingOfferings && planIncludesTrial && (
+          {/* Trial Info - Always shown since both plans have trial */}
+          {!isLoadingOfferings && (
             <View
               style={{
                 backgroundColor: colors.lime[900] + '50',
@@ -646,37 +644,6 @@ export default function QuizPaywall() {
                   lineHeight: 22,
                 }}>
                 Full access • Cancel anytime • No commitment
-              </Text>
-            </View>
-          )}
-          {!isLoadingOfferings && isLifetimeSelected && (
-            <View
-              style={{
-                backgroundColor: colors.lime[900] + '50',
-                borderRadius: 12,
-                padding: 20,
-                marginTop: 24,
-                borderWidth: 1,
-                borderColor: colors.lime[600] + '40',
-              }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: colors.text.primary,
-                  textAlign: 'center',
-                  marginBottom: 8,
-                }}>
-                Instant Lifetime Access
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: colors.text.secondary,
-                  textAlign: 'center',
-                  lineHeight: 22,
-                }}>
-                Pay once, keep Premium forever. No renewal or trial period required.
               </Text>
             </View>
           )}

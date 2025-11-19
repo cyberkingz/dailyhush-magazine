@@ -108,9 +108,6 @@ export default function ProfileScreen() {
   };
 
   // Navigate to mood capture flow
-  const handleCheckIn = () => {
-    router.push('/mood-capture/mood');
-  };
 
   // Handle insight dismissal
   const handleDismissInsight = async (insightId: string) => {
@@ -181,26 +178,26 @@ export default function ProfileScreen() {
     <ScrollControlProvider>
       <View style={styles.container}>
         <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: () => <Text style={styles.headerLogo}>Nœma</Text>,
-          headerStyle: {
-            backgroundColor: colors.background.primary,
-          },
-          headerTintColor: colors.text.primary,
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={handleSettings}
-              style={styles.headerButton}
-              accessibilityLabel="Settings"
-              accessibilityRole="button">
-              <Settings size={24} color={colors.text.primary} />
-            </TouchableOpacity>
-          ),
-        }}
-      />
+          options={{
+            headerShown: true,
+            headerTitle: () => <Text style={styles.headerLogo}>Nœma</Text>,
+            headerStyle: {
+              backgroundColor: colors.background.primary,
+            },
+            headerTintColor: colors.text.primary,
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={handleSettings}
+                style={styles.headerButton}
+                accessibilityLabel="Settings"
+                accessibilityRole="button">
+                <Settings size={24} color={colors.text.primary} />
+              </TouchableOpacity>
+            ),
+          }}
+        />
 
-      {/*
+        {/*
         Layout Architecture:
         - ScrollView with proper bottom padding to prevent content overlap with tab bar
         - Uses design tokens (BOTTOM_NAV.height + SPACING.xl) instead of hardcoded values
@@ -208,134 +205,135 @@ export default function ProfileScreen() {
         - SPACING.xl (24px) provides breathing room between last card and tab bar
         - Total: 104px bottom padding ensures "gentle suggestion" card doesn't touch tab bar
       */}
-      <ScrollFadeView
-        style={styles.scrollView}
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingBottom: BOTTOM_NAV.height + insets.bottom + SPACING.xxl, // Tab bar + safe area + breathing room
-          },
-        ]}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            {...refreshControlColors}
-          />
-        }
-        fadeColor={colors.background.primary}
-        fadeHeight={48}
-        fadeIntensity={0.95}
-        fadeVisibility="always">
-        {/* Greeting + Journey Header Combined */}
-        <View style={styles.topSection}>
-          <Text style={styles.greetingText}>
-            {(() => {
-              const hour = new Date().getHours();
-              if (hour < 12) return 'Good morning';
-              if (hour < 18) return 'Good afternoon';
-              return 'Good evening';
-            })()}
-            {profileData.user.full_name ? `, ${profileData.user.full_name.split(' ')[0]}` : ''}
-          </Text>
-          <Text style={styles.journeySubtext}>Your journey this week</Text>
-        </View>
-
-        {/* Remove stats section until real data is wired up */}
-
-        {/* Section: Right Now */}
-        <View style={styles.section}>
-          <EmotionalWeatherWidget
-            weather={profileData.todayCheckIn?.emotional_weather as any}
-            moodRating={profileData.todayCheckIn?.mood_rating}
-            notes={profileData.todayCheckIn?.notes || undefined}
-            createdAt={profileData.todayCheckIn?.created_at}
-            updatedAt={profileData.todayCheckIn?.updated_at}
-            onMoodSubmit={(data) => {
-              console.log('[Profile] Mood submitted:', data);
-              // Refresh profile data to show new mood
-              loadProfileData();
-            }}
-            onUpdate={() => {
-              console.log('[Profile] Update mood clicked');
-              // Widget handles the update flow internally
-            }}
-          />
-        </View>
-
-        {/* Section: What We're Learning Together */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeaderNoBorder}>
-            <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
-              What We're Learning Together
+        <ScrollFadeView
+          style={styles.scrollView}
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingBottom: BOTTOM_NAV.height + insets.bottom + SPACING.xxl, // Tab bar + safe area + breathing room
+            },
+          ]}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              {...refreshControlColors}
+            />
+          }
+          fadeColor={colors.background.primary}
+          fadeHeight={48}
+          fadeIntensity={0.95}
+          fadeVisibility="always">
+          {/* Greeting + Journey Header Combined */}
+          <View style={styles.topSection}>
+            <Text style={styles.greetingText}>
+              {(() => {
+                const hour = new Date().getHours();
+                if (hour < 12) return 'Good morning';
+                if (hour < 18) return 'Good afternoon';
+                return 'Good evening';
+              })()}
+              {profileData.user.full_name ? `, ${profileData.user.full_name.split(' ')[0]}` : ''}
             </Text>
-            <Text style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
-              {profileData.insights.length > 0
-                ? `Patterns emerging from your ${profileData.stats.totalCheckIns} check-ins`
-                : 'Your patterns are growing'}
-            </Text>
+            <Text style={styles.journeySubtext}>Your journey this week</Text>
           </View>
 
-          {profileData.insights.length > 0 ? (
-            profileData.insights.map((insight, index) => (
-              <PatternInsightCard
-                key={insight.id}
-                insight={insight}
-                index={index}
-                onDismiss={handleDismissInsight}
-              />
-            ))
-          ) : (
-            <View style={styles.emptyPatternsCard}>
-              <Text style={styles.emptyPatternsIcon}>🌱</Text>
-              <Text style={styles.emptyPatternsTitle}>Your patterns are growing</Text>
-              <Text style={styles.emptyPatternsBody}>
-                Keep checking in. After a few more reflections, we'll start to see patterns in your
-                emotional weather.
-              </Text>
-            </View>
-          )}
-        </View>
+          {/* Remove stats section until real data is wired up */}
 
-        {/* Subtle divider before loop type */}
-        <View style={styles.narrativeDivider} />
+          {/* Section: Right Now */}
+          <View style={styles.section}>
+            <EmotionalWeatherWidget
+              weather={profileData.todayCheckIn?.emotional_weather as any}
+              moodRating={profileData.todayCheckIn?.mood_rating}
+              notes={profileData.todayCheckIn?.notes || undefined}
+              createdAt={profileData.todayCheckIn?.created_at}
+              updatedAt={profileData.todayCheckIn?.updated_at}
+              onMoodSubmit={async (data) => {
+                console.log('[Profile] Mood submitted:', data);
+                // Refresh profile data to show new mood
+                await loadProfileData();
+              }}
+              onUpdate={() => {
+                console.log('[Profile] Update mood clicked');
+                // Widget handles the update flow internally
+              }}
+            />
+          </View>
 
-        {/* Section: Understanding Your Pattern */}
-        {profileData.user.loop_type && (
+          {/* Section: What We're Learning Together */}
           <View style={styles.section}>
             <View style={styles.sectionHeaderNoBorder}>
               <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
-                Understanding Your Pattern
+                What We're Learning Together
               </Text>
               <Text style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
-                The {getLoopTypeConfig(profileData.user.loop_type as LoopType).name} explained
+                {profileData.insights.length > 0
+                  ? `Patterns emerging from your ${profileData.stats.totalCheckIns} check-ins`
+                  : 'Your patterns are growing'}
               </Text>
             </View>
 
-            {/* Loop type intro - paragraph format */}
-            <View style={styles.loopIntroParagraph}>
-              <Text style={styles.loopIntroText}>
-                Based on your check-ins, you're navigating the{' '}
-                <Text style={styles.loopTypeNameInline}>
-                  {getLoopTypeConfig(profileData.user.loop_type as LoopType).name}
+            {profileData.insights.length > 0 ? (
+              profileData.insights.map((insight, index) => (
+                <PatternInsightCard
+                  key={insight.id}
+                  insight={insight}
+                  index={index}
+                  onDismiss={handleDismissInsight}
+                />
+              ))
+            ) : (
+              <View style={styles.emptyPatternsCard}>
+                <Text style={styles.emptyPatternsIcon}>🌱</Text>
+                <Text style={styles.emptyPatternsTitle}>Your patterns are growing</Text>
+                <Text style={styles.emptyPatternsBody}>
+                  Keep checking in. After a few more reflections, we'll start to see patterns in
+                  your emotional weather.
                 </Text>
-                —{getLoopTypeConfig(profileData.user.loop_type as LoopType).tagline.toLowerCase()}.
-                Understanding this pattern helps you work with it, not against it.
-              </Text>
-            </View>
-
-            <LoopCharacteristics loopType={profileData.user.loop_type as LoopType} />
+              </View>
+            )}
           </View>
-        )}
 
-        {/* Inspirational Quote */}
-        <View style={styles.quoteSection}>
-          <Text style={styles.quoteText}>
-            "You are not your thoughts. You are the awareness behind them."
-          </Text>
-          <Text style={styles.quoteAuthor}>— Jon Kabat-Zinn</Text>
-        </View>
-      </ScrollFadeView>
+          {/* Subtle divider before loop type */}
+          <View style={styles.narrativeDivider} />
+
+          {/* Section: Understanding Your Pattern */}
+          {profileData.user.loop_type && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeaderNoBorder}>
+                <Text style={[profileTypography.sections.title, { color: colors.text.primary }]}>
+                  Understanding Your Pattern
+                </Text>
+                <Text
+                  style={[profileTypography.sections.subtitle, { color: colors.text.secondary }]}>
+                  The {getLoopTypeConfig(profileData.user.loop_type as LoopType).name} explained
+                </Text>
+              </View>
+
+              {/* Loop type intro - paragraph format */}
+              <View style={styles.loopIntroParagraph}>
+                <Text style={styles.loopIntroText}>
+                  Based on your check-ins, you're navigating the{' '}
+                  <Text style={styles.loopTypeNameInline}>
+                    {getLoopTypeConfig(profileData.user.loop_type as LoopType).name}
+                  </Text>
+                  —{getLoopTypeConfig(profileData.user.loop_type as LoopType).tagline.toLowerCase()}
+                  . Understanding this pattern helps you work with it, not against it.
+                </Text>
+              </View>
+
+              <LoopCharacteristics loopType={profileData.user.loop_type as LoopType} />
+            </View>
+          )}
+
+          {/* Inspirational Quote */}
+          <View style={styles.quoteSection}>
+            <Text style={styles.quoteText}>
+              "You are not your thoughts. You are the awareness behind them."
+            </Text>
+            <Text style={styles.quoteAuthor}>— Jon Kabat-Zinn</Text>
+          </View>
+        </ScrollFadeView>
       </View>
     </ScrollControlProvider>
   );

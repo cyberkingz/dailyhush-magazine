@@ -12,6 +12,7 @@
 This roadmap outlines the complete implementation of DailyHush's **Therapeutic Mood Capture Flow** - a 4-step bottom sheet experience designed for women aged 55-70 that combines mood tracking with therapeutic journaling.
 
 ### Key Features
+
 - **4-Step Flow**: Mood → Intensity → Free Writing (with voice-to-text) → Gentle Suggestion
 - **End-to-End Encryption**: Military-grade AES-256-GCM encryption for journal entries
 - **Voice-to-Text**: Accessible input method for 55-70 demographic
@@ -26,7 +27,9 @@ This roadmap outlines the complete implementation of DailyHush's **Therapeutic M
 ### ✅ COMPLETED BY SPECIALIZED AGENTS
 
 #### 1. UI/UX Design Expert
+
 **Deliverable**: [120-page comprehensive design specification](#design-specification)
+
 - Complete bottom sheet architecture
 - All 4 steps fully designed (wireframes, specifications, interactions)
 - Animation specifications (entrance, exit, transitions)
@@ -37,7 +40,9 @@ This roadmap outlines the complete implementation of DailyHush's **Therapeutic M
 **Location**: Inline in this roadmap (see Design Specification section below)
 
 #### 2. Supabase Database Expert
+
 **Deliverables**: [Complete database schema + API implementation](#database-implementation)
+
 - SQL migration file (`supabase/migrations/20250201_create_mood_entries.sql`)
 - TypeScript types (`types/mood-entries.ts`, `types/mood-database.ts`)
 - CRUD operations library (`lib/mood-entries.ts`)
@@ -100,6 +105,7 @@ dailyhush-mobile-app/
 ```
 
 **Legend**:
+
 - ✅ = Already completed by specialized agents
 - 📍 = Current document
 - (no marker) = To be implemented
@@ -111,11 +117,13 @@ dailyhush-mobile-app/
 ### Week 1: Foundation & Database (3-5 days)
 
 #### Day 1-2: Database Setup & Encryption
+
 **Owner**: Backend Developer
 **Dependencies**: Supabase Expert deliverables
 **Effort**: 8-12 hours
 
 **Tasks**:
+
 - [ ] Review Supabase Expert deliverables
 - [ ] Run database migration (`supabase/migrations/20250201_create_mood_entries.sql`)
 - [ ] Verify tables, indexes, RLS policies
@@ -128,6 +136,7 @@ dailyhush-mobile-app/
 - [ ] Add key clearing on logout
 
 **Acceptance Criteria**:
+
 - ✓ Database migration runs successfully
 - ✓ Can create encrypted mood entry
 - ✓ Can retrieve and decrypt mood entry
@@ -137,11 +146,13 @@ dailyhush-mobile-app/
 ---
 
 #### Day 3: API Integration Layer
+
 **Owner**: Backend Developer
 **Dependencies**: Database setup complete
 **Effort**: 6-8 hours
 
 **Tasks**:
+
 - [ ] Create `services/moodCaptureService.ts`
 - [ ] Implement all CRUD operations from `lib/mood-entries.ts`:
   - `createMoodEntry()`
@@ -156,6 +167,7 @@ dailyhush-mobile-app/
 - [ ] Test error scenarios (offline, network errors)
 
 **Acceptance Criteria**:
+
 - ✓ Can create draft mood entry
 - ✓ Auto-save updates entry every 3 seconds
 - ✓ Can complete mood entry (transition draft → completed)
@@ -166,11 +178,13 @@ dailyhush-mobile-app/
 ---
 
 #### Day 4-5: Voice-to-Text Integration
+
 **Owner**: Frontend Developer
 **Dependencies**: None (can work in parallel)
 **Effort**: 8-10 hours
 
 **Tasks**:
+
 - [ ] Research React Native voice recognition libraries:
   - `expo-speech` (built-in, recommended)
   - `@react-native-voice/voice` (alternative)
@@ -195,6 +209,7 @@ dailyhush-mobile-app/
 - [ ] Test on physical devices (iOS + Android)
 
 **Acceptance Criteria**:
+
 - ✓ Microphone button shows correct states
 - ✓ Recording starts/stops with single tap
 - ✓ Transcription appears in real-time
@@ -207,11 +222,13 @@ dailyhush-mobile-app/
 ### Week 2: UI Components (5-7 days)
 
 #### Day 6-7: Bottom Sheet & Navigation
+
 **Owner**: Frontend Developer
 **Dependencies**: UI/UX design spec
 **Effort**: 10-12 hours
 
 **Tasks**:
+
 - [ ] Install dependencies:
   - `react-native-gesture-handler`
   - `react-native-reanimated`
@@ -246,6 +263,7 @@ dailyhush-mobile-app/
 - [ ] Test all gestures and animations
 
 **Acceptance Criteria**:
+
 - ✓ Bottom sheet opens with smooth entrance animation
 - ✓ Swipe down closes with confirmation
 - ✓ Progress dots update correctly
@@ -257,11 +275,13 @@ dailyhush-mobile-app/
 ---
 
 #### Day 8: Step 1 - Mood Selection
+
 **Owner**: Frontend Developer
 **Dependencies**: Bottom sheet complete
 **Effort**: 4-6 hours
 
 **Tasks**:
+
 - [ ] Create `components/moodCapture/Step1MoodSelection.tsx`
 - [ ] Implement mood option cards (5 moods):
   - Large emoji (48px)
@@ -287,6 +307,7 @@ dailyhush-mobile-app/
 - [ ] Test with VoiceOver (iOS) and TalkBack (Android)
 
 **Acceptance Criteria**:
+
 - ✓ 5 mood cards display correctly
 - ✓ Card selection works (single selection)
 - ✓ Selected state shows emerald glow
@@ -298,11 +319,13 @@ dailyhush-mobile-app/
 ---
 
 #### Day 9: Step 2 - Intensity Scale
+
 **Owner**: Frontend Developer
 **Dependencies**: Step 1 complete
 **Effort**: 4-6 hours
 
 **Tasks**:
+
 - [ ] Create `components/moodCapture/Step2IntensityScale.tsx`
 - [ ] Display selected mood badge:
   - Emoji + label
@@ -327,6 +350,7 @@ dailyhush-mobile-app/
 - [ ] Implement accessibility
 
 **Acceptance Criteria**:
+
 - ✓ Mood badge displays selected mood
 - ✓ 5 dots display with correct spacing
 - ✓ Dot selection works (progressive fill)
@@ -338,11 +362,13 @@ dailyhush-mobile-app/
 ---
 
 #### Day 10-11: Step 3 - Free Writing (Most Complex)
+
 **Owner**: Frontend Developer
 **Dependencies**: Voice-to-text complete
 **Effort**: 12-14 hours
 
 **Tasks**:
+
 - [ ] Create `components/moodCapture/Step3FreeWriting.tsx`
 - [ ] Implement large text area:
   - Minimum height: 240px
@@ -395,6 +421,7 @@ dailyhush-mobile-app/
   - Network failure during auto-save
 
 **Acceptance Criteria**:
+
 - ✓ Text area auto-grows with content
 - ✓ Voice button works (insert transcription)
 - ✓ Prompt chips insert text correctly
@@ -409,11 +436,13 @@ dailyhush-mobile-app/
 ---
 
 #### Day 12: Step 4 - Gentle Suggestion
+
 **Owner**: Frontend Developer
 **Dependencies**: Suggestion service complete
 **Effort**: 6-8 hours
 
 **Tasks**:
+
 - [ ] Create `services/suggestionService.ts`:
   - Implement suggestion selection logic:
     - Match mood + intensity to suggestion templates
@@ -462,6 +491,7 @@ dailyhush-mobile-app/
 - [ ] Test with different mood combinations
 
 **Acceptance Criteria**:
+
 - ✓ Suggestion displays for selected mood
 - ✓ Card shows title, description, steps
 - ✓ Badge shows loop type (if available)
@@ -475,10 +505,12 @@ dailyhush-mobile-app/
 ### Week 3: Integration, Testing & Polish (5-7 days)
 
 #### Day 13-14: Integration & Smoke Testing
+
 **Owner**: Full Team
 **Effort**: 10-12 hours
 
 **Tasks**:
+
 - [ ] Integrate mood capture flow with existing screens:
   - Add "Log Mood" button to `EmotionalWeather` component (profile page)
   - Add "Log Mood" button to `MoodCard` component (home page)
@@ -508,6 +540,7 @@ dailyhush-mobile-app/
   - Measure encryption overhead (target: <100ms)
 
 **Acceptance Criteria**:
+
 - ✓ Can open mood capture from profile page
 - ✓ Can open mood capture from home page
 - ✓ Complete flow works (all 4 steps)
@@ -522,10 +555,12 @@ dailyhush-mobile-app/
 ---
 
 #### Day 15: Accessibility Audit
+
 **Owner**: Accessibility Specialist (or Senior Developer)
 **Effort**: 6-8 hours
 
 **Tasks**:
+
 - [ ] Run accessibility audit on all components:
   - VoiceOver (iOS) testing on iPhone
   - TalkBack (Android) testing on Android device
@@ -550,6 +585,7 @@ dailyhush-mobile-app/
 - [ ] Schedule P1/P2 issues for future sprints
 
 **Acceptance Criteria**:
+
 - ✓ VoiceOver announces all elements correctly
 - ✓ TalkBack announces all elements correctly
 - ✓ All interactive elements have 56x56px touch targets
@@ -562,10 +598,12 @@ dailyhush-mobile-app/
 ---
 
 #### Day 16: Comprehensive Testing
+
 **Owner**: QA Engineer (or Full Team)
 **Effort**: 8-10 hours
 
 **Tasks**:
+
 - [ ] Write unit tests:
   - `hooks/useMoodCapture.ts` (state management)
   - `hooks/useVoiceToText.ts` (recording logic)
@@ -611,6 +649,7 @@ dailyhush-mobile-app/
 - [ ] Fix critical (P0) bugs before launch
 
 **Acceptance Criteria**:
+
 - ✓ Unit tests: 80%+ code coverage
 - ✓ Integration tests pass
 - ✓ All edge cases handled gracefully
@@ -623,10 +662,12 @@ dailyhush-mobile-app/
 ---
 
 #### Day 17: Polish & Launch Prep
+
 **Owner**: Full Team
 **Effort**: 6-8 hours
 
 **Tasks**:
+
 - [ ] Final visual polish:
   - Review all animations (300-500ms)
   - Review all spacing (use design tokens)
@@ -688,6 +729,7 @@ dailyhush-mobile-app/
   - Update help documentation
 
 **Acceptance Criteria**:
+
 - ✓ All animations are smooth and consistent
 - ✓ Haptic feedback works correctly
 - ✓ Messaging is therapeutic and supportive
@@ -704,6 +746,7 @@ dailyhush-mobile-app/
 Track these KPIs post-launch to measure success:
 
 ### Engagement Metrics
+
 - **Mood Capture Completion Rate**: % of users who start and complete all 4 steps
   - Target: >70% completion rate
 - **Voice-to-Text Usage**: % of entries using voice input
@@ -716,6 +759,7 @@ Track these KPIs post-launch to measure success:
   - Target: >20% DAU
 
 ### Quality Metrics
+
 - **Average Entry Length**: Mean character count of writing
   - Target: >150 characters (2-3 sentences)
 - **Average Time Spent**: Mean time per flow completion
@@ -724,6 +768,7 @@ Track these KPIs post-launch to measure success:
   - Target: >50% of drafts completed
 
 ### Technical Metrics
+
 - **Error Rate**: % of flows with errors
   - Target: <1% error rate
 - **Auto-Save Success Rate**: % of auto-saves that succeed
@@ -734,6 +779,7 @@ Track these KPIs post-launch to measure success:
   - Target: <300ms per transition
 
 ### Retention Metrics
+
 - **7-Day Retention**: % of users who return within 7 days
   - Target: >40% retention
 - **30-Day Retention**: % of users who return within 30 days
@@ -777,6 +823,7 @@ Before launch, verify:
 ## 🐛 Known Issues & Future Enhancements
 
 ### Known Issues (to be fixed post-launch)
+
 1. **Voice transcription accuracy**: May be lower in noisy environments
    - Workaround: Add noise reduction or use external API
 2. **Auto-save conflicts**: Rapid typing can cause race conditions
@@ -785,6 +832,7 @@ Before launch, verify:
    - Workaround: Add character limit warning at 1500 chars
 
 ### Future Enhancements (Phase 2)
+
 1. **AI-Powered Suggestions**: Use OpenAI or Anthropic to generate personalized suggestions
 2. **Exercise Integration**: Link suggestions to guided exercise screens
 3. **Mood History Visualization**: Charts showing mood patterns over time
@@ -799,16 +847,19 @@ Before launch, verify:
 ## 📚 Resources & Documentation
 
 ### Design Specification
+
 - **Full UI/UX Spec**: [Inline in this roadmap](#design-specification-by-uiux-expert) (see below)
 - **Figma Designs**: (to be created)
 
 ### Database & API
+
 - **Database Schema**: `supabase/migrations/20250201_create_mood_entries.sql`
 - **API Documentation**: `docs/MOOD_ENTRIES_API.md`
 - **Implementation Guide**: `docs/MOOD_ENTRIES_README.md`
 - **Quick Reference**: `docs/MOOD_ENTRIES_QUICK_REFERENCE.md`
 
 ### Libraries & Tools
+
 - **Bottom Sheet**: [@gorhom/bottom-sheet](https://gorhom.github.io/react-native-bottom-sheet/)
 - **Animations**: [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/)
 - **Voice**: [expo-speech](https://docs.expo.dev/versions/latest/sdk/speech/)
@@ -816,6 +867,7 @@ Before launch, verify:
 - **Secure Storage**: [expo-secure-store](https://docs.expo.dev/versions/latest/sdk/securestore/)
 
 ### External APIs (if using AI suggestions)
+
 - **OpenAI GPT-4**: [API Docs](https://platform.openai.com/docs/api-reference)
 - **Anthropic Claude**: [API Docs](https://docs.anthropic.com/claude/reference/getting-started-with-the-api)
 
@@ -826,6 +878,7 @@ Before launch, verify:
 Before launching to production:
 
 ### Technical
+
 - [ ] Database migration deployed to production
 - [ ] All environment variables configured
 - [ ] Feature flag enabled for gradual rollout
@@ -835,6 +888,7 @@ Before launching to production:
 - [ ] Backups configured (Supabase automatic backups)
 
 ### Quality Assurance
+
 - [ ] All unit tests passing
 - [ ] All integration tests passing
 - [ ] Accessibility audit complete
@@ -844,6 +898,7 @@ Before launching to production:
 - [ ] Internal beta feedback addressed
 
 ### Documentation
+
 - [ ] User-facing help articles written:
   - "How to Log Your Mood"
   - "Using Voice-to-Text"
@@ -854,12 +909,14 @@ Before launching to production:
 - [ ] FAQ updated
 
 ### Communication
+
 - [ ] In-app announcement written
 - [ ] Social media posts scheduled
 - [ ] Email blast prepared (optional)
 - [ ] Press release (if major feature)
 
 ### Rollout Strategy
+
 - [ ] Phase 1: Internal team (100% of team)
 - [ ] Phase 2: Beta users (10% of user base)
 - [ ] Phase 3: Gradual rollout (25% → 50% → 75% → 100%)
@@ -871,12 +928,14 @@ Before launching to production:
 ## 💬 Questions & Support
 
 ### For Implementation Questions
+
 - **UI/UX Questions**: Review [UI/UX Design Specification](#design-specification-by-uiux-expert)
 - **Database Questions**: Review `docs/MOOD_ENTRIES_API.md`
 - **Encryption Questions**: Review `lib/encryption.ts` comments
 - **Voice Questions**: Review `expo-speech` documentation
 
 ### For Issues
+
 - **Create GitHub Issue**: Include component name, steps to reproduce, expected vs actual behavior
 - **Tag Appropriately**: `mood-capture`, `bug`, `enhancement`, `question`
 
@@ -884,15 +943,15 @@ Before launching to production:
 
 ## 🏆 Team & Ownership
 
-| Area | Owner | Backup |
-|------|-------|--------|
-| **Overall Coordination** | Product Manager | Engineering Lead |
-| **Database & Backend** | Backend Developer | DevOps Engineer |
-| **UI Components** | Frontend Developer 1 | Frontend Developer 2 |
-| **Voice Integration** | Frontend Developer 2 | Frontend Developer 1 |
-| **Accessibility** | Accessibility Specialist | Senior Frontend Dev |
-| **QA & Testing** | QA Engineer | Full Team |
-| **Design Review** | UI/UX Designer | Product Manager |
+| Area                     | Owner                    | Backup               |
+| ------------------------ | ------------------------ | -------------------- |
+| **Overall Coordination** | Product Manager          | Engineering Lead     |
+| **Database & Backend**   | Backend Developer        | DevOps Engineer      |
+| **UI Components**        | Frontend Developer 1     | Frontend Developer 2 |
+| **Voice Integration**    | Frontend Developer 2     | Frontend Developer 1 |
+| **Accessibility**        | Accessibility Specialist | Senior Frontend Dev  |
+| **QA & Testing**         | QA Engineer              | Full Team            |
+| **Design Review**        | UI/UX Designer           | Product Manager      |
 
 ---
 

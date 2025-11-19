@@ -290,10 +290,14 @@ Reframe: 'I'm learning what works'"
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-3 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 Ask yourself:
               </Text>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 • Is this thought 100% true?{'\n\n'}• What evidence contradicts it?{'\n\n'}• What
                 would I tell a friend?{'\n\n'}• What's a more balanced view?
               </Text>
@@ -343,10 +347,14 @@ Adding shame on top doesn't help. It makes it worse."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-3 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 The Compassion Reframe:
               </Text>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 ✓ "This is hard. It's okay that it's hard"
                 {'\n\n'}✓ "I'm doing my best"
                 {'\n\n'}✓ "Millions of people struggle with this"
@@ -456,10 +464,14 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-3 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-3 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 How to use this:
               </Text>
-              <Text className="text-base leading-relaxed" style={{ color: colors.background.primary }}>
+              <Text
+                className="text-base leading-relaxed"
+                style={{ color: colors.background.primary }}>
                 1. Catch the shame thought
                 {'\n\n'}2. Pull up your library
                 {'\n\n'}3. Find a similar reframe
@@ -471,7 +483,9 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
               The pattern you repeat becomes your default.
             </Text>
 
-            <Text className="text-center text-lg font-semibold" style={{ color: colors.text.primary }}>
+            <Text
+              className="text-center text-lg font-semibold"
+              style={{ color: colors.text.primary }}>
               Right now, shame is your default.
             </Text>
 
@@ -514,7 +528,9 @@ Over time, you'll have a library of YOUR reframes for YOUR specific patterns."
               backgroundColor: colors.button.primary,
               height: spacing.button.height,
             }}>
-            <Text className="mr-2 text-lg font-semibold" style={{ color: colors.button.primaryText }}>
+            <Text
+              className="mr-2 text-lg font-semibold"
+              style={{ color: colors.button.primaryText }}>
               Continue
             </Text>
             <ArrowRight size={20} color={colors.button.primaryText} strokeWidth={2} />

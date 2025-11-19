@@ -32,15 +32,10 @@ export function CloseButton({ onPress, style }: CloseButtonProps) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         onPress();
       }}
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.buttonPressed,
-        style,
-      ]}
+      style={({ pressed }) => [styles.button, pressed && styles.buttonPressed, style]}
       accessibilityRole="button"
       accessibilityLabel={ACCESSIBILITY_LABELS.moodSelector.closeButton}
-      accessibilityHint={ACCESSIBILITY_LABELS.moodSelector.closeHint}
-    >
+      accessibilityHint={ACCESSIBILITY_LABELS.moodSelector.closeHint}>
       <X size={20} color={colors.text.primary} strokeWidth={2.5} />
     </Pressable>
   );

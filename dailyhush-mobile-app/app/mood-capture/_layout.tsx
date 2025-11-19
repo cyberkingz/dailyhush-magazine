@@ -18,8 +18,7 @@ export default function MoodCaptureLayout() {
         },
         animation: 'slide_from_right',
         presentation: 'card',
-      }}
-    >
+      }}>
       <Stack.Screen name="mood" />
       <Stack.Screen name="intensity" />
       <Stack.Screen name="writing" />

@@ -17,11 +17,7 @@ interface ProfileStatsProps {
   avgMoodRating: number;
 }
 
-export function ProfileStats({
-  currentStreak,
-  totalCheckIns,
-  avgMoodRating,
-}: ProfileStatsProps) {
+export function ProfileStats({ currentStreak, totalCheckIns, avgMoodRating }: ProfileStatsProps) {
   // Check if it's a milestone streak
   const isMilestone = [7, 14, 30, 60, 90, 180, 365].includes(currentStreak);
 
@@ -67,7 +63,14 @@ interface StatCardProps {
   isMilestone?: boolean;
 }
 
-function StatCard({ icon, value, label, index, isHero = false, isMilestone = false }: StatCardProps) {
+function StatCard({
+  icon,
+  value,
+  label,
+  index,
+  isHero = false,
+  isMilestone = false,
+}: StatCardProps) {
   return (
     <MotiView
       from={{ opacity: 0, scale: 0.9 }}
@@ -77,20 +80,14 @@ function StatCard({ icon, value, label, index, isHero = false, isMilestone = fal
         duration: 400,
         delay: index * 100,
       }}
-      style={[
-        styles.statCard,
-        isHero && styles.heroCard,
-        isMilestone && styles.milestoneCard,
-      ]}
-    >
+      style={[styles.statCard, isHero && styles.heroCard, isMilestone && styles.milestoneCard]}>
       <View style={[styles.iconContainer, isHero && styles.heroIcon]}>{icon}</View>
       <Text
         style={[
           profileTypography.stats.number,
           { color: colors.text.primary },
           isHero && styles.heroValue,
-        ]}
-      >
+        ]}>
         {value}
       </Text>
       <Text
@@ -98,8 +95,7 @@ function StatCard({ icon, value, label, index, isHero = false, isMilestone = fal
           profileTypography.stats.label,
           { color: colors.text.secondary },
           isHero && styles.heroLabel,
-        ]}
-      >
+        ]}>
         {label}
       </Text>
       {isMilestone && (

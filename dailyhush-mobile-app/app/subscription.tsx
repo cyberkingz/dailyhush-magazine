@@ -96,10 +96,9 @@ export default function SubscriptionScreen() {
         return;
       }
 
-      // Find specific packages
+      // Find specific packages (Monthly and Annual only)
       const monthlyPkg = packages.find((p) => p.identifier === PACKAGE_IDS.MONTHLY);
       const annualPkg = packages.find((p) => p.identifier === PACKAGE_IDS.ANNUAL);
-      const lifetimePkg = packages.find((p) => p.identifier === PACKAGE_IDS.LIFETIME);
 
       // Get recommendations
       const recommendations = getRecommendedPackages(packages);
@@ -121,16 +120,6 @@ export default function SubscriptionScreen() {
             annualPkg,
             recommendations.mostPopular === annualPkg.identifier ? 'MOST POPULAR' : undefined,
             annualSavings || 'Best value'
-          )
-        );
-      }
-
-      if (lifetimePkg) {
-        options.push(
-          packageToSubscriptionPlan(
-            lifetimePkg,
-            recommendations.bestValue === lifetimePkg.identifier ? 'BEST VALUE' : undefined,
-            'Pay once, keep forever'
           )
         );
       }
@@ -240,8 +229,8 @@ export default function SubscriptionScreen() {
             selectedOption.id === PACKAGE_IDS.MONTHLY
               ? 'monthly'
               : selectedOption.id === PACKAGE_IDS.ANNUAL
-              ? 'annual'
-              : 'lifetime',
+                ? 'annual'
+                : 'lifetime',
           is_trial: isTrial,
         });
 
@@ -260,6 +249,9 @@ export default function SubscriptionScreen() {
             })
             .eq('id', session.user.id);
         }
+
+        // Stop loading state BEFORE navigation
+        setIsPurchasing(false);
 
         // Navigate back to home
         router.replace('/');
@@ -474,8 +466,8 @@ export default function SubscriptionScreen() {
                           id === PACKAGE_IDS.MONTHLY
                             ? 'monthly'
                             : id === PACKAGE_IDS.ANNUAL
-                            ? 'annual'
-                            : 'lifetime',
+                              ? 'annual'
+                              : 'lifetime',
                         subscription_price: selected.priceValue,
                       });
                     }

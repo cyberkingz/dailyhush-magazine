@@ -1,4 +1,5 @@
 # DailyHush - Future Stripe Integration Guide
+
 ## Complete Implementation Blueprint (Post-MVP)
 
 **Status:** NOT IMPLEMENTED - FOR FUTURE USE
@@ -50,6 +51,7 @@ Copy Webhook Secret: whsec_...
 ### 1.2 Environment Variables
 
 **Add to Supabase Edge Function secrets:**
+
 ```bash
 # Set Stripe secrets (use Supabase CLI)
 supabase secrets set STRIPE_SECRET_KEY=sk_test_xxxxx
@@ -60,6 +62,7 @@ supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_xxxxx
 ```
 
 **Add to React Native app:**
+
 ```bash
 # .env (for React Native)
 EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
@@ -224,20 +227,23 @@ serve(async (req) => {
     const { priceId, userId }: CheckoutRequest = await req.json();
 
     if (!priceId || !userId) {
-      return new Response(
-        JSON.stringify({ error: 'Missing priceId or userId' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Missing priceId or userId' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     // Get user email from Supabase Auth
-    const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(userId);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.admin.getUserById(userId);
 
     if (userError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'User not found' }),
-        { status: 404, headers: { 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'User not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     // Check if user already has a Stripe customer ID
@@ -251,26 +257,27 @@ serve(async (req) => {
 
     // Create Stripe customer if doesn't exist
     if (!customerId) {
-      const customer = await stripe.customers.create({
-        email: user.email,
-        metadata: {
-          user_id: userId,
+      const customer = await stripe.customers.create(
+        {
+          email: user.email,
+          metadata: {
+            user_id: userId,
+          },
         },
-      }, {
-        idempotencyKey: `customer-${userId}`,
-      });
+        {
+          idempotencyKey: `customer-${userId}`,
+        }
+      );
 
       customerId = customer.id;
 
       // Store customer ID in Supabase
-      await supabase
-        .from('subscriptions')
-        .upsert({
-          user_id: userId,
-          stripe_customer_id: customerId,
-          tier: 'free',
-          status: 'active',
-        });
+      await supabase.from('subscriptions').upsert({
+        user_id: userId,
+        stripe_customer_id: customerId,
+        tier: 'free',
+        status: 'active',
+      });
     }
 
     // Determine success/cancel URLs based on mobile deep linking
@@ -278,31 +285,34 @@ serve(async (req) => {
     const cancelUrl = 'dailyhush://subscription/cancel';
 
     // Create Stripe Checkout Session
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      mode: 'subscription',
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
+    const session = await stripe.checkout.sessions.create(
+      {
+        customer: customerId,
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        subscription_data: {
+          metadata: {
+            user_id: userId,
+          },
+          trial_period_days: 7, // 7-day free trial
         },
-      ],
-      subscription_data: {
+        allow_promotion_codes: true,
+        success_url: successUrl,
+        cancel_url: cancelUrl,
         metadata: {
           user_id: userId,
         },
-        trial_period_days: 7, // 7-day free trial
       },
-      allow_promotion_codes: true,
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      metadata: {
-        user_id: userId,
-      },
-    }, {
-      idempotencyKey: `checkout-${userId}-${Date.now()}`,
-    });
+      {
+        idempotencyKey: `checkout-${userId}-${Date.now()}`,
+      }
+    );
 
     return new Response(
       JSON.stringify({
@@ -417,10 +427,10 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Webhook processing error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -561,10 +571,10 @@ serve(async (req) => {
     const { userId } = await req.json();
 
     if (!userId) {
-      return new Response(
-        JSON.stringify({ error: 'Missing userId' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Missing userId' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     // Get customer ID from Supabase
@@ -575,10 +585,10 @@ serve(async (req) => {
       .single();
 
     if (!subscription?.stripe_customer_id) {
-      return new Response(
-        JSON.stringify({ error: 'No Stripe customer found' }),
-        { status: 404, headers: { 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No Stripe customer found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     // Create portal session
@@ -587,28 +597,22 @@ serve(async (req) => {
       return_url: 'dailyhush://settings',
     });
 
-    return new Response(
-      JSON.stringify({ portalUrl: session.url }),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    );
+    return new Response(JSON.stringify({ portalUrl: session.url }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
   } catch (error) {
     console.error('Portal session error:', error);
 
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
   }
 });
 ```
@@ -663,7 +667,7 @@ import { supabase } from './supabase';
 
 export const STRIPE_PRICES = {
   PREMIUM_MONTHLY: 'price_xxxxx', // Replace with actual Price ID from Stripe Dashboard
-  PREMIUM_ANNUAL: 'price_yyyyy',  // Replace with actual Price ID from Stripe Dashboard
+  PREMIUM_ANNUAL: 'price_yyyyy', // Replace with actual Price ID from Stripe Dashboard
 };
 
 export const SUBSCRIPTION_TIERS = {
@@ -673,7 +677,7 @@ export const SUBSCRIPTION_TIERS = {
   ANNUAL: 'annual',
 } as const;
 
-export type SubscriptionTier = typeof SUBSCRIPTION_TIERS[keyof typeof SUBSCRIPTION_TIERS];
+export type SubscriptionTier = (typeof SUBSCRIPTION_TIERS)[keyof typeof SUBSCRIPTION_TIERS];
 
 export interface SubscriptionInfo {
   tier: SubscriptionTier;
@@ -715,7 +719,9 @@ export async function createCheckoutSession(
   priceId: string
 ): Promise<string | null> {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       throw new Error('Not authenticated');
@@ -727,7 +733,7 @@ export async function createCheckoutSession(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ userId, priceId }),
       }
@@ -751,7 +757,9 @@ export async function createCheckoutSession(
  */
 export async function createPortalSession(userId: string): Promise<string | null> {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       throw new Error('Not authenticated');
@@ -763,7 +771,7 @@ export async function createPortalSession(userId: string): Promise<string | null
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ userId }),
       }
@@ -793,8 +801,7 @@ export function isPremiumUser(subscription: SubscriptionInfo | null): boolean {
     subscription.tier === SUBSCRIPTION_TIERS.ANNUAL ||
     subscription.tier === SUBSCRIPTION_TIERS.TRIAL;
 
-  const isActiveStatus =
-    subscription.status === 'active' || subscription.status === 'trialing';
+  const isActiveStatus = subscription.status === 'active' || subscription.status === 'trialing';
 
   return isPremiumTier && isActiveStatus;
 }

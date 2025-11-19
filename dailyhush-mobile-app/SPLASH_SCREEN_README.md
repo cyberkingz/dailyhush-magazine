@@ -74,6 +74,7 @@ npx expo install expo-linear-gradient react-native-svg
 ### 2. Copy Component
 
 The component is already in place at:
+
 ```
 /Users/toni/Downloads/dailyhush-blog/dailyhush-mobile-app/components/SplashScreen.tsx
 ```
@@ -102,19 +103,12 @@ export default function Layout() {
   // Show splash while initializing
   if (!isReady) {
     return (
-      <SplashScreen
-        onAnimationComplete={() => console.log('Splash done')}
-        showLoading={true}
-      />
+      <SplashScreen onAnimationComplete={() => console.log('Splash done')} showLoading={true} />
     );
   }
 
   // Your normal app layout
-  return (
-    <Stack>
-      {/* Your screens */}
-    </Stack>
-  );
+  return <Stack>{/* Your screens */}</Stack>;
 }
 ```
 
@@ -189,8 +183,8 @@ SplashScreen (main)
 
 ```typescript
 interface SplashScreenProps {
-  onAnimationComplete?: () => void;  // Callback when done
-  showLoading?: boolean;              // Show loading indicator
+  onAnimationComplete?: () => void; // Callback when done
+  showLoading?: boolean; // Show loading indicator
 }
 ```
 
@@ -199,6 +193,7 @@ interface SplashScreenProps {
 ## 📱 Platform Support
 
 ### iOS
+
 - ✅ iPhone SE (small screen)
 - ✅ iPhone 14/15 (standard)
 - ✅ iPhone 15 Pro Max (large)
@@ -206,6 +201,7 @@ interface SplashScreenProps {
 - ✅ iPad (tablet)
 
 ### Android
+
 - ✅ Small phones (5")
 - ✅ Standard phones (6")
 - ✅ Large phones (6.5"+)
@@ -213,6 +209,7 @@ interface SplashScreenProps {
 - ✅ Gesture navigation
 
 ### Safe Area Handling
+
 - iOS: 60px top, 40px bottom
 - Android: 40px top, 30px bottom
 - Automatically adjusts for notches, Dynamic Island, etc.
@@ -222,15 +219,18 @@ interface SplashScreenProps {
 ## ♿ Accessibility
 
 ### Color Contrast
+
 - Text on background: **15.2:1** (WCAG AAA ✓)
 - Accent on background: **9.8:1** (WCAG AAA ✓)
 
 ### Screen Reader Support
+
 - Appropriate semantic structure
 - No critical info conveyed by animation alone
 - Clean transition announcements
 
 ### Motion Sensitivity
+
 - Consider detecting reduced motion preference
 - Can disable rotation if needed
 
@@ -239,22 +239,26 @@ interface SplashScreenProps {
 ## 🎭 Visual Metaphors
 
 ### Moon Icon 🌙
+
 - Represents calm, rest, peace
 - Nighttime imagery aligns with "Hush"
 - Universal symbol of tranquility
 
 ### Breaking Spiral 🌀
+
 - Direct metaphor for interrupting rumination
 - Broken arcs show patterns being stopped
 - Rotation suggests movement being controlled
 - Accent dots highlight "break points"
 
 ### Dark Theme
+
 - Reduces overstimulation
 - Creates calming atmosphere
 - Appropriate for mental health context
 
 ### Emerald Green
+
 - Associated with growth and healing
 - Calming without being cold
 - Professional medical feel
@@ -264,18 +268,21 @@ interface SplashScreenProps {
 ## 📊 Performance
 
 ### Bundle Size
+
 - Component: ~8KB
 - No external assets needed
 - SVG rendered programmatically
 - Minimal impact on app size
 
 ### Animation Performance
+
 - All animations use `useNativeDriver: true`
 - Runs at 60fps on supported devices
 - Hardware-accelerated rendering
 - No performance degradation
 
 ### Memory Usage
+
 - +2-3MB during splash (acceptable)
 - Released after transition
 - No memory leaks
@@ -357,16 +364,16 @@ Modify animation durations:
 // Faster fade in (200ms instead of 400ms)
 Animated.timing(fadeAnim, {
   toValue: 1,
-  duration: 200,  // Change this
+  duration: 200, // Change this
   useNativeDriver: true,
-})
+});
 ```
 
 ### Hide Loading Dots
 
 ```tsx
 <SplashScreen
-  showLoading={false}  // Don't show loading indicator
+  showLoading={false} // Don't show loading indicator
   onAnimationComplete={() => setIsReady(true)}
 />
 ```
@@ -378,12 +385,14 @@ Animated.timing(fadeAnim, {
 ### Common Issues
 
 **Issue: Splash shows white flash**
+
 ```
 Solution: Ensure Expo splash backgroundColor matches custom splash
 In app.json: "backgroundColor": "#0A1612"
 ```
 
 **Issue: Animations are choppy**
+
 ```
 Solution:
 1. Test on physical device (not simulator)
@@ -392,18 +401,21 @@ Solution:
 ```
 
 **Issue: Spiral doesn't render**
+
 ```
 Solution: Install react-native-svg
 npx expo install react-native-svg
 ```
 
 **Issue: Gradient doesn't show**
+
 ```
 Solution: Install expo-linear-gradient
 npx expo install expo-linear-gradient
 ```
 
 **Issue: Splash never dismisses**
+
 ```
 Solution: Add timeout fallback
 setTimeout(() => setIsReady(true), 5000);
@@ -487,12 +499,14 @@ Project Root
 ## 🎓 Learning Resources
 
 ### Related Documentation
+
 - [Expo Splash Screens](https://docs.expo.dev/guides/splash-screens/)
 - [React Native Animated](https://reactnative.dev/docs/animated)
 - [React Native SVG](https://github.com/software-mansion/react-native-svg)
 - [Expo Linear Gradient](https://docs.expo.dev/versions/latest/sdk/linear-gradient/)
 
 ### Design Inspiration
+
 - Mental health app design patterns
 - Mindfulness app aesthetics
 - iOS Human Interface Guidelines
@@ -505,6 +519,7 @@ Project Root
 ### Reporting Issues
 
 If you encounter problems:
+
 1. Check troubleshooting section
 2. Review existing documentation
 3. Test on physical device
@@ -513,6 +528,7 @@ If you encounter problems:
 ### Suggesting Improvements
 
 Ideas for enhancements:
+
 - Additional animation variations
 - Seasonal themes
 - Accessibility improvements
@@ -534,11 +550,13 @@ Ideas for enhancements:
 ## 📞 Support
 
 ### Documentation
+
 - Design Spec: `SPLASH_SCREEN_DESIGN.md`
 - Integration: `SPLASH_SCREEN_INTEGRATION.md`
 - Examples: `SplashScreen.example.tsx`
 
 ### Quick Links
+
 - Component: `/components/SplashScreen.tsx`
 - Checklist: `SPLASH_SCREEN_CHECKLIST.md`
 - Comparison: `SPLASH_COMPARISON.md`
@@ -570,6 +588,7 @@ Ideas for enhancements:
 ## 🎉 Summary
 
 You now have:
+
 - ✅ A beautiful, calming splash screen
 - ✅ Complete implementation code
 - ✅ Comprehensive documentation

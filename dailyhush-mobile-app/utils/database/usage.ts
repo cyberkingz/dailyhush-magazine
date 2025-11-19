@@ -135,7 +135,7 @@ export async function countUsageThisWeek(
   weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // Start of week (Sunday)
   weekStart.setHours(0, 0, 0, 0);
 
-  const { data, error, count } = await supabase
+  const { error, count } = await supabase
     .from('user_usage')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', userId)
@@ -156,14 +156,11 @@ export async function countUsageThisWeek(
  * @param resourceType - Type of resource to count
  * @returns Number of times resource was used today
  */
-export async function countUsageToday(
-  userId: string,
-  resourceType: ResourceType
-): Promise<number> {
+export async function countUsageToday(userId: string, resourceType: ResourceType): Promise<number> {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const { data, error, count } = await supabase
+  const { error, count } = await supabase
     .from('user_usage')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', userId)
@@ -192,7 +189,7 @@ export async function countUsageThisMonth(
   monthStart.setDate(1);
   monthStart.setHours(0, 0, 0, 0);
 
-  const { data, error, count } = await supabase
+  const { error, count } = await supabase
     .from('user_usage')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', userId)
@@ -240,11 +237,7 @@ export async function recordUsage(
     ...options,
   };
 
-  const { data, error } = await supabase
-    .from('user_usage')
-    .insert(usageRecord)
-    .select()
-    .single();
+  const { data, error } = await supabase.from('user_usage').insert(usageRecord).select().single();
 
   if (error) {
     console.error('Error recording usage:', error);
@@ -446,26 +439,24 @@ export async function updateSubscriptionFromRevenueCat(
     currency?: string;
   }
 ): Promise<void> {
-  const { error } = await supabase
-    .from('subscriptions')
-    .upsert(
-      {
-        user_id: userId,
-        tier: subscriptionData.tier,
-        status: subscriptionData.status,
-        product_id: subscriptionData.productId,
-        store: subscriptionData.store,
-        revenuecat_customer_id: subscriptionData.revenuecatCustomerId,
-        current_period_start: subscriptionData.currentPeriodStart.toISOString(),
-        current_period_end: subscriptionData.currentPeriodEnd.toISOString(),
-        price_cents: subscriptionData.priceCents,
-        currency: subscriptionData.currency || 'USD',
-        updated_at: new Date().toISOString(),
-      },
-      {
-        onConflict: 'user_id',
-      }
-    );
+  const { error } = await supabase.from('subscriptions').upsert(
+    {
+      user_id: userId,
+      tier: subscriptionData.tier,
+      status: subscriptionData.status,
+      product_id: subscriptionData.productId,
+      store: subscriptionData.store,
+      revenuecat_customer_id: subscriptionData.revenuecatCustomerId,
+      current_period_start: subscriptionData.currentPeriodStart.toISOString(),
+      current_period_end: subscriptionData.currentPeriodEnd.toISOString(),
+      price_cents: subscriptionData.priceCents,
+      currency: subscriptionData.currency || 'USD',
+      updated_at: new Date().toISOString(),
+    },
+    {
+      onConflict: 'user_id',
+    }
+  );
 
   if (error) {
     console.error('Error updating subscription:', error);

@@ -11,10 +11,14 @@ import type {
   ExerciseStats,
   TriggerOption,
   ExerciseType,
-  CompletionStatus,
   ModuleContext,
-  ExerciseHistoryItem,
 } from '@/types/exercises';
+import {
+  UserExerciseSummary,
+  WeeklyExerciseProgress,
+  TriggerAnalysis,
+  ExerciseHistoryItem,
+} from '@/types/exercise-logs';
 
 // ============================================================================
 // 1. CREATE EXERCISE LOG
@@ -24,9 +28,7 @@ import type {
  * Start a new exercise session
  * Creates a log entry with pre-anxiety rating and trigger info
  */
-export async function startExercise(
-  payload: Partial<ExerciseLogInsert>
-) {
+export async function startExercise(payload: Partial<ExerciseLogInsert>) {
   const { data, error } = await supabase
     .from('exercise_logs')
     .insert({
@@ -166,9 +168,7 @@ export async function getRecentExercises(
 
   return (data || []).map((item) => ({
     ...item,
-    duration_minutes: item.duration_seconds
-      ? Math.round(item.duration_seconds / 60)
-      : 0,
+    duration_minutes: item.duration_seconds ? Math.round(item.duration_seconds / 60) : 0,
   })) as ExerciseHistoryItem[];
 }
 
@@ -201,9 +201,7 @@ export async function getExercisesByDateRange(
 /**
  * Get single exercise log by ID
  */
-export async function getExerciseById(
-  logId: string
-): Promise<ExerciseLog | null> {
+export async function getExerciseById(logId: string): Promise<ExerciseLog | null> {
   const { data, error } = await supabase
     .from('exercise_logs')
     .select('*')
@@ -230,9 +228,7 @@ export async function getExerciseById(
 /**
  * Get user's exercise summary for dashboard
  */
-export async function getUserExerciseSummary(
-  userId: string
-): Promise<UserExerciseSummary> {
+export async function getUserExerciseSummary(userId: string): Promise<UserExerciseSummary> {
   const { data, error } = await supabase.rpc('get_user_exercise_summary', {
     p_user_id: userId,
   });
@@ -248,9 +244,7 @@ export async function getUserExerciseSummary(
 /**
  * Get pre-computed stats from materialized view (FAST)
  */
-export async function getExerciseStats(
-  userId: string
-): Promise<ExerciseStats[]> {
+export async function getExerciseStats(userId: string): Promise<ExerciseStats[]> {
   const { data, error } = await supabase
     .from('exercise_stats_by_user')
     .select('*')
@@ -283,9 +277,7 @@ export async function getExerciseStreak(userId: string): Promise<number> {
 /**
  * Get most effective exercise type for user
  */
-export async function getMostEffectiveExercise(
-  userId: string
-): Promise<ExerciseType | null> {
+export async function getMostEffectiveExercise(userId: string): Promise<ExerciseType | null> {
   const { data, error } = await supabase.rpc('get_most_effective_exercise', {
     p_user_id: userId,
   });
@@ -301,9 +293,7 @@ export async function getMostEffectiveExercise(
 /**
  * Get most common trigger category
  */
-export async function getMostCommonTrigger(
-  userId: string
-): Promise<string | null> {
+export async function getMostCommonTrigger(userId: string): Promise<string | null> {
   const { data, error } = await supabase.rpc('get_most_common_trigger', {
     p_user_id: userId,
   });
@@ -339,9 +329,7 @@ export async function getWeeklyProgress(
 /**
  * Get trigger analysis
  */
-export async function getTriggerAnalysis(
-  userId: string
-): Promise<TriggerAnalysis[]> {
+export async function getTriggerAnalysis(userId: string): Promise<TriggerAnalysis[]> {
   const { data, error } = await supabase.rpc('get_trigger_analysis', {
     p_user_id: userId,
   });
@@ -361,9 +349,7 @@ export async function getTriggerAnalysis(
 /**
  * Get all available exercise triggers
  */
-export async function getExerciseTriggers(
-  loopType?: string
-): Promise<TriggerOption[]> {
+export async function getExerciseTriggers(loopType?: string): Promise<TriggerOption[]> {
   let query = supabase
     .from('exercise_triggers')
     .select('*')
@@ -457,10 +443,7 @@ export async function getCompletionRateByType(userId: string) {
       if (item.completion_status === 'skipped') acc[type].skipped++;
       return acc;
     },
-    {} as Record<
-      string,
-      { total: number; completed: number; abandoned: number; skipped: number }
-    >
+    {} as Record<string, { total: number; completed: number; abandoned: number; skipped: number }>
   );
 
   // Calculate rates
@@ -470,8 +453,7 @@ export async function getCompletionRateByType(userId: string) {
     completed_count: stats.completed,
     abandoned_count: stats.abandoned,
     skipped_count: stats.skipped,
-    completion_rate:
-      stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0,
+    completion_rate: stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0,
   }));
 }
 
@@ -503,10 +485,7 @@ export async function getCompletionRateByModule(userId: string) {
       if (item.completion_status === 'skipped') acc[module].skipped++;
       return acc;
     },
-    {} as Record<
-      string,
-      { total: number; completed: number; abandoned: number; skipped: number }
-    >
+    {} as Record<string, { total: number; completed: number; abandoned: number; skipped: number }>
   );
 
   // Calculate rates
@@ -516,8 +495,7 @@ export async function getCompletionRateByModule(userId: string) {
     completed_count: stats.completed,
     abandoned_count: stats.abandoned,
     skipped_count: stats.skipped,
-    completion_rate:
-      stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0,
+    completion_rate: stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0,
   }));
 }
 
@@ -529,10 +507,7 @@ export async function getCompletionRateByModule(userId: string) {
  * Subscribe to exercise log changes for a user
  * Use case: Real-time dashboard updates
  */
-export function subscribeToExerciseLogs(
-  userId: string,
-  callback: (payload: any) => void
-) {
+export function subscribeToExerciseLogs(userId: string, callback: (payload: any) => void) {
   const subscription = supabase
     .channel('exercise-logs-changes')
     .on(
@@ -564,10 +539,7 @@ export function unsubscribeFromExerciseLogs(subscription: any) {
 /**
  * Calculate anxiety reduction percentage
  */
-export function calculateReductionPercentage(
-  preRating: number,
-  postRating: number
-): number {
+export function calculateReductionPercentage(preRating: number, postRating: number): number {
   if (preRating === 0) return 0;
   return Math.round(((preRating - postRating) / preRating) * 100);
 }

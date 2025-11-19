@@ -91,7 +91,7 @@ export default function WritingScreen() {
       {/* Bottom Actions */}
       <View style={[styles.bottomActions, { paddingBottom: insets.bottom + 20 }]}>
         <ContinueButton
-          label={isSaving ? "Saving..." : "Continue"}
+          label={isSaving ? 'Saving...' : 'Continue'}
           onPress={handleContinue}
           disabled={isSaving}
         />

@@ -11,6 +11,7 @@
 ### 1. Current State ❌
 
 **No Functional Payment System:**
+
 - ❌ No Stripe SDK installed
 - ❌ No backend API endpoints
 - ❌ No webhook handlers
@@ -18,6 +19,7 @@
 - ⚠️ Subscription UI exists but shows placeholder alerts
 
 **Code Status:**
+
 - ✅ Well-structured subscription UI (449 lines)
 - ✅ Helper functions defined (but non-functional)
 - ✅ Data model ready for Stripe integration
@@ -25,6 +27,7 @@
 - ❌ No premium feature gates implemented
 
 **Premium Features Status:**
+
 - All features currently available to all users
 - No enforcement of free vs. premium tiers
 - Upsell cards shown but not functional
@@ -60,6 +63,7 @@
 ### What to Do
 
 **Immediate Actions (1-2 hours):**
+
 1. Delete `app/subscription.tsx`
 2. Delete `utils/stripe.ts`
 3. Remove subscription link from settings
@@ -67,6 +71,7 @@
 5. Update README to reflect FREE MVP
 
 **Keep for Future:**
+
 - Subscription types in `types/index.ts`
 - Subscription state in store (not breaking anything)
 - User profile structure (ready for Stripe IDs)
@@ -78,6 +83,7 @@
 ### When to Add Monetization
 
 **Trigger Metrics:**
+
 - ✅ 5,000+ active users
 - ✅ 40%+ 7-day retention
 - ✅ 3+ spiral interrupts per user per day
@@ -85,17 +91,18 @@
 
 ### Pricing Strategy
 
-| Tier | Price | Features |
-|------|-------|----------|
-| **Free** | $0 | Basic spiral interrupts, F.I.R.E. training, 30-day history |
-| **Premium** | $9.99/mo | Advanced AI insights, daily predictions, unlimited history, export reports |
-| **Annual** | $99.99/yr | Premium + 2 months free + early access |
+| Tier        | Price     | Features                                                                   |
+| ----------- | --------- | -------------------------------------------------------------------------- |
+| **Free**    | $0        | Basic spiral interrupts, F.I.R.E. training, 30-day history                 |
+| **Premium** | $9.99/mo  | Advanced AI insights, daily predictions, unlimited history, export reports |
+| **Annual**  | $99.99/yr | Premium + 2 months free + early access                                     |
 
 **7-day free trial for all premium subscriptions**
 
 ### Technical Implementation
 
 **Required Infrastructure:**
+
 1. Stripe account (test → live mode)
 2. Supabase Edge Functions (3 endpoints)
 3. Database migration (subscriptions table)
@@ -110,11 +117,13 @@
 ## Financial Projections
 
 ### MVP Phase (Months 1-3)
+
 - **Cost:** ~$25/month (Supabase free tier + Apple Developer)
 - **Revenue:** $0
 - **Users:** Target 5,000 active users
 
 ### Premium Launch (Months 4-12)
+
 - **Conversion Rate:** 10% (industry standard)
 - **MRR:** $49,950 (5,000 paying users × $9.99)
 - **Annual Revenue:** ~$398,000 (after Stripe + Apple fees)
@@ -154,6 +163,7 @@
 ## Next Steps
 
 ### This Week (MVP Launch Prep)
+
 - [ ] Remove subscription files (2 hours)
 - [ ] Update settings/insights screens
 - [ ] Test all navigation flows
@@ -161,12 +171,14 @@
 - [ ] Focus on core features (spiral, F.I.R.E., insights)
 
 ### Month 3 (Evaluate Monetization)
+
 - [ ] Review user engagement metrics
 - [ ] Survey users about premium features
 - [ ] Identify most-used features
 - [ ] Plan premium tier rollout
 
 ### Month 4-5 (Build Premium Tier)
+
 - [ ] Set up Stripe account (test mode)
 - [ ] Build backend API (Supabase Edge Functions)
 - [ ] Create subscriptions database table
@@ -174,6 +186,7 @@
 - [ ] Test payment flow end-to-end
 
 ### Month 6 (Launch Premium)
+
 - [ ] Switch to Stripe live mode
 - [ ] Deploy premium tier
 - [ ] Grandfather early adopters (lifetime premium)
@@ -184,12 +197,15 @@
 ## Questions?
 
 **For MVP Questions:**
+
 - See: `MVP_MONETIZATION_ACTION_PLAN.md`
 
 **For Future Stripe Integration:**
+
 - See: `FUTURE_STRIPE_INTEGRATION.md`
 
 **For Complete Analysis:**
+
 - See: `PAYMENT_MONETIZATION_AUDIT.md`
 
 ---

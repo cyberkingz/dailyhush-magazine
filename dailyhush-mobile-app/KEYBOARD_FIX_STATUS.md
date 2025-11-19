@@ -8,6 +8,7 @@
 ## ✅ What's Been Implemented
 
 ### 1. Keyboard Handling Infrastructure
+
 ```tsx
 // Lines 121-122: Keyboard state variables
 const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -22,9 +23,11 @@ const handleInteractiveInputLayout = useCallback((event: LayoutChangeEvent) => {
   interactiveInputOffsetRef.current = event.nativeEvent.layout.y;
 }, []);
 ```
+
 **Status**: ✅ **Complete**
 
 ### 2. Keyboard Event Listeners
+
 ```tsx
 // Lines 206-239: Keyboard show/hide listeners
 useEffect(() => {
@@ -62,9 +65,11 @@ useEffect(() => {
   };
 }, [isInteractiveAwaitingResume]);
 ```
+
 **Status**: ✅ **Complete** - Good use of platform-specific events and cleanup
 
 ### 3. KeyboardAvoidingView Wrapper
+
 ```tsx
 // Lines 1090-1093
 <KeyboardAvoidingView
@@ -72,9 +77,11 @@ useEffect(() => {
   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
   keyboardVerticalOffset={0}>
 ```
+
 **Status**: ✅ **Complete**
 
 ### 4. ScrollView Configuration
+
 ```tsx
 // Lines 1094-1102
 <ScrollView
@@ -87,9 +94,11 @@ useEffect(() => {
     width: '100%',
   }}>
 ```
+
 **Status**: ✅ **Complete**
 
 ### 5. Dynamic Padding for Keyboard
+
 ```tsx
 // Lines 152-157
 const effectiveKeyboardPadding = Math.max(keyboardHeight - safeAreaBottom, 0);
@@ -102,9 +111,11 @@ const interactiveKeyboardPadding = isInteractiveAwaitingResume
 // Line 1109: Applied to paddingBottom
 paddingBottom: protocolPaddingBottom + interactiveKeyboardPadding,
 ```
+
 **Status**: ✅ **Complete**
 
 ### 6. Layout Tracking for Input
+
 ```tsx
 // Line 1354: onLayout handler on interactive input wrapper
 <View
@@ -113,6 +124,7 @@ paddingBottom: protocolPaddingBottom + interactiveKeyboardPadding,
   <InteractiveStepInput ... />
 </View>
 ```
+
 **Status**: ✅ **Complete**
 
 ---
@@ -122,6 +134,7 @@ paddingBottom: protocolPaddingBottom + interactiveKeyboardPadding,
 ### Issue #1: InteractiveStepInput autoFocus Reliability
 
 **Current Implementation** (components/protocol/InteractiveStepInput.tsx lines 63-71):
+
 ```tsx
 useEffect(() => {
   if (autoFocus && inputRef.current) {
@@ -135,11 +148,13 @@ useEffect(() => {
 ```
 
 **Problem**:
+
 - `inputRef.current?.focus()` may not reliably open keyboard on iOS
 - 300ms delay might not be sufficient in all cases
 - No fallback if focus fails
 
 **Recommended Fix**:
+
 ```tsx
 import { InteractionManager } from 'react-native';
 
@@ -169,16 +184,19 @@ useEffect(() => {
 ### Issue #2: Keyboard Vertical Offset May Need Adjustment
 
 **Current Setting** (line 1092):
+
 ```tsx
 keyboardVerticalOffset={0}
 ```
 
 **Problem**:
+
 - On iOS, the keyboard might still cover part of the input
 - Safe area insets not accounted for
 - May need different values for iOS vs Android
 
 **Recommended Fix**:
+
 ```tsx
 <KeyboardAvoidingView
   style={{ flex: 1 }}
@@ -193,6 +211,7 @@ keyboardVerticalOffset={0}
 ### Issue #3: ScrollView Content Layout During Keyboard
 
 **Current Implementation** (lines 1099-1116):
+
 ```tsx
 contentContainerStyle={{
   flexGrow: 1,
@@ -217,11 +236,13 @@ contentContainerStyle={{
 ```
 
 **Observation**:
+
 - `justifyContent` changes based on keyboard state
 - This might cause layout jumps
 - The countdown might get pushed off-screen when keyboard appears
 
 **Potential Issue**:
+
 - Users might not be able to see the countdown while typing
 - Layout shift might feel jarring
 
@@ -232,11 +253,13 @@ contentContainerStyle={{
 ### Issue #4: Scroll Behavior Dependency Array
 
 **Current Implementation** (line 239):
+
 ```tsx
 }, [isInteractiveAwaitingResume]);
 ```
 
 **Problem**:
+
 - Keyboard listeners only re-register when `isInteractiveAwaitingResume` changes
 - If `protocolScrollRef` or `interactiveInputOffsetRef` change, handlers use stale values
 - This is probably fine, but worth noting
@@ -251,14 +274,10 @@ contentContainerStyle={{
 The InteractiveStepInput component doesn't have a Pressable wrapper to manually trigger focus if autoFocus fails.
 
 **Recommended Addition** (in InteractiveStepInput.tsx):
+
 ```tsx
-<Pressable
-  onPress={() => inputRef.current?.focus()}
-  style={{ width: '100%' }}>
-  <TextInput
-    ref={inputRef}
-    {...props}
-  />
+<Pressable onPress={() => inputRef.current?.focus()} style={{ width: '100%' }}>
+  <TextInput ref={inputRef} {...props} />
 </Pressable>
 ```
 
@@ -269,11 +288,13 @@ The InteractiveStepInput component doesn't have a Pressable wrapper to manually 
 ### Issue #6: Android Keyboard Behavior
 
 **Observation**:
+
 - Android uses `keyboardDidShow` (not `keyboardWillShow`)
 - This means the layout adjustment happens AFTER the keyboard is visible
 - Might cause a brief visual glitch
 
 **Current Implementation** (line 207):
+
 ```tsx
 const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
 ```
@@ -287,38 +308,45 @@ const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
 To determine what's still not working, test these scenarios:
 
 ### Scenario 1: Keyboard Opens Automatically
+
 - [ ] Start spiral protocol
 - [ ] Wait for interactive step to appear
 - [ ] **EXPECTED**: Keyboard opens automatically without tapping
 - [ ] **IF FAILS**: autoFocus issue (Issue #1)
 
 ### Scenario 2: Keyboard Opens on Tap
+
 - [ ] Interactive step appears but keyboard doesn't open
 - [ ] Tap inside the input field
 - [ ] **EXPECTED**: Keyboard opens immediately
 - [ ] **IF FAILS**: Input might not be receiving touch events
 
 ### Scenario 3: Input Remains Visible
+
 - [ ] Keyboard opens (either automatically or manually)
 - [ ] **EXPECTED**: Input field scrolls up and remains visible above keyboard
 - [ ] **IF FAILS**: KeyboardAvoidingView or scroll position issue (Issue #2)
 
 ### Scenario 4: Countdown Visibility
+
 - [ ] Keyboard is open
 - [ ] **CHECK**: Can you still see the countdown timer at the top?
 - [ ] **IF NOT VISIBLE**: This might be intentional, but verify
 
 ### Scenario 5: Layout Doesn't Jump
+
 - [ ] Keyboard opens and closes multiple times
 - [ ] **EXPECTED**: Smooth transitions without jarring layout shifts
 - [ ] **IF JUMPY**: Review justifyContent logic (Issue #3)
 
 ### Scenario 6: Keyboard Persists When Needed
+
 - [ ] Tap outside input (but not on Submit button)
 - [ ] **EXPECTED**: Keyboard stays open
 - [ ] **IF DISMISSES**: keyboardShouldPersistTaps not working
 
 ### Scenario 7: Works on Both Platforms
+
 - [ ] Test on iOS device/simulator
 - [ ] Test on Android device/emulator
 - [ ] **EXPECTED**: Consistent behavior on both
@@ -331,16 +359,19 @@ To determine what's still not working, test these scenarios:
 Based on typical React Native keyboard problems, here are the most likely culprits:
 
 ### 1st Most Likely: autoFocus Not Reliable (Issue #1)
+
 **Symptom**: Keyboard doesn't open automatically when interactive step appears
 **Fix**: Enhance autoFocus implementation with InteractionManager
 **Priority**: **HIGH**
 
 ### 2nd Most Likely: keyboardVerticalOffset Too Small (Issue #2)
+
 **Symptom**: Keyboard covers part of the input field
 **Fix**: Adjust keyboardVerticalOffset to account for safe area
 **Priority**: **MEDIUM**
 
 ### 3rd Most Likely: Input Not Focusable
+
 **Symptom**: Tapping input doesn't open keyboard
 **Fix**: Add Pressable wrapper (Issue #5)
 **Priority**: **MEDIUM**
@@ -361,7 +392,9 @@ Based on typical React Native keyboard problems, here are the most likely culpri
 If keyboard still doesn't open, try these quick fixes in order:
 
 ### Fix A: Increase autoFocus Delay
+
 In `InteractiveStepInput.tsx`, change line 68:
+
 ```tsx
 const timer = setTimeout(() => {
   inputRef.current?.focus();
@@ -369,7 +402,9 @@ const timer = setTimeout(() => {
 ```
 
 ### Fix B: Add Double Focus for iOS
+
 In `InteractiveStepInput.tsx`, replace the autoFocus effect:
+
 ```tsx
 useEffect(() => {
   if (autoFocus && inputRef.current) {
@@ -389,13 +424,17 @@ useEffect(() => {
 ```
 
 ### Fix C: Adjust KeyboardAvoidingView Offset
+
 In `spiral.tsx`, change line 1092:
+
 ```tsx
 keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 20}>
 ```
 
 ### Fix D: Add Manual Focus Pressable
+
 In `InteractiveStepInput.tsx`, wrap the TextInput:
+
 ```tsx
 <Pressable onPress={() => inputRef.current?.focus()} style={{ width: '100%' }}>
   <TextInput

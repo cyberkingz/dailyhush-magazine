@@ -77,9 +77,7 @@ function SettingRow({
       )}
 
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 16, fontWeight: '600', color: colors.text.primary }}>
-          {title}
-        </Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', color: colors.text.primary }}>{title}</Text>
         {subtitle && (
           <Text style={{ marginTop: 2, fontSize: 14, color: colors.text.secondary }}>
             {subtitle}
@@ -160,222 +158,222 @@ export default function Settings() {
         <StatusBar style="light" />
 
         <ScrollFadeView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingTop: 20,
-          paddingBottom: 40 + insets.bottom,
-        }}
-        showsVerticalScrollIndicator={false}
-        fadeColor={colors.background.primary}
-        fadeHeight={48}
-        fadeIntensity={0.95}
-        fadeVisibility="always">
-        {/* Guest Account Upgrade Banner */}
-        {isGuest && (
-          <View className="mb-6">
-            <Pressable
-              onPress={() => {
-                Haptics.selectionAsync();
-                router.push('/onboarding');
-              }}
-              style={{
-                borderRadius: 16,
-                backgroundColor: colors.lime[600],
-                padding: 20,
-              }}>
-              <View style={{ marginBottom: 8, flexDirection: 'row', alignItems: 'center' }}>
-                <Shield size={20} color={colors.lime[200]} strokeWidth={2} />
+          style={{ flex: 1 }}
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            paddingBottom: 40 + insets.bottom,
+          }}
+          showsVerticalScrollIndicator={false}
+          fadeColor={colors.background.primary}
+          fadeHeight={48}
+          fadeIntensity={0.95}
+          fadeVisibility="always">
+          {/* Guest Account Upgrade Banner */}
+          {isGuest && (
+            <View className="mb-6">
+              <Pressable
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  router.push('/onboarding');
+                }}
+                style={{
+                  borderRadius: 16,
+                  backgroundColor: colors.lime[600],
+                  padding: 20,
+                }}>
+                <View style={{ marginBottom: 8, flexDirection: 'row', alignItems: 'center' }}>
+                  <Shield size={20} color={colors.lime[200]} strokeWidth={2} />
+                  <Text
+                    style={{
+                      marginLeft: 8,
+                      fontSize: 16,
+                      fontWeight: '700',
+                      color: colors.text.primary,
+                    }}>
+                    Create Your Account
+                  </Text>
+                </View>
                 <Text
                   style={{
-                    marginLeft: 8,
-                    fontSize: 16,
-                    fontWeight: '700',
-                    color: colors.text.primary,
+                    marginBottom: 12,
+                    fontSize: 14,
+                    lineHeight: 20,
+                    color: colors.lime[200],
                   }}>
-                  Create Your Account
+                  You&apos;re using Nœma as a guest. Create an account to save your progress and
+                  patterns across devices.
                 </Text>
-              </View>
-              <Text
-                style={{
-                  marginBottom: 12,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  color: colors.lime[200],
-                }}>
-                You&apos;re using Nœma as a guest. Create an account to save your progress and
-                patterns across devices.
-              </Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={{ fontSize: 14, fontWeight: '600', color: colors.lime[300] }}>
-                  Create Account →
-                </Text>
-              </View>
-            </Pressable>
-          </View>
-        )}
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 14, fontWeight: '600', color: colors.lime[300] }}>
+                    Create Account →
+                  </Text>
+                </View>
+              </Pressable>
+            </View>
+          )}
 
-        {/* Account Section */}
-        <Text
-          style={{
-            marginBottom: 12,
-            fontSize: 12,
-            fontWeight: '600',
-            textTransform: 'uppercase',
-            color: colors.text.secondary,
-          }}>
-          Account
-        </Text>
+          {/* Account Section */}
+          <Text
+            style={{
+              marginBottom: 12,
+              fontSize: 12,
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              color: colors.text.secondary,
+            }}>
+            Account
+          </Text>
 
-        <SettingRow
-          title="Profile"
-          subtitle={user?.email || 'Guest Account'}
-          icon={<User size={20} color={colors.lime[500]} strokeWidth={2} />}
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.push('/profile');
-          }}
-        />
-
-        {/* Subscription Management - Only show for authenticated users */}
-        {!isGuest && (
           <SettingRow
-            title="Subscription"
-            subtitle="Manage your Premium plan"
-            icon={<Crown size={20} color={colors.lime[500]} strokeWidth={2} />}
+            title="Profile"
+            subtitle={user?.email || 'Guest Account'}
+            icon={<User size={20} color={colors.lime[500]} strokeWidth={2} />}
             onPress={() => {
               Haptics.selectionAsync();
-              router.push('/settings/subscription');
+              router.push('/profile');
             }}
           />
-        )}
 
-        {/* Logout Button - Only show for authenticated users */}
-        {!isGuest && (
-          <>
+          {/* Subscription Management - Only show for authenticated users */}
+          {!isGuest && (
             <SettingRow
-              title={isLoggingOut ? 'Signing out...' : 'Sign Out'}
-              subtitle="Sign out of your account"
-              icon={<LogOut size={20} color="#E63946" strokeWidth={2} />}
-              onPress={isLoggingOut ? undefined : handleLogout}
-              showChevron={false}
-            />
-
-            <SettingRow
-              title="Delete Account"
-              subtitle="Permanently delete your account and data"
-              icon={<Shield size={20} color="#E63946" strokeWidth={2} />}
+              title="Subscription"
+              subtitle="Manage your Premium plan"
+              icon={<Crown size={20} color={colors.lime[500]} strokeWidth={2} />}
               onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-                router.push('/settings/delete-account' as any);
+                Haptics.selectionAsync();
+                router.push('/settings/subscription');
               }}
             />
-          </>
-        )}
+          )}
 
-        {/* Preferences Section */}
-        <Text
-          style={{
-            marginBottom: 12,
-            marginTop: 24,
-            fontSize: 12,
-            fontWeight: '600',
-            textTransform: 'uppercase',
-            color: colors.text.secondary,
-          }}>
-          Preferences
-        </Text>
+          {/* Logout Button - Only show for authenticated users */}
+          {!isGuest && (
+            <>
+              <SettingRow
+                title={isLoggingOut ? 'Signing out...' : 'Sign Out'}
+                subtitle="Sign out of your account"
+                icon={<LogOut size={20} color="#E63946" strokeWidth={2} />}
+                onPress={isLoggingOut ? undefined : handleLogout}
+                showChevron={false}
+              />
 
-        <SettingRow
-          title="Notifications"
-          subtitle="Daily check-ins and reminders"
-          icon={<Bell size={20} color={colors.lime[500]} strokeWidth={2} />}
-          toggle
-          toggleValue={true}
-          onToggle={(value) => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          }}
-        />
+              <SettingRow
+                title="Delete Account"
+                subtitle="Permanently delete your account and data"
+                icon={<Shield size={20} color="#E63946" strokeWidth={2} />}
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                  router.push('/settings/delete-account' as any);
+                }}
+              />
+            </>
+          )}
 
-        <SettingRow
-          title="Text Size"
-          value="Large"
-          icon={<Type size={20} color={colors.lime[500]} strokeWidth={2} />}
-          onPress={() => Haptics.selectionAsync()}
-        />
-
-        {/* Support Section */}
-        <Text
-          style={{
-            marginBottom: 12,
-            marginTop: 24,
-            fontSize: 12,
-            fontWeight: '600',
-            textTransform: 'uppercase',
-            color: colors.text.secondary,
-          }}>
-          Support
-        </Text>
-
-        <SettingRow
-          title="Help & FAQs"
-          icon={<HelpCircle size={20} color={colors.lime[500]} strokeWidth={2} />}
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.push('/faq' as any);
-          }}
-        />
-
-        <SettingRow
-          title="Contact Support"
-          subtitle="hello@trynoema.com"
-          icon={<Mail size={20} color={colors.lime[500]} strokeWidth={2} />}
-          onPress={() => Haptics.selectionAsync()}
-        />
-
-        {/* Legal Section */}
-        <Text
-          style={{
-            marginBottom: 12,
-            marginTop: 24,
-            fontSize: 12,
-            fontWeight: '600',
-            textTransform: 'uppercase',
-            color: colors.text.secondary,
-          }}>
-          Legal
-        </Text>
-
-        <SettingRow
-          title="Privacy Policy"
-          subtitle="How we protect your data"
-          icon={<Shield size={20} color={colors.lime[500]} strokeWidth={2} />}
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.push('/legal/privacy');
-          }}
-        />
-
-        <SettingRow
-          title="Terms of Service"
-          subtitle="App usage agreement"
-          icon={<FileText size={20} color={colors.lime[500]} strokeWidth={2} />}
-          onPress={() => {
-            Haptics.selectionAsync();
-            router.push('/legal/terms');
-          }}
-        />
-
-        {/* App Info */}
-        <View style={{ marginTop: 32, alignItems: 'center' }}>
-          <Text style={{ marginBottom: 4, fontSize: 12, color: colors.text.secondary }}>
-            Nœma v1.0.0
+          {/* Preferences Section */}
+          <Text
+            style={{
+              marginBottom: 12,
+              marginTop: 24,
+              fontSize: 12,
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              color: colors.text.secondary,
+            }}>
+            Preferences
           </Text>
-          <Text style={{ textAlign: 'center', fontSize: 12, color: colors.text.secondary }}>
-            Made with ❤️ for women who deserve peace of mind
+
+          <SettingRow
+            title="Notifications"
+            subtitle="Daily check-ins and reminders"
+            icon={<Bell size={20} color={colors.lime[500]} strokeWidth={2} />}
+            toggle
+            toggleValue={true}
+            onToggle={(value) => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+          />
+
+          <SettingRow
+            title="Text Size"
+            value="Large"
+            icon={<Type size={20} color={colors.lime[500]} strokeWidth={2} />}
+            onPress={() => Haptics.selectionAsync()}
+          />
+
+          {/* Support Section */}
+          <Text
+            style={{
+              marginBottom: 12,
+              marginTop: 24,
+              fontSize: 12,
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              color: colors.text.secondary,
+            }}>
+            Support
           </Text>
-        </View>
-      </ScrollFadeView>
+
+          <SettingRow
+            title="Help & FAQs"
+            icon={<HelpCircle size={20} color={colors.lime[500]} strokeWidth={2} />}
+            onPress={() => {
+              Haptics.selectionAsync();
+              router.push('/faq' as any);
+            }}
+          />
+
+          <SettingRow
+            title="Contact Support"
+            subtitle="hello@trynoema.com"
+            icon={<Mail size={20} color={colors.lime[500]} strokeWidth={2} />}
+            onPress={() => Haptics.selectionAsync()}
+          />
+
+          {/* Legal Section */}
+          <Text
+            style={{
+              marginBottom: 12,
+              marginTop: 24,
+              fontSize: 12,
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              color: colors.text.secondary,
+            }}>
+            Legal
+          </Text>
+
+          <SettingRow
+            title="Privacy Policy"
+            subtitle="How we protect your data"
+            icon={<Shield size={20} color={colors.lime[500]} strokeWidth={2} />}
+            onPress={() => {
+              Haptics.selectionAsync();
+              router.push('/legal/privacy');
+            }}
+          />
+
+          <SettingRow
+            title="Terms of Service"
+            subtitle="App usage agreement"
+            icon={<FileText size={20} color={colors.lime[500]} strokeWidth={2} />}
+            onPress={() => {
+              Haptics.selectionAsync();
+              router.push('/legal/terms');
+            }}
+          />
+
+          {/* App Info */}
+          <View style={{ marginTop: 32, alignItems: 'center' }}>
+            <Text style={{ marginBottom: 4, fontSize: 12, color: colors.text.secondary }}>
+              Nœma v1.0.0
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 12, color: colors.text.secondary }}>
+              Made with ❤️ for women who deserve peace of mind
+            </Text>
+          </View>
+        </ScrollFadeView>
       </View>
     </ScrollControlProvider>
   );

@@ -25,7 +25,7 @@ import {
   type MethodId,
   type Module,
   type Method,
-} from '@/constants'
+} from '@/constants';
 ```
 
 ## Common Use Cases
@@ -116,19 +116,15 @@ function MethodCard({ moduleId, methodId }) {
 
 ```typescript
 // Check module access
-const canAccessModule = hasModuleAccess('better-sleep', isPremiumUser)
+const canAccessModule = hasModuleAccess('better-sleep', isPremiumUser);
 
 // Check method access
-const canAccessMethod = hasMethodAccess(
-  'better-sleep',
-  'progress-dashboard',
-  isPremiumUser
-)
+const canAccessMethod = hasMethodAccess('better-sleep', 'progress-dashboard', isPremiumUser);
 
 // Get only accessible methods
-const accessibleMethods = getMethodsForModule(moduleId).filter(method =>
+const accessibleMethods = getMethodsForModule(moduleId).filter((method) =>
   hasMethodAccess(moduleId, method.id, isPremiumUser)
-)
+);
 ```
 
 ### 5. Get Module by Tag (Search/Discovery)
@@ -194,7 +190,7 @@ const module = {
   estimatedDuration: '2-10 min',
   methods: ['talk-to-anna', 'quick-exercise', 'breathing-exercise'],
   tags: ['urgent', 'rumination', 'anxiety', 'overthinking'],
-}
+};
 ```
 
 ## Method Data Structure
@@ -226,21 +222,21 @@ const method = {
 
 ```typescript
 type ModuleId =
-  | 'stop-spiraling'    // Free, urgent
-  | 'calm-anxiety'      // Free
-  | 'process-emotions'  // Premium
-  | 'better-sleep'      // Premium
-  | 'gain-focus'        // Premium
+  | 'stop-spiraling' // Free, urgent
+  | 'calm-anxiety' // Free
+  | 'process-emotions' // Premium
+  | 'better-sleep' // Premium
+  | 'gain-focus'; // Premium
 ```
 
 ## Method IDs
 
 ```typescript
 type MethodId =
-  | 'talk-to-anna'        // Conversational therapy
-  | 'quick-exercise'      // Direct to exercise
-  | 'breathing-exercise'  // Guided breathing
-  | 'progress-dashboard'  // Historical insights (premium only)
+  | 'talk-to-anna' // Conversational therapy
+  | 'quick-exercise' // Direct to exercise
+  | 'breathing-exercise' // Guided breathing
+  | 'progress-dashboard'; // Historical insights (premium only)
 ```
 
 ## Color System
@@ -274,7 +270,7 @@ analytics.track('MODULE_SELECTED', {
   is_premium: module.isPremium,
   is_urgent: module.isUrgent,
   has_access: hasModuleAccess(module.id, isPremium),
-})
+});
 
 // When user selects method
 analytics.track('METHOD_SELECTED', {
@@ -284,7 +280,7 @@ analytics.track('METHOD_SELECTED', {
   duration_minutes: method.durationMinutes,
   is_recommended: method.isRecommended,
   is_premium: method.isPremium,
-})
+});
 
 // When method completed
 analytics.track('METHOD_COMPLETED', {
@@ -292,7 +288,7 @@ analytics.track('METHOD_COMPLETED', {
   method_id: methodId,
   duration_seconds: actualDuration,
   completion_status: 'completed' | 'skipped' | 'abandoned',
-})
+});
 ```
 
 ## Common Patterns
@@ -321,22 +317,22 @@ return (
 
 ```typescript
 function getRecommendedModule(userContext: {
-  timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night',
-  isSpiraling: boolean,
-  recentActivity: string[]
+  timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night';
+  isSpiraling: boolean;
+  recentActivity: string[];
 }): ModuleId {
   // Spiraling takes priority
   if (userContext.isSpiraling) {
-    return 'stop-spiraling'
+    return 'stop-spiraling';
   }
 
   // Nighttime → sleep module
   if (userContext.timeOfDay === 'night') {
-    return 'better-sleep'
+    return 'better-sleep';
   }
 
   // Default to calm anxiety
-  return 'calm-anxiety'
+  return 'calm-anxiety';
 }
 ```
 
@@ -375,17 +371,17 @@ All functions are fully typed. TypeScript will catch:
 
 ```typescript
 // ✅ Valid
-const module = getModule('stop-spiraling')
-const methods = getMethodsForModule('calm-anxiety')
+const module = getModule('stop-spiraling');
+const methods = getMethodsForModule('calm-anxiety');
 
 // ❌ TypeScript error - invalid module ID
-const invalid = getModule('invalid-module')
+const invalid = getModule('invalid-module');
 
 // ✅ Valid method for module
-const nav = getMethodNavigationParams('stop-spiraling', 'talk-to-anna')
+const nav = getMethodNavigationParams('stop-spiraling', 'talk-to-anna');
 
 // ❌ TypeScript error - method doesn't exist for this module
-const invalid = getMethodNavigationParams('stop-spiraling', 'invalid-method')
+const invalid = getMethodNavigationParams('stop-spiraling', 'invalid-method');
 ```
 
 ## Adding New Content
@@ -413,33 +409,28 @@ const invalid = getMethodNavigationParams('stop-spiraling', 'invalid-method')
 ## Testing
 
 ```typescript
-import { describe, it, expect } from '@jest/globals'
-import {
-  getModule,
-  getMethodsForModule,
-  hasModuleAccess,
-  hasMethodAccess,
-} from '@/constants'
+import { describe, it, expect } from '@jest/globals';
+import { getModule, getMethodsForModule, hasModuleAccess, hasMethodAccess } from '@/constants';
 
 describe('Module System', () => {
   it('should return module by ID', () => {
-    const module = getModule('stop-spiraling')
-    expect(module.title).toBe('Stop Spiraling')
-    expect(module.isPremium).toBe(false)
-  })
+    const module = getModule('stop-spiraling');
+    expect(module.title).toBe('Stop Spiraling');
+    expect(module.isPremium).toBe(false);
+  });
 
   it('should return methods for module', () => {
-    const methods = getMethodsForModule('stop-spiraling')
-    expect(methods.length).toBeGreaterThan(0)
-    expect(methods[0].moduleId).toBe('stop-spiraling')
-  })
+    const methods = getMethodsForModule('stop-spiraling');
+    expect(methods.length).toBeGreaterThan(0);
+    expect(methods[0].moduleId).toBe('stop-spiraling');
+  });
 
   it('should gate premium content', () => {
-    expect(hasModuleAccess('better-sleep', false)).toBe(false)
-    expect(hasModuleAccess('better-sleep', true)).toBe(true)
-    expect(hasModuleAccess('stop-spiraling', false)).toBe(true)
-  })
-})
+    expect(hasModuleAccess('better-sleep', false)).toBe(false);
+    expect(hasModuleAccess('better-sleep', true)).toBe(true);
+    expect(hasModuleAccess('stop-spiraling', false)).toBe(true);
+  });
+});
 ```
 
 ## Performance Considerations
@@ -448,13 +439,13 @@ All helpers use direct object lookups - O(1) complexity:
 
 ```typescript
 // ✅ Fast - single object lookup
-const module = getModule('stop-spiraling')
+const module = getModule('stop-spiraling');
 
 // ✅ Fast - filter operation on small array (~10-15 items)
-const methods = getMethodsForModule('stop-spiraling')
+const methods = getMethodsForModule('stop-spiraling');
 
 // ✅ Fast - cached in memory, no network calls
-const enabled = getEnabledModules()
+const enabled = getEnabledModules();
 ```
 
 No network calls required - all configuration is static.
@@ -462,6 +453,7 @@ No network calls required - all configuration is static.
 ---
 
 **Quick Links:**
+
 - Full Documentation: `/docs/MODULE_NAVIGATION_FLOW.md`
 - Module Config: `/constants/modules.ts`
 - Method Config: `/constants/methods.ts`

@@ -6,7 +6,15 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, PanResponder, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  PanResponder,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import * as Haptics from 'expo-haptics';
 import {
   getMoodEmoji,
@@ -74,7 +82,11 @@ function snapToIntensity(angle: number): IntensityValue {
 }
 
 // Get position for a given intensity (centered on handle, not top-left)
-function getPositionForIntensity(intensity: IntensityValue): { x: number; y: number; angle: number } {
+function getPositionForIntensity(intensity: IntensityValue): {
+  x: number;
+  y: number;
+  angle: number;
+} {
   const angle = getAngleForIntensity(intensity);
   const radians = (angle * Math.PI) / 180;
 
@@ -234,8 +246,8 @@ export function IntensityScale({
             newIntensity >= 4
               ? Haptics.ImpactFeedbackStyle.Heavy
               : newIntensity >= 3
-              ? Haptics.ImpactFeedbackStyle.Medium
-              : Haptics.ImpactFeedbackStyle.Light;
+                ? Haptics.ImpactFeedbackStyle.Medium
+                : Haptics.ImpactFeedbackStyle.Light;
 
           if (lastHapticIntensity.current !== newIntensity) {
             Haptics.impactAsync(hapticStyle);
@@ -270,9 +282,7 @@ export function IntensityScale({
           {/* Center Label */}
           <View style={styles.centerLabel}>
             <Text style={styles.intensityNumber}>{currentIntensity}</Text>
-            <Text style={styles.intensityLabel}>
-              {INTENSITY_LABELS[currentIntensity]}
-            </Text>
+            <Text style={styles.intensityLabel}>{INTENSITY_LABELS[currentIntensity]}</Text>
           </View>
 
           {/* Arc/Track - Render BEFORE markers so markers appear on top */}
@@ -300,8 +310,7 @@ export function IntensityScale({
                   onIntensitySelect(intensity);
                 }}
                 accessibilityLabel={`Intensity ${intensity}: ${INTENSITY_LABELS[intensity]}`}
-                accessibilityRole="button"
-              >
+                accessibilityRole="button">
                 <View
                   style={[
                     styles.marker,
@@ -310,9 +319,7 @@ export function IntensityScale({
                         ? colors.emerald[500] // Solid emerald when active
                         : 'rgba(15, 50, 41, 0.95)', // Solid dark background when inactive
                       borderWidth: isActive ? 0 : 3, // Ring only when inactive
-                      borderColor: isActive
-                        ? 'transparent'
-                        : 'rgba(16, 185, 129, 0.75)', // Emerald ring for inactive markers
+                      borderColor: isActive ? 'transparent' : 'rgba(16, 185, 129, 0.75)', // Emerald ring for inactive markers
                       width: isActive ? 18 : 14, // Slightly larger for better visibility
                       height: isActive ? 18 : 14,
                       borderRadius: isActive ? 9 : 7,
@@ -333,8 +340,7 @@ export function IntensityScale({
                 top: handleY,
                 transform: [{ scale: handleScale }],
               },
-            ]}
-          >
+            ]}>
             <View style={styles.handleInner} />
           </Animated.View>
         </View>
@@ -478,6 +484,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     color: colors.text.secondary,
-    opacity: 0.80, // Increased from 0.75 for contrast
+    opacity: 0.8, // Increased from 0.75 for contrast
   },
 });

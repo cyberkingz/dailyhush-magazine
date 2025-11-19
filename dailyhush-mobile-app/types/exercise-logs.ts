@@ -392,9 +392,7 @@ export interface ExerciseAbandonmentEvent {
 // HELPER TYPE GUARDS
 // ============================================================================
 
-export function isCompletedExercise(
-  log: ExerciseLog
-): log is ExerciseLog & {
+export function isCompletedExercise(log: ExerciseLog): log is ExerciseLog & {
   completion_status: 'completed';
   completed_at: string;
   post_anxiety_rating: number;
@@ -406,16 +404,11 @@ export function isCompletedExercise(
   );
 }
 
-export function isAbandonedExercise(
-  log: ExerciseLog
-): log is ExerciseLog & {
+export function isAbandonedExercise(log: ExerciseLog): log is ExerciseLog & {
   completion_status: 'abandoned';
   abandoned_at_percentage: number;
 } {
-  return (
-    log.completion_status === 'abandoned' &&
-    log.abandoned_at_percentage !== null
-  );
+  return log.completion_status === 'abandoned' && log.abandoned_at_percentage !== null;
 }
 
 export function isSkippedExercise(

@@ -57,7 +57,7 @@ const stopSpiralingMethods: Method[] = [
     title: 'Talk to Anna',
     subtitle: 'Get personalized support',
     description:
-      'Have a conversation with Anna, your AI therapist. She\'ll help you understand what\'s happening and guide you through it.',
+      "Have a conversation with Anna, your AI therapist. She'll help you understand what's happening and guide you through it.",
     icon: '💬',
     duration: '5-10 min',
     durationMinutes: 7,
@@ -77,7 +77,7 @@ const stopSpiralingMethods: Method[] = [
     ],
     bestFor: [
       'When you need to talk it out',
-      'Understanding why you\'re spiraling',
+      "Understanding why you're spiraling",
       'First time using the app',
     ],
   },
@@ -122,7 +122,7 @@ const stopSpiralingMethods: Method[] = [
     bestFor: [
       'Physical anxiety symptoms',
       'Public places',
-      'When you can\'t talk',
+      "When you can't talk",
       'Building daily habits',
     ],
   },
@@ -136,7 +136,7 @@ const calmAnxietyMethods: Method[] = [
     title: 'Talk to Anna',
     subtitle: 'Work through your anxiety',
     description:
-      'Discuss what\'s making you anxious with Anna. She\'ll help you identify triggers and develop coping strategies.',
+      "Discuss what's making you anxious with Anna. She'll help you identify triggers and develop coping strategies.",
     icon: '💬',
     duration: '5-10 min',
     durationMinutes: 7,
@@ -181,7 +181,8 @@ const calmAnxietyMethods: Method[] = [
     moduleId: 'calm-anxiety',
     title: 'Calming Breath',
     subtitle: '4-7-8 breathing',
-    description: 'Research-backed breathing pattern to activate your parasympathetic nervous system.',
+    description:
+      'Research-backed breathing pattern to activate your parasympathetic nervous system.',
     icon: '🫁',
     duration: '3 min',
     durationMinutes: 3,
@@ -224,12 +225,7 @@ const processEmotionsMethods: Method[] = [
     },
     isPremium: true,
     isRecommended: true,
-    benefits: [
-      'Emotional clarity',
-      'Self-compassion',
-      'Pattern recognition',
-      'Healthy processing',
-    ],
+    benefits: ['Emotional clarity', 'Self-compassion', 'Pattern recognition', 'Healthy processing'],
     bestFor: [
       'Complex feelings',
       'After difficult events',
@@ -241,8 +237,8 @@ const processEmotionsMethods: Method[] = [
     id: 'quick-exercise',
     moduleId: 'process-emotions',
     title: 'Emotion Wheel',
-    subtitle: 'Identify what you\'re feeling',
-    description: 'Use the emotion wheel to pinpoint exactly what you\'re experiencing and why.',
+    subtitle: "Identify what you're feeling",
+    description: "Use the emotion wheel to pinpoint exactly what you're experiencing and why.",
     icon: '🎨',
     duration: '5 min',
     durationMinutes: 5,
@@ -293,7 +289,7 @@ const betterSleepMethods: Method[] = [
     moduleId: 'better-sleep',
     title: 'Bedtime Check-In',
     subtitle: 'Clear your mind for sleep',
-    description: 'Talk through what\'s keeping you up. Anna helps you process and release it.',
+    description: "Talk through what's keeping you up. Anna helps you process and release it.",
     icon: '💬',
     duration: '5-10 min',
     durationMinutes: 7,
@@ -306,15 +302,10 @@ const betterSleepMethods: Method[] = [
     },
     isPremium: true,
     isRecommended: true,
-    benefits: [
-      'Mental clarity',
-      'Tomorrow planning',
-      'Worry offloading',
-      'Sleep-ready mindset',
-    ],
+    benefits: ['Mental clarity', 'Tomorrow planning', 'Worry offloading', 'Sleep-ready mindset'],
     bestFor: [
       'Racing thoughts at night',
-      'Tomorrow\'s worries',
+      "Tomorrow's worries",
       'Bedtime routine',
       'First-time insomnia',
     ],
@@ -373,7 +364,7 @@ const betterSleepMethods: Method[] = [
     moduleId: 'better-sleep',
     title: 'Sleep Patterns',
     subtitle: 'Track your sleep quality',
-    description: 'See how your mental patterns affect sleep and what\'s improving.',
+    description: "See how your mental patterns affect sleep and what's improving.",
     icon: '📊',
     duration: 'Explore',
     durationMinutes: 0,
@@ -401,7 +392,7 @@ const gainFocusMethods: Method[] = [
     moduleId: 'gain-focus',
     title: 'Focus Session',
     subtitle: 'Clear mental clutter',
-    description: 'Work with Anna to identify what\'s distracting you and create a focus plan.',
+    description: "Work with Anna to identify what's distracting you and create a focus plan.",
     icon: '💬',
     duration: '5-8 min',
     durationMinutes: 6,
@@ -414,18 +405,8 @@ const gainFocusMethods: Method[] = [
     },
     isPremium: true,
     isRecommended: true,
-    benefits: [
-      'Distraction identification',
-      'Priority clarity',
-      'Focus plan',
-      'Motivation boost',
-    ],
-    bestFor: [
-      'Starting work sessions',
-      'Scattered thoughts',
-      'Procrastination',
-      'Important tasks',
-    ],
+    benefits: ['Distraction identification', 'Priority clarity', 'Focus plan', 'Motivation boost'],
+    bestFor: ['Starting work sessions', 'Scattered thoughts', 'Procrastination', 'Important tasks'],
   },
   {
     id: 'quick-exercise',
@@ -443,12 +424,7 @@ const gainFocusMethods: Method[] = [
     isPremium: true,
     isRecommended: false,
     benefits: ['Quick reset', 'Energy boost', 'Mental clarity', 'Portable technique'],
-    bestFor: [
-      'Between tasks',
-      'Afternoon slumps',
-      'Meeting transitions',
-      'Pomodoro breaks',
-    ],
+    bestFor: ['Between tasks', 'Afternoon slumps', 'Meeting transitions', 'Pomodoro breaks'],
   },
   {
     id: 'progress-dashboard',
@@ -466,12 +442,7 @@ const gainFocusMethods: Method[] = [
     },
     isPremium: true,
     isRecommended: false,
-    benefits: [
-      'Peak time identification',
-      'Distraction patterns',
-      'Optimization',
-      'Work planning',
-    ],
+    benefits: ['Peak time identification', 'Distraction patterns', 'Optimization', 'Work planning'],
     bestFor: [
       'Optimizing schedule',
       'Understanding patterns',
@@ -528,27 +499,21 @@ export const getMethod = (moduleId: ModuleId, methodId: MethodId): Method | unde
  * Get recommended method for a module
  */
 export const getRecommendedMethod = (moduleId: ModuleId): Method | undefined => {
-  return allMethodsArray.find(
-    (method) => method.moduleId === moduleId && method.isRecommended
-  );
+  return allMethodsArray.find((method) => method.moduleId === moduleId && method.isRecommended);
 };
 
 /**
  * Get free methods for a module
  */
 export const getFreeMethods = (moduleId: ModuleId): Method[] => {
-  return allMethodsArray.filter(
-    (method) => method.moduleId === moduleId && !method.isPremium
-  );
+  return allMethodsArray.filter((method) => method.moduleId === moduleId && !method.isPremium);
 };
 
 /**
  * Get premium methods for a module
  */
 export const getPremiumMethods = (moduleId: ModuleId): Method[] => {
-  return allMethodsArray.filter(
-    (method) => method.moduleId === moduleId && method.isPremium
-  );
+  return allMethodsArray.filter((method) => method.moduleId === moduleId && method.isPremium);
 };
 
 /**

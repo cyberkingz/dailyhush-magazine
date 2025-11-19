@@ -11,6 +11,7 @@ This guide gets you from current state to improved state in minimal time. For de
 **File:** `/Users/toni/Downloads/dailyhush-blog/dailyhush-mobile-app/app/profile.tsx`
 
 **Line 14:** Add these imports:
+
 ```tsx
 import { ProfileTextInput } from '@/components/profile/ProfileTextInput';
 import { AuthButton } from '@/components/auth/AuthButton';
@@ -22,11 +23,13 @@ import { ErrorAlert } from '@/components/auth/ErrorAlert';
 ## Step 2: Add Error State (1 minute)
 
 **Line 27:** Add after `const [successMessage, setSuccessMessage] = useState('');`
+
 ```tsx
 const [error, setError] = useState<string | null>(null);
 ```
 
 **Line 36:** Add after the successMessage useEffect:
+
 ```tsx
 useEffect(() => {
   if (error) {
@@ -43,30 +46,28 @@ useEffect(() => {
 **Lines 100-138:** Replace entire header section with:
 
 ```tsx
-{/* Header - Back button only */}
+{
+  /* Header - Back button only */
+}
 <View
-  className="bg-[#0A1612] border-b border-[#1A4D3C]/30"
+  className="border-b border-[#1A4D3C]/30 bg-[#0A1612]"
   style={{
     paddingTop: insets.top + 12,
     paddingBottom: 12,
     paddingHorizontal: 20,
-  }}
->
+  }}>
   <Pressable
     onPress={handleBack}
     hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
     className="active:opacity-70"
     accessibilityRole="button"
-    accessibilityLabel="Go back"
-  >
+    accessibilityLabel="Go back">
     <View className="flex-row items-center">
       <ArrowLeft size={24} color="#52B788" strokeWidth={2} />
-      <Text className="text-[#E8F4F0] text-lg font-semibold ml-3">
-        Edit Profile
-      </Text>
+      <Text className="ml-3 text-lg font-semibold text-[#E8F4F0]">Edit Profile</Text>
     </View>
   </Pressable>
-</View>
+</View>;
 ```
 
 ---
@@ -76,22 +77,16 @@ useEffect(() => {
 **Lines 154-161:** Replace with:
 
 ```tsx
-{/* Success/Error Messages */}
-{successMessage && (
-  <ErrorAlert
-    message={successMessage}
-    type="success"
-    dismissible={false}
-  />
-)}
+{
+  /* Success/Error Messages */
+}
+{
+  successMessage && <ErrorAlert message={successMessage} type="success" dismissible={false} />;
+}
 
-{error && (
-  <ErrorAlert
-    message={error}
-    type="error"
-    onDismiss={() => setError(null)}
-  />
-)}
+{
+  error && <ErrorAlert message={error} type="error" onDismiss={() => setError(null)} />;
+}
 ```
 
 ---
@@ -99,12 +94,14 @@ useEffect(() => {
 ## Step 5: Add Form Wrapper (2 minutes)
 
 **Line 153:** After the ScrollView opening tag, add:
+
 ```tsx
 {/* Form wrapper for max-width */}
 <View style={{ maxWidth: 420, width: '100%', alignSelf: 'center' }}>
 ```
 
 **Line 228:** Before the closing ScrollView tag, add:
+
 ```tsx
 </View>
 {/* End form wrapper */}
@@ -115,8 +112,11 @@ useEffect(() => {
 ## Step 6: Update Section Headers (3 minutes)
 
 **Lines 164-167:** Replace with:
+
 ```tsx
-{/* Account Section */}
+{
+  /* Account Section */
+}
 <View className="mb-8">
   <Text
     style={{
@@ -126,11 +126,10 @@ useEffect(() => {
       letterSpacing: 1.2,
       textTransform: 'uppercase',
       marginBottom: 16,
-    }}
-  >
+    }}>
     Account Information
   </Text>
-  <View className="bg-[#1A4D3C] rounded-2xl p-4">
+  <View className="rounded-2xl bg-[#1A4D3C] p-4">
     <Text style={{ fontSize: 15, fontWeight: '600', color: '#95B8A8', marginBottom: 8 }}>
       Email
     </Text>
@@ -138,12 +137,15 @@ useEffect(() => {
       {user?.email || 'Not set'}
     </Text>
   </View>
-</View>
+</View>;
 ```
 
 **Lines 177-219:** Replace with:
+
 ```tsx
-{/* Personal Information Section */}
+{
+  /* Personal Information Section */
+}
 <View className="mb-6">
   <Text
     style={{
@@ -153,8 +155,7 @@ useEffect(() => {
       letterSpacing: 1.2,
       textTransform: 'uppercase',
       marginBottom: 16,
-    }}
-  >
+    }}>
     Personal Details
   </Text>
 
@@ -187,7 +188,7 @@ useEffect(() => {
     testID="age-input"
     editable={!isSaving}
   />
-</View>
+</View>;
 ```
 
 ---
@@ -195,8 +196,11 @@ useEffect(() => {
 ## Step 7: Update Privacy Notice (2 minutes)
 
 **Lines 222-227:** Replace with:
+
 ```tsx
-{/* Privacy Notice */}
+{
+  /* Privacy Notice */
+}
 <View
   style={{
     backgroundColor: 'rgba(26, 77, 60, 0.4)',
@@ -205,19 +209,18 @@ useEffect(() => {
     marginTop: 24,
     borderWidth: 1,
     borderColor: 'rgba(82, 183, 136, 0.2)',
-  }}
->
+  }}>
   <Text
     style={{
       fontSize: 15,
       lineHeight: 24,
       color: '#B7E4C7',
       fontWeight: '400',
-    }}
-  >
-    Your personal information is private and secure. We use this to personalize your DailyHush experience and provide age-appropriate content recommendations.
+    }}>
+    Your personal information is private and secure. We use this to personalize your DailyHush
+    experience and provide age-appropriate content recommendations.
   </Text>
-</View>
+</View>;
 ```
 
 ---
@@ -225,8 +228,11 @@ useEffect(() => {
 ## Step 8: Add Save Button at Bottom (2 minutes)
 
 **After the privacy notice (new code):** Add:
+
 ```tsx
-{/* Save Button */}
+{
+  /* Save Button */
+}
 <View style={{ marginTop: 36 }}>
   <AuthButton
     title="Save Changes"
@@ -236,7 +242,7 @@ useEffect(() => {
     loading={isSaving}
     testID="save-profile-button"
   />
-</View>
+</View>;
 ```
 
 ---
@@ -244,6 +250,7 @@ useEffect(() => {
 ## Step 9: Update Error Handling (5 minutes)
 
 **Lines 42-46:** Replace with:
+
 ```tsx
 if (!user?.user_id) {
   setError('No user account found. Please sign in again.');
@@ -253,6 +260,7 @@ if (!user?.user_id) {
 ```
 
 **Lines 48-49:** Add validation after age parsing:
+
 ```tsx
 const ageValue = age ? parseInt(age, 10) : null;
 
@@ -266,6 +274,7 @@ if (ageValue !== null && (ageValue < 18 || ageValue > 120)) {
 ```
 
 **Lines 61-66:** Replace with:
+
 ```tsx
 if (updateError) {
   console.error('Error updating profile:', updateError);
@@ -277,6 +286,7 @@ if (updateError) {
 ```
 
 **Lines 83-85:** Replace catch block with:
+
 ```tsx
 catch (error: any) {
   console.error('Exception updating profile:', error);
@@ -290,6 +300,7 @@ catch (error: any) {
 ## Step 10: Test (10 minutes)
 
 ### Quick Tests
+
 1. **Run app:** `npm start` or `yarn start`
 2. **Navigate to profile screen**
 3. **Test inputs:** Tap each field, verify 56px height
@@ -300,6 +311,7 @@ catch (error: any) {
 8. **Test keyboard:** Verify fields advance properly
 
 ### Visual Checklist
+
 - [ ] Back button works
 - [ ] No save button in header
 - [ ] Section headers are bold and visible
@@ -315,18 +327,22 @@ catch (error: any) {
 ## Troubleshooting
 
 ### ProfileTextInput not found
+
 **Issue:** Import error
 **Solution:** Component already created at `/components/profile/ProfileTextInput.tsx`
 
 ### ErrorAlert not animating
+
 **Issue:** Wrong import
 **Solution:** Ensure import from `@/components/auth/ErrorAlert`
 
 ### Save button not visible
+
 **Issue:** ScrollView padding
 **Solution:** Verify `paddingBottom: 40 + insets.bottom` in ScrollView
 
 ### Inputs not focusing
+
 **Issue:** Keyboard covering input
 **Solution:** KeyboardAvoidingView already implemented, check behavior prop
 
@@ -411,6 +427,7 @@ grep -n "fontSize: 14\|fontSize: 15\|fontSize: 16\|fontSize: 17" app/profile.tsx
 ## Full Documentation
 
 For detailed explanations, rationale, and complete code:
+
 - **PROFILE_SCREEN_UI_IMPROVEMENTS.md** - Comprehensive analysis
 - **PROFILE_BEFORE_AFTER_COMPARISON.md** - Side-by-side comparisons
 - **PROFILE_IMPROVEMENTS_SUMMARY.md** - Executive summary
@@ -420,6 +437,7 @@ For detailed explanations, rationale, and complete code:
 ## Support
 
 If you encounter issues:
+
 1. Check "Common Issues & Solutions" in PROFILE_BEFORE_AFTER_COMPARISON.md
 2. Verify all imports are correct
 3. Ensure ProfileTextInput component exists

@@ -25,7 +25,7 @@ import {
   Easing,
   cancelAnimation,
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
+
 import type { UseSuccessAnimationReturn } from '@/types/widget.types';
 
 // ============================================================================
@@ -88,9 +88,7 @@ const CHECKMARK_PATH_LENGTH = 100;
  * </Svg>
  * ```
  */
-export function useSuccessAnimation(
-  config: UseSuccessAnimationConfig
-): UseSuccessAnimationReturn {
+export function useSuccessAnimation(config: UseSuccessAnimationConfig): UseSuccessAnimationReturn {
   const { duration, enableHaptics, showGlow, onComplete } = config;
 
   // ========================================================================
@@ -245,10 +243,7 @@ export function useSuccessAnimation(
     'worklet';
 
     return {
-      transform: [
-        { scale: scale.value },
-        { rotate: `${rotate.value}deg` },
-      ],
+      transform: [{ scale: scale.value }, { rotate: `${rotate.value}deg` }],
       // Glow shadow effect (if enabled)
       ...(showGlow && {
         shadowOpacity: glowOpacity.value,

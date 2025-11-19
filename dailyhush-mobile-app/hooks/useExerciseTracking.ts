@@ -10,7 +10,6 @@ import { ExerciseLogsAPI } from '@/utils/supabase/exercise-logs';
 import type {
   ExerciseLog,
   ExerciseType,
-  FireModule,
   StartExercisePayload,
   CompleteExercisePayload,
   AbandonExercisePayload,
@@ -27,9 +26,7 @@ export function useExerciseTracking() {
   const userId = user?.user_id;
 
   // State
-  const [currentExercise, setCurrentExercise] = useState<ExerciseLog | null>(
-    null
-  );
+  const [currentExercise, setCurrentExercise] = useState<ExerciseLog | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -118,11 +115,7 @@ export function useExerciseTracking() {
   // ============================================================================
 
   const abandonExercise = useCallback(
-    async (
-      logId: string,
-      abandonedAtPercentage: number,
-      durationSeconds?: number
-    ) => {
+    async (logId: string, abandonedAtPercentage: number, durationSeconds?: number) => {
       setIsLoading(true);
       setError(null);
 
@@ -156,30 +149,27 @@ export function useExerciseTracking() {
   // SKIP EXERCISE
   // ============================================================================
 
-  const skipExercise = useCallback(
-    async (logId: string, skipReason?: string) => {
-      setIsLoading(true);
-      setError(null);
+  const skipExercise = useCallback(async (logId: string, skipReason?: string) => {
+    setIsLoading(true);
+    setError(null);
 
-      try {
-        const log = await ExerciseLogsAPI.skipExercise(logId, {
-          completion_status: 'skipped',
-          skip_reason: skipReason,
-        });
+    try {
+      const log = await ExerciseLogsAPI.skipExercise(logId, {
+        completion_status: 'skipped',
+        skip_reason: skipReason,
+      });
 
-        setCurrentExercise(null);
+      setCurrentExercise(null);
 
-        return log;
-      } catch (err: any) {
-        console.error('Error skipping exercise:', err);
-        setError(err.message || 'Failed to skip exercise');
-        return null;
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    []
-  );
+      return log;
+    } catch (err: any) {
+      console.error('Error skipping exercise:', err);
+      setError(err.message || 'Failed to skip exercise');
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return {
     currentExercise,
@@ -243,11 +233,8 @@ export function useExerciseStats() {
 
   const [stats, setStats] = useState<ExerciseStats[]>([]);
   const [streak, setStreak] = useState<number>(0);
-  const [mostEffectiveExercise, setMostEffectiveExercise] =
-    useState<ExerciseType | null>(null);
-  const [mostCommonTrigger, setMostCommonTrigger] = useState<string | null>(
-    null
-  );
+  const [mostEffectiveExercise, setMostEffectiveExercise] = useState<ExerciseType | null>(null);
+  const [mostCommonTrigger, setMostCommonTrigger] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -259,13 +246,12 @@ export function useExerciseStats() {
 
     try {
       // Fetch all stats in parallel
-      const [statsData, streakData, effectiveExercise, commonTrigger] =
-        await Promise.all([
-          ExerciseLogsAPI.getExerciseStats(userId),
-          ExerciseLogsAPI.getExerciseStreak(userId),
-          ExerciseLogsAPI.getMostEffectiveExercise(userId),
-          ExerciseLogsAPI.getMostCommonTrigger(userId),
-        ]);
+      const [statsData, streakData, effectiveExercise, commonTrigger] = await Promise.all([
+        ExerciseLogsAPI.getExerciseStats(userId),
+        ExerciseLogsAPI.getExerciseStreak(userId),
+        ExerciseLogsAPI.getMostEffectiveExercise(userId),
+        ExerciseLogsAPI.getMostCommonTrigger(userId),
+      ]);
 
       setStats(statsData);
       setStreak(streakData);
@@ -288,8 +274,7 @@ export function useExerciseStats() {
     (acc, stat) => ({
       total_sessions: acc.total_sessions + stat.total_sessions,
       completed_count: acc.completed_count + stat.completed_count,
-      avg_reduction:
-        acc.avg_reduction + stat.avg_anxiety_reduction * stat.total_sessions,
+      avg_reduction: acc.avg_reduction + stat.avg_anxiety_reduction * stat.total_sessions,
       total_this_week: acc.total_this_week + stat.completions_last_7_days,
     }),
     {
@@ -360,9 +345,7 @@ export function useExerciseTriggers(loopType?: string) {
 // HOOK: useExerciseSubscription
 // ============================================================================
 
-export function useExerciseSubscription(
-  onExerciseUpdate?: (payload: any) => void
-) {
+export function useExerciseSubscription(onExerciseUpdate?: (payload: any) => void) {
   const { user } = useUserStore();
   const userId = user?.user_id;
 
@@ -370,10 +353,7 @@ export function useExerciseSubscription(
     if (!userId || !onExerciseUpdate) return;
 
     // Subscribe to real-time updates
-    const subscription = ExerciseLogsAPI.subscribeToExerciseLogs(
-      userId,
-      onExerciseUpdate
-    );
+    const subscription = ExerciseLogsAPI.subscribeToExerciseLogs(userId, onExerciseUpdate);
 
     // Cleanup on unmount
     return () => {

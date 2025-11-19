@@ -52,11 +52,7 @@ interface PromptChipsProps {
  * Prompt chips for writing assistance
  * Shows mood-relevant prompts that can be tapped to insert
  */
-export function PromptChips({
-  mood,
-  onPromptSelect,
-  maxChips = 8,
-}: PromptChipsProps) {
+export function PromptChips({ mood, onPromptSelect, maxChips = 8 }: PromptChipsProps) {
   // Get filtered prompts based on mood
   const prompts = getPromptsForMood(mood);
 
@@ -68,14 +64,9 @@ export function PromptChips({
       style={styles.container}
       accessibilityRole="list"
       accessibilityLabel="Writing prompts to help you get started"
-      accessibilityHint="Select a prompt to insert it into your journal entry"
-    >
+      accessibilityHint="Select a prompt to insert it into your journal entry">
       {displayedPrompts.map((prompt) => (
-        <PromptChip
-          key={prompt.id}
-          prompt={prompt}
-          onPress={() => onPromptSelect(prompt.text)}
-        />
+        <PromptChip key={prompt.id} prompt={prompt} onPress={() => onPromptSelect(prompt.text)} />
       ))}
     </View>
   );
@@ -103,8 +94,7 @@ function PromptChip({ prompt, onPress }: PromptChipProps) {
       activeOpacity={0.7}
       accessibilityRole="button"
       accessibilityLabel={`Insert prompt: ${prompt.text}`}
-      accessibilityHint="Double tap to add this prompt to your journal"
-    >
+      accessibilityHint="Double tap to add this prompt to your journal">
       <Text style={styles.chipText}>{prompt.text}</Text>
     </TouchableOpacity>
   );

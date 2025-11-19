@@ -4,8 +4,6 @@
  * Optimized for emotional impact and readability
  */
 
-import { typography } from './typography';
-
 /**
  * Brand Font Families
  * Beautiful serif fonts for headlines and elegant text
@@ -505,10 +503,7 @@ export type TextOpacity = keyof typeof textOpacity;
 /**
  * Helper Functions
  */
-export const getProfileTypography = (
-  category: keyof typeof profileTypography,
-  style: string
-) => {
+export const getProfileTypography = (category: keyof typeof profileTypography, style: string) => {
   const categoryStyles = profileTypography[category] as any;
   return categoryStyles[style] || categoryStyles.default;
 };

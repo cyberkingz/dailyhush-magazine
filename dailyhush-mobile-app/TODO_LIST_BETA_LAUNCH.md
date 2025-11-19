@@ -13,10 +13,12 @@
 **Status:** Blocks ALL other work - TypeScript won't compile
 
 ### Task 1: Fix TypeScript Syntax Error
+
 - **File:** `app/onboarding/quiz/results.tsx`
 - **Line:** 157
 - **Problem:** Extra `}` after `fadeVisibility="always"}`
 - **Fix:**
+
   ```tsx
   // BEFORE (line 157):
   fadeVisibility="always"}
@@ -24,6 +26,7 @@
   // AFTER (line 157):
   fadeVisibility="always"
   ```
+
 - **Time:** 30 seconds
 - **Priority:** 🔴 BLOCKER
 - **Testing:** Run `npx tsc --noEmit` (should return 0 errors)
@@ -36,11 +39,13 @@
 **Status:** Required for feature parity and security
 
 ### Task 2: Add Quiz Answers Saving to Mobile App
+
 - **File:** `utils/quizScoring.ts`
 - **Function:** `submitQuizToSupabase`
 - **Problem:** Mobile app only saves `quiz_submissions`, not individual answers to `quiz_answers` table (web version does both)
 - **Impact:** Lost analytics, can't analyze which questions users struggle with
 - **Fix:**
+
   ```typescript
   // After successful submission insert, add:
 
@@ -56,15 +61,14 @@
   }));
 
   // Insert all answers
-  const { error: answersError } = await supabase
-    .from('quiz_answers')
-    .insert(answersData);
+  const { error: answersError } = await supabase.from('quiz_answers').insert(answersData);
 
   if (answersError) {
     console.error('Error saving quiz answers:', answersError);
     console.warn('Quiz submission successful but answers failed to save');
   }
   ```
+
 - **Time:** 15 minutes
 - **Priority:** 🔴 CRITICAL
 - **Testing:** Complete quiz → Check Supabase for 16 records in `quiz_answers` with correct `submission_id`
@@ -74,6 +78,7 @@
 **Context:** Supabase security audit found RLS policies exist but are not enabled on tables. This is a CRITICAL security vulnerability.
 
 #### Task 3: Enable RLS on quiz_submissions
+
 - **SQL:**
   ```sql
   ALTER TABLE quiz_submissions ENABLE ROW LEVEL SECURITY;
@@ -82,6 +87,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 4: Enable RLS on quiz_answers
+
 - **SQL:**
   ```sql
   ALTER TABLE quiz_answers ENABLE ROW LEVEL SECURITY;
@@ -90,6 +96,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 5: Enable RLS on quiz_sessions
+
 - **SQL:**
   ```sql
   ALTER TABLE quiz_sessions ENABLE ROW LEVEL SECURITY;
@@ -98,6 +105,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 6: Enable RLS on quiz_events
+
 - **SQL:**
   ```sql
   ALTER TABLE quiz_events ENABLE ROW LEVEL SECURITY;
@@ -106,6 +114,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 7: Enable RLS on thank_you_page_sessions
+
 - **SQL:**
   ```sql
   ALTER TABLE thank_you_page_sessions ENABLE ROW LEVEL SECURITY;
@@ -114,6 +123,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 8: Enable RLS on page_views
+
 - **SQL:**
   ```sql
   ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
@@ -122,6 +132,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 9: Enable RLS on lead_activities
+
 - **SQL:**
   ```sql
   ALTER TABLE lead_activities ENABLE ROW LEVEL SECURITY;
@@ -130,6 +141,7 @@
 - **Priority:** 🔴 CRITICAL
 
 #### Task 10: Enable RLS on revenue_events
+
 - **SQL:**
   ```sql
   ALTER TABLE revenue_events ENABLE ROW LEVEL SECURITY;
@@ -138,6 +150,7 @@
 - **Priority:** 🔴 CRITICAL
 
 **RLS Enable All (Batch Command):**
+
 ```sql
 -- Run this in Supabase SQL Editor to enable RLS on all tables at once:
 ALTER TABLE quiz_submissions ENABLE ROW LEVEL SECURITY;
@@ -152,6 +165,7 @@ ALTER TABLE revenue_events ENABLE ROW LEVEL SECURITY;
 
 **Total RLS Time:** 40 minutes (includes testing)
 **Testing:**
+
 ```sql
 -- Verify RLS is enabled
 SELECT tablename, rowsecurity
@@ -178,6 +192,7 @@ AND tablename IN (
 **Status:** Improves UX and security significantly
 
 ### Task 11: Delete Orphaned Backup File
+
 - **File:** `app/index-old-backup.tsx`
 - **Problem:** Orphaned file cluttering codebase
 - **Fix:**
@@ -191,11 +206,13 @@ AND tablename IN (
 - **Testing:** Verify file deleted, app still runs
 
 ### Task 12: Add Retry Logic to Quiz Submission
+
 - **File:** `app/onboarding/quiz/results.tsx`
 - **Function:** `handleContinue`
 - **Problem:** Network failures cause permanent submission failure - user must manually retry
 - **Impact:** Poor UX on mobile networks, lost conversions
 - **Fix:**
+
   ```typescript
   // Add state
   const [retryCount, setRetryCount] = useState(0);
@@ -243,6 +260,7 @@ AND tablename IN (
     </Pressable>
   )}
   ```
+
 - **Time:** 30 minutes
 - **Priority:** 🟡 HIGH
 - **Testing:**
@@ -251,11 +269,13 @@ AND tablename IN (
   - Verify retry button appears after 3 failures
 
 ### Task 13: Add Password Strength Validation
+
 - **File:** `app/onboarding/password-setup.tsx`
 - **Function:** `validatePassword`
 - **Problem:** Only checks 8+ characters, allows weak passwords like "12345678"
 - **Impact:** Account security compromised, higher brute force risk
 - **Fix:**
+
   ```typescript
   const validatePassword = (): boolean => {
     if (!password || password.length < 8) {
@@ -284,6 +304,7 @@ AND tablename IN (
     return true;
   };
   ```
+
 - **Time:** 15 minutes
 - **Priority:** 🟡 HIGH
 - **Testing:** Try creating account with:
@@ -300,6 +321,7 @@ AND tablename IN (
 **Status:** Verify all fixes work correctly
 
 ### Task 14: Test TypeScript Compilation
+
 - **Command:**
   ```bash
   npx tsc --noEmit
@@ -310,6 +332,7 @@ AND tablename IN (
 - **Depends on:** Task 1 (syntax error fix)
 
 ### Task 15: Test Quiz Submission Data Flow
+
 - **Steps:**
   1. Complete quiz in mobile app
   2. Submit with email
@@ -322,6 +345,7 @@ AND tablename IN (
 - **Depends on:** Task 2 (quiz answers saving)
 
 ### Task 16: Verify RLS Enabled on All Tables
+
 - **SQL:**
   ```sql
   SELECT tablename, rowsecurity
@@ -335,6 +359,7 @@ AND tablename IN (
 - **Depends on:** Tasks 3-10 (RLS enable)
 
 ### Task 17: Test User Journey Path A (Existing Quiz User)
+
 - **Steps:**
   1. Open app → quiz-recognition screen
   2. Tap "Yes, I took the quiz"
@@ -350,6 +375,7 @@ AND tablename IN (
 - **Priority:** ✅ TESTING
 
 ### Task 18: Test User Journey Path B (New User Taking Quiz)
+
 - **Steps:**
   1. Open app → quiz-recognition screen
   2. Tap "No, I'm new here"
@@ -367,6 +393,7 @@ AND tablename IN (
 - **Priority:** ✅ TESTING
 
 ### Task 19: Test User Journey Path C (Not Sure About Quiz)
+
 - **Steps:**
   1. Open app → quiz-recognition screen
   2. Tap "I'm not sure"
@@ -376,6 +403,7 @@ AND tablename IN (
 - **Priority:** ✅ TESTING
 
 ### Task 20: Test AsyncStorage Quiz Persistence
+
 - **Steps:**
   1. Start quiz, answer questions 1-5
   2. Close app completely (swipe up from app switcher)
@@ -400,6 +428,7 @@ AND tablename IN (
 **Status:** Security hardening for production
 
 ### Task 21: Review and Fix SECURITY DEFINER Views
+
 - **Context:** Supabase audit found 14 views with SECURITY DEFINER property
 - **Problem:** Views execute with owner privileges, not current user (privilege escalation risk)
 - **Steps:**
@@ -418,6 +447,7 @@ AND tablename IN (
 - **Priority:** 🟡 MEDIUM
 
 ### Task 22: Audit Anonymous User Access Policies
+
 - **Context:** 14 tables have policies allowing anonymous access
 - **Steps:**
   1. List all policies with anonymous access:
@@ -432,6 +462,7 @@ AND tablename IN (
 - **Priority:** 🟡 MEDIUM
 
 ### Task 23: Check and Upgrade Postgres Version
+
 - **Context:** Supabase advisor warned "Your Postgres version has security patches available"
 - **Steps:**
   1. Check current version in Supabase dashboard
@@ -446,37 +477,42 @@ AND tablename IN (
 
 ## 📊 Task Summary by Priority
 
-| Priority | Count | Time | Status |
-|----------|-------|------|--------|
-| 🔴 BLOCKER | 1 | 30 seconds | BLOCKS ALL WORK |
-| 🔴 CRITICAL | 9 | 2h 15min | REQUIRED FOR BETA |
-| 🟡 HIGH | 3 | 1h 15min | SHOULD DO FOR BETA |
-| ✅ TESTING | 7 | 1h 30min | VERIFY FIXES WORK |
-| 🟡 MEDIUM | 3 | 3-4 hours | PRODUCTION HARDENING |
-| **TOTAL** | **23** | **~6.5 hours** | |
+| Priority    | Count  | Time           | Status               |
+| ----------- | ------ | -------------- | -------------------- |
+| 🔴 BLOCKER  | 1      | 30 seconds     | BLOCKS ALL WORK      |
+| 🔴 CRITICAL | 9      | 2h 15min       | REQUIRED FOR BETA    |
+| 🟡 HIGH     | 3      | 1h 15min       | SHOULD DO FOR BETA   |
+| ✅ TESTING  | 7      | 1h 30min       | VERIFY FIXES WORK    |
+| 🟡 MEDIUM   | 3      | 3-4 hours      | PRODUCTION HARDENING |
+| **TOTAL**   | **23** | **~6.5 hours** |                      |
 
 ---
 
 ## 🚀 Recommended Execution Order
 
 ### Phase 1: Unblock TypeScript (30 seconds)
+
 1. ✅ Task 1: Fix syntax error in results.tsx
 2. ✅ Task 14: Test TypeScript compilation
 
 ### Phase 2: Critical Security (2 hours)
+
 3. ✅ Tasks 3-10: Enable RLS on all 8 tables (batch command)
 4. ✅ Task 16: Verify RLS enabled
 
 ### Phase 3: Feature Parity (15 minutes)
+
 5. ✅ Task 2: Add quiz_answers saving
 6. ✅ Task 15: Test quiz submission data flow
 
 ### Phase 4: High Priority Improvements (1h 15min)
+
 7. ✅ Task 11: Delete orphaned file
 8. ✅ Task 12: Add retry logic
 9. ✅ Task 13: Add password strength validation
 
 ### Phase 5: User Journey Testing (45 minutes)
+
 10. ✅ Task 17: Test Path A (existing quiz)
 11. ✅ Task 18: Test Path B (new user)
 12. ✅ Task 19: Test Path C (not sure)
@@ -485,6 +521,7 @@ AND tablename IN (
 **Total time for beta-ready:** ~4 hours
 
 ### Phase 6: Production Hardening (3-4 hours) - POST-LAUNCH
+
 14. ✅ Task 21: Review SECURITY DEFINER views
 15. ✅ Task 22: Audit anonymous policies
 16. ✅ Task 23: Upgrade Postgres version
@@ -494,6 +531,7 @@ AND tablename IN (
 ## ✅ Completion Checklist
 
 ### Before Beta Launch:
+
 - [ ] TypeScript compiles with 0 errors
 - [ ] Mobile quiz saves to both `quiz_submissions` AND `quiz_answers`
 - [ ] RLS enabled on all 8 tables
@@ -504,6 +542,7 @@ AND tablename IN (
 - [ ] No orphaned files in codebase
 
 ### Before Production Launch:
+
 - [ ] SECURITY DEFINER views reviewed
 - [ ] Anonymous access policies audited
 - [ ] Postgres version upgraded

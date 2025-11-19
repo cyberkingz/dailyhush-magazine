@@ -60,7 +60,8 @@ export const getLoopTypeMetadata = (loopType: LoopType) => {
     'sleep-loop': {
       name: 'Sleep Loop',
       shortName: 'Sleep',
-      description: 'Your mind finds peace in the quiet hours, but struggles to rest when the world sleeps',
+      description:
+        'Your mind finds peace in the quiet hours, but struggles to rest when the world sleeps',
       theme: 'Bedtime Rumination',
       keywords: ['bedtime', 'nighttime', 'rumination', 'sleep', 'rest'],
       vibe: 'dreamy, cosmic, calming',
@@ -68,7 +69,8 @@ export const getLoopTypeMetadata = (loopType: LoopType) => {
     'decision-loop': {
       name: 'Decision Loop',
       shortName: 'Decision',
-      description: 'Your mind explores every path, seeking the perfect choice in a world of possibilities',
+      description:
+        'Your mind explores every path, seeking the perfect choice in a world of possibilities',
       theme: 'Analysis Paralysis',
       keywords: ['decisions', 'choices', 'analysis', 'overthinking', 'clarity'],
       vibe: 'thoughtful, contemplative, crossroads',
@@ -76,7 +78,8 @@ export const getLoopTypeMetadata = (loopType: LoopType) => {
     'social-loop': {
       name: 'Social Loop',
       shortName: 'Social',
-      description: 'Your heart seeks connection, but your mind replays every interaction in search of belonging',
+      description:
+        'Your heart seeks connection, but your mind replays every interaction in search of belonging',
       theme: 'Social Anxiety',
       keywords: ['social', 'connection', 'conversation', 'belonging', 'anxiety'],
       vibe: 'warm, gentle, human',
@@ -84,7 +87,8 @@ export const getLoopTypeMetadata = (loopType: LoopType) => {
     'perfectionism-loop': {
       name: 'Perfectionism Loop',
       shortName: 'Perfectionism',
-      description: 'Your spirit reaches for excellence, but your mind never quite accepts good enough',
+      description:
+        'Your spirit reaches for excellence, but your mind never quite accepts good enough',
       theme: 'Never Good Enough',
       keywords: ['perfection', 'growth', 'excellence', 'standards', 'self-compassion'],
       vibe: 'growth-focused, organic, natural',
@@ -149,12 +153,9 @@ export const useReducedMotion = () => {
       setPrefersReducedMotion(isEnabled);
     });
 
-    const subscription = AccessibilityInfo.addEventListener(
-      'reduceMotionChanged',
-      (isEnabled) => {
-        setPrefersReducedMotion(isEnabled);
-      }
-    );
+    const subscription = AccessibilityInfo.addEventListener('reduceMotionChanged', (isEnabled) => {
+      setPrefersReducedMotion(isEnabled);
+    });
 
     return () => subscription.remove();
   }, []);
@@ -173,7 +174,7 @@ export const getAccessibleDuration = (
   normalDuration: number,
   reducedDuration?: number
 ) => {
-  return prefersReduced ? (reducedDuration || normalDuration * 0.5) : normalDuration;
+  return prefersReduced ? reducedDuration || normalDuration * 0.5 : normalDuration;
 };
 
 /**
@@ -281,11 +282,7 @@ export const generateStarRating = (rating: number): string => {
   const hasHalfStar = rating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
-  return (
-    '⭐'.repeat(fullStars) +
-    (hasHalfStar ? '⭐' : '') +
-    '☆'.repeat(emptyStars)
-  );
+  return '⭐'.repeat(fullStars) + (hasHalfStar ? '⭐' : '') + '☆'.repeat(emptyStars);
 };
 
 /**
@@ -305,10 +302,7 @@ export const getLoopTypeProductTags = (loopType: LoopType): string[] => {
 /**
  * Generate accessibility label for components
  */
-export const createAccessibilityLabel = (
-  component: string,
-  data: Record<string, any>
-): string => {
+export const createAccessibilityLabel = (component: string, data: Record<string, any>): string => {
   switch (component) {
     case 'loopTypeHero':
       return `Your loop type: ${data.loopType}. ${data.description}`;
@@ -391,14 +385,12 @@ export const calculateGrowthStage = (
 /**
  * Get encouraging message based on growth stage
  */
-export const getGrowthMessage = (
-  stage: 'seed' | 'sprout' | 'bloom' | 'flourish'
-): string => {
+export const getGrowthMessage = (stage: 'seed' | 'sprout' | 'bloom' | 'flourish'): string => {
   const messages = {
     seed: "You've planted the seed. Every small step counts. 🌱",
-    sprout: "Your garden is starting to grow. Keep nurturing it. 🌿",
-    bloom: "Beautiful progress! Your consistency is blooming. 🌸",
-    flourish: "Your garden is flourishing beautifully! Keep it up. 🌺",
+    sprout: 'Your garden is starting to grow. Keep nurturing it. 🌿',
+    bloom: 'Beautiful progress! Your consistency is blooming. 🌸',
+    flourish: 'Your garden is flourishing beautifully! Keep it up. 🌺',
   };
 
   return messages[stage];

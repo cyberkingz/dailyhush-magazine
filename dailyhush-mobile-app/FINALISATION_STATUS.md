@@ -8,6 +8,7 @@
 ## ⏳ EN COURS DE TRAITEMENT
 
 ### Annual Premium - Pricing
+
 - **Statut:** ⏳ En cours de traitement (progressbar visible)
 - **Action:** Attendre que le traitement soit terminé (5-15 minutes)
 - **Une fois finalisé:** Créer le 7-day free trial
@@ -17,6 +18,7 @@
 ## ✅ COMPLÉTÉ
 
 ### Monthly Premium
+
 - ✅ Localization (Display Name + Description)
 - ✅ Review Notes
 - ✅ Pricing ($9.99 USD)
@@ -24,6 +26,7 @@
 - ✅ Screenshot
 
 ### Annual Premium
+
 - ✅ Localization (Display Name + Description)
 - ✅ Review Notes
 - ✅ Pricing configuré ($59.99 USD) - **EN TRAITEMENT**
@@ -31,6 +34,7 @@
 - ⏳ 7-day free trial - **EN ATTENTE** (nécessite pricing finalisé)
 
 ### Lifetime Premium
+
 - ✅ Localization (Display Name + Description)
 - ✅ Review Notes
 - ✅ Pricing ($149.99 USD)
@@ -38,6 +42,7 @@
 - ✅ Pas de trial (achat unique)
 
 ### Subscription Group
+
 - ✅ Groupe "Noema Premium" créé
 - ✅ Les 3 produits sont dans le groupe
 - ✅ Ordre: Monthly (1), Annual (2), Lifetime (3)
@@ -47,15 +52,18 @@
 ## ⚠️ PROBLÈME IDENTIFIÉ
 
 ### Statut "Missing Metadata"
+
 **Tous les 3 produits affichent encore "Missing Metadata"**
 
 **Causes possibles:**
+
 1. ⏳ Pricing Annual encore en traitement
 2. ⏳ 7-day free trial Annual pas encore créé
 3. ⏳ Délai de traitement d'Apple (peut prendre 15-30 minutes après finalisation)
 4. ⚠️ Section "Availability" vide pour Annual (à vérifier)
 
 **Action requise:**
+
 - Attendre que le pricing Annual soit finalisé
 - Créer le 7-day free trial Annual
 - Vérifier la section "Availability" pour Annual
@@ -66,6 +74,7 @@
 ## 📋 ACTIONS RESTANTES
 
 ### 1. Finaliser Annual Premium (URGENT)
+
 - [ ] Attendre que le pricing soit finalisé (vérifier toutes les 5 minutes)
 - [ ] Vérifier la section "Availability" (s'assurer que "All countries" est sélectionné)
 - [ ] Créer le 7-day free trial:
@@ -75,15 +84,18 @@
   - No End Date
 
 ### 2. Vérifier Statut Final
+
 - [ ] Vérifier que tous les produits passent de "Missing Metadata" à "Ready to Submit"
 - [ ] Si le statut ne change pas après 30 minutes, vérifier chaque section individuellement
 
 ### 3. App Version
+
 - [ ] Aller dans "App Store" → "Versions"
 - [ ] Vérifier/créer une nouvelle version
 - [ ] Dans "In-App Purchases and Subscriptions", sélectionner les 3 subscriptions
 
 ### 4. Soumission
+
 - [ ] Vérifier que toutes les métadonnées de l'app sont complètes
 - [ ] Cliquer sur "Submit for Review"
 - [ ] Vérifier que les 3 subscriptions sont incluses
@@ -127,4 +139,3 @@
 - Apple traite actuellement le pricing pour tous les pays (175 pays)
 - Une fois le traitement terminé, le bouton "Add Introductory Offer" devrait apparaître
 - Le statut "Missing Metadata" devrait se résoudre automatiquement une fois tout complété
-

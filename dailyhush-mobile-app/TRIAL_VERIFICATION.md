@@ -8,6 +8,7 @@
 ## 📋 Résumé de Vérification
 
 ### ✅ Monthly Premium (com.anthony.noema.monthly)
+
 - **7-day free trial:** ✅ CONFIGURÉ
 - **Date:** Nov 27, 2025 to No End Date
 - **Countries:** 175 Countries or Regions
@@ -19,6 +20,7 @@
 ---
 
 ### ✅ Annual Premium (com.anthony.noema.annual)
+
 - **7-day free trial:** ✅ CONFIGURÉ
 - **Date:** Nov 16, 2025 to No End Date
 - **Countries:** 175 Countries or Regions
@@ -37,6 +39,7 @@
 - Annual: Trial actif depuis Nov 16, 2025
 
 Les deux trials sont configurés pour:
+
 - ✅ Tous les pays (175 countries)
 - ✅ Sans date de fin (No End Date)
 - ✅ Free for the first week
@@ -46,4 +49,3 @@ Les deux trials sont configurés pour:
 ## 📝 Note
 
 Le statut "Upcoming Changes" pour Monthly signifie que le trial est programmé pour commencer le 27 novembre 2025. Le statut "Current Introductory Offers" pour Annual signifie que le trial est actuellement actif.
-

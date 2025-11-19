@@ -1,4 +1,5 @@
 # DailyHush Mobile App - Payment & Monetization Audit
+
 ## Executive Summary: FREE MVP Strategy
 
 **Date:** October 24, 2025
@@ -12,16 +13,19 @@
 ### 1.1 Stripe Integration Status ❌
 
 **Package.json Status:**
+
 - ❌ No Stripe SDK installed
 - ❌ No `@stripe/stripe-react-native`
 - ❌ No `stripe` backend package
 - ✅ Has Supabase for data persistence
 
 **Environment Variables:**
+
 - ❌ No Stripe keys configured (neither test nor live)
 - ✅ Has Supabase URL and anon key
 
 **Backend API:**
+
 - ❌ No `/api/stripe/*` endpoints exist
 - ❌ No webhook handlers
 - ❌ No backend server infrastructure visible
@@ -29,6 +33,7 @@
 ### 1.2 Subscription Implementation Review
 
 **Files Analyzed:**
+
 1. `/app/subscription.tsx` - 449 lines of subscription UI
 2. `/utils/stripe.ts` - 217 lines of Stripe helper functions
 3. `/types/index.ts` - Subscription type definitions (lines 184-199)
@@ -37,6 +42,7 @@
 **Key Findings:**
 
 #### subscription.tsx (Full Premium UI)
+
 ```typescript
 // Lines 52-60: TODO comments for Stripe
 // TODO: Implement Stripe Checkout
@@ -47,6 +53,7 @@ alert('Stripe Customer Portal would open here.');
 ```
 
 **Current Features:**
+
 - ✅ Complete subscription screen with pricing cards
 - ✅ Monthly ($9.99/mo) and Annual ($99.99/yr) tiers
 - ✅ Benefits list and premium badges
@@ -57,14 +64,16 @@ alert('Stripe Customer Portal would open here.');
 - ❌ No backend API calls work (would fail)
 
 #### utils/stripe.ts (Helper Functions)
+
 ```typescript
 export const STRIPE_PRICES = {
   PREMIUM_MONTHLY: 'price_premium_monthly', // Placeholder
-  PREMIUM_ANNUAL: 'price_premium_annual',   // Placeholder
+  PREMIUM_ANNUAL: 'price_premium_annual', // Placeholder
 };
 ```
 
 **Functions Present (All Non-Functional):**
+
 - `getUserSubscription()` - Queries Supabase (but table doesn't exist)
 - `createStripeCustomer()` - Calls non-existent API
 - `createCheckoutSession()` - Calls non-existent API
@@ -77,6 +86,7 @@ export const STRIPE_PRICES = {
 ### 1.3 Data Model Assessment
 
 **Subscription Type Definition (types/index.ts):**
+
 ```typescript
 export interface Subscription {
   user_id: string;
@@ -91,6 +101,7 @@ export interface Subscription {
 ```
 
 **Assessment:**
+
 - ✅ Well-structured for Stripe integration
 - ✅ Includes Stripe IDs for future linking
 - ✅ Status field matches Stripe subscription statuses
@@ -102,6 +113,7 @@ export interface Subscription {
 **Where Premium Status is Checked:**
 
 1. **insights.tsx** (Lines 137-148):
+
 ```typescript
 {/* Premium Upsell */}
 <View className="bg-[#2D6A4F] border border-[#40916C]/30 rounded-2xl p-5">
@@ -109,10 +121,12 @@ export interface Subscription {
   <Text>Premium: $9.99/month</Text>
 </View>
 ```
+
 - Shows soft upsell card
 - No enforcement (free users see all insights)
 
 2. **settings.tsx** (Lines 127-136):
+
 ```typescript
 <SettingRow
   title="Subscription"
@@ -121,16 +135,19 @@ export interface Subscription {
   onPress={() => router.push('/subscription')}
 />
 ```
+
 - Links to subscription screen
 - Defaults to "Free Plan" label
 
 3. **subscription.tsx**:
+
 - Full subscription management UI
 - Premium badge display
 - Tier selection and upgrade flow
 
 **Critical Finding:**
 ❌ **No actual premium feature enforcement**
+
 - All features are currently available to all users
 - No checks for `isPremiumUser()` blocking content
 - Advanced insights are visible to free users
@@ -143,6 +160,7 @@ export interface Subscription {
 ### 2.1 Core Recommendation: REMOVE Subscription Screen for MVP
 
 **Rationale:**
+
 1. **User Confusion Prevention**
    - Showing non-functional payment UI creates false expectations
    - Alert messages ("Stripe Checkout would open here") look unprofessional
@@ -167,13 +185,16 @@ export interface Subscription {
 ### 2.2 Implementation Changes
 
 #### Option A: Remove Completely (RECOMMENDED)
+
 **Remove these files:**
+
 - ❌ `/app/subscription.tsx`
 - ❌ `/utils/stripe.ts`
 
 **Update these files:**
 
 1. **app/settings.tsx** (Line 127-136):
+
 ```typescript
 // BEFORE:
 <SettingRow
@@ -188,6 +209,7 @@ export interface Subscription {
 ```
 
 2. **app/insights.tsx** (Lines 137-148):
+
 ```typescript
 // BEFORE:
 <View className="bg-[#2D6A4F] border border-[#40916C]/30 rounded-2xl p-5">
@@ -200,6 +222,7 @@ export interface Subscription {
 ```
 
 3. **types/index.ts**:
+
 ```typescript
 // KEEP the Subscription type definition for future use
 // It's not hurting anything and preserves your data model
@@ -209,6 +232,7 @@ export interface Subscription {
 ```
 
 4. **store/useStore.ts**:
+
 ```typescript
 // KEEP subscription state for future use
 // Just don't use it in MVP
@@ -219,6 +243,7 @@ export interface Subscription {
 If you insist on keeping it:
 
 **Update app/subscription.tsx:**
+
 ```typescript
 export default function Subscription() {
   return (
@@ -245,11 +270,13 @@ export default function Subscription() {
 ```
 
 **Pros:**
+
 - Shows future monetization intent
 - Keeps users informed
 - Maintains navigation structure
 
 **Cons:**
+
 - Still takes development time
 - May disappoint users who tap
 - Clutters settings menu
@@ -261,6 +288,7 @@ export default function Subscription() {
 ### 3.1 When to Add Monetization
 
 **Trigger Points:**
+
 - ✅ 5,000+ active users
 - ✅ 40%+ 7-day retention
 - ✅ 3+ daily spiral interrupts per user
@@ -273,37 +301,40 @@ export default function Subscription() {
 
 Based on the existing premium benefits defined in `utils/stripe.ts`:
 
-| Feature | Free Tier | Premium Tier ($9.99/mo) |
-|---------|-----------|------------------------|
-| **Spiral Interrupts** | ✅ Unlimited | ✅ Unlimited |
-| **F.I.R.E. Training** | ✅ Basic modules | ✅ Advanced modules + early access |
-| **Pattern Insights** | ✅ Weekly summaries | ✅ Daily predictions + AI insights |
-| **History** | ⏱️ 30 days | ✅ Unlimited |
-| **Custom Reframes** | ❌ | ✅ Personalized |
-| **Export Reports** | ❌ | ✅ PDF for therapist |
-| **3AM Mode** | ✅ Basic | ✅ Premium features |
-| **Shift Integration** | ✅ Standard | ✅ Advanced analytics |
-| **Support** | 📧 Email | 🚀 Priority |
+| Feature               | Free Tier           | Premium Tier ($9.99/mo)            |
+| --------------------- | ------------------- | ---------------------------------- |
+| **Spiral Interrupts** | ✅ Unlimited        | ✅ Unlimited                       |
+| **F.I.R.E. Training** | ✅ Basic modules    | ✅ Advanced modules + early access |
+| **Pattern Insights**  | ✅ Weekly summaries | ✅ Daily predictions + AI insights |
+| **History**           | ⏱️ 30 days          | ✅ Unlimited                       |
+| **Custom Reframes**   | ❌                  | ✅ Personalized                    |
+| **Export Reports**    | ❌                  | ✅ PDF for therapist               |
+| **3AM Mode**          | ✅ Basic            | ✅ Premium features                |
+| **Shift Integration** | ✅ Standard         | ✅ Advanced analytics              |
+| **Support**           | 📧 Email            | 🚀 Priority                        |
 
 ### 3.3 Pricing Model Recommendation
 
 **Current Pricing (from code):**
+
 - Monthly: $9.99/month
 - Annual: $99.99/year (save $20)
 
 **Assessment:**
+
 - ✅ Competitive with health/wellness apps
 - ✅ Annual discount creates incentive (16.7% off)
 - ✅ Affordable for 65+ demographic
 - ⚠️ Consider 7-day free trial for premium
 
 **Suggested Adjustment:**
+
 ```typescript
 export const SUBSCRIPTION_TIERS = {
   FREE: 'free',
-  TRIAL: 'trial',      // NEW: 7-day free trial
-  MONTHLY: 'monthly',   // $9.99/mo
-  ANNUAL: 'annual',     // $99.99/yr (save $20)
+  TRIAL: 'trial', // NEW: 7-day free trial
+  MONTHLY: 'monthly', // $9.99/mo
+  ANNUAL: 'annual', // $99.99/yr (save $20)
 } as const;
 ```
 
@@ -364,29 +395,32 @@ export default async function handler(req: Request) {
   let customerId = user?.stripe_customer_id;
 
   if (!customerId) {
-    const customer = await stripe.customers.create({
-      email: user?.email,
-      metadata: { user_id: userId },
-    }, { idempotencyKey: `customer-${userId}` });
+    const customer = await stripe.customers.create(
+      {
+        email: user?.email,
+        metadata: { user_id: userId },
+      },
+      { idempotencyKey: `customer-${userId}` }
+    );
 
     customerId = customer.id;
 
     // Store customer ID in Supabase
-    await supabase
-      .from('users')
-      .update({ stripe_customer_id: customerId })
-      .eq('user_id', userId);
+    await supabase.from('users').update({ stripe_customer_id: customerId }).eq('user_id', userId);
   }
 
   // Create checkout session
-  const session = await stripe.checkout.sessions.create({
-    customer: customerId,
-    mode: 'subscription',
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: 'dailyhush://subscription/success?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: 'dailyhush://subscription/cancel',
-    metadata: { user_id: userId },
-  }, { idempotencyKey: `checkout-${userId}-${Date.now()}` });
+  const session = await stripe.checkout.sessions.create(
+    {
+      customer: customerId,
+      mode: 'subscription',
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: 'dailyhush://subscription/success?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'dailyhush://subscription/cancel',
+      metadata: { user_id: userId },
+    },
+    { idempotencyKey: `checkout-${userId}-${Date.now()}` }
+  );
 
   return new Response(JSON.stringify({ checkoutUrl: session.url }), {
     headers: { 'Content-Type': 'application/json' },
@@ -437,10 +471,13 @@ export default async function handler(req: Request) {
       const subscription = event.data.object as Stripe.Subscription;
       const userId = subscription.metadata?.user_id;
 
-      await supabase.from('subscriptions').update({
-        status: subscription.status,
-        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-      }).eq('stripe_subscription_id', subscription.id);
+      await supabase
+        .from('subscriptions')
+        .update({
+          status: subscription.status,
+          current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        })
+        .eq('stripe_subscription_id', subscription.id);
       break;
     }
   }
@@ -536,7 +573,7 @@ export function useCheckout() {
 }
 ```
 
-**Update app/_layout.tsx:**
+**Update app/\_layout.tsx:**
 
 ```typescript
 import { StripeProvider } from '@stripe/stripe-react-native';
@@ -617,12 +654,14 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 5.2 Data Preservation
 
 **Keep Historical Data:**
+
 - All spiral logs (even from free period)
 - F.I.R.E. module progress
 - Pattern insights
 - Shift device pairings
 
 **Reasoning:**
+
 - Premium features build on historical data
 - No need to "unlock" past insights
 - Maintains trust with early users
@@ -634,6 +673,7 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 6.1 Immediate Actions for MVP (Next 2 Weeks)
 
 **Priority 1: Remove Subscription UI**
+
 - [ ] Delete `/app/subscription.tsx`
 - [ ] Delete `/utils/stripe.ts`
 - [ ] Remove subscription link from settings
@@ -642,6 +682,7 @@ async function applyGrandfatherBenefits(userId: string) {
 - [ ] Update README to reflect FREE MVP
 
 **Priority 2: Focus on Core Features**
+
 - [ ] Complete onboarding flow
 - [ ] Implement spiral interrupt protocol
 - [ ] Build F.I.R.E. training modules
@@ -649,6 +690,7 @@ async function applyGrandfatherBenefits(userId: string) {
 - [ ] Test Shift Bluetooth integration
 
 **Priority 3: Analytics Preparation**
+
 - [ ] Add usage tracking (spiral interrupts per day)
 - [ ] Track feature engagement (which screens users visit)
 - [ ] Monitor retention (7-day, 30-day)
@@ -657,11 +699,13 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 6.2 Post-MVP Monetization Checklist (Month 4-6)
 
 **When to Introduce Premium:**
+
 - ✅ 5,000+ active users
 - ✅ 40%+ 7-day retention
 - ✅ Clear feature request patterns
 
 **Implementation Steps:**
+
 1. [ ] Set up Stripe account (test mode first)
 2. [ ] Create Stripe products and prices
 3. [ ] Build backend API (Supabase Edge Functions)
@@ -676,6 +720,7 @@ async function applyGrandfatherBenefits(userId: string) {
 12. [ ] Switch to live mode
 
 **Testing Checklist:**
+
 - [ ] Test card: 4242 4242 4242 4242 (success)
 - [ ] Test card: 4000 0000 0000 9995 (declined)
 - [ ] Test 3D Secure: 4000 0027 6000 3184
@@ -687,12 +732,14 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 6.3 Budget Estimates
 
 **MVP (Free Launch):**
+
 - Development: $0 Stripe costs
 - Supabase: ~$25/month (free tier should suffice)
 - Apple Developer Account: $99/year
 - Total Monthly: ~$25
 
 **Post-Premium Launch (5,000 users, 10% conversion):**
+
 - Stripe fees: 2.9% + $0.30 per transaction
 - 500 paying users × $9.99 = $4,995 MRR
 - Stripe fees: ~$175/month
@@ -700,6 +747,7 @@ async function applyGrandfatherBenefits(userId: string) {
 - Net Revenue: ~$4,795/month
 
 **Year 1 Projection (50,000 users, 10% conversion):**
+
 - 5,000 paying users × $9.99 = $49,950 MRR
 - Stripe fees: ~$1,750/month
 - Supabase Pro: $25/month
@@ -713,6 +761,7 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 7.1 PCI Compliance
 
 **Good News:**
+
 - Stripe handles all PCI compliance
 - Never store credit card numbers
 - Only store Stripe customer/subscription IDs
@@ -721,6 +770,7 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 7.2 Data Privacy (65+ Users)
 
 **Requirements:**
+
 - [ ] Clear privacy policy (explain data collection)
 - [ ] Explicit consent for payment processing
 - [ ] Option to export all user data
@@ -730,6 +780,7 @@ async function applyGrandfatherBenefits(userId: string) {
 ### 7.3 Refund Policy
 
 **Recommended Policy:**
+
 ```
 DailyHush Refund Policy
 
@@ -746,26 +797,28 @@ DailyHush Refund Policy
 
 ### 8.1 MVP Decision Matrix
 
-| Factor | Remove Subscription | Keep as "Coming Soon" |
-|--------|--------------------|-----------------------|
-| **Development Time** | ✅ Saves 2-3 days | ⚠️ Requires minimal work |
-| **User Confusion** | ✅ No confusion | ❌ May disappoint users |
-| **Launch Speed** | ✅ Faster | ⚠️ Slightly slower |
-| **Analytics** | ✅ Clear free usage data | ⚠️ May skew engagement |
-| **First Impression** | ✅ Polished free app | ❌ "Incomplete" feeling |
-| **Future Flexibility** | ✅ Clean slate for pricing | ⚠️ Sets expectations |
+| Factor                 | Remove Subscription        | Keep as "Coming Soon"    |
+| ---------------------- | -------------------------- | ------------------------ |
+| **Development Time**   | ✅ Saves 2-3 days          | ⚠️ Requires minimal work |
+| **User Confusion**     | ✅ No confusion            | ❌ May disappoint users  |
+| **Launch Speed**       | ✅ Faster                  | ⚠️ Slightly slower       |
+| **Analytics**          | ✅ Clear free usage data   | ⚠️ May skew engagement   |
+| **First Impression**   | ✅ Polished free app       | ❌ "Incomplete" feeling  |
+| **Future Flexibility** | ✅ Clean slate for pricing | ⚠️ Sets expectations     |
 
 **FINAL RECOMMENDATION:** **Remove subscription screen entirely for MVP**
 
 ### 8.2 Summary
 
 **Current State:**
+
 - Well-structured subscription UI exists but is non-functional
 - No Stripe SDK installed, no backend API, no payment processing
 - Premium features are not gated (all users see everything)
 - Data model is ready for future Stripe integration
 
 **MVP Strategy:**
+
 - ✅ Remove subscription screen and upsell cards
 - ✅ Launch as 100% FREE with all features
 - ✅ Focus on proving core value (spiral interrupts work)
@@ -773,6 +826,7 @@ DailyHush Refund Policy
 - ✅ Add monetization after product-market fit validation
 
 **Future Premium Tier:**
+
 - Launch in 3-6 months after MVP validation
 - Pricing: $9.99/month or $99.99/year
 - Use Stripe Checkout for simplest implementation
@@ -781,6 +835,7 @@ DailyHush Refund Policy
 - Target 10% conversion rate (industry standard for health apps)
 
 **Next Steps:**
+
 1. Delete subscription files today
 2. Ship MVP as FREE within 2 weeks
 3. Monitor user engagement for 90 days

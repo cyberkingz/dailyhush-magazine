@@ -3,7 +3,7 @@
  * Handles login, logout, token refresh, and profile updates
  */
 
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback } from 'react';
 import { supabase } from '@/utils/supabase';
 import { useStore } from '@/store/useStore';
 import { loadUserProfile } from '@/services/auth';

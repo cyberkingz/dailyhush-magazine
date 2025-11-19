@@ -53,7 +53,7 @@ export async function signInAnonymously(): Promise<AuthResult> {
         email: '', // Anonymous users don't have email
         onboarding_completed: false, // They might complete onboarding later
         has_shift_necklace: false,
-        shift_paired: false,
+
         fire_progress: {
           focus: false,
           interrupt: false,
@@ -298,7 +298,6 @@ export async function signUpWithEmail(
           fire_progress: guestProfile.fire_progress,
           triggers: guestProfile.triggers,
           has_shift_necklace: guestProfile.has_shift_necklace,
-          shift_paired: guestProfile.shift_paired,
         };
         console.log('Guest data to migrate:', guestData);
       }
@@ -375,7 +374,6 @@ export async function signUpWithEmail(
           p_fire_progress: guestData.fire_progress,
           p_triggers: guestData.triggers,
           p_has_shift_necklace: guestData.has_shift_necklace,
-          p_shift_paired: guestData.shift_paired,
         });
 
         if (migrationError) {

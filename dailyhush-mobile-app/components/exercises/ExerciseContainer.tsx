@@ -21,7 +21,7 @@ import type { ExerciseConfig, ExerciseSession } from '@/types/exercises';
 import { colors } from '@/constants/colors';
 import { typography } from '@/constants/typography';
 import { spacing } from '@/constants/spacing';
-import { COLORS, RADIUS, SHADOWS, ICON_SIZE } from '@/constants/design-tokens';
+import { COLORS, RADIUS, ICON_SIZE } from '@/constants/design-tokens';
 
 interface ExerciseContainerProps {
   config: ExerciseConfig;
@@ -80,8 +80,7 @@ export function ExerciseContainer({
             onPress={handleExit}
             style={styles.exitButton}
             accessibilityLabel="Exit exercise"
-            accessibilityRole="button"
-          >
+            accessibilityRole="button">
             <X size={ICON_SIZE.md} color={colors.text.muted} />
           </TouchableOpacity>
 
@@ -91,7 +90,9 @@ export function ExerciseContainer({
 
             {/* Progress Bar */}
             <View style={styles.progressBarContainer}>
-              <View style={[styles.progressBarFill, { width: `${session.progress.percentage}%` }]} />
+              <View
+                style={[styles.progressBarFill, { width: `${session.progress.percentage}%` }]}
+              />
             </View>
 
             {/* Step Counter */}
@@ -106,8 +107,7 @@ export function ExerciseContainer({
               onPress={handlePauseToggle}
               style={styles.pauseButton}
               accessibilityLabel={session.isPaused ? 'Resume exercise' : 'Pause exercise'}
-              accessibilityRole="button"
-            >
+              accessibilityRole="button">
               {session.isPaused ? (
                 <Play size={ICON_SIZE.md} color={colors.text.muted} fill={colors.text.muted} />
               ) : (
@@ -148,8 +148,7 @@ export function ExerciseContainer({
                   onPress={confirmExit}
                   style={styles.exitConfirmButton}
                   accessibilityLabel="Confirm exit"
-                  accessibilityRole="button"
-                >
+                  accessibilityRole="button">
                   <Text style={styles.exitConfirmText}>Yes, Exit</Text>
                 </TouchableOpacity>
 
@@ -158,8 +157,7 @@ export function ExerciseContainer({
                   onPress={cancelExit}
                   style={styles.keepGoingButton}
                   accessibilityLabel="Continue exercise"
-                  accessibilityRole="button"
-                >
+                  accessibilityRole="button">
                   <Text style={styles.keepGoingText}>Keep Going</Text>
                 </TouchableOpacity>
               </View>
@@ -177,8 +175,7 @@ export function ExerciseContainer({
                 onPress={handlePauseToggle}
                 style={styles.resumeButton}
                 accessibilityLabel="Resume exercise"
-                accessibilityRole="button"
-              >
+                accessibilityRole="button">
                 <Text style={styles.resumeButtonText}>Resume</Text>
               </TouchableOpacity>
             </View>

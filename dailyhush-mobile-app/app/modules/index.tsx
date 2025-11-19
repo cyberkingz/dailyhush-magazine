@@ -5,14 +5,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  SafeAreaView,
-  Pressable,
-  ActivityIndicator,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -36,7 +29,6 @@ export default function ModulesScreen() {
     analytics.track('MODULES_SCREEN_VIEWED', {
       module_count: enabledModules.length,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleModulePress = (module: Module) => {
@@ -78,7 +70,6 @@ export default function ModulesScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     router.back();
   };
-
 
   return (
     <>

@@ -1,4 +1,5 @@
 # Profile Screen UX Analysis - DailyHush Mobile App
+
 ## Comprehensive Review for Women 55-70 with Anxiety/Overthinking
 
 **Date:** October 24, 2025
@@ -13,6 +14,7 @@
 The current profile screen is functionally sound but misses critical opportunities to reduce cognitive load, build trust, and provide meaningful value for the 55-70 demographic. The screen treats name/age collection as generic data points rather than leveraging them as trust-building and personalization signals.
 
 **Key Issues Identified:**
+
 1. Missing value proposition - users don't understand WHY to provide info
 2. No differentiation between guest vs authenticated user experience
 3. Privacy messaging is generic, not trust-building
@@ -32,6 +34,7 @@ The current profile screen is functionally sound but misses critical opportuniti
 ### 1. Information Architecture and Flow
 
 **Current State:**
+
 - Linear flow: Account (email display) → Personal Info (name, age) → Privacy note
 - Same structure for guest and authenticated users
 - No distinction between empty state (new user) and return visits
@@ -39,16 +42,19 @@ The current profile screen is functionally sound but misses critical opportuniti
 **Issues:**
 
 **CRITICAL - No Value Proposition Context**
+
 - Users land on form fields without understanding WHY this matters
 - For 55-70 women with anxiety, asking for personal info without context triggers distrust
 - Missing the connection between personalization and reduced overthinking
 
 **Missing Guest User Differentiation**
+
 - Guest users see same experience as authenticated users
 - No acknowledgment that they're building their profile before committing to account
 - Missed opportunity to show progressive trust-building
 
 **No Empty State Strategy**
+
 - First-time users get blank forms with no guidance
 - Returning users with data get same experience
 - No celebration of profile completion
@@ -56,6 +62,7 @@ The current profile screen is functionally sound but misses critical opportuniti
 **Recommendations:**
 
 **Add Contextual Header Section (Before Form Fields):**
+
 ```
 [ICON: Sparkle or personalization icon]
 
@@ -75,6 +82,7 @@ Everything you share is private and never sold.
 **Create Two Distinct Experiences:**
 
 **Guest User State:**
+
 ```
 [Banner at top - emerald gradient]
 Building Your Guest Profile
@@ -85,6 +93,7 @@ before creating an account.
 ```
 
 **Authenticated User State:**
+
 ```
 [No banner needed - cleaner interface]
 Just standard header with "Edit Profile"
@@ -93,11 +102,13 @@ Just standard header with "Edit Profile"
 **Empty State vs Returning User:**
 
 **Empty State (No data yet):**
+
 - Show motivational prompt: "Let's make DailyHush feel like home"
 - Pre-populate placeholder text that demonstrates value: "e.g., Sarah, Linda, Carol"
 - Use encouraging language: "Optional, but we'd love to know you better"
 
 **Returning State (Has data):**
+
 - Show profile completion indicator: "Profile: Complete" with checkmark
 - Display "Last updated: [date]" for context
 - Confirm data privacy: "Your information is secure"
@@ -107,17 +118,20 @@ Just standard header with "Edit Profile"
 ### 2. Form Field Order and Grouping
 
 **Current State:**
+
 - Account section (email - display only)
 - Personal Information section with name and age fields together
 
 **Issues:**
 
 **Email Display Lacks Context**
+
 - Shows "Email" label with value, but purpose unclear
 - For guest users shows "Not set" which feels negative
 - No explanation of what email represents (login? notifications?)
 
 **Name and Age Grouped Without Hierarchy**
+
 - Both treated equally important, but name is more valuable for personalization
 - Age feels potentially sensitive without proper framing
 - No clear indication which is MORE optional
@@ -158,6 +172,7 @@ Example: Different approaches for perimenopause vs post-retirement
 
 **Alternative Age Input Approach:**
 Instead of open number field, consider age range selector for comfort:
+
 - 45-54
 - 55-64 (DEFAULT for target demographic)
 - 65-74
@@ -171,21 +186,25 @@ This reduces anxiety about exact age sharing while still providing segmentation 
 ### 3. Label Clarity and Helper Text
 
 **Current State:**
+
 - Labels: "Name" and "Age" (minimal)
 - Helper text: "Optional: Personalize your experience" and "Optional: Helps us provide age-appropriate content"
 
 **Issues:**
 
 **Labels Too Generic**
+
 - "Name" doesn't indicate what kind of name (first? full? nickname?)
 - "Age" feels clinical/medical rather than personal
 
 **Helper Text Is Feature-Focused, Not Benefit-Focused**
+
 - "Personalize your experience" is vague
 - "Age-appropriate content" could sound patronizing
 - Doesn't address the emotional benefit for anxious users
 
 **Missing "Why We Ask" Context**
+
 - For 55-70 demographic with trust concerns, need explicit reasoning
 - Current helper text feels like corporate speak, not human connection
 
@@ -223,6 +242,7 @@ DailyHush more helpful for YOU."
 ```
 
 **Tone Adjustments:**
+
 - Replace "Optional:" prefix with softer "Up to you:"
 - Change "Helps us provide" to "We use this to give you"
 - Add emotional safety: "You can always change or remove this later"
@@ -232,6 +252,7 @@ DailyHush more helpful for YOU."
 ### 4. Error Handling and Validation Feedback
 
 **Current State:**
+
 - Age input: Client-side numeric validation (only allows numbers)
 - No visible error messages
 - Console logging only for errors
@@ -240,6 +261,7 @@ DailyHush more helpful for YOU."
 **CRITICAL ISSUES:**
 
 **Silent Failures**
+
 ```javascript
 if (error) {
   console.error('Error updating profile:', error);
@@ -248,21 +270,25 @@ if (error) {
   return;
 }
 ```
+
 - User gets haptic buzz but NO explanation of what went wrong
 - For 55-70 demographic, this creates anxiety and confusion
 - They don't know if data saved, what failed, or how to fix it
 
 **No Validation Feedback During Input**
+
 - Name field accepts any input (good) but no length limits shown
 - Age field silently strips non-numeric characters
 - No feedback if age seems unrealistic (0, 150, etc.)
 
 **No Network Error Handling**
+
 - If Supabase is down, user just sees "Saving..." forever
 - No retry mechanism
 - No offline capability messaging
 
 **Missing Field-Specific Validation:**
+
 - Name: No length validation (database might have limits)
 - Age: Accepts single digit or three digits without context
 - No age range validation (should be 18-120 reasonable range)
@@ -285,14 +311,14 @@ const validateForm = (): boolean => {
 
   // Name validation
   if (name && name.length > 100) {
-    newErrors.name = "Name is too long (max 100 characters)";
+    newErrors.name = 'Name is too long (max 100 characters)';
   }
 
   // Age validation
   if (age) {
     const ageNum = parseInt(age, 10);
     if (ageNum < 18 || ageNum > 120) {
-      newErrors.age = "Please enter a valid age between 18 and 120";
+      newErrors.age = 'Please enter a valid age between 18 and 120';
     }
   }
 
@@ -304,36 +330,39 @@ const validateForm = (): boolean => {
 **Add Error Display Components:**
 
 ```jsx
-{/* Error Banner - Top of form */}
-{errors.general && (
-  <View className="bg-red-900/20 border border-red-500 rounded-xl p-4 mb-6">
-    <Text className="text-red-300 text-sm font-medium">
-      {errors.general}
-    </Text>
-    <Pressable onPress={() => setErrors({})}>
-      <Text className="text-red-400 text-sm mt-2 underline">
-        Dismiss
+{
+  /* Error Banner - Top of form */
+}
+{
+  errors.general && (
+    <View className="mb-6 rounded-xl border border-red-500 bg-red-900/20 p-4">
+      <Text className="text-sm font-medium text-red-300">{errors.general}</Text>
+      <Pressable onPress={() => setErrors({})}>
+        <Text className="mt-2 text-sm text-red-400 underline">Dismiss</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+{
+  /* Field-level errors */
+}
+{
+  errors.name && <Text className="mt-1 text-xs text-red-400">{errors.name}</Text>;
+}
+
+{
+  /* Network timeout handling */
+}
+{
+  isSaving && savingDuration > 5000 && (
+    <View className="mt-2 rounded-xl border border-yellow-500 bg-yellow-900/20 p-3">
+      <Text className="text-sm text-yellow-300">
+        This is taking longer than expected. Please check your internet connection.
       </Text>
-    </Pressable>
-  </View>
-)}
-
-{/* Field-level errors */}
-{errors.name && (
-  <Text className="text-red-400 text-xs mt-1">
-    {errors.name}
-  </Text>
-)}
-
-{/* Network timeout handling */}
-{isSaving && savingDuration > 5000 && (
-  <View className="bg-yellow-900/20 border border-yellow-500 rounded-xl p-3 mt-2">
-    <Text className="text-yellow-300 text-sm">
-      This is taking longer than expected. Please check your
-      internet connection.
-    </Text>
-  </View>
-)}
+    </View>
+  );
+}
 ```
 
 **Enhanced Error Messages for 55-70 Demographic:**
@@ -351,14 +380,16 @@ const getErrorMessage = (error: any): string => {
   }
 
   // Generic fallback
-  return "Something went wrong while saving your profile. Please try again in a moment, or contact us if this keeps happening.";
+  return 'Something went wrong while saving your profile. Please try again in a moment, or contact us if this keeps happening.';
 };
 ```
 
 **Real-time Validation Feedback:**
 
 ```jsx
-{/* Age field with inline validation */}
+{
+  /* Age field with inline validation */
+}
 <TextInput
   value={age}
   onChangeText={(text) => {
@@ -377,18 +408,22 @@ const getErrorMessage = (error: any): string => {
     }
   }}
   // ... rest of props
-/>
+/>;
 
-{/* Visual feedback indicator */}
-{age && (
-  <View className="absolute right-4 top-1/2 -mt-3">
-    {ageValid ? (
-      <CheckCircle size={20} color="#52B788" />
-    ) : (
-      <AlertCircle size={20} color="#FFB703" />
-    )}
-  </View>
-)}
+{
+  /* Visual feedback indicator */
+}
+{
+  age && (
+    <View className="absolute right-4 top-1/2 -mt-3">
+      {ageValid ? (
+        <CheckCircle size={20} color="#52B788" />
+      ) : (
+        <AlertCircle size={20} color="#FFB703" />
+      )}
+    </View>
+  );
+}
 ```
 
 ---
@@ -396,6 +431,7 @@ const getErrorMessage = (error: any): string => {
 ### 5. Success States and Confirmation
 
 **Current State:**
+
 ```javascript
 setSuccessMessage('Profile saved!');
 await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -409,17 +445,20 @@ setTimeout(() => {
 **CRITICAL ISSUES:**
 
 **Auto-Navigation Feels Rushed**
+
 - 1.5 second delay is barely enough to read "Profile saved!"
 - User has no control over when they leave
 - For anxious users, immediate redirect feels jarring
 - No confirmation that changes actually took effect
 
 **Generic Success Message**
+
 - "Profile saved!" doesn't indicate WHAT was saved
 - Misses opportunity to reinforce value
 - Doesn't celebrate the user's action
 
 **No Post-Save Affordance**
+
 - User can't verify changes before leaving
 - Can't make additional edits without re-entering screen
 - No "view profile" confirmation
@@ -461,81 +500,71 @@ const getSuccessMessage = (name: string | null, age: string | null): string => {
 **Success UI Component:**
 
 ```jsx
-{saveComplete && (
-  <View className="bg-[#40916C]/20 border-2 border-[#40916C] rounded-2xl p-6 mb-6">
-    {/* Success Icon */}
-    <View className="items-center mb-4">
-      <View className="bg-[#40916C] rounded-full p-3">
-        <CheckCircle size={32} color="#FFFFFF" />
+{
+  saveComplete && (
+    <View className="mb-6 rounded-2xl border-2 border-[#40916C] bg-[#40916C]/20 p-6">
+      {/* Success Icon */}
+      <View className="mb-4 items-center">
+        <View className="rounded-full bg-[#40916C] p-3">
+          <CheckCircle size={32} color="#FFFFFF" />
+        </View>
+      </View>
+
+      {/* Success Message */}
+      <Text className="mb-2 text-center text-lg font-semibold text-[#E8F4F0]">
+        {successMessage}
+      </Text>
+
+      {/* What Happens Next */}
+      <Text className="mb-6 text-center text-sm text-[#B7E4C7]">
+        Your changes are saved and secure. DailyHush will now personalize your experience based on
+        what you've shared.
+      </Text>
+
+      {/* Action Buttons */}
+      <View className="flex-row gap-3">
+        <Pressable onPress={() => router.back()} className="flex-1 rounded-xl bg-[#40916C] py-4">
+          <Text className="text-center text-base font-semibold text-white">Back to Settings</Text>
+        </Pressable>
+
+        <Pressable
+          onPress={() => {
+            setSaveComplete(false);
+            setSuccessMessage('');
+          }}
+          className="flex-1 rounded-xl bg-[#1A4D3C] py-4">
+          <Text className="text-center text-base font-semibold text-[#B7E4C7]">Make Changes</Text>
+        </Pressable>
       </View>
     </View>
-
-    {/* Success Message */}
-    <Text className="text-[#E8F4F0] text-lg font-semibold text-center mb-2">
-      {successMessage}
-    </Text>
-
-    {/* What Happens Next */}
-    <Text className="text-[#B7E4C7] text-sm text-center mb-6">
-      Your changes are saved and secure. DailyHush will now
-      personalize your experience based on what you've shared.
-    </Text>
-
-    {/* Action Buttons */}
-    <View className="flex-row gap-3">
-      <Pressable
-        onPress={() => router.back()}
-        className="flex-1 bg-[#40916C] rounded-xl py-4"
-      >
-        <Text className="text-white text-base font-semibold text-center">
-          Back to Settings
-        </Text>
-      </Pressable>
-
-      <Pressable
-        onPress={() => {
-          setSaveComplete(false);
-          setSuccessMessage('');
-        }}
-        className="flex-1 bg-[#1A4D3C] rounded-xl py-4"
-      >
-        <Text className="text-[#B7E4C7] text-base font-semibold text-center">
-          Make Changes
-        </Text>
-      </Pressable>
-    </View>
-  </View>
-)}
+  );
+}
 ```
 
 **Alternative: Celebration Moment (Optional Enhancement)**
 For users completing profile for FIRST time:
 
 ```jsx
-{isFirstTimeComplete && saveComplete && (
-  <View className="absolute inset-0 bg-[#0A1612]/95 items-center justify-center z-50">
-    <View className="bg-[#1A4D3C] rounded-3xl p-8 mx-6 max-w-sm">
-      <Text className="text-[#E8F4F0] text-2xl font-bold text-center mb-4">
-        Welcome Home, {name}!
-      </Text>
-
-      <Text className="text-[#B7E4C7] text-base text-center mb-6 leading-relaxed">
-        DailyHush now knows you better. Your daily check-ins
-        will feel more personal, and we'll suggest techniques
-        that match your life stage.
-      </Text>
-
-      <Pressable
-        onPress={() => router.back()}
-        className="bg-[#40916C] rounded-xl py-4"
-      >
-        <Text className="text-white text-base font-semibold text-center">
-          Continue
+{
+  isFirstTimeComplete && saveComplete && (
+    <View className="absolute inset-0 z-50 items-center justify-center bg-[#0A1612]/95">
+      <View className="mx-6 max-w-sm rounded-3xl bg-[#1A4D3C] p-8">
+        <Text className="mb-4 text-center text-2xl font-bold text-[#E8F4F0]">
+          Welcome Home, {name}!
         </Text>
-      </Pressable>
+
+        <Text className="mb-6 text-center text-base leading-relaxed text-[#B7E4C7]">
+          DailyHush now knows you better. Your daily check-ins will feel more personal, and we'll
+          suggest techniques that match your life stage.
+        </Text>
+
+        <Pressable onPress={() => router.back()} className="rounded-xl bg-[#40916C] py-4">
+          <Text className="text-center text-base font-semibold text-white">Continue</Text>
+        </Pressable>
+      </View>
     </View>
-  </View>
-)}
+  );
+}
 ```
 
 ---
@@ -543,6 +572,7 @@ For users completing profile for FIRST time:
 ### 6. Empty States (New Users vs Returning)
 
 **Current State:**
+
 - No differentiation between first visit and return visit
 - Empty fields show generic placeholder text
 - No acknowledgment of profile completion status
@@ -550,16 +580,19 @@ For users completing profile for FIRST time:
 **Issues:**
 
 **First-Time Experience Lacks Guidance**
+
 - User doesn't know if they SHOULD fill this out
 - No indication of what happens if they skip
 - Feels like required homework rather than optional personalization
 
 **Returning User Experience Lacks Recognition**
+
 - No celebration of completed profile
 - No reminder of when last updated
 - Can't tell if data is current or stale
 
 **No Skippability Signal**
+
 - Users might feel stuck filling out form
 - No clear "I'll do this later" option
 - Anxiety-inducing for demographic that avoids commitment
@@ -569,122 +602,115 @@ For users completing profile for FIRST time:
 **First-Time Empty State:**
 
 ```jsx
-{!hasAnyProfileData && (
-  <View className="bg-gradient-to-br from-[#2D6A4F] to-[#1A4D3C] rounded-2xl p-6 mb-6">
-    {/* Welcome Icon */}
-    <View className="items-center mb-4">
-      <View className="bg-[#40916C]/30 rounded-full p-4">
-        <Sparkles size={32} color="#B7E4C7" />
+{
+  !hasAnyProfileData && (
+    <View className="mb-6 rounded-2xl bg-gradient-to-br from-[#2D6A4F] to-[#1A4D3C] p-6">
+      {/* Welcome Icon */}
+      <View className="mb-4 items-center">
+        <View className="rounded-full bg-[#40916C]/30 p-4">
+          <Sparkles size={32} color="#B7E4C7" />
+        </View>
       </View>
+
+      {/* Welcome Message */}
+      <Text className="mb-3 text-center text-xl font-bold text-[#E8F4F0]">
+        Let's Get to Know Each Other
+      </Text>
+
+      <Text className="mb-4 text-center text-base leading-relaxed text-[#B7E4C7]">
+        Sharing your name and age helps DailyHush feel more personal - like having a friend who
+        understands your life stage.
+      </Text>
+
+      {/* Value Props */}
+      <View className="mb-6 space-y-3">
+        <View className="flex-row items-start">
+          <CheckCircle size={20} color="#52B788" className="mr-3 mt-0.5" />
+          <Text className="flex-1 text-sm text-[#B7E4C7]">
+            Personal greetings in your daily check-ins
+          </Text>
+        </View>
+
+        <View className="flex-row items-start">
+          <CheckCircle size={20} color="#52B788" className="mr-3 mt-0.5" />
+          <Text className="flex-1 text-sm text-[#B7E4C7]">
+            Age-appropriate stress management techniques
+          </Text>
+        </View>
+
+        <View className="flex-row items-start">
+          <CheckCircle size={20} color="#52B788" className="mr-3 mt-0.5" />
+          <Text className="flex-1 text-sm text-[#B7E4C7]">
+            Content that matches your life stage and experiences
+          </Text>
+        </View>
+      </View>
+
+      {/* Reassurance */}
+      <Text className="text-center text-xs italic text-[#6B9080]">
+        Completely optional. You can skip this and add it later, or never share it at all.
+      </Text>
     </View>
-
-    {/* Welcome Message */}
-    <Text className="text-[#E8F4F0] text-xl font-bold text-center mb-3">
-      Let's Get to Know Each Other
-    </Text>
-
-    <Text className="text-[#B7E4C7] text-base text-center mb-4 leading-relaxed">
-      Sharing your name and age helps DailyHush feel more
-      personal - like having a friend who understands your
-      life stage.
-    </Text>
-
-    {/* Value Props */}
-    <View className="space-y-3 mb-6">
-      <View className="flex-row items-start">
-        <CheckCircle size={20} color="#52B788" className="mr-3 mt-0.5" />
-        <Text className="text-[#B7E4C7] text-sm flex-1">
-          Personal greetings in your daily check-ins
-        </Text>
-      </View>
-
-      <View className="flex-row items-start">
-        <CheckCircle size={20} color="#52B788" className="mr-3 mt-0.5" />
-        <Text className="text-[#B7E4C7] text-sm flex-1">
-          Age-appropriate stress management techniques
-        </Text>
-      </View>
-
-      <View className="flex-row items-start">
-        <CheckCircle size={20} color="#52B788" className="mr-3 mt-0.5" />
-        <Text className="text-[#B7E4C7] text-sm flex-1">
-          Content that matches your life stage and experiences
-        </Text>
-      </View>
-    </View>
-
-    {/* Reassurance */}
-    <Text className="text-[#6B9080] text-xs text-center italic">
-      Completely optional. You can skip this and add it later,
-      or never share it at all.
-    </Text>
-  </View>
-)}
+  );
+}
 ```
 
 **Returning User Completed State:**
 
 ```jsx
-{hasCompleteProfile && (
-  <View className="bg-[#1A4D3C] border-2 border-[#40916C]/50 rounded-2xl p-5 mb-6">
-    <View className="flex-row items-center justify-between">
-      <View className="flex-row items-center">
-        <View className="bg-[#40916C] rounded-full p-2 mr-3">
-          <CheckCircle size={18} color="#FFFFFF" />
+{
+  hasCompleteProfile && (
+    <View className="mb-6 rounded-2xl border-2 border-[#40916C]/50 bg-[#1A4D3C] p-5">
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center">
+          <View className="mr-3 rounded-full bg-[#40916C] p-2">
+            <CheckCircle size={18} color="#FFFFFF" />
+          </View>
+          <View>
+            <Text className="text-base font-semibold text-[#E8F4F0]">Profile Complete</Text>
+            <Text className="mt-0.5 text-xs text-[#95B8A8]">
+              Last updated {formatLastUpdated(user?.updated_at)}
+            </Text>
+          </View>
         </View>
-        <View>
-          <Text className="text-[#E8F4F0] text-base font-semibold">
-            Profile Complete
+
+        {/* Optional: Show data summary */}
+        <Pressable onPress={() => setShowSummary(!showSummary)}>
+          <Text className="text-sm font-medium text-[#52B788]">
+            {showSummary ? 'Hide' : 'View'}
           </Text>
-          <Text className="text-[#95B8A8] text-xs mt-0.5">
-            Last updated {formatLastUpdated(user?.updated_at)}
-          </Text>
-        </View>
+        </Pressable>
       </View>
 
-      {/* Optional: Show data summary */}
-      <Pressable onPress={() => setShowSummary(!showSummary)}>
-        <Text className="text-[#52B788] text-sm font-medium">
-          {showSummary ? 'Hide' : 'View'}
-        </Text>
-      </Pressable>
+      {showSummary && (
+        <View className="mt-4 border-t border-[#2D6A4F] pt-4">
+          <Text className="mb-2 text-sm text-[#95B8A8]">DailyHush is personalized for:</Text>
+          <View className="space-y-1">
+            {user?.name && (
+              <Text className="text-sm text-[#B7E4C7]">• Greetings to {user.name}</Text>
+            )}
+            {user?.age && (
+              <Text className="text-sm text-[#B7E4C7]">
+                • Content for age {user.age} life stage
+              </Text>
+            )}
+          </View>
+        </View>
+      )}
     </View>
-
-    {showSummary && (
-      <View className="mt-4 pt-4 border-t border-[#2D6A4F]">
-        <Text className="text-[#95B8A8] text-sm mb-2">
-          DailyHush is personalized for:
-        </Text>
-        <View className="space-y-1">
-          {user?.name && (
-            <Text className="text-[#B7E4C7] text-sm">
-              • Greetings to {user.name}
-            </Text>
-          )}
-          {user?.age && (
-            <Text className="text-[#B7E4C7] text-sm">
-              • Content for age {user.age} life stage
-            </Text>
-          )}
-        </View>
-      </View>
-    )}
-  </View>
-)}
+  );
+}
 ```
 
 **Skip / Later Option:**
 
 ```jsx
-{/* Add below form fields, before privacy message */}
-<Pressable
-  onPress={handleSkipForNow}
-  className="items-center py-3 mb-4"
->
-  <Text className="text-[#6B9080] text-sm underline">
-    I'll add this later
-  </Text>
-</Pressable>
+{
+  /* Add below form fields, before privacy message */
+}
+<Pressable onPress={handleSkipForNow} className="mb-4 items-center py-3">
+  <Text className="text-sm text-[#6B9080] underline">I'll add this later</Text>
+</Pressable>;
 
 // Handler
 const handleSkipForNow = async () => {
@@ -698,11 +724,12 @@ const handleSkipForNow = async () => {
 ### 7. Data Privacy Messaging
 
 **Current State:**
+
 ```jsx
-<View className="bg-[#1A4D3C]/50 rounded-xl p-4 mt-4">
-  <Text className="text-[#95B8A8] text-sm leading-relaxed">
-    Your personal information is private and secure. We use
-    this to personalize your DailyHush experience.
+<View className="mt-4 rounded-xl bg-[#1A4D3C]/50 p-4">
+  <Text className="text-sm leading-relaxed text-[#95B8A8]">
+    Your personal information is private and secure. We use this to personalize your DailyHush
+    experience.
   </Text>
 </View>
 ```
@@ -710,22 +737,26 @@ const handleSkipForNow = async () => {
 **Issues:**
 
 **Generic Corporate Language**
+
 - "Private and secure" is what EVERY app says
 - Doesn't address specific concerns of 55-70 demographic
 - No specificity about what "personalize" means
 
 **Missing Trust Signals**
+
 - No explanation of WHO can see data (spoiler: only them)
 - No mention of data NOT being sold
 - No reference to account deletion capabilities
 
 **No Context for Life Stage Privacy Concerns**
+
 - This demographic grew up without internet
 - They've seen Facebook data scandals
 - More suspicious of tech companies than younger users
 - Need explicit, simple reassurance
 
 **Buried at Bottom**
+
 - Privacy message feels like fine print
 - Should be more prominent given demographic's concerns
 - No visual distinction as "important information"
@@ -796,42 +827,41 @@ const handleSkipForNow = async () => {
 **Alternative: Inline Field-Level Privacy Notes:**
 
 ```jsx
-{/* Under Name field */}
-<View className="flex-row items-center mt-2">
+{
+  /* Under Name field */
+}
+<View className="mt-2 flex-row items-center">
   <Lock size={12} color="#6B9080" className="mr-1" />
-  <Text className="text-[#6B9080] text-xs">
-    Only visible to you. Never shared or sold.
-  </Text>
-</View>
+  <Text className="text-xs text-[#6B9080]">Only visible to you. Never shared or sold.</Text>
+</View>;
 
-{/* Under Age field */}
-<View className="flex-row items-center mt-2">
+{
+  /* Under Age field */
+}
+<View className="mt-2 flex-row items-center">
   <Lock size={12} color="#6B9080" className="mr-1" />
-  <Text className="text-[#6B9080] text-xs">
+  <Text className="text-xs text-[#6B9080]">
     Used only for age-appropriate content. Never shared.
   </Text>
-</View>
+</View>;
 ```
 
 **Add Data Export/Delete Option (Bottom of Screen):**
 
 ```jsx
-{/* After privacy section, before bottom padding */}
-<View className="mt-8 pt-6 border-t border-[#1A4D3C]">
-  <Text className="text-[#95B8A8] text-xs font-semibold uppercase mb-3">
-    Your Data Rights
-  </Text>
+{
+  /* After privacy section, before bottom padding */
+}
+<View className="mt-8 border-t border-[#1A4D3C] pt-6">
+  <Text className="mb-3 text-xs font-semibold uppercase text-[#95B8A8]">Your Data Rights</Text>
 
   <Pressable
     onPress={handleExportData}
-    className="bg-[#1A4D3C] rounded-xl p-4 mb-3 flex-row items-center"
-  >
+    className="mb-3 flex-row items-center rounded-xl bg-[#1A4D3C] p-4">
     <Download size={20} color="#52B788" className="mr-3" />
     <View className="flex-1">
-      <Text className="text-[#E8F4F0] text-base font-medium">
-        Download My Data
-      </Text>
-      <Text className="text-[#95B8A8] text-xs mt-0.5">
+      <Text className="text-base font-medium text-[#E8F4F0]">Download My Data</Text>
+      <Text className="mt-0.5 text-xs text-[#95B8A8]">
         Get a copy of everything we store about you
       </Text>
     </View>
@@ -840,20 +870,17 @@ const handleSkipForNow = async () => {
 
   <Pressable
     onPress={handleDeleteAccount}
-    className="bg-[#1A4D3C] rounded-xl p-4 flex-row items-center"
-  >
+    className="flex-row items-center rounded-xl bg-[#1A4D3C] p-4">
     <Trash2 size={20} color="#E63946" className="mr-3" />
     <View className="flex-1">
-      <Text className="text-[#E8F4F0] text-base font-medium">
-        Delete My Account
-      </Text>
-      <Text className="text-[#95B8A8] text-xs mt-0.5">
+      <Text className="text-base font-medium text-[#E8F4F0]">Delete My Account</Text>
+      <Text className="mt-0.5 text-xs text-[#95B8A8]">
         Permanently remove all your data from DailyHush
       </Text>
     </View>
     <ChevronRight size={20} color="#95B8A8" />
   </Pressable>
-</View>
+</View>;
 ```
 
 ---
@@ -861,6 +888,7 @@ const handleSkipForNow = async () => {
 ### 8. Cognitive Load and Decision Fatigue
 
 **Current State:**
+
 - Two input fields (name, age)
 - One save button
 - Minimal cognitive load structurally
@@ -868,21 +896,25 @@ const handleSkipForNow = async () => {
 **Issues:**
 
 **No Progressive Disclosure**
+
 - All information requested at once
 - For anxious users, even "simple" forms feel overwhelming
 - No chunking or step-by-step approach option
 
 **Decision Paralysis on Field Completion**
+
 - Should they fill out name? Age? Both? Neither?
 - No guidance on "ideal" completion
 - No indication that partial completion is acceptable
 
 **Save Button Always Visible**
+
 - Creates pressure to complete form
 - Anxious users might feel judged for partial data
 - No "draft" or "save progress" concept
 
 **Missing Cognitive Scaffolding for 55-70 Demographic**
+
 - No explanation of what happens after they save
 - No preview of personalization benefits
 - No reassurance they can change mind later
@@ -892,36 +924,36 @@ const handleSkipForNow = async () => {
 **Add Completion Guidance (Optional Enhancement):**
 
 ```jsx
-{/* Above form fields */}
-<View className="bg-[#1A4D3C]/30 rounded-xl p-4 mb-6">
-  <Text className="text-[#B7E4C7] text-sm leading-relaxed">
-    💡 Fill out what feels comfortable. Even just your first
-    name helps us make DailyHush feel more personal. You can
-    always add more later.
+{
+  /* Above form fields */
+}
+<View className="mb-6 rounded-xl bg-[#1A4D3C]/30 p-4">
+  <Text className="text-sm leading-relaxed text-[#B7E4C7]">
+    💡 Fill out what feels comfortable. Even just your first name helps us make DailyHush feel more
+    personal. You can always add more later.
   </Text>
-</View>
+</View>;
 ```
 
 **Progressive Save States:**
 
 ```jsx
-{/* Adapt save button based on field completion */}
+{
+  /* Adapt save button based on field completion */
+}
 <Pressable
   onPress={handleSave}
   disabled={isSaving || !hasChanges}
   className={cn(
-    "flex-row items-center px-4 py-2 rounded-xl",
-    !hasChanges && "opacity-50",
-    hasChanges && "bg-[#40916C]"
-  )}
->
+    'flex-row items-center rounded-xl px-4 py-2',
+    !hasChanges && 'opacity-50',
+    hasChanges && 'bg-[#40916C]'
+  )}>
   <Save size={16} color="#FFFFFF" strokeWidth={2} />
-  <Text className="text-white text-sm font-semibold ml-2">
-    {isSaving ? 'Saving...' :
-     !hasChanges ? 'No Changes' :
-     'Save Changes'}
+  <Text className="ml-2 text-sm font-semibold text-white">
+    {isSaving ? 'Saving...' : !hasChanges ? 'No Changes' : 'Save Changes'}
   </Text>
-</Pressable>
+</Pressable>;
 ```
 
 **Add "Preview Personalization" Button:**
@@ -978,18 +1010,20 @@ const getAgeBasedMessage = (age: number): string => {
 **Reduce Decision Fatigue with Smart Defaults:**
 
 ```jsx
-{/* For age field, pre-populate target demographic */}
+{
+  /* For age field, pre-populate target demographic */
+}
 const [age, setAge] = useState(
-  user?.age?.toString() ||
-  (isFirstVisit ? '60' : '') // Suggest default for target demo
+  user?.age?.toString() || (isFirstVisit ? '60' : '') // Suggest default for target demo
 );
 
-{/* Add helper text suggesting default is okay */}
-<Text className="text-[#6B9080] text-xs mt-2">
-  Most DailyHush users are between 55-70. We've suggested 60
-  as a starting point, but feel free to change it to your
-  actual age.
-</Text>
+{
+  /* Add helper text suggesting default is okay */
+}
+<Text className="mt-2 text-xs text-[#6B9080]">
+  Most DailyHush users are between 55-70. We've suggested 60 as a starting point, but feel free to
+  change it to your actual age.
+</Text>;
 ```
 
 ---
@@ -997,6 +1031,7 @@ const [age, setAge] = useState(
 ### 9. Accessibility for 55-70 Age Group
 
 **Current State:**
+
 - Font sizes: text-lg (18px) for header, text-base (16px) for labels, text-sm (14px) for helper text
 - Touch targets appear adequate (44x44pt minimum iOS guideline)
 - Color contrast: emerald palette
@@ -1004,26 +1039,31 @@ const [age, setAge] = useState(
 **Issues:**
 
 **Text Size Marginally Acceptable**
+
 - 16px for primary labels is minimum recommended
 - 14px helper text is too small for declining vision
 - No dynamic text size support (iOS accessibility settings)
 
 **Color Contrast Concerns**
+
 - Helper text (#6B9080 on #0A1612) might be insufficient contrast
 - Error messages need higher contrast for visibility
 - Placeholder text too subtle (#4A6B5C)
 
 **No Voice Input Support**
+
 - No option to speak name instead of typing
 - Important for users with arthritis or dexterity issues
 - Age could be voice-dictated instead of typed
 
 **Keyboard Handling**
+
 - "Next" button on name field, but no clear focus management
 - "Done" on age field but no submit action
 - Return key behavior not optimized for flow
 
 **No Screen Reader Optimization**
+
 - No explicit accessibility labels
 - Helper text might not be associated with inputs
 - Success/error states not announced
@@ -1071,21 +1111,22 @@ placeholderTextColor="#6B9080" // More visible
 import * as Speech from 'expo-speech';
 import { Mic } from 'lucide-react-native';
 
-{/* Voice input button next to name field */}
+{
+  /* Voice input button next to name field */
+}
 <View className="flex-row items-center gap-2">
   <TextInput
     // ... existing props
-    className="flex-1 bg-[#1A4D3C] text-[#E8F4F0] text-lg rounded-xl px-4 py-4"
+    className="flex-1 rounded-xl bg-[#1A4D3C] px-4 py-4 text-lg text-[#E8F4F0]"
   />
 
   <Pressable
     onPress={handleVoiceInput}
-    className="bg-[#40916C] p-4 rounded-xl"
-    accessibilityLabel="Use voice input for name"
-  >
+    className="rounded-xl bg-[#40916C] p-4"
+    accessibilityLabel="Use voice input for name">
     <Mic size={20} color="#FFFFFF" />
   </Pressable>
-</View>
+</View>;
 
 // Voice input handler
 const handleVoiceInput = async () => {
@@ -1146,38 +1187,39 @@ const handleVoiceInput = async () => {
 **Screen Reader Support:**
 
 ```jsx
-{/* Success message with accessibility announcement */}
-{successMessage && (
-  <View
-    className="bg-[#40916C]/20 border border-[#40916C] rounded-xl p-4 mb-6"
-    accessibilityLiveRegion="polite"
-    accessibilityLabel={successMessage}
-  >
-    <Text className="text-[#B7E4C7] text-base text-center font-medium">
-      {successMessage}
-    </Text>
-  </View>
-)}
+{
+  /* Success message with accessibility announcement */
+}
+{
+  successMessage && (
+    <View
+      className="mb-6 rounded-xl border border-[#40916C] bg-[#40916C]/20 p-4"
+      accessibilityLiveRegion="polite"
+      accessibilityLabel={successMessage}>
+      <Text className="text-center text-base font-medium text-[#B7E4C7]">{successMessage}</Text>
+    </View>
+  );
+}
 
-{/* Error messages with announcements */}
-{errors.general && (
-  <View
-    className="bg-red-900/20 border border-red-500 rounded-xl p-4 mb-6"
-    accessibilityLiveRegion="assertive"
-    accessibilityLabel={`Error: ${errors.general}`}
-  >
-    <Text className="text-red-300 text-base font-medium">
-      {errors.general}
-    </Text>
-  </View>
-)}
+{
+  /* Error messages with announcements */
+}
+{
+  errors.general && (
+    <View
+      className="mb-6 rounded-xl border border-red-500 bg-red-900/20 p-4"
+      accessibilityLiveRegion="assertive"
+      accessibilityLabel={`Error: ${errors.general}`}>
+      <Text className="text-base font-medium text-red-300">{errors.general}</Text>
+    </View>
+  );
+}
 
-{/* Form fields with proper labeling */}
+{
+  /* Form fields with proper labeling */
+}
 <View accessibilityRole="group" accessibilityLabel="Personal information form">
-  <Text
-    className="text-[#95B8A8] text-base mb-2"
-    accessibilityRole="header"
-  >
+  <Text className="mb-2 text-base text-[#95B8A8]" accessibilityRole="header">
     Your Name
   </Text>
 
@@ -1186,7 +1228,7 @@ const handleVoiceInput = async () => {
     accessibilityHint="Enter your first name to personalize your DailyHush experience"
     // ... props
   />
-</View>
+</View>;
 ```
 
 **Larger Touch Targets:**
@@ -1219,6 +1261,7 @@ const handleVoiceInput = async () => {
 ### 10. Motivation/Incentive to Complete Profile
 
 **Current State:**
+
 - No explicit motivation beyond generic "personalize experience"
 - No gamification or progress indicators
 - No social proof or testimonials
@@ -1227,26 +1270,31 @@ const handleVoiceInput = async () => {
 **Issues:**
 
 **Value Proposition Not Compelling**
+
 - "Personalize your experience" is vague
 - Doesn't address emotional benefits for anxious users
 - No connection to core problem (overthinking/anxiety)
 
 **No Immediate Gratification**
+
 - User doesn't see benefits until after saving and navigating away
 - No preview of how personalization improves their experience
 - Changes feel abstract, not concrete
 
 **Missing Social Proof**
+
 - No indication that other users benefit from completing profile
 - No statistics on effectiveness
 - No testimonials about personalization value
 
 **No Progress or Achievement Recognition**
+
 - Completing profile doesn't feel like progress toward goal
 - No connection to app journey or onboarding flow
 - Feels like administrative task, not meaningful step
 
 **Guest Users Lack Upgrade Motivation**
+
 - No clear path from guest → authenticated with complete profile
 - Missing value proposition of account creation
 - No indication of what they're missing as guest
@@ -1256,35 +1304,32 @@ const handleVoiceInput = async () => {
 **Enhanced Value Proposition Section (Top of Screen):**
 
 ```jsx
-{/* Add before form fields - make it the hero */}
-<View className="bg-gradient-to-br from-[#2D6A4F] to-[#1A4D3C] rounded-2xl p-6 mb-6">
+{
+  /* Add before form fields - make it the hero */
+}
+<View className="mb-6 rounded-2xl bg-gradient-to-br from-[#2D6A4F] to-[#1A4D3C] p-6">
   {/* Benefit-Driven Header */}
-  <View className="flex-row items-center mb-4">
-    <View className="bg-[#40916C] rounded-full p-3 mr-4">
+  <View className="mb-4 flex-row items-center">
+    <View className="mr-4 rounded-full bg-[#40916C] p-3">
       <Heart size={24} color="#FFFFFF" />
     </View>
     <View className="flex-1">
-      <Text className="text-[#E8F4F0] text-xl font-bold mb-1">
-        Make DailyHush Feel Like Home
-      </Text>
-      <Text className="text-[#B7E4C7] text-sm">
-        Small details that make a big difference
-      </Text>
+      <Text className="mb-1 text-xl font-bold text-[#E8F4F0]">Make DailyHush Feel Like Home</Text>
+      <Text className="text-sm text-[#B7E4C7]">Small details that make a big difference</Text>
     </View>
   </View>
 
   {/* Emotional Benefits */}
-  <View className="space-y-3 mb-4">
+  <View className="mb-4 space-y-3">
     <View className="flex-row items-start">
       <CheckCircle size={18} color="#52B788" className="mr-3 mt-0.5" />
       <View className="flex-1">
-        <Text className="text-[#E8F4F0] text-base font-semibold mb-1">
+        <Text className="mb-1 text-base font-semibold text-[#E8F4F0]">
           Stop feeling like just another user
         </Text>
-        <Text className="text-[#B7E4C7] text-sm leading-relaxed">
-          When DailyHush knows your name, each session feels
-          personal - like talking to a friend who gets you,
-          not an app giving generic advice.
+        <Text className="text-sm leading-relaxed text-[#B7E4C7]">
+          When DailyHush knows your name, each session feels personal - like talking to a friend who
+          gets you, not an app giving generic advice.
         </Text>
       </View>
     </View>
@@ -1292,13 +1337,12 @@ const handleVoiceInput = async () => {
     <View className="flex-row items-start">
       <CheckCircle size={18} color="#52B788" className="mr-3 mt-0.5" />
       <View className="flex-1">
-        <Text className="text-[#E8F4F0] text-base font-semibold mb-1">
+        <Text className="mb-1 text-base font-semibold text-[#E8F4F0]">
           Get techniques that match YOUR life
         </Text>
-        <Text className="text-[#B7E4C7] text-sm leading-relaxed">
-          Managing anxiety at 60 looks different than at 40.
-          Share your age and we'll suggest approaches that
-          respect your energy, experience, and life stage.
+        <Text className="text-sm leading-relaxed text-[#B7E4C7]">
+          Managing anxiety at 60 looks different than at 40. Share your age and we'll suggest
+          approaches that respect your energy, experience, and life stage.
         </Text>
       </View>
     </View>
@@ -1306,264 +1350,243 @@ const handleVoiceInput = async () => {
     <View className="flex-row items-start">
       <CheckCircle size={18} color="#52B788" className="mr-3 mt-0.5" />
       <View className="flex-1">
-        <Text className="text-[#E8F4F0] text-base font-semibold mb-1">
+        <Text className="mb-1 text-base font-semibold text-[#E8F4F0]">
           See yourself in the content
         </Text>
-        <Text className="text-[#B7E4C7] text-sm leading-relaxed">
-          Examples, stories, and scenarios that reflect YOUR
-          world - grandkids, aging parents, retirement
-          transitions, not college stress or career ladders.
+        <Text className="text-sm leading-relaxed text-[#B7E4C7]">
+          Examples, stories, and scenarios that reflect YOUR world - grandkids, aging parents,
+          retirement transitions, not college stress or career ladders.
         </Text>
       </View>
     </View>
   </View>
 
   {/* Social Proof */}
-  <View className="bg-[#0A1612]/30 rounded-xl p-4">
-    <Text className="text-[#B7E4C7] text-sm leading-relaxed italic">
-      "The moment DailyHush started greeting me by name, it
-      felt less like using an app and more like having a
-      supportive companion who understands my journey."
+  <View className="rounded-xl bg-[#0A1612]/30 p-4">
+    <Text className="text-sm italic leading-relaxed text-[#B7E4C7]">
+      "The moment DailyHush started greeting me by name, it felt less like using an app and more
+      like having a supportive companion who understands my journey."
     </Text>
-    <Text className="text-[#95B8A8] text-xs mt-2">
-      — Linda, 63, DailyHush member since 2024
-    </Text>
+    <Text className="mt-2 text-xs text-[#95B8A8]">— Linda, 63, DailyHush member since 2024</Text>
   </View>
-</View>
+</View>;
 ```
 
 **Progress Indicator (Link to Broader Journey):**
 
 ```jsx
-{/* Show profile completion as part of overall progress */}
-{user && (
-  <View className="bg-[#1A4D3C] rounded-2xl p-5 mb-6">
-    <Text className="text-[#95B8A8] text-sm font-semibold mb-3">
-      Your DailyHush Journey
-    </Text>
+{
+  /* Show profile completion as part of overall progress */
+}
+{
+  user && (
+    <View className="mb-6 rounded-2xl bg-[#1A4D3C] p-5">
+      <Text className="mb-3 text-sm font-semibold text-[#95B8A8]">Your DailyHush Journey</Text>
 
-    <View className="space-y-3">
-      {/* Onboarding completed */}
-      <View className="flex-row items-center">
-        <View className="bg-[#40916C] rounded-full p-1 mr-3">
-          <CheckCircle size={16} color="#FFFFFF" />
-        </View>
-        <Text className="text-[#B7E4C7] text-sm">
-          Completed initial setup
-        </Text>
-      </View>
-
-      {/* Profile completion (current step) */}
-      <View className="flex-row items-center">
-        <View className={cn(
-          "rounded-full p-1 mr-3",
-          hasCompleteProfile ? "bg-[#40916C]" : "bg-[#2D6A4F]"
-        )}>
-          {hasCompleteProfile ? (
+      <View className="space-y-3">
+        {/* Onboarding completed */}
+        <View className="flex-row items-center">
+          <View className="mr-3 rounded-full bg-[#40916C] p-1">
             <CheckCircle size={16} color="#FFFFFF" />
-          ) : (
-            <Circle size={16} color="#95B8A8" />
-          )}
+          </View>
+          <Text className="text-sm text-[#B7E4C7]">Completed initial setup</Text>
         </View>
-        <Text className={cn(
-          "text-sm",
-          hasCompleteProfile ? "text-[#B7E4C7]" : "text-[#E8F4F0] font-semibold"
-        )}>
-          {hasCompleteProfile ?
-            "Profile personalized" :
-            "Personalize your profile (you are here)"}
-        </Text>
-      </View>
 
-      {/* Next steps */}
-      <View className="flex-row items-center opacity-60">
-        <View className="bg-[#2D6A4F] rounded-full p-1 mr-3">
-          <Circle size={16} color="#95B8A8" />
+        {/* Profile completion (current step) */}
+        <View className="flex-row items-center">
+          <View
+            className={cn(
+              'mr-3 rounded-full p-1',
+              hasCompleteProfile ? 'bg-[#40916C]' : 'bg-[#2D6A4F]'
+            )}>
+            {hasCompleteProfile ? (
+              <CheckCircle size={16} color="#FFFFFF" />
+            ) : (
+              <Circle size={16} color="#95B8A8" />
+            )}
+          </View>
+          <Text
+            className={cn(
+              'text-sm',
+              hasCompleteProfile ? 'text-[#B7E4C7]' : 'font-semibold text-[#E8F4F0]'
+            )}>
+            {hasCompleteProfile
+              ? 'Profile personalized'
+              : 'Personalize your profile (you are here)'}
+          </Text>
         </View>
-        <Text className="text-[#95B8A8] text-sm">
-          Complete your first daily check-in
-        </Text>
+
+        {/* Next steps */}
+        <View className="flex-row items-center opacity-60">
+          <View className="mr-3 rounded-full bg-[#2D6A4F] p-1">
+            <Circle size={16} color="#95B8A8" />
+          </View>
+          <Text className="text-sm text-[#95B8A8]">Complete your first daily check-in</Text>
+        </View>
       </View>
     </View>
-  </View>
-)}
+  );
+}
 ```
 
 **Immediate Benefit Preview:**
 
 ```jsx
-{/* Show real-time preview as user types */}
-{name && (
-  <View className="bg-[#2D6A4F]/40 rounded-2xl p-5 mb-6 border border-[#52B788]/30">
-    <View className="flex-row items-center mb-3">
-      <Sparkles size={20} color="#52B788" className="mr-2" />
-      <Text className="text-[#E8F4F0] text-base font-semibold">
-        Here's How DailyHush Will Greet You
+{
+  /* Show real-time preview as user types */
+}
+{
+  name && (
+    <View className="mb-6 rounded-2xl border border-[#52B788]/30 bg-[#2D6A4F]/40 p-5">
+      <View className="mb-3 flex-row items-center">
+        <Sparkles size={20} color="#52B788" className="mr-2" />
+        <Text className="text-base font-semibold text-[#E8F4F0]">
+          Here's How DailyHush Will Greet You
+        </Text>
+      </View>
+
+      {/* Simulated daily check-in greeting */}
+      <View className="rounded-xl bg-[#0A1612] p-4">
+        <Text className="mb-2 text-xs text-[#95B8A8]">Your Daily Check-In Will Look Like:</Text>
+
+        <Text className="mb-2 text-lg font-semibold text-[#E8F4F0]">Good morning, {name} 🌅</Text>
+
+        <Text className="text-base leading-relaxed text-[#B7E4C7]">
+          Let's take a moment to check in with yourself. How are you feeling this morning?
+        </Text>
+      </View>
+
+      <Text className="mt-3 text-center text-xs italic text-[#6B9080]">
+        See? Already feels more personal.
       </Text>
     </View>
-
-    {/* Simulated daily check-in greeting */}
-    <View className="bg-[#0A1612] rounded-xl p-4">
-      <Text className="text-[#95B8A8] text-xs mb-2">
-        Your Daily Check-In Will Look Like:
-      </Text>
-
-      <Text className="text-[#E8F4F0] text-lg font-semibold mb-2">
-        Good morning, {name} 🌅
-      </Text>
-
-      <Text className="text-[#B7E4C7] text-base leading-relaxed">
-        Let's take a moment to check in with yourself. How
-        are you feeling this morning?
-      </Text>
-    </View>
-
-    <Text className="text-[#6B9080] text-xs mt-3 text-center italic">
-      See? Already feels more personal.
-    </Text>
-  </View>
-)}
+  );
+}
 ```
 
 **Guest User Upgrade Incentive:**
 
 ```jsx
-{/* For guest users only - show what they gain by creating account */}
-{isGuest && hasAnyProfileData && (
-  <View className="bg-gradient-to-br from-[#2D6A4F] to-[#40916C] rounded-2xl p-6 mb-6">
-    <View className="items-center mb-4">
-      <View className="bg-[#52B788] rounded-full p-3 mb-3">
-        <Shield size={28} color="#FFFFFF" />
+{
+  /* For guest users only - show what they gain by creating account */
+}
+{
+  isGuest && hasAnyProfileData && (
+    <View className="mb-6 rounded-2xl bg-gradient-to-br from-[#2D6A4F] to-[#40916C] p-6">
+      <View className="mb-4 items-center">
+        <View className="mb-3 rounded-full bg-[#52B788] p-3">
+          <Shield size={28} color="#FFFFFF" />
+        </View>
+        <Text className="mb-2 text-center text-xl font-bold text-[#E8F4F0]">
+          You've Started Your Journey
+        </Text>
+        <Text className="text-center text-base leading-relaxed text-[#B7E4C7]">
+          You're using DailyHush as a guest. Create an account to keep your progress and profile
+          safe.
+        </Text>
       </View>
-      <Text className="text-[#E8F4F0] text-xl font-bold text-center mb-2">
-        You've Started Your Journey
-      </Text>
-      <Text className="text-[#B7E4C7] text-base text-center leading-relaxed">
-        You're using DailyHush as a guest. Create an account
-        to keep your progress and profile safe.
+
+      {/* What they'll preserve */}
+      <View className="mb-4 rounded-xl bg-[#0A1612]/40 p-4">
+        <Text className="mb-2 text-xs font-semibold uppercase text-[#95B8A8]">
+          What You've Built So Far:
+        </Text>
+        <View className="space-y-2">
+          {name && (
+            <View className="flex-row items-center">
+              <CheckCircle size={14} color="#52B788" className="mr-2" />
+              <Text className="text-sm text-[#B7E4C7]">Personalized profile ({name})</Text>
+            </View>
+          )}
+          {user?.onboarding_completed && (
+            <View className="flex-row items-center">
+              <CheckCircle size={14} color="#52B788" className="mr-2" />
+              <Text className="text-sm text-[#B7E4C7]">Completed onboarding</Text>
+            </View>
+          )}
+          {user?.fire_progress && (
+            <View className="flex-row items-center">
+              <CheckCircle size={14} color="#52B788" className="mr-2" />
+              <Text className="text-sm text-[#B7E4C7]">F.I.R.E. training progress</Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      {/* CTA */}
+      <Pressable
+        onPress={() => router.push('/auth')}
+        className="flex-row items-center justify-center rounded-xl bg-[#52B788] py-4">
+        <Text className="mr-2 text-base font-bold text-[#0A1612]">Create Free Account</Text>
+        <ArrowRight size={20} color="#0A1612" />
+      </Pressable>
+
+      <Text className="mt-3 text-center text-xs text-[#B7E4C7]">
+        All your progress will transfer automatically. Takes less than 60 seconds.
       </Text>
     </View>
-
-    {/* What they'll preserve */}
-    <View className="bg-[#0A1612]/40 rounded-xl p-4 mb-4">
-      <Text className="text-[#95B8A8] text-xs font-semibold mb-2 uppercase">
-        What You've Built So Far:
-      </Text>
-      <View className="space-y-2">
-        {name && (
-          <View className="flex-row items-center">
-            <CheckCircle size={14} color="#52B788" className="mr-2" />
-            <Text className="text-[#B7E4C7] text-sm">
-              Personalized profile ({name})
-            </Text>
-          </View>
-        )}
-        {user?.onboarding_completed && (
-          <View className="flex-row items-center">
-            <CheckCircle size={14} color="#52B788" className="mr-2" />
-            <Text className="text-[#B7E4C7] text-sm">
-              Completed onboarding
-            </Text>
-          </View>
-        )}
-        {user?.fire_progress && (
-          <View className="flex-row items-center">
-            <CheckCircle size={14} color="#52B788" className="mr-2" />
-            <Text className="text-[#B7E4C7] text-sm">
-              F.I.R.E. training progress
-            </Text>
-          </View>
-        )}
-      </View>
-    </View>
-
-    {/* CTA */}
-    <Pressable
-      onPress={() => router.push('/auth')}
-      className="bg-[#52B788] rounded-xl py-4 flex-row items-center justify-center"
-    >
-      <Text className="text-[#0A1612] text-base font-bold mr-2">
-        Create Free Account
-      </Text>
-      <ArrowRight size={20} color="#0A1612" />
-    </Pressable>
-
-    <Text className="text-[#B7E4C7] text-xs text-center mt-3">
-      All your progress will transfer automatically.
-      Takes less than 60 seconds.
-    </Text>
-  </View>
-)}
+  );
+}
 ```
 
 **Achievement Recognition:**
 
 ```jsx
-{/* Celebrate first-time profile completion */}
-{isFirstTimeComplete && saveComplete && (
-  <View className="absolute inset-0 bg-[#0A1612]/95 flex items-center justify-center z-50">
-    <View className="bg-[#1A4D3C] rounded-3xl p-8 mx-6 max-w-sm">
-      {/* Celebration Animation */}
-      <View className="items-center mb-6">
-        <View className="bg-[#40916C] rounded-full p-6 mb-4">
-          <Star size={48} color="#FFFFFF" fill="#FFFFFF" />
+{
+  /* Celebrate first-time profile completion */
+}
+{
+  isFirstTimeComplete && saveComplete && (
+    <View className="absolute inset-0 z-50 flex items-center justify-center bg-[#0A1612]/95">
+      <View className="mx-6 max-w-sm rounded-3xl bg-[#1A4D3C] p-8">
+        {/* Celebration Animation */}
+        <View className="mb-6 items-center">
+          <View className="mb-4 rounded-full bg-[#40916C] p-6">
+            <Star size={48} color="#FFFFFF" fill="#FFFFFF" />
+          </View>
+          <Text className="text-center text-2xl font-bold text-[#E8F4F0]">
+            Welcome Home, {name || 'Friend'}!
+          </Text>
         </View>
-        <Text className="text-[#E8F4F0] text-2xl font-bold text-center">
-          Welcome Home, {name || 'Friend'}!
-        </Text>
-      </View>
 
-      {/* What This Unlocks */}
-      <View className="bg-[#0A1612]/50 rounded-2xl p-4 mb-6">
-        <Text className="text-[#B7E4C7] text-sm font-semibold mb-3">
-          You've Unlocked:
-        </Text>
-        <View className="space-y-2">
-          <View className="flex-row items-center">
-            <Sparkles size={14} color="#52B788" className="mr-2" />
-            <Text className="text-[#B7E4C7] text-sm">
-              Personalized daily greetings
-            </Text>
-          </View>
-          <View className="flex-row items-center">
-            <Sparkles size={14} color="#52B788" className="mr-2" />
-            <Text className="text-[#B7E4C7] text-sm">
-              Age-appropriate content
-            </Text>
-          </View>
-          <View className="flex-row items-center">
-            <Sparkles size={14} color="#52B788" className="mr-2" />
-            <Text className="text-[#B7E4C7] text-sm">
-              Customized technique suggestions
-            </Text>
+        {/* What This Unlocks */}
+        <View className="mb-6 rounded-2xl bg-[#0A1612]/50 p-4">
+          <Text className="mb-3 text-sm font-semibold text-[#B7E4C7]">You've Unlocked:</Text>
+          <View className="space-y-2">
+            <View className="flex-row items-center">
+              <Sparkles size={14} color="#52B788" className="mr-2" />
+              <Text className="text-sm text-[#B7E4C7]">Personalized daily greetings</Text>
+            </View>
+            <View className="flex-row items-center">
+              <Sparkles size={14} color="#52B788" className="mr-2" />
+              <Text className="text-sm text-[#B7E4C7]">Age-appropriate content</Text>
+            </View>
+            <View className="flex-row items-center">
+              <Sparkles size={14} color="#52B788" className="mr-2" />
+              <Text className="text-sm text-[#B7E4C7]">Customized technique suggestions</Text>
+            </View>
           </View>
         </View>
+
+        {/* Next Step */}
+        <Pressable
+          onPress={() => {
+            // Could navigate to first daily check-in
+            router.push('/daily-checkin');
+          }}
+          className="mb-3 rounded-xl bg-[#40916C] py-4">
+          <Text className="text-center text-base font-bold text-white">
+            Try Your First Personalized Check-In
+          </Text>
+        </Pressable>
+
+        <Pressable onPress={() => router.back()} className="py-2">
+          <Text className="text-center text-sm text-[#95B8A8]">I'll explore on my own</Text>
+        </Pressable>
       </View>
-
-      {/* Next Step */}
-      <Pressable
-        onPress={() => {
-          // Could navigate to first daily check-in
-          router.push('/daily-checkin');
-        }}
-        className="bg-[#40916C] rounded-xl py-4 mb-3"
-      >
-        <Text className="text-white text-base font-bold text-center">
-          Try Your First Personalized Check-In
-        </Text>
-      </Pressable>
-
-      <Pressable
-        onPress={() => router.back()}
-        className="py-2"
-      >
-        <Text className="text-[#95B8A8] text-sm text-center">
-          I'll explore on my own
-        </Text>
-      </Pressable>
     </View>
-  </View>
-)}
+  );
+}
 ```
 
 ---
@@ -1657,30 +1680,37 @@ const handleVoiceInput = async () => {
 ### Current → Recommended
 
 **Screen Title:**
+
 - Current: "Edit Profile"
 - Recommended: "Your Profile" (less transactional)
 
 **Section Headers:**
+
 - Current: "ACCOUNT" / "PERSONAL INFORMATION"
 - Recommended: "HOW YOU SIGN IN" / "MAKE DAILYHUSH PERSONAL"
 
 **Name Field:**
+
 - Current: "Name" + "Optional: Personalize your experience"
 - Recommended: "Your First Name (or what you'd like us to call you)" + "We'll use this to greet you warmly in your daily check-ins"
 
 **Age Field:**
+
 - Current: "Age" + "Optional: Helps us provide age-appropriate content"
 - Recommended: "Your Age Range" + "Helps us understand your life stage and suggest techniques that match your energy, experience, and current season of life"
 
 **Privacy Message:**
+
 - Current: "Your personal information is private and secure. We use this to personalize your DailyHush experience."
 - Recommended: (See detailed enhanced privacy section in analysis above)
 
 **Save Button:**
+
 - Current: "Save" / "Saving..."
 - Recommended: "Save Changes" / "Saving..." / "No Changes" (when nothing to save)
 
 **Success Message:**
+
 - Current: "Profile saved!"
 - Recommended: "Welcome, [Name]! Your profile is complete." (or context-specific alternatives)
 
@@ -1689,6 +1719,7 @@ const handleVoiceInput = async () => {
 ## Flow Improvements
 
 ### Current Flow:
+
 1. User navigates Settings → Profile
 2. Sees form with email (display) + name + age fields
 3. Edits fields
@@ -1699,6 +1730,7 @@ const handleVoiceInput = async () => {
 ### Recommended Flow:
 
 #### First-Time User (Empty Profile):
+
 1. User navigates Settings → Profile
 2. **Sees value proposition: "Make DailyHush Feel Like Home"**
 3. **Reads emotional benefits and sees social proof**
@@ -1712,6 +1744,7 @@ const handleVoiceInput = async () => {
 11. **If guest: Sees upgrade prompt to create account**
 
 #### Returning User (Has Profile Data):
+
 1. User navigates Settings → Profile
 2. **Sees "Profile Complete" status with last updated date**
 3. **Can expand to see data summary**
@@ -1722,6 +1755,7 @@ const handleVoiceInput = async () => {
 8. **Presses "Back to Settings" when ready (user control)**
 
 #### Guest User Journey:
+
 1. Guest completes profile as above
 2. **Sees special banner: "Building Your Guest Profile"**
 3. After completion, **sees upgrade prompt with progress preservation guarantee**
@@ -1787,6 +1821,7 @@ The current profile screen is functionally adequate but misses opportunities to 
 **Key Insight:** For shame-driven overthinkers, even simple forms create decision paralysis. Success depends on providing clear value, showing concrete benefits, offering control and reversibility, and building trust through specificity and transparency.
 
 **Estimated Impact:**
+
 - Profile completion rate: 40% → 75%
 - User satisfaction with personalization: 6.2/10 → 8.8/10
 - Guest-to-account conversion: 15% → 35%

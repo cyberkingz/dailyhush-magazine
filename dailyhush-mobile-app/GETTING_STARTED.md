@@ -5,6 +5,7 @@
 We've successfully scaffolded and configured your DailyHush iOS mobile app! Here's what's ready:
 
 ### 📦 Project Setup
+
 - ✅ Expo + React Native + TypeScript environment
 - ✅ Expo Router for file-based navigation
 - ✅ NativeWind (Tailwind CSS for React Native)
@@ -13,6 +14,7 @@ We've successfully scaffolded and configured your DailyHush iOS mobile app! Here
 - ✅ All required dependencies installed
 
 ### 🎨 Design System
+
 - ✅ Brand colors (Emerald, Amber, Cream)
 - ✅ Typography system (18pt minimum for 65+ users)
 - ✅ Spacing and layout constants
@@ -20,12 +22,14 @@ We've successfully scaffolded and configured your DailyHush iOS mobile app! Here
 - ✅ Night mode colors for 3AM feature
 
 ### 🏗️ Core Architecture
+
 - ✅ TypeScript type definitions for all data models
 - ✅ Global state store with Zustand
 - ✅ Project structure organized by feature
 - ✅ iOS permissions configured (Bluetooth, Microphone, Audio)
 
 ### 🖥️ Home Screen
+
 - ✅ Giant "I'M SPIRALING" button (280px height)
 - ✅ Time-based greeting
 - ✅ Haptic feedback on button press
@@ -228,21 +232,25 @@ npm run ios -- --device      # Build for physical iPhone
 ### Common Issues
 
 **Metro bundler won't start:**
+
 ```bash
 npm start -- --reset-cache
 ```
 
 **iOS simulator not opening:**
+
 ```bash
 npx expo run:ios
 ```
 
 **TypeScript errors:**
+
 ```bash
 npm run type-check
 ```
 
 **Module not found:**
+
 ```bash
 rm -rf node_modules
 npm install

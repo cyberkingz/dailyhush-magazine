@@ -71,6 +71,7 @@ Text Combination              Ratio    Pass
 ## Typography Scale
 
 ### Size Hierarchy
+
 ```
 Hero     32pt   Onboarding, Major Headings
 H1       28pt   Screen Titles
@@ -83,6 +84,7 @@ Caption  12pt   Metadata (use sparingly)
 ```
 
 ### Font Families (Current Stack)
+
 ```
 Primary:    Poppins (rounded, friendly)
 - Poppins_700Bold
@@ -94,6 +96,7 @@ Fallback:   System/Inter
 ```
 
 ### Line Heights
+
 ```
 Headings:   1.2-1.3  (tight)
 Body:       1.6-1.8  (breathing room)
@@ -101,6 +104,7 @@ Captions:   1.4-1.5  (compact)
 ```
 
 ### Letter Spacing
+
 ```
 Headings:   0.3-0.5  (slight spacing)
 Body:       0.0      (default)
@@ -112,6 +116,7 @@ All Caps:   0.5-1.0  (avoid all caps if possible)
 ## Spacing System
 
 ### Base Scale (pixels)
+
 ```
 xs     4px    Micro spacing
 sm     8px    Tight spacing
@@ -125,6 +130,7 @@ xl     24px   Card padding
 ```
 
 ### Component-Specific
+
 ```
 Button Height:       56px (standard)
 Button Height Large: 60px (critical actions)
@@ -139,6 +145,7 @@ Safe Area Bottom:    16px
 ## Touch Target Specifications
 
 ### Minimum Sizes (iOS Guidelines)
+
 ```
 Priority         Size        Use Case
 ═══════════════════════════════════════════
@@ -149,6 +156,7 @@ Minimum          44×44pt    Never go below
 ```
 
 ### Spacing Between Targets
+
 ```
 Minimum Gap:     16px
 Recommended:     20-24px
@@ -156,6 +164,7 @@ Critical Actions: 32px
 ```
 
 ### Visual vs Touch Area
+
 ```
 Icon:            20×20pt visual
 Touch Area:      44×44pt (or larger)
@@ -169,6 +178,7 @@ Touch Area:      44×44pt (or larger)
 ## Animation Specifications
 
 ### Timing Functions
+
 ```
 Instant:         0ms       State changes
 Fast:            200ms     Micro-interactions
@@ -178,6 +188,7 @@ Breathing:       4000ms    Natural rhythm
 ```
 
 ### Easing Curves
+
 ```
 Standard:        ease-in-out
 Entrance:        ease-out
@@ -186,6 +197,7 @@ Spring:          Avoid (too playful for therapy)
 ```
 
 ### Breathing Animation
+
 ```typescript
 Inhale:
   Duration:      4000ms
@@ -206,6 +218,7 @@ Exhale:
 ```
 
 ### Progress Ring
+
 ```
 Stroke Width:    8px
 Radius:          126px (260px total)
@@ -215,6 +228,7 @@ Shadow:          0px 0px 20px rgba(82, 183, 136, 0.3)
 ```
 
 ### Reduced Motion
+
 ```
 If user has Reduce Motion enabled:
 - All scale animations → static
@@ -228,6 +242,7 @@ If user has Reduce Motion enabled:
 ## Button Specifications
 
 ### Primary Button
+
 ```
 Height:          56px
 Border Radius:   100px (fully rounded)
@@ -254,6 +269,7 @@ Disabled State:
 ```
 
 ### Secondary Button
+
 ```
 Height:          56px
 Border Radius:   100px
@@ -272,6 +288,7 @@ Shadow:
 ```
 
 ### Ghost Button
+
 ```
 Height:          56px
 Border Radius:   100px
@@ -289,6 +306,7 @@ Shadow:          None
 ## Input Field Specifications
 
 ### Text Input
+
 ```
 Height:          56px (single line)
 Min Height:      120px (multiline)
@@ -306,6 +324,7 @@ Focus State:
 ```
 
 ### Slider
+
 ```
 Track Height:    8px
 Thumb Size:      28px
@@ -321,6 +340,7 @@ Touch Area:      60px (entire slider height for easier grab)
 ## Card Specifications
 
 ### Standard Card
+
 ```
 Background:      #0F1F1A
 Border Radius:   20px
@@ -336,6 +356,7 @@ Shadow:
 ```
 
 ### Highlighted Card
+
 ```
 Background:      #2D6A4F
 Border:          1px solid #40916C
@@ -354,6 +375,7 @@ Shadow:
 ## Iconography Rules
 
 ### Icon Sizes
+
 ```
 Small:           16px  (inline with small text)
 Medium:          20px  (inline with body text)
@@ -363,6 +385,7 @@ Emoji:           48px  (emotion selection)
 ```
 
 ### Icon + Text Pattern
+
 ```
 [Icon 20px] [8px gap] [Text 18px]
 
@@ -372,6 +395,7 @@ Icon stroke width:  2px (standard)
 ```
 
 ### Icon-Only Buttons
+
 ```
 AVOID: Icon-only buttons are hard for 55-70 demographic
 
@@ -391,6 +415,7 @@ NOT:
 ## Progress Indicator Specifications
 
 ### Circular Progress Ring
+
 ```typescript
 Size:            260px
 Stroke Width:    8px
@@ -405,6 +430,7 @@ Center Content:
 ```
 
 ### Bar Progress
+
 ```
 Height:          8px
 Border Radius:   4px
@@ -414,6 +440,7 @@ Width:           100% of container
 ```
 
 ### Dot Indicators
+
 ```
 Inactive Dot:    8×8px circle, #1A4D3C
 Active Dot:      12×12px circle, #10B981
@@ -426,6 +453,7 @@ Gap:             8px between dots
 ## Modal Specifications
 
 ### Standard Modal
+
 ```
 Background:      #0F1F1A
 Border Radius:   24px
@@ -440,6 +468,7 @@ Overlay:
 ```
 
 ### Exit Confirmation Modal
+
 ```
 Title:           24pt bold
 Message:         18pt regular
@@ -453,6 +482,7 @@ Subtitle:        14pt muted
 ## Haptic Feedback Patterns
 
 ### iOS Haptic Types
+
 ```
 Light:           Button taps, selections
 Medium:          Confirmations, toggles
@@ -463,6 +493,7 @@ Error:           Validation failure
 ```
 
 ### Time-Based Intensity
+
 ```
 22:00 - 06:00    30% intensity (night)
 20:00 - 22:00    60% intensity (evening)
@@ -471,6 +502,7 @@ Error:           Validation failure
 ```
 
 ### Pattern Timing
+
 ```
 Single Tap:      Immediate
 Success:         Delayed 100ms after visual confirmation
@@ -483,6 +515,7 @@ Breathing:       Sync with animation transitions
 ## Accessibility Checklist
 
 ### Visual
+
 - [ ] All text ≥ 18pt (or 16pt minimum for labels)
 - [ ] All touch targets ≥ 44×44pt
 - [ ] Contrast ratio ≥ 7:1 (WCAG AAA)
@@ -491,6 +524,7 @@ Breathing:       Sync with animation transitions
 - [ ] Test at 20% brightness
 
 ### Motor
+
 - [ ] Touch targets ≥ 44pt with 16pt spacing
 - [ ] No precise gestures (pinch, rotate)
 - [ ] No time-based interactions
@@ -498,6 +532,7 @@ Breathing:       Sync with animation transitions
 - [ ] Large buttons for critical actions (60pt)
 
 ### Cognitive
+
 - [ ] One primary action per screen
 - [ ] Clear, literal language (6th grade reading level)
 - [ ] No jargon or technical terms
@@ -505,6 +540,7 @@ Breathing:       Sync with animation transitions
 - [ ] Auto-save all progress
 
 ### Vestibular
+
 - [ ] Respect Reduce Motion preference
 - [ ] No parallax effects
 - [ ] No auto-playing video
@@ -512,6 +548,7 @@ Breathing:       Sync with animation transitions
 - [ ] Static alternatives for all animations
 
 ### Auditory
+
 - [ ] Captions for all audio
 - [ ] Visual alternatives for sound cues
 - [ ] Haptic alternatives for audio feedback
@@ -522,6 +559,7 @@ Breathing:       Sync with animation transitions
 ## Screen Layout Templates
 
 ### Full-Screen Exercise Template
+
 ```
 ┌────────────────────────────────┐
 │ [Safe Area Top: 8px]           │
@@ -547,6 +585,7 @@ Gap: 24px between sections
 ```
 
 ### Multi-Step Exercise Template
+
 ```
 ┌────────────────────────────────┐
 │ [Safe Area Top]                │
@@ -580,6 +619,7 @@ Button Layout:
 ## Night Mode Specifications
 
 ### Color Shifts
+
 ```
 Default Mode → Night Mode
 ═══════════════════════════════════
@@ -595,6 +635,7 @@ Blue Light Reduction:
 ```
 
 ### Brightness Adjustments
+
 ```
 Auto-dim:        30-40% brightness
 Manual:          User controls, minimum 5%
@@ -603,6 +644,7 @@ Transition:      Gradual (2 second fade)
 ```
 
 ### UI Adjustments
+
 ```
 Animations:      Minimal (opacity only)
 Haptics:         30% intensity
@@ -632,6 +674,7 @@ Scale up:           Automatically with flexbox
 ## Shadow Specifications
 
 ### Button Shadows
+
 ```
 Primary Button:
   shadowColor:     #52B788
@@ -649,6 +692,7 @@ Secondary Button:
 ```
 
 ### Card Shadows
+
 ```
 Standard Card:
   shadowColor:     #000000
@@ -666,6 +710,7 @@ Elevated Card:
 ```
 
 ### Glow Effects
+
 ```
 Active Element:
   shadowColor:     #10B981
@@ -680,6 +725,7 @@ Active Element:
 ## Loading States
 
 ### Skeleton Screens
+
 ```
 Background:      #1A4D3C
 Shimmer:         linear-gradient(90deg,
@@ -691,6 +737,7 @@ Border Radius:   Match component (12-20px)
 ```
 
 ### Spinner
+
 ```
 Size:            24px (inline)
                  40px (full-screen)
@@ -700,6 +747,7 @@ Style:           Indeterminate circular
 ```
 
 ### Progress Text
+
 ```
 "Loading..."     14pt regular #95B8A8
 "Saving..."      14pt regular #95B8A8
@@ -711,6 +759,7 @@ No spinner:      Text only (reduces visual noise)
 ## Implementation Quick Reference
 
 ### CSS/StyleSheet Pattern
+
 ```typescript
 const styles = StyleSheet.create({
   // Colors
@@ -732,12 +781,13 @@ const styles = StyleSheet.create({
   // Accessibility
   contrast: {
     color: colors.text.primary, // 21:1
-    backgroundColor: colors.background.primary
+    backgroundColor: colors.background.primary,
   },
 });
 ```
 
 ### Common Component Props
+
 ```typescript
 // Button
 <AccessibleButton
@@ -800,6 +850,7 @@ utils/
 ## Testing Devices
 
 ### Minimum Test Suite
+
 ```
 Physical Devices:
 - iPhone SE (small screen, older demographic common)

@@ -122,9 +122,7 @@ class MockSpeechRecognition {
 
     // Simulate transcription after 2 seconds
     this.mockTimer = setTimeout(() => {
-      this.emit('result', [
-        { transcript: 'This is a test transcription from voice input' },
-      ]);
+      this.emit('result', [{ transcript: 'This is a test transcription from voice input' }]);
       this.stop();
     }, 2000);
   }
@@ -197,11 +195,8 @@ const speechRecognition = new MockSpeechRecognition();
  * </TouchableOpacity>
  * ```
  */
-export function useVoiceToText(
-  options: UseVoiceToTextOptions = {}
-): UseVoiceToTextReturn {
+export function useVoiceToText(options: UseVoiceToTextOptions = {}): UseVoiceToTextReturn {
   const {
-    language = 'en-US',
     maxDuration = 120000, // 2 minutes
     onTranscription,
     onInterim,
@@ -294,7 +289,7 @@ export function useVoiceToText(
           stopRecording();
         }
       }, maxDuration);
-    } catch (err) {
+    } catch {
       const recordingError: VoiceError = {
         code: 'recording_failed',
         message: 'Could not start recording. Please check your microphone.',
@@ -323,7 +318,7 @@ export function useVoiceToText(
       speechRecognition.stop();
 
       // Processing will transition to idle when result arrives
-    } catch (err) {
+    } catch {
       const stopError: VoiceError = {
         code: 'recording_failed',
         message: 'Error stopping recording.',
@@ -396,9 +391,7 @@ export function useVoiceToText(
 
       const transcriptionError: VoiceError = {
         code: 'transcription_failed',
-        message:
-          errorEvent.message ||
-          'Could not transcribe audio. Please try speaking again.',
+        message: errorEvent.message || 'Could not transcribe audio. Please try speaking again.',
         action: 'Try Again',
       };
 

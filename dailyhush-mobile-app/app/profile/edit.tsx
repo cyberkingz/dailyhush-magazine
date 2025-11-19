@@ -173,8 +173,8 @@ export default function Profile() {
             <View className="mb-6 rounded-2xl bg-[#2D6A4F] p-5">
               <Text className="mb-2 text-lg font-bold text-[#E8F4F0]">Why share this with us?</Text>
               <Text className="text-base leading-relaxed text-[#B7E4C7]">
-                We&apos;ll greet you warmly each morning and tailor your Nœma experience to
-                feel like it was made just for you.
+                We&apos;ll greet you warmly each morning and tailor your Nœma experience to feel
+                like it was made just for you.
               </Text>
             </View>
 

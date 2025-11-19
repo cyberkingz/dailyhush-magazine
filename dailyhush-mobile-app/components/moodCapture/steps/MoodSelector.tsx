@@ -6,13 +6,11 @@
  */
 
 import React, { useRef } from 'react';
-import { View, Text, Pressable, StyleSheet, Animated, ScrollView, Dimensions } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Animated, ScrollView } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { MOOD_OPTIONS, type MoodOption } from '@/constants/moodOptions';
 import { colors } from '@/constants/colors';
 import type { Enums } from '@/types/supabase';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // ============================================================================
 // TYPES
@@ -49,8 +47,7 @@ export function MoodSelector({
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.cardsContainer}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {MOOD_OPTIONS.map((mood, index) => (
           <MoodCard
             key={mood.id}
@@ -233,13 +230,9 @@ function MoodCard({ mood, isSelected, onPress, delay = 0 }: MoodCardProps) {
         styles.cardWrapper,
         {
           opacity: fadeAnim,
-          transform: [
-            { translateX: slideAnim },
-            { scale: scaleAnim },
-          ],
+          transform: [{ translateX: slideAnim }, { scale: scaleAnim }],
         },
-      ]}
-    >
+      ]}>
       <Pressable
         onPress={handlePress}
         onPressIn={handlePressIn}
@@ -247,8 +240,7 @@ function MoodCard({ mood, isSelected, onPress, delay = 0 }: MoodCardProps) {
         style={styles.cardTouchable}
         accessibilityRole="radio"
         accessibilityState={{ selected: isSelected }}
-        accessibilityLabel={`${mood.label}. ${mood.description}`}
-      >
+        accessibilityLabel={`${mood.label}. ${mood.description}`}>
         {/* Background glow */}
         <Animated.View
           style={[
@@ -279,14 +271,15 @@ function MoodCard({ mood, isSelected, onPress, delay = 0 }: MoodCardProps) {
               {
                 transform: [
                   { scale: emojiScale },
-                  { rotate: emojiRotate.interpolate({
-                    inputRange: [-10, 10],
-                    outputRange: ['-10deg', '10deg'],
-                  })},
+                  {
+                    rotate: emojiRotate.interpolate({
+                      inputRange: [-10, 10],
+                      outputRange: ['-10deg', '10deg'],
+                    }),
+                  },
                 ],
               },
-            ]}
-          >
+            ]}>
             <Text style={styles.emoji}>{mood.emoji}</Text>
           </Animated.View>
 
@@ -297,8 +290,7 @@ function MoodCard({ mood, isSelected, onPress, delay = 0 }: MoodCardProps) {
               {
                 transform: [{ translateX: textSlide }],
               },
-            ]}
-          >
+            ]}>
             <Text style={styles.label}>{mood.label}</Text>
             <Text style={styles.description}>{mood.description}</Text>
           </Animated.View>
@@ -311,8 +303,7 @@ function MoodCard({ mood, isSelected, onPress, delay = 0 }: MoodCardProps) {
                 opacity: checkmarkScale,
                 transform: [{ scale: checkmarkScale }],
               },
-            ]}
-          >
+            ]}>
             <Text style={styles.checkmark}>✓</Text>
           </Animated.View>
         </View>

@@ -97,18 +97,18 @@ User behavior: "Oh, I can scroll!"
 
 ## Detailed Comparison Table
 
-| Feature | Before | After | Impact |
-|---------|--------|-------|--------|
-| **Scroll Hint** | Small text (13px) | Banner + icon (15px) | +200% visibility |
-| **Text Color** | Low contrast (#95B8A8) | High contrast (#34D399) | WCAG AAA compliant |
-| **Gradient Height** | 80px | 120px | +50% coverage |
-| **Gradient Stops** | 3 stops | 4 stops | Smoother fade |
-| **Motion Cues** | None | Bouncing chevron | Eye-catching |
-| **Scroll Indicator** | None | Progress dots (5) | Position awareness |
-| **Safe Area** | Fixed 20px | Dynamic (44-59px) | Device-specific |
-| **Haptic Feedback** | Only on selection | + First scroll | Discovery moment |
-| **Partial Card** | No | Card 3 shows ~50% | Visual affordance |
-| **Total Affordances** | 2 (text + gradient) | 6 (all features) | +300% redundancy |
+| Feature               | Before                 | After                   | Impact             |
+| --------------------- | ---------------------- | ----------------------- | ------------------ |
+| **Scroll Hint**       | Small text (13px)      | Banner + icon (15px)    | +200% visibility   |
+| **Text Color**        | Low contrast (#95B8A8) | High contrast (#34D399) | WCAG AAA compliant |
+| **Gradient Height**   | 80px                   | 120px                   | +50% coverage      |
+| **Gradient Stops**    | 3 stops                | 4 stops                 | Smoother fade      |
+| **Motion Cues**       | None                   | Bouncing chevron        | Eye-catching       |
+| **Scroll Indicator**  | None                   | Progress dots (5)       | Position awareness |
+| **Safe Area**         | Fixed 20px             | Dynamic (44-59px)       | Device-specific    |
+| **Haptic Feedback**   | Only on selection      | + First scroll          | Discovery moment   |
+| **Partial Card**      | No                     | Card 3 shows ~50%       | Visual affordance  |
+| **Total Affordances** | 2 (text + gradient)    | 6 (all features)        | +300% redundancy   |
 
 ---
 
@@ -369,6 +369,7 @@ Events tracked:
 ```
 
 This data reveals:
+
 - Which users struggle to discover scrolling
 - Effectiveness of scroll indicators
 - A/B test results for different hint texts

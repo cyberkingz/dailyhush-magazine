@@ -455,7 +455,12 @@ export async function updateUserFireProgress(
 
   // Use the authenticated user ID (works for both anonymous and email users)
   const actualUserId = authUser.id;
-  logTraining('Updating fire progress for user:', actualUserId, 'isAnonymous:', authUser.is_anonymous);
+  logTraining(
+    'Updating fire progress for user:',
+    actualUserId,
+    'isAnonymous:',
+    authUser.is_anonymous
+  );
 
   if (!module) {
     return {

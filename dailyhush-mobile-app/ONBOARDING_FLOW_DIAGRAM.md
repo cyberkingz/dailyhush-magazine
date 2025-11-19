@@ -122,7 +122,9 @@ FOUND ✓   NOT FOUND ✗                         │
 ## Flow Summary
 
 ### Path A: New User (No Website Quiz)
+
 **Steps: 5**
+
 ```
 Welcome
   → Quiz Recognition → "No/Not sure"
@@ -131,12 +133,15 @@ Welcome
   → Password Setup
   → Home ✓
 ```
+
 **Time:** ~3-5 minutes (quiz takes 2-3 min)
 
 ---
 
 ### Path B: Existing Quiz User (Email Found)
+
 **Steps: 4**
+
 ```
 Welcome
   → Quiz Recognition → "Yes"
@@ -144,12 +149,15 @@ Welcome
   → Password Setup
   → Home ✓
 ```
+
 **Time:** ~1-2 minutes
 
 ---
 
 ### Path C: Existing Quiz User (Email NOT Found → Takes Native Quiz)
+
 **Steps: 6**
+
 ```
 Welcome
   → Quiz Recognition → "Yes"
@@ -160,6 +168,7 @@ Welcome
   → Password Setup
   → Home ✓
 ```
+
 **Time:** ~4-6 minutes
 
 ---
@@ -167,15 +176,18 @@ Welcome
 ## Key Decision Points
 
 ### 1. Quiz Recognition Screen
+
 - **"Yes, I took the quiz"** → Email lookup flow
 - **"No, I'm new here"** → Native quiz flow
 - **"I'm not sure"** → Native quiz flow (same as "No")
 
 ### 2. Email Lookup Screen (Only if user selected "Yes")
+
 - **Email found** → Password setup (quick path)
 - **Email not found** → Option to "Take quiz instead"
 
 ### 3. Password Setup Screen (Final Step Before Home)
+
 - **Both paths converge here**
 - All users create account with quiz data
 - All users skip remaining onboarding
@@ -185,6 +197,7 @@ Welcome
 ## Data Flow
 
 ### Native Quiz Submission (Mobile App)
+
 ```javascript
 {
   email: "user@example.com",
@@ -202,6 +215,7 @@ Welcome
 ```
 
 ### Website Quiz Submission (For Comparison)
+
 ```javascript
 {
   email: "user@example.com",
@@ -217,6 +231,7 @@ Welcome
 ```
 
 ### Filtering in Analytics
+
 ```sql
 -- Mobile quiz takers only
 SELECT * FROM quiz_submissions
@@ -235,6 +250,7 @@ SELECT * FROM quiz_submissions;
 ## Screen-by-Screen Breakdown
 
 ### 1. `/onboarding` (index.tsx)
+
 **Purpose:** Welcome screen
 **Actions:** User taps "Try It Now"
 **Next:** `/onboarding/quiz-recognition`
@@ -242,8 +258,10 @@ SELECT * FROM quiz_submissions;
 ---
 
 ### 2. `/onboarding/quiz-recognition`
+
 **Purpose:** Ask if user took website quiz
 **Options:**
+
 - "Yes" → `/onboarding/email-lookup`
 - "No" → `/onboarding/quiz`
 - "I'm not sure" → `/onboarding/quiz`
@@ -251,18 +269,22 @@ SELECT * FROM quiz_submissions;
 ---
 
 ### 3A. `/onboarding/email-lookup` (Web Quiz Path)
+
 **Purpose:** Find existing quiz by email
 **Input:** Email address
 **Database:** Query `quiz_submissions` table
 **Outcomes:**
+
 - Found → `/onboarding/password-setup` (with quiz data)
 - Not Found → Show error + "Take quiz instead" link → `/onboarding/quiz`
 
 ---
 
 ### 3B. `/onboarding/quiz` (Native Quiz Path)
+
 **Purpose:** In-app 16-question quiz
 **Features:**
+
 - 16 questions across 5 sections
 - Progress bar (Question X of 16, Y%)
 - Back/Next navigation
@@ -274,8 +296,10 @@ SELECT * FROM quiz_submissions;
 ---
 
 ### 4. `/onboarding/quiz/results`
+
 **Purpose:** Show quiz results + collect email
 **Display:**
+
 - Overthinker type (title)
 - Description
 - Insight
@@ -288,14 +312,17 @@ SELECT * FROM quiz_submissions;
 ---
 
 ### 5. `/onboarding/password-setup`
+
 **Purpose:** Create account with quiz data
 **Receives Params:**
+
 - `email`
 - `quizSubmissionId`
 - `overthinkerType`
 - `score`
 
 **Actions:**
+
 1. User creates password (8+ chars, confirmation)
 2. Create Supabase auth account
 3. Create `user_profiles` record with:
@@ -311,8 +338,10 @@ SELECT * FROM quiz_submissions;
 ---
 
 ### 6. `/` (Home)
+
 **Purpose:** Main app experience
 **User State:**
+
 - Authenticated ✓
 - Quiz results connected ✓
 - Onboarding complete ✓
@@ -323,10 +352,12 @@ SELECT * FROM quiz_submissions;
 ## Exit Points
 
 **No exit during quiz:**
+
 - User MUST complete quiz once started (no back button on results)
 - Can go back during questions, but can't skip quiz
 
 **Only exit after account creation:**
+
 - Once password setup is complete, user is in the app
 - Can't return to onboarding (marked complete in database)
 
@@ -335,16 +366,19 @@ SELECT * FROM quiz_submissions;
 ## Error Handling
 
 ### Email Lookup Errors
+
 - **Invalid email format:** Red border + error message
 - **Email not found:** Friendly message + option to take quiz
 - **Database error:** Generic error + retry option
 
 ### Quiz Submission Errors
+
 - **Supabase error:** Error message + retry button
 - **Network error:** "Please check connection" message
 - **Invalid data:** Should never happen (client-side validation)
 
 ### Password Setup Errors
+
 - **Password too short:** "Must be 8+ characters"
 - **Passwords don't match:** "Passwords do not match"
 - **Email already registered:** "Email already exists, please sign in"
@@ -355,16 +389,19 @@ SELECT * FROM quiz_submissions;
 ## Technical Notes
 
 ### Why Two Quiz Paths?
+
 1. **Web Quiz Users:** Already invested time, have results → Quick account creation
 2. **New Users:** No results yet → Need to take quiz in-app for personalization
 
 ### Why Same `quiz_submissions` Table?
+
 - Centralized data
 - Easy analytics across platforms
 - Same quiz, same scoring, same results
 - `source_page` field distinguishes origin
 
 ### Why Skip Rest of Onboarding?
+
 - Quiz users are already qualified
 - They know what they're signing up for
 - Faster time-to-value
@@ -375,6 +412,7 @@ SELECT * FROM quiz_submissions;
 ## Future Enhancements
 
 ### Potential Additions
+
 1. **Skip quiz option:** Allow users to create account without quiz (mark as incomplete)
 2. **Retake quiz:** Let users retake quiz later to update results
 3. **Social signup:** Google/Apple sign in with quiz later
@@ -382,6 +420,7 @@ SELECT * FROM quiz_submissions;
 5. **Save progress:** Allow users to pause quiz and resume later
 
 ### Analytics to Track
+
 - % who select "Yes" vs "No" on quiz recognition
 - Email lookup success rate
 - Quiz completion rate (started vs finished)

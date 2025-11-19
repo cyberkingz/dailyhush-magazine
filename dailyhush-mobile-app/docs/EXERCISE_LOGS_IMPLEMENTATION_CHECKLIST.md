@@ -3,12 +3,14 @@
 ## ✅ Phase 1: Database Setup
 
 ### Migration
+
 - [ ] Review migration file: `/supabase/migrations/20250104000000_create_exercise_logs.sql`
 - [ ] Test on staging database first (CRITICAL)
 - [ ] Run migration: `supabase db push`
 - [ ] Verify no errors in migration output
 
 ### Verification
+
 - [ ] Tables created (3): `exercise_logs`, `exercise_triggers`, `exercise_stats_by_user`
   ```sql
   SELECT table_name FROM information_schema.tables WHERE table_name LIKE 'exercise%';
@@ -31,6 +33,7 @@
   ```
 
 ### Testing
+
 - [ ] Insert test exercise log (as authenticated user)
 - [ ] Verify RLS works (try accessing another user's logs - should fail)
 - [ ] Test streak calculation: `SELECT get_exercise_streak('user-id');`
@@ -44,6 +47,7 @@
 ## ✅ Phase 2: TypeScript Integration
 
 ### Import Types
+
 - [ ] Copy types file to project: `/types/exercise-logs.ts`
 - [ ] Verify TypeScript compiles without errors
 - [ ] Test type imports in a component
@@ -52,6 +56,7 @@
   ```
 
 ### Import Client Helpers
+
 - [ ] Copy client file: `/utils/supabase/exercise-logs.ts`
 - [ ] Update Supabase client import path if needed
 - [ ] Test a simple query
@@ -61,6 +66,7 @@
   ```
 
 ### Import Hooks
+
 - [ ] Copy hooks file: `/hooks/useExerciseTracking.ts`
 - [ ] Update import paths (userStore, supabase, types)
 - [ ] Test hooks in a component
@@ -77,6 +83,7 @@
 ### Create Exercise Components
 
 #### 1. Breathing Exercise Screen
+
 - [ ] Create screen: `app/exercises/breathing.tsx`
 - [ ] Import `useExerciseTracking` hook
 - [ ] Add pre-anxiety rating UI (1-10 scale)
@@ -88,6 +95,7 @@
 - [ ] Test full flow: start → exercise → complete
 
 #### 2. Brain Dump Screen
+
 - [ ] Create screen: `app/exercises/brain-dump.tsx`
 - [ ] Add text input (REMINDER: don't store content)
 - [ ] Track word count only
@@ -96,30 +104,35 @@
 - [ ] **CRITICAL:** Verify journal content NOT sent to database
 
 #### 3. Grounding Exercise Screen
+
 - [ ] Create screen: `app/exercises/grounding.tsx`
 - [ ] Add 5-4-3-2-1 step-by-step UI
 - [ ] Track items identified per sense
 - [ ] Implement exercise flow
 
 #### 4. Progressive Muscle Relaxation
+
 - [ ] Create screen: `app/exercises/progressive-muscle.tsx`
 - [ ] Add muscle group checklist
 - [ ] Track completion per group
 - [ ] Implement exercise flow
 
 #### 5. Body Scan Screen
+
 - [ ] Create screen: `app/exercises/body-scan.tsx`
 - [ ] Add body scan guide
 - [ ] Track tension areas (optional)
 - [ ] Implement exercise flow
 
 #### 6. Cognitive Reframe Screen
+
 - [ ] Create screen: `app/exercises/cognitive-reframe.tsx`
 - [ ] Add thought capture (don't store full text)
 - [ ] Add reframe prompts
 - [ ] Implement exercise flow
 
 ### Exercise Selection Screen
+
 - [ ] Create screen: `app/exercises/index.tsx`
 - [ ] Display all 6 exercise options
 - [ ] Show "Recommended for you" based on stats
@@ -133,6 +146,7 @@
 ## ✅ Phase 4: Dashboard & Analytics
 
 ### Exercise History Screen
+
 - [ ] Create screen: `app/history/exercises.tsx`
 - [ ] Use `useExerciseHistory` hook
 - [ ] Display last 20 exercises
@@ -142,6 +156,7 @@
 - [ ] Pull to refresh
 
 ### Stats Dashboard
+
 - [ ] Create screen: `app/dashboard/stats.tsx`
 - [ ] Use `useExerciseStats` hook
 - [ ] Display current streak (with 🔥 emoji)
@@ -152,6 +167,7 @@
 - [ ] Show "Most common trigger"
 
 ### Pattern Insights Screen
+
 - [ ] Create screen: `app/insights/patterns.tsx`
 - [ ] Weekly trend chart (Chart.js or react-native-chart-kit)
 - [ ] Trigger analysis visualization
@@ -168,24 +184,28 @@
 ### Module Screens
 
 #### Module 1: FOCUS
+
 - [ ] Update screen: `app/training/focus.tsx`
 - [ ] Add exercise recommendation
 - [ ] Track which exercises completed from this module
 - [ ] Update `fire_training_progress` when exercise completed
 
 #### Module 2: INTERRUPT
+
 - [ ] Update screen: `app/training/interrupt.tsx`
 - [ ] Link to breathing/grounding exercises
 - [ ] Track module_context: 'interrupt'
 - [ ] Update progress tracking
 
 #### Module 3: REFRAME
+
 - [ ] Update screen: `app/training/reframe.tsx`
 - [ ] Link to cognitive reframe exercise
 - [ ] Track module_context: 'reframe'
 - [ ] Update progress tracking
 
 #### Module 4: EXECUTE
+
 - [ ] Update screen: `app/training/execute.tsx`
 - [ ] Link to all exercises
 - [ ] Track module_context: 'execute'
@@ -198,6 +218,7 @@
 ## ✅ Phase 6: Real-Time Features
 
 ### Real-Time Updates
+
 - [ ] Implement dashboard auto-refresh
   ```typescript
   useExerciseSubscription((payload) => {
@@ -210,6 +231,7 @@
 - [ ] Handle subscription cleanup on unmount
 
 ### Push Notifications (Optional)
+
 - [ ] Set up notification system
 - [ ] Trigger notification when streak about to break
 - [ ] Trigger notification for weekly insights
@@ -222,6 +244,7 @@
 ## ✅ Phase 7: Performance Optimization
 
 ### Materialized View Refresh
+
 - [ ] Set up pg_cron (if Supabase Pro)
   ```sql
   SELECT cron.schedule('refresh-exercise-stats', '0 */6 * * *',
@@ -232,6 +255,7 @@
 - [ ] Monitor refresh performance (<30s)
 
 ### Query Performance
+
 - [ ] Run EXPLAIN ANALYZE on dashboard queries
   ```sql
   EXPLAIN ANALYZE SELECT * FROM exercise_logs WHERE user_id = 'xxx';
@@ -241,6 +265,7 @@
 - [ ] History list loads in <300ms
 
 ### Caching (Optional)
+
 - [ ] Implement React Query for client-side caching
 - [ ] Set stale time to 5 minutes for stats
 - [ ] Invalidate cache after exercise completion
@@ -252,6 +277,7 @@
 ## ✅ Phase 8: Testing
 
 ### Unit Tests
+
 - [ ] Test `ExerciseLogsAPI.startExercise()`
 - [ ] Test `ExerciseLogsAPI.completeExercise()`
 - [ ] Test `ExerciseLogsAPI.getExerciseStreak()`
@@ -259,6 +285,7 @@
 - [ ] Test RLS policies (user can't access other user's data)
 
 ### Integration Tests
+
 - [ ] Test complete exercise flow (start → complete)
 - [ ] Test abandonment flow
 - [ ] Test skip flow
@@ -266,6 +293,7 @@
 - [ ] Test real-time updates
 
 ### E2E Tests
+
 - [ ] User completes breathing exercise
 - [ ] Verify stats update correctly
 - [ ] Verify streak increments
@@ -273,6 +301,7 @@
 - [ ] Test across multiple days for streak
 
 ### Performance Tests
+
 - [ ] Load test with 1000 exercise logs
 - [ ] Verify dashboard still loads quickly
 - [ ] Test materialized view refresh time
@@ -301,6 +330,7 @@
 - [ ] Update app to use `exercise_logs` for new spirals
 
 **OR keep both tables (recommended):**
+
 - [ ] Document that both tables exist
 - [ ] Use `spiral_logs` for existing spiral feature
 - [ ] Use `exercise_logs` for new 6 exercises
@@ -312,6 +342,7 @@
 ## ✅ Phase 10: Deployment
 
 ### Pre-Deployment
+
 - [ ] All tests passing
 - [ ] Code review complete
 - [ ] Database migration tested on staging
@@ -319,6 +350,7 @@
 - [ ] Documentation updated
 
 ### Deployment
+
 - [ ] Create database backup
   ```bash
   supabase db dump -f backup_before_exercise_logs.sql
@@ -329,6 +361,7 @@
 - [ ] Deploy app updates to stores (iOS/Android)
 
 ### Post-Deployment
+
 - [ ] Monitor error logs (first 24 hours)
 - [ ] Monitor database performance
 - [ ] Monitor query execution times
@@ -337,6 +370,7 @@
 - [ ] Monitor user feedback
 
 ### Rollback Plan (If Needed)
+
 - [ ] Have rollback SQL script ready (in `/docs/MIGRATION_NOTES.md`)
 - [ ] Test rollback on staging
 - [ ] Document rollback procedure
@@ -348,6 +382,7 @@
 ## ✅ Phase 11: Monitoring & Maintenance
 
 ### Set Up Monitoring
+
 - [ ] Database query performance dashboard
 - [ ] Error tracking (Sentry/Bugsnag)
 - [ ] User analytics (Mixpanel/Amplitude)
@@ -355,6 +390,7 @@
 - [ ] Materialized view refresh monitoring
 
 ### Regular Maintenance
+
 - [ ] Weekly: Check query performance
 - [ ] Weekly: Review error logs
 - [ ] Monthly: Analyze table growth
@@ -362,6 +398,7 @@
 - [ ] Quarterly: Review RLS policies
 
 ### Analytics Tracking
+
 - [ ] Track exercise completions
 - [ ] Track abandonment rates
 - [ ] Track most popular exercises
@@ -389,19 +426,19 @@ Track these metrics to measure success:
 
 ## 📊 Timeline Estimate
 
-| Phase | Duration | Dependencies |
-|-------|----------|--------------|
-| 1. Database Setup | 1 day | None |
-| 2. TypeScript Integration | 0.5 days | Phase 1 |
-| 3. UI Implementation | 5 days | Phase 2 |
-| 4. Dashboard & Analytics | 3 days | Phase 2 |
-| 5. FIRE Integration | 2 days | Phase 3 |
-| 6. Real-Time Features | 1 day | Phase 3 |
-| 7. Performance Optimization | 1 day | Phase 3-4 |
-| 8. Testing | 3 days | Phase 3-7 |
-| 9. Data Migration (if needed) | 1 day | Phase 8 |
-| 10. Deployment | 1 day | Phase 8-9 |
-| 11. Monitoring Setup | 1 day | Phase 10 |
+| Phase                         | Duration | Dependencies |
+| ----------------------------- | -------- | ------------ |
+| 1. Database Setup             | 1 day    | None         |
+| 2. TypeScript Integration     | 0.5 days | Phase 1      |
+| 3. UI Implementation          | 5 days   | Phase 2      |
+| 4. Dashboard & Analytics      | 3 days   | Phase 2      |
+| 5. FIRE Integration           | 2 days   | Phase 3      |
+| 6. Real-Time Features         | 1 day    | Phase 3      |
+| 7. Performance Optimization   | 1 day    | Phase 3-4    |
+| 8. Testing                    | 3 days   | Phase 3-7    |
+| 9. Data Migration (if needed) | 1 day    | Phase 8      |
+| 10. Deployment                | 1 day    | Phase 8-9    |
+| 11. Monitoring Setup          | 1 day    | Phase 10     |
 
 **Total Estimate:** 15-20 working days (3-4 weeks)
 
@@ -426,11 +463,11 @@ Track these metrics to measure success:
 - [ ] Documentation complete
 - [ ] Team trained on new system
 
-**Project Lead:** _____________________ Date: _______
+**Project Lead:** **********\_********** Date: **\_\_\_**
 
-**Developer:** _____________________ Date: _______
+**Developer:** **********\_********** Date: **\_\_\_**
 
-**QA Lead:** _____________________ Date: _______
+**QA Lead:** **********\_********** Date: **\_\_\_**
 
 ---
 

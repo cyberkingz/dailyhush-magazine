@@ -5,62 +5,61 @@ appId: com.dailyhush.app
 # Flow: Welcome → "I already took it" → Email Lookup → Password Setup → Results
 
 - launchApp
-- assertVisible: "DailyHush"
+- assertVisible: 'DailyHush'
 
 # ============================================
 # STEP 1: SELECT "I ALREADY TOOK THE QUIZ"
 # ============================================
-- assertVisible: "Take the Quiz"
+- assertVisible: 'Take the Quiz'
 
 # Scroll down to find "I already took it" option
 - scroll
 
-- assertVisible: "I already took the quiz on your website"
-- tapOn: "I already took the quiz on your website"
+- assertVisible: 'I already took the quiz on your website'
+- tapOn: 'I already took the quiz on your website'
 
 # ============================================
 # STEP 2: EMAIL LOOKUP
 # ============================================
-- assertVisible: "Find Your Quiz Results"
-- assertVisible: "Enter the email you used for the quiz"
+- assertVisible: 'Find Your Quiz Results'
+- assertVisible: 'Enter the email you used for the quiz'
 
 # Enter email that exists in quiz_submissions table
 # NOTE: Replace with actual quiz submission email from your database
-- tapOn: "your.email@example.com"
-- inputText: "quiz-taker@test.com"
+- tapOn: 'your.email@example.com'
+- inputText: 'quiz-taker@test.com'
 
-- tapOn: "Find My Quiz"
+- tapOn: 'Find My Quiz'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 3: PASSWORD SETUP
 # ============================================
-- assertVisible: "Your Results Are Ready!"
-- assertVisible: "Create a password to unlock your personalized insights"
+- assertVisible: 'Your Results Are Ready!'
+- assertVisible: 'Create a password to unlock your personalized insights'
 
 # Email should be pre-filled
-- assertVisible: "quiz-taker@test.com"
+- assertVisible: 'quiz-taker@test.com'
 
 # Enter password
-- tapOn: "8+ characters"
-- inputText: "TestPass123!"
+- tapOn: '8+ characters'
+- inputText: 'TestPass123!'
 
-- tapOn: "Create Account & See Results"
+- tapOn: 'Create Account & See Results'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 4: RESULTS SCREEN
 # ============================================
-- assertVisible: "Your Results"
+- assertVisible: 'Your Results'
 - assertVisible: "✨ You're all set!"
 
 # Continue to home
-- tapOn: "Get Started"
+- tapOn: 'Get Started'
 - waitForAnimationToEnd
 
 # ============================================
 # STEP 5: HOME SCREEN - Quiz Connected!
 # ============================================
-- assertVisible: "Good"
-
+- assertVisible: 'Good'
 # SUCCESS! Quiz connected 🎉

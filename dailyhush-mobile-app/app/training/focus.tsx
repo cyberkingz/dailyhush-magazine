@@ -144,7 +144,6 @@ export default function FocusModule() {
     };
 
     loadProgress();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.user_id]);
 
   // Create stable debounced save function using ref to avoid dependency issues
@@ -316,7 +315,9 @@ Usually 3-10 seconds."
                   style={{ lineHeight: 28, paddingTop: 2, color: colors.lime[500] }}>
                   ✓
                 </Text>
-                <Text className="flex-1 text-base leading-relaxed" style={{ color: colors.text.primary }}>
+                <Text
+                  className="flex-1 text-base leading-relaxed"
+                  style={{ color: colors.text.primary }}>
                   Know your #1 rumination trigger
                 </Text>
               </View>
@@ -327,7 +328,9 @@ Usually 3-10 seconds."
                   style={{ lineHeight: 28, paddingTop: 2, color: colors.lime[500] }}>
                   ✓
                 </Text>
-                <Text className="flex-1 text-base leading-relaxed" style={{ color: colors.text.primary }}>
+                <Text
+                  className="flex-1 text-base leading-relaxed"
+                  style={{ color: colors.text.primary }}>
                   Recognize it in real-time
                 </Text>
               </View>
@@ -338,7 +341,9 @@ Usually 3-10 seconds."
                   style={{ lineHeight: 28, paddingTop: 2, color: colors.lime[500] }}>
                   ✓
                 </Text>
-                <Text className="flex-1 text-base leading-relaxed" style={{ color: colors.text.primary }}>
+                <Text
+                  className="flex-1 text-base leading-relaxed"
+                  style={{ color: colors.text.primary }}>
                   Understand why YOUR brain loops (it's different for everyone)
                 </Text>
               </View>
@@ -486,7 +491,9 @@ And that means: One solution fixes both."
                 borderColor: colors.lime[500],
                 backgroundColor: colors.lime[600],
               }}>
-              <Text className="mb-4 text-base font-semibold" style={{ color: colors.background.primary }}>
+              <Text
+                className="mb-4 text-base font-semibold"
+                style={{ color: colors.background.primary }}>
                 Your Patterns:
               </Text>
 

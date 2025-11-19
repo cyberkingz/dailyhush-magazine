@@ -7,26 +7,28 @@ type ButtonProps = {
   variant?: 'primary' | 'secondary';
 } & TouchableOpacityProps;
 
-export const Button = forwardRef<View, ButtonProps>(({ title, variant = 'primary', ...touchableProps }, ref) => {
-  return (
-    <TouchableOpacity
-      ref={ref}
-      {...touchableProps}
-      style={[
-        styles.button,
-        variant === 'primary' ? styles.primary : styles.secondary,
-        touchableProps.style,
-      ]}>
-      <Text
+export const Button = forwardRef<View, ButtonProps>(
+  ({ title, variant = 'primary', ...touchableProps }, ref) => {
+    return (
+      <TouchableOpacity
+        ref={ref}
+        {...touchableProps}
         style={[
-          styles.buttonText,
-          variant === 'primary' ? styles.primaryText : styles.secondaryText,
+          styles.button,
+          variant === 'primary' ? styles.primary : styles.secondary,
+          touchableProps.style,
         ]}>
-        {title}
-      </Text>
-    </TouchableOpacity>
-  );
-});
+        <Text
+          style={[
+            styles.buttonText,
+            variant === 'primary' ? styles.primaryText : styles.secondaryText,
+          ]}>
+          {title}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+);
 
 Button.displayName = 'Button';
 

@@ -21,6 +21,7 @@
    - Version iOS
 
 **Avantages :**
+
 - ✅ Symbolication automatique (noms de fonctions lisibles)
 - ✅ Facile à accéder
 - ✅ Historique complet
@@ -32,16 +33,19 @@
 **URL Sentry :** https://sentry.io/organizations/noema-sa/projects/react-native/
 
 **Vérification :**
+
 1. Va sur [sentry.io](https://sentry.io)
 2. Connecte-toi avec ton compte
 3. Va dans **Projects** → **react-native**
 4. Regarde la section **"Issues"** pour les crashes récents
 
 **Si tu n'as pas accès :**
+
 - Vérifie que le DSN est correct dans `app/_layout.tsx`
 - Vérifie que Sentry est bien initialisé avant le crash
 
 **DSN actuel :**
+
 ```
 https://d2daf2f2691269cb8ed4d3f8b049d59e@o4510369045741568.ingest.us.sentry.io/4510369062977536
 ```
@@ -59,6 +63,7 @@ https://d2daf2f2691269cb8ed4d3f8b049d59e@o4510369045741568.ingest.us.sentry.io/4
 5. Regarde les logs en temps réel
 
 **Avantages :**
+
 - ✅ Logs en temps réel
 - ✅ Tous les logs système
 - ✅ Pas besoin de rebuild
@@ -76,6 +81,7 @@ https://d2daf2f2691269cb8ed4d3f8b049d59e@o4510369045741568.ingest.us.sentry.io/4
 5. Tu verras tous les crash reports
 
 **Avantages :**
+
 - ✅ Symbolication automatique
 - ✅ Stack traces détaillés
 - ✅ Informations sur l'appareil
@@ -192,4 +198,3 @@ Si les logs ne sont pas suffisants, on peut ajouter des logs dans `app/_layout.t
 ---
 
 **Dis-moi ce que tu trouves dans TestFlight ou Sentry ! 🐛**
-

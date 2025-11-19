@@ -182,17 +182,14 @@ export const WRITING_PROMPTS: readonly WritingPrompt[] = [
  * Get relevant prompts for a specific mood
  * Returns all prompts if no mood specified
  */
-export function getPromptsForMood(
-  moodId?: Enums<'mood_type'>
-): readonly WritingPrompt[] {
+export function getPromptsForMood(moodId?: Enums<'mood_type'>): readonly WritingPrompt[] {
   if (!moodId) {
     return WRITING_PROMPTS;
   }
 
   // Filter prompts that are relevant to the mood, or have no mood restriction
   const relevant = WRITING_PROMPTS.filter(
-    (prompt) =>
-      !prompt.relevantMoods || prompt.relevantMoods.includes(moodId)
+    (prompt) => !prompt.relevantMoods || prompt.relevantMoods.includes(moodId)
   );
 
   // Return at least 3 prompts, even if not all are perfectly relevant
@@ -217,8 +214,7 @@ export const PRIVACY_MESSAGES = {
   saved: 'Saved',
 
   /** Shown in confirmation dialogs */
-  draftPrompt:
-    'We found an unsaved draft from earlier. Would you like to restore it?',
+  draftPrompt: 'We found an unsaved draft from earlier. Would you like to restore it?',
 } as const;
 
 /**
@@ -227,7 +223,7 @@ export const PRIVACY_MESSAGES = {
 export const STEP_SUBTITLES = {
   step1: "Take your time. There's no rush.",
   step2: 'Your feelings matter, however intense they may be.',
-  step3: 'Share as much or as little as you\'d like.',
+  step3: "Share as much or as little as you'd like.",
   step4: 'A gentle suggestion, just for you.',
 } as const;
 
@@ -235,6 +231,6 @@ export const STEP_SUBTITLES = {
 // TYPE EXPORTS
 // ============================================================================
 
-export type MoodId = typeof MOOD_OPTIONS[number]['id'];
+export type MoodId = (typeof MOOD_OPTIONS)[number]['id'];
 export type IntensityValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-export type PromptId = typeof WRITING_PROMPTS[number]['id'];
+export type PromptId = (typeof WRITING_PROMPTS)[number]['id'];

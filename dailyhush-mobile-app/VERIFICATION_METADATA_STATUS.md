@@ -8,6 +8,7 @@
 ## ✅ CE QUI A ÉTÉ FAIT
 
 ### 1. Introductory Offer (7-day Free Trial) ✅
+
 - **Statut:** ✅ CRÉÉE
 - **Détails:**
   - Type: Free Trial
@@ -19,14 +20,17 @@
 - **Localisation:** `/apps/6755148761/distribution/subscriptions/6755150752/pricing/intro-offers`
 
 ### 2. Pricing ✅
+
 - **Statut:** ✅ CONFIGURÉ
 - **Prix:** $9.99 USD (Tier 10)
 - **Vérifié:** Le prix est déjà configuré dans App Store Connect
 
 ### 3. Review Notes ⚠️
+
 - **Statut:** ⚠️ À VÉRIFIER/COMPLÉTER
 - **Note:** Les Review Notes ont été remplis précédemment mais semblent vides maintenant
 - **Texte à utiliser:**
+
 ```
 This is a monthly auto-renewable subscription that unlocks Premium features in Nœma. Premium includes unlimited spiral interrupt exercises, advanced progress tracking, personalized technique recommendations, voice journaling (coming soon), priority support, and an ad-free experience. The subscription includes a 7-day free trial for new subscribers. Users can cancel anytime through their App Store settings. This subscription helps users break free from rumination spirals and overthinking patterns using science-backed techniques.
 ```
@@ -36,6 +40,7 @@ This is a monthly auto-renewable subscription that unlocks Premium features in N
 ## ❌ CE QUI RESTE À FAIRE
 
 ### 1. Localization (Display Name & Description) ❌
+
 - **Statut:** ❌ NON COMPLÉTÉ
 - **Problème:** La limite d'Apple est de 170 caractères pour la description
 - **Actuel:**
@@ -50,6 +55,7 @@ This is a monthly auto-renewable subscription that unlocks Premium features in N
     ```
 
 ### 2. Sauvegarder les modifications ❌
+
 - **Statut:** ❌ NON SAUVEGARDÉ
 - **Note:** Le bouton "Save" est actuellement désactivé car il n'y a pas de modifications en attente
 
@@ -57,18 +63,18 @@ This is a monthly auto-renewable subscription that unlocks Premium features in N
 
 ## 📊 RÉSUMÉ PAR SECTION
 
-| Section | Statut | Détails |
-|---------|--------|---------|
-| **Product ID** | ✅ | com.anthony.noema.monthly |
-| **Reference Name** | ✅ | Noema Premium Monthly |
-| **Subscription Duration** | ✅ | 1 Month |
-| **Pricing** | ✅ | $9.99 USD (Tier 10) |
-| **Introductory Offer** | ✅ | 7-day free trial créée |
-| **Localization (Display Name)** | ❌ | À mettre à jour: "Premium Monthly" |
-| **Localization (Description)** | ❌ | À mettre à jour (limite 170 caractères) |
-| **Review Notes** | ⚠️ | À vérifier/compléter |
-| **Screenshot** | ❌ | À faire plus tard |
-| **Status** | ⚠️ | "Missing Metadata" |
+| Section                         | Statut | Détails                                 |
+| ------------------------------- | ------ | --------------------------------------- |
+| **Product ID**                  | ✅     | com.anthony.noema.monthly               |
+| **Reference Name**              | ✅     | Noema Premium Monthly                   |
+| **Subscription Duration**       | ✅     | 1 Month                                 |
+| **Pricing**                     | ✅     | $9.99 USD (Tier 10)                     |
+| **Introductory Offer**          | ✅     | 7-day free trial créée                  |
+| **Localization (Display Name)** | ❌     | À mettre à jour: "Premium Monthly"      |
+| **Localization (Description)**  | ❌     | À mettre à jour (limite 170 caractères) |
+| **Review Notes**                | ⚠️     | À vérifier/compléter                    |
+| **Screenshot**                  | ❌     | À faire plus tard                       |
+| **Status**                      | ⚠️     | "Missing Metadata"                      |
 
 ---
 
@@ -108,4 +114,3 @@ This is a monthly auto-renewable subscription that unlocks Premium features in N
 - **Pricing:** https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752/pricing
 - **Introductory Offers:** https://appstoreconnect.apple.com/apps/6755148761/distribution/subscriptions/6755150752/pricing/intro-offers
 - **Subscription Group:** https://appstoreconnect.apple.com/apps/6755148761/distribution/subscription-groups/21829692
-

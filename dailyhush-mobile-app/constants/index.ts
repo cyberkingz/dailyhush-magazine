@@ -33,7 +33,7 @@ export {
   BorderRadius,
   Shadows,
   Accessibility,
-  Animation
+  Animation,
 } from './theme';
 export * from './authStyles';
 export * from './messages';

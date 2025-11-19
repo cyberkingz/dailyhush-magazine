@@ -23,11 +23,41 @@ import * as Haptics from 'expo-haptics';
 import type { TriggerOption, EmotionWheelData } from '@/types/exercises';
 
 const MOCK_TRIGGERS: TriggerOption[] = [
-  { trigger_id: '1', trigger_name: 'Work stress', trigger_category: 'work', display_order: 1, loop_type: 'all' },
-  { trigger_id: '2', trigger_name: 'Social situation', trigger_category: 'social', display_order: 2, loop_type: 'all' },
-  { trigger_id: '3', trigger_name: 'Health worry', trigger_category: 'health', display_order: 3, loop_type: 'all' },
-  { trigger_id: '4', trigger_name: 'Relationship', trigger_category: 'relationship', display_order: 4, loop_type: 'all' },
-  { trigger_id: '5', trigger_name: 'Financial concern', trigger_category: 'financial', display_order: 5, loop_type: 'all' },
+  {
+    trigger_id: '1',
+    trigger_name: 'Work stress',
+    trigger_category: 'work',
+    display_order: 1,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '2',
+    trigger_name: 'Social situation',
+    trigger_category: 'social',
+    display_order: 2,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '3',
+    trigger_name: 'Health worry',
+    trigger_category: 'health',
+    display_order: 3,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '4',
+    trigger_name: 'Relationship',
+    trigger_category: 'relationship',
+    display_order: 4,
+    loop_type: 'all',
+  },
+  {
+    trigger_id: '5',
+    trigger_name: 'Financial concern',
+    trigger_category: 'financial',
+    display_order: 5,
+    loop_type: 'all',
+  },
 ];
 
 // Emotion categories with primary emotions
@@ -73,21 +103,23 @@ export default function EmotionWheelExercise() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center">
+      <View className="bg-forest-900 flex-1 items-center justify-center">
         <ActivityIndicator size="large" color="#4FD1C5" />
-        <Text className="text-sage-300 font-inter-medium text-base mt-4">Loading exercise...</Text>
+        <Text className="font-inter-medium mt-4 text-base text-sage-300">Loading exercise...</Text>
       </View>
     );
   }
 
   if (error || !session) {
     return (
-      <View className="flex-1 bg-forest-900 items-center justify-center px-6">
-        <Text className="text-red-400 font-poppins-semibold text-xl mb-2">Error</Text>
-        <Text className="text-sage-300 font-inter-regular text-base text-center mb-6">
+      <View className="bg-forest-900 flex-1 items-center justify-center px-6">
+        <Text className="font-poppins-semibold mb-2 text-xl text-red-400">Error</Text>
+        <Text className="font-inter-regular mb-6 text-center text-base text-sage-300">
           {error || 'Failed to start exercise'}
         </Text>
-        <TouchableOpacity onPress={() => router.back()} className="bg-mindful-teal rounded-xl px-6 py-3">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="bg-mindful-teal rounded-xl px-6 py-3">
           <Text className="text-forest-900 font-poppins-semibold text-base">Go Back</Text>
         </TouchableOpacity>
       </View>
@@ -153,10 +185,12 @@ export default function EmotionWheelExercise() {
         );
 
       case 'complete':
-        const reduction = session.preRating && session.postRating ? session.preRating - session.postRating : 0;
-        const reductionPercentage = session.preRating && session.preRating > 0
-          ? Math.round((reduction / session.preRating) * 100)
-          : 0;
+        const reduction =
+          session.preRating && session.postRating ? session.preRating - session.postRating : 0;
+        const reductionPercentage =
+          session.preRating && session.preRating > 0
+            ? Math.round((reduction / session.preRating) * 100)
+            : 0;
 
         return (
           <CompletionScreen
@@ -185,8 +219,7 @@ export default function EmotionWheelExercise() {
       session={session}
       onPause={pause}
       onResume={resume}
-      onAbandon={abandon}
-    >
+      onAbandon={abandon}>
       {renderStage()}
     </ExerciseContainer>
   );
@@ -204,51 +237,51 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
           <Text className="text-sage-50 font-poppins-bold text-3xl leading-tight">
             {EMOTION_WHEEL_CONFIG.copy.headline}
           </Text>
-          <Text className="text-sage-300 font-inter-regular text-lg leading-relaxed">
+          <Text className="font-inter-regular text-lg leading-relaxed text-sage-300">
             {EMOTION_WHEEL_CONFIG.copy.subheadline}
           </Text>
         </View>
 
         {/* Cialdini Hooks */}
         <View className="space-y-3">
-          <View className="bg-mindful-teal/10 border border-mindful-teal/30 rounded-xl p-4">
-            <View className="flex-row items-center gap-2 mb-2">
-              <View className="w-8 h-8 bg-mindful-teal/20 rounded-full items-center justify-center">
+          <View className="bg-mindful-teal/10 border-mindful-teal/30 rounded-xl border p-4">
+            <View className="mb-2 flex-row items-center gap-2">
+              <View className="bg-mindful-teal/20 h-8 w-8 items-center justify-center rounded-full">
                 <BookOpen size={16} color="#4FD1C5" />
               </View>
               <Text className="text-mindful-teal font-inter-semibold text-sm uppercase tracking-wide">
                 Research-Backed
               </Text>
             </View>
-            <Text className="text-sage-300 font-inter-medium text-base">
+            <Text className="font-inter-medium text-base text-sage-300">
               {EMOTION_WHEEL_CONFIG.persuasion?.authorityBadge}
             </Text>
           </View>
 
-          <View className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-            <View className="flex-row items-center gap-2 mb-2">
-              <View className="w-8 h-8 bg-amber-500/20 rounded-full items-center justify-center">
+          <View className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+            <View className="mb-2 flex-row items-center gap-2">
+              <View className="h-8 w-8 items-center justify-center rounded-full bg-amber-500/20">
                 <Sparkles size={16} color="#F59E0B" />
               </View>
-              <Text className="text-amber-400 font-inter-semibold text-sm uppercase tracking-wide">
+              <Text className="font-inter-semibold text-sm uppercase tracking-wide text-amber-400">
                 Quick Process
               </Text>
             </View>
-            <Text className="text-sage-300 font-inter-medium text-base">
+            <Text className="font-inter-medium text-base text-sage-300">
               {EMOTION_WHEEL_CONFIG.persuasion?.preCommitment}
             </Text>
           </View>
 
-          <View className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4">
-            <View className="flex-row items-center gap-2 mb-2">
-              <View className="w-8 h-8 bg-purple-500/20 rounded-full items-center justify-center">
+          <View className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-4">
+            <View className="mb-2 flex-row items-center gap-2">
+              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-500/20">
                 <Users size={16} color="#A855F7" />
               </View>
-              <Text className="text-purple-400 font-inter-semibold text-sm uppercase tracking-wide">
+              <Text className="font-inter-semibold text-sm uppercase tracking-wide text-purple-400">
                 Proven Technique
               </Text>
             </View>
-            <Text className="text-sage-300 font-inter-medium text-base">
+            <Text className="font-inter-medium text-base text-sage-300">
               {EMOTION_WHEEL_CONFIG.persuasion?.socialProof}
             </Text>
           </View>
@@ -259,10 +292,10 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
           <Text className="text-sage-50 font-poppins-semibold text-xl">How it works:</Text>
           {EMOTION_WHEEL_CONFIG.instructions.map((instruction, index) => (
             <View key={index} className="flex-row gap-3">
-              <View className="w-8 h-8 bg-mindful-teal/20 rounded-full items-center justify-center">
+              <View className="bg-mindful-teal/20 h-8 w-8 items-center justify-center rounded-full">
                 <Text className="text-mindful-teal font-poppins-bold text-sm">{index + 1}</Text>
               </View>
-              <Text className="flex-1 text-sage-300 font-inter-regular text-base leading-relaxed pt-1">
+              <Text className="font-inter-regular flex-1 pt-1 text-base leading-relaxed text-sage-300">
                 {instruction}
               </Text>
             </View>
@@ -271,9 +304,11 @@ function InstructionsStage({ onContinue }: { onContinue: () => void }) {
 
         {/* Ogilvy CTA */}
         <TouchableOpacity
-          onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); onContinue(); }}
-          className="bg-mindful-teal rounded-xl py-4 flex-row items-center justify-center gap-2 shadow-lg mt-2"
-        >
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onContinue();
+          }}
+          className="bg-mindful-teal mt-2 flex-row items-center justify-center gap-2 rounded-xl py-4 shadow-lg">
           <Text className="text-forest-900 font-poppins-semibold text-lg">
             {EMOTION_WHEEL_CONFIG.copy.ctaStart}
           </Text>
@@ -330,20 +365,20 @@ function EmotionSelectionStage({
       <View className="space-y-6">
         {/* Header */}
         <View className="items-center">
-          <View className="w-20 h-20 bg-pink-500/20 rounded-full items-center justify-center mb-4">
+          <View className="mb-4 h-20 w-20 items-center justify-center rounded-full bg-pink-500/20">
             <Heart size={40} color="#EC4899" />
           </View>
-          <Text className="text-sage-50 font-poppins-bold text-2xl text-center mb-2">
+          <Text className="text-sage-50 font-poppins-bold mb-2 text-center text-2xl">
             What are you feeling?
           </Text>
-          <Text className="text-sage-300 font-inter-regular text-base text-center">
+          <Text className="font-inter-regular text-center text-base text-sage-300">
             Choose the category, then the specific emotion
           </Text>
         </View>
 
         {/* Primary Emotions */}
         <View className="space-y-3">
-          <Text className="text-sage-300 font-inter-semibold text-sm">1. Choose a category:</Text>
+          <Text className="font-inter-semibold text-sm text-sage-300">1. Choose a category:</Text>
           <View className="flex-row flex-wrap gap-2">
             {Object.keys(EMOTION_CATEGORIES).map((category) => (
               <TouchableOpacity
@@ -353,17 +388,15 @@ function EmotionSelectionStage({
                   setSelectedPrimary(category);
                   setSelectedSecondary(null);
                 }}
-                className={`px-4 py-2 rounded-full border-2 ${
+                className={`rounded-full border-2 px-4 py-2 ${
                   selectedPrimary === category
                     ? 'bg-mindful-teal/20 border-mindful-teal'
                     : 'bg-forest-800 border-forest-700'
-                }`}
-              >
+                }`}>
                 <Text
                   className={`font-inter-semibold text-sm ${
                     selectedPrimary === category ? 'text-mindful-teal' : 'text-sage-300'
-                  }`}
-                >
+                  }`}>
                   {category}
                 </Text>
               </TouchableOpacity>
@@ -374,30 +407,32 @@ function EmotionSelectionStage({
         {/* Secondary Emotions */}
         {selectedPrimary && (
           <View className="space-y-3">
-            <Text className="text-sage-300 font-inter-semibold text-sm">2. Which specific feeling?</Text>
+            <Text className="font-inter-semibold text-sm text-sage-300">
+              2. Which specific feeling?
+            </Text>
             <View className="flex-row flex-wrap gap-2">
-              {EMOTION_CATEGORIES[selectedPrimary as keyof typeof EMOTION_CATEGORIES].map((emotion) => (
-                <TouchableOpacity
-                  key={emotion}
-                  onPress={() => {
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    setSelectedSecondary(emotion);
-                  }}
-                  className={`px-4 py-2 rounded-full border-2 ${
-                    selectedSecondary === emotion
-                      ? 'bg-mindful-teal/20 border-mindful-teal'
-                      : 'bg-forest-800 border-forest-700'
-                  }`}
-                >
-                  <Text
-                    className={`font-inter-medium text-sm ${
-                      selectedSecondary === emotion ? 'text-mindful-teal' : 'text-sage-300'
-                    }`}
-                  >
-                    {emotion}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+              {EMOTION_CATEGORIES[selectedPrimary as keyof typeof EMOTION_CATEGORIES].map(
+                (emotion) => (
+                  <TouchableOpacity
+                    key={emotion}
+                    onPress={() => {
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      setSelectedSecondary(emotion);
+                    }}
+                    className={`rounded-full border-2 px-4 py-2 ${
+                      selectedSecondary === emotion
+                        ? 'bg-mindful-teal/20 border-mindful-teal'
+                        : 'bg-forest-800 border-forest-700'
+                    }`}>
+                    <Text
+                      className={`font-inter-medium text-sm ${
+                        selectedSecondary === emotion ? 'text-mindful-teal' : 'text-sage-300'
+                      }`}>
+                      {emotion}
+                    </Text>
+                  </TouchableOpacity>
+                )
+              )}
             </View>
           </View>
         )}
@@ -406,9 +441,8 @@ function EmotionSelectionStage({
         {selectedPrimary && selectedSecondary && (
           <TouchableOpacity
             onPress={handleAddEmotion}
-            className="bg-mindful-teal rounded-xl py-4 shadow-lg mt-2"
-          >
-            <Text className="text-forest-900 font-poppins-semibold text-base text-center">
+            className="bg-mindful-teal mt-2 rounded-xl py-4 shadow-lg">
+            <Text className="text-forest-900 font-poppins-semibold text-center text-base">
               I'm feeling {selectedSecondary}
             </Text>
           </TouchableOpacity>

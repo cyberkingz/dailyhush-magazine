@@ -151,8 +151,7 @@ function calculateUserStats(
   const totalCheckIns = checkIns.length;
 
   // Average mood rating
-  const avgMoodRating =
-    checkIns.reduce((sum, ci) => sum + ci.mood_rating, 0) / checkIns.length;
+  const avgMoodRating = checkIns.reduce((sum, ci) => sum + ci.mood_rating, 0) / checkIns.length;
 
   // Calculate current streak
   const currentStreak = calculateCurrentStreak(checkIns);
@@ -224,9 +223,7 @@ function calculateLongestStreak(checkIns: Tables<'user_check_ins'>[]): number {
     const prevDate = new Date(sorted[i - 1].check_in_date);
     const currDate = new Date(sorted[i].check_in_date);
 
-    const daysDiff = Math.floor(
-      (currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
+    const daysDiff = Math.floor((currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24));
 
     if (daysDiff === 1) {
       currentStreakLength++;

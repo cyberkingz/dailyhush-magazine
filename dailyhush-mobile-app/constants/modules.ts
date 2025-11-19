@@ -84,7 +84,7 @@ export const MODULES: Record<ModuleId, Module> = {
     title: 'Stop Spiraling',
     subtitle: 'Interrupt rumination right now',
     description:
-      'You\'re stuck in a thought loop and need to break out. Get immediate relief through guided exercises or talk to Anna for personalized support.',
+      "You're stuck in a thought loop and need to break out. Get immediate relief through guided exercises or talk to Anna for personalized support.",
     icon: '🌀',
     color: moduleColors.red,
     isEnabled: true,
@@ -114,7 +114,7 @@ export const MODULES: Record<ModuleId, Module> = {
   'process-emotions': {
     id: 'process-emotions',
     title: 'Process Emotions',
-    subtitle: 'Understand what you\'re feeling',
+    subtitle: "Understand what you're feeling",
     description:
       'Work through difficult emotions with compassionate guidance. Learn to identify, accept, and move through your feelings in healthy ways.',
     icon: '💜',

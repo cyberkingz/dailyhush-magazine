@@ -47,9 +47,7 @@ export function InteractiveStepInputExamples() {
             autoFocus={false}
             testID="thought-input"
           />
-          <Text style={styles.valueDisplay}>
-            Current value: {thoughtText || '(empty)'}
-          </Text>
+          <Text style={styles.valueDisplay}>Current value: {thoughtText || '(empty)'}</Text>
         </View>
 
         {/* Example 2: Multi-line List Input */}
@@ -68,9 +66,7 @@ export function InteractiveStepInputExamples() {
             autoFocus={false}
             testID="seeing-list-input"
           />
-          <Text style={styles.valueDisplay}>
-            Current value: {seeingList || '(empty)'}
-          </Text>
+          <Text style={styles.valueDisplay}>Current value: {seeingList || '(empty)'}</Text>
         </View>
 
         {/* Example 3: Numeric Count Input */}
@@ -89,17 +85,13 @@ export function InteractiveStepInputExamples() {
             autoFocus={false}
             testID="breath-count-input"
           />
-          <Text style={styles.valueDisplay}>
-            Current value: {breathCount || '(empty)'}
-          </Text>
+          <Text style={styles.valueDisplay}>Current value: {breathCount || '(empty)'}</Text>
         </View>
 
         {/* Example 4: Auto-focused Input */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>4. Auto-focused Input</Text>
-          <Text style={styles.description}>
-            (This input will auto-focus when the screen loads)
-          </Text>
+          <Text style={styles.description}>(This input will auto-focus when the screen loads)</Text>
           <InteractiveStepInput
             config={{
               type: 'text',

@@ -30,22 +30,13 @@ export function TabBar({ tabs, activeTab, onTabChange }: TabBarProps) {
                 await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 onTabChange(tab.id);
               }}
-              style={[
-                styles.tab,
-                isActive && styles.tabActive
-              ]}
+              style={[styles.tab, isActive && styles.tabActive]}
               accessible={true}
               accessibilityRole="tab"
               accessibilityLabel={tab.accessibilityLabel}
               accessibilityHint={tab.accessibilityHint}
               accessibilityState={{ selected: isActive }}>
-              <Text
-                style={[
-                  styles.tabText,
-                  isActive && styles.tabTextActive
-                ]}>
-                {tab.label}
-              </Text>
+              <Text style={[styles.tabText, isActive && styles.tabTextActive]}>{tab.label}</Text>
             </Pressable>
           );
         })}

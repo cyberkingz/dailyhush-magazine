@@ -91,16 +91,19 @@ Keys are available at: https://app.revenuecat.com/
 ### 1. Create Products in App Store Connect
 
 **Monthly Subscription:**
+
 - Product ID: `dailyhush_premium_monthly`
 - Type: Auto-renewable subscription
 - Price Tier: Tier 10 ($9.99)
 
 **Annual Subscription:**
+
 - Product ID: `dailyhush_premium_annual`
 - Type: Auto-renewable subscription
 - Price Tier: Tier 60 ($59.99)
 
 **Lifetime Purchase:**
+
 - Product ID: `dailyhush_premium_lifetime`
 - Type: Non-consumable
 - Price Tier: Tier 150 ($149.99)
@@ -152,9 +155,9 @@ const offering = await getOfferings();
 const packages = offering.availablePackages;
 
 // Display prices (already localized)
-packages.map(pkg => ({
+packages.map((pkg) => ({
   price: pkg.product.priceString, // e.g., "$9.99", "€9.99"
-  priceValue: pkg.product.price,  // Numeric value for sorting
+  priceValue: pkg.product.price, // Numeric value for sorting
 }));
 
 // Purchase selected package
@@ -175,6 +178,7 @@ const { isPremium, isLoading, source } = usePremiumStatus();
 ```
 
 The hook checks:
+
 1. **Trial status** from Supabase (7-day NO-CC trial)
 2. **Subscription status** from RevenueCat
 3. Returns `true` if **either** is active
@@ -207,6 +211,7 @@ components/
 ### Created Files
 
 **`utils/revenueCat.ts`** - Complete RevenueCat SDK wrapper:
+
 - `initializeRevenueCat(userId?)` - Initialize SDK
 - `getOfferings()` - Get subscription packages with localized pricing
 - `purchasePackage(package)` - Purchase subscription
@@ -219,22 +224,26 @@ components/
 **`app/_layout.tsx`** - Added RevenueCat initialization on app startup
 
 **`app/subscription.tsx`** - Completely rewritten:
+
 - Loads offerings from RevenueCat (not hardcoded)
 - Displays localized pricing automatically
 - Handles purchase flow with proper error handling
 - Updates Supabase after successful purchase
 
 **`hooks/useTrialGuard.ts`** - Updated `usePremiumStatus()`:
+
 - Checks trial status first
 - Falls back to RevenueCat subscription check
 - Returns `source` field to indicate Premium source
 
 **`constants/subscription.ts`** - Marked pricing as deprecated:
+
 - Added `@deprecated` comment
 - Pricing is now **reference only**
 - Actual pricing loaded from RevenueCat
 
 **`components/subscription/SubscriptionOption.tsx`** - Fixed type issues:
+
 - Added `priceValue` field to interface
 - Added accessibility labels
 - Added haptic feedback
@@ -302,26 +311,31 @@ Before launching subscriptions:
 ## Key Benefits
 
 ### 1. **No Hardcoded Prices**
+
 - All pricing loaded dynamically from App Store/Play Store
 - Easy to change prices without app update
 - A/B testing possible via RevenueCat offerings
 
 ### 2. **Automatic Currency Support**
+
 - Works in 200+ countries
 - No manual currency conversion
 - Respects user's App Store locale
 
 ### 3. **Cross-Platform Consistency**
+
 - Same codebase for iOS and Android
 - RevenueCat handles platform differences
 - Unified subscription status across devices
 
 ### 4. **Receipt Validation**
+
 - RevenueCat validates all receipts server-side
 - Prevents piracy and fraudulent purchases
 - No manual receipt verification needed
 
 ### 5. **User Identification**
+
 - Links purchases to Supabase user ID
 - Purchases persist across devices
 - Easy to track user subscription history
@@ -333,6 +347,7 @@ Before launching subscriptions:
 ### Introductory Offers
 
 Enable in App Store Connect:
+
 - 3-day free trial
 - Discounted first month
 - Pay-as-you-go intro price
@@ -352,6 +367,7 @@ await Purchases.presentCodeRedemptionSheet();
 ### Subscription Status Webhooks
 
 Configure in RevenueCat Dashboard → Integrations:
+
 - Webhook URL: `https://your-backend.com/webhooks/revenuecat`
 - Events: `INITIAL_PURCHASE`, `RENEWAL`, `CANCELLATION`, `EXPIRATION`
 
@@ -365,6 +381,7 @@ Use to update Supabase subscription status server-side.
 
 **Cause:** RevenueCat can't find offerings
 **Fix:** Check that:
+
 1. Products exist in App Store Connect/Play Console
 2. Products are linked to entitlement in RevenueCat
 3. Offering `default` exists with packages
@@ -374,6 +391,7 @@ Use to update Supabase subscription status server-side.
 
 **Cause:** Multiple possible reasons
 **Fix:** Check error message:
+
 - `userCancelled` - User cancelled, not an error
 - `productNotAvailable` - Product ID mismatch
 - `receiptInvalid` - Receipt validation failed
@@ -383,6 +401,7 @@ Use to update Supabase subscription status server-side.
 
 **Cause:** Products not approved in App Store Connect
 **Fix:**
+
 1. Submit products for review
 2. Wait for approval
 3. Test with sandbox account
@@ -391,6 +410,7 @@ Use to update Supabase subscription status server-side.
 
 **Cause:** Supabase not updated
 **Fix:** Check `app/subscription.tsx:178-186`:
+
 ```typescript
 await supabase
   .from('profiles')

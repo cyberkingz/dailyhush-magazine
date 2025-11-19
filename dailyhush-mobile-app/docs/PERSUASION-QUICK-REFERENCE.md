@@ -1,4 +1,5 @@
 # Exercise Persuasion Quick Reference
+
 ## One-Page Cheat Sheet
 
 **For:** Engineering team implementing persuasion architecture
@@ -175,6 +176,7 @@ SCREEN 6: COMMITMENT PROMPT
 ```
 
 **Example (Cyclic Sigh):**
+
 ```typescript
 {
   icon: "🫁",
@@ -203,6 +205,7 @@ SCREEN 6: COMMITMENT PROMPT
 ```
 
 **Example (4-7-8 Breathing):**
+
 ```typescript
 {
   researchCitation: "Dr. Andrew Weil (Harvard Med) calls this 'a natural tranquilizer for the nervous system.'",
@@ -223,18 +226,19 @@ SCREEN 6: COMMITMENT PROMPT
 
 ```typescript
 const encouragement = {
-  round1: "[Physiological change happening]",
-  round2: "[Progress acknowledgment] + [Self-check prompt]",
-  round3: "[Almost done] + [Final push]"
+  round1: '[Physiological change happening]',
+  round2: '[Progress acknowledgment] + [Self-check prompt]',
+  round3: '[Almost done] + [Final push]',
 };
 ```
 
 **Example (Cyclic Sigh):**
+
 ```typescript
 const encouragement = {
-  round1: "Good. Your nervous system is already responding.",
+  round1: 'Good. Your nervous system is already responding.',
   round2: "You're halfway there. Notice anything shifting?",
-  round3: "Final round. You're almost done."
+  round3: "Final round. You're almost done.",
 };
 ```
 
@@ -251,6 +255,7 @@ const encouragement = {
 ```
 
 **Example (Grounding 5-4-3-2-1):**
+
 ```typescript
 {
   completionMessage: "You just used the same technique therapists teach for panic attacks.",
@@ -272,6 +277,7 @@ const encouragement = {
 ```
 
 **Example:**
+
 ```typescript
 {
   reinforcement: "That's the Stanford protocol working.",
@@ -285,6 +291,7 @@ const encouragement = {
 ## IMPLEMENTATION CHECKLIST
 
 ### WEEK 1-2: OPENING SCREENS
+
 ```
 [ ] Add research citations to all 6 exercises
 [ ] Add Anna testimonials (1 per exercise)
@@ -296,6 +303,7 @@ Expected Impact: +20-30% "Begin Exercise" click rate
 ```
 
 ### WEEK 3-4: SOCIAL PROOF
+
 ```
 [ ] Create exercise_completions table in Supabase
 [ ] Build exerciseStats.ts service (real-time counts)
@@ -306,6 +314,7 @@ Expected Impact: +15-20% card-click rate
 ```
 
 ### WEEK 5-6: MICRO-ENCOURAGEMENT
+
 ```
 [ ] Add ProgressEncouragement component
 [ ] Add round-by-round messages
@@ -315,6 +324,7 @@ Expected Impact: +10-15% completion rate
 ```
 
 ### WEEK 7-8: UNITY MESSAGING
+
 ```
 [ ] Add "You're part of X people" to completion screens
 [ ] Build CommunityFeed component
@@ -324,6 +334,7 @@ Expected Impact: +20-25% repeat usage rate
 ```
 
 ### WEEK 9-10: STREAKS
+
 ```
 [ ] Create exercise_streaks table
 [ ] Build StreakCard component
@@ -334,6 +345,7 @@ Expected Impact: +30-40% daily active usage
 ```
 
 ### WEEK 11-12: COMMITMENTS
+
 ```
 [ ] Add bookmark functionality
 [ ] Build reminder system (8am, 3pm, bedtime)
@@ -371,6 +383,7 @@ Card → Complete: 25%+
 ## A/B TESTS TO RUN (Priority Order)
 
 ### Test 1: Authority Citation Format
+
 ```
 Control: "In a 2023 Stanford study..."
 Variant: "Stanford University researchers found..."
@@ -380,6 +393,7 @@ Expected Winner: Variant (more specific)
 ```
 
 ### Test 2: Social Proof Type
+
 ```
 Control: "10,000+ people used this"
 Variant A: "10,247 people used this today"
@@ -390,6 +404,7 @@ Expected Winner: Variant B (real-time urgency)
 ```
 
 ### Test 3: Anna Testimonial Placement
+
 ```
 Control: Anna at bottom of opening screen
 Variant A: Anna at top (before research)
@@ -404,36 +419,42 @@ Expected Winner: Variant B (authority → liking → action)
 ## COPY BANK - TOP 6 EXERCISES
 
 ### 1. CYCLIC PHYSIOLOGICAL SIGH
+
 **Authority:** Stanford 2023, 114 participants, most effective
 **Anna:** "I use this when I'm spiraling. It works embarrassingly fast."
 **Social Proof:** 10,247 used today
 **Effect:** 65% reduction in under 2 minutes
 
 ### 2. 5-4-3-2-1 GROUNDING
+
 **Authority:** DBT, Dr. Marsha Linehan, trauma therapists worldwide
 **Anna:** "This saved me during my first panic attack. It works when nothing else does."
 **Social Proof:** 8,429 tried today
 **Effect:** 97% feel more present
 
 ### 3. 4-7-8 BREATHING
+
 **Authority:** Dr. Andrew Weil (Harvard), Navy SEALs, natural tranquilizer
 **Anna:** "I do this every night. It's the only thing that turns off my brain."
 **Social Proof:** 12,683 used before bed last night
 **Effect:** Fall asleep in 60 seconds
 
 ### 4. EMOTION WHEEL
+
 **Authority:** Plutchik framework, psychology standard for 40+ years, UCLA research
 **Anna:** "This changed everything. I thought I was just anxious. Turns out I was grieving."
 **Social Proof:** 6,291 using right now
 **Effect:** Affect labeling reduces amygdala activation by 30-50%
 
 ### 5. BRAIN DUMP
+
 **Authority:** Pennebaker 1997, cognitive offloading, reduces intrusive thoughts
 **Anna:** "I do this every morning. It's like clearing RAM on a computer."
 **Social Proof:** 9,142 dumped thoughts today
 **Effect:** 37% reduction in intrusive thoughts for 6 hours
 
 ### 6. MIND CLEAR
+
 **Authority:** Attention Restoration Theory (Kaplan & Kaplan 1989), prefrontal cortex reset
 **Anna:** "I use this between meetings when my brain feels full. 2 minutes, sharp again."
 **Social Proof:** 11,573 cleared their mind today
@@ -539,6 +560,7 @@ USE RECIPROCITY WHEN:
 ```
 
 **The Test:**
+
 > "If the user knew I was using this persuasion technique, would they still appreciate it?"
 
 If YES → Ethical persuasion

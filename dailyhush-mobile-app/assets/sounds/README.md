@@ -48,7 +48,7 @@ Once you add the file, update this line in `/app/spiral.tsx` (line 83-85):
 ```typescript
 // Replace this:
 const audioSource = {
-  uri: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3'
+  uri: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3',
 };
 
 // With this:
@@ -70,5 +70,6 @@ const audioSource = require('@/assets/sounds/meditation.mp3');
 ### File Size Recommendations
 
 Keep files under 5MB for optimal mobile performance:
+
 - 2-minute MP3 @ 128kbps ≈ 1.9 MB
 - 3-minute MP3 @ 192kbps ≈ 4.4 MB

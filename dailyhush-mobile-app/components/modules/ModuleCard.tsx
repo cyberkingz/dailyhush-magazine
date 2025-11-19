@@ -5,19 +5,12 @@
  */
 
 import React, { memo, useCallback } from 'react';
-import {
-  View,
-  Pressable,
-  StyleSheet,
-  ViewStyle,
-  AccessibilityRole,
-} from 'react-native';
+import { View, Pressable, StyleSheet, ViewStyle } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
-  interpolate,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import { LucideIcon } from 'lucide-react-native';
@@ -158,9 +151,7 @@ export const ModuleCard = memo<ModuleCardProps>(
 
     const defaultAccessibilityLabel = `Module ${moduleNumber}: ${title}${
       isLocked ? '. Premium module, locked' : ''
-    }${isCompleted ? '. Completed' : ''}${
-      isActive ? '. Currently active' : ''
-    }`;
+    }${isCompleted ? '. Completed' : ''}${isActive ? '. Currently active' : ''}`;
 
     const defaultAccessibilityHint = isLocked
       ? 'Upgrade to premium to unlock this module'
@@ -190,8 +181,7 @@ export const ModuleCard = memo<ModuleCardProps>(
           accessibilityState={accessibilityState}
           testID={testID || `module-card-${id}`}
           hitSlop={TOUCH_TARGET.hitSlopSmall}
-          style={styles.pressable}
-        >
+          style={styles.pressable}>
           {/* Background gradient */}
           <LinearGradient
             colors={
@@ -201,17 +191,14 @@ export const ModuleCard = memo<ModuleCardProps>(
             }
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            style={styles.gradient}
-          >
+            style={styles.gradient}>
             {/* Animated border overlay */}
             <Animated.View
               style={[
                 styles.borderOverlay,
                 animatedBorderStyle,
                 {
-                  borderColor: isActive
-                    ? COLORS.primary[500]
-                    : COLORS.border.default,
+                  borderColor: isActive ? COLORS.primary[500] : COLORS.border.default,
                 },
               ]}
             />
@@ -264,18 +251,13 @@ export const ModuleCard = memo<ModuleCardProps>(
                     isActive && styles.titleActive,
                   ]}
                   numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
+                  ellipsizeMode="tail">
                   {title}
                 </Text>
                 <Text
-                  style={[
-                    styles.description,
-                    isLocked && styles.descriptionDisabled,
-                  ]}
+                  style={[styles.description, isLocked && styles.descriptionDisabled]}
                   numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
+                  ellipsizeMode="tail">
                   {description}
                 </Text>
               </View>
@@ -284,12 +266,7 @@ export const ModuleCard = memo<ModuleCardProps>(
               {progress > 0 && !isCompleted && (
                 <View style={styles.progressContainer}>
                   <View style={styles.progressBar}>
-                    <View
-                      style={[
-                        styles.progressFill,
-                        { width: `${Math.min(progress, 100)}%` },
-                      ]}
-                    />
+                    <View style={[styles.progressFill, { width: `${Math.min(progress, 100)}%` }]} />
                   </View>
                   <Text style={styles.progressText}>{Math.round(progress)}%</Text>
                 </View>
@@ -299,7 +276,7 @@ export const ModuleCard = memo<ModuleCardProps>(
         </Pressable>
       </Animated.View>
     );
-  },
+  }
 );
 
 ModuleCard.displayName = 'ModuleCard';

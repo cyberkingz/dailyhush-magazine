@@ -9,25 +9,16 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import Animated from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import type { MoodSelectorProps } from '@/types/widget.types';
-import { useMoodSelection } from '@/hooks/widget';
 import { colors } from '@/constants/colors';
 import { SPACING } from '@/constants/designTokens';
-import { ACCESSIBILITY_LABELS } from '@/constants/widgetConfig';
 
 /**
  * MoodSelector component
  * 5 mood choices with staggered entrance
  */
-export function MoodSelector({
-  moods,
-  onSelect,
-  selected,
-  visible,
-  config,
-}: MoodSelectorProps) {
+export function MoodSelector({ moods, onSelect, selected, visible, config }: MoodSelectorProps) {
   if (!visible) {
     return null;
   }
@@ -36,21 +27,15 @@ export function MoodSelector({
     <View
       style={styles.container}
       accessibilityRole="radiogroup"
-      accessibilityLabel="Select your current mood"
-    >
-      <Text style={styles.headline}>
-        How are you feeling?
-      </Text>
+      accessibilityLabel="Select your current mood">
+      <Text style={styles.headline}>How are you feeling?</Text>
 
       <View style={styles.column}>
         {moods.map((mood) => {
           const isSelected = selected === mood.value;
 
           return (
-            <View
-              key={mood.value}
-              style={styles.moodWrapper}
-            >
+            <View key={mood.value} style={styles.moodWrapper}>
               <Pressable
                 onPress={() => {
                   if (config.spacing) {
@@ -65,13 +50,8 @@ export function MoodSelector({
                   width: '100%',
                   flexDirection: 'row',
                   alignItems: 'center',
-                }}
-              >
-                <mood.icon
-                  size={20}
-                  color="#0a1f1a"
-                  strokeWidth={2.5}
-                />
+                }}>
+                <mood.icon size={20} color="#0a1f1a" strokeWidth={2.5} />
                 <Text style={{ color: '#0a1f1a', fontSize: 16, fontWeight: '600', marginLeft: 12 }}>
                   {mood.label}
                 </Text>

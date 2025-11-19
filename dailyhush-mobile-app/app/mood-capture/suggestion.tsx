@@ -95,11 +95,7 @@ export default function SuggestionScreen() {
 
       {/* Bottom Actions */}
       <View style={[styles.bottomActions, { paddingBottom: insets.bottom + 20 }]}>
-        <ContinueButton
-          label="Save & Close"
-          onPress={handleSaveAndClose}
-          disabled={isSubmitting}
-        />
+        <ContinueButton label="Save & Close" onPress={handleSaveAndClose} disabled={isSubmitting} />
       </View>
     </View>
   );

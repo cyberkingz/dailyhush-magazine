@@ -21,6 +21,7 @@ yarn add react-native-safe-area-context
 ```
 
 **Already in use**:
+
 - `moti` (animations)
 - `expo-linear-gradient` (gradients)
 - `expo-haptics` (tactile feedback)
@@ -58,10 +59,8 @@ const insets = useSafeAreaInsets();
 
 ```typescript
 // Determine when to show scroll indicators
-const isScrolledToBottom =
-  contentHeight - scrollPosition <= scrollViewHeight + 20;
-const showScrollIndicators =
-  !isScrolledToBottom && contentHeight > scrollViewHeight;
+const isScrolledToBottom = contentHeight - scrollPosition <= scrollViewHeight + 20;
+const showScrollIndicators = !isScrolledToBottom && contentHeight > scrollViewHeight;
 
 // Handle scroll events
 const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -105,6 +104,7 @@ const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
 ```
 
 **Style**:
+
 ```typescript
 scrollHintContainer: {
   flexDirection: 'row',
@@ -144,6 +144,7 @@ scrollHintContainer: {
 ```
 
 **Key changes**:
+
 - Height increased: 80px → 120px
 - Added 2 extra color stops for smoother fade
 - Higher opacity for stronger effect
@@ -182,6 +183,7 @@ scrollHintContainer: {
 ```
 
 **Animation details**:
+
 - **Type**: Continuous loop with reverse
 - **Duration**: 1000ms (gentle, not jarring)
 - **Movement**: 8px vertical travel
@@ -223,11 +225,11 @@ scrollHintContainer: {
 ```
 
 **Visibility logic**:
+
 ```typescript
 // A card is "visible" if any part is in viewport
 isVisible =
-  scrollPosition <= cardPosition + cardHeight &&
-  scrollPosition + scrollViewHeight >= cardPosition
+  scrollPosition <= cardPosition + cardHeight && scrollPosition + scrollViewHeight >= cardPosition;
 ```
 
 ---
@@ -285,11 +287,11 @@ isVisible =
 
 ### Device Examples
 
-| Device | insets.top | Applied Padding |
-|--------|-----------|-----------------|
-| iPhone 15 Pro Max | 59px | 59px |
-| iPhone X-14 | 44px | 44px |
-| iPhone 8/SE | 0px | 20px (minimum) |
+| Device            | insets.top | Applied Padding |
+| ----------------- | ---------- | --------------- |
+| iPhone 15 Pro Max | 59px       | 59px            |
+| iPhone X-14       | 44px       | 44px            |
+| iPhone 8/SE       | 0px        | 20px (minimum)  |
 
 ---
 
@@ -368,7 +370,7 @@ scrollEventThrottle={16}  // Limits to 60fps max
 ```typescript
 // Only fires ONCE per session
 if (!hasScrolled && newPosition > 10) {
-  setHasScrolled(true);  // Prevents future triggers
+  setHasScrolled(true); // Prevents future triggers
   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 }
 ```
@@ -437,6 +439,7 @@ test('Safe area padding applies correctly', () => {
 **Problem**: `showScrollIndicators` stays true
 
 **Debug**:
+
 ```typescript
 console.log({
   scrollPosition,
@@ -448,9 +451,9 @@ console.log({
 ```
 
 **Fix**: Adjust threshold in calculation
+
 ```typescript
-const isScrolledToBottom =
-  contentHeight - scrollPosition <= scrollViewHeight + 50; // Increase threshold
+const isScrolledToBottom = contentHeight - scrollPosition <= scrollViewHeight + 50; // Increase threshold
 ```
 
 ---
@@ -460,6 +463,7 @@ const isScrolledToBottom =
 **Problem**: `hasScrolled` not persisting
 
 **Debug**:
+
 ```typescript
 const handleScroll = (event) => {
   console.log('hasScrolled:', hasScrolled);
@@ -468,6 +472,7 @@ const handleScroll = (event) => {
 ```
 
 **Fix**: Ensure state isn't resetting
+
 ```typescript
 const [hasScrolled, setHasScrolled] = useState(false);
 // Don't reset this state
@@ -480,6 +485,7 @@ const [hasScrolled, setHasScrolled] = useState(false);
 **Problem**: Moti animation not looping
 
 **Debug**:
+
 ```typescript
 <MotiView
   animate={{ translateY: 8 }}
@@ -493,6 +499,7 @@ const [hasScrolled, setHasScrolled] = useState(false);
 ```
 
 **Fix**: Ensure `from` and `animate` values differ
+
 ```typescript
 from={{ translateY: 0 }}    // Start position
 animate={{ translateY: 8 }}  // End position (different!)
@@ -505,6 +512,7 @@ animate={{ translateY: 8 }}  // End position (different!)
 **Problem**: Content overlaps notch
 
 **Debug**:
+
 ```typescript
 const insets = useSafeAreaInsets();
 console.log('insets.top:', insets.top);
@@ -512,6 +520,7 @@ console.log('insets.top:', insets.top);
 ```
 
 **Fix**: Ensure SafeAreaProvider wraps app
+
 ```typescript
 // In App.tsx or _layout.tsx
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -532,6 +541,7 @@ export default function App() {
 **Problem**: Visibility calculation off
 
 **Debug**:
+
 ```typescript
 MOOD_OPTIONS.map((_, index) => {
   const cardHeight = 88 + 16;
@@ -542,13 +552,15 @@ MOOD_OPTIONS.map((_, index) => {
     cardPosition,
     scrollPosition,
     scrollViewHeight,
-    isVisible: scrollPosition <= cardPosition + cardHeight &&
-               scrollPosition + scrollViewHeight >= cardPosition,
+    isVisible:
+      scrollPosition <= cardPosition + cardHeight &&
+      scrollPosition + scrollViewHeight >= cardPosition,
   });
 });
 ```
 
 **Fix**: Adjust card height if custom styling
+
 ```typescript
 const cardHeight = 88 + 16; // minHeight + marginBottom
 // Update if MOOD_CARD.container changed
@@ -625,6 +637,7 @@ scrollProgressDotActive: {
 The parent component that uses `<MoodSelector>` should:
 
 1. **Provide required props**:
+
 ```typescript
 <MoodSelector
   selectedMood={currentMood}
@@ -634,6 +647,7 @@ The parent component that uses `<MoodSelector>` should:
 ```
 
 2. **Wrap in SafeAreaProvider** (if not already):
+
 ```typescript
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -653,10 +667,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 ### New Type Imports
 
 ```typescript
-import type {
-  NativeSyntheticEvent,
-  NativeScrollEvent
-} from 'react-native';
+import type { NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 ```
 
 ### Props Interface (Unchanged)
@@ -674,6 +685,7 @@ interface MoodSelectorProps {
 ## Bundle Size Impact
 
 Minimal increase:
+
 - **New code**: ~2KB
 - **New dependencies**: 0 (all existing)
 - **Total component size**: ~15KB (was ~13KB)
@@ -710,6 +722,7 @@ When VoiceOver/TalkBack is enabled:
 If issues occur, rollback is simple:
 
 1. **Revert imports**:
+
 ```typescript
 // Remove these
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -717,16 +730,19 @@ import { Ionicons } from '@expo/vector-icons';
 ```
 
 2. **Revert container padding**:
+
 ```typescript
 <View style={styles.container}>  // Remove dynamic padding
 ```
 
 3. **Remove conditional components**:
+
 ```typescript
 // Delete all {showScrollIndicators && ...} blocks
 ```
 
 4. **Restore original styles**:
+
 ```typescript
 container: {
   flex: 1,
@@ -741,6 +757,7 @@ container: {
 ### Planned Improvements (Optional)
 
 1. **Analytics tracking**:
+
 ```typescript
 // Track scroll engagement
 analytics.logEvent('mood_selector_scrolled', {
@@ -750,16 +767,18 @@ analytics.logEvent('mood_selector_scrolled', {
 ```
 
 2. **A/B testing variants**:
+
 ```typescript
 // Test different scroll hint texts
 const scrollHintVariants = [
-  "Swipe up to see all 5 moods",
-  "More moods below - swipe up",
-  "Scroll to explore 5 moods",
+  'Swipe up to see all 5 moods',
+  'More moods below - swipe up',
+  'Scroll to explore 5 moods',
 ];
 ```
 
 3. **Adaptive indicators**:
+
 ```typescript
 // Hide indicators faster for power users
 if (userHasScrolledBefore) {
@@ -812,6 +831,7 @@ A: Minimal - animations use native drivers, scroll throttled to 60fps
 ## Summary
 
 This implementation adds **6 complementary scroll affordances** with:
+
 - ✅ No breaking changes to existing API
 - ✅ Minimal performance impact
 - ✅ Full accessibility support

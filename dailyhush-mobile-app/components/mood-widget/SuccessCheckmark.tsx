@@ -8,8 +8,8 @@
  */
 
 import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import { StyleSheet } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 import type { SuccessCheckmarkProps } from '@/types/widget.types';
 import { useSuccessAnimation } from '@/hooks/widget';
@@ -24,11 +24,7 @@ const AnimatedText = Animated.createAnimatedComponent(Animated.Text);
  * SuccessCheckmark component
  * Animated checkmark with glow effect
  */
-export function SuccessCheckmark({
-  visible,
-  onComplete,
-  config,
-}: SuccessCheckmarkProps) {
+export function SuccessCheckmark({ visible, onComplete, config }: SuccessCheckmarkProps) {
   // Opacity for fade-out
   const opacity = useSharedValue(1);
 

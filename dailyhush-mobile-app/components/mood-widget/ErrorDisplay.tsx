@@ -156,7 +156,7 @@ export function ErrorDisplay({ error, onRetry, onCancel, visible }: ErrorDisplay
       <View style={styles.actions}>
         {showRetry && (
           <PillButton
-            label={isRetrying ? "Retrying..." : "Try Again"}
+            label={isRetrying ? 'Retrying...' : 'Try Again'}
             onPress={handleRetry}
             variant="primary"
             style={styles.actionButton}

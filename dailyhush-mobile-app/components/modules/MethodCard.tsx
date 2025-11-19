@@ -5,12 +5,7 @@
  */
 
 import React, { memo, useCallback } from 'react';
-import {
-  View,
-  Pressable,
-  StyleSheet,
-  ViewStyle,
-} from 'react-native';
+import { View, Pressable, StyleSheet, ViewStyle } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -134,9 +129,7 @@ export const MethodCard = memo<MethodCardProps>(
 
     const defaultAccessibilityLabel = `${title}${
       isRecommended ? '. Recommended' : ''
-    }${isSelected ? '. Selected' : ''}${
-      duration ? `. Duration: ${duration} minutes` : ''
-    }`;
+    }${isSelected ? '. Selected' : ''}${duration ? `. Duration: ${duration} minutes` : ''}`;
 
     const accessibilityState = {
       selected: isSelected,
@@ -157,8 +150,7 @@ export const MethodCard = memo<MethodCardProps>(
           accessibilityState={accessibilityState}
           testID={testID || `method-card-${id}`}
           hitSlop={TOUCH_TARGET.hitSlopSmall}
-          style={styles.pressable}
-        >
+          style={styles.pressable}>
           <LinearGradient
             colors={
               isSelected
@@ -167,19 +159,13 @@ export const MethodCard = memo<MethodCardProps>(
             }
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            style={[
-              styles.gradient,
-              isSelected && styles.gradientSelected,
-            ]}
-          >
+            style={[styles.gradient, isSelected && styles.gradientSelected]}>
             {/* Border overlay */}
             <View
               style={[
                 styles.borderOverlay,
                 {
-                  borderColor: isSelected
-                    ? COLORS.primary[500]
-                    : COLORS.border.default,
+                  borderColor: isSelected ? COLORS.primary[500] : COLORS.border.default,
                   opacity: isSelected ? 1 : 0.3,
                 },
               ]}
@@ -189,19 +175,10 @@ export const MethodCard = memo<MethodCardProps>(
             <View style={styles.content}>
               {/* Icon and badge row */}
               <View style={styles.header}>
-                <View
-                  style={[
-                    styles.iconContainer,
-                    isSelected && styles.iconContainerSelected,
-                  ]}
-                >
+                <View style={[styles.iconContainer, isSelected && styles.iconContainerSelected]}>
                   <Icon
                     size={ICON_SIZE.lg}
-                    color={
-                      isSelected
-                        ? COLORS.primary[200]
-                        : COLORS.text.secondary
-                    }
+                    color={isSelected ? COLORS.primary[200] : COLORS.text.secondary}
                     strokeWidth={2}
                   />
                 </View>
@@ -216,23 +193,15 @@ export const MethodCard = memo<MethodCardProps>(
               {/* Text content */}
               <View style={styles.textContainer}>
                 <Text
-                  style={[
-                    styles.title,
-                    isSelected && styles.titleSelected,
-                  ]}
+                  style={[styles.title, isSelected && styles.titleSelected]}
                   numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
+                  ellipsizeMode="tail">
                   {title}
                 </Text>
                 <Text
-                  style={[
-                    styles.description,
-                    isSelected && styles.descriptionSelected,
-                  ]}
+                  style={[styles.description, isSelected && styles.descriptionSelected]}
                   numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
+                  ellipsizeMode="tail">
                   {description}
                 </Text>
               </View>
@@ -240,12 +209,7 @@ export const MethodCard = memo<MethodCardProps>(
               {/* Duration footer */}
               {duration && (
                 <View style={styles.footer}>
-                  <Text
-                    style={[
-                      styles.duration,
-                      isSelected && styles.durationSelected,
-                    ]}
-                  >
+                  <Text style={[styles.duration, isSelected && styles.durationSelected]}>
                     {duration} min
                   </Text>
                 </View>
@@ -255,7 +219,7 @@ export const MethodCard = memo<MethodCardProps>(
         </Pressable>
       </Animated.View>
     );
-  },
+  }
 );
 
 MethodCard.displayName = 'MethodCard';

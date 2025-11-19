@@ -127,9 +127,7 @@ export function CompletionScreen({
               <View style={styles.ratingAfter}>
                 <Text style={styles.ratingLabel}>After</Text>
                 <View style={styles.ratingRow}>
-                  <Text style={[styles.ratingNumber, styles.ratingNumberAfter]}>
-                    {postRating}
-                  </Text>
+                  <Text style={[styles.ratingNumber, styles.ratingNumberAfter]}>{postRating}</Text>
                   <Text style={styles.ratingSlash}>/10</Text>
                 </View>
               </View>
@@ -176,8 +174,7 @@ export function CompletionScreen({
             onPress={onContinue}
             style={styles.continueButton}
             accessibilityLabel="Continue"
-            accessibilityRole="button"
-          >
+            accessibilityRole="button">
             <Text style={styles.continueButtonText}>Continue</Text>
           </TouchableOpacity>
 
@@ -186,8 +183,7 @@ export function CompletionScreen({
             onPress={onReturnHome}
             style={styles.returnHomeButton}
             accessibilityLabel="Return to home"
-            accessibilityRole="button"
-          >
+            accessibilityRole="button">
             <Text style={styles.returnHomeButtonText}>Return to Home</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -458,4 +454,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_600SemiBold',
   },
 });
-

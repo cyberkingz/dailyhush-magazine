@@ -130,22 +130,23 @@ Based on the DailyHush brand guidelines:
 
 ## 🔧 Key Technologies
 
-| Technology | Purpose |
-|------------|---------|
-| **Expo** | React Native framework |
-| **Expo Router** | File-based routing |
-| **TypeScript** | Type safety |
-| **Supabase** | Backend (auth, database, real-time) |
-| **NativeWind** | Tailwind CSS for React Native |
-| **Zustand** | State management |
-| **react-native-ble-plx** | Bluetooth Low Energy |
-| **expo-av** | Audio playback |
-| **expo-haptics** | Haptic feedback |
-| **date-fns** | Date utilities |
+| Technology               | Purpose                             |
+| ------------------------ | ----------------------------------- |
+| **Expo**                 | React Native framework              |
+| **Expo Router**          | File-based routing                  |
+| **TypeScript**           | Type safety                         |
+| **Supabase**             | Backend (auth, database, real-time) |
+| **NativeWind**           | Tailwind CSS for React Native       |
+| **Zustand**              | State management                    |
+| **react-native-ble-plx** | Bluetooth Low Energy                |
+| **expo-av**              | Audio playback                      |
+| **expo-haptics**         | Haptic feedback                     |
+| **date-fns**             | Date utilities                      |
 
 ## 🗄️ Data Architecture
 
 ### User Profile
+
 ```typescript
 {
   user_id: string
@@ -160,6 +161,7 @@ Based on the DailyHush brand guidelines:
 ```
 
 ### Spiral Log
+
 ```typescript
 {
   spiral_id: string
@@ -231,20 +233,21 @@ Auto-log spiral interrupts
 
 ## 🎯 Success Metrics (Year 1)
 
-| Metric | Target |
-|--------|--------|
-| **Downloads** | 50,000 |
-| **DAU/MAU** | 40%+ |
-| **Spiral Interrupts/Day** | 3+ |
-| **7-Day Retention** | 60%+ |
-| **30-Day Retention** | 40%+ |
-| **Free → Paid Conversion** | 10% |
-| **MRR** | $50,000 |
-| **App Store Rating** | 4.5+ |
+| Metric                     | Target  |
+| -------------------------- | ------- |
+| **Downloads**              | 50,000  |
+| **DAU/MAU**                | 40%+    |
+| **Spiral Interrupts/Day**  | 3+      |
+| **7-Day Retention**        | 60%+    |
+| **30-Day Retention**       | 40%+    |
+| **Free → Paid Conversion** | 10%     |
+| **MRR**                    | $50,000 |
+| **App Store Rating**       | 4.5+    |
 
 ## 🚢 Development Roadmap
 
 ### ✅ Phase 1: MVP (Months 1-4)
+
 - [x] Project scaffolding
 - [x] Design system
 - [x] Type definitions
@@ -256,12 +259,14 @@ Auto-log spiral interrupts
 - [ ] 3AM Mode
 
 ### 📅 Phase 2: Enhancement (Months 5-8)
+
 - [ ] Apple Watch app
 - [ ] Advanced pattern detection (AI)
 - [ ] Voice journaling
 - [ ] Android version
 
 ### 📅 Phase 3: Community (Months 9-12)
+
 - [ ] Accountability partners
 - [ ] Anonymous sharing
 - [ ] Expert Q&A sessions
@@ -270,6 +275,7 @@ Auto-log spiral interrupts
 ## 🧪 Testing
 
 ### Run Tests
+
 ```bash
 # Unit tests
 npm test

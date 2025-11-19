@@ -5,6 +5,7 @@
 This document tracks compliance with Apple App Store Review Guidelines for the DailyHush mobile app.
 
 **Recent Updates:**
+
 - ✅ Legal footer components implemented (January 1, 2025)
 - ✅ Restore Purchases added to all subscription screens (January 1, 2025)
 - ✅ Privacy disclosure added to account deletion screen (January 1, 2025)
@@ -16,6 +17,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 1. Legal Documents (REQUIRED)
 
 ### 1.1 Privacy Policy
+
 - **Status:** ✅ IMPLEMENTED
 - **Location:** `/legal/PRIVACY_POLICY.md`
 - **Screen:** `/app/legal/privacy.tsx`
@@ -38,6 +40,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - ✅ Contact information
 
 ### 1.2 Terms of Service
+
 - **Status:** ✅ IMPLEMENTED
 - **Location:** `/legal/TERMS_OF_SERVICE.md`
 - **Screen:** `/app/legal/terms.tsx`
@@ -59,6 +62,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - ✅ Contact information
 
 ### 1.3 User Agreement During Signup
+
 - **Status:** ✅ IMPLEMENTED
 - **Location:** `/app/auth/signup.tsx`
 - **Implementation:**
@@ -75,6 +79,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 2. Account Deletion (REQUIRED)
 
 ### 2.1 In-App Account Deletion
+
 - **Status:** ✅ IMPLEMENTED
 - **Location:** `/app/settings/delete-account.tsx`
 - **Implementation Details:**
@@ -101,6 +106,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 3. Data Collection and Privacy
 
 ### 3.1 Permission Declarations
+
 - **Status:** ✅ DOCUMENTED in Privacy Policy
 - **Required Permissions:**
   - **Bluetooth:** For Shift necklace pairing
@@ -111,6 +117,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 **Apple Requirement:** Privacy Policy must disclose all data collection and permissions.
 
 ### 3.2 App Privacy Details (App Store Connect)
+
 - **Status:** ⚠️ CONFIGURE IN APP STORE CONNECT
 - **Data Types to Declare:**
   - ✅ Email Address - Account creation
@@ -127,12 +134,14 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 4. Health and Mental Health Disclaimers
 
 ### 4.1 Medical Disclaimer
+
 - **Status:** ✅ IMPLEMENTED
 - **Locations:**
   - ✅ Terms of Service (Section 6.1)
   - ✅ App should also show on first launch (onboarding)
 
 **Content:**
+
 - ✅ "DailyHush is NOT a medical or therapeutic service"
 - ✅ "Not a substitute for professional mental health care"
 - ✅ "Does not diagnose, treat, cure, or prevent any medical condition"
@@ -141,6 +150,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 **Apple Requirement:** Health-related apps must clearly state they are not medical devices and provide crisis resources.
 
 ### 4.2 Crisis Resources
+
 - **Status:** ✅ IMPLEMENTED in Terms of Service
 - **Crisis Hotlines Listed:**
   - ✅ National Suicide Prevention Lifeline: 988
@@ -154,6 +164,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 5. Subscription and In-App Purchases
 
 ### 5.1 Subscription Terms
+
 - **Status:** ✅ DOCUMENTED in Terms of Service
 - **Pricing:**
   - ✅ Monthly: $7.99/month
@@ -163,6 +174,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - ✅ Instructions for cancellation provided
 
 ### 5.2 Restore Purchases
+
 - **Status:** ✅ IMPLEMENTED
 - **Required:** Users must be able to restore previous purchases on new devices
 - **Implementation Details:**
@@ -179,6 +191,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 **Apple Requirement:** Apps offering subscriptions MUST provide "Restore Purchases" functionality (Guideline 3.1.2). ✅ COMPLIANT
 
 ### 5.3 Free Trial (if applicable)
+
 - **Status:** Not applicable (no free trial currently planned)
 
 ---
@@ -186,12 +199,14 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 6. Age Rating and Parental Controls
 
 ### 6.1 Age Requirement
+
 - **Status:** ✅ 13+ (documented in Privacy Policy and Terms)
 - **App Store Age Rating:** Should be set to 12+ or 17+ based on content
 
 **Apple Requirement:** Apps with account creation must be 13+ due to COPPA compliance.
 
 ### 6.2 Age-Appropriate Content
+
 - **Status:** ✅ No inappropriate content
 - **Mental Health Topic:** App deals with anxiety/rumination but in a supportive, non-graphic way
 
@@ -202,6 +217,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 7. Third-Party Services Disclosure
 
 ### 7.1 Services Used
+
 - **Status:** ✅ DOCUMENTED in Privacy Policy (Section 3.1)
 - **Third Parties:**
   - ✅ Supabase - Database and authentication
@@ -216,6 +232,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 8. Content Rights and Intellectual Property
 
 ### 8.1 Ownership
+
 - **Status:** ✅ DOCUMENTED in Terms of Service (Section 5)
 - **Content:**
   - ✅ DailyHush name and logo
@@ -224,6 +241,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - ✅ The Shift branding
 
 ### 8.2 User Content Ownership
+
 - **Status:** ✅ DOCUMENTED in Terms (Section 5.3)
 - **Policy:** Users retain ownership of their content (spiral logs, journal entries)
 
@@ -232,10 +250,12 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 9. Accessibility
 
 ### 9.1 VoiceOver Support
+
 - **Status:** ⚠️ NEEDS TESTING
 - **Action Required:** Test app with VoiceOver and add accessibility labels where needed
 
 ### 9.2 Dynamic Type Support
+
 - **Status:** ⚠️ NEEDS IMPLEMENTATION
 - **Action Required:** Ensure text scales with iOS Dynamic Type settings (important for 55-70 demographic)
 
@@ -244,6 +264,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 10. App Store Metadata Requirements
 
 ### 10.1 Screenshots (Required)
+
 - **Status:** ⚠️ NOT YET CREATED
 - **Required:**
   - iPhone 6.7" (iPhone 14 Pro Max)
@@ -251,6 +272,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - iPad Pro 12.9" (optional but recommended)
 
 **Action Required:** Create app screenshots showcasing:
+
 1. Home screen with spiral interruption
 2. F.I.R.E. training modules
 3. Pattern insights
@@ -258,6 +280,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 5. 3AM Mode
 
 ### 10.2 App Description
+
 - **Status:** ⚠️ DRAFT NEEDED
 - **Requirements:**
   - Clear explanation of what the app does
@@ -266,10 +289,12 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
   - Highlight key features (F.I.R.E., Shift integration, 3AM Mode)
 
 ### 10.3 Keywords
+
 - **Recommended Keywords:**
   - anxiety, rumination, overthinking, mindfulness, mental health, breathing, women's health, self-help, meditation, stress relief
 
 ### 10.4 App Icon
+
 - **Status:** ⚠️ NEEDS DESIGN
 - **Requirements:**
   - 1024x1024 PNG (no alpha channel)
@@ -280,9 +305,11 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 11. Technical Requirements
 
 ### 11.1 IPv6 Compatibility
+
 - **Status:** ✅ Expo handles this automatically
 
 ### 11.2 Crash Reporting
+
 - **Status:** ⚠️ NEEDS IMPLEMENTATION
 - **Recommended:** Integrate Sentry or similar crash reporting
 - **Current:** ErrorBoundary implemented but no remote logging
@@ -290,6 +317,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 **Action Required:** Implement Sentry or Crashlytics for production crash reporting.
 
 ### 11.3 Performance
+
 - **Status:** ⚠️ NEEDS TESTING
 - **Action Required:** Test app performance on older devices (iPhone 8, iPhone SE)
 
@@ -298,6 +326,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## ✅ 12. Location and Region
 
 ### 12.1 Geographic Availability
+
 - **Status:** Worldwide (recommended)
 - **Company Location:** Wyoming, USA
 - **Legal Compliance:** Privacy Policy covers GDPR (EU) and CCPA (California)
@@ -307,6 +336,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
 ## 🚨 CRITICAL ITEMS TO COMPLETE BEFORE SUBMISSION
 
 ### High Priority (BLOCKERS)
+
 1. ✅ **Implement in-app account deletion** (Settings → Delete Account) - COMPLETE
    - Required by Apple App Store Review Guideline 5.1.1 (v)
    - Location: `/app/settings/delete-account.tsx`
@@ -339,6 +369,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
    - Estimated time: 2 hours
 
 ### Medium Priority (Recommended)
+
 7. ⚠️ **Test VoiceOver accessibility**
    - Add accessibility labels
    - Estimated time: 3-4 hours
@@ -356,6 +387,7 @@ This document tracks compliance with Apple App Store Review Guidelines for the D
     - Estimated time: 2-3 hours
 
 ### Low Priority (Nice to Have)
+
 11. ⚠️ **Create marketing website**
     - Not required but recommended
     - Link from App Store description
@@ -407,6 +439,7 @@ When submitting to App Store Connect, ensure:
 ## 📝 Implementation Notes
 
 ### Account Deletion Implementation (October 25, 2025)
+
 The in-app account deletion feature has been fully implemented to comply with Apple App Store Review Guideline 5.1.1 (v). The implementation includes:
 
 1. **Security Measures:**
@@ -455,31 +488,37 @@ The in-app account deletion feature has been fully implemented to comply with Ap
 **CRITICAL:** A database migration is required to properly implement data retention when accounts are deleted.
 
 **Problem Found:** The original database schema had a CASCADE DELETE constraint:
+
 ```sql
 user_profiles.user_id REFERENCES auth.users(id) ON DELETE CASCADE
 ```
 
 This meant when `supabase.auth.admin.deleteUser()` was called, it would trigger a chain reaction deleting:
+
 - user_profiles → spiral_logs → pattern_insights → shift_devices → quiz_submissions → etc.
 
 **ALL user data would be deleted**, which contradicts the data retention policy.
 
 **Solution Implemented:**
+
 1. Created migration: `/supabase/migrations/20251025_remove_auth_cascade_delete.sql`
 2. Removes foreign key constraint from `user_profiles.user_id` to `auth.users.id`
 3. Updated main schema: `/supabase/schema.sql`
 4. Created documentation: `/supabase/migrations/README_DATA_RETENTION.md`
 
 **Result:**
+
 - Auth account deletion no longer cascades to user_profiles
 - All user data persists for analytics (user_id becomes "orphaned" but that's intentional)
 - Child tables still cascade from user_profiles (for normal cleanup when needed)
 
 **Action Required:**
+
 - Apply migration to production database before launch
 - See migration README for detailed instructions and verification steps
 
 **Files Changed:**
+
 - `/supabase/schema.sql` - Updated for new database setups
 - `/supabase/migrations/20251025_remove_auth_cascade_delete.sql` - Migration for existing databases
 - `/supabase/migrations/README_DATA_RETENTION.md` - Detailed documentation
@@ -493,6 +532,7 @@ To ensure full App Store compliance and provide users with easy access to legal 
 **1. Components Created:**
 
 **LegalFooter Component** (`components/legal/LegalFooter.tsx` - 245 lines)
+
 - Reusable footer with Privacy Policy, Terms of Service, and optional Restore Purchases links
 - Props-based configuration (variant, showRestore, textAlign, containerStyle, onRestorePurchases)
 - Two variants: default (12px) and compact (11px) for space-constrained screens
@@ -505,6 +545,7 @@ To ensure full App Store compliance and provide users with easy access to legal 
 - Automatic routing via expo-router
 
 **PrivacyDisclosure Component** (`components/legal/PrivacyDisclosure.tsx` - 178 lines)
+
 - Warning-style disclosure for data retention notifications
 - Three pre-configured types: account-deletion, data-retention, generic
 - Each type has custom icon, color scheme, title, message, and link text
@@ -515,22 +556,26 @@ To ensure full App Store compliance and provide users with easy access to legal 
 **2. Integration Locations:**
 
 ✅ **Subscription Screen** (`app/subscription.tsx` line 295-300)
+
 - LegalFooter with showRestore={true}
 - Full handleRestore implementation with RevenueCat integration
 - Success/failure alerts with haptic feedback
 - Auto-navigation on successful restore
 
 ✅ **Onboarding Paywall** (`app/onboarding/quiz/paywall.tsx` line 573-580)
+
 - LegalFooter with showRestore={true}
 - Integrated after urgency message, before fixed CTA button
 - Same restore handler pattern as subscription screen
 
 ✅ **Trial Expired Screen** (`app/trial-expired.tsx` + `components/TrialExpiredPaywall.tsx` line 183-186)
+
 - LegalFooter with showRestore={true}
 - Conditional rendering based on onRestorePurchases prop
 - Restore handler passed from parent screen
 
 ✅ **Account Deletion Screen** (`app/settings/delete-account.tsx` line 339)
+
 - PrivacyDisclosure with type="account-deletion"
 - Placed above password input to inform users before deletion
 - Warning icon and orange theme to emphasize importance
@@ -550,18 +595,21 @@ To ensure full App Store compliance and provide users with easy access to legal 
 **4. App Store Compliance Achieved:**
 
 **Apple Guideline 5.1.1 (i) - Legal Requirements:**
+
 - ✅ Privacy Policy accessible on signup ✅
 - ✅ Privacy Policy accessible on all subscription screens ✅
 - ✅ Terms of Service accessible on signup ✅
 - ✅ Terms of Service accessible on all subscription screens ✅
 
 **Apple Guideline 3.1.2 - Subscriptions:**
+
 - ✅ "Restore Purchases" on subscription screen ✅
 - ✅ "Restore Purchases" on onboarding paywall ✅
 - ✅ "Restore Purchases" on trial expired screen ✅
 - ✅ Full RevenueCat integration with error handling ✅
 
 **GDPR Article 13-14 & CCPA 1798.100 - Data Transparency:**
+
 - ✅ Privacy disclosure on account deletion screen ✅
 - ✅ Clear explanation of data retention policy ✅
 - ✅ Link to full Privacy Policy for details ✅
@@ -569,6 +617,7 @@ To ensure full App Store compliance and provide users with easy access to legal 
 **5. Documentation Created:**
 
 ✅ **Component README** (`components/legal/README.md`)
+
 - Comprehensive usage guide (200+ lines)
 - All props documented with examples
 - Visual specifications and behavior descriptions
@@ -578,12 +627,14 @@ To ensure full App Store compliance and provide users with easy access to legal 
 - App Store compliance notes
 
 ✅ **Research Document** (`LEGAL_PLACEMENT_COMPLIANCE_RESEARCH.md`)
+
 - Deep research on Apple, Google, GDPR, CCPA, FTC requirements
 - Industry standards analysis (85% of subscription apps use legal footers)
 - Competitive analysis (Calm, Headspace patterns)
 - Risk assessment for non-compliance
 
 ✅ **Implementation Roadmap** (`LEGAL_FOOTER_IMPLEMENTATION_ROADMAP.md`)
+
 - 5 phases, 29 tasks, detailed specifications
 - Technical requirements and agent delegation
 - Testing checklist with 50+ test cases
@@ -591,6 +642,7 @@ To ensure full App Store compliance and provide users with easy access to legal 
 **6. Files Created/Modified:**
 
 **New Files:**
+
 - `components/legal/LegalFooter.tsx` - Footer component (245 lines)
 - `components/legal/PrivacyDisclosure.tsx` - Disclosure component (178 lines)
 - `components/legal/index.ts` - Barrel export
@@ -599,6 +651,7 @@ To ensure full App Store compliance and provide users with easy access to legal 
 - `LEGAL_FOOTER_IMPLEMENTATION_ROADMAP.md` - Roadmap (1200+ lines)
 
 **Modified Files:**
+
 - `app/subscription.tsx` - Added LegalFooter with restore handler
 - `app/onboarding/quiz/paywall.tsx` - Added LegalFooter with restore handler
 - `app/trial-expired.tsx` - Added restore handler
@@ -609,6 +662,7 @@ To ensure full App Store compliance and provide users with easy access to legal 
 **7. Testing Recommendations:**
 
 Before App Store submission, test:
+
 - [ ] LegalFooter navigation (Privacy Policy, Terms of Service links)
 - [ ] Restore Purchases flow (success, failure, no purchases found)
 - [ ] PrivacyDisclosure navigation (Privacy Policy link)

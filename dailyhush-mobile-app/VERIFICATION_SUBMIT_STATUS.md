@@ -8,6 +8,7 @@
 ## 📊 ÉTAT ACTUEL DES PRODUITS
 
 ### 1. Monthly Premium (com.anthony.noema.monthly)
+
 - **Statut:** ⚠️ Missing Metadata
 - **Localization:** ✅ Complété (Premium Monthly, Premium features. 7-day trial.)
 - **Review Notes:** ✅ Complété (3599 caractères)
@@ -16,6 +17,7 @@
 - **Group Reference Name:** ✅ Noema Premium
 
 ### 2. Annual Premium (com.anthony.noema.annual)
+
 - **Statut:** ⚠️ Missing Metadata
 - **Localization:** ✅ Complété (Premium Annual, Premium features. 7-day trial.)
 - **Review Notes:** ✅ Complété (3362 caractères)
@@ -24,6 +26,7 @@
 - **Group Reference Name:** ✅ Noema Premium
 
 ### 3. Lifetime Premium (com.anthony.noema.lifetime)
+
 - **Statut:** ⚠️ Missing Metadata
 - **Localization:** ✅ Complété (Premium Lifetime, Premium features. One-time payment.)
 - **Review Notes:** ✅ Complété (3474 caractères)
@@ -36,16 +39,21 @@
 ## ⚠️ PROBLÈMES IDENTIFIÉS
 
 ### 1. Statut "Missing Metadata"
+
 Tous les produits affichent encore "Missing Metadata" malgré la complétion des champs. Cela peut être dû à :
+
 - **Délai de traitement Apple** : Les changements peuvent prendre quelques minutes à être reflétés
 - **Éléments manquants** : Il peut manquer des éléments non visibles (screenshots, etc.)
 - **Pricing en cours de traitement** : Le pricing pour Monthly et Annual est encore en cours de traitement
 
 ### 2. Message Important
+
 Apple affiche ce message sur chaque produit :
+
 > "Your first subscription must be submitted with a new app version. Create your subscription, then select it from the app's In-App Purchases and Subscriptions section on the version page before submitting the version to App Review."
 
 **Cela signifie que :**
+
 - Les subscriptions ne peuvent pas être soumises individuellement
 - Elles doivent être soumises avec une nouvelle version de l'app
 - Il faut aller dans la section "In-App Purchases and Subscriptions" de la version de l'app
@@ -65,11 +73,13 @@ Apple affiche ce message sur chaque produit :
 ## 📋 PROCHAINES ÉTAPES
 
 ### Pour finaliser les métadonnées :
+
 1. ⏳ Attendre que le pricing soit finalisé pour Monthly et Annual
 2. ⏳ Créer le 7-day free trial pour Annual une fois le pricing finalisé
 3. ⏳ Vérifier que le statut passe de "Missing Metadata" à "Ready to Submit"
 
 ### Pour soumettre les produits :
+
 1. 📱 Aller dans la section "Versions" de l'app
 2. 📱 Créer ou sélectionner une nouvelle version
 3. 📱 Aller dans "In-App Purchases and Subscriptions"
@@ -89,4 +99,3 @@ Apple affiche ce message sur chaque produit :
 ---
 
 **Note:** Les subscriptions doivent être soumises avec une version de l'app, pas individuellement. Le statut "Missing Metadata" peut persister jusqu'à ce que tous les éléments soient complétés et traités par Apple.
-

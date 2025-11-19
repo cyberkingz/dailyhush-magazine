@@ -55,12 +55,7 @@ interface AutoSaveIndicatorProps {
  * Auto-save status indicator
  * Shows current save state with appropriate icon and message
  */
-export function AutoSaveIndicator({
-  status,
-  lastSaved,
-  error,
-  onRetry,
-}: AutoSaveIndicatorProps) {
+export function AutoSaveIndicator({ status, lastSaved, error, onRetry }: AutoSaveIndicatorProps) {
   // Don't render if idle and no last saved time
   if (status === 'idle' && !lastSaved) {
     return null;
@@ -137,14 +132,12 @@ export function AutoSaveIndicator({
       transition={{
         type: 'timing',
         duration: 200,
-      }}
-    >
+      }}>
       <View
         style={styles.container}
         accessibilityRole="status"
         accessibilityLabel={`Save status: ${display.text}`}
-        accessibilityLive="polite"
-      >
+        accessibilityLive="polite">
         {display.icon}
         <Text style={[styles.text, { color: display.color }]}>{display.text}</Text>
 
@@ -154,8 +147,7 @@ export function AutoSaveIndicator({
             onPress={onRetry}
             accessibilityRole="button"
             accessibilityLabel="Retry saving"
-            style={styles.retryButton}
-          >
+            style={styles.retryButton}>
             <Text style={styles.retryText}>Retry</Text>
           </TouchableOpacity>
         )}

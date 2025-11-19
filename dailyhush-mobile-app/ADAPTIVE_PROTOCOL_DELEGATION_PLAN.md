@@ -1,4 +1,5 @@
 # Adaptive Protocol Implementation - Task Delegation Plan
+
 ## Complete Codebase Inventory & Agent Assignment
 
 **Date:** November 5, 2025
@@ -8,6 +9,7 @@
 ---
 
 ## Table of Contents
+
 1. [Complete Codebase Inventory](#complete-codebase-inventory)
 2. [Available Specialized Agents](#available-specialized-agents)
 3. [Task Delegation Matrix](#task-delegation-matrix)
@@ -22,6 +24,7 @@
 ### 1. Existing Components (95 components)
 
 #### Core UI Components (9)
+
 - `Button.tsx` - Generic button (CAN REUSE)
 - `Container.tsx` - Layout container (CAN REUSE)
 - `ErrorBoundary.tsx` - Error handler (CAN REUSE)
@@ -33,12 +36,14 @@
 - `TopBar.tsx` / `BottomNav.tsx` - Navigation (EXISTS)
 
 #### UI Primitives (4)
+
 - `components/ui/button.tsx` - Shadcn button (CAN REUSE)
 - `components/ui/card.tsx` - Shadcn card (CAN REUSE)
 - `components/ui/pill-button.tsx` - Pill style button (CAN REUSE)
 - `components/ui/text.tsx` - Typography component (CAN REUSE)
 
 #### Exercise Components (7)
+
 - `exercises/AnxietyRatingDial.tsx` - **PERFECT FOR INTENSITY SELECTION** ⭐
 - `exercises/BreathingAnimation.tsx` - Animation (CAN REUSE)
 - `exercises/CompletionScreen.tsx` - Success screen (CAN REUSE)
@@ -48,11 +53,13 @@
 - `exercises/TriggerLogCard.tsx` - **TRIGGER LOGGING** ⭐
 
 #### Auth Components (3)
+
 - `auth/AuthButton.tsx` - Styled button (CAN REUSE)
 - `auth/AuthTextInput.tsx` - **TEXT INPUT COMPONENT** ⭐
 - `auth/ErrorAlert.tsx` - Error display (CAN REUSE)
 
 #### Profile Components (7)
+
 - `profile/EmotionalWeather.tsx` - Mood visualization
 - `profile/PatternInsightCard.tsx` - **INSIGHTS CARD** ⭐
 - `profile/ProductCard.tsx` - Product display
@@ -62,6 +69,7 @@
 - `profile/LoopTypeHero.tsx` - Hero section
 
 #### Mood Capture Components (10) - HIGHLY RELEVANT!
+
 - `moodCapture/AutoSaveIndicator.tsx` - Auto-save UI
 - `moodCapture/MoodCaptureBottomSheet.tsx` - Bottom sheet
 - `moodCapture/NavigationButtons.tsx` - **NAV BUTTONS** ⭐
@@ -74,6 +82,7 @@
 - `moodCapture/steps/MoodSelector.tsx` - **SELECTOR COMPONENT** ⭐
 
 #### Training Components (7)
+
 - `training/ContentCard.tsx` - Content display (CAN REUSE)
 - `training/InteractiveExercise.tsx` - **INTERACTIVE COMPONENT** ⭐
 - `training/KeyTakeaway.tsx` - Takeaway display
@@ -82,11 +91,13 @@
 - `training/QuizQuestion.tsx` - Quiz UI
 
 #### Paywall/Subscription Components (11)
+
 - `paywall/*` - 6 paywall components
 - `subscription/*` - 5 subscription components
 - `LoopSpecificPaywall.tsx`, `TrialExpiredPaywall.tsx`, `PremiumCard.tsx`
 
 #### Other Components
+
 - `BackgroundPattern.tsx`, `CountdownRing.tsx`, `CrisisSupport.tsx`
 - `QuoteCard.tsx`, `QuoteGem.tsx`, `SplashScreen.tsx`
 - `SuccessRipple.tsx` - **SUCCESS ANIMATION** ⭐
@@ -97,6 +108,7 @@
 ### 2. Existing Screens (55 screens)
 
 #### Core Flow Screens
+
 - `app/index.tsx` - Home
 - `app/spiral.tsx` - **MAIN SPIRAL SCREEN (1,475 LINES!)** 🎯
 - `app/history.tsx` - History
@@ -105,9 +117,11 @@
 - `app/settings.tsx` - Settings
 
 #### Auth Screens (4)
+
 - `auth/index.tsx`, `auth/login.tsx`, `auth/signup.tsx`, `auth/forgot-password.tsx`
 
 #### Onboarding Screens (8)
+
 - `onboarding/index.tsx`, `onboarding/email-lookup.tsx`
 - `onboarding/password-setup.tsx`, `onboarding/profile-setup.tsx`
 - `onboarding/quiz-recognition.tsx`
@@ -115,21 +129,25 @@
 - `onboarding/quiz/results.tsx`, `onboarding/quiz/signup.tsx`
 
 #### Mood Capture Flow (5)
+
 - `mood-capture/_layout.tsx`, `mood-capture/mood.tsx`
 - `mood-capture/intensity.tsx`, `mood-capture/suggestion.tsx`
 - `mood-capture/writing.tsx`
 
 #### Training/Modules (5)
+
 - `training/index.tsx`, `training/focus.tsx`, `training/interrupt.tsx`
 - `training/reframe.tsx`, `training/execute.tsx`
 - `modules/index.tsx`, `modules/[moduleId]/method.tsx`
 
 #### Exercise Screens (6)
+
 - `exercises/brain-dump.tsx`, `exercises/breathing.tsx`
 - `exercises/cyclic-sigh.tsx`, `exercises/emotion-wheel.tsx`
 - `exercises/grounding.tsx`, `exercises/mind-clear.tsx`
 
 #### Other Screens
+
 - `anna/conversation.tsx`, `shift-pairing.tsx`
 - `subscription.tsx`, `trial-expired.tsx`, `payment-failed.tsx`
 - `settings/subscription.tsx`, `settings/delete-account.tsx`
@@ -188,6 +206,7 @@
 ### 6. Existing Constants (28 constant files!)
 
 Key constants:
+
 - `constants/colors.ts` - Color system (USE THIS)
 - `constants/design-tokens.ts` - Design tokens (USE THIS)
 - `constants/exerciseConfigs.ts` - Exercise configs
@@ -220,7 +239,9 @@ Key constants:
 ### Relevant Agents for This Project
 
 #### 1. **supabase-expert** (PRIMARY)
+
 **Best for:**
+
 - Database schema design
 - SQL migrations
 - RPC functions
@@ -228,13 +249,16 @@ Key constants:
 - Row Level Security (RLS)
 
 **Assign to:**
+
 - ✅ Database migration for adaptive protocols
 - ✅ Supabase RPC function creation
 - ✅ Pattern detection queries
 - ✅ Stats calculation functions
 
 #### 2. **ui-design-expert**
+
 **Best for:**
+
 - Component architecture
 - Design systems
 - Visual consistency
@@ -242,13 +266,16 @@ Key constants:
 - Modern UI patterns
 
 **Assign to:**
+
 - ✅ Interactive step component design
 - ✅ Protocol intelligence screen layout
 - ✅ Technique selection UI
 - ✅ Component composition strategy
 
 #### 3. **ux-expert**
+
 **Best for:**
+
 - User flows
 - Information architecture
 - Usability patterns
@@ -256,19 +283,23 @@ Key constants:
 - Interaction design
 
 **Assign to:**
+
 - ✅ Adaptive selection flow UX
 - ✅ Interactive step UX patterns
 - ✅ Insights screen information architecture
 - ✅ Pause & Reflect modal UX
 
 #### 4. **general-purpose**
+
 **Best for:**
+
 - TypeScript coding
 - Service layer implementation
 - Hook development
 - General refactoring
 
 **Assign to:**
+
 - ✅ Service implementation (adaptiveProtocol.ts)
 - ✅ Hook implementation (useAdaptiveProtocol.ts)
 - ✅ Integration with spiral.tsx
@@ -280,14 +311,15 @@ Key constants:
 
 ### Phase 1: Database Foundation (Week 1, Days 1-3)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Create database schema for technique effectiveness | **supabase-expert** | `20251106_adaptive_protocols.sql` migration | None |
-| Create auto-update trigger function | **supabase-expert** | `update_technique_stats()` SQL function | Schema migration |
-| Test migration locally | **supabase-expert** | Verified migration script | Functions |
-| Create TypeScript types for protocols | **general-purpose** | Updated `types/index.ts` | None |
+| Task                                               | Agent               | Deliverables                                | Dependencies     |
+| -------------------------------------------------- | ------------------- | ------------------------------------------- | ---------------- |
+| Create database schema for technique effectiveness | **supabase-expert** | `20251106_adaptive_protocols.sql` migration | None             |
+| Create auto-update trigger function                | **supabase-expert** | `update_technique_stats()` SQL function     | Schema migration |
+| Test migration locally                             | **supabase-expert** | Verified migration script                   | Functions        |
+| Create TypeScript types for protocols              | **general-purpose** | Updated `types/index.ts`                    | None             |
 
 **User Action Required:**
+
 ```bash
 # After supabase-expert creates migration
 Ask Supabase agent to run MCP:
@@ -298,13 +330,14 @@ Ask Supabase agent to run MCP:
 
 ### Phase 2: Technique Library (Week 1, Days 4-5)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Design technique library structure | **ui-design-expert** | Architecture document | None |
-| Create technique library constant | **general-purpose** | `constants/techniqueLibrary.ts` | Type definitions |
-| Review for design consistency | **ui-design-expert** | Approved library | Library file |
+| Task                               | Agent                | Deliverables                    | Dependencies     |
+| ---------------------------------- | -------------------- | ------------------------------- | ---------------- |
+| Design technique library structure | **ui-design-expert** | Architecture document           | None             |
+| Create technique library constant  | **general-purpose**  | `constants/techniqueLibrary.ts` | Type definitions |
+| Review for design consistency      | **ui-design-expert** | Approved library                | Library file     |
 
 **Reuse Existing:**
+
 - ✅ Use `constants/exerciseConfigs.ts` as pattern
 - ✅ Follow `constants/moodOptions.ts` structure
 - ✅ Import from `constants/design-tokens.ts`
@@ -313,14 +346,15 @@ Ask Supabase agent to run MCP:
 
 ### Phase 3: Adaptive Selection Algorithm (Week 1, Days 6-7)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
+| Task                                  | Agent               | Deliverables                            | Dependencies                 |
+| ------------------------------------- | ------------------- | --------------------------------------- | ---------------------------- |
 | Create `services/adaptiveProtocol.ts` | **general-purpose** | Service with `selectAdaptiveProtocol()` | Technique library, DB schema |
-| Implement scoring algorithm | **general-purpose** | `scoreTechnique()` function | Service file |
-| Create `recordProtocolOutcome()` | **general-purpose** | Outcome logging function | Service file |
-| Add error handling with retry | **general-purpose** | Wrapped with `utils/retry.ts` | Service complete |
+| Implement scoring algorithm           | **general-purpose** | `scoreTechnique()` function             | Service file                 |
+| Create `recordProtocolOutcome()`      | **general-purpose** | Outcome logging function                | Service file                 |
+| Add error handling with retry         | **general-purpose** | Wrapped with `utils/retry.ts`           | Service complete             |
 
 **Reuse Existing:**
+
 - ✅ Import `utils/retry.ts` for error handling
 - ✅ Import `utils/supabase.ts` for DB client
 - ✅ Follow pattern from `services/profileService.ts`
@@ -329,14 +363,15 @@ Ask Supabase agent to run MCP:
 
 ### Phase 4: Pattern Detection Service (Week 2, Days 8-9)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Create `services/patternDetection.ts` | **general-purpose** | Pattern detection service | DB schema |
-| Implement `getPeakSpiralTime()` | **general-purpose** | Peak time calculation | Service file |
-| Implement `getMostCommonTrigger()` | **general-purpose** | Trigger analysis | Service file |
-| Implement `getTechniqueRankings()` | **general-purpose** | Ranking calculation | Service file |
+| Task                                  | Agent               | Deliverables              | Dependencies |
+| ------------------------------------- | ------------------- | ------------------------- | ------------ |
+| Create `services/patternDetection.ts` | **general-purpose** | Pattern detection service | DB schema    |
+| Implement `getPeakSpiralTime()`       | **general-purpose** | Peak time calculation     | Service file |
+| Implement `getMostCommonTrigger()`    | **general-purpose** | Trigger analysis          | Service file |
+| Implement `getTechniqueRankings()`    | **general-purpose** | Ranking calculation       | Service file |
 
 **Reuse Existing:**
+
 - ✅ Follow pattern from `services/insights.ts`
 - ✅ Use `utils/supabase.ts` for queries
 
@@ -344,14 +379,15 @@ Ask Supabase agent to run MCP:
 
 ### Phase 5: Interactive Step Component (Week 2, Days 10-11)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Design interactive input UX | **ux-expert** | UX specification | None |
-| Design visual component | **ui-design-expert** | Component spec | UX spec |
-| Create `components/protocol/InteractiveStepInput.tsx` | **general-purpose** | Reusable component | Design specs |
-| Add accessibility labels | **ui-design-expert** | A11y compliance | Component |
+| Task                                                  | Agent                | Deliverables       | Dependencies |
+| ----------------------------------------------------- | -------------------- | ------------------ | ------------ |
+| Design interactive input UX                           | **ux-expert**        | UX specification   | None         |
+| Design visual component                               | **ui-design-expert** | Component spec     | UX spec      |
+| Create `components/protocol/InteractiveStepInput.tsx` | **general-purpose**  | Reusable component | Design specs |
+| Add accessibility labels                              | **ui-design-expert** | A11y compliance    | Component    |
 
 **Reuse Existing:**
+
 - ✅ `auth/AuthTextInput.tsx` as base pattern
 - ✅ `moodCapture/steps/FreeWriting.tsx` for text input
 - ✅ `constants/design-tokens.ts` for styling
@@ -361,15 +397,16 @@ Ask Supabase agent to run MCP:
 
 ### Phase 6: Update spiral.tsx (Week 2, Days 12-14)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Refactor spiral.tsx protocol steps | **general-purpose** | Use technique library | Technique library |
-| Add adaptive protocol selection | **general-purpose** | Call `selectAdaptiveProtocol()` | Service |
-| Render interactive steps | **general-purpose** | Dynamic step rendering | Interactive component |
-| Add rationale display | **general-purpose** | Show selection reasoning | Adaptive logic |
-| Update outcome logging | **general-purpose** | Call `recordProtocolOutcome()` | Service |
+| Task                               | Agent               | Deliverables                    | Dependencies          |
+| ---------------------------------- | ------------------- | ------------------------------- | --------------------- |
+| Refactor spiral.tsx protocol steps | **general-purpose** | Use technique library           | Technique library     |
+| Add adaptive protocol selection    | **general-purpose** | Call `selectAdaptiveProtocol()` | Service               |
+| Render interactive steps           | **general-purpose** | Dynamic step rendering          | Interactive component |
+| Add rationale display              | **general-purpose** | Show selection reasoning        | Adaptive logic        |
+| Update outcome logging             | **general-purpose** | Call `recordProtocolOutcome()`  | Service               |
 
 **Reuse Existing:**
+
 - ✅ Keep existing `spiral.tsx` structure
 - ✅ Replace `protocolSteps` array with dynamic selection
 - ✅ Use existing `CountdownRing.tsx`
@@ -379,15 +416,16 @@ Ask Supabase agent to run MCP:
 
 ### Phase 7: Protocol Intelligence Screen (Week 3, Days 15-17)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Design insights screen UX | **ux-expert** | Screen wireframe | Pattern detection service |
-| Design visual layout | **ui-design-expert** | Visual spec | UX wireframe |
-| Create `app/insights/protocol-intelligence.tsx` | **general-purpose** | New screen | Design specs |
-| Create technique ranking component | **general-purpose** | `TechniqueRankingCard` | Screen |
-| Create pattern visualization | **general-purpose** | `PatternInsightCard` (reuse!) | Screen |
+| Task                                            | Agent                | Deliverables                  | Dependencies              |
+| ----------------------------------------------- | -------------------- | ----------------------------- | ------------------------- |
+| Design insights screen UX                       | **ux-expert**        | Screen wireframe              | Pattern detection service |
+| Design visual layout                            | **ui-design-expert** | Visual spec                   | UX wireframe              |
+| Create `app/insights/protocol-intelligence.tsx` | **general-purpose**  | New screen                    | Design specs              |
+| Create technique ranking component              | **general-purpose**  | `TechniqueRankingCard`        | Screen                    |
+| Create pattern visualization                    | **general-purpose**  | `PatternInsightCard` (reuse!) | Screen                    |
 
 **Reuse Existing:**
+
 - ✅ `profile/PatternInsightCard.tsx` - **EXACT MATCH!**
 - ✅ `profile/ProfileStats.tsx` for stats display
 - ✅ `components/ui/card.tsx` for card layout
@@ -397,15 +435,16 @@ Ask Supabase agent to run MCP:
 
 ### Phase 8: Replace Skip with Pause & Reflect (Week 3, Days 18-19)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Design pause/reflect UX flow | **ux-expert** | UX specification | None |
-| Design modal UI | **ui-design-expert** | Modal design spec | UX spec |
-| Create `components/protocol/PauseReflectionModal.tsx` | **general-purpose** | Modal component | Design specs |
-| Integrate into spiral.tsx | **general-purpose** | Replace skip button | Modal component |
-| Add pause analytics tracking | **general-purpose** | Track pause events | Modal |
+| Task                                                  | Agent                | Deliverables        | Dependencies    |
+| ----------------------------------------------------- | -------------------- | ------------------- | --------------- |
+| Design pause/reflect UX flow                          | **ux-expert**        | UX specification    | None            |
+| Design modal UI                                       | **ui-design-expert** | Modal design spec   | UX spec         |
+| Create `components/protocol/PauseReflectionModal.tsx` | **general-purpose**  | Modal component     | Design specs    |
+| Integrate into spiral.tsx                             | **general-purpose**  | Replace skip button | Modal component |
+| Add pause analytics tracking                          | **general-purpose**  | Track pause events  | Modal           |
 
 **Reuse Existing:**
+
 - ✅ Existing skip confirmation modal pattern (lines 1082-1178)
 - ✅ `auth/AuthTextInput.tsx` for text input
 - ✅ `components/ui/button.tsx` for buttons
@@ -414,14 +453,15 @@ Ask Supabase agent to run MCP:
 
 ### Phase 9: Smart Alerts (Week 3, Days 20-21)
 
-| Task | Agent | Deliverables | Dependencies |
-|------|-------|--------------|--------------|
-| Design alert settings UX | **ux-expert** | Settings screen design | Pattern detection |
+| Task                             | Agent               | Deliverables              | Dependencies        |
+| -------------------------------- | ------------------- | ------------------------- | ------------------- |
+| Design alert settings UX         | **ux-expert**       | Settings screen design    | Pattern detection   |
 | Create alert scheduling function | **general-purpose** | `schedulePatternAlerts()` | Peak time detection |
-| Add settings toggle | **general-purpose** | Settings screen update | Function |
-| Test notification delivery | **general-purpose** | Working alerts | Integration |
+| Add settings toggle              | **general-purpose** | Settings screen update    | Function            |
+| Test notification delivery       | **general-purpose** | Working alerts            | Integration         |
 
 **Reuse Existing:**
+
 - ✅ `services/notifications.ts` - Already has notification system
 - ✅ `app/settings.tsx` - Add toggle there
 - ✅ Follow `sendEncouragementNotification()` pattern
@@ -432,29 +472,29 @@ Ask Supabase agent to run MCP:
 
 ### DO NOT CREATE - Already Exists ✅
 
-| Need | Existing Component | Location |
-|------|-------------------|----------|
-| Text Input | `auth/AuthTextInput.tsx` | components/auth/ |
-| Button | `components/ui/button.tsx` | components/ui/ |
-| Card Layout | `components/ui/card.tsx` | components/ui/ |
-| Progress Bar | `components/ProgressIndicator.tsx` | components/ |
-| Rating Scale | `exercises/AnxietyRatingDial.tsx` | components/exercises/ |
-| Pre/Post Rating | `exercises/PrePostRatingCard.tsx` | components/exercises/ |
-| Success Animation | `SuccessRipple.tsx` | components/ |
-| Loading | `MagmaLoader.tsx` | components/ |
-| Error Display | `auth/ErrorAlert.tsx` | components/auth/ |
+| Need               | Existing Component                  | Location                |
+| ------------------ | ----------------------------------- | ----------------------- |
+| Text Input         | `auth/AuthTextInput.tsx`            | components/auth/        |
+| Button             | `components/ui/button.tsx`          | components/ui/          |
+| Card Layout        | `components/ui/card.tsx`            | components/ui/          |
+| Progress Bar       | `components/ProgressIndicator.tsx`  | components/             |
+| Rating Scale       | `exercises/AnxietyRatingDial.tsx`   | components/exercises/   |
+| Pre/Post Rating    | `exercises/PrePostRatingCard.tsx`   | components/exercises/   |
+| Success Animation  | `SuccessRipple.tsx`                 | components/             |
+| Loading            | `MagmaLoader.tsx`                   | components/             |
+| Error Display      | `auth/ErrorAlert.tsx`               | components/auth/        |
 | Navigation Buttons | `moodCapture/NavigationButtons.tsx` | components/moodCapture/ |
-| Insights Card | `profile/PatternInsightCard.tsx` | components/profile/ |
-| Stats Display | `profile/ProfileStats.tsx` | components/profile/ |
+| Insights Card      | `profile/PatternInsightCard.tsx`    | components/profile/     |
+| Stats Display      | `profile/ProfileStats.tsx`          | components/profile/     |
 
 ### CREATE NEW - Doesn't Exist ❌
 
-| Need | New Component | Reason |
-|------|---------------|--------|
-| Interactive Protocol Step | `protocol/InteractiveStepInput.tsx` | Unique to adaptive protocols |
-| Technique Ranking | `protocol/TechniqueRankingCard.tsx` | New visualization |
-| Pause Reflection Modal | `protocol/PauseReflectionModal.tsx` | New UX pattern |
-| Protocol Rationale Display | `protocol/SelectionRationale.tsx` | New feature |
+| Need                       | New Component                       | Reason                       |
+| -------------------------- | ----------------------------------- | ---------------------------- |
+| Interactive Protocol Step  | `protocol/InteractiveStepInput.tsx` | Unique to adaptive protocols |
+| Technique Ranking          | `protocol/TechniqueRankingCard.tsx` | New visualization            |
+| Pause Reflection Modal     | `protocol/PauseReflectionModal.tsx` | New UX pattern               |
+| Protocol Rationale Display | `protocol/SelectionRationale.tsx`   | New feature                  |
 
 **Total New Components:** 4 (vs 12 we could reuse!)
 
@@ -465,6 +505,7 @@ Ask Supabase agent to run MCP:
 ### ✅ Senior Developer Principles
 
 #### 1. **No Hardcoding**
+
 ```typescript
 // ❌ BAD
 const duration = 90;
@@ -478,6 +519,7 @@ const color = colors.lime[500];
 ```
 
 #### 2. **Props Over Context (When Possible)**
+
 ```typescript
 // ❌ BAD - Global context for everything
 const { technique } = useProtocolContext();
@@ -490,6 +532,7 @@ interface TechniqueCardProps {
 ```
 
 #### 3. **Modular, Single Responsibility**
+
 ```typescript
 // ❌ BAD - One giant component
 function SpiralScreen() {
@@ -509,6 +552,7 @@ function SpiralScreen() {
 ```
 
 #### 4. **TypeScript Strict Mode**
+
 ```typescript
 // ❌ BAD
 const data: any = await fetchData();
@@ -523,6 +567,7 @@ const data: TechniqueStats[] = await fetchData();
 ```
 
 #### 5. **Error Handling**
+
 ```typescript
 // ❌ BAD
 const result = await supabase.from('table').select();
@@ -539,19 +584,21 @@ try {
 ```
 
 #### 6. **Proper Nomenclature**
+
 ```typescript
 // ❌ BAD
-function getThing() { }
+function getThing() {}
 const stuff = [];
 const temp = 5;
 
 // ✅ GOOD
-function getTechniqueEffectiveness() { }
+function getTechniqueEffectiveness() {}
 const techniqueStats: TechniqueStats[] = [];
 const intensityThreshold = 5;
 ```
 
 #### 7. **Component Organization**
+
 ```
 components/
   protocol/              # New feature namespace
@@ -563,6 +610,7 @@ components/
 ```
 
 #### 8. **Barrel Exports**
+
 ```typescript
 // components/protocol/index.ts
 export { InteractiveStepInput } from './InteractiveStepInput';
@@ -579,11 +627,13 @@ import { InteractiveStepInput, TechniqueRankingCard } from '@/components/protoco
 ## Implementation Phases Summary
 
 ### **Phase 1: Foundation (Week 1)**
+
 **Days 1-3:** Database (Supabase Expert)
 **Days 4-5:** Technique Library (General Purpose + UI Design Expert)
 **Days 6-7:** Selection Algorithm (General Purpose)
 
 **Deliverables:**
+
 - ✅ Database schema with triggers
 - ✅ Technique library constant
 - ✅ Adaptive selection service
@@ -592,11 +642,13 @@ import { InteractiveStepInput, TechniqueRankingCard } from '@/components/protoco
 ---
 
 ### **Phase 2: Integration (Week 2)**
+
 **Days 8-9:** Pattern Detection (General Purpose)
 **Days 10-11:** Interactive Components (UX + UI + General Purpose)
 **Days 12-14:** Spiral.tsx Integration (General Purpose)
 
 **Deliverables:**
+
 - ✅ Interactive step component
 - ✅ Updated spiral.tsx with adaptive selection
 - ✅ Dynamic protocol rendering
@@ -605,11 +657,13 @@ import { InteractiveStepInput, TechniqueRankingCard } from '@/components/protoco
 ---
 
 ### **Phase 3: User Features (Week 3)**
+
 **Days 15-17:** Insights Screen (UX + UI + General Purpose)
 **Days 18-19:** Pause & Reflect (UX + UI + General Purpose)
 **Days 20-21:** Smart Alerts (General Purpose)
 
 **Deliverables:**
+
 - ✅ Protocol intelligence screen
 - ✅ Technique rankings
 - ✅ Pattern visualizations
@@ -753,6 +807,7 @@ Output:
 ## Success Criteria
 
 ### Technical
+
 - ✅ Zero duplicate components
 - ✅ All props typed with TypeScript
 - ✅ No hardcoded values
@@ -761,6 +816,7 @@ Output:
 - ✅ Follows existing patterns
 
 ### User Experience
+
 - ✅ Protocols adapt based on user data
 - ✅ Users see why technique was chosen
 - ✅ Interactive steps don't disrupt flow
@@ -768,6 +824,7 @@ Output:
 - ✅ Smart alerts predict spirals
 
 ### Performance
+
 - ✅ All calculations client-side
 - ✅ Database queries optimized with indexes
 - ✅ No external API calls

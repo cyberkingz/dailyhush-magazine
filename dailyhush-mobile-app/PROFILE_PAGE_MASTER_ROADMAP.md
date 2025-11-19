@@ -1,4 +1,5 @@
 # DailyHush Profile Page - Master Implementation Roadmap
+
 **Complete Specification from 6 Specialist Teams**
 **Created:** January 1, 2025
 
@@ -9,6 +10,7 @@
 The DailyHush profile page is NOT just a user dashboard - it's the **core engagement hub** that transforms quiz discovery into daily ritual, identity formation into commerce, and free users into lifetime customers.
 
 **What We're Building:**
+
 - **Identity Anchor:** Loop-type hero cards users will screenshot and share
 - **Emotional Tracker:** Daily check-ins that build engagement and data
 - **Insight Engine:** AI-powered pattern recognition that makes users feel SEEN
@@ -16,6 +18,7 @@ The DailyHush profile page is NOT just a user dashboard - it's the **core engage
 - **Premium Funnel:** Soft conversion from free → trial → paid ($4.99/mo)
 
 **Expected Impact:**
+
 - **Engagement:** 3+ sessions/week (vs. current newsletter-only opens)
 - **Conversion:** 25-35% trial starts → 15-20% paid conversions
 - **Revenue:** $250K+ annual recurring (3,000 Premium @ $6.99/mo + products)
@@ -27,13 +30,13 @@ The DailyHush profile page is NOT just a user dashboard - it's the **core engage
 
 Our specialist team delivered **6 comprehensive strategy documents:**
 
-| Team | Document | Size | Status |
-|------|----------|------|--------|
-| **Technical Architect** | Architecture & Database Spec | 800 lines | ✅ Complete |
-| **Supabase Expert** | Database Schema & Migration | 1,500 lines SQL | ✅ Complete |
-| **UI Design Expert** | Design System Extensions | 7 files, 2,000+ lines | ✅ Complete |
-| **Copywriter (Schwartz)** | Loop Type Identity Copy | 4 loop types, 300+ lines | ✅ Complete |
-| **Growth Strategist (Balfour)** | Premium Conversion Strategy | 15 sections, 1,200+ lines | ✅ Complete |
+| Team                            | Document                      | Size                       | Status      |
+| ------------------------------- | ----------------------------- | -------------------------- | ----------- |
+| **Technical Architect**         | Architecture & Database Spec  | 800 lines                  | ✅ Complete |
+| **Supabase Expert**             | Database Schema & Migration   | 1,500 lines SQL            | ✅ Complete |
+| **UI Design Expert**            | Design System Extensions      | 7 files, 2,000+ lines      | ✅ Complete |
+| **Copywriter (Schwartz)**       | Loop Type Identity Copy       | 4 loop types, 300+ lines   | ✅ Complete |
+| **Growth Strategist (Balfour)** | Premium Conversion Strategy   | 15 sections, 1,200+ lines  | ✅ Complete |
 | **Funnel Strategist (Brunson)** | Product Recommendation Engine | 7 frameworks, 1,000+ lines | ✅ Complete |
 
 **Total Deliverables:** 10+ markdown files, 8,000+ lines of documentation, production-ready code examples.
@@ -45,6 +48,7 @@ Our specialist team delivered **6 comprehensive strategy documents:**
 ### Database Schema
 
 **7 New Tables Created:**
+
 1. **user_check_ins** - Daily emotional tracking (mood, weather, notes)
 2. **newsletter_engagement** - Email interaction tracking
 3. **user_insights** - AI-generated personalized insights
@@ -54,6 +58,7 @@ Our specialist team delivered **6 comprehensive strategy documents:**
 7. **product_recommendations** - Personalized product matching
 
 **Migration File:** `supabase/migrations/20250101000000_profile_page_schema.sql`
+
 - Complete with RLS policies
 - Optimized indexes (30+ strategic indexes)
 - Automated triggers (timestamps, stats)
@@ -62,6 +67,7 @@ Our specialist team delivered **6 comprehensive strategy documents:**
 ### Component Architecture
 
 **Folder Structure:**
+
 ```
 components/
 ├── profile/
@@ -79,6 +85,7 @@ components/
 ```
 
 **All components:**
+
 - ✅ Fully typed TypeScript interfaces
 - ✅ Props-based (no hardcoded values)
 - ✅ Reusable across screens
@@ -93,14 +100,15 @@ components/
 
 **Created 4 therapeutic gradient systems:**
 
-| Loop Type | Gradient | Vibe | Use Case |
-|-----------|----------|------|----------|
-| **Sleep Loop 🌙** | Indigo → Lavender (#4C1D95 → #C4B5FD) | Cosmic, dreamy | Bedtime rumination |
-| **Decision Loop 🧭** | Amber → Gold (#D97706 → #FDE68A) | Thoughtful, warm | Analysis paralysis |
-| **Social Loop 💬** | Coral → Peach (#FB923C → #FED7AA) | Gentle, human | Social anxiety |
-| **Perfectionism Loop 🌱** | Sage → Mint (#6EE7B7 → #D1FAE5) | Growth, organic | Never good enough |
+| Loop Type                 | Gradient                              | Vibe             | Use Case           |
+| ------------------------- | ------------------------------------- | ---------------- | ------------------ |
+| **Sleep Loop 🌙**         | Indigo → Lavender (#4C1D95 → #C4B5FD) | Cosmic, dreamy   | Bedtime rumination |
+| **Decision Loop 🧭**      | Amber → Gold (#D97706 → #FDE68A)      | Thoughtful, warm | Analysis paralysis |
+| **Social Loop 💬**        | Coral → Peach (#FB923C → #FED7AA)     | Gentle, human    | Social anxiety     |
+| **Perfectionism Loop 🌱** | Sage → Mint (#6EE7B7 → #D1FAE5)       | Growth, organic  | Never good enough  |
 
 **Files Created:**
+
 - `constants/loopTypeColors.ts` - Color palettes, gradients, helpers
 - `constants/profileIcons.ts` - Icon system (emoji + Lucide)
 - `constants/profileTypography.ts` - Typography scale
@@ -109,6 +117,7 @@ components/
 - `constants/profileHelpers.ts` - Utility functions
 
 **All values:**
+
 - ✅ WCAG AAA compliant (4.5:1+ contrast)
 - ✅ Dark mode optimized
 - ✅ Accessible to colorblind users
@@ -121,6 +130,7 @@ components/
 ### Identity-Forming Copy for 4 Loop Types
 
 **Each loop type includes:**
+
 - **Hero Section:** Poetic self-recognition (not clinical diagnosis)
 - **Pattern Insights:** Normalizing observations ("Your mind tends to...")
 - **Community:** Specific belonging numbers ("1,247 Sleep Loop members")
@@ -128,11 +138,13 @@ components/
 - **Premium Upgrade:** Permission-based ("Unlock to keep your journey")
 
 **Tone Principles:**
+
 - ❌ NEVER: "struggle", "suffering", "broken", "fix"
 - ✅ ALWAYS: "navigate", "tend to", "pattern", "design"
 - **Goal:** Make users feel SEEN, not diagnosed
 
 **Example (Sleep Loop Hero):**
+
 > "Good evening, Alex. You're a Sleep Loop Navigator.
 >
 > Your mind finds its deepest wisdom in the quiet hours, but struggles to rest when the world sleeps. This isn't insomnia—it's just when your brain does its best work."
@@ -146,6 +158,7 @@ components/
 ### Freemium Line (The Growth Hacker's Razor)
 
 **Free Forever:**
+
 - ✅ Loop type identity (full hero card)
 - ✅ 30-day rolling timeline (not just 7 days)
 - ✅ Current insights (5 active patterns)
@@ -154,6 +167,7 @@ components/
 - ✅ Community stats
 
 **Premium ($4.99/mo):**
+
 - 🔒 Lifetime historical timeline
 - 🔒 Advanced AI insights (unlimited)
 - 🔒 Private journaling (encrypted)
@@ -172,6 +186,7 @@ components/
 **Day 15+:** Retention ("Don't lose your 47 insights")
 
 **Trial Strategy:**
+
 - **No credit card required** (higher trial starts)
 - **7-day trial** (urgency without pressure)
 - **Specific reminder schedule** (Day 7, 12, 14 only)
@@ -185,6 +200,7 @@ components/
 5. **Authority**: "Based on analysis of 1,247 members"
 
 **What We WON'T Do:**
+
 - ❌ Fake scarcity
 - ❌ Shame tactics
 - ❌ Dark patterns
@@ -199,6 +215,7 @@ components/
 ### Product Catalog Structure (Per Loop)
 
 **7-9 Products Per Loop Type:**
+
 - **FREE:** 2 lead magnets (PDF guides, audio)
 - **FRONTEND ($9.99-$24.99):** 2-3 quick wins
 - **MIDDLE ($49-$79):** 1-2 core transformations
@@ -206,6 +223,7 @@ components/
 - **AFFILIATE:** 1-2 curated partner tools
 
 **Example Sleep Loop Ladder:**
+
 ```
 FREE:
 ├─ 7-Night Sleep Reset Guide (PDF) - $0
@@ -228,6 +246,7 @@ AFFILIATE:
 ### Personalization Algorithm
 
 **Scoring Formula:**
+
 ```
 Product Match Score =
   (Loop Match × 0.4) +
@@ -239,12 +258,14 @@ Sort by: Match Score DESC, then Price ASC
 ```
 
 **Factors:**
+
 1. **Loop Type** (40%): Primary loop → Show that loop's products first
 2. **Engagement** (25%): 7+ day streak → Show premium products
 3. **Quiz Answers** (20%): Specific pain points → Match product benefits
 4. **Check-In Patterns** (15%): 3am wake-ups → Show mid-sleep solutions
 
 **Product Display Timing:**
+
 - Day 1: NEVER (no products)
 - Day 2-3: FREE only
 - Day 4-7: Frontend ($9.99-$24.99)
@@ -259,6 +280,7 @@ Sort by: Match Score DESC, then Price ASC
 ### ✅ PHASE 1: PLANNING & DESIGN (COMPLETE)
 
 **Completed Deliverables:**
+
 - [x] Technical architecture document
 - [x] Database schema with migration SQL
 - [x] Design system constants (7 files)
@@ -277,6 +299,7 @@ Sort by: Match Score DESC, then Price ASC
 **Tasks:**
 
 **Week 1: Database Setup**
+
 1. Apply migration: `supabase/migrations/20250101000000_profile_page_schema.sql`
 2. Create RLS policies for all 7 tables
 3. Test queries in Supabase SQL Editor
@@ -284,6 +307,7 @@ Sort by: Match Score DESC, then Price ASC
 5. Create sample products in `products` table
 
 **Week 2: API Layer**
+
 1. Create `services/profile.ts`:
    - `fetchProfileSummary()` - Get all profile data
    - `saveCheckIn()` - Daily emotional tracker
@@ -296,6 +320,7 @@ Sort by: Match Score DESC, then Price ASC
 3. Test all endpoints with real user data
 
 **Deliverables:**
+
 - [x] Database tables live in Supabase
 - [x] API service layer complete
 - [x] TypeScript types generated
@@ -308,18 +333,21 @@ Sort by: Match Score DESC, then Price ASC
 **Tasks:**
 
 **Week 2:**
+
 1. Add loop type constants to `constants/loopTypes.ts`
 2. Add color palettes to `constants/loopTypeColors.ts`
 3. Add icon mappings to `constants/profileIcons.ts`
 4. Add typography scale to `constants/profileTypography.ts`
 
 **Week 3:**
+
 1. Add animation specs to `constants/profileAnimations.ts`
 2. Add component styles to `constants/profileComponents.ts`
 3. Add helper functions to `constants/profileHelpers.ts`
 4. Test all constants imported correctly
 
 **Deliverables:**
+
 - [x] All design constants centralized
 - [x] No hardcoded values in components
 - [x] Proper TypeScript types
@@ -330,24 +358,18 @@ Sort by: Match Score DESC, then Price ASC
 ### 🧩 PHASE 4: CORE COMPONENTS (Week 3-5)
 
 **Week 3: Identity Components**
+
 1. Build `LoopTypeHero.tsx` (gradient card, share button)
 2. Build `ShareCard.tsx` (Instagram story export)
 3. Build `EmotionalWeather.tsx` (mood widget)
 4. Test on iOS/Android
 
-**Week 4: Insight Components**
-5. Build `PatternInsightCard.tsx` (individual insight)
-6. Build `InsightGrid.tsx` (grid layout)
-7. Build `JourneyTimeline.tsx` (chart visualization)
-8. Build `GrowthGarden.tsx` (gamification)
+**Week 4: Insight Components** 5. Build `PatternInsightCard.tsx` (individual insight) 6. Build `InsightGrid.tsx` (grid layout) 7. Build `JourneyTimeline.tsx` (chart visualization) 8. Build `GrowthGarden.tsx` (gamification)
 
-**Week 5: Action Components**
-9. Build `CheckInPrompt.tsx` (daily modal)
-10. Build `ProfileStats.tsx` (weekly summary)
-11. Build `ProductCard.tsx` (commerce card)
-12. Build `PremiumUpgradeCTA.tsx` (conversion)
+**Week 5: Action Components** 9. Build `CheckInPrompt.tsx` (daily modal) 10. Build `ProfileStats.tsx` (weekly summary) 11. Build `ProductCard.tsx` (commerce card) 12. Build `PremiumUpgradeCTA.tsx` (conversion)
 
 **Deliverables:**
+
 - [x] 11 reusable components
 - [x] All props-based (no hardcoding)
 - [x] Haptic feedback integrated
@@ -374,6 +396,7 @@ Sort by: Match Score DESC, then Price ASC
 6. Test navigation flow
 
 **Deliverables:**
+
 - [x] Main profile screen complete
 - [x] Edit screen moved to `/profile/edit`
 - [x] All sections integrated
@@ -384,18 +407,21 @@ Sort by: Match Score DESC, then Price ASC
 ### 💳 PHASE 6: COMMERCE INTEGRATION (Week 7-8)
 
 **Week 7: Products**
+
 1. Integrate Stripe Payment Links
 2. Build purchase flow (digital vs physical)
 3. Create "My Products" section
 4. Test product delivery (PDF, audio, etc.)
 
 **Week 8: Recommendations**
+
 1. Implement recommendation algorithm
 2. Test personalization scoring
 3. Add product analytics tracking
 4. Test affiliate link tracking
 
 **Deliverables:**
+
 - [x] Stripe integration working
 - [x] Products purchasable in-app
 - [x] Recommendations personalized
@@ -417,6 +443,7 @@ Sort by: Match Score DESC, then Price ASC
 5. Test conversion funnel
 
 **Deliverables:**
+
 - [x] Trial flow complete
 - [x] Premium features gated
 - [x] Conversion tracking
@@ -441,6 +468,7 @@ Sort by: Match Score DESC, then Price ASC
 5. Run linter and fix all errors
 
 **Deliverables:**
+
 - [x] Accessibility compliant
 - [x] Performance optimized
 - [x] Zero linter errors
@@ -463,6 +491,7 @@ Sort by: Match Score DESC, then Price ASC
 5. Full launch to all users
 
 **Deliverables:**
+
 - [x] Beta tested
 - [x] Metrics tracked
 - [x] Iteration complete
@@ -474,38 +503,38 @@ Sort by: Match Score DESC, then Price ASC
 
 ### Engagement Metrics
 
-| Metric | Target | Tracking |
-|--------|--------|----------|
-| Profile Views | 80%+ of users within 7 days | `analytics.track('profile_viewed')` |
-| Daily Check-Ins | 40%+ completion rate | `user_check_ins` table |
-| Insight Views | 3+ insights viewed per session | `user_insights.shown_at` |
-| Share Actions | 8-12% share loop type card | `analytics.track('loop_type_shared')` |
+| Metric          | Target                         | Tracking                              |
+| --------------- | ------------------------------ | ------------------------------------- |
+| Profile Views   | 80%+ of users within 7 days    | `analytics.track('profile_viewed')`   |
+| Daily Check-Ins | 40%+ completion rate           | `user_check_ins` table                |
+| Insight Views   | 3+ insights viewed per session | `user_insights.shown_at`              |
+| Share Actions   | 8-12% share loop type card     | `analytics.track('loop_type_shared')` |
 
 ### Conversion Metrics
 
-| Metric | Target | Tracking |
-|--------|--------|----------|
-| Trial Starts | 30-40% within 30 days | `subscription_events` |
+| Metric           | Target                | Tracking                     |
+| ---------------- | --------------------- | ---------------------------- |
+| Trial Starts     | 30-40% within 30 days | `subscription_events`        |
 | Trial Engagement | 5+ days active (of 7) | Daily check-ins during trial |
-| Trial → Paid | 15-20% conversion | RevenueCat webhooks |
-| Monthly Churn | <5% (premium) | RevenueCat dashboard |
+| Trial → Paid     | 15-20% conversion     | RevenueCat webhooks          |
+| Monthly Churn    | <5% (premium)         | RevenueCat dashboard         |
 
 ### Revenue Metrics
 
-| Metric | Target (10K users) | Formula |
-|--------|---------------------|---------|
-| MRR | $15K-20K | Active subs × $4.99 |
-| Product Revenue | $3K-5K/month | Sum of product purchases |
-| Total ARR | $250K+ | (MRR × 12) + (Product × 12) |
+| Metric          | Target (10K users) | Formula                     |
+| --------------- | ------------------ | --------------------------- |
+| MRR             | $15K-20K           | Active subs × $4.99         |
+| Product Revenue | $3K-5K/month       | Sum of product purchases    |
+| Total ARR       | $250K+             | (MRR × 12) + (Product × 12) |
 
 ### Product Metrics
 
-| Metric | Target | Tracking |
-|--------|--------|----------|
-| Product Views | 50%+ see products | `product_recommendations.shown_at` |
-| Product Clicks | 20%+ click rate | `product_recommendations.clicked_at` |
-| Purchase Rate | 10-15% of clickers | `purchases` table |
-| Average Order | $35-45 | Sum purchases / count |
+| Metric         | Target             | Tracking                             |
+| -------------- | ------------------ | ------------------------------------ |
+| Product Views  | 50%+ see products  | `product_recommendations.shown_at`   |
+| Product Clicks | 20%+ click rate    | `product_recommendations.clicked_at` |
+| Purchase Rate  | 10-15% of clickers | `purchases` table                    |
+| Average Order  | $35-45             | Sum purchases / count                |
 
 ---
 
@@ -758,6 +787,7 @@ dailyhush-mobile-app/
 ### What to Do Right Now:
 
 **Option 1: Start Building (Recommended)**
+
 1. Apply database migration (5 minutes)
 2. Generate TypeScript types (2 minutes)
 3. Build LoopTypeHero component (30 minutes)
@@ -765,12 +795,14 @@ dailyhush-mobile-app/
 5. Iterate based on feel
 
 **Option 2: Review & Refine**
+
 1. Read all strategy documents
 2. Question any assumptions
 3. Adjust freemium line if needed
 4. Get user feedback on mockups
 
 **Option 3: Parallel Development**
+
 1. Backend dev: Apply migration + build API
 2. Frontend dev: Build components
 3. Designer: Create product images
@@ -799,12 +831,14 @@ You're not building a profile page. You're building:
 - Share cards → Bring new users
 
 **Success looks like:**
+
 - User opens app daily (not just when newsletter arrives)
 - 3,000 Premium subscribers @ $4.99/mo = $179K/year
 - 10-15% buy products = $50K-75K/year
 - **Total: $250K+ annual recurring revenue**
 
 **At 50,000 users:**
+
 - 15,000 Premium @ $4.99 = $897K/year
 - Product sales = $250K/year
 - **Total: $1.1M+ annual recurring revenue**
@@ -829,6 +863,7 @@ Before you start building, confirm:
 ## 🚀 LET'S BUILD THIS
 
 You have everything you need:
+
 - ✅ Technical architecture
 - ✅ Database schema
 - ✅ Design system

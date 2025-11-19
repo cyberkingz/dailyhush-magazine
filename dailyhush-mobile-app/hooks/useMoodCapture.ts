@@ -14,7 +14,6 @@
  */
 
 import { useState, useCallback, useEffect } from 'react';
-import type { Enums } from '@/types/supabase';
 import type { MoodOption, IntensityValue } from '@/constants/moodOptions';
 import type { SuggestionTemplate } from '@/constants/suggestions';
 
@@ -152,9 +151,7 @@ export function useMoodCapture(options?: {
    */
   const goToNextStep = useCallback(() => {
     if (!canContinueFromStep(currentStep)) {
-      console.warn(
-        `Cannot continue from step ${currentStep}: validation failed`
-      );
+      console.warn(`Cannot continue from step ${currentStep}: validation failed`);
       return;
     }
 
@@ -263,16 +260,13 @@ export function useMoodCapture(options?: {
   /**
    * Set suggestion and acceptance (Step 4)
    */
-  const setSuggestion = useCallback(
-    (suggestion: SuggestionTemplate, accepted: boolean) => {
-      setData((prev) => ({
-        ...prev,
-        suggestion,
-        suggestionAccepted: accepted,
-      }));
-    },
-    []
-  );
+  const setSuggestion = useCallback((suggestion: SuggestionTemplate, accepted: boolean) => {
+    setData((prev) => ({
+      ...prev,
+      suggestion,
+      suggestionAccepted: accepted,
+    }));
+  }, []);
 
   // ========================================================================
   // RESET

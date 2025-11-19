@@ -231,9 +231,6 @@ export function useIntensitySlider(config: UseIntensitySliderConfig): UseIntensi
     .onChange((event) => {
       'worklet';
 
-      // Check if we've crossed into a new step
-      const newValue = positionToValue(thumbPosition.value, sliderWidth, range);
-
       // Run onChange on JS thread
       runOnJS(updateValueFromPosition)(thumbPosition.value);
     })

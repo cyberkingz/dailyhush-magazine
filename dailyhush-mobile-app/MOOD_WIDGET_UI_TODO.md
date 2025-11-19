@@ -1,4 +1,5 @@
 # Mood Widget UI Implementation - Complete Todo List
+
 **Date**: 2025-11-06
 **Status**: Foundation Complete (40%) | UI Implementation Pending (60%)
 **Estimated Time**: 12-16 hours
@@ -18,6 +19,7 @@ This todo list covers the complete UI implementation of the mood widget, from bu
 ## 🏗️ PHASE 1: COMPONENT STRUCTURE (1 task | 5 mins)
 
 ### Setup
+
 - [ ] **1.1** Create components folder structure
   - Path: `dailyhush-mobile-app/components/mood-widget/`
   - Files to create: 12 components + index.ts
@@ -29,6 +31,7 @@ This todo list covers the complete UI implementation of the mood widget, from bu
 Build simplest components first (no complex animations).
 
 ### 2.1 EmptyState Component
+
 - [ ] **2.1.1** Build EmptyState.tsx (initial "Log Mood" prompt)
   - CloudSun icon from Lucide
   - "How are you feeling today?" title
@@ -38,6 +41,7 @@ Build simplest components first (no complex animations).
   - **Estimated time**: 30-45 mins
 
 ### 2.2 WeatherDisplay Component
+
 - [ ] **2.2.1** Build WeatherDisplay.tsx (logged mood display)
   - Weather icon + name (from emotionalWeatherColors)
   - Mood rating dots (● ● ● ○ ○)
@@ -54,6 +58,7 @@ Build simplest components first (no complex animations).
 Build components with complex animations.
 
 ### 3.1 SuccessCheckmark Component
+
 - [ ] **3.1.1** Build SuccessCheckmark.tsx (SVG animated checkmark)
   - Use react-native-svg
   - AnimatedPath with strokeDashoffset
@@ -65,6 +70,7 @@ Build components with complex animations.
   - **Estimated time**: 1-1.5 hours
 
 ### 3.2 MoodSelector Component
+
 - [ ] **3.2.1** Build MoodSelector.tsx (5 mood choices with animations)
   - Grid of 5 emoji buttons
   - Hook: useMoodSelection
@@ -77,6 +83,7 @@ Build components with complex animations.
   - **Estimated time**: 1.5-2 hours
 
 ### 3.3 IntensitySlider Component (CRITICAL - Accessibility)
+
 - [ ] **3.3.1** Build IntensitySlider.tsx (gesture + tap-to-select)
   - **Gesture mode**: Pan gesture slider with snap-to-step
   - **Tap mode**: Tappable number buttons (1-7) for accessibility
@@ -95,6 +102,7 @@ Build components with complex animations.
 ## ⌨️ PHASE 4: INPUT COMPONENT (1 task | 1 hour)
 
 ### 4.1 QuickNotesInput Component
+
 - [ ] **4.1.1** Build QuickNotesInput.tsx (optional notes input)
   - TextInput with placeholder
   - Character counter (200 max)
@@ -112,6 +120,7 @@ Build components with complex animations.
 Build supporting UI components.
 
 ### 5.1 CloseButton Component
+
 - [ ] **5.1.1** Build CloseButton.tsx (top-right X, always visible)
   - X icon from Lucide
   - Position: absolute top-right
@@ -124,6 +133,7 @@ Build supporting UI components.
   - **⚠️ Addresses UX P0 finding #1**
 
 ### 5.2 ProgressIndicator Component
+
 - [ ] **5.2.1** Build ProgressIndicator.tsx (Step X of Y)
   - Dots or numbers showing current step
   - Position: top-center
@@ -133,6 +143,7 @@ Build supporting UI components.
   - **Estimated time**: 20 mins
 
 ### 5.3 LoadingOverlay Component
+
 - [ ] **5.3.1** Build LoadingOverlay.tsx (during submission)
   - Semi-transparent overlay
   - ActivityIndicator (lime color)
@@ -143,6 +154,7 @@ Build supporting UI components.
   - **⚠️ Addresses UX P0 finding #8**
 
 ### 5.4 ErrorDisplay Component
+
 - [ ] **5.4.1** Build ErrorDisplay.tsx (inline error + retry)
   - Error icon (AlertCircle from Lucide)
   - Error message (user-friendly)
@@ -154,6 +166,7 @@ Build supporting UI components.
   - **⚠️ Addresses UX P0 finding #8**
 
 ### 5.5 Backdrop Component
+
 - [ ] **5.5.1** Build Backdrop.tsx (tap-outside-to-cancel)
   - Semi-transparent overlay
   - Pressable wrapper
@@ -170,6 +183,7 @@ Build supporting UI components.
 Build the orchestrator that ties everything together.
 
 ### 6.1 Container Structure
+
 - [ ] **6.1.1** Build EmotionalWeatherWidget.tsx (main container)
   - Animated.View wrapper (for card expansion)
   - Hook: useCardExpansion
@@ -178,6 +192,7 @@ Build the orchestrator that ties everything together.
   - **Estimated time**: 30 mins
 
 ### 6.2 Component Integration
+
 - [ ] **6.2.1** Integrate all child components into container
   - EmptyState (state === 'empty')
   - MoodSelector (state === 'mood')
@@ -193,6 +208,7 @@ Build the orchestrator that ties everything together.
   - **Estimated time**: 1 hour
 
 ### 6.3 State-Based Rendering
+
 - [ ] **6.3.1** Add state-based component rendering logic
   - Conditional rendering based on widgetState
   - Smooth transitions between states
@@ -200,6 +216,7 @@ Build the orchestrator that ties everything together.
   - **Estimated time**: 30 mins
 
 ### 6.4 Animation Integration
+
 - [ ] **6.4.1** Wire up all animation triggers and transitions
   - startFlow() → expand card + show MoodSelector
   - selectMood() → hide other moods + show IntensitySlider
@@ -209,6 +226,7 @@ Build the orchestrator that ties everything together.
   - **Estimated time**: 1 hour
 
 ### 6.5 Interaction Handlers
+
 - [ ] **6.5.1** Add tap-outside-to-cancel functionality
   - Backdrop onPress → cancel()
   - Collapse card + reset state
@@ -224,6 +242,7 @@ Build the orchestrator that ties everything together.
   - **⚠️ Addresses UX P0 finding #7**
 
 ### 6.6 Update Flow
+
 - [ ] **6.6.1** Add update vs log flow logic
   - If weather/moodRating exists → pre-populate data
   - Change button text: "Log Mood" → "Update Mood"
@@ -238,6 +257,7 @@ Build the orchestrator that ties everything together.
 Ensure WCAG 2.1 AA compliance.
 
 ### 7.1 Accessibility Labels
+
 - [ ] **7.1.1** Add accessibility labels to all interactive elements
   - accessibilityLabel on all Pressable/TouchableOpacity
   - accessibilityHint for context
@@ -246,6 +266,7 @@ Ensure WCAG 2.1 AA compliance.
   - **Estimated time**: 30 mins
 
 ### 7.2 Live Region Announcements
+
 - [ ] **7.2.1** Add accessibility live region announcements
   - accessibilityLiveRegion="polite" on state containers
   - Announce state changes: "Mood selector visible", "Intensity slider visible", etc.
@@ -255,6 +276,7 @@ Ensure WCAG 2.1 AA compliance.
   - **⚠️ Addresses UX P0 finding #8**
 
 ### 7.3 Haptic Feedback
+
 - [ ] **7.3.1** Add haptic feedback to all interactions
   - Mood selection: Medium impact
   - Intensity change: Light impact
@@ -266,6 +288,7 @@ Ensure WCAG 2.1 AA compliance.
   - **Estimated time**: 20 mins
 
 ### 7.4 Minimum Touch Targets
+
 - [ ] **7.4.1** Verify all touch targets are 44x44pt minimum
   - Mood emoji buttons
   - Intensity slider numbers
@@ -279,6 +302,7 @@ Ensure WCAG 2.1 AA compliance.
 ## 🎨 PHASE 8: ERROR & LOADING STATES (2 tasks | 30 mins)
 
 ### 8.1 Error State UI
+
 - [ ] **8.1.1** Implement error state UI
   - Show ErrorDisplay component when error
   - Inline error (don't navigate away)
@@ -287,6 +311,7 @@ Ensure WCAG 2.1 AA compliance.
   - **Estimated time**: 15 mins
 
 ### 8.2 Loading State UI
+
 - [ ] **8.2.1** Implement loading state UI
   - Show LoadingOverlay when isLoading
   - Disable all buttons during submission
@@ -299,6 +324,7 @@ Ensure WCAG 2.1 AA compliance.
 ## 📦 PHASE 9: EXPORTS & INTEGRATION (4 tasks | 1 hour)
 
 ### 9.1 Component Exports
+
 - [ ] **9.1.1** Create component index.ts with all exports
   - Export EmotionalWeatherWidget as default
   - Export all sub-components (named exports)
@@ -306,6 +332,7 @@ Ensure WCAG 2.1 AA compliance.
   - **Estimated time**: 10 mins
 
 ### 9.2 Home Page Integration
+
 - [ ] **9.2.1** Update home page to import new widget
   - Replace: `import { EmotionalWeather } from '@/components/profile/EmotionalWeather'`
   - With: `import { EmotionalWeatherWidget } from '@/components/mood-widget'`
@@ -321,6 +348,7 @@ Ensure WCAG 2.1 AA compliance.
   - **Estimated time**: 10 mins
 
 ### 9.3 Fetch Today's Mood
+
 - [ ] **9.3.1** Fetch and display existing mood on mount
   - Use getTodayMood() from useMoodLogging
   - Pass weather, moodRating, notes to widget
@@ -333,6 +361,7 @@ Ensure WCAG 2.1 AA compliance.
 Test all user flows and interactions.
 
 ### 10.1 Happy Path Testing
+
 - [ ] **10.1.1** Test empty state → log mood flow
   - Tap "Log Mood" → card expands
   - Moods appear with stagger
@@ -392,6 +421,7 @@ Test all user flows and interactions.
   - **Estimated time**: 10 mins
 
 ### 10.2 Cancellation Testing
+
 - [ ] **10.2.1** Test cancel at each stage
   - Cancel from mood selection
   - Cancel from intensity
@@ -411,6 +441,7 @@ Test all user flows and interactions.
   - **Estimated time**: 5 mins
 
 ### 10.3 Error Handling Testing
+
 - [ ] **10.3.1** Test error state (network failure)
   - Simulate network error
   - Error display shows
@@ -605,25 +636,25 @@ Track all user interactions.
 
 ## 📊 SUMMARY BY CATEGORY
 
-| Category | Tasks | Est. Time | Priority |
-|----------|-------|-----------|----------|
-| **Component Structure** | 1 | 5 mins | High |
-| **Base Components** | 2 | 1-2 hours | High |
-| **Animated Components** | 3 | 3-4 hours | High |
-| **Input Component** | 1 | 1 hour | High |
-| **Utility Components** | 4 | 1-2 hours | High |
-| **Main Container** | 7 | 3-4 hours | High |
-| **Accessibility** | 4 | 1-2 hours | Critical |
-| **Error & Loading** | 2 | 30 mins | High |
-| **Exports & Integration** | 4 | 1 hour | High |
-| **Functional Testing** | 15 | 2-3 hours | Critical |
-| **Responsive Testing** | 4 | 30 mins | Medium |
-| **Accessibility Testing** | 3 | 1 hour | Critical |
-| **Performance Testing** | 2 | 30 mins | Medium |
-| **Analytics** | 7 | 30 mins | Medium |
-| **Documentation** | 2 | 30 mins | Low |
-| **Bug Fixes** | 2 | 1-2 hours | High |
-| **Finalization** | 3 | 30 mins | High |
+| Category                  | Tasks | Est. Time | Priority |
+| ------------------------- | ----- | --------- | -------- |
+| **Component Structure**   | 1     | 5 mins    | High     |
+| **Base Components**       | 2     | 1-2 hours | High     |
+| **Animated Components**   | 3     | 3-4 hours | High     |
+| **Input Component**       | 1     | 1 hour    | High     |
+| **Utility Components**    | 4     | 1-2 hours | High     |
+| **Main Container**        | 7     | 3-4 hours | High     |
+| **Accessibility**         | 4     | 1-2 hours | Critical |
+| **Error & Loading**       | 2     | 30 mins   | High     |
+| **Exports & Integration** | 4     | 1 hour    | High     |
+| **Functional Testing**    | 15    | 2-3 hours | Critical |
+| **Responsive Testing**    | 4     | 30 mins   | Medium   |
+| **Accessibility Testing** | 3     | 1 hour    | Critical |
+| **Performance Testing**   | 2     | 30 mins   | Medium   |
+| **Analytics**             | 7     | 30 mins   | Medium   |
+| **Documentation**         | 2     | 30 mins   | Low      |
+| **Bug Fixes**             | 2     | 1-2 hours | High     |
+| **Finalization**          | 3     | 30 mins   | High     |
 
 **Total**: 65 tasks | **12-16 hours**
 

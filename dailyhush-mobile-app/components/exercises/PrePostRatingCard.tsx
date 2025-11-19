@@ -16,10 +16,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { TrendingDown, TrendingUp, Minus } from 'lucide-react-native';
-import { ANXIETY_SCALE } from '@/types/exercises';
 import { AnxietyRatingDial } from './AnxietyRatingDial';
-import { COLORS, SPACING, TYPOGRAPHY, RADIUS, SHADOWS, OPACITY, ICON_SIZE } from '@/constants/design-tokens';
+import { RADIUS, SHADOWS } from '@/constants/design-tokens';
 import { colors } from '@/constants/colors';
 import { typography } from '@/constants/typography';
 import { spacing } from '@/constants/spacing';
@@ -40,57 +38,6 @@ interface PrePostRatingCardProps {
 interface ReductionData {
   reduction: number;
   percentage: number;
-}
-
-// ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
-/**
- * Get icon component based on reduction amount
- * Now uses outcome-based colors for clarity
- */
-function getReductionIcon(reduction: number) {
-  const iconSize = ICON_SIZE.lg;
-
-  if (reduction > 0) {
-    // Improvement - anxiety decreased (green)
-    return <TrendingDown size={iconSize} color={COLORS.outcome.improved.icon} />;
-  } else if (reduction < 0) {
-    // Worsening - anxiety increased (red)
-    return <TrendingUp size={iconSize} color={COLORS.outcome.worsened.icon} />;
-  } else {
-    // No change (blue)
-    return <Minus size={iconSize} color={COLORS.outcome.noChange.icon} />;
-  }
-}
-
-/**
- * Get reduction message based on reduction amount
- * Now uses clear outcome language that eliminates confusion
- */
-function getReductionMessage(reduction: number): string {
-  const points = Math.abs(reduction);
-  const pointText = points === 1 ? 'point' : 'points';
-
-  if (reduction > 0) {
-    // Improvement - anxiety went down
-    return `Your anxiety decreased by ${points} ${pointText}`;
-  } else if (reduction < 0) {
-    // Worsening - anxiety went up
-    return `Your anxiety increased by ${points} ${pointText}`;
-  } else {
-    // No change
-    return 'Your anxiety stayed the same';
-  }
-}
-
-/**
- * Get reassurance message for worsened outcomes
- * Provides context and reduces worry
- */
-function getReassuranceMessage(): string {
-  return 'This happens sometimes - let\'s explore other techniques';
 }
 
 // ============================================================================
@@ -135,32 +82,7 @@ export function PrePostRatingCard({
     return { reduction, percentage };
   };
 
-  const reduction = getReduction();
-
-  // Helper function to get outcome-based styles
-  const getOutcomeStyles = (reduction: number) => {
-    if (reduction > 0) {
-      return {
-        backgroundColor: COLORS.outcome.improved.backgroundDark,
-        borderColor: COLORS.outcome.improved.border,
-        textColor: COLORS.outcome.improved.textDark,
-      };
-    } else if (reduction < 0) {
-      return {
-        backgroundColor: COLORS.outcome.worsened.backgroundDark,
-        borderColor: COLORS.outcome.worsened.border,
-        textColor: COLORS.outcome.worsened.textDark,
-      };
-    } else {
-      return {
-        backgroundColor: COLORS.outcome.noChange.backgroundDark,
-        borderColor: COLORS.outcome.noChange.border,
-        textColor: COLORS.outcome.noChange.textDark,
-      };
-    }
-  };
-
-  const outcomeStyles = reduction ? getOutcomeStyles(reduction.reduction) : null;
+  getReduction();
 
   return (
     <View style={styles.container}>
@@ -181,8 +103,7 @@ export function PrePostRatingCard({
             style={styles.continueButton}
             activeOpacity={0.8}
             accessibilityLabel="Continue to next step"
-            accessibilityRole="button"
-          >
+            accessibilityRole="button">
             <Text style={styles.continueButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>

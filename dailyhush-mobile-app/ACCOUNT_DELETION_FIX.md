@@ -19,6 +19,7 @@ Created a **Supabase Edge Function** that runs server-side with proper admin pri
 ### 1. Created Edge Function (`supabase/functions/delete-account/index.ts`)
 
 A secure server-side function that:
+
 - ✅ Verifies user authentication
 - ✅ Uses service role key (admin privileges)
 - ✅ Deletes user profile (triggers cascade delete for all data)
@@ -29,12 +30,14 @@ A secure server-side function that:
 ### 2. Updated Client Code (`app/settings/delete-account.tsx`)
 
 Changed from:
+
 ```typescript
 // ❌ This doesn't work from client side
 const { error: authError } = await supabase.auth.admin.deleteUser(user.user_id);
 ```
 
 To:
+
 ```typescript
 // ✅ Calls secure Edge Function
 const response = await fetch(
@@ -42,7 +45,7 @@ const response = await fetch(
   {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${session.session.access_token}`,
+      Authorization: `Bearer ${session.session.access_token}`,
       'Content-Type': 'application/json',
     },
   }
@@ -54,11 +57,13 @@ const response = await fetch(
 ### Prerequisites
 
 1. **Install Supabase CLI**:
+
    ```bash
    npm install -g supabase
    ```
 
 2. **Login to Supabase**:
+
    ```bash
    supabase login
    ```
@@ -71,12 +76,14 @@ const response = await fetch(
 ### Deploy the Edge Function
 
 **Option 1: Use the deployment script**
+
 ```bash
 cd supabase/functions
 ./deploy.sh delete-account
 ```
 
 **Option 2: Deploy manually**
+
 ```bash
 supabase functions deploy delete-account --no-verify-jwt
 ```
@@ -114,6 +121,7 @@ curl -i --location --request POST \
 ```
 
 Expected response:
+
 ```json
 {
   "success": true,
@@ -146,16 +154,19 @@ When a user deletes their account, the Edge Function removes:
 ## Monitoring
 
 ### View Logs in Dashboard
+
 1. Go to Supabase Dashboard
 2. Navigate to Edge Functions → delete-account
 3. Click "Logs" tab
 
 ### View Logs via CLI
+
 ```bash
 supabase functions logs delete-account
 ```
 
 ### Follow Live Logs
+
 ```bash
 supabase functions logs delete-account --follow
 ```
@@ -166,6 +177,7 @@ supabase functions logs delete-account --follow
 
 **Problem**: Client gets 404 when calling Edge Function
 **Solution**: Make sure function is deployed:
+
 ```bash
 supabase functions deploy delete-account
 ```
@@ -174,6 +186,7 @@ supabase functions deploy delete-account
 
 **Problem**: Function returns 401 Unauthorized
 **Solutions**:
+
 - Verify user is logged in
 - Check that access token is being sent correctly
 - Ensure token hasn't expired
@@ -182,6 +195,7 @@ supabase functions deploy delete-account
 
 **Problem**: Function can't access service role key
 **Solutions**:
+
 - Verify project is linked: `supabase link --project-ref YOUR_REF`
 - Re-deploy the function
 - Check that Edge Functions are enabled in your project
@@ -190,6 +204,7 @@ supabase functions deploy delete-account
 
 **Problem**: `supabase functions deploy` fails
 **Solutions**:
+
 - Verify Supabase CLI is installed: `supabase --version`
 - Login again: `supabase login`
 - Check internet connection

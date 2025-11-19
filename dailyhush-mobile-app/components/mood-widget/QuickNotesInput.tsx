@@ -9,7 +9,15 @@
  */
 
 import React, { useRef, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import { PillButton } from '@/components/ui/pill-button';
 import type { QuickNotesInputProps } from '@/types/widget.types';
 import { colors } from '@/constants/colors';
@@ -63,12 +71,9 @@ export function QuickNotesInput({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
+      style={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>
-        Add a note (optional)
-      </Text>
+      <Text style={styles.title}>Add a note (optional)</Text>
 
       {/* Text input */}
       <TextInput
@@ -80,10 +85,7 @@ export function QuickNotesInput({
         multiline
         numberOfLines={3}
         maxLength={maxLength}
-        style={[
-          styles.input,
-          isOverLimit && styles.inputError,
-        ]}
+        style={[styles.input, isOverLimit && styles.inputError]}
         accessibilityLabel={ACCESSIBILITY_LABELS.quickNotes.input}
         accessibilityHint={ACCESSIBILITY_LABELS.quickNotes.inputHint}
         editable={!isSubmitting}
@@ -95,12 +97,7 @@ export function QuickNotesInput({
 
       {/* Character counter */}
       {config.showCounter && (
-        <Text
-          style={[
-            styles.counter,
-            isOverLimit && styles.counterError,
-          ]}
-        >
+        <Text style={[styles.counter, isOverLimit && styles.counterError]}>
           {characterCount} / {maxLength}
         </Text>
       )}

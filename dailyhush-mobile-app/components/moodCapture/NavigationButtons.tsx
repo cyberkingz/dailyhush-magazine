@@ -41,8 +41,7 @@ export function BackButton({ onPress, visible = true }: BackButtonProps) {
       activeOpacity={0.7}
       accessibilityRole="button"
       accessibilityLabel="Go back to previous step"
-      accessibilityHint="Double tap to return to the previous step. Your progress will be saved."
-    >
+      accessibilityHint="Double tap to return to the previous step. Your progress will be saved.">
       <ChevronLeft
         size={BUTTONS.back.icon.size}
         color={BUTTONS.back.icon.color}
@@ -73,8 +72,7 @@ export function CloseButton({ onPress }: CloseButtonProps) {
       activeOpacity={0.7}
       accessibilityRole="button"
       accessibilityLabel="Close mood capture"
-      accessibilityHint="Double tap to close this screen"
-    >
+      accessibilityHint="Double tap to close this screen">
       <X
         size={BUTTONS.close.icon.size}
         color={BUTTONS.close.icon.color}
@@ -108,8 +106,7 @@ export function SkipButton({ onPress, visible = true }: SkipButtonProps) {
       activeOpacity={0.7}
       accessibilityRole="button"
       accessibilityLabel="Skip this step"
-      accessibilityHint="Double tap to skip to the writing step"
-    >
+      accessibilityHint="Double tap to skip to the writing step">
       <Text style={[styles.skipButtonText, STEP_HEADER.skipButton.text]}>Skip</Text>
     </TouchableOpacity>
   );
@@ -152,8 +149,7 @@ export function ContinueButton({
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityHint="Double tap to proceed to next step"
-      accessibilityState={{ disabled: disabled || loading }}
-    >
+      accessibilityState={{ disabled: disabled || loading }}>
       {loading ? (
         <ActivityIndicator size="small" color={colors.text.primary} />
       ) : (
@@ -188,8 +184,7 @@ export function SecondaryButton({ onPress, label, loading = false }: SecondaryBu
       disabled={loading}
       activeOpacity={0.7}
       accessibilityRole="button"
-      accessibilityLabel={label}
-    >
+      accessibilityLabel={label}>
       {loading ? (
         <ActivityIndicator size="small" color={colors.text.secondary} />
       ) : (

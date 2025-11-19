@@ -68,6 +68,7 @@ Les produits ont le statut **"Missing Metadata"** dans RevenueCat parce qu'ils *
 ### Pourquoi la Section "In-App Purchases and Subscriptions" n'apparaît pas ?
 
 Apple n'affiche cette section **que si un build est attaché à la version**. Si tu ne la vois pas :
+
 1. Vérifie qu'un build est sélectionné dans la section "Build"
 2. Si aucun build n'est disponible, attends que Apple finisse de traiter le dernier build uploadé (peut prendre 5-15 minutes)
 3. Rafraîchis la page après avoir attaché un build
@@ -75,6 +76,7 @@ Apple n'affiche cette section **que si un build est attaché à la version**. Si
 ### Pourquoi RevenueCat affiche "Missing Metadata" ?
 
 RevenueCat synchronise avec App Store Connect. Les produits ont le statut "Missing Metadata" car Apple les considère comme "non prêts" tant qu'ils ne sont pas :
+
 1. **Complètement configurés** (métadonnées, pricing) ✅ FAIT
 2. **Attachés à une version soumise** ❌ PAS ENCORE FAIT
 
@@ -97,4 +99,3 @@ Une fois fait, l'app fonctionnera sur TestFlight et les produits seront disponib
 ---
 
 **Si tu as des erreurs à l'une de ces étapes, copie le message exact et je t'aiderai à le corriger.**
-

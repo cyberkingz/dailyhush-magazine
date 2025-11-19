@@ -10,6 +10,7 @@
 ## 🎯 Vision: From Navigation to Widget
 
 ### Current Flow (Navigation-Based) ❌
+
 ```
 Home Page
   └─> EmotionalWeather Card
@@ -24,6 +25,7 @@ Home Page
 ```
 
 **Problems**:
+
 - Multiple screen navigations break flow
 - Context switching disrupts emotional state
 - Feels heavy for quick check-in
@@ -32,6 +34,7 @@ Home Page
 ---
 
 ### New Flow (Inline Widget) ✅
+
 ```
 Home Page
   └─> EmotionalWeather Card
@@ -49,6 +52,7 @@ Home Page
 ```
 
 **Benefits**:
+
 - ✅ No screen navigation - everything happens inline
 - ✅ Maintains context on home screen
 - ✅ Feels lightweight and fluid
@@ -61,9 +65,11 @@ Home Page
 ## 🎨 Animation Sequence Design
 
 ### Stage 1: Initial Tap → Expansion (0.3s)
+
 **User Action**: Taps "Log Mood" button
 
 **Animations**:
+
 1. **Card Background**
    - `height`: 240px → 480px (expand vertically)
    - `backgroundColor`: card → slightly brighter
@@ -102,6 +108,7 @@ const expandCard = () => {
 ```
 
 ### Visual Flow:
+
 ```
 ┌──────────────────────────┐
 │ How are you feeling?     │ 240px
@@ -126,9 +133,11 @@ const expandCard = () => {
 ---
 
 ### Stage 2: Mood Selection → Intensity (0.4s)
+
 **User Action**: Taps mood choice (e.g., 😊)
 
 **Animations**:
+
 1. **Selected Mood**
    - `scale`: 1 → 1.2 → 1 (pulse)
    - `rotate`: 0deg → 5deg → -5deg → 0deg (wiggle)
@@ -173,6 +182,7 @@ const selectMood = (mood: string) => {
 ```
 
 ### Visual Flow:
+
 ```
 ┌──────────────────────────┐
 │   [Log Mood]             │
@@ -194,9 +204,11 @@ const selectMood = (mood: string) => {
 ---
 
 ### Stage 3: Intensity Selection → Notes (Optional) (0.3s)
+
 **User Action**: Drags slider or taps intensity level
 
 **Animations**:
+
 1. **Slider Thumb**
    - `scale`: 1 → 1.3 → 1 (bounce on release)
    - `shadowRadius`: 4 → 12 → 4 (glow effect)
@@ -231,9 +243,11 @@ const selectIntensity = (level: number) => {
 ---
 
 ### Stage 4: Submit → Collapse with Success (0.5s)
+
 **User Action**: Taps submit button
 
 **Animations**:
+
 1. **Success Checkmark**
    - Draw checkmark with `react-native-svg` path animation
    - `scale`: 0 → 1.2 → 1 (bounce)
@@ -264,7 +278,7 @@ const submitMood = async () => {
   checkmarkRotate.value = withTiming(360, { duration: 400 });
 
   // Collapse card after brief delay
-  await new Promise(resolve => setTimeout(resolve, 800));
+  await new Promise((resolve) => setTimeout(resolve, 800));
 
   cardHeight.value = withTiming(240, { duration: 400, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
 
@@ -274,6 +288,7 @@ const submitMood = async () => {
 ```
 
 ### Visual Flow:
+
 ```
 ┌──────────────────────────┐
 │  [Rate Intensity]        │
@@ -365,6 +380,7 @@ EmotionalWeather (Enhanced)
 ### Phase 1: Foundation Setup (2-3 hours)
 
 #### 1.1 Install Dependencies
+
 ```bash
 npm install react-native-reanimated@4.x
 npm install react-native-gesture-handler
@@ -372,6 +388,7 @@ npm install react-native-svg
 ```
 
 #### 1.2 Update babel.config.js
+
 ```js
 module.exports = {
   presets: ['babel-preset-expo'],
@@ -382,12 +399,15 @@ module.exports = {
 ```
 
 #### 1.3 Create Shared Values
+
 ```tsx
 // EmotionalWeather.tsx
 import { useSharedValue, useAnimatedStyle, withTiming, withSpring } from 'react-native-reanimated';
 
 // State management
-const [stage, setStage] = useState<'empty' | 'mood' | 'intensity' | 'notes' | 'success' | 'display'>('empty');
+const [stage, setStage] = useState<
+  'empty' | 'mood' | 'intensity' | 'notes' | 'success' | 'display'
+>('empty');
 const [selectedMood, setSelectedMood] = useState<string | null>(null);
 const [selectedIntensity, setSelectedIntensity] = useState<number>(4);
 
@@ -408,6 +428,7 @@ const weatherOpacity = useSharedValue(0);
 ### Phase 2: Animation Implementation (4-6 hours)
 
 #### 2.1 Card Animation
+
 ```tsx
 const animatedCardStyle = useAnimatedStyle(() => ({
   height: cardHeight.value,
@@ -415,84 +436,75 @@ const animatedCardStyle = useAnimatedStyle(() => ({
   transform: [{ scale: withSpring(1) }],
 }));
 
-<Animated.View style={[styles.container, animatedCardStyle]}>
-  {/* content */}
-</Animated.View>
+<Animated.View style={[styles.container, animatedCardStyle]}>{/* content */}</Animated.View>;
 ```
 
 #### 2.2 Button Animation
+
 ```tsx
 const animatedButtonStyle = useAnimatedStyle(() => ({
-  transform: [
-    { translateY: buttonY.value },
-    { scale: buttonScale.value },
-  ],
+  transform: [{ translateY: buttonY.value }, { scale: buttonScale.value }],
 }));
 
 <Animated.View style={[styles.floatingButton, animatedButtonStyle]}>
   <PillButton label={buttonText} onPress={handleLogMood} />
-</Animated.View>
+</Animated.View>;
 ```
 
 #### 2.3 Content Fade Out
+
 ```tsx
 const animatedContentStyle = useAnimatedStyle(() => ({
   opacity: contentOpacity.value,
   transform: [{ translateY: contentTranslateY.value }],
 }));
 
-{stage === 'empty' && (
-  <Animated.View style={animatedContentStyle}>
-    <Text style={styles.emptyTitle}>How are you feeling today?</Text>
-    <View style={styles.iconCircle}>
-      <CloudSun size={64} color={colors.lime[400]} />
-    </View>
-    <Text style={styles.emptyDescription}>
-      Check in with your emotional weather
-    </Text>
-  </Animated.View>
-)}
+{
+  stage === 'empty' && (
+    <Animated.View style={animatedContentStyle}>
+      <Text style={styles.emptyTitle}>How are you feeling today?</Text>
+      <View style={styles.iconCircle}>
+        <CloudSun size={64} color={colors.lime[400]} />
+      </View>
+      <Text style={styles.emptyDescription}>Check in with your emotional weather</Text>
+    </Animated.View>
+  );
+}
 ```
 
 #### 2.4 Mood Choices Stagger
+
 ```tsx
 const moodEmojis = ['😊', '😐', '🙁', '😢', '😭'];
 
-{stage === 'mood' && (
-  <View style={styles.moodChoicesContainer}>
-    {moodEmojis.map((emoji, index) => {
-      const moodOpacity = useSharedValue(0);
-      const moodTranslateY = useSharedValue(60);
+{
+  stage === 'mood' && (
+    <View style={styles.moodChoicesContainer}>
+      {moodEmojis.map((emoji, index) => {
+        const moodOpacity = useSharedValue(0);
+        const moodTranslateY = useSharedValue(60);
 
-      useEffect(() => {
-        moodOpacity.value = withDelay(
-          index * 50,
-          withTiming(1, { duration: 300 })
+        useEffect(() => {
+          moodOpacity.value = withDelay(index * 50, withTiming(1, { duration: 300 }));
+          moodTranslateY.value = withDelay(index * 50, withSpring(0, { damping: 12 }));
+        }, []);
+
+        const animatedMoodStyle = useAnimatedStyle(() => ({
+          opacity: moodOpacity.value,
+          transform: [{ translateY: moodTranslateY.value }, { scale: withSpring(1) }],
+        }));
+
+        return (
+          <Pressable key={emoji} onPress={() => selectMood(emoji)}>
+            <Animated.View style={animatedMoodStyle}>
+              <Text style={styles.moodEmoji}>{emoji}</Text>
+            </Animated.View>
+          </Pressable>
         );
-        moodTranslateY.value = withDelay(
-          index * 50,
-          withSpring(0, { damping: 12 })
-        );
-      }, []);
-
-      const animatedMoodStyle = useAnimatedStyle(() => ({
-        opacity: moodOpacity.value,
-        transform: [
-          { translateY: moodTranslateY.value },
-          { scale: withSpring(1) },
-        ],
-      }));
-
-      return (
-        <Pressable key={emoji} onPress={() => selectMood(emoji)}>
-          <Animated.View style={animatedMoodStyle}>
-            <Text style={styles.moodEmoji}>{emoji}</Text>
-          </Animated.View>
-        </Pressable>
-      );
-    })}
-  </View>
-)}
+      })}
+    </View>
+  );
+}
 ```
 
 ---
@@ -500,6 +512,7 @@ const moodEmojis = ['😊', '😐', '🙁', '😢', '😭'];
 ### Phase 3: Gesture Handling (2-3 hours)
 
 #### 3.1 Intensity Slider with Gesture
+
 ```tsx
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 
@@ -524,7 +537,7 @@ const panGesture = Gesture.Pan()
 
 <GestureDetector gesture={panGesture}>
   <Animated.View style={styles.sliderThumb} />
-</GestureDetector>
+</GestureDetector>;
 ```
 
 ---
@@ -532,6 +545,7 @@ const panGesture = Gesture.Pan()
 ### Phase 4: Success Animation (2 hours)
 
 #### 4.1 Checkmark SVG Animation
+
 ```tsx
 import Svg, { Path } from 'react-native-svg';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
@@ -556,7 +570,7 @@ checkmarkProgress.value = withTiming(1, { duration: 400 });
     strokeDasharray={100}
     animatedProps={animatedProps}
   />
-</Svg>
+</Svg>;
 ```
 
 ---
@@ -564,6 +578,7 @@ checkmarkProgress.value = withTiming(1, { duration: 400 });
 ### Phase 5: State Management (2 hours)
 
 #### 5.1 Stage Transitions
+
 ```tsx
 const transitionToMood = () => {
   runOnJS(setStage)('mood');
@@ -617,6 +632,7 @@ const transitionToDisplay = () => {
 ### For UI/UX Designer:
 
 #### 1. **Mood Choice Visual Design**
+
 - [ ] Emoji size and spacing
 - [ ] Background circles for each mood
 - [ ] Hover/press states
@@ -624,6 +640,7 @@ const transitionToDisplay = () => {
 - [ ] Layout: horizontal row or grid?
 
 #### 2. **Intensity Slider Design**
+
 - [ ] Track color and gradient
 - [ ] Thumb design (circle, pill, custom?)
 - [ ] Step indicators (dots, numbers, both?)
@@ -631,6 +648,7 @@ const transitionToDisplay = () => {
 - [ ] Label positions
 
 #### 3. **Card Expansion Behavior**
+
 - [ ] Final expanded height (480px? 520px?)
 - [ ] Border radius changes during expansion?
 - [ ] Shadow/glow effects
@@ -638,6 +656,7 @@ const transitionToDisplay = () => {
 - [ ] Content alignment (center, top, custom?)
 
 #### 4. **Success Animation Style**
+
 - [ ] Checkmark style (simple, bold, filled?)
 - [ ] Success message text
 - [ ] Confetti particles (yes/no)?
@@ -645,12 +664,14 @@ const transitionToDisplay = () => {
 - [ ] Duration of success screen
 
 #### 5. **Button Morphing**
+
 - [ ] Text transitions ("Log Mood" → "Rate Intensity" → "Submit")
 - [ ] Icon changes?
 - [ ] Size adjustments
 - [ ] Color changes per stage
 
 #### 6. **Micro-interactions**
+
 - [ ] Haptic feedback points
 - [ ] Sound effects (optional)
 - [ ] Loading states
@@ -662,16 +683,19 @@ const transitionToDisplay = () => {
 ## 📐 Responsive Considerations
 
 ### Small Screens (iPhone SE)
+
 - Reduce card expanded height to 420px
 - Smaller emoji sizes (48px → 40px)
 - Tighter spacing
 
 ### Large Screens (iPhone 14 Pro Max, iPad)
+
 - Max width constraint: 420px
 - Center card horizontally
 - Maintain aspect ratios
 
 ### Landscape Mode
+
 - Adjust card height to fit viewport
 - Horizontal mood layout
 - Slider remains horizontal
@@ -683,6 +707,7 @@ const transitionToDisplay = () => {
 ### Reanimated 4 Best Practices
 
 1. **Use worklets for animations**
+
 ```tsx
 'worklet';
 const smoothTransition = (value: number) => {
@@ -691,6 +716,7 @@ const smoothTransition = (value: number) => {
 ```
 
 2. **Avoid JavaScript bridge**
+
 ```tsx
 // ❌ Don't do this
 onPress={() => setOpacity(0)}
@@ -700,6 +726,7 @@ onPress={() => { opacity.value = withTiming(0) }}
 ```
 
 3. **Batch animations**
+
 ```tsx
 const animateMultiple = () => {
   'worklet';
@@ -710,11 +737,15 @@ const animateMultiple = () => {
 ```
 
 4. **Memoize styles**
+
 ```tsx
-const animatedStyle = useAnimatedStyle(() => ({
-  opacity: opacity.value,
-  transform: [{ scale: scale.value }],
-}), []);
+const animatedStyle = useAnimatedStyle(
+  () => ({
+    opacity: opacity.value,
+    transform: [{ scale: scale.value }],
+  }),
+  []
+);
 ```
 
 ---
@@ -722,6 +753,7 @@ const animatedStyle = useAnimatedStyle(() => ({
 ## ✅ Testing Checklist
 
 ### Functionality
+
 - [ ] All mood choices selectable
 - [ ] Intensity slider responds to gestures
 - [ ] Quick notes input works (if included)
@@ -731,6 +763,7 @@ const animatedStyle = useAnimatedStyle(() => ({
 - [ ] "Update" button allows re-entry
 
 ### Animations
+
 - [ ] Card expansion smooth (no jank)
 - [ ] Button translation accurate
 - [ ] Content fade timing correct
@@ -740,6 +773,7 @@ const animatedStyle = useAnimatedStyle(() => ({
 - [ ] Weather display fades in smoothly
 
 ### Edge Cases
+
 - [ ] Rapid taps don't break flow
 - [ ] Back gesture during animation
 - [ ] App backgrounded mid-animation
@@ -747,6 +781,7 @@ const animatedStyle = useAnimatedStyle(() => ({
 - [ ] Re-opening after completion
 
 ### Performance
+
 - [ ] 60 FPS maintained
 - [ ] No frame drops on low-end devices
 - [ ] Memory usage stable
@@ -757,12 +792,14 @@ const animatedStyle = useAnimatedStyle(() => ({
 ## 📊 Success Metrics
 
 ### Quantitative
+
 - **Completion Time**: Target 50% reduction (from ~45s to ~20s)
 - **Completion Rate**: Target 95%+ (up from ~70%)
 - **User Retention**: Track daily check-ins before/after
 - **Frame Rate**: Maintain 60 FPS throughout
 
 ### Qualitative
+
 - User feedback: "Feels smoother"
 - Reduced navigation friction
 - Increased engagement
@@ -773,6 +810,7 @@ const animatedStyle = useAnimatedStyle(() => ({
 ## 🔮 Future Enhancements
 
 ### V2 Ideas
+
 - [ ] Voice input for quick notes
 - [ ] Photo attachment option
 - [ ] Streak counter animation
@@ -786,6 +824,7 @@ const animatedStyle = useAnimatedStyle(() => ({
 ## 📝 Next Steps
 
 ### Immediate (This Week)
+
 1. **Design Review** with UI/UX designer
    - Finalize visual designs for each stage
    - Agree on animation timings
@@ -802,6 +841,7 @@ const animatedStyle = useAnimatedStyle(() => ({
    - Iterate based on insights
 
 ### Medium-Term (Next 2 Weeks)
+
 4. **Full Implementation**
    - Build all stages with final designs
    - Integrate with backend
@@ -818,6 +858,7 @@ const animatedStyle = useAnimatedStyle(() => ({
    - Gather feedback
 
 ### Long-Term (Next Month)
+
 7. **Production Release**
    - Roll out to all users
    - Monitor metrics
@@ -828,11 +869,13 @@ const animatedStyle = useAnimatedStyle(() => ({
 ## 💡 Technical Considerations for Team
 
 ### Backend Changes Needed
+
 - Ensure mood log API supports inline submission
 - Add optimistic UI updates
 - Handle submission failures gracefully
 
 ### Analytics Events to Track
+
 ```typescript
 analytics.track('MOOD_WIDGET_OPENED');
 analytics.track('MOOD_SELECTED', { mood: '😊' });
@@ -842,6 +885,7 @@ analytics.track('MOOD_WIDGET_COLLAPSED');
 ```
 
 ### Error States to Design
+
 - Network failure during submit
 - Invalid input (shouldn't happen, but defensive)
 - Backend timeout

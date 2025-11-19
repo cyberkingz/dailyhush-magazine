@@ -165,7 +165,7 @@ export type AnalyticsProperties = {
 
 /**
  * Hook to track analytics events
- * Usage: const analytics = useAnalytics()s
+ * Usage: const analytics = useAnalytics()
  */
 export function useAnalytics() {
   const posthog = usePostHog();
